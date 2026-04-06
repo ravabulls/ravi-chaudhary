@@ -7,7 +7,7 @@ description: A high-level overview of the Supply Chain Digitization course, cove
 
 ## The Shift to Digital SCM
 
-Current **Supply Chain Management (SCM)** is undergoing a fundamental transformation driven by two forces:
+Modern **Supply Chain Management (SCM)** is undergoing a fundamental transformation driven by two forces:
 
 - **High data availability** — from operations, purchases, and payments
 - **The Platform Economy** — reshaping how businesses connect and transact
