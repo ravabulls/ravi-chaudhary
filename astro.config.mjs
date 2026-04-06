@@ -1,24 +1,29 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-// https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			title: 'My Professional Journey',
+			customCss: [
+				'./src/styles/custom.css',
+			],
 			sidebar: [
 				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
+					label: 'Home',
+					link: '/',
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: 'Resume',
+					autogenerate: { directory: 'resume' },
+				},
+				{
+					label: 'Learnings',
+					items: [
+						{ label: 'MBA Subjects', autogenerate: { directory: 'learnings/mba' } },
+						{ label: 'Non-Fiction Books', autogenerate: { directory: 'learnings/books' } },
+						{ label: 'Online Courses', autogenerate: { directory: 'learnings/online' } },
+					],
 				},
 			],
 		}),
