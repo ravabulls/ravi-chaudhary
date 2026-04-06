@@ -1,11 +1,10 @@
 ---
 title: Supply Chain Digitization — Course Overview
 description: A high-level overview of the Supply Chain Digitization course, covering key modules from SCM fundamentals to Industry 4.0 digital infrastructure.
+sidebar:
+  label: Course Overview
+  order: 1
 ---
-
-# Supply Chain Digitization
-
-## The Shift to Digital SCM
 
 Modern **Supply Chain Management (SCM)** is undergoing a fundamental transformation driven by two forces:
 
@@ -20,9 +19,7 @@ Digitization isn't just about collecting data — it's about using that data to 
 
 ---
 
-## Course Modules at a Glance
-
-### Module 1 — SCM Fundamentals
+## Module 1 — SCM Fundamentals
 
 Covers the baseline concepts before any digital tools are applied:
 
@@ -31,14 +28,14 @@ Covers the baseline concepts before any digital tools are applied:
 - **Strategic Fit** — Choosing between a **Responsive SC** (speed & flexibility) vs. an **Efficient SC** (low cost)
 - **Supply Chain Segmentation** — Managing complexity within a single SC by product, demand pattern, customer type, geography, or channel
 
-### Module 2 — Digital Business Models in SCM
+## Module 2 — Digital Business Models in SCM
 
 Explores the **Platform Economy** and how it reshapes channel structures:
 
 - Centralized vs. Decentralized decision-making
 - Channel evolution: Brick & Mortar → Dual Channel → Multi-channel → **Omni-channel**
 
-### Module 3 — Supply Chain Analytics
+## Module 3 — Supply Chain Analytics
 
 From raw data to actionable decisions using the analytics hierarchy:
 
@@ -49,7 +46,9 @@ From raw data to actionable decisions using the analytics hierarchy:
 | Predictive | What will happen? | AI/ML, demand forecasting |
 | Prescriptive | How to make it happen? | Optimization models |
 
-### Module 4 — Digital Infrastructure & Industry 4.0
+See [Supply Chain Analytics — Deep Dive](/learnings/online/supply-chain-digitization/sub-page/) for the full breakdown including Big Data, demand forecasting, and network optimization.
+
+## Module 4 — Digital Infrastructure & Industry 4.0
 
 Builds the **"Digital Thread"** across the supply chain using core systems (ERP, WMS, TMS) and advanced technologies like **Digital Twins**, **Control Towers**, **IoT**, and **Blockchain**.
 

@@ -1,15 +1,12 @@
 ---
-title: Supply Chain Analytics — From Data to Decisions
+title: Supply Chain Analytics — Deep Dive
 description: A deep dive into the analytics hierarchy used in modern SCM, including Big Data, AI/ML-driven demand forecasting, and network optimization techniques.
+sidebar:
+  label: Analytics Deep Dive
+  order: 2
 ---
 
-# Supply Chain Analytics
-
-## Why Analytics Matters in SCM
-
-Modern supply chains generate enormous volumes of data — from warehouse operations and transport logs to customer purchases and payment flows. Without the right tools to interpret this data, it becomes noise rather than an asset.
-
-**Supply Chain Analytics** is the discipline of turning that raw data into decisions that reduce cost, improve service levels, and build resilience.
+**Supply Chain Analytics** is the discipline of turning raw supply chain data into decisions that reduce cost, improve service levels, and build resilience. Modern supply chains generate enormous volumes of data — from warehouse operations and transport logs to customer purchases and payment flows. Without the right analytical framework, it becomes noise rather than an asset.
 
 :::note
 AI/ML and Python-based coding are now standard toolsets for demand forecasting and cost-minimizing network design.
@@ -68,11 +65,7 @@ The most advanced tier — uses **optimization models** to recommend the best co
 
 **Network Optimization** is one of the most impactful applications of prescriptive analytics in SCM.
 
-### Objective
-
-Minimize **total supply chain cost** while maintaining or improving **service levels**.
-
-### Key Decisions
+**Objective:** Minimize total supply chain cost while maintaining or improving service levels.
 
 | Decision Type | Description |
 |---|---|
@@ -80,7 +73,7 @@ Minimize **total supply chain cost** while maintaining or improving **service le
 | **Allocation** | Which plant serves which WH or DC |
 | **Product Flow** | How goods move across the network from origin to final delivery |
 
-### How It Works
+**How it works:**
 
 1. Define the network: nodes (facilities) and arcs (transport lanes)
 2. Input cost parameters: production, storage, transportation, fixed facility costs
@@ -106,7 +99,7 @@ Network optimization is not a one-time exercise. Supply chain networks should be
 
 ## Key Takeaways
 
-- The **analytics hierarchy** (Descriptive → Diagnostic → Predictive → Prescriptive) is a maturity roadmap — most organizations start at the bottom and work upward
+- The analytics hierarchy (Descriptive → Diagnostic → Predictive → Prescriptive) is a maturity roadmap — most organizations start at the bottom and work upward
 - **Demand forecasting** with AI/ML is the most widely adopted advanced analytics technique in SCM
 - **Network optimization** delivers some of the largest cost savings but requires clean data and modelling expertise
 - Analytics is most powerful when integrated with real-time data from **ERP**, **WMS**, and **TMS** systems
