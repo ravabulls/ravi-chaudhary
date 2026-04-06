@@ -1,12 +1,36 @@
 :root {
-  /* This changes your brand color (currently set to a professional blue) */
   --sl-color-accent-low: #1e3a8a;
   --sl-color-accent: #2563eb;
   --sl-color-accent-high: #60a5fa;
 }
 
-/* This makes sure your images don't overflow on small screens */
+/* Prevent images from overflowing on small screens */
 img {
+  max-width: 100%;
+  height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Profile photo in the resume header — override the default box-shadow
+   since it's circular; the inline style sets border-radius: 50% already */
+.profile-photo-circle {
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px -2px rgb(37 99 235 / 0.35);
+}
+
+/* Give Badges a bit of breathing room when listed inline */
+.sl-badge + .sl-badge {
+  margin-left: 0.3rem;
+}
+
+/* Tighten up the splash hero tagline for multi-line display */
+.hero .tagline {
+  white-space: pre-line;
+}
+
+/* Cards in CardGrid: ensure equal-height columns look clean */
+.card {
+  display: flex;
+  flex-direction: column;
 }
