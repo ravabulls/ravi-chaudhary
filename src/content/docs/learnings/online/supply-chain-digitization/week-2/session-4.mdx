@@ -1,0 +1,161 @@
+---
+title: "Week 2, Session 4: Analytical Product Segmentation & Kraljic Matrix"
+description: Data-driven product segmentation using Coefficient of Variation and weekly sales quadrants, plus the Kraljic Matrix for classifying procurement items by supply risk and profit impact.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+## Session Context
+
+Two analytical frameworks covered:
+1. **Demand Variability vs. Weekly Sales Quadrant** — data-driven product segmentation
+2. **Kraljic Matrix** — sourcing and procurement decisions
+
+---
+
+## Part 1: Analytical Product Segmentation — Demand Variability & Weekly Sales
+
+### Case Setup
+
+- **Company:** Electronic gadgets manufacturer (smartphones, tablets, smart watches, other gadgets)
+- **Operations:** 2 cities — City A and City B; 2 channels — Online and Retail
+- **Data:** Weekly sales for 20 SKUs over 8 weeks
+- **Segmentation variables:** Average Weekly Sales (volume indicator) + Demand Variability (stability indicator)
+
+---
+
+### Measuring Demand Variability — Coefficient of Variation (CoV)
+
+<Aside type="note">
+**Why CoV and not just Standard Deviation?**
+
+- Standard Deviation (σ): measures *absolute* variability — fluctuation level
+- CoV (σ/μ): measures variability *relative to average demand* — normalizes across SKUs with different demand levels
+
+CoV allows fair comparison across SKUs. This is the major advantage.
+</Aside>
+
+| Formula | Description |
+|---|---|
+| **CoV = σ / μ** | Coefficient of Variation |
+| **μ = Σxᵢ / n** | Mean demand (sum of orders ÷ number of observations) |
+| **σ = √[Σ(xᵢ − x̄)² / n]** | Standard deviation |
+
+- **CoV = 0.1** → very stable demand
+- **CoV = 0.5+** → high variability
+
+---
+
+### Steps to Calculate & Segment (Excel-based)
+
+<Steps>
+1. Collect 8-week weekly demand data for all 20 SKUs for City A and City B separately.
+2. Calculate SKU-wise average demand (using AVERAGEIFS formula) for each city.
+3. Calculate SKU-wise standard deviation (using STDEVIFS formula) for each city.
+4. Compute CoV = σ / μ for each SKU per city.
+5. Plot a Scatter Plot — X-axis: CoV (demand variability), Y-axis: Average weekly sales.
+6. Combine City A + City B demand → compute joint average demand + joint σ + joint CoV.
+7. Plot combined scatter for the Distribution Center view (serving both cities).
+8. Build the 4-Quadrant Matrix to assign SC strategy to each product group.
+</Steps>
+
+<Aside type="note">
+The combined (joint) CoV represents the variability faced by the distribution center serving both cities.
+</Aside>
+
+**Key observation from scatter plot:** The same SKU may have different CoV in different cities — demand pattern is city-specific.
+
+---
+
+### 4-Quadrant Strategy Matrix
+
+| Quadrant | CoV | Avg Weekly Sales | Product Type | SC Type | Strategy |
+|---|---|---|---|---|---|
+| **Q1 (Top-Left)** | Low | High | Essential / High-volume | Efficient | **Push** |
+| **Q2 (Bottom-Right)** | High | Low | Customized / Niche | Responsive | **Pull** |
+| **Q3 (Top-Right)** | High | High | Consumer electronics / High-tech | Hybrid | **Push-Pull** |
+| **Q4 (Bottom-Left)** | Low | Low | Basic / Slow-moving | Hybrid | **Push-Pull** |
+
+**Examples by quadrant:**
+- **Q1:** Standard commodity goods, staple consumer products
+- **Q2:** Special edition collectibles, highly customized products
+- **Q3:** Consumer electronics, tech gadgets with rapid model changes
+- **Q4:** Non-seasonal apparel basics, basic electronic components
+
+<Aside type="note">
+Quick recall: Q1 = Push (low CoV, high sales). Q2 = Pull (high CoV, low sales). Q3 & Q4 = Hybrid Push-Pull.
+</Aside>
+
+---
+
+## Part 2: Kraljic Matrix — Procurement/Sourcing Segmentation
+
+<Aside type="note">
+**Framework by:** Peter Kraljic
+
+**Purpose:** Classify components/inputs required for manufacturing based on two factors. Helps decide supplier relationship strategy and procurement approach for each component type.
+</Aside>
+
+### Two Axes
+
+| Axis | What It Measures | Factors |
+|---|---|---|
+| **X-axis — Supply Risk** | How risky is supply of this item? | Availability, number of suppliers, competitive demand, make-or-buy feasibility |
+| **Y-axis — Profit Impact** | How much does this item affect firm profitability? | Volume required, % of total purchase cost, direct/indirect impact on growth |
+
+---
+
+### 4 Quadrants of the Kraljic Matrix
+
+#### 1. Non-Critical Items *(Low Supply Risk + Low Profit Impact)*
+
+- Product is highly standardized; abundant supply — many suppliers available
+- Easy to manage — multiple sourcing options exist
+- **Strategy:** Streamline procurement, reduce admin effort, automate ordering
+
+#### 2. Leverage Items *(Low Supply Risk + High Profit Impact)*
+
+- Abundant supply, but high impact on profit
+- Company has strong purchasing power — can negotiate hard
+- **Strategy:** Exploit full purchasing power — competitive bidding, negotiate pricing aggressively
+- Requires: good pricing strategy
+
+#### 3. Strategic Items *(High Supply Risk + High Profit Impact)*
+
+- Most critical category — high risk AND high profit impact
+- Affects business on a long-term basis
+- Cannot switch suppliers easily — partnership approach required
+- **Strategy:** Long-term supplier relationships + deep collaboration; supply continuity, joint development, strategic alliances
+
+#### 4. Bottleneck Items *(High Supply Risk + Low Profit Impact)*
+
+- High supply risk, but minimal profit impact if unavailable
+- Unavailability can still disrupt operations even if profit impact is low
+- Very low control over suppliers — difficult to manage
+- **Strategy:** Ensure availability through safety stock / alternate sourcing; monitor closely
+
+---
+
+### Kraljic Matrix — Quick Reference
+
+| Quadrant | Supply Risk | Profit Impact | Strategy |
+|---|---|---|---|
+| Non-Critical | Low | Low | Streamline, automate |
+| Leverage | Low | High | Negotiate hard, competitive bidding |
+| Strategic | High | High | Long-term partnerships, collaborate |
+| Bottleneck | High | Low | Secure supply, hold safety stock |
+
+---
+
+## Session Summary
+
+| Framework | Purpose | Output |
+|---|---|---|
+| **Demand Variability vs. Weekly Sales Quadrant** | Segment SKUs by CoV and volume | Q1 = Push, Q2 = Pull, Q3 & Q4 = Hybrid Push-Pull |
+| **Kraljic Matrix** | Classify procurement items by Supply Risk and Profit Impact | Non-critical / Leverage / Strategic / Bottleneck → each needs a different supplier strategy |
+
+<Aside type="tip">
+**Exam tip:** Both frameworks are data-driven and practical — expect case-based questions where you must classify SKUs or components and recommend SC strategies.
+
+For Kraljic: Classify by Supply Risk (x-axis) and Profit Impact (y-axis). Name all four quadrants with their strategies.
+</Aside>

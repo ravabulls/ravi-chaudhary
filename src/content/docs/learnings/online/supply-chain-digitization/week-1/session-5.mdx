@@ -1,0 +1,201 @@
+---
+title: "Week 1, Session 5: Manufacturing KPIs, Inventory, Distribution & Customer Service"
+description: Capacity types and utilisation formulas, inventory management techniques and KPIs, distribution and logistics analytics, and customer service metrics — completing all 6 SC processes.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## 1. Process 3 (continued) — Production & Manufacturing KPIs
+
+### Three Types of Capacity
+
+<Aside type="note">
+**Design Capacity:** maximum capacity the system is available to operate at (ideal/theoretical maximum).
+
+**Effective Capacity:** Design Capacity minus planned unavailability (preventive maintenance, setups, changeovers).
+
+**Actual Capacity (Actual Output):** Effective Capacity minus unplanned unavailability (machine breakdowns, spare part shortages).
+</Aside>
+
+### Utilisation & Efficiency — Formulas
+
+| KPI | Formula | Denominator |
+|---|---|---|
+| **Utilisation** | Actual Output ÷ Design Capacity | Theoretical maximum |
+| **Efficiency** | Actual Output ÷ Effective Capacity | Planned usable capacity |
+
+The numerator is the same (Actual Output); only the denominator differs.
+
+### Worked Example — Leather Bag Manufacturer
+
+**Given data:**
+- Actual output (last week) = 1,02,000 bags
+- Effective capacity = 1,07,500 bags
+- Working schedule = 7 days/week × 2 shifts/day × 9 hrs/shift
+- Production rate = 900 bags/hour
+
+**Step 1 — Calculate Design Capacity:**
+> 7 × 2 × 9 × 900 = **1,13,400 bags**
+
+**Step 2 — Utilisation:**
+> 1,02,000 ÷ 1,13,400 = **89.9%**
+
+**Step 3 — Efficiency:**
+> 1,02,000 ÷ 1,07,500 = **94.8%**
+
+---
+
+## 2. Process 4 — Inventory Management
+
+<Aside type="note">
+**Definition:** Knowing how much product is available on hand and where it is located → enables SC decision-making.
+</Aside>
+
+**Goal:** Balance between adequate stock on hand AND avoiding surplus/hoarding.
+
+### Inventory Management Techniques
+
+| Technique | Description |
+|---|---|
+| **ABC Analysis** | Classify products into A, B, C categories by importance/value; most widely used |
+| **Safety Stock** | Buffer stock based on lead time and lead time variability to cover demand uncertainty |
+| **EOQ** (Economic Order Quantity) | Balances ordering cost vs. holding cost to find optimal order quantity |
+| **Reorder Point** | Triggers replenishment order to ensure product is always available when needed |
+
+### Key Inventory KPIs
+
+| KPI | Formula |
+|---|---|
+| **Inventory Turnover Ratio** | COGS ÷ Average Inventory |
+| **Inventory Turnover Rate (Days)** | Planning Period ÷ Inventory Turnover Ratio |
+
+### Worked Example — T-Shirt Boutique (Inventory Turnover)
+
+**Planning period:** 1 quarter = 90 days | **COGS:** ₹15,00,000 (same for both scenarios)
+
+| Scenario | Avg Inventory | Turnover Ratio | Rate (Days) | Implication |
+|---|---|---|---|---|
+| Low inventory | ₹1,50,000 | 10 | 9 days | More frequent refills → more responsive |
+| High inventory | ₹5,00,000 | 3 | 30 days | Less frequent refills → higher holding cost |
+
+<Aside type="note">
+Use these KPIs to decide the right inventory level — avoid missing demand while minimising holding cost.
+</Aside>
+
+---
+
+## 3. Process 5 — Distribution & Logistics
+
+**Role:** Ensure product is available to customers as per their requirement; coordinate order management → warehousing → inventory management → transportation.
+
+**Customer expectation:** real-time order visibility and ability to track shipment.
+
+### Role of Data Analytics in Distribution & Logistics
+
+| Application | Description |
+|---|---|
+| Route optimisation | Analyse historical traffic and weather data → optimise delivery routes in real time |
+| Warehouse optimisation | Space utilisation, product placement, picking process efficiency |
+| Fleet optimisation | Vehicle routing, fuel consumption, maintenance scheduling |
+| Inventory optimisation | Right stock at right location |
+| Real-time visibility | Track orders through the distribution network |
+
+### Distribution & Logistics KPIs
+
+| KPI | Definition |
+|---|---|
+| Transportation Cost per Unit | Cost to move one unit |
+| Order Cycle Time | Time from order placement to fulfilment |
+| **OTD** (On-Time Delivery) | % of orders delivered on or before promised date |
+| Inventory Turnover Rate | How quickly inventory is sold through |
+| **OTIF** (On-Time In-Full) | Delivered on time AND in correct quantity |
+
+### Worked Example — 3PL Selection (Total Cost Analysis)
+
+**Context:** Company choosing between Avitruck and Logitruck for 3 product types (Modern, Semi-Modern, Classical).
+
+**Total Cost = Annual Inventory Carrying Cost + Annual Transportation Cost**
+
+| Term | Formula |
+|---|---|
+| Cycle Stock | 0.5 × Shipment Size |
+| Pipeline Inventory | Lead Time × Demand Rate |
+| Total Inventory | Cycle Stock + Pipeline Inventory |
+| Annual Carrying Cost | Total Inventory × Unit Cost × 25% |
+| Annual Transport Cost | Annual Demand (weekly × 52) × Transport Cost/unit |
+
+**Sample calculation (Logitruck + Modern product):**
+- Shipment size = 350 → Cycle Stock = 0.5 × 350 = **175 units**
+- Lead time = 3 wks, Demand = 150 units/wk → Pipeline Inv. = 3 × 150 = **450 units**
+- Total Inventory = 175 + 450 = **625 units**
+- Annual inventory carrying cost = 625 × 18,000 × 0.25 = **₹28,12,500**
+- Transport Cost = 150 × 52 × ₹100 = **₹7,80,000/year**
+- **Total Cost ≈ ₹35,92,500**
+
+**Result (all combinations analysed):**
+
+| Product | Best Provider |
+|---|---|
+| Modern | Avitruck (lower total cost) |
+| Semi-Modern | Logitruck (lower total cost) |
+| Classical | Logitruck (lower total cost) |
+
+---
+
+## 4. Process 6 — Customer Service
+
+**Role:** Drives the whole SC; focuses on providing support to customers throughout their experience.
+
+### 3 Core Customer Expectations
+
+| Expectation | Description |
+|---|---|
+| Effective communication | Real-time order tracking and visibility |
+| Responsiveness | Fast responses to queries and issues |
+| Quality | Consistently high product and service quality |
+
+### Scope of Digitisation in Customer Service
+
+- Improved inventory management → faster response times → more customers attracted
+- Order tracking → transparency and visibility for customers
+- Reverse logistics: returns, refunds, exchanges managed efficiently via digitised systems
+
+### Customer Service KPIs
+
+| KPI | Definition |
+|---|---|
+| **Order Fulfilment Cycle Time** | Time from order placement to delivery |
+| **OTD** (On-Time Delivery) | % of orders delivered on or before promised date |
+| **Fill Rate** | % of customer demand fulfilled immediately from stock — no backorders |
+| **Return Rate** | % of products returned; critical in e-commerce |
+| **Supplier On-Time Delivery Rate** | % of times supplier delivers RM on time |
+| **Compliance with SLAs** | Adherence to agreed service level agreements |
+
+### Worked Example — Soap Bar Manufacturer
+
+| KPI | Formula | Result | Interpretation |
+|---|---|---|---|
+| On-Time Delivery | (720 ÷ 800) × 100 | **90%** | 90% of orders delivered on time → excellent |
+| Delivery Cost per Soap Bar | ₹400 ÷ 720 | **₹0.56/bar** | Shipping fee per unit; useful for comparing logistics options |
+| Supplier On-Time Delivery Rate | 75 ÷ 80 | **93.75%** | Suppliers deliver RM on time 93.75% of the time → good |
+
+---
+
+## 5. Module 1 — Full Summary (All 6 SC Processes)
+
+| Process | Purpose | Key KPIs |
+|---|---|---|
+| Planning & Forecasting | Predict demand; plan resources | MAPE, Bias, R² |
+| Sourcing & Procurement | Acquire goods/services efficiently | Cost, compliance, delivery |
+| Production & Manufacturing | Convert RM to FG | OEE, Utilisation, Efficiency, Throughput |
+| Inventory Management | Balance stock with demand | Turnover Ratio, Turnover Rate |
+| Distribution & Logistics | Move product to customer | OTD, OTIF, Transport Cost/Unit |
+| Customer Service | Support throughout experience | Fill Rate, Return Rate, Order Cycle Time |
+
+<Aside type="tip">
+**Exam angle:** "Describe all 6 SC processes with their KPIs and role of digitisation." For numerical questions: be ready to compute Utilisation/Efficiency (capacity formulas), Inventory Turnover Ratio/Rate, 3PL total cost, OTD rate, and delivery cost per unit.
+</Aside>
+
+<Aside type="note">
+**End of Module 1.** Next: Module 2 on Supply Chain Segmentation.
+</Aside>
