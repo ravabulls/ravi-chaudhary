@@ -4,7 +4,7 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Professional Journey',
+			title: 'Ravi Chaudhary',
 			customCss: [
 				'./src/styles/custom.css',
 			],
