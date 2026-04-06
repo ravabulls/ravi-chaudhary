@@ -8,6 +8,26 @@ export default defineConfig({
 			customCss: [
 				'./src/styles/custom.css',
 			],
+			head: [
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'manifest',
+						href: '/manifest.webmanifest',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'theme-color',
+						content: '#2563eb',
+					},
+				},
+				{
+					tag: 'script',
+					content: `if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); }); }`,
+				},
+			],
 			sidebar: [
 				{
 					label: 'Home',
