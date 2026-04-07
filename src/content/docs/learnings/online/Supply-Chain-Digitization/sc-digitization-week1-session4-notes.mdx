@@ -1,0 +1,228 @@
+---
+title: "Week 1 | Session 4: SC Processes — Planning, Sourcing & Manufacturing"
+description: "A detailed walkthrough of the first three supply chain processes — Planning & Forecasting, Sourcing & Procurement, and Production & Manufacturing — including key definitions, KPIs, and forecasting methods."
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization*
+
+---
+
+## SC Processes — Overview
+
+<Aside type="note">
+SC processes follow a **fixed sequence** — the same order applies across most supply chains, with minor variation by industry. Different stakeholders handle different processes, and **KPIs** are defined for each to monitor performance regularly and ensure efficient, effective execution.
+</Aside>
+
+The **6 Major SC Processes** in sequence are:
+
+<Steps>
+1. Planning & Forecasting
+2. Sourcing & Procurement
+3. Production & Manufacturing
+4. Inventory Management
+5. Distribution & Logistics
+6. Customer Service
+</Steps>
+
+<Aside type="caution">
+**Session Scope:** Session 4 covers **Processes 1–3** only. Processes 4–6 (Inventory Management, Distribution & Logistics, and Customer Service) are covered in Session 5.
+</Aside>
+
+---
+
+## Process 1 — Planning & Forecasting
+
+<Badge text="Process 1 of 6" variant="note" />
+
+### Forecasting vs. Planning — The Key Difference
+
+<Aside type="note">
+**Forecasting:** Predicting future demand, future sales, marketing needs, and resource requirements.
+
+**Planning:** Deciding *how to manage resources* — production, inventory, capacity, and financials — to fulfil the predicted demand.
+
+**Relationship:** Forecasting is always done first → its output feeds directly into Planning.
+</Aside>
+
+### What Planning Covers
+
+| Planning Area | Description |
+|---|---|
+| **Make-or-Buy Decisions** | Produce components in-house, or buy from a supplier / outsource? |
+| **Facility Role Planning** | What quantity to manufacture at each plant, store at each warehouse, sell at each retailer |
+| **SC Network Structuring** | How nodes (plants, warehouses, retailers) are connected and what role each plays |
+| **Productivity Monitoring** | Track performance of all facilities and processes using KPIs |
+
+---
+
+### Forecasting Methods — Worked Example
+
+<Badge text="Exam Calculation" variant="tip" />
+
+**Context:** An online sports equipment retailer needs to forecast bicycle sales for August 2023.
+
+**Historical data:**
+
+| Month | Units Sold |
+|---|---|
+| May 2023 | 200 |
+| June 2023 | 180 |
+| July 2023 | 150 |
+
+**Method:** 3-Month Simple Moving Average
+
+<Aside type="note">
+**Formula:**
+
+`Forecast = (Month 1 + Month 2 + Month 3) ÷ 3`
+
+**Calculation:**
+
+`(200 + 180 + 150) ÷ 3 = 530 ÷ 3 ≈ 176.67 → rounded to **177 units**`
+
+If 4 months of data are available, use a 4-month moving average — and so on.
+</Aside>
+
+**Business value of this forecast:** The retailer can now plan inventory levels, staffing, and marketing spend for the holiday season based on an evidence-backed demand estimate.
+
+<Aside type="note">
+**Forecast Error:** The difference between estimated demand and actual demand. Used to measure forecasting accuracy over time.
+</Aside>
+
+---
+
+### KPIs for Planning & Forecasting
+
+**Forecast Accuracy:**
+
+| KPI | Full Name | What It Measures |
+|---|---|---|
+| **MAPE** | Mean Absolute Percentage Error | Average % difference between forecasted and actual value — *lower MAPE = higher forecast accuracy* |
+
+**Forecast Error Measures:**
+
+| KPI | Full Name | What It Tells You |
+|---|---|---|
+| **MAD** | Mean Absolute Deviation | Average magnitude of forecast errors |
+| **MSE** | Mean Square Error | Average of squared errors — penalises large deviations more |
+| **RMSE** | Root Mean Square Error | Square root of MSE — same units as original data, easier to interpret |
+| **Bias** | — | Indicates whether the model is *over-forecasting* or *under-forecasting* systematically |
+
+**AI/ML Model Performance (when ML is used for forecasting):**
+
+| KPI | What It Measures |
+|---|---|
+| **R² (R-Squared)** | Proportion of variation in actual data explained by the model — *higher R² = better model fit*. Commonly used in regression-based forecasting and across other ML models. |
+
+---
+
+## Process 2 — Sourcing & Procurement
+
+<Badge text="Process 2 of 6" variant="note" />
+
+### Sourcing
+
+<Aside type="note">
+**Definition:** Identifying, evaluating, selecting, and managing suppliers to fulfil a company's requirements.
+</Aside>
+
+| Goal | Description |
+|---|---|
+| **Cost Reduction** | Always the primary goal of any sourcing activity |
+| **Diversification** | Avoid reliance on a single supplier to reduce supply risk |
+| **Quality Assurance** | Ensure all vendors and suppliers consistently meet quality standards |
+| **Innovation Support** | Suppliers are increasingly expected to support new product requirements in today's fast-moving market |
+
+---
+
+### Procurement
+
+<Aside type="note">
+**Definition:** The end-to-end process of acquiring goods, services, or work from external sources — from sourcing all the way through to final payment.
+</Aside>
+
+| Goal | Description |
+|---|---|
+| **Cost Control** | Manage costs across the entire process, from sourcing to payment |
+| **Timely Flow** | Track and ensure goods and services flow on time and efficiently |
+| **Risk Management** | Manage supplier relationships proactively to prevent supply disruption |
+| **Quality & Delivery** | Ensure product quality is maintained and delivery commitments are met |
+| **Compliance** | Ensure all procurement activities comply with relevant regulations |
+
+---
+
+### Sourcing vs. Procurement — The Key Distinction
+
+<Aside type="note">
+**Sourcing is a subset of Procurement.**
+
+Sourcing identifies and selects suppliers → this triggers the broader procurement process that spans all the way to payment.
+</Aside>
+
+---
+
+### KPIs for Sourcing & Procurement
+
+| Area | KPI | What It Tracks |
+|---|---|---|
+| **Sourcing** | Supplier Performance Score | Overall supplier performance — a composite measure across multiple criteria |
+| **Sourcing** | Lead Time | Time elapsed from placing an order to receiving delivery |
+| **Procurement** | Purchase Order Cycle Time | Total time to complete one full PO cycle |
+| **Procurement** | Purchase Order Accuracy | Percentage of POs raised without errors |
+| **Procurement** | Contract / Payment Compliance | Adherence to agreed payment terms and contract conditions |
+
+<Aside type="tip">
+**Application of Concepts:** The **Kraljic Matrix** — referenced in Session 3 under the Sourcing driver — classifies purchased items by supply risk and profit impact, and directly informs which suppliers to single-source, multi-source, or develop as strategic partners. It will be covered in detail in a future session.
+</Aside>
+
+---
+
+## Process 3 — Production & Manufacturing
+
+<Badge text="Process 3 of 6" variant="note" />
+
+<Aside type="note">
+Modern production is a **data-rich environment** — new technologies capture point-to-point data and track production progress in real time. The large volumes of data generated must be actively analysed to improve operational decisions.
+</Aside>
+
+### What Data Analytics Enables in Production
+
+| Application | Description |
+|---|---|
+| **Employee & Sales Performance Tracking** | Data ensures production goals are met; allows schedules and production levels to be adjusted dynamically |
+| **Predictive Maintenance** | Predict machine failures before they occur → reduce unplanned downtime |
+| **Quality Control (SPC)** | Statistical Process Control — monitor and maintain product quality throughout production |
+| **Root Cause Analysis** | ML models identify the causes of defects or production issues at their source |
+| **Process Monitoring** | Continuous real-time tracking of production parameters across the line |
+
+### Key KPIs for Production & Manufacturing
+
+| KPI | What It Measures |
+|---|---|
+| **OEE (Overall Equipment Effectiveness)** | How well equipment is being utilised: Availability × Performance × Quality |
+| **Cycle Time** | Time taken to complete one unit of production |
+| **Throughput** | Number of units produced within a given time period |
+| **Capacity Utilisation** | Percentage of total production capacity that is actually being used |
+
+---
+
+## Quick Reference — All Three Processes (Session 4)
+
+| Process | Core Activity | Key KPIs | Tools / Methods |
+|---|---|---|---|
+| **Planning & Forecasting** | Predict demand; plan resources, capacity, inventory, and network structure | MAPE, MAD, MSE, RMSE, Bias, R² | Moving Average, Regression, AI/ML |
+| **Sourcing & Procurement** | Identify and select suppliers; acquire goods end-to-end through to payment | Supplier Score, Lead Time, PO Cycle Time, PO Accuracy, Compliance | Supplier Evaluation, Kraljic Matrix (future session) |
+| **Production & Manufacturing** | Convert raw materials into finished goods; monitor production performance using data | OEE, Cycle Time, Throughput, Capacity Utilisation | SPC, ML, Predictive Maintenance |
+
+<Aside type="tip">
+**Exam Angle:** *"Explain the key SC processes and their KPIs."*
+
+Answer framework:
+1. List all **6 processes in sequence** (Planning → Sourcing → Production → Inventory → Distribution → Customer Service)
+2. For each: define it, state its goal, and name the relevant KPIs
+3. For forecasting specifically — be ready to **compute a moving average** and interpret **MAPE** and **Bias** in context
+</Aside>
