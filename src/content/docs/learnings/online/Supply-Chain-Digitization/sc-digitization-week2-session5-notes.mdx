@@ -1,0 +1,391 @@
+---
+title: "Week 2 | Session 5: Inventory Segmentation — Methods, Advanced Approaches & AHP Case"
+description: "Covers the four traditional inventory segmentation methods (ABC, FSN, VED, XYZ), five advanced multi-criteria approaches, and a full AHP-based multi-criteria case study classifying 25 SKUs for an e-commerce retailer — the final session of Module 2."
+sidebar:
+  order: 11
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization*
+
+---
+
+## Recap & Session Context
+
+<Aside type="note">
+**Session 4 covered:** Analytical product segmentation using the Demand Variability vs. Weekly Sales quadrant (CoV-based) → 4-quadrant matrix → Push / Pull / Hybrid strategies, and the Kraljic Matrix for procurement.
+
+**This session:** Inventory Segmentation — what it is, the four popular single-criterion methods, five advanced multi-criteria approaches, and a full AHP-based case study.
+
+**This is the final session of Module 2 — Supply Chain Segmentation.**
+</Aside>
+
+---
+
+## What is Inventory Segmentation?
+
+<Aside type="note">
+**Definition:** Categorising a company's inventory into distinct groups based on defined criteria, so that each group receives a tailored management strategy.
+</Aside>
+
+**Key benefits:**
+
+| Benefit | Description |
+|---|---|
+| **Cost optimisation** | Allocate SC resources precisely where they generate the most value |
+| **Improved service levels** | Set and maintain the right service level per SKU category |
+| **Right storage system** | Assign appropriate storage infrastructure per inventory type |
+| **Better picking strategy** | Design warehouse and DC picking processes based on movement frequency and item characteristics |
+| **Operational performance** | Overall improvement across fulfilment, replenishment, and inventory accuracy |
+
+---
+
+## Popular Inventory Segmentation Methods — 4 Traditional Approaches
+
+<Aside type="note">
+All four traditional methods are **single-criterion** approaches. While each is powerful within its domain, real business decisions require multiple criteria simultaneously. Single-criterion methods risk oversimplification and suboptimal strategies — which is why advanced multi-criteria methods exist.
+</Aside>
+
+### 1. ABC Analysis — Revenue-Based
+
+<Badge text="Criterion: Revenue Contribution" variant="note" />
+
+Classification based on the **revenue contribution** of each inventory item — the Pareto principle applied to inventory.
+
+| Segment | Share of Products | Share of Revenue | Management Priority |
+|---|---|---|---|
+| **A** | ~20% | ~80% | Highest — tightly monitored, frequent review |
+| **B** | ~30% | ~15% | Moderate — regular review |
+| **C** | ~50% | ~5% | Lowest — simplified, automated management |
+
+<Aside type="note">
+**★ ABC = Pareto principle applied to inventory.** 20% of SKUs drive 80% of revenue — focus management effort accordingly.
+</Aside>
+
+---
+
+### 2. FSN Analysis — Movement-Based
+
+<Badge text="Criterion: Speed of Movement" variant="note" />
+
+Classification based on the **consumption rate and speed of movement** through the warehouse.
+
+| Segment | Share of Items | Movement Behaviour | Avg Cumulative Stay |
+|---|---|---|---|
+| **F — Fast Moving** | ~10% | Very short stay in warehouse; consumed rapidly | Less than 10% of average cumulative stay |
+| **S — Slow Moving** | ~30% | Moderate movement; stays longer in warehouse | ~20% of average cumulative stay |
+| **N — Non-Moving** | ~50% | Stagnant inventory — no consumption for extended period; inventory turnover ratio < 1 | High cumulative stay |
+
+<Aside type="tip">
+**Application of Concepts:** Non-Moving (N) items are a direct holding cost liability. Identifying them allows the business to decide whether to liquidate, discount, or discontinue — rather than continuing to pay storage costs on stock that will never move.
+</Aside>
+
+---
+
+### 3. VED Analysis — Criticality-Based
+
+<Badge text="Criterion: Operational Criticality" variant="note" />
+
+Classification based on the **criticality of each item to business operations** — not its value or movement speed.
+
+| Segment | Meaning | Description |
+|---|---|---|
+| **V — Vital** | Cannot operate without it | Absolutely crucial — business halts if unavailable |
+| **E — Essential** | Very important | High priority after Vital; significant disruption if unavailable |
+| **D — Desirable** | Not strictly necessary | Operations can continue without it, but quality or efficiency suffers |
+
+<Aside type="note">
+**★ VED is most common in manufacturing, hospitals, and defence** — wherever certain items are mission-critical regardless of their cost or demand frequency. A low-cost item can still be Vital.
+</Aside>
+
+---
+
+### 4. XYZ Analysis — Demand Variability-Based
+
+<Badge text="Criterion: Demand Predictability" variant="note" />
+
+Classification based on the **predictability of demand** over time — complementary to ABC analysis.
+
+| Segment | Demand Behaviour | Management Approach |
+|---|---|---|
+| **X** | Little or no variation — highly predictable | Lean inventory; tight replenishment cycles |
+| **Y** | Unsteady demand — but can be predicted to a certain extent | Moderate safety stock; regular review |
+| **Z** | Very high variation — no discernible trend or causal factors | High safety stock; frequent monitoring; hardest to manage |
+
+---
+
+### Quick Reference — 4 Traditional Methods
+
+| Method | Classification Criterion | Segments |
+|---|---|---|
+| **ABC** | Revenue contribution | A (high) / B (medium) / C (low) |
+| **FSN** | Speed of movement / consumption rate | F (fast) / S (slow) / N (non-moving) |
+| **VED** | Criticality to operations | V (vital) / E (essential) / D (desirable) |
+| **XYZ** | Demand predictability / variability | X (stable) / Y (variable) / Z (unpredictable) |
+
+---
+
+## Advanced Inventory Segmentation Approaches
+
+<Badge text="Multi-Criteria Methods" variant="caution" />
+
+<Aside type="note">
+Enabled by: the combination of **data availability** and **increased computational power** — both now accessible to most organisations. Advanced methods handle two or more criteria simultaneously for realistic, business-grade segmentation.
+</Aside>
+
+### 1. Mathematical Programming
+
+- **Linear Programming (LP)** or **Non-Linear Programming (NLP)**
+- Formulates the segmentation problem as a mathematical optimisation model incorporating multiple criteria simultaneously
+
+### 2. Metaheuristics
+
+Used when the problem is too complex for exact mathematical programming:
+
+| Algorithm | Type |
+|---|---|
+| **Genetic Algorithm (GA)** | Evolutionary optimisation |
+| **Particle Swarm Optimisation (PSO)** | Swarm intelligence |
+| **Simulated Annealing** | Probabilistic local search |
+
+### 3. AI / Machine Learning
+
+Heavily data-driven — well suited to today's data-rich SC environment:
+
+| Algorithm | Type |
+|---|---|
+| **Artificial Neural Networks (ANN)** | Deep learning |
+| **Support Vector Machines (SVM)** | Supervised classification |
+| **Back Propagation Networks** | Neural network training |
+| **K-Nearest Neighbor (KNN)** | Instance-based learning |
+| **Regression models** | Predictive modelling |
+
+### 4. Multi-Criteria Decision Making (MCDM)
+
+Incorporates **expert opinion** to weigh multiple factors:
+
+| Method | Description |
+|---|---|
+| **AHP — Analytical Hierarchy Process** | Pairwise comparison of criteria to derive priority weights |
+| **Fuzzy AHP** | AHP with fuzzy logic to handle uncertainty in expert judgement |
+| **ANP — Analytical Network Process** | Extension of AHP allowing interdependencies between criteria |
+
+### 5. Hybrid Approaches
+
+Combinations of the above — e.g., AHP + ML, GA + LP — used when no single method is adequate alone.
+
+<Aside type="tip">
+**★ Exam tip — Advanced methods:** Know all four traditional methods in full detail. For advanced methods, be able to name each category and state *why* it is used: handling multiple criteria simultaneously, accommodating data availability, or managing complexity beyond single-criterion approaches.
+</Aside>
+
+---
+
+## AHP — Analytical Hierarchy Process
+
+<Badge text="MCDM Framework" variant="note" />
+
+<Aside type="note">
+**Proposed by:** Thomas L. Saaty
+
+**Type:** Multi-Criteria Decision Making (MCDM) method
+
+**Applications:** Supplier selection, procurement decisions, product and service design, resource allocation, and inventory segmentation.
+</Aside>
+
+### Core Idea
+
+AHP organises a complex, multi-factor decision into a **hierarchical structure**, performs **pairwise comparisons** of all factors to determine their relative importance, and outputs **quantitative, consistent priority weights** for each factor. Inputs can come from a single expert or aggregated from multiple experts.
+
+### AHP Hierarchy Structure
+
+![AHP Hierarchical Structure Diagram — Goal → Criteria → Alternatives](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image1.png)
+
+### Saaty Scale (1–9)
+
+<Aside type="note">
+| Scale Value | Meaning |
+|---|---|
+| **1** | Equally important |
+| **3** | Moderately more important |
+| **5** | Strongly more important |
+| **7** | Very strongly more important |
+| **9** | Extremely more important |
+| **2, 4, 6, 8** | Intermediate values between adjacent judgements |
+</Aside>
+
+### AHP Steps
+
+<Steps>
+1. **Define the problem** — state the objective clearly
+2. **Develop the hierarchical framework** — list all criteria and map their relationships
+3. **Construct the Pairwise Comparison Matrix** for each level using the Saaty scale (1–9)
+4. **Normalise the matrix** — calculate criterion weights (the priority vector)
+5. **Calculate the Consistency Ratio (CR)** using: `CR = CI / RI` where CI = Consistency Index and RI = Random Index (standard table value based on matrix size)
+6. **Check CR:** If CR < 0.1 → consistent, proceed. If CR ≥ 0.1 → inconsistent, return to Step 3 and redo the pairwise comparison
+</Steps>
+
+<Aside type="note">
+**★ CR < 0.1 is the MUST-PASS condition in AHP.** If this threshold is not met, the expert's pairwise judgements are considered internally inconsistent and unreliable — the comparison must be redone.
+</Aside>
+
+---
+
+## Case Study — AHP-Based Inventory Segmentation: XYZ E-tailer
+
+<Badge text="Case Study" variant="tip" />
+
+### Case Setup
+
+| Parameter | Detail |
+|---|---|
+| **Company** | XYZ E-tail — an e-commerce retailer |
+| **Constraint** | Fixed warehouse space under a 3-year contract |
+| **Listing policy** | A product is listed as 'available' only if it is physically present in the warehouse |
+| **Challenge** | Management wants to expand the product portfolio but warehouse space is limited |
+| **Previous policy** | 95% service level maintained uniformly for all SKUs |
+| **New plan** | Classify 25 SKUs into 3 groups with differentiated service levels |
+| **Tool** | AHP — to classify 25 SKUs into Class A / B / C |
+
+**Target service levels under the new classification:**
+
+| Class | Service Level |
+|---|---|
+| **A** | 95% |
+| **B** | 90% |
+| **C** | 85% |
+
+---
+
+### SKU Data — 25 SKUs Across 6 Criteria
+
+![XYZ E-tailer SKU Data Table — 25 SKUs with values across all 6 criteria](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image2.png)
+
+---
+
+### 6 Evaluation Criteria
+
+![Criteria Summary Table — Direction and description of all 6 AHP criteria](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image3.png)
+
+The six criteria used, with their direction of preference:
+
+| # | Criterion | Unit | Direction |
+|---|---|---|---|
+| 1 | **Monthly Demand** | Units/month | Higher = Better |
+| 2 | **Priority of Product Category** | Score 1–10 | Higher = Better |
+| 3 | **Supplier Reliability** | % perfect orders | Higher = Better |
+| 4 | **Profit Margin** | % | Higher = Better |
+| 5 | **Lead Time** | Hours | **Lower = Better** |
+| 6 | **Likelihood of Return** | % | **Lower = Better** |
+
+<Aside type="note">
+**★ Mixed directions matter:** Criteria 5 and 6 are "Lower = Better." Normalisation must account for this — they are inverted before scoring. Cannot compare or multiply criteria in different units or directions without normalisation first.
+</Aside>
+
+---
+
+### Step 1 — Pairwise Comparison Matrix
+
+![Pairwise Comparison Matrix — 6×6 Saaty Scale Ratings for All Criteria Pairs](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image4.png)
+
+*Example reading:* Monthly Demand vs. Priority of Product Category → Monthly Demand rated **3× more important** (Saaty scale = 3).
+
+---
+
+### Step 2 — Normalised Matrix & Criterion Weights
+
+![Normalised Pairwise Matrix and Criterion Weight (Priority Vector) Table](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image5.png)
+
+### Step 3 — Consistency Check
+
+<Aside type="note">
+**Result: CR = 0.08 < 0.1 → Consistent ✓**
+
+The expert's pairwise comparisons pass the AHP consistency threshold. The derived criterion weights are valid and can be used for SKU scoring.
+</Aside>
+
+---
+
+### Criterion Weights Output
+
+![Criterion Weights Summary — AHP Priority Vector for All 6 Factors](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image6.png)
+
+---
+
+### Normalisation of SKU Data
+
+**Problem:** All six criteria are in different units — they cannot be directly compared or multiplied.
+
+**Solution:** Normalise all criteria to a 0–1 scale before scoring.
+
+<Aside type="note">
+**For Higher-is-Better criteria** (Monthly Demand, Category Priority, Supplier Reliability, Profit Margin):
+
+`Normalised Score = (xᵢ − min) / (max − min)`
+
+**For Lower-is-Better criteria** (Lead Time, Likelihood of Return):
+
+`Normalised Score = 1 − [(xᵢ − min) / (max − min)]`
+
+This inversion converts "lower is better" into a consistent "higher is better" scale — ensuring all six criteria point in the same direction before being multiplied by their AHP weights.
+</Aside>
+
+![Normalised SKU Data Table — All 25 SKUs with Normalised Scores Across All 6 Criteria](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image7.png)
+
+---
+
+### Calculating the SKU Score
+
+<Aside type="note">
+For each SKU, multiply each normalised criterion score by its AHP criterion weight, then sum across all six criteria:
+
+`SKU Score = Σ (AHP Weightᵢ × Normalised Scoreᵢ)`
+
+A higher combined score indicates a more strategically important SKU overall.
+</Aside>
+
+---
+
+### ABC Classification from SKU Scores
+
+<Steps>
+1. **Sort** all 25 SKUs by combined SKU Score in descending order (highest → most important)
+2. **Calculate cumulative score** and the **cumulative % of total score** for each SKU
+3. **Apply cut-offs** to assign classes:
+   - **Class A** → top SKUs up to ~60% of cumulative score → **7 out of 25 items** → 95% service level
+   - **Class B** → next ~25% of cumulative score → **8 out of 25 items** → 90% service level
+   - **Class C** → remaining ~15% → **10 out of 25 items** → 85% service level
+</Steps>
+
+<Aside type="note">
+**★ The cut-off percentages (60% / 25% / 15%) are not universal fixed values.** They are set by the company based on its own business strategy, warehouse capacity constraints, and service level targets. A different company with different constraints would set different cut-offs.
+</Aside>
+
+---
+
+### Final Classification Results
+
+![Final SKU Scores Table — Sorted by Score with Cumulative % and A/B/C Class Assignment](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image8.png)
+
+![Classification Summary — Count of SKUs per Class and Assigned Service Level](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image9.png)
+
+---
+
+## Module 2 Summary — Supply Chain Segmentation (All 5 Sessions)
+
+| Session | Topic Covered |
+|---|---|
+| **Session 1** | SC challenges — building the case for why segmentation is needed |
+| **Session 2** | 8 reasons for segmentation + 7 types of segmentation |
+| **Session 3** | Functional vs. Innovative products → Efficient vs. Responsive SC → Push / Pull / Hybrid → Push-Pull Boundary |
+| **Session 4** | Analytical product segmentation (CoV quadrant) + Kraljic Matrix |
+| **Session 5** | Inventory segmentation — ABC / FSN / VED / XYZ + Advanced methods + AHP multi-criteria classification case |
+
+<Aside type="tip">
+**★ Exam Tip — Inventory Segmentation:**
+For traditional methods, always state the **criterion used**: Revenue = ABC | Movement = FSN | Criticality = VED | Variability = XYZ
+
+**For AHP questions:** State all six steps clearly and always mention the **CR < 0.1 condition** — it is the threshold that validates the expert's pairwise judgements.
+
+**Key conceptual contribution of this session:** AHP provides a principled, data-driven way to handle multi-criteria, mixed-unit, and mixed-direction factors — combining them into a single consistent classification score. This is what traditional single-criterion methods cannot do.
+</Aside>

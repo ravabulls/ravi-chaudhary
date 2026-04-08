@@ -1,0 +1,280 @@
+---
+title: "Week 2 | Session 4: Analytical Product Segmentation & Kraljic Matrix"
+description: "Covers two data-driven product segmentation frameworks — the Demand Variability vs. Weekly Sales quadrant (using Coefficient of Variation) and the Kraljic Matrix — and links each quadrant to a concrete SC or procurement strategy."
+sidebar:
+  order: 10
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization*
+
+---
+
+## Session Context
+
+<Aside type="note">
+**Previous sessions covered:** SC challenges → segmentation strategies and how to match them to SC type.
+
+**This session:** A deep dive into **Product Segmentation** using two analytical frameworks:
+1. **Demand Variability vs. Weekly Sales Quadrant** — a data-driven scatter-and-classify method
+2. **Kraljic Matrix** — a sourcing and procurement decision framework
+
+Both are practical tools. Expect **case-based exam questions** where you must classify SKUs or components and recommend SC or procurement strategies.
+</Aside>
+
+---
+
+## Part 1 — Analytical Product Segmentation: Demand Variability & Weekly Sales
+
+<Badge text="Data-Driven Segmentation" variant="note" />
+
+### Case Setup
+
+**Company:** Electronic gadgets manufacturer with a large variety of SKUs.
+**Products:** Smartphones, tablets, smart watches, and other gadgets.
+**Operations:** 2 cities — City A and City B; 2 channels — Online and Retail.
+**Data available:** Weekly sales for 20 SKUs over 8 weeks for both cities.
+**Annual revenue:** USD 1 billion.
+
+**Segmentation variables used:**
+
+| Variable | What It Measures |
+|---|---|
+| **Average Weekly Sales** | Volume indicator — how much of a SKU is sold per week on average |
+| **Demand Variability / Order Variability** | Stability indicator — how much demand fluctuates from week to week |
+
+---
+
+### Measuring Demand Variability — Coefficient of Variation (CoV)
+
+<Aside type="note">
+**Demand variability** = fluctuations in orders, including changes in the number and size of orders over time.
+
+**Tool used:** Coefficient of Variation (CoV)
+
+**Why CoV and not just Standard Deviation?**
+
+| Measure | What It Captures | Limitation |
+|---|---|---|
+| **Standard Deviation (σ)** | Absolute variability around the mean — the raw fluctuation level | Cannot be compared across SKUs with different demand levels |
+| **CoV (σ / μ)** | Variability *relative* to average demand — normalised across SKUs | None — this is precisely why it is preferred |
+
+CoV allows fair **comparison across SKUs with very different demand levels** — a major analytical advantage over using σ alone.
+</Aside>
+
+**Formulas:**
+
+<Aside type="note">
+`CoV = σ (Standard Deviation) / μ (Mean)`
+
+`Mean (μ) = Σxᵢ / n`
+→ Sum of all order quantities divided by the number of observations
+
+`Standard Deviation (σ) = √[ Σ(xᵢ − x̄)² / n ]`
+→ where xᵢ = individual order quantity, x̄ = average demand, n = number of observations
+</Aside>
+
+<Aside type="tip">
+**Interpreting CoV:** CoV ≈ 0.1 → very stable demand. CoV ≥ 0.5 → high variability. Always use CoV to compare across SKUs, not raw σ.
+</Aside>
+
+---
+
+### Steps to Calculate & Segment (Excel-Based Workflow)
+
+<Steps>
+1. **Collect data** — gather 8-week weekly demand data for all 20 SKUs for City A and City B separately
+2. **Calculate SKU-wise average demand** — use the `AVERAGEIFS` conditional formula for each city
+3. **Calculate SKU-wise standard deviation** — use the `STDEVIFS` conditional formula for each city
+4. **Compute CoV** — divide σ by μ for each SKU per city: `CoV = σ / μ`
+5. **Plot a scatter** — X-axis: CoV (demand variability); Y-axis: Average weekly sales — one scatter per city
+6. **Combine City A + City B demand** — compute the joint average demand, joint σ, and joint CoV for each SKU
+7. **Plot the combined (joint) scatter** — this represents the **Distribution Centre view** serving both cities
+8. **Build the 4-Quadrant Matrix** — assign an SC strategy to each product group based on quadrant position
+</Steps>
+
+<Aside type="note">
+**★ Key point:** The combined (joint) CoV represents the total demand variability faced by the distribution centre serving both cities simultaneously — this is the operationally relevant view for SC design.
+</Aside>
+
+---
+
+### Raw Weekly Sales Data Table
+
+![Weekly Sales Data Table — 20 SKUs × 8 Weeks for City A and City B](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image1.png)
+
+---
+
+### CoV Calculations — City A
+
+![CoV Calculation Table — City A: Mean, Standard Deviation, and CoV per SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image2.png)
+
+---
+
+### CoV Calculations — City B
+
+![CoV Calculation Table — City B: Mean, Standard Deviation, and CoV per SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image3.png)
+
+---
+
+### Joint (Combined) CoV — Distribution Centre View
+
+![Joint CoV Summary Table — Combined City A + City B for Distribution Centre](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image4.png)
+
+---
+
+### Scatter Plot — City A & City B Combined
+
+![Scatter Plot — CoV vs. Average Weekly Sales for City A (Blue) and City B (Orange) SKUs](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image5.png)
+
+---
+
+### Scatter Plot — Distribution Centre (Joint) View
+
+![Scatter Plot — Joint CoV vs. Average Weekly Sales: Distribution Centre Perspective](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image6.png)
+
+---
+
+### 4-Quadrant Strategy Matrix
+
+The scatter plots are divided into four quadrants based on threshold values for CoV and average weekly sales. Each quadrant maps to a distinct SC strategy.
+
+![4-Quadrant Product Segmentation Matrix — CoV vs. Average Weekly Sales with SC Strategy per Quadrant](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image7.png)
+
+#### Quadrant 1 — Low CoV + High Sales (Top-Left)
+
+<Badge text="Push Strategy" variant="note" />
+
+| Attribute | Detail |
+|---|---|
+| **Product type** | Essential / High-volume products |
+| **Characteristics** | Always in demand, stable, predictable |
+| **Examples** | Standard commodity goods, staple consumer products |
+| **SC type** | Efficient Supply Chain |
+| **Strategy** | **PUSH** — forecast-driven, mass production |
+
+#### Quadrant 2 — High CoV + Low Sales (Bottom-Right)
+
+<Badge text="Pull Strategy" variant="caution" />
+
+| Attribute | Detail |
+|---|---|
+| **Product type** | Customised / Niche products |
+| **Characteristics** | Low demand volume + high unpredictability |
+| **Examples** | Special-edition collectibles, highly customised products |
+| **SC type** | Responsive Supply Chain |
+| **Strategy** | **PULL** — demand-driven, high customisation |
+
+#### Quadrant 3 — High CoV + High Sales (Top-Right)
+
+<Badge text="Hybrid Push-Pull" variant="danger" />
+
+| Attribute | Detail |
+|---|---|
+| **Product type** | Consumer electronics / High-tech products |
+| **Characteristics** | High volume AND high variability — the most complex quadrant to manage |
+| **Examples** | Consumer electronics, tech gadgets with rapid model changes |
+| **Strategy** | **Hybrid Push-Pull** — apply push-pull boundary framework from Session 3; boundary position depends on level of customisation required |
+
+#### Quadrant 4 — Low CoV + Low Sales (Bottom-Left)
+
+<Badge text="Hybrid Push-Pull" variant="note" />
+
+| Attribute | Detail |
+|---|---|
+| **Product type** | Basic / Slow-moving products |
+| **Characteristics** | Low sales + stable demand — neither high priority nor high risk |
+| **Examples** | Non-seasonal apparel basics, basic electronic components |
+| **Strategy** | **Hybrid Push-Pull** — specific combination determined by individual product requirements |
+
+<Aside type="note">
+**★ Quick Recall:**
+- **Q1** (Low CoV, High Sales) = **Push**
+- **Q2** (High CoV, Low Sales) = **Pull**
+- **Q3** (High CoV, High Sales) = **Hybrid Push-Pull**
+- **Q4** (Low CoV, Low Sales) = **Hybrid Push-Pull**
+</Aside>
+
+---
+
+## Part 2 — Kraljic Matrix: Procurement & Sourcing Segmentation
+
+<Badge text="Sourcing Strategy Framework" variant="note" />
+
+<Aside type="note">
+**Framework by:** Peter Kraljic
+
+**Purpose:** Classify the components and inputs required for manufacturing based on two strategic factors, and use that classification to determine the right **supplier relationship strategy and procurement approach** for each component type.
+</Aside>
+
+### Two Axes of the Kraljic Matrix
+
+| Axis | What It Measures | Key Factors |
+|---|---|---|
+| **X-axis — Supply Risk** | How difficult or risky it is to procure the component | Availability of the component; number of suppliers; competitive demand; make-or-buy feasibility; other supply-side risk factors |
+| **Y-axis — Profit Impact** | How significantly the component affects business profitability | Volume required; percentage of total purchase cost; direct or indirect impact on business growth |
+
+---
+
+### 4 Quadrants of the Kraljic Matrix
+
+![Kraljic Matrix — Supply Risk vs. Profit Impact with 4 Procurement Strategy Quadrants](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image8.png)
+
+#### 1. Non-Critical Items — Low Supply Risk + Low Profit Impact
+
+| Attribute | Detail |
+|---|---|
+| **Characteristics** | Highly standardised; abundant supply — many suppliers available; easy to manage |
+| **Strategy** | **Streamline procurement** — reduce administrative effort, automate ordering where possible |
+
+#### 2. Leverage Items — Low Supply Risk + High Profit Impact
+
+| Attribute | Detail |
+|---|---|
+| **Characteristics** | Abundant supply available but **high impact on profit**; company holds strong purchasing power |
+| **Strategy** | **Exploit full purchasing power** — competitive bidding, aggressive price negotiation, good pricing strategy |
+
+#### 3. Strategic Items — High Supply Risk + High Profit Impact
+
+| Attribute | Detail |
+|---|---|
+| **Characteristics** | Most critical category — **high risk AND high profit impact**; affects the business on a long-term basis; cannot switch suppliers easily |
+| **Strategy** | **Long-term supplier relationships + deep collaboration** — partnership approach, joint development, strategic alliances; focus on supply continuity |
+
+#### 4. Bottleneck Items — High Supply Risk + Low Profit Impact
+
+| Attribute | Detail |
+|---|---|
+| **Characteristics** | High supply risk but minimal direct profit impact; very **low control over suppliers**; unavailability can still **disrupt operations** even when profit impact is low |
+| **Strategy** | **Ensure availability** through safety stock and alternate sourcing; monitor closely |
+
+---
+
+### Kraljic Matrix — Quick Reference
+
+| Quadrant | Supply Risk | Profit Impact | Procurement Strategy |
+|---|---|---|---|
+| **Non-Critical** | Low | Low | Streamline and automate procurement |
+| **Leverage** | Low | High | Negotiate hard; competitive bidding |
+| **Strategic** | High | High | Long-term partnerships; deep collaboration |
+| **Bottleneck** | High | Low | Secure supply; hold safety stock; monitor closely |
+
+<Aside type="tip">
+**★ Exam Tip — Kraljic Matrix:** Classify by Supply Risk (X-axis) and Profit Impact (Y-axis). Four quadrants = Non-Critical, Leverage, Strategic, Bottleneck. Each requires a fundamentally different supplier strategy.
+
+**Watch out for Bottleneck items:** Low profit impact does not mean low priority — the disruption risk to operations makes them critical to manage actively despite their limited financial significance.
+</Aside>
+
+---
+
+## Session Summary — Two Analytical Tools
+
+| Tool | Axes | Output | Strategy Assigned |
+|---|---|---|---|
+| **Demand Variability vs. Weekly Sales Quadrant** | X: CoV (variability), Y: Avg weekly sales | 4-quadrant product classification | Q1 = Push \| Q2 = Pull \| Q3 & Q4 = Hybrid Push-Pull |
+| **Kraljic Matrix** | X: Supply risk, Y: Profit impact | 4-quadrant component classification | Non-Critical = Streamline \| Leverage = Negotiate \| Strategic = Partner \| Bottleneck = Secure |
+
+<Aside type="note">
+Both frameworks are **data-driven and directly actionable** — they take measurable inputs (sales data, supply risk, profit contribution) and produce clear strategic recommendations. In exams, you will likely be given a dataset or scenario and asked to classify items and justify the recommended strategy using one or both frameworks.
+</Aside>
