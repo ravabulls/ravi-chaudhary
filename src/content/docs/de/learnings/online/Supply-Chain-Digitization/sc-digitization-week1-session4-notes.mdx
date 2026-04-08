@@ -1,0 +1,228 @@
+---
+title: "Woche 1 | Sitzung 4: SC-Prozesse — Planung, Beschaffung und Fertigung"
+description: "Detaillierter Durchgang der ersten drei Lieferkettenprozesse — Planung und Prognose, Beschaffung und Einkauf sowie Produktion und Fertigung — einschließlich Definitionen, KPIs und Prognosemethoden."
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply-Chain-Digitalisierung*
+
+---
+
+## SC-Prozesse — Überblick
+
+<Aside type="note">
+SC-Prozesse folgen einer **festen Reihenfolge** — dieselbe Reihenfolge gilt für die meisten Lieferketten, mit kleinen branchenspezifischen Unterschieden. Verschiedene Stakeholder übernehmen verschiedene Prozesse, und **KPIs** sind für jeden definiert, um Leistung regelmäßig zu überwachen.
+</Aside>
+
+Die **6 wichtigsten SC-Prozesse** in Reihenfolge:
+
+<Steps>
+1. Planung und Prognose
+2. Beschaffung und Einkauf
+3. Produktion und Fertigung
+4. Bestandsmanagement
+5. Distribution und Logistik
+6. Kundenservice
+</Steps>
+
+<Aside type="caution">
+**Sitzungsumfang:** Sitzung 4 behandelt nur **Prozesse 1–3**. Prozesse 4–6 (Bestandsmanagement, Distribution & Logistik und Kundenservice) werden in Sitzung 5 behandelt.
+</Aside>
+
+---
+
+## Prozess 1 — Planung und Prognose
+
+<Badge text="Prozess 1 von 6" variant="note" />
+
+### Prognose vs. Planung — Der wichtigste Unterschied
+
+<Aside type="note">
+**Prognose:** Vorhersage der zukünftigen Nachfrage, zukünftiger Verkäufe, Marketingbedarf und Ressourcenanforderungen.
+
+**Planung:** Entscheiden, *wie Ressourcen verwaltet werden* — Produktion, Lagerbestand, Kapazität und Finanzen — um die vorhergesagte Nachfrage zu erfüllen.
+
+**Beziehung:** Prognose wird immer zuerst erstellt → ihr Ergebnis fließt direkt in die Planung ein.
+</Aside>
+
+### Was Planung abdeckt
+
+| Planungsbereich | Beschreibung |
+|---|---|
+| **Eigen- oder Fremdfertigung** | Komponenten intern produzieren oder von einem Lieferanten kaufen/outsourcen? |
+| **Einrichtungsrollenplanung** | Welche Menge in jedem Werk fertigen, in jedem Lager lagern, in jedem Einzelhandel verkaufen |
+| **SC-Netzwerkstrukturierung** | Wie Knoten (Werke, Lager, Einzelhändler) verbunden sind und welche Rolle jeder spielt |
+| **Produktivitätsüberwachung** | Leistung aller Einrichtungen und Prozesse mithilfe von KPIs verfolgen |
+
+---
+
+### Prognosemethoden — Rechenbeispiel
+
+<Badge text="Prüfungsberechnung" variant="tip" />
+
+**Kontext:** Ein Online-Sportartikel-Einzelhändler muss den Fahrradabsatz für August 2023 prognostizieren.
+
+**Historische Daten:**
+
+| Monat | Verkaufte Einheiten |
+|---|---|
+| Mai 2023 | 200 |
+| Juni 2023 | 180 |
+| Juli 2023 | 150 |
+
+**Methode:** 3-Monats-Einfacher gleitender Durchschnitt
+
+<Aside type="note">
+**Formel:**
+
+`Prognose = (Monat 1 + Monat 2 + Monat 3) ÷ 3`
+
+**Berechnung:**
+
+`(200 + 180 + 150) ÷ 3 = 530 ÷ 3 ≈ 176,67 → gerundet auf **177 Einheiten**`
+
+Wenn 4 Monate Daten verfügbar sind, verwenden Sie einen 4-Monats-gleitenden Durchschnitt — und so weiter.
+</Aside>
+
+**Geschäftswert dieser Prognose:** Der Einzelhändler kann nun Lagerbestandsniveaus, Personalplanung und Marketingausgaben für die Hauptsaison auf Basis einer evidenzgestützten Nachfrageschätzung planen.
+
+<Aside type="note">
+**Prognosefehler:** Die Differenz zwischen geschätzter und tatsächlicher Nachfrage. Wird verwendet, um die Prognosegenauigkeit über die Zeit zu messen.
+</Aside>
+
+---
+
+### KPIs für Planung und Prognose
+
+**Prognosegenauigkeit:**
+
+| KPI | Vollständiger Name | Was er misst |
+|---|---|---|
+| **MAPE** | Mean Absolute Percentage Error | Durchschnittliche prozentuale Abweichung zwischen Prognose und Istwert — *niedrigerer MAPE = höhere Prognosegenauigkeit* |
+
+**Prognosefehler-Maße:**
+
+| KPI | Vollständiger Name | Was er anzeigt |
+|---|---|---|
+| **MAD** | Mean Absolute Deviation | Durchschnittliche Größe der Prognosefehler |
+| **MSE** | Mean Square Error | Durchschnitt der quadrierten Fehler — bestraft große Abweichungen stärker |
+| **RMSE** | Root Mean Square Error | Quadratwurzel des MSE — gleiche Einheiten wie Originaldaten, leichter zu interpretieren |
+| **Bias** | — | Zeigt an, ob das Modell systematisch *über-* oder *unterprognostiziert* |
+
+**KI/ML-Modellleistung (bei ML-basierter Prognose):**
+
+| KPI | Was er misst |
+|---|---|
+| **R² (R-Quadrat)** | Anteil der Variation in den Istdaten, der durch das Modell erklärt wird — *höheres R² = bessere Modellanpassung* |
+
+---
+
+## Prozess 2 — Beschaffung und Einkauf
+
+<Badge text="Prozess 2 von 6" variant="note" />
+
+### Beschaffung (Sourcing)
+
+<Aside type="note">
+**Definition:** Identifizierung, Bewertung, Auswahl und Verwaltung von Lieferanten zur Erfüllung der Unternehmensanforderungen.
+</Aside>
+
+| Ziel | Beschreibung |
+|---|---|
+| **Kostensenkung** | Immer das Hauptziel jeder Beschaffungsaktivität |
+| **Diversifizierung** | Abhängigkeit von einem einzigen Lieferanten vermeiden, um Versorgungsrisiken zu reduzieren |
+| **Qualitätssicherung** | Sicherstellen, dass alle Anbieter und Lieferanten kontinuierlich Qualitätsstandards erfüllen |
+| **Innovationsunterstützung** | Lieferanten werden zunehmend erwartet, neue Produktanforderungen zu unterstützen |
+
+---
+
+### Einkauf (Procurement)
+
+<Aside type="note">
+**Definition:** Der End-to-End-Prozess der Beschaffung von Waren, Dienstleistungen oder Arbeiten aus externen Quellen — von der Lieferantenidentifikation bis zur endgültigen Zahlung.
+</Aside>
+
+| Ziel | Beschreibung |
+|---|---|
+| **Kostenkontrolle** | Kosten über den gesamten Prozess von der Beschaffung bis zur Zahlung managen |
+| **Pünktlicher Fluss** | Waren und Dienstleistungen pünktlich und effizient verfolgen und sicherstellen |
+| **Risikomanagement** | Lieferantenbeziehungen proaktiv managen, um Versorgungsunterbrechungen zu verhindern |
+| **Qualität und Lieferung** | Sicherstellen, dass Produktqualität aufrechterhalten und Lieferverpflichtungen eingehalten werden |
+| **Compliance** | Sicherstellen, dass alle Einkaufsaktivitäten relevante Vorschriften einhalten |
+
+---
+
+### Beschaffung vs. Einkauf — Der wichtigste Unterschied
+
+<Aside type="note">
+**Beschaffung (Sourcing) ist eine Teilmenge des Einkaufs (Procurement).**
+
+Sourcing identifiziert und wählt Lieferanten aus → dies löst den umfassenderen Beschaffungsprozess aus, der bis zur Zahlung reicht.
+</Aside>
+
+---
+
+### KPIs für Beschaffung und Einkauf
+
+| Bereich | KPI | Was er verfolgt |
+|---|---|---|
+| **Sourcing** | Lieferantenleistungsbewertung | Gesamtlieferantenleistung — ein zusammengesetztes Maß über mehrere Kriterien |
+| **Sourcing** | Vorlaufzeit | Zeit von der Bestellaufgabe bis zum Erhalt der Lieferung |
+| **Procurement** | Bestellzyklus-Dauer | Gesamtzeit für einen vollständigen Bestellzyklus |
+| **Procurement** | Bestellgenauigkeit | Prozentsatz der fehlerfrei aufgegebenen Bestellungen |
+| **Procurement** | Vertrags-/Zahlungs-Compliance | Einhaltung vereinbarter Zahlungsbedingungen und Vertragsbedingungen |
+
+<Aside type="tip">
+**Anwendung der Konzepte:** Die **Kraljic-Matrix** — in Sitzung 3 im Beschaffungstreiber referenziert — klassifiziert eingekaufte Artikel nach Versorgungsrisiko und Gewinnauswirkung und bestimmt, welche Lieferanten als strategische Partner entwickelt werden sollen.
+</Aside>
+
+---
+
+## Prozess 3 — Produktion und Fertigung
+
+<Badge text="Prozess 3 von 6" variant="note" />
+
+<Aside type="note">
+Moderne Produktion ist eine **datenreiche Umgebung** — neue Technologien erfassen Punkt-zu-Punkt-Daten und verfolgen den Produktionsfortschritt in Echtzeit. Die generierten großen Datenmengen müssen aktiv analysiert werden, um Betriebsentscheidungen zu verbessern.
+</Aside>
+
+### Was Datenanalytik in der Produktion ermöglicht
+
+| Anwendung | Beschreibung |
+|---|---|
+| **Mitarbeiter- und Verkaufsleistungsverfolgung** | Daten stellen sicher, dass Produktionsziele erreicht werden; ermöglicht dynamische Anpassung von Zeitplänen |
+| **Prädiktive Wartung** | Maschinenausfälle vor ihrem Auftreten vorhersagen → ungeplante Ausfallzeiten reduzieren |
+| **Qualitätskontrolle (SPC)** | Statistische Prozesskontrolle — Produktqualität während der Produktion überwachen und aufrechterhalten |
+| **Ursachenanalyse** | ML-Modelle identifizieren die Ursachen von Defekten oder Produktionsproblemen an ihrer Quelle |
+| **Prozessüberwachung** | Kontinuierliche Echtzeit-Verfolgung von Produktionsparametern über die gesamte Linie |
+
+### Wichtige KPIs für Produktion und Fertigung
+
+| KPI | Was er misst |
+|---|---|
+| **OEE (Overall Equipment Effectiveness)** | Wie gut Ausrüstung genutzt wird: Verfügbarkeit × Leistung × Qualität |
+| **Zykluszeit** | Zeit für die Fertigstellung einer Produktionseinheit |
+| **Durchsatz** | Anzahl der in einem bestimmten Zeitraum produzierten Einheiten |
+| **Kapazitätsauslastung** | Prozentsatz der tatsächlich genutzten Gesamtproduktionskapazität |
+
+---
+
+## Schnellreferenz — Alle drei Prozesse (Sitzung 4)
+
+| Prozess | Kernaktivität | Wichtige KPIs | Tools / Methoden |
+|---|---|---|---|
+| **Planung und Prognose** | Nachfrage vorhersagen; Ressourcen, Kapazität, Bestand und Netzwerkstruktur planen | MAPE, MAD, MSE, RMSE, Bias, R² | Gleitender Durchschnitt, Regression, KI/ML |
+| **Beschaffung und Einkauf** | Lieferanten identifizieren und auswählen; Waren end-to-end bis zur Zahlung beschaffen | Lieferantenbewertung, Vorlaufzeit, Bestellzyklus-Dauer, Bestellgenauigkeit, Compliance | Lieferantenbewertung, Kraljic-Matrix (zukünftige Sitzung) |
+| **Produktion und Fertigung** | Rohstoffe in Fertigwaren umwandeln; Produktionsleistung mit Daten überwachen | OEE, Zykluszeit, Durchsatz, Kapazitätsauslastung | SPC, ML, Prädiktive Wartung |
+
+<Aside type="tip">
+**Prüfungsansatz:** *"Erläutern Sie die wichtigsten SC-Prozesse und ihre KPIs."*
+
+Antwortrahmen:
+1. Alle **6 Prozesse in Reihenfolge** aufzählen (Planung → Beschaffung → Produktion → Bestand → Distribution → Kundenservice)
+2. Für jeden: Definieren, Ziel angeben, relevante KPIs nennen
+3. Für Prognosen speziell — bereit sein, einen **gleitenden Durchschnitt zu berechnen** und **MAPE** und **Bias** im Kontext zu interpretieren
+</Aside>

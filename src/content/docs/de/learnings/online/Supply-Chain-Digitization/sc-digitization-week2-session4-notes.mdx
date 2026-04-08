@@ -1,0 +1,276 @@
+---
+title: "Woche 2 | Sitzung 4: Analytische Produktsegmentierung und Kraljic-Matrix"
+description: "Behandelt zwei datengestützte Produktsegmentierungsrahmen — das Nachfragevariabilität-vs-Wochenumsatz-Quadrant (unter Verwendung des Variationskoeffizienten) und die Kraljic-Matrix — und verknüpft jedes Quadrant mit einer konkreten SC- oder Beschaffungsstrategie."
+sidebar:
+  order: 10
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply-Chain-Digitalisierung*
+
+---
+
+## Sitzungskontext
+
+<Aside type="note">
+**Vorherige Sitzungen behandelten:** SC-Herausforderungen → Segmentierungsstrategien und deren Zuordnung zum SC-Typ.
+
+**Diese Sitzung:** Eine vertiefte Analyse der **Produktsegmentierung** mit zwei analytischen Rahmen:
+1. **Nachfragevariabilität vs. Wochenumsatz-Quadrant** — eine datengestützte Klassifizierungsmethode
+2. **Kraljic-Matrix** — ein Beschaffungs- und Einkaufsentscheidungsrahmen
+
+Beide sind praktische Tools. Prüfungsfragen werden wahrscheinlich **fallbasiert** sein.
+</Aside>
+
+---
+
+## Teil 1 — Analytische Produktsegmentierung: Nachfragevariabilität und Wochenumsatz
+
+<Badge text="Datengestützte Segmentierung" variant="note" />
+
+### Fallaufbau
+
+**Unternehmen:** Hersteller von Elektronikgeräten mit einer großen Vielfalt an SKUs.
+**Produkte:** Smartphones, Tablets, Smartwatches und andere Gadgets.
+**Betrieb:** 2 Städte — Stadt A und Stadt B; 2 Kanäle — Online und Einzelhandel.
+**Verfügbare Daten:** Wochenumsatz für 20 SKUs über 8 Wochen für beide Städte.
+**Jahresumsatz:** 1 Mrd. USD.
+
+**Verwendete Segmentierungsvariablen:**
+
+| Variable | Was sie misst |
+|---|---|
+| **Durchschnittlicher Wochenumsatz** | Volumenindikator — wie viele eines SKUs pro Woche durchschnittlich verkauft werden |
+| **Nachfragevariabilität / Bestellvariabilität** | Stabilitätsindikator — wie stark die Nachfrage von Woche zu Woche schwankt |
+
+---
+
+### Nachfragevariabilität messen — Variationskoeffizient (VK)
+
+<Aside type="note">
+**Nachfragevariabilität** = Schwankungen in Bestellungen, einschließlich Änderungen in Anzahl und Größe der Bestellungen über die Zeit.
+
+**Verwendetes Tool:** Variationskoeffizient (VK)
+
+**Warum VK und nicht nur Standardabweichung?**
+
+| Maß | Was es erfasst | Einschränkung |
+|---|---|---|
+| **Standardabweichung (σ)** | Absolute Variabilität um den Mittelwert | Kann nicht zwischen SKUs mit verschiedenen Nachfrageniveaus verglichen werden |
+| **VK (σ / μ)** | Variabilität *relativ* zur Durchschnittsnachfrage — normiert über SKUs | Keine — genau deshalb wird er bevorzugt |
+
+VK ermöglicht fairen **Vergleich über SKUs mit sehr unterschiedlichen Nachfrageniveaus** — ein großer analytischer Vorteil.
+</Aside>
+
+**Formeln:**
+
+<Aside type="note">
+`VK = σ (Standardabweichung) / μ (Mittelwert)`
+
+`Mittelwert (μ) = Σxᵢ / n`
+→ Summe aller Bestellmengen geteilt durch die Anzahl der Beobachtungen
+
+`Standardabweichung (σ) = √[ Σ(xᵢ − x̄)² / n ]`
+→ wobei xᵢ = einzelne Bestellmenge, x̄ = Durchschnittsnachfrage, n = Anzahl der Beobachtungen
+</Aside>
+
+<Aside type="tip">
+**VK interpretieren:** VK ≈ 0,1 → sehr stabile Nachfrage. VK ≥ 0,5 → hohe Variabilität. Immer VK verwenden, um SKUs zu vergleichen, nicht rohe σ.
+</Aside>
+
+---
+
+### Schritte zur Berechnung und Segmentierung (Excel-basierter Workflow)
+
+<Steps>
+1. **Daten erfassen** — 8-Wochen-Wochennachfragedaten für alle 20 SKUs für Stadt A und Stadt B separat sammeln
+2. **SKU-weisen Durchschnittsbedarf berechnen** — bedingte `AVERAGEIFS`-Formel für jede Stadt verwenden
+3. **SKU-weise Standardabweichung berechnen** — bedingte `STDEVIFS`-Formel für jede Stadt verwenden
+4. **VK berechnen** — σ durch μ für jede SKU je Stadt dividieren: `VK = σ / μ`
+5. **Streudiagramm erstellen** — X-Achse: VK (Nachfragevariabilität); Y-Achse: Durchschnittlicher Wochenumsatz
+6. **Stadt-A- + Stadt-B-Nachfrage kombinieren** — gemeinsamen Durchschnittsbedarf, gemeinsames σ und gemeinsamen VK für jede SKU berechnen
+7. **Kombiniertes (gemeinsames) Streudiagramm erstellen** — repräsentiert die **Verteilzentrumsperspektive**
+8. **4-Quadranten-Matrix erstellen** — jeder Produktgruppe je nach Quadrantposition eine SC-Strategie zuweisen
+</Steps>
+
+---
+
+### Rohe Wochenumsatzdatentabelle
+
+![Wochenumsatzdatentabelle — 20 SKUs × 8 Wochen für Stadt A und Stadt B](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image1.png)
+
+---
+
+### VK-Berechnungen — Stadt A
+
+![VK-Berechnungstabelle — Stadt A: Mittelwert, Standardabweichung und VK je SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image2.png)
+
+---
+
+### VK-Berechnungen — Stadt B
+
+![VK-Berechnungstabelle — Stadt B: Mittelwert, Standardabweichung und VK je SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image3.png)
+
+---
+
+### Gemeinsamer (Kombinierter) VK — Verteilzentrumsperspektive
+
+![Gemeinsame VK-Zusammenfassungstabelle — Kombiniert Stadt A + Stadt B für Verteilzentrum](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image4.png)
+
+---
+
+### Streudiagramm — Stadt A und Stadt B kombiniert
+
+![Streudiagramm — VK vs. Durchschnittlicher Wochenumsatz für Stadt A (Blau) und Stadt B (Orange) SKUs](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image5.png)
+
+---
+
+### Streudiagramm — Verteilzentrum (Gemeinsam)
+
+![Streudiagramm — Gemeinsamer VK vs. Durchschnittlicher Wochenumsatz: Verteilzentrumsperspektive](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image6.png)
+
+---
+
+### 4-Quadranten-Strategiematrix
+
+Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnittlichen Wochenumsatz in vier Quadranten unterteilt. Jeder Quadrant ordnet einer bestimmten SC-Strategie zu.
+
+![4-Quadranten-Produktsegmentierungsmatrix — VK vs. Durchschnittlicher Wochenumsatz mit SC-Strategie je Quadrant](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image7.png)
+
+#### Quadrant 1 — Niedriger VK + Hoher Umsatz (Oben-Links)
+
+<Badge text="Push-Strategie" variant="note" />
+
+| Merkmal | Detail |
+|---|---|
+| **Produkttyp** | Wesentliche / Hochvolumige Produkte |
+| **Merkmale** | Immer nachgefragt, stabil, vorhersagbar |
+| **Beispiele** | Standardgüter, Alltagskonsumgüter |
+| **SC-Typ** | Effiziente Lieferkette |
+| **Strategie** | **PUSH** — prognosegesteuert, Massenproduktion |
+
+#### Quadrant 2 — Hoher VK + Niedriger Umsatz (Unten-Rechts)
+
+<Badge text="Pull-Strategie" variant="caution" />
+
+| Merkmal | Detail |
+|---|---|
+| **Produkttyp** | Maßgefertigte / Nischenprodukte |
+| **Merkmale** | Geringes Nachfragevolumen + hohe Unvorhersagbarkeit |
+| **Beispiele** | Sondereditionen, hochgradig maßgefertigte Produkte |
+| **SC-Typ** | Reaktionsfähige Lieferkette |
+| **Strategie** | **PULL** — nachfragegesteuert, hohe Anpassung |
+
+#### Quadrant 3 — Hoher VK + Hoher Umsatz (Oben-Rechts)
+
+<Badge text="Hybrid Push-Pull" variant="danger" />
+
+| Merkmal | Detail |
+|---|---|
+| **Produkttyp** | Unterhaltungselektronik / High-Tech-Produkte |
+| **Merkmale** | Hohes Volumen UND hohe Variabilität — der komplexeste Quadrant |
+| **Beispiele** | Unterhaltungselektronik, Tech-Gadgets mit schnellen Modellwechseln |
+| **Strategie** | **Hybrid Push-Pull** — Push-Pull-Grenzrahmen aus Sitzung 3 anwenden |
+
+#### Quadrant 4 — Niedriger VK + Niedriger Umsatz (Unten-Links)
+
+<Badge text="Hybrid Push-Pull" variant="note" />
+
+| Merkmal | Detail |
+|---|---|
+| **Produkttyp** | Basis- / Langsam drehende Produkte |
+| **Merkmale** | Niedriger Umsatz + stabile Nachfrage |
+| **Beispiele** | Saisonunabhängige Bekleidungsbasics, einfache Elektronikkomponenten |
+| **Strategie** | **Hybrid Push-Pull** — spezifische Kombination je Produktanforderung |
+
+<Aside type="note">
+**★ Schnellerinnerung:**
+- **Q1** (Niedriger VK, Hoher Umsatz) = **Push**
+- **Q2** (Hoher VK, Niedriger Umsatz) = **Pull**
+- **Q3** (Hoher VK, Hoher Umsatz) = **Hybrid Push-Pull**
+- **Q4** (Niedriger VK, Niedriger Umsatz) = **Hybrid Push-Pull**
+</Aside>
+
+---
+
+## Teil 2 — Kraljic-Matrix: Beschaffungs- und Einkaufssegmentierung
+
+<Badge text="Beschaffungsstrategierahmen" variant="note" />
+
+<Aside type="note">
+**Rahmen von:** Peter Kraljic
+
+**Zweck:** Komponenten und Eingaben für die Fertigung basierend auf zwei strategischen Faktoren klassifizieren und diese Klassifikation nutzen, um die richtige **Lieferantenbeziehungsstrategie** für jeden Komponententyp zu bestimmen.
+</Aside>
+
+### Zwei Achsen der Kraljic-Matrix
+
+| Achse | Was sie misst | Wichtige Faktoren |
+|---|---|---|
+| **X-Achse — Versorgungsrisiko** | Wie schwierig oder riskant es ist, die Komponente zu beschaffen | Verfügbarkeit der Komponente; Anzahl der Lieferanten; Wettbewerbsnachfrage; Make-or-Buy-Machbarkeit; andere versorgungsseitige Risikofaktoren |
+| **Y-Achse — Gewinnauswirkung** | Wie stark die Komponente die Geschäftsrentabilität beeinflusst | Erforderliches Volumen; Prozentsatz der Gesamteinkaufskosten; direkte oder indirekte Auswirkung auf das Geschäftswachstum |
+
+---
+
+### 4 Quadranten der Kraljic-Matrix
+
+![Kraljic-Matrix — Versorgungsrisiko vs. Gewinnauswirkung mit 4 Beschaffungsstrategien](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image8.png)
+
+#### 1. Unkritische Artikel — Geringes Versorgungsrisiko + Geringe Gewinnauswirkung
+
+| Merkmal | Detail |
+|---|---|
+| **Merkmale** | Hochgradig standardisiert; reichlich Angebot — viele Lieferanten verfügbar; einfach zu managen |
+| **Strategie** | **Beschaffung rationalisieren** — Verwaltungsaufwand reduzieren, Bestellung automatisieren wo möglich |
+
+#### 2. Hebel-Artikel — Geringes Versorgungsrisiko + Hohe Gewinnauswirkung
+
+| Merkmal | Detail |
+|---|---|
+| **Merkmale** | Reichlich Angebot verfügbar aber **hohe Gewinnauswirkung**; Unternehmen hat starke Einkaufsmacht |
+| **Strategie** | **Volle Einkaufsmacht nutzen** — Wettbewerbsgebote, aggressive Preisverhandlungen |
+
+#### 3. Strategische Artikel — Hohes Versorgungsrisiko + Hohe Gewinnauswirkung
+
+| Merkmal | Detail |
+|---|---|
+| **Merkmale** | Kritischste Kategorie — **hohes Risiko UND hohe Gewinnauswirkung**; langfristige Auswirkung; Lieferantenwechsel schwierig |
+| **Strategie** | **Langfristige Lieferantenbeziehungen + tiefe Zusammenarbeit** — Partnerschaftsansatz, gemeinsame Entwicklung, strategische Allianzen; Fokus auf Versorgungskontinuität |
+
+#### 4. Engpass-Artikel — Hohes Versorgungsrisiko + Geringe Gewinnauswirkung
+
+| Merkmal | Detail |
+|---|---|
+| **Merkmale** | Hohes Versorgungsrisiko aber minimale direkte Gewinnauswirkung; sehr **geringe Kontrolle über Lieferanten**; Nichtverfügbarkeit kann trotzdem **den Betrieb stören** |
+| **Strategie** | **Verfügbarkeit sicherstellen** durch Sicherheitsbestand und alternative Beschaffung; eng überwachen |
+
+---
+
+### Kraljic-Matrix — Schnellreferenz
+
+| Quadrant | Versorgungsrisiko | Gewinnauswirkung | Beschaffungsstrategie |
+|---|---|---|---|
+| **Unkritisch** | Niedrig | Niedrig | Rationalisieren und automatisieren |
+| **Hebel** | Niedrig | Hoch | Hart verhandeln; Wettbewerbsgebote |
+| **Strategisch** | Hoch | Hoch | Langfristige Partnerschaften; tiefe Zusammenarbeit |
+| **Engpass** | Hoch | Niedrig | Versorgung sichern; Sicherheitsbestand halten; eng überwachen |
+
+<Aside type="tip">
+**★ Prüfungstipp — Kraljic-Matrix:** Nach Versorgungsrisiko (X-Achse) und Gewinnauswirkung (Y-Achse) klassifizieren. Vier Quadranten = Unkritisch, Hebel, Strategisch, Engpass. Jeder erfordert eine grundlegend andere Lieferantenstrategie.
+
+**Achtung bei Engpass-Artikeln:** Geringe Gewinnauswirkung bedeutet nicht geringe Priorität — das Betriebsunterbrechungsrisiko macht sie trotz ihrer begrenzten finanziellen Bedeutung wichtig zu managen.
+</Aside>
+
+---
+
+## Sitzungszusammenfassung — Zwei analytische Tools
+
+| Tool | Achsen | Ergebnis | Zugeordnete Strategie |
+|---|---|---|---|
+| **Nachfragevariabilität vs. Wochenumsatz-Quadrant** | X: VK (Variabilität), Y: Durchschn. Wochenumsatz | 4-Quadranten-Produktklassifikation | Q1 = Push \| Q2 = Pull \| Q3 & Q4 = Hybrid Push-Pull |
+| **Kraljic-Matrix** | X: Versorgungsrisiko, Y: Gewinnauswirkung | 4-Quadranten-Komponentenklassifikation | Unkritisch = Rationalisieren \| Hebel = Verhandeln \| Strategisch = Partnerschaft \| Engpass = Sichern |
+
+<Aside type="note">
+Beide Rahmen sind **datengestützt und direkt umsetzbar** — sie nehmen messbare Eingaben (Umsatzdaten, Versorgungsrisiko, Gewinnbeitrag) und produzieren klare strategische Empfehlungen. In Prüfungen werden Sie wahrscheinlich einen Datensatz oder ein Szenario erhalten und gebeten, Artikel zu klassifizieren und die empfohlene Strategie zu begründen.
+</Aside>

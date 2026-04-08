@@ -1,0 +1,391 @@
+---
+title: "Woche 2 | Sitzung 5: Bestandssegmentierung — Methoden, Fortgeschrittene Ansätze und AHP-Fallstudie"
+description: "Behandelt die vier traditionellen Bestandssegmentierungsmethoden (ABC, FSN, VED, XYZ), fünf fortgeschrittene Mehrkriterienmethoden und eine vollständige AHP-basierte Mehrkriterienfallstudie zur Klassifizierung von 25 SKUs für einen E-Commerce-Händler — die letzte Sitzung von Modul 2."
+sidebar:
+  order: 11
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply-Chain-Digitalisierung*
+
+---
+
+## Rückblick und Sitzungskontext
+
+<Aside type="note">
+**Sitzung 4 behandelte:** Analytische Produktsegmentierung mit dem Nachfragevariabilität-vs-Wochenumsatz-Quadrant (VK-basiert) → 4-Quadranten-Matrix → Push/Pull/Hybrid-Strategien und die Kraljic-Matrix für die Beschaffung.
+
+**Diese Sitzung:** Bestandssegmentierung — was sie ist, die vier beliebten Einzelkriterien-Methoden, fünf fortgeschrittene Mehrkriterien-Ansätze und eine vollständige AHP-basierte Fallstudie.
+
+**Dies ist die letzte Sitzung von Modul 2 — Supply-Chain-Segmentierung.**
+</Aside>
+
+---
+
+## Was ist Bestandssegmentierung?
+
+<Aside type="note">
+**Definition:** Den Bestand eines Unternehmens basierend auf definierten Kriterien in verschiedene Gruppen kategorisieren, damit jede Gruppe eine maßgeschneiderte Managementstrategie erhält.
+</Aside>
+
+**Hauptvorteile:**
+
+| Vorteil | Beschreibung |
+|---|---|
+| **Kostenoptimierung** | SC-Ressourcen genau dort zuweisen, wo sie den größten Wert generieren |
+| **Verbesserte Serviceniveaus** | Das richtige Serviceniveau je SKU-Kategorie festlegen und aufrechterhalten |
+| **Richtiges Lagersystem** | Geeignete Lagerinfrastruktur je Bestandstyp zuweisen |
+| **Bessere Kommissionierstrategie** | Lager- und Verteilzentrumsprozesse basierend auf Bewegungshäufigkeit und Artikelmerkmalen gestalten |
+| **Operative Leistung** | Gesamtverbesserung bei Erfüllung, Nachschub und Bestandsgenauigkeit |
+
+---
+
+## Beliebte Bestandssegmentierungsmethoden — 4 Traditionelle Ansätze
+
+<Aside type="note">
+Alle vier traditionellen Methoden sind **Einzelkriterien**-Ansätze. Obwohl jede in ihrem Bereich wirkungsvoll ist, erfordern reale Geschäftsentscheidungen mehrere Kriterien gleichzeitig. Einzelkriterien-Methoden riskieren Vereinfachung — weshalb fortgeschrittene Mehrkriterien-Methoden existieren.
+</Aside>
+
+### 1. ABC-Analyse — Umsatzbasiert
+
+<Badge text="Kriterium: Umsatzbeitrag" variant="note" />
+
+Klassifikation basierend auf dem **Umsatzbeitrag** jedes Bestandsartikels — das Pareto-Prinzip angewendet auf den Bestand.
+
+| Segment | Anteil der Produkte | Anteil am Umsatz | Managementpriorität |
+|---|---|---|---|
+| **A** | ~20 % | ~80 % | Höchste — eng überwacht, häufige Überprüfung |
+| **B** | ~30 % | ~15 % | Mittel — regelmäßige Überprüfung |
+| **C** | ~50 % | ~5 % | Niedrigste — vereinfachtes, automatisiertes Management |
+
+<Aside type="note">
+**★ ABC = Pareto-Prinzip angewendet auf den Bestand.** 20 % der SKUs generieren 80 % des Umsatzes — Managementaufwand entsprechend fokussieren.
+</Aside>
+
+---
+
+### 2. FSN-Analyse — Bewegungsbasiert
+
+<Badge text="Kriterium: Bewegungsgeschwindigkeit" variant="note" />
+
+Klassifikation basierend auf der **Verbrauchsrate und Bewegungsgeschwindigkeit** durch das Lager.
+
+| Segment | Anteil der Artikel | Bewegungsverhalten | Durchschn. kumulativer Verbleib |
+|---|---|---|---|
+| **F — Schnelldrehend** | ~10 % | Sehr kurzer Verbleib im Lager; schnell verbraucht | Weniger als 10 % des durchschn. kumulativen Verbleibs |
+| **S — Langsamdrehend** | ~30 % | Moderate Bewegung; verbleibt länger im Lager | ~20 % des durchschn. kumulativen Verbleibs |
+| **N — Nicht-bewegend** | ~50 % | Stagnierender Bestand — kein Verbrauch für längere Zeit; Lagerumschlagsquotient < 1 | Hoher kumulativer Verbleib |
+
+<Aside type="tip">
+**Anwendung der Konzepte:** Nicht-bewegende (N) Artikel sind eine direkte Haltekostenhaftung. Sie zu identifizieren ermöglicht dem Unternehmen zu entscheiden, ob liquidiert, rabattiert oder eingestellt werden soll — anstatt weiterhin Lagerkosten für Bestand zu zahlen, der sich nie bewegt.
+</Aside>
+
+---
+
+### 3. VED-Analyse — Kritizitätsbasiert
+
+<Badge text="Kriterium: Operative Kritizität" variant="note" />
+
+Klassifikation basierend auf der **Kritizität jedes Artikels für den Geschäftsbetrieb** — nicht seinem Wert oder seiner Bewegungsgeschwindigkeit.
+
+| Segment | Bedeutung | Beschreibung |
+|---|---|---|
+| **V — Vital** | Kann ohne ihn nicht betrieben werden | Absolut entscheidend — Geschäft stoppt bei Nichtverfügbarkeit |
+| **E — Wesentlich** | Sehr wichtig | Hohe Priorität nach Vital; erhebliche Störung bei Nichtverfügbarkeit |
+| **D — Erwünscht** | Nicht unbedingt erforderlich | Betrieb kann ohne ihn fortfahren, aber Qualität oder Effizienz leidet |
+
+<Aside type="note">
+**★ VED ist am häufigsten in Fertigung, Krankenhäusern und Verteidigung** — überall wo bestimmte Artikel missionskritisch sind, unabhängig von Kosten oder Nachfragehäufigkeit. Ein kostengünstiger Artikel kann trotzdem Vital sein.
+</Aside>
+
+---
+
+### 4. XYZ-Analyse — Nachfragevariabilitätsbasiert
+
+<Badge text="Kriterium: Nachfragevoraussagbarkeit" variant="note" />
+
+Klassifikation basierend auf der **Vorhersagbarkeit der Nachfrage** über die Zeit — ergänzend zur ABC-Analyse.
+
+| Segment | Nachfrageverhalten | Managementansatz |
+|---|---|---|
+| **X** | Geringe oder keine Variation — hochgradig vorhersagbar | Schlanker Bestand; enge Nachschubzyklen |
+| **Y** | Ungleichmäßige Nachfrage — aber zu einem gewissen Grad vorhersagbar | Moderater Sicherheitsbestand; regelmäßige Überprüfung |
+| **Z** | Sehr hohe Variation — kein erkennbarer Trend oder kausale Faktoren | Hoher Sicherheitsbestand; häufige Überwachung; am schwierigsten zu managen |
+
+---
+
+### Schnellreferenz — 4 Traditionelle Methoden
+
+| Methode | Klassifikationskriterium | Segmente |
+|---|---|---|
+| **ABC** | Umsatzbeitrag | A (hoch) / B (mittel) / C (niedrig) |
+| **FSN** | Bewegungsgeschwindigkeit / Verbrauchsrate | F (schnell) / S (langsam) / N (nicht-bewegend) |
+| **VED** | Kritizität für den Betrieb | V (vital) / E (wesentlich) / D (erwünscht) |
+| **XYZ** | Nachfragevoraussagbarkeit / -variabilität | X (stabil) / Y (variabel) / Z (unvorhersagbar) |
+
+---
+
+## Fortgeschrittene Bestandssegmentierungsansätze
+
+<Badge text="Mehrkriterien-Methoden" variant="caution" />
+
+<Aside type="note">
+Ermöglicht durch: die Kombination von **Datenverfügbarkeit** und **gesteigerter Rechenkapazität** — beides für die meisten Organisationen jetzt zugänglich. Fortgeschrittene Methoden verarbeiten zwei oder mehr Kriterien gleichzeitig für realistische, praxisgerechte Segmentierung.
+</Aside>
+
+### 1. Mathematische Programmierung
+
+- **Lineare Programmierung (LP)** oder **Nichtlineare Programmierung (NLP)**
+- Formuliert das Segmentierungsproblem als mathematisches Optimierungsmodell, das mehrere Kriterien gleichzeitig integriert
+
+### 2. Metaheuristiken
+
+Verwendet, wenn das Problem zu komplex für exakte mathematische Programmierung ist:
+
+| Algorithmus | Typ |
+|---|---|
+| **Genetischer Algorithmus (GA)** | Evolutionäre Optimierung |
+| **Partikelschwarm-Optimierung (PSO)** | Schwarm-Intelligenz |
+| **Simulated Annealing** | Probabilistische lokale Suche |
+
+### 3. KI / Machine Learning
+
+Stark datengetrieben — gut geeignet für die heutige datenreiche SC-Umgebung:
+
+| Algorithmus | Typ |
+|---|---|
+| **Künstliche Neuronale Netze (KNN)** | Deep Learning |
+| **Support Vector Machines (SVM)** | Überwachte Klassifikation |
+| **Rückpropagierungsnetze** | Neuronales Netzwerktraining |
+| **K-Nächste-Nachbarn (KNN)** | Instanzbasiertes Lernen |
+| **Regressionsmodelle** | Prädiktive Modellierung |
+
+### 4. Mehrkriterien-Entscheidungsfindung (MCDM)
+
+Integriert **Expertenmeinung** zur Gewichtung mehrerer Faktoren:
+
+| Methode | Beschreibung |
+|---|---|
+| **AHP — Analytischer Hierarchieprozess** | Paarweiser Vergleich von Kriterien zur Ableitung von Prioritätsgewichten |
+| **Fuzzy AHP** | AHP mit Fuzzy-Logik zur Handhabung von Unsicherheit im Expertenurteil |
+| **ANP — Analytischer Netzwerkprozess** | Erweiterung des AHP, die Abhängigkeiten zwischen Kriterien zulässt |
+
+### 5. Hybride Ansätze
+
+Kombinationen der obigen — z.B. AHP + ML, GA + LP — verwendet wenn keine einzelne Methode allein ausreicht.
+
+<Aside type="tip">
+**★ Prüfungstipp — Fortgeschrittene Methoden:** Alle vier traditionellen Methoden im Detail kennen. Für fortgeschrittene Methoden jede Kategorie benennen und angeben können, *warum* sie verwendet wird: mehrere Kriterien gleichzeitig behandeln, Datenverfügbarkeit nutzen oder Komplexität jenseits von Einzelkriterien-Ansätzen managen.
+</Aside>
+
+---
+
+## AHP — Analytischer Hierarchieprozess
+
+<Badge text="MCDM-Rahmen" variant="note" />
+
+<Aside type="note">
+**Vorgeschlagen von:** Thomas L. Saaty
+
+**Typ:** Mehrkriterien-Entscheidungsfindungsmethode (MCDM)
+
+**Anwendungen:** Lieferantenauswahl, Beschaffungsentscheidungen, Produkt- und Servicedesign, Ressourcenzuweisung und Bestandssegmentierung.
+</Aside>
+
+### Kernidee
+
+AHP organisiert eine komplexe, multifaktorielle Entscheidung in eine **hierarchische Struktur**, führt **paarweise Vergleiche** aller Faktoren durch, um ihre relative Wichtigkeit zu bestimmen, und gibt **quantitative, konsistente Prioritätsgewichte** für jeden Faktor aus.
+
+### AHP-Hierarchiestruktur
+
+![AHP-Hierarchische Strukturdiagramm — Ziel → Kriterien → Alternativen](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image1.png)
+
+### Saaty-Skala (1–9)
+
+<Aside type="note">
+| Skalenwert | Bedeutung |
+|---|---|
+| **1** | Gleich wichtig |
+| **3** | Mäßig wichtiger |
+| **5** | Stark wichtiger |
+| **7** | Sehr stark wichtiger |
+| **9** | Extrem wichtiger |
+| **2, 4, 6, 8** | Zwischenwerte zwischen benachbarten Urteilen |
+</Aside>
+
+### AHP-Schritte
+
+<Steps>
+1. **Problem definieren** — Ziel klar formulieren
+2. **Hierarchisches Rahmen entwickeln** — alle Kriterien auflisten und ihre Beziehungen abbilden
+3. **Paarweise Vergleichsmatrix erstellen** für jede Ebene mit der Saaty-Skala (1–9)
+4. **Matrix normalisieren** — Kriteriengewichte berechnen (der Prioritätsvektor)
+5. **Konsistenzquotienten (CR) berechnen** mit: `CR = CI / RI` wobei CI = Konsistenzindex und RI = Zufallsindex (Standardtabellenwert basierend auf Matrixgröße)
+6. **CR prüfen:** Wenn CR < 0,1 → konsistent, fortfahren. Wenn CR ≥ 0,1 → inkonsistent, zu Schritt 3 zurückgehen und paarweisen Vergleich wiederholen
+</Steps>
+
+<Aside type="note">
+**★ CR < 0,1 ist die MUSS-BESTEHEN-Bedingung im AHP.** Wenn diese Schwelle nicht erfüllt wird, gelten die paarweisen Urteile des Experten als intern inkonsistent und unzuverlässig — der Vergleich muss wiederholt werden.
+</Aside>
+
+---
+
+## Fallstudie — AHP-basierte Bestandssegmentierung: XYZ E-tailer
+
+<Badge text="Fallstudie" variant="tip" />
+
+### Fallaufbau
+
+| Parameter | Detail |
+|---|---|
+| **Unternehmen** | XYZ E-tail — ein E-Commerce-Händler |
+| **Einschränkung** | Fester Lagerraum unter einem 3-Jahres-Vertrag |
+| **Listungsrichtlinie** | Ein Produkt wird nur als 'verfügbar' gelistet, wenn es physisch im Lager vorhanden ist |
+| **Herausforderung** | Management möchte das Produktportfolio erweitern, aber der Lagerraum ist begrenzt |
+| **Frühere Richtlinie** | 95 % Serviceniveau einheitlich für alle SKUs |
+| **Neuer Plan** | 25 SKUs in 3 Gruppen mit differenzierten Serviceniveaus klassifizieren |
+| **Tool** | AHP — zur Klassifizierung von 25 SKUs in Klasse A / B / C |
+
+**Ziel-Serviceniveaus unter der neuen Klassifikation:**
+
+| Klasse | Serviceniveau |
+|---|---|
+| **A** | 95 % |
+| **B** | 90 % |
+| **C** | 85 % |
+
+---
+
+### SKU-Daten — 25 SKUs über 6 Kriterien
+
+![XYZ E-tailer SKU-Datentabelle — 25 SKUs mit Werten über alle 6 Kriterien](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image2.png)
+
+---
+
+### 6 Bewertungskriterien
+
+![Kriterien-Zusammenfassungstabelle — Richtung und Beschreibung aller 6 AHP-Kriterien](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image3.png)
+
+Die sechs verwendeten Kriterien mit ihrer Präferenzrichtung:
+
+| # | Kriterium | Einheit | Richtung |
+|---|---|---|---|
+| 1 | **Monatliche Nachfrage** | Einheiten/Monat | Höher = Besser |
+| 2 | **Priorität der Produktkategorie** | Wert 1–10 | Höher = Besser |
+| 3 | **Lieferantenuverlässigkeit** | % perfekte Bestellungen | Höher = Besser |
+| 4 | **Gewinnmarge** | % | Höher = Besser |
+| 5 | **Vorlaufzeit** | Stunden | **Niedriger = Besser** |
+| 6 | **Rückgabewahrscheinlichkeit** | % | **Niedriger = Besser** |
+
+<Aside type="note">
+**★ Gemischte Richtungen sind wichtig:** Kriterien 5 und 6 sind "Niedriger = Besser". Die Normalisierung muss dies berücksichtigen — sie werden vor der Bewertung invertiert. Kriterien in verschiedenen Einheiten oder Richtungen können nicht direkt verglichen oder multipliziert werden, ohne Normalisierung.
+</Aside>
+
+---
+
+### Schritt 1 — Paarweise Vergleichsmatrix
+
+![Paarweise Vergleichsmatrix — 6×6 Saaty-Skala-Bewertungen für alle Kriterienpaare](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image4.png)
+
+*Beispiellesart:* Monatliche Nachfrage vs. Priorität der Produktkategorie → Monatliche Nachfrage bewertet **3× wichtiger** (Saaty-Skala = 3).
+
+---
+
+### Schritt 2 — Normalisierte Matrix und Kriteriengewichte
+
+![Normalisierte Paarvergleichsmatrix und Kriteriengewicht (Prioritätsvektor) Tabelle](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image5.png)
+
+### Schritt 3 — Konsistenzprüfung
+
+<Aside type="note">
+**Ergebnis: CR = 0,08 < 0,1 → Konsistent ✓**
+
+Die paarweisen Vergleiche des Experten bestehen die AHP-Konsistenzschwelle. Die abgeleiteten Kriteriengewichte sind gültig und können für die SKU-Bewertung verwendet werden.
+</Aside>
+
+---
+
+### Kriteriengewichte-Ergebnis
+
+![Kriteriengewichte-Zusammenfassung — AHP-Prioritätsvektor für alle 6 Faktoren](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image6.png)
+
+---
+
+### Normalisierung der SKU-Daten
+
+**Problem:** Alle sechs Kriterien haben verschiedene Einheiten — sie können nicht direkt verglichen oder multipliziert werden.
+
+**Lösung:** Alle Kriterien auf eine 0–1-Skala normalisieren, bevor die Bewertung erfolgt.
+
+<Aside type="note">
+**Für Höher-ist-Besser-Kriterien** (Monatliche Nachfrage, Kategorieprioritätsvät, Lieferantenzuverlässigkeit, Gewinnmarge):
+
+`Normalisierter Score = (xᵢ − min) / (max − min)`
+
+**Für Niedriger-ist-Besser-Kriterien** (Vorlaufzeit, Rückgabewahrscheinlichkeit):
+
+`Normalisierter Score = 1 − [(xᵢ − min) / (max − min)]`
+
+Diese Invertierung wandelt "niedriger ist besser" in eine konsistente "höher ist besser"-Skala um — damit alle sechs Kriterien in dieselbe Richtung zeigen, bevor sie mit ihren AHP-Gewichten multipliziert werden.
+</Aside>
+
+![Normalisierte SKU-Datentabelle — Alle 25 SKUs mit normalisierten Scores über alle 6 Kriterien](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image7.png)
+
+---
+
+### Berechnung des SKU-Scores
+
+<Aside type="note">
+Für jede SKU: jeden normalisierten Kriteriumsscore mit seinem AHP-Kriteriumsgewicht multiplizieren, dann über alle sechs Kriterien summieren:
+
+`SKU-Score = Σ (AHP-Gewichtᵢ × Normalisierter Scoreᵢ)`
+
+Ein höherer kombinierter Score zeigt eine strategisch wichtigere SKU an.
+</Aside>
+
+---
+
+### ABC-Klassifikation aus SKU-Scores
+
+<Steps>
+1. **Sortieren** alle 25 SKUs nach kombiniertem SKU-Score in absteigender Reihenfolge (höchster → wichtigster)
+2. **Kumulativen Score berechnen** und den **kumulativen % des Gesamtscores** für jede SKU
+3. **Schwellenwerte anwenden** um Klassen zuzuweisen:
+   - **Klasse A** → Top-SKUs bis ~60 % des kumulativen Scores → **7 von 25 Artikeln** → 95 % Serviceniveau
+   - **Klasse B** → nächste ~25 % des kumulativen Scores → **8 von 25 Artikeln** → 90 % Serviceniveau
+   - **Klasse C** → verbleibende ~15 % → **10 von 25 Artikeln** → 85 % Serviceniveau
+</Steps>
+
+<Aside type="note">
+**★ Die Schwellenwerte (60 % / 25 % / 15 %) sind keine universellen festen Werte.** Sie werden vom Unternehmen basierend auf eigener Geschäftsstrategie, Lagerraumkapazität und Serviceniveauzielen festgelegt.
+</Aside>
+
+---
+
+### Endgültige Klassifikationsergebnisse
+
+![Endgültige SKU-Scores-Tabelle — Sortiert nach Score mit kumulativem % und A/B/C-Klassenzuweisung](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image8.png)
+
+![Klassifikationszusammenfassung — Anzahl der SKUs je Klasse und zugewiesenes Serviceniveau](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image9.png)
+
+---
+
+## Modul-2-Zusammenfassung — Supply-Chain-Segmentierung (Alle 5 Sitzungen)
+
+| Sitzung | Behandeltes Thema |
+|---|---|
+| **Sitzung 1** | SC-Herausforderungen — Begründung, warum Segmentierung notwendig ist |
+| **Sitzung 2** | 8 Gründe für Segmentierung + 7 Segmentierungstypen |
+| **Sitzung 3** | Funktionale vs. Innovative Produkte → Effiziente vs. Reaktionsfähige SC → Push / Pull / Hybrid → Push-Pull-Grenze |
+| **Sitzung 4** | Analytische Produktsegmentierung (VK-Quadrant) + Kraljic-Matrix |
+| **Sitzung 5** | Bestandssegmentierung — ABC / FSN / VED / XYZ + Fortgeschrittene Methoden + AHP-Mehrkriterien-Klassifikations-Fallstudie |
+
+<Aside type="tip">
+**★ Prüfungstipp — Bestandssegmentierung:**
+Für traditionelle Methoden immer das **verwendete Kriterium** angeben: Umsatz = ABC | Bewegung = FSN | Kritizität = VED | Variabilität = XYZ
+
+**Für AHP-Fragen:** Alle sechs Schritte klar angeben und immer die **CR < 0,1-Bedingung** erwähnen — sie ist die Schwelle, die die paarweisen Urteile des Experten validiert.
+
+**Wichtigster konzeptueller Beitrag dieser Sitzung:** AHP bietet einen prinzipiellen, datengestützten Weg, um Mehrkriterien-, gemischte Einheiten- und gemischte Richtungsfaktoren zu handhaben — sie zu einem einzigen konsistenten Klassifikationsscore zu kombinieren. Das können traditionelle Einzelkriterien-Methoden nicht leisten.
+</Aside>

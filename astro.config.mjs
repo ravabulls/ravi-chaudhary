@@ -5,6 +5,10 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Ravi Chaudhary',
+			locales: {
+				root: { label: 'English', lang: 'en' },
+				de: { label: 'Deutsch', lang: 'de' },
+			},
 			customCss: [
 				'./src/styles/custom.css',
 			],
