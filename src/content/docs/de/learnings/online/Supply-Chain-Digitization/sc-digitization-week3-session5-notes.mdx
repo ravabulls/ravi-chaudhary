@@ -1,0 +1,301 @@
+---
+title: "Woche 3 | Sitzung 5: Kraljic-Matrix — Anwendungsbeispiel (Abfüllwerk)"
+description: "Ein vollständig ausgearbeitetes Fallbeispiel, das die Kraljic-Matrix auf ein Softgetränke-Abfüllwerk anwendet — Datenerhebung, zusammengesetzte Versorgungsrisikobewertung, Quadrantenklassifizierung von 8 beschafften Artikeln, Überprüfung der aktuellen Praxis und gezielte Beschaffungsempfehlungen pro Artikel."
+sidebar:
+  order: 16
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply-Chain-Digitalisierung*
+
+---
+
+## Fallkontext — Das Abfüllwerk
+
+<Aside type="note">
+**Unternehmen:** Ein Softgetränke-Abfüllwerk, das seine Beschaffungsstrategie überprüft.
+
+**Umfang:** Analyse auf Werksebene — nicht auf Organisationsebene. Dieser Unterschied ist wichtig: Die Anzahl und Arten der Artikel variieren erheblich je nachdem, auf welcher Ebene die Matrix angewendet wird.
+
+**Verfügbare Daten:** Einkaufsmenge (Pakete), Kosten pro Paket, Gesamteinkaufswert, Anzahl der Lieferanten und durchschnittliche Entfernung zum Lieferanten.
+
+**Datenzeitraum:** Letztes Geschäftsjahr. Wenn keine Beschaffungshistorie vorhanden — Marktpreisschätzungen und geplante Mengen verwenden.
+
+**Artikel:** 8 repräsentative Artikel zur Veranschaulichung gewählt. Ein echtes Abfüllwerk würde viel mehr beschaffen.
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Immer angeben, ob die Kraljic-Matrix auf **Werksebene** oder **Organisationsebene** angewendet wird — der Umfang bestimmt, welche Artikel im Umfang sind und wie Risiko- und Kostenschwellen festgelegt werden.
+</Aside>
+
+---
+
+## Die 8 beschafften Artikel — Überblick
+
+![Abfüllwerk — Übersichtsdiagramm der 8 beschafften Artikel mit Kategorien](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image1.png)
+
+**Artikelkategorien:**
+
+| Kategorie | Artikel |
+|---|---|
+| **Produktion** | Kunststoffflasche, Sirup, Etikett A, Etikett B, Kartons |
+| **Büro / Verwaltung** | A4-Papier, Tintenkartusche A (Etikettierung), Tintenkartusche B (Büro) |
+
+<Aside type="note">
+**Tintenkartusche A vs. B — warum beide vorhanden sind:**
+
+Variable Informationen — Chargennummer, Abfülldatum und Werksstandort — können nicht vom Etikettenlieferanten vorgedruckt werden, da diese sich pro Produktionslauf ändern. Das Werk druckt diese Informationen intern mit Tintenkartusche A. Tintenkartusche B dient dem normalen Bürodruck und hat keine Produktionskritikalität.
+</Aside>
+
+---
+
+## Beschaffungsdaten — 8 Artikel im Überblick
+
+![Beschaffungsdatentabelle — Alle 8 Artikel mit Einkaufsmenge, Kosten pro Paket, Gesamtwert, Lieferantenanzahl und Entfernung](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image2.png)
+
+**Artikelweise Beschaffungsdaten und vorläufige Quadrantenklassifizierung:**
+
+| Artikel | Paketgröße | Gekaufte Pakete | Kosten/Paket (₹) | Gesamtwert | Anzahl Lieferanten | Durchschn. Entfernung | Quadrant |
+|---|---|---|---|---|---|---|---|
+| **Kunststoffflasche** | 500 Einheiten | 2.000 | ₹3.000 | Hoch | 1.000 | Sehr nah | **Hebel** |
+| **Sirup** | 1 Fass | 1.000 | ₹6.300 | Hoch | 2 | Sehr weit (internat.) | **Strategisch** |
+| **Etikett A** | 2.500 Etiketten | 500 Pakete | ₹15.000 | ₹75 Lakh | 4 | Weit | **Strategisch** |
+| **Etikett B** | 2.500 Etiketten | 100 Pakete | ₹15.000 | Niedrig | 4 | Weit | **Engpass** |
+| **Karton** | 1 Karton | 30.000 | ₹20 | Mittel | Viele | Mittel | **Engpass** |
+| **Papier (A4)** | 10 Ries | 30 | ₹4.000 | Niedrig | Viele | Mittel | **Unkritisch** |
+| **Tintenkartusche A** (Etikettierung) | 1 Einheit | 20 | ₹2.000 | Niedrig | 1 | Sehr weit | **Engpass** |
+| **Tintenkartusche B** (Büro) | 1 Einheit | 2 | ₹500 | ~₹1.000 | Viele | Nah | **Unkritisch** |
+
+---
+
+## Wichtige Beobachtungen aus den Daten
+
+### Gewinneinfluss (Einkaufswert)
+
+| Artikel | Beobachtung |
+|---|---|
+| **Etikett A** | Höchster Gesamtwert mit ₹75 Lakh — die Paketgröße (2.500 Etiketten) lässt es pro Einheit teuer erscheinen, aber das Volumen ist es, das die Gesamtkosten treibt |
+| **Kunststoffflasche & Sirup** | Ebenfalls hoher Gesamtwert — Sirup zu ₹6.300/Fass ist teuer pro Einheit |
+| **Bürobedarf** | Sehr niedriger Gesamtwert — Papier und Tintenkartusche B zusammen insgesamt nur ~₹1.000 |
+| **Karton** | 30.000 Einheiten gekauft, aber zu ₹20 je — mittlerer Gesamtwert trotz hohem Volumen |
+
+### Versorgungsrisiko
+
+| Risikoebene | Artikel | Grund |
+|---|---|---|
+| **Hohes Risiko — wenige Lieferanten** | Sirup (2), Etiketten A & B (je 4), Tintenkartusche A (nur 1 Lieferant) | Begrenzte Beschaffungsoptionen |
+| **Niedriges Risiko — viele Lieferanten** | Kunststoffflasche (1.000), Karton, Papier, Tintenkartusche B | Reichlich Optionen |
+| **Hohes Risiko — große Entfernung** | Sirup (international), Tintenkartusche A (sehr weit) | Lange Wiederbeschaffungsvorlaufzeiten |
+| **Niedriges Risiko — nahe Entfernung** | Kunststoffflasche (sehr nah) | Schnelle Wiederbeschaffung möglich |
+
+<Aside type="note">
+**★ Warum ABC-Analyse allein NICHT ausreicht:**
+
+Die ABC-Analyse klassifiziert Artikel nach Einkaufswert — nützlich für die interne Bestandspolitik (Überprüfungshäufigkeit, Materialhandhabungspriorität). Sie sagt aber nichts über das versorgungsseitige Risiko aus und kann daher keine Beschaffungsstrategie definieren.
+
+**Kraljic-Matrix = ABC-ähnliche Wertanalyse + Versorgungsrisimodimension → reichhaltigere, handlungsorientierte Beschaffungsstrategie.**
+
+ABC → interne Bestandspolitik. Kraljic → externe Beschaffungsstrategie. Beide sind nötig, aber für unterschiedliche Zwecke.
+</Aside>
+
+---
+
+## Zusammengesetzten Versorgungsrisiko-Indikator aufbauen
+
+### Das Problem mit zwei Teilkennzahlen
+
+Die zwei verfügbaren Versorgungsrisiko-Teilkennzahlen wirken in **entgegengesetzten Richtungen** — sie können nicht ohne Normalisierung kombiniert werden:
+
+| Teilkennzahl | Richtung | Interpretation |
+|---|---|---|
+| **Anzahl der Lieferanten** | Mehr Lieferanten → **niedrigeres** Risiko | Umgekehrte Beziehung |
+| **Durchschnittliche Entfernung** | Größere Entfernung → **höheres** Risiko | Direkte Beziehung |
+
+### Skalierungsansatz
+
+Alle Kennzahlen werden auf vergleichbare Skalen umgerechnet, bevor sie kombiniert werden:
+
+| Kennzahl | Skala | Logik |
+|---|---|---|
+| **Gewinneinfluss** | 0–10 | 0 = Artikel mit niedrigstem Wert, 10 = Artikel mit höchstem Wert |
+| **Anzahl der Lieferanten** | 1–10 | 1 = wenigste Lieferanten = höchstes Risiko; 10 = meiste Lieferanten = niedrigstes Risiko |
+| **Durchschn. Entfernung** | 1–10 | 1 = am weitesten entfernt = höchstes Risiko; 10 = am nächsten = niedrigstes Risiko |
+
+<Aside type="note">
+Der Professor verwendet 0–10 für den Gewinneinfluss und 1–10 für Versorgungsrisiko-Teilkennzahlen — eine kleine Skalierungsinkonsistenz, die die Analyse nicht wesentlich beeinflusst. In der Praxis werden konsistente Skalen bevorzugt (entweder alle 0–10 oder alle 1–10).
+</Aside>
+
+### Gewichtete Versorgungsrisiko-Formel
+
+<Aside type="note">
+**Gewichtetes Versorgungsrisiko = 0,8 × (Lieferantenanzahl-Score) + 0,2 × (Entfernungs-Score)**
+
+**Warum diese Gewichte?**
+- Gewicht **0,8** auf Lieferantenanzahl → das Unternehmen beurteilt die Lieferantenverfügbarkeit als dominanteren Treiber des Versorgungsrisikos
+- Gewicht **0,2** auf Entfernung → Entfernung ist in den meisten Kontexten handhabbar, sollte aber in schwierigem Gelände oder entlegenen Betriebsumgebungen deutlich erhöht werden
+
+**Kritisches Prinzip:** Gewichte sind **urteilsbasiert** — das Unternehmen entscheidet basierend auf seinem spezifischen Betriebskontext. Es gibt keine universelle Regel für die Gewichtung. Immer die gewählten Gewichte kontextbezogen begründen, wenn eine Prüfungsfrage beantwortet wird.
+</Aside>
+
+---
+
+## Gewichtete Versorgungsrisiko-Ergebnisse
+
+![Versorgungsrisiko-Skalierungstabelle — Normalisierte Scores für Lieferantenanzahl und Entfernung pro Artikel](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image3.png)
+
+![Gewichtetes Versorgungsrisiko und Gewinneinfluss-Scores — Alle 8 Artikel bereit zur Matrix-Darstellung](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image4.png)
+
+**Rangfolge nach gewichtetem Versorgungsrisiko — wichtige Ergebnisse:**
+
+| Artikel | Versorgungsrisikoebene | Haupttreiber |
+|---|---|---|
+| **Sirup** | Höchstes (~9,996) | Nur 2 Lieferanten + internationale Entfernung |
+| **Tintenkartusche A** (Etikettierung) | Hoch | Nur 1 Lieferant + sehr weit entfernt |
+| **Etikett A & B** | Mittel-hoch | Nur 4 Lieferanten + weit entfernt |
+| **Tintenkartusche B** (Büro) | Niedrig | Viele Lieferanten + nahe Lage |
+| **Papier (A4)** | Niedrig | Viele Lieferanten + mittlere Entfernung |
+| **Kunststoffflasche** | Niedrig | 1.000 Lieferanten + sehr nahe Lage |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Die Formel kennen. Wissen, warum die Gewichte subjektiv sind. In jeder Prüfungsantwort, die Kraljic einbezieht, die gewählten Gewichte immer durch den Betriebskontext des Unternehmens begründen — das zeigt analytische Reife, nicht nur Formelkenntnis.
+</Aside>
+
+---
+
+## Darstellung und Klassifizierung in der Kraljic-Matrix
+
+- **X-Achse:** Gewinneinfluss (0–10)
+- **Y-Achse:** Gewichtetes Versorgungsrisiko (1–10)
+- **Angewendeter Grenzwert:** Score > 6 auf einer Achse = klassifiziert in die „hohe" Seite dieser Dimension
+
+![Streudiagramm — 8 Artikel dargestellt auf Gewinneinfluss vs. Versorgungsrisiko-Achsen mit Quadrantengrenzlinien](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image5.png)
+
+![Endgültige Kraljic-Matrix — 8 Artikel in vier Quadranten klassifiziert](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image6.png)
+
+### Resultierende Quadrantenklassifizierung
+
+| Quadrant | Artikel |
+|---|---|
+| **Strategisch** (Hoher GI + Hohes Risiko) | Sirup, Etikett A |
+| **Engpass** (Niedriger GI + Hohes Risiko) | Etikett B, Karton, Tintenkartusche A (Etikettierung) |
+| **Hebel** (Hoher GI + Niedriges Risiko) | Kunststoffflasche |
+| **Unkritisch** (Niedriger GI + Niedriges Risiko) | Papier (A4), Tintenkartusche B (Büro) |
+
+<Aside type="note">
+**★ Prüfungstipp — Der Grenzwertvorbehalt:** Der Grenzwert (hier: 6 von 10) ist eine **Managemententscheidung** — kein universell fester Schwellenwert. Die Änderung des Grenzwerts kann Artikel neu klassifizieren. Dies immer erwähnen, wenn die Klassifizierung in einer Prüfungsantwort erklärt wird. Der Grenzwert sollte basierend auf der Risikobereitschaft und den strategischen Prioritäten des Unternehmens festgelegt werden.
+</Aside>
+
+---
+
+## Aktueller Beschaffungszustand — Überprüfung
+
+Bevor Änderungen empfohlen werden, wird die aktuelle Praxis für jeden Artikel gegen seinen Quadranten bewertet:
+
+| Artikel | Quadrant | Aktuelle Praxis | Identifiziertes Problem |
+|---|---|---|---|
+| **Kunststoffflasche** | Hebel | Gleicher Lieferant seit 5 Jahren | Käufermacht nicht genutzt — 1.000 Lieferanten verfügbar |
+| **Sirup** | Strategisch | Gleicher Lieferant 10 Jahre; jährliche Vertragsneugotiation | Hohe Abhängigkeit; nur 2 Lieferanten; internationale Entfernung erhöht Risiko |
+| **Etikett A** | Strategisch | Lieferant jährlich durch Preisverhandlung gewählt | Preis von Jahr zu Jahr volatil; nur 4 Lieferanten |
+| **Etikett B** | Engpass | Lieferant jährlich gewählt | Niedriger Wert, aber Versorgungsrisiko noch vorhanden — wenige Lieferanten, weit entfernt |
+| **Karton** | Engpass | Jährliche Auswahl | Risiko trotz moderater Lieferantenanzahl vorhanden |
+| **Papier (A4)** | Unkritisch | Spotkäufe nach Bedarf ✓ | Möglicherweise zu viel ausgeben; lohnt sich, digitale Alternativen zu prüfen |
+| **Tintenkartusche A** | Engpass | 3-Jahres-Vertrag, dann neuer Lieferant | 1 Lieferant, sehr weit — hohes Produktionsunterbrechungsrisiko |
+| **Tintenkartusche B** | Unkritisch | Spotkäufe nach Bedarf ✓ | Minimales Problem |
+
+---
+
+## Empfohlene Beschaffungsstrategien
+
+![Empfehlungsübersicht — Artikelweise Strategiekarte auf der Kraljic-Matrix](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image7.png)
+
+![Empfehlungslogiktabelle — Vollständige artikelweise aktuelle Praxis vs. empfohlene Maßnahme](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image8.png)
+
+**Vollständige Empfehlungen — aktuelle Praxis vs. Maßnahme:**
+
+| Artikel | Quadrant | Aktuelle Praxis | Problem | Empfohlene Maßnahme |
+|---|---|---|---|---|
+| **Kunststoffflasche** | Hebel | Gleicher Lieferant seit 5 Jahren | Käufermacht trotz 1.000 Lieferanten nicht genutzt | Wettbewerbliche Ausschreibung öffnen → Angebote einholen → Beschaffungskosten senken |
+| **Sirup** | Strategisch | Gleicher Lieferant 10 Jahre; jährliche Neuverhandlung | Hohe Abhängigkeit; nur 2 Lieferanten; internationale Entfernung | JV erkunden; langfristige Konditionen verhandeln; Substitute prüfen, wenn Formulierungsflexibilität besteht |
+| **Etikett A** | Strategisch | Lieferant jährlich durch Preisverhandlung gewählt | Preis von Jahr zu Jahr volatil; nur 4 Lieferanten | Mehrjährige Verträge mit 2–3 Lieferanten anbieten; Beschaffung verteilen, um Einzelquellenrisiko zu reduzieren und Kosten zu stabilisieren |
+| **Etikett B** | Engpass | Lieferant jährlich gewählt | Niedriger Wert, aber Versorgungsrisiko vorhanden — wenige Lieferanten, weit entfernt | Mehrjähriger Vertrag zur Reduzierung des Versorgungsunterbrechungsrisikos |
+| **Karton** | Engpass | Jährliche Auswahl | Versorgungsrisiko trotz moderater Lieferantenanzahl vorhanden | Mehrere Lieferanten registrieren → Single-Point-of-Failure-Risiko reduzieren |
+| **Papier (A4)** | Unkritisch | Spotkäufe nach Bedarf | Möglicherweise zu viel ausgeben; prüfenswert | Papierlose / digitale Prozesse erkunden; in der Zwischenzeit Spotkäufe fortsetzen |
+| **Tintenkartusche A** | Engpass | 3-Jahres-Vertrag, dann neuer Lieferant | 1 Lieferant, sehr weit — Produktionsetikettierung stoppt bei Versorgungsunterbrechung | Lieferantenübernahme erkunden ODER auf standardkompatible Tinte von einem nahegelegenen Lieferanten wechseln (Substitutionsstrategie) |
+| **Tintenkartusche B** | Unkritisch | Spotkäufe nach Bedarf | Minimales Problem | Papierloses Büro erkunden; Spotkäufe fortsetzen |
+
+---
+
+## Logik hinter den wichtigsten Empfehlungen
+
+### Kunststoffflasche → Wettbewerbliche Ausschreibung
+
+Mit 1.000 nahe gelegenen Lieferanten hat der Käufer **maximale Verhandlungsmacht**. Fünf Jahre bei einem Lieferanten zu bleiben, ist eine verpasste Kostensenkungsmöglichkeit. Das Öffnen von Wettbewerbsausschreibungen wird die Beschaffungskosten deutlich senken.
+
+### Sirup → JV / Langfristige Verhandlung / Substitute
+
+Nur 2 Lieferanten weltweit, mit internationaler Entfernung — die Lehrbuchdefinition einer Strategischen Artikel-Herausforderung. Jährliche Neuverhandlung erzeugt Kostenunsicherheit und Beziehungszerbrechlichkeit.
+
+<Aside type="tip">
+**Entscheidungsbaum für Sirup:**
+- Wenn die Siruprezeptur die Produktidentität definiert → Substitute sind nicht machbar → Fokus auf JV oder einen langfristigen Festpreisvertrag
+- Wenn eine gewisse Formulierungsflexibilität besteht → alternative Sirupe erkunden, um die Lieferantenbasis zu erweitern und das Versorgungsrisiko zu reduzieren
+</Aside>
+
+### Etikett A & B → Langfristige Verträge + Verteilung über Lieferanten
+
+Beide Etiketten haben sehr wenige Lieferanten (je 4) an weit entfernten Standorten. Die jährliche Auswahl schafft Preisinstabilität und fragile Beziehungen.
+
+**Lösung:** Mehrjähriger Vertrag mit 2–3 Lieferanten gleichzeitig — stabilisiert Kosten (Etikett A, Strategisch) und reduziert Unterbrechungsrisiko (Etikett B, Engpass). Die Verteilung der Beschaffung über mehrere Lieferanten eliminiert die Single-Point-of-Failure-Gefährdung.
+
+### Tintenkartusche A (Etikettierung) → Substitut / Naher Lieferant
+
+Dies ist der **gefährlichste Engpassartikel** im Portfolio — ein Lieferant, der sehr weit entfernt ist. Eine Versorgungsunterbrechung stoppt den internen Etikettendruck, was die Produktionschargenbildung vollständig stoppt.
+
+**Zwei Optionen:**
+1. Lieferantenübernahme erkunden, wenn Mengen dies rechtfertigen
+2. Auf eine standardkompatible Tinte von einem lokalen oder nahen Lieferanten wechseln — eine Substitutionsstrategie, die das Versorgungsrisiko sofort senkt
+
+### Unkritische Artikel (Papier, Tintenkartusche B) → Papierlos / Spotkauf
+
+Niedriger Wert und niedriges Risiko — keine strategische Aufsicht erforderlich. Spotkäufe fortsetzen und papierlos oder digital gehen erkunden, um den Beschaffungsbedarf schließlich ganz zu eliminieren.
+
+<Aside type="note">
+**★ Die Maßnahme dem Quadranten zuordnen.** JV-Logik nicht auf unkritische Artikel anwenden oder Spotkauf-Logik auf Strategische Artikel. Der Quadrant bestimmt die Maßnahme — nicht nur Kosten oder Menge allein.
+</Aside>
+
+---
+
+## Kontinuierliche Verbesserung — Die Matrix relevant halten
+
+<Aside type="note">
+Die Kraljic-Matrix ist **keine einmalige Übung**. Märkte, Lieferantenlandschaften und Kosten ändern sich kontinuierlich. Die Matrix muss regelmäßig überprüft und verfeinert werden, um handlungsorientiert zu bleiben.
+
+**Wichtige laufende Maßnahmen:**
+- **Kennzahlen regelmäßig überprüfen** — Kennzahlauswahl, Skalierungsansatz und Gewichte überarbeiten, wenn sich der Kontext ändert
+- **Teamkonsens aufbauen** — das gesamte Beschaffungsteam einbeziehen; andere können zusätzliche Risikodimensionen identifizieren, die noch nicht erfasst wurden
+- **Benchmarking mit Wettbewerbern** — Best Practices von anderen Werken oder Branchenkollegen im gleichen Sektor ansehen
+- **Ergebnisse validieren** — bestätigen, dass den Segmenten zugewiesene Strategien in der Praxis tatsächlich die beabsichtigten Ergebnisse erzeugen
+- **Gewichte kontextangepasst** — in schwierigem Gelände oder entlegenen Betriebsregionen sollte das Entfernungsgewicht deutlich höher als 0,2 sein
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Das Erwähnen von kontinuierlicher Verbesserung und kontextspezifischer Gewichtung signalisiert dem Prüfer, dass Sie die Kraljic-Matrix als **lebendiges Managementwerkzeug** verstehen, nicht als einmal angewendete und abgeheftete feste Formel.
+</Aside>
+
+---
+
+## Sitzungszusammenfassung — 6-schrittiger Kraljic-Anwendungsprozess
+
+<Steps>
+1. **Daten sammeln** — Einkaufswert, Anzahl der Lieferanten, durchschnittliche Lieferantenentfernung für alle Artikel im Umfang
+2. **Skalieren und gewichten** — Teilkennzahlen auf eine konsistente Skala normalisieren; gewichteten zusammengesetzten Versorgungsrisiko-Score berechnen
+3. **Darstellen und klassifizieren** — einen management-definierten Grenzwert anwenden (z. B. 6/10), um jeden Artikel einem der vier Quadranten zuzuweisen
+4. **Aktuellen Zustand überprüfen** — tatsächliche Beschaffungspraxis mit der idealen Strategie für jeden Quadranten vergleichen
+5. **Empfehlen** — gezielte Strategie pro Artikel definieren: Wettbewerbsangebote / JV / Langfristvertrag / Substitution / Spotkauf
+6. **Iterieren** — Matrix regelmäßig überprüfen; Gewichte, Kennzahlen und Grenzwerte verfeinern, wenn sich Marktbedingungen entwickeln
+</Steps>
+
+<Aside type="note">
+**★ Die Kraljic-Matrix verwandelt rohe Beschaffungsdaten in einen strategischen Aktionsplan.** Der Quadrant bestimmt die Maßnahme — nicht nur Kosten oder Menge isoliert betrachtet. Die Klassifizierung ist immer der erste Schritt; die Strategie folgt daraus.
+</Aside>

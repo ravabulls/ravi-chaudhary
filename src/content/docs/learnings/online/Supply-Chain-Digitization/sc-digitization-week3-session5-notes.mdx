@@ -1,0 +1,301 @@
+---
+title: "Week 3 | Session 5: Kraljic Matrix — Example Application (Bottling Plant)"
+description: "A full worked case applying the Kraljic Matrix to a soft drink bottling plant — covering data collection, composite supply risk scoring, quadrant classification of 8 procured items, current practice review, and targeted procurement recommendations per item."
+sidebar:
+  order: 16
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization*
+
+---
+
+## Example Context — The Bottling Plant
+
+<Aside type="note">
+**Firm:** A soft drink bottling plant reviewing its procurement strategy.
+
+**Scope:** Plant-level analysis — not organisation-level. This distinction matters: the number and types of items will differ significantly depending on which level the matrix is applied at.
+
+**Data available:** Purchase quantity (packs), cost per pack, total purchase value, number of suppliers, and average distance to supplier.
+
+**Data period:** Last financial year. If no procurement history exists — use market price estimates and planned quantities.
+
+**Items:** 8 representative items chosen for illustration. A real bottling plant would procure many more.
+</Aside>
+
+<Aside type="tip">
+**★ Exam Tip:** Always state whether the Kraljic Matrix is applied at **plant level** or **organisation level** — the scope determines which items are in scope and how risk and cost thresholds are set.
+</Aside>
+
+---
+
+## The 8 Procured Items — Overview
+
+![Bottling Plant — Overview Diagram of 8 Procured Items with Categories](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image1.png)
+
+**Item categories:**
+
+| Category | Items |
+|---|---|
+| **Production** | Plastic Bottle, Syrup, Label A, Label B, Cartons |
+| **Office / Admin** | A4 Paper, Ink Cartridge A (labelling), Ink Cartridge B (office) |
+
+<Aside type="note">
+**Ink Cartridge A vs. B — why both exist:**
+
+Variable information — batch number, bottling date, and plant location — cannot be pre-printed by the label supplier because these change per production run. The plant prints this information in-house using Ink Cartridge A. Ink Cartridge B is for routine office printing and carries no production criticality.
+</Aside>
+
+---
+
+## Procurement Data — 8 Items at a Glance
+
+![Procurement Data Table — All 8 Items with Purchase Quantity, Cost per Pack, Total Value, Supplier Count, and Distance](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image2.png)
+
+**Item-wise procurement data and preliminary quadrant classification:**
+
+| Item | Pack Size | Packs Bought | Cost/Pack (₹) | Total Value | No. of Suppliers | Avg. Distance | Quadrant |
+|---|---|---|---|---|---|---|---|
+| **Plastic Bottle** | 500 units | 2,000 | ₹3,000 | High | 1,000 | Very close | **Leverage** |
+| **Syrup** | 1 barrel | 1,000 | ₹6,300 | High | 2 | Very far (intl.) | **Strategic** |
+| **Label A** | 2,500 labels | 500 packs | ₹15,000 | ₹75 lakh | 4 | Far | **Strategic** |
+| **Label B** | 2,500 labels | 100 packs | ₹15,000 | Low | 4 | Far | **Bottleneck** |
+| **Carton** | 1 carton | 30,000 | ₹20 | Moderate | Many | Moderate | **Bottleneck** |
+| **Paper (A4)** | 10 reams | 30 | ₹4,000 | Low | Many | Moderate | **Non-Critical** |
+| **Ink Cartridge A** (labelling) | 1 unit | 20 | ₹2,000 | Low | 1 | Very far | **Bottleneck** |
+| **Ink Cartridge B** (office) | 1 unit | 2 | ₹500 | ~₹1,000 | Many | Close | **Non-Critical** |
+
+---
+
+## Key Observations from the Data
+
+### Profit Impact (Purchase Value)
+
+| Item | Observation |
+|---|---|
+| **Label A** | Highest total value at ₹75 lakh — the pack size (2,500 labels) makes this look expensive per unit, but the volume is what drives total cost |
+| **Plastic Bottle & Syrup** | Also high total value — syrup at ₹6,300/barrel is expensive per unit |
+| **Office supplies** | Very low total value — Paper and Ink Cartridge B together total only ~₹1,000 |
+| **Carton** | 30,000 units purchased but at ₹20 each — moderate total value despite high volume |
+
+### Supply Risk
+
+| Risk Level | Items | Reason |
+|---|---|---|
+| **High risk — few suppliers** | Syrup (2), Labels A & B (4 each), Ink Cartridge A (1 supplier only) | Limited sourcing options |
+| **Low risk — many suppliers** | Plastic Bottle (1,000), Carton, Paper, Ink Cartridge B | Abundant options |
+| **High risk — far distance** | Syrup (international), Ink Cartridge A (very far) | Long replenishment lead times |
+| **Low risk — close distance** | Plastic Bottle (very close) | Quick replenishment possible |
+
+<Aside type="note">
+**★ Why ABC Analysis Alone is NOT Enough:**
+
+ABC analysis classifies items by purchase value — useful for setting internal inventory policy (review frequency, material handling priority). But it says nothing about supply-side risk and therefore cannot define a procurement strategy.
+
+**Kraljic Matrix = ABC-style value analysis + supply risk dimension → richer, actionable procurement strategy.**
+
+ABC → internal inventory policy. Kraljic → external procurement strategy. Both are needed, but for different purposes.
+</Aside>
+
+---
+
+## Building a Composite Supply Risk Metric
+
+### The Problem with Two Sub-Metrics
+
+The two available supply risk sub-metrics operate in **opposite directions** — they cannot be combined without normalisation:
+
+| Sub-metric | Direction | Interpretation |
+|---|---|---|
+| **Number of suppliers** | More suppliers → **lower** risk | Inverse relationship |
+| **Average distance** | Greater distance → **higher** risk | Direct relationship |
+
+### Scaling Approach
+
+All metrics are converted to comparable scales before combining:
+
+| Metric | Scale | Logic |
+|---|---|---|
+| **Profit Impact** | 0–10 | 0 = lowest value item, 10 = highest value item |
+| **No. of Suppliers** | 1–10 | 1 = fewest suppliers = highest risk; 10 = most suppliers = lowest risk |
+| **Avg. Distance** | 1–10 | 1 = farthest = highest risk; 10 = closest = lowest risk |
+
+<Aside type="note">
+The professor uses 0–10 for Profit Impact and 1–10 for supply risk sub-metrics — a minor scaling inconsistency that does not materially affect the analysis. In practice, prefer consistent scales throughout (either all 0–10 or all 1–10).
+</Aside>
+
+### Weighted Supply Risk Formula
+
+<Aside type="note">
+**Weighted Supply Risk = 0.8 × (No. of Suppliers Score) + 0.2 × (Distance Score)**
+
+**Why these weights?**
+- Weight **0.8** on number of suppliers → the company judges that supplier availability is the more dominant driver of supply risk
+- Weight **0.2** on distance → distance is manageable in most contexts, but should be increased significantly in poor terrain or remote operating environments
+
+**Critical principle:** Weights are **judgement-based** — the company decides based on its specific operating context. There is no universal rule for weighting. Always justify the weights chosen based on context when answering an exam question.
+</Aside>
+
+---
+
+## Weighted Supply Risk Results
+
+![Supply Risk Scaling Table — Normalised Scores for Supplier Count and Distance per Item](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image3.png)
+
+![Weighted Supply Risk and Profit Impact Scores — All 8 Items Ready for Matrix Plotting](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image4.png)
+
+**Weighted supply risk ranking — key results:**
+
+| Item | Supply Risk Level | Primary Driver |
+|---|---|---|
+| **Syrup** | Highest (~9.996) | Only 2 suppliers + international distance |
+| **Ink Cartridge A** (labelling) | High | Only 1 supplier + very far location |
+| **Label A & B** | Moderate-high | Only 4 suppliers + far location |
+| **Ink Cartridge B** (office) | Low | Many suppliers + close location |
+| **Paper (A4)** | Low | Many suppliers + moderate distance |
+| **Plastic Bottle** | Low | 1,000 suppliers + very close location |
+
+<Aside type="tip">
+**★ Exam Tip:** Know the formula. Know why the weights are subjective. In any exam answer involving Kraljic, always justify the weights chosen by referencing the company's operating context — this shows analytical maturity, not just formula recall.
+</Aside>
+
+---
+
+## Plotting & Classification on the Kraljic Matrix
+
+- **X-axis:** Profit Impact (0–10)
+- **Y-axis:** Weighted Supply Risk (1–10)
+- **Cutoff applied:** Score > 6 on either axis = classified into the "high" side of that dimension
+
+![Scatter Plot — 8 Items Plotted on Profit Impact vs. Supply Risk Axes with Quadrant Cutoff Lines](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image5.png)
+
+![Final Kraljic Matrix — 8 Items Classified into Four Quadrants](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image6.png)
+
+### Resulting Quadrant Classification
+
+| Quadrant | Items |
+|---|---|
+| **Strategic** (High PI + High Risk) | Syrup, Label A |
+| **Bottleneck** (Low PI + High Risk) | Label B, Carton, Ink Cartridge A (labelling) |
+| **Leverage** (High PI + Low Risk) | Plastic Bottle |
+| **Non-Critical** (Low PI + Low Risk) | Paper (A4), Ink Cartridge B (office) |
+
+<Aside type="note">
+**★ Exam Tip — The cutoff caveat:** The cutoff value (here: 6 out of 10) is a **management judgement call** — it is not a universal fixed threshold. Changing the cutoff can reclassify items. Always mention this when explaining the classification in an exam answer. The cutoff should be set based on the firm's risk appetite and strategic priorities.
+</Aside>
+
+---
+
+## Current Procurement State — Review
+
+Before recommending changes, the current practice for each item is assessed against its quadrant:
+
+| Item | Quadrant | Current Practice | Issue Identified |
+|---|---|---|---|
+| **Plastic Bottle** | Leverage | Same supplier for 5 years | Not using buyer power — 1,000 suppliers available |
+| **Syrup** | Strategic | Same supplier 10 years; yearly contract renegotiation | High dependency; only 2 suppliers; international distance adds risk |
+| **Label A** | Strategic | Supplier chosen yearly by cost negotiation | Price volatile year to year; only 4 suppliers |
+| **Label B** | Bottleneck | Supplier chosen yearly | Low value but supply risk still present — few suppliers, far location |
+| **Carton** | Bottleneck | Yearly selection | Risk exists despite moderate supplier numbers |
+| **Paper (A4)** | Non-Critical | Spot purchases as needed ✓ | Possibly over-spending; worth reviewing digital alternatives |
+| **Ink Cartridge A** | Bottleneck | 3-year contract then new supplier | 1 supplier, very far — high production disruption risk |
+| **Ink Cartridge B** | Non-Critical | Spot purchases as needed ✓ | Minimal issue |
+
+---
+
+## Recommended Procurement Strategies
+
+![Recommendations Overview — Item-wise Strategy Map on Kraljic Matrix](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image7.png)
+
+![Recommendations Logic Table — Full Item-wise Current Practice vs. Recommended Action](/learnings/online/Supply-Chain-Digitization/sc_w3s5_image8.png)
+
+**Full recommendations — current practice vs. action:**
+
+| Item | Quadrant | Current Practice | Issue | Recommended Action |
+|---|---|---|---|---|
+| **Plastic Bottle** | Leverage | Same supplier for 5 years | Not leveraging buyer power despite 1,000 suppliers | Open competitive tendering → invite bids → drive down procurement cost |
+| **Syrup** | Strategic | Same supplier 10 years; yearly renegotiation | High dependency; only 2 suppliers; international distance | Explore JV; negotiate long-term rates; evaluate substitutes if formulation flexibility exists |
+| **Label A** | Strategic | Supplier chosen yearly by cost negotiation | Price volatile year to year; only 4 suppliers | Offer multi-year contracts to 2–3 suppliers; distribute procurement to reduce single-source risk and stabilise cost |
+| **Label B** | Bottleneck | Supplier chosen yearly | Low value but supply risk present — few suppliers, far location | Multi-year contract to reduce supply disruption risk |
+| **Carton** | Bottleneck | Yearly selection | Supply risk still present despite moderate supplier count | Empanel multiple suppliers → reduce single-point-of-failure risk |
+| **Paper (A4)** | Non-Critical | Spot purchases as needed | Possibly over-spending; worth reviewing | Explore paperless / digital processes; continue spot purchasing in the interim |
+| **Ink Cartridge A** | Bottleneck | 3-year contract then new supplier | 1 supplier, very far — production labelling halts if supply disrupted | Explore supplier takeover OR switch to standard compatible ink from a nearby supplier (substitute strategy) |
+| **Ink Cartridge B** | Non-Critical | Spot purchases as needed | Minimal issue | Explore paperless office; continue spot purchasing |
+
+---
+
+## Logic Behind Key Recommendations
+
+### Plastic Bottle → Competitive Bidding
+
+With 1,000 suppliers located nearby, the buyer holds **maximum negotiating power**. Remaining with one supplier for five years is a missed cost-reduction opportunity. Opening competitive tendering will drive procurement cost down significantly.
+
+### Syrup → JV / Long-Term Negotiation / Substitutes
+
+Only 2 suppliers globally, with international distance — the textbook definition of a Strategic item challenge. Yearly renegotiation produces cost instability and relationship fragility.
+
+<Aside type="tip">
+**Decision tree for Syrup:**
+- If the syrup formulation defines the product's identity → substitutes are not feasible → focus on JV or a long-term lock-in deal
+- If some flexibility exists on formulation → explore alternative syrups to broaden the supplier base and reduce supply risk
+</Aside>
+
+### Label A & B → Long-Term Contracts + Distribute Across Suppliers
+
+Both labels have very few suppliers (4 each) at far locations. Yearly selection creates price instability and fragile relationships.
+
+**Fix:** Multi-year contract with 2–3 suppliers simultaneously — stabilises cost (Label A, Strategic) and reduces disruption risk (Label B, Bottleneck). Distributing procurement across multiple suppliers eliminates single-point-of-failure exposure.
+
+### Ink Cartridge A (Labelling) → Substitute / Nearby Supplier
+
+This is the **most dangerous bottleneck item** in the portfolio — one supplier located very far away. A supply disruption stops in-house label printing, which halts production batching entirely.
+
+**Two options:**
+1. Explore supplier takeover if volumes justify it
+2. Switch to a standard compatible ink from a local or nearby supplier — a substitute strategy that immediately lowers supply risk
+
+### Non-Critical Items (Paper, Ink Cartridge B) → Paperless / Spot Purchase
+
+Low value and low risk — no strategic oversight required. Continue spot purchasing and explore going paperless or digital to eventually eliminate the procurement need altogether.
+
+<Aside type="note">
+**★ Match the intervention to the quadrant.** Do not apply JV logic to Non-Critical items or spot-purchase logic to Strategic items. The quadrant drives the intervention — not cost or quantity alone.
+</Aside>
+
+---
+
+## Continuous Improvement — Keeping the Matrix Relevant
+
+<Aside type="note">
+The Kraljic Matrix is **not a one-time exercise**. Markets, supplier landscapes, and costs change continuously. The matrix must be revisited and refined regularly to remain actionable.
+
+**Key ongoing actions:**
+- **Review metrics regularly** — revisit metric selection, scaling approach, and weights as context evolves
+- **Build team consensus** — involve the full procurement team; others may flag additional risk dimensions not yet captured
+- **Benchmark against peers** — look at best practices from other plants or industry peers in the same sector
+- **Validate outcomes** — confirm that strategies assigned per segment actually produce the intended results in practice
+- **Adjust weights by context** — in poor terrain or remote operating regions, the distance weight should be significantly higher than 0.2
+</Aside>
+
+<Aside type="tip">
+**★ Exam Tip:** Mentioning continuous improvement and context-specific weighting signals to the examiner that you understand the Kraljic Matrix as a **living management tool**, not a fixed formula applied once and filed away.
+</Aside>
+
+---
+
+## Session Summary — 6-Step Kraljic Application Process
+
+<Steps>
+1. **Collect data** — purchase value, number of suppliers, average supplier distance for all items in scope
+2. **Scale and weight** — normalise sub-metrics to a consistent scale; compute weighted composite supply risk score
+3. **Plot and classify** — apply a management-defined cutoff (e.g. 6/10) to assign each item to one of the four quadrants
+4. **Review current state** — compare actual procurement practice against the ideal strategy for each quadrant
+5. **Recommend** — define targeted strategy per item: competitive bidding / JV / long-term contract / substitution / spot purchase
+6. **Iterate** — revisit the matrix regularly; refine weights, metrics, and cutoffs as market conditions evolve
+</Steps>
+
+<Aside type="note">
+**★ The Kraljic Matrix turns raw procurement data into a strategic action plan.** The quadrant drives the intervention — not just cost or quantity considered in isolation. Classification is always the first step; strategy follows from it.
+</Aside>
