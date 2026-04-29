@@ -1,0 +1,297 @@
+---
+title: "Woche 4 | Sitzung 4: Dezentralisierte vs. zentralisierte SC — Das Zeitungshändler-Problem (Deterministisch)"
+description: "Führt das Zeitungshändler-Problem als klassisches Einperioden-Bestellmodell ein, arbeitet sieben Nachfrageszenarien unter deterministischen Bedingungen durch, um zu zeigen, wie dezentralisierte Entscheidungsfindung SC-Konflikte erzeugt, und gibt einen Ausblick auf die Koordinationsmechanismen, die diese lösen."
+sidebar:
+  order: 20
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply-Chain-Digitalisierung — Modul 3: Digitales Geschäft in der SC*
+
+---
+
+## Sitzungsagenda & Kontext
+
+<Aside type="note">
+**Warum dieses Beispiel?** SC-Koordination fragt: Wie sollten Entscheidungen innerhalb einer Lieferkette getroffen werden — zentral oder unabhängig? Das Zeitungshändler-Problem (ZHP) ist das klassische Modell, das zeigt, was schiefgeht, wenn jeder Akteur nur für sich selbst optimiert.
+
+**Fokus-Entscheidung:** „Wie viel bestellen?" — eine Losgrößen- und Bestellmengenentscheidung.
+
+**Verhältnis zur Wirtschaftlichen Bestellmenge (EOQ):** Beide befassen sich mit Bestellmengen, sind aber unterschiedliche Modelle. EOQ = Mehrperiodisch, kontinuierliche Nachfrage. ZHP = **Einperiodisch**, einmalige Bestellentscheidung.
+
+**Verbindung zur Plattformökonomie:** Diese Sitzung legt die Grundlage — SC-Koordinationsfehler → Plattformökonomie als strukturelle Lösung (in späteren Sitzungen behandelt).
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Zeitungshändler-Problem = **einperiodische Bestellentscheidung**. Diese Definition unterscheidet es von der EOQ. Dies immer nennen, wenn das Modell eingeführt wird.
+</Aside>
+
+---
+
+## Die Ausgangssituation — Akteure & Ziele
+
+### Akteure
+
+| Akteur | Rolle | Ziel |
+|---|---|---|
+| **Zeitungshändler (ZH)** | Beobachtet Marktnachfrage → gibt Bestellung auf → verkauft an den Endmarkt | Maximierung des **eigenen** Gewinns |
+| **Regionslieferant (RL)** | Erhält ZH-Bestellung → entscheidet, ob er druckt und liefert | Maximierung des **eigenen** Gewinns — kann die Belieferung **verweigern**, wenn die Bestellung nicht tragfähig ist |
+
+<Aside type="note">
+In der Praxis können mehrere Zeitungshändler und mehrere Regionslieferanten gleichzeitig existieren. Diese Analyse vereinfacht auf **einen ZH und einen RL**, um das Koordinations- und Anreizproblem sauber zu isolieren.
+
+**Andere mögliche Ziele** für SC-Akteure umfassen Kostensenkung und Emissionsziele — dieses Modell verwendet jedoch durchgehend Gewinnmaximierung.
+</Aside>
+
+### Entscheidungsfolge (Chronologisch)
+
+<Steps>
+1. **ZH beobachtet Nachfrage** → entscheidet Bestellmenge **S** → gibt Bestellung an RL auf
+2. **RL erhält Bestellung** → entscheidet, ob er akzeptiert und liefert (basierend auf RL's eigener Rentabilitätsbewertung)
+</Steps>
+
+<Aside type="tip">
+**★ Prüfungstipp — Der kritische Unterschied:**
+- **Dezentralisiert** = jeder Akteur maximiert seinen eigenen Gewinn unabhängig — ZH und RL entscheiden jeweils allein
+- **Zentralisiert** = ein zentraler Planer maximiert den **gesamten SC-Gewinn** — die Ergebnisse beider Akteure werden gemeinsam optimiert
+
+Dieser Unterschied treibt jede folgende Szenarioanalyse an.
+</Aside>
+
+---
+
+## Erlös- & Kostenparameter
+
+| Parameter | Zeitungshändler (₹/Einheit) | Regionslieferant (₹/Einheit) |
+|---|---|---|
+| **Einzelhandelspreis (p)** | ₹30 (Preis an Endkunden) | — |
+| **Großhandelspreis (w)** | ₹10 (an RL je bestellter Einheit) | ₹10 (von ZH je gelieferter Einheit) |
+| **Distributionskosten (c_d)** | ₹10 je verkaufter Einheit | — |
+| **Herstellungs-/Betriebskosten (c_m)** | — | ₹5 je gedruckter Einheit |
+| **Fixe Betriebskosten (F)** | Keine Fixkosten → immer rentabel wenn Nachfrage > 0 | ₹1,50,000 je Periode |
+| **Nettomarge je verkaufter Einheit** | ₹30 − ₹10 − ₹10 = **₹10 je Einheit** | ₹10 − ₹5 = **₹5 je Einheit** (über Gewinnschwelle) |
+| **Gewinnschwelle** | Keine Fixkosten — immer rentabel wenn eine Einheit verkauft wird | ₹1,50,000 ÷ ₹5 = **30.000 Einheiten** |
+
+---
+
+## Wichtige Formeln
+
+### Zeitungshändler-Gewinn
+
+<Aside type="note">
+**Verkaufte Einheiten = min(Nachfrage N, Bestellung S)**
+→ Der ZH kann nur so viel verkaufen, wie die Nachfrage erlaubt oder was bestellt wurde — je nachdem, was kleiner ist.
+
+**ZH-Gewinn = [min(N, S) × (p − c_d)] − [S × w]**
+= [min(N, S) × ₹20] − [S × ₹10]
+
+| Bedingung | Ergebnis |
+|---|---|
+| **N = S** | ZH verkauft alles → Gewinn = S × ₹10 |
+| **N < S** | ZH verkauft nur N Einheiten → Überbestandsverlust für (S − N) beschaffte, aber unverkaufte Einheiten |
+| **N > S** | ZH verkauft nur S Einheiten → entgangene Verkäufe (Fehlmenge) |
+</Aside>
+
+### Regionslieferant-Gewinn
+
+<Aside type="note">
+**RL-Gewinn = [S × (w − c_m)] − F**
+= [S × ₹5] − ₹1,50,000
+
+| Bedingung | Ergebnis |
+|---|---|
+| **S < 30.000** | RL macht Verlust → hat rationalen Anlass, die Bestellung **abzulehnen** |
+| **S = 30.000** | RL bricht genau gleich auf → kaum tragfähig |
+| **S > 30.000** | Jede zusätzliche Einheit bringt ₹5 Deckungsbeitrag → rentabel |
+</Aside>
+
+---
+
+## Deterministisches Setting — Was das bedeutet
+
+<Aside type="note">
+**Deterministische Nachfrage:** Die Nachfrage ist vor der Bestellaufgabe mit Sicherheit bekannt. Sie kann eine feste Konstante oder eine Funktion des Preises sein (wenn der Preis steigt, sinkt die Nachfrage).
+
+**Warum wird es verwendet?** Es ist die analytische Ausgangsbasis — es isoliert das **Anreizausrichtungsproblem** vom Nachfrageunsicherheitsproblem. Die Beseitigung der Nachfrageunsicherheit lässt uns das Koordinationsversagen in seiner reinsten Form sehen.
+
+**Ist es realistisch?** Nein — aber das ist nicht sein Zweck. Das probabilistische Setting (nächste Sitzung) fügt die Nachfrageunsicherheit wieder hinzu.
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Deterministisch ≠ realistisch. Immer erklären, *warum* ein Setting gewählt wird — deterministisch wird verwendet, um das Anreizproblem zu isolieren und zu analysieren, ohne gleichzeitig die Komplexität der Nachfrageunsicherheit hinzuzufügen.
+</Aside>
+
+---
+
+## 7 Szenarien — Dezentralisierte Entscheidungsfindung (Deterministisch)
+
+ZH gibt Bestellung S bei bekannter Nachfrage N auf. Beide Akteure treffen unabhängige gewinnmaximierende Entscheidungen.
+
+| Szenario | Nachfrage (N) | Bestellung (S) | ZH-Gewinn (₹) | RL-Gewinn (₹) | Wer profitiert? | Würde ZH das wählen? |
+|---|---|---|---|---|---|---|
+| **1** | 0 | 2.000 | −₹20.000 | −₹1,40.000 | Keiner | Nein — besser 0 bestellen |
+| **2** | 2.000 | 40.000 | −₹3,60.000 | +₹50.000 | Nur Lieferant | Nein — ZH verliert stark |
+| **3** | 2.000 | 1.500 | +₹15.000 | −₹1,42.500 | Nur ZH | Nein — S4 ist besser |
+| **4** | 2.000 | 2.000 | +₹20.000 | −₹1,40.000 | Nur ZH | **Ja** (N < 30.000; beste ZH-Option) |
+| **5** | 30.000 | 30.000 | +₹3,00.000 | ₹0 (Gewinnschwelle) | Nur ZH | **Ja** (ZH rentabel) |
+| **6** | 40.000 | 40.000 | +₹4,00.000 | +₹50.000 | **Beide ✓** | **Ja — beide gewinnen** |
+| **7** | > 40.000 | = N | Steigt mit N | Steigt mit N | **Beide ✓** | **Ja — bestes Ergebnis** |
+
+---
+
+## Szenarioweise Analyse
+
+### Szenarien 1–3: Sehr niedrige Nachfrage (N ≪ Gewinnschwelle)
+
+<Badge text="N = 0 oder 2.000 | RL-Gewinnschwelle = 30.000" variant="danger" />
+
+**Szenario 1 (N=0, S=2.000):** ZH verkauft 0 Einheiten → verliert ₹20.000. RL druckt 2.000 → verliert ₹1,40.000. Kein Akteur profitiert. ZH würde das nie wählen — 0 bestellen ist besser.
+
+**Szenario 2 (N=2.000, S=40.000):** ZH überbestellt massiv → verliert ₹3,60.000. RL erhält eine große Bestellung → verdient ₹50.000. Lieferant profitiert, ZH wird zerstört. ZH würde das rational nie wählen.
+
+**Szenario 3 (N=2.000, S=1.500):** ZH unterbestellt leicht → verdient ₹15.000. RL-Bestellung liegt weit unter Gewinnschwelle → verliert ₹1,42.500.
+
+<Aside type="note">
+**Wichtige Erkenntnis:** Szenarien 1–3 treten in einer dezentralisierten Umgebung tatsächlich nicht auf. Der ZH hat immer eine bessere Option verfügbar — Szenario 4. Diese Szenarien werden nur aufgezeigt, um zu verdeutlichen, warum der ZH immer zu S = N konvergiert.
+</Aside>
+
+---
+
+### Szenario 4: N = 2.000, S = 2.000 (ZH passt sich der Nachfrage an)
+
+<Badge text="ZH profitiert — RL verliert — SC-Konflikt" variant="danger" />
+
+- **ZH verkauft alle 2.000 Einheiten → Gewinn = 2.000 × ₹10 = +₹20.000 ✓**
+- **RL druckt 2.000 (weit unter der Gewinnschwelle von 30.000) → Verlust = −₹1,40.000 ✗**
+
+<Aside type="note">
+**★ Entscheidender Konfliktpunkt:** ZH ist rentabel und hat rational die beste ihm verfügbare Entscheidung getroffen. RL ist tief unrentabel.
+
+**Rationale Reaktion des RL:** Lieferung verweigern. Wenn RL ablehnt → ZH hat kein Produkt zu verkaufen → SC bricht zusammen. Die individuell rationale Entscheidung des ZH zerstört unbeabsichtigt die Lieferkette.
+</Aside>
+
+---
+
+### Szenario 5: N = 30.000, S = 30.000 (Nachfrage = RL-Gewinnschwelle)
+
+<Badge text="ZH profitiert — RL bricht gleich auf" variant="caution" />
+
+- **ZH-Gewinn = 30.000 × ₹10 = +₹3,00.000 ✓**
+- **RL-Gewinn = 30.000 × ₹5 − ₹1,50.000 = ₹0 (genau an der Gewinnschwelle)**
+
+ZH ist rentabel. RL ist indifferent — kaum tragfähig, kein Anreiz zu investieren oder Kapazitäten zu erweitern. Die SC funktioniert technisch, aber nur knapp.
+
+---
+
+### Szenarien 6 & 7: N ≥ 40.000 (Beide Akteure rentabel)
+
+<Badge text="Beide profitieren — Anreize ausgerichtet" variant="tip" />
+
+**Szenario 6 (N = 40.000, S = 40.000):**
+- ZH-Gewinn = +₹4,00.000 ✓
+- RL-Gewinn = (40.000 × ₹5) − ₹1,50.000 = +₹50.000 ✓
+
+**Szenario 7 (N > 40.000, S = N):**
+- Beide Gewinne steigen proportional mit der Nachfrage
+- Beide Akteure bevorzugen S7 > S6 > S5 — Anreize sind vollständig ausgerichtet, wenn N ≥ 30.000
+
+<Aside type="tip">
+**Anwendung der Konzepte:** ZH und RL haben ausgerichtete Anreize **nur dann, wenn die Nachfrage hoch genug ist, um die Fixkosten des Lieferanten zu decken**. Dies ist das grundlegende Koordinationsproblem — die Bestellmengenentscheidung des ZH hat externe Auswirkungen auf den RL, aber der ZH hat keinen Anreiz, diese zu internalisieren.
+</Aside>
+
+---
+
+## Kernerkenntnisse — Dezentralisiert vs. Zentralisiert
+
+### Entscheidungsregel des Zeitungshändlers (Dezentralisiert)
+
+<Aside type="note">
+In einem dezentralisierten, deterministischen Setting ist die dominante Strategie des ZH immer:
+
+**Genau S = N bestellen** (Nachfrage genau treffen)
+
+| Regel | Begründung |
+|---|---|
+| Nie S > N bestellen | Überbestand schadet dem ZH — unverkaufte Einheiten erzeugen Beschaffungskosten aber keinen Erlös |
+| Nie S < N bestellen | Unterbestand lässt Geld liegen — rentable Verkäufe werden nicht realisiert |
+| Immer S = N bestellen | Maximiert den eigenen Gewinn des ZH in jedem Nachfrageszenario |
+
+**Der ZH hat die Macht:** Die Bestellmenge des ZH bestimmt, was der RL verdient. Das kommerzielle Schicksal des Lieferanten liegt vollständig in den Händen des ZH.
+</Aside>
+
+---
+
+### Auswirkung der ZH-Entscheidung auf den Regionslieferanten
+
+| Nachfrageniveau | Rationale Bestellung des ZH | ZH-Ergebnis | RL-Ergebnis | SC-Ergebnis |
+|---|---|---|---|---|
+| **N < 30.000** | S = N (< 30.000) | Rentabel | Verlust — kann Lieferung verweigern | **SC-Konflikt → potenzieller Zusammenbruch** |
+| **N < 30.000, S erzwungen > 30.000** | ZH würde das nie wählen | Verlust | Rentabel | ZH lehnt ab — wird nicht gewählt |
+| **N ≥ 30.000** | S = N (≥ 30.000) | Rentabel | Rentabel oder an Gewinnschwelle | **SC funktioniert ✓** |
+
+<Aside type="note">
+**★ Die Kernaussage der dezentralisierten SC-Analyse:**
+
+Der ZH maximiert seinen eigenen Gewinn → verursacht unbeabsichtigt SC-Konflikte, wenn die Marktnachfrage unter der Gewinnschwelle des Lieferanten liegt. Die SC wird nicht als Ganzes optimiert — nur aus ZH-Perspektive.
+
+Dies wird in der SC-Literatur als **doppelte Marginalisierung** bezeichnet — jeder Akteur nimmt eine Marge, und der kumulative Effekt reduziert die systemweite Effizienz unter das, was ein zentraler Planer erreichen könnte.
+</Aside>
+
+---
+
+### Was würde sich unter zentralisierter Entscheidungsfindung ändern?
+
+Ein zentraler Planer, der den **gesamten SC-Gewinn** optimiert, würde:
+
+- Die SC nur betreiben, wenn N ≥ 30.000 — um die Tragfähigkeit beider Akteure zu gewährleisten
+- Bestellmengen wählen, die sowohl RL- als auch ZH-Rentabilität garantieren
+- Erkennen, dass eine Bestellung von S < 30.000 das System unrentabel macht — und entweder den Betrieb ablehnen oder einen Weg finden, den RL zu entschädigen
+
+<Aside type="note">
+**Die zentrale Herausforderung:** Wie bringt man den ZH dazu, freiwillig mehr zu bestellen als die Nachfrage vorgibt — auch wenn das die eigene Marge des ZH schadet?
+
+Dazu sind **Koordinationsverträge** erforderlich — Mechanismen, die die Anreizstruktur so verändern, dass die individuell rationale Entscheidung des ZH auch zur kollektiv optimalen Entscheidung wird.
+
+**Beispiele für Koordinationsverträge** (in kommenden Sitzungen behandelt): Rückkaufverträge | Umsatzbeteiligung | Mengenflexibilität
+</Aside>
+
+---
+
+## Grenzen des deterministischen Settings
+
+<Aside type="note">
+Das deterministische Setting setzte voraus, dass die Nachfrage vor der Bestellaufgabe mit Sicherheit bekannt war. Dies ist analytisch sauber, aber in der Praxis unrealistisch.
+
+**Echte Nachfrage ist probabilistisch:** Der ZH weiß nicht genau, wie viele Zeitungen morgen verkauft werden. Die Nachfrage ist eine Zufallsvariable — sie kann hoch oder niedrig sein.
+
+Die Konfliktszenarien (1–4) werden **strukturell komplexer**, wenn die Nachfrage unsicher ist — da der ZH S nun entscheiden muss, bevor N bekannt ist, was eine neue Quelle der Fehlausrichtung hinzufügt.
+
+**Nächste Sitzung:** Das gleiche ZHP in einem probabilistischen Nachfragesetting → weitere analytische Herausforderungen entstehen → bereitet die vollständigen Koordinationsmechanismen und die Plattformökonomiediskussion vor.
+</Aside>
+
+---
+
+## Zusammenfassung
+
+| Element | Detail |
+|---|---|
+| **Modell** | Zeitungshändler-Problem — einperiodische Bestellung mit 2 Akteuren (ZH und RL) |
+| **ZH-Gewinnformel** | min(N, S) × ₹20 − S × ₹10 |
+| **RL-Gewinnformel** | S × ₹5 − ₹1,50.000 \| Gewinnschwelle bei S = 30.000 Einheiten |
+| **Dominante Strategie des ZH (deterministisch)** | Immer S = N bestellen — passt Nachfrage genau an |
+| **SC-Konfliktzone** | N < 30.000 → ZH rentabel, RL nicht → RL kann aussteigen → SC bricht zusammen |
+| **Beide-rentabel-Zone** | N ≥ 30.000 → sowohl ZH als auch RL rentabel → SC funktioniert |
+| **Zentralisierte Verbesserung** | Koordinationsverträge notwendig, um ZH-Individualentscheidungen mit dem systemweiten Optimum auszurichten |
+| **Nächste Sitzung** | Probabilistisches Nachfragesetting + Koordinationsmechanismen |
+
+<Aside type="tip">
+**★ Prüfungstipp — 10-Punkte-Antwort zu dezentralisierter vs. zentralisierter SC:**
+
+1. **Beide definieren:** Dezentralisiert = jeder Akteur maximiert seinen eigenen Gewinn unabhängig. Zentralisiert = zentraler Planer maximiert den gesamten SC-Gewinn.
+2. **Das ZHP einführen:** Einperiodisches Bestellmodell mit ZH (Einzelhändler) und RL (Lieferant). Parameter nennen — Einzelhandelspreis ₹30, Großhandel ₹10, Distributionskosten ₹10, Herstellungskosten ₹5, RL-Fixkosten ₹1,50.000.
+3. **Formeln nennen:** ZH-Gewinn = min(N,S) × ₹20 − S × ₹10 | RL-Gewinn = S × ₹5 − ₹1,50.000 | RL-Gewinnschwelle = 30.000 Einheiten.
+4. **Szenariotabelle verwenden:** Zeigen, dass ZH immer S = N wählt → wenn N < 30.000, profitiert ZH aber RL nicht → RL kann Lieferung verweigern → SC-Konflikt und Zusammenbruch.
+5. **Zentralisierte Lösung nennen:** Zentraler Planer würde nur bei N ≥ 30.000 arbeiten und Koordinationsverträge (Rückkauf, Umsatzbeteiligung) benötigen, damit ZH die Fixkosten des RL internalisiert.
+6. **Mit Ausblick abschließen:** Probabilistisches Setting fügt Nachfrageunsicherheit hinzu → Koordinationsmechanismen + Plattformökonomie als strukturelle Lösungen.
+</Aside>

@@ -1,0 +1,287 @@
+---
+title: "Week 4 | Session 5: News Vendor Problem — Full Payoff Analysis & SC Conflict (Deterministic)"
+description: "Completes the deterministic News Vendor Problem with full payoff curves for the News Vendor, Regional Supplier, and the total SC — identifying the three-way conflict between player objectives and establishing the conditions under which decentralised SC alignment is and is not possible."
+sidebar:
+  order: 21
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Digital Business in SC*
+
+---
+
+## Recap — Setup & Key Parameters
+
+<Aside type="note">
+**NV decision:** How much to order (S) from Regional Supplier, given known demand (D).
+
+**NV profit formula:** min(D, S) × ₹20 − S × ₹10
+
+**RS profit formula:** S × ₹5 − ₹1,50,000 | Breakeven at **S = 30,000 units**
+
+**Decision sequence:** NV orders first → RS decides whether to accept or reject.
+
+**Information asymmetry:** NV knows market demand D. RS only knows the order size S placed by NV — RS does not see demand directly.
+</Aside>
+
+<Aside type="tip">
+**★ Exam Tip:** NV holds **informational power** — knows demand. RS holds **operational power** — can refuse to supply. This asymmetry is the root of SC conflict in decentralised settings.
+</Aside>
+
+---
+
+## NV Payoff — Shape of the Profit Curve
+
+<Aside type="note">
+**The NV payoff as a function of order size S has an inverted-U shape for every demand level D:**
+
+| Order vs. Demand | What Happens | NV Profit |
+|---|---|---|
+| **S < D** | NV understocks → sells only S units | Positive but below maximum — leaving money on the table |
+| **S = D** | NV matches demand exactly → sells all units | **Maximum profit for NV at this demand level** |
+| **S > D** | NV overstocks → sells only D units, pays full wholesale cost for (S−D) unsold | Profit falls below peak |
+| **S >> D** | Excess purchase cost overwhelms revenue | Profit can reach zero or go deeply negative |
+</Aside>
+
+**Why the NV never deviates from S\* = D:**
+
+| Direction | Cost of Deviation |
+|---|---|
+| **Order more than D** | Each unit beyond D is purchased at ₹10 wholesale but generates ₹0 revenue → pure loss |
+| **Order less than D** | Each unit short of D is a missed sale of ₹20 net revenue (₹30 price − ₹10 distribution) |
+
+<Aside type="tip">
+**★ Exam Tip:** The NV payoff curve **peaks at S = D for any demand level in the deterministic setting**. This is the single most important result from the NVP analysis. State it clearly and first in any exam answer on this topic.
+</Aside>
+
+---
+
+## NV Payoff — Best Decision Per Scenario
+
+| Scenario | Demand (D) | NV Best Order (S\*) | NV Max Profit | NV Payoff Shape | Will NV Choose S\*? |
+|---|---|---|---|---|---|
+| **1** | 0 | **S\* = 0** | ₹0 | Any order > 0 → loss. Order nothing = ₹0. | **Yes — order nothing** |
+| **2–4** | 2,000 | **S\* = 2,000** | **+₹20,000** | Rises to peak at S=D=2,000, falls on either side. Ordering 40,000 → −₹3,60,000. | **Yes — match demand** |
+| **5** | 30,000 | **S\* = 30,000** | **+₹3,00,000** | Rises steadily to peak at S=30,000. Any order beyond reduces profit. | **Yes — match demand** |
+| **6** | 40,000 | **S\* = 40,000** | **+₹4,00,000** | Rises to peak at S=D=40,000, then falls. Ordering 5 lakh → deeply unprofitable. | **Yes — match demand** |
+| **7** | 5,00,000 | **S\* = 5,00,000** | **Maximum** | Rises to peak at S=D=5,00,000. Would go higher if no upper demand bound existed. | **Yes — match demand** |
+
+---
+
+## NV Full Payoff Matrix (All Orders × All Demand Levels)
+
+The table below shows NV profit (₹) for every combination of demand scenario and order quantity S:
+
+| Scenario | Demand | S=0 | S=1,000 | S=2,000 | S=3,000 | S=5,000 | S=10,000 | S=20,000 | S=30,000 | S=40,000 | S=5,00,000 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0 | 0 | −10,000 | −20,000 | −30,000 | −50,000 | −1,00,000 | −2,00,000 | −3,00,000 | −4,00,000 | −50,00,000 |
+| 2–4 | 2,000 | 0 | +10,000 | **+20,000** | +10,000 | −10,000 | −60,000 | −1,60,000 | −2,60,000 | −3,60,000 | −49,60,000 |
+| 5 | 30,000 | 0 | +10,000 | +20,000 | +30,000 | +50,000 | +1,00,000 | +2,00,000 | **+3,00,000** | +2,00,000 | −44,00,000 |
+| 6 | 40,000 | 0 | +10,000 | +20,000 | +30,000 | +50,000 | +1,00,000 | +2,00,000 | +3,00,000 | **+4,00,000** | −42,00,000 |
+| 7 | 5,00,000 | 0 | +10,000 | +20,000 | +30,000 | +50,000 | +1,00,000 | +2,00,000 | +3,00,000 | +4,00,000 | **+50,00,000** |
+
+<Aside type="note">
+**Reading the matrix:** Bold values show each scenario's profit-maximising order (S\* = D). Every row's peak is at the column where S equals the row's demand level — confirming the universal rule S\* = D.
+
+**Key observation:** Ordering at S > D always reduces NV profit. The S = 5,00,000 column is catastrophic for all scenarios except Scenario 7, confirming the NV would never over-order in a deterministic setting.
+</Aside>
+
+---
+
+## Supplier Payoff — Impact of NV's Best Decisions
+
+<Badge text="RS Perspective" variant="caution" />
+
+### RS Payoff Shape
+
+<Aside type="note">
+RS profit increases **monotonically** with order size S — more NV orders means more RS earns:
+
+**RS Profit = S × ₹5 − ₹1,50,000**
+
+| Order Level | RS Outcome |
+|---|---|
+| **S < 30,000** | RS always makes a loss — fixed cost not covered |
+| **S = 30,000** | RS exactly breaks even — no profit incentive to participate |
+| **S > 30,000** | Each additional unit earns ₹5 contribution margin → profitable and growing |
+
+**RS rational behaviour:** Refuse to supply if expected order S < 30,000 units — the order is simply not commercially viable.
+</Aside>
+
+### RS Full Payoff Matrix (All Orders × All Demand Levels)
+
+RS payoff depends only on S (not on D directly — RS cannot observe demand):
+
+| Scenario | Demand | S=0 | S=1,000 | S=2,000 | S=10,000 | S=20,000 | S=30,000 | S=40,000 | S=5,00,000 |
+|---|---|---|---|---|---|---|---|---|---|
+| All scenarios | Any | 0 | −1,45,000 | −1,40,000 | −1,00,000 | −50,000 | **₹0** | +50,000 | +23,50,000 |
+
+<Aside type="note">
+**Critical observation:** RS payoff is **identical across all demand scenarios** for a given order size S — because RS profit depends only on the quantity ordered, not on what the market demand actually is. The RS never sees demand; it only sees S.
+
+This is the asymmetry: **NV's profit varies with D, RS's profit does not** — yet D determines what S the NV will place. RS is entirely dependent on NV's market knowledge.
+</Aside>
+
+### When NV Places Its Best Order (S\* = D) — What Happens to RS?
+
+| Demand Level | NV's Rational Order | NV Outcome | RS Outcome | SC Result |
+|---|---|---|---|---|
+| **D < 30,000** (S1–S4) | S\* = D < 30,000 | Profitable ✓ | Loss up to −₹1,40,000 → **RS refuses to supply** | **SC collapses ✗** |
+| **D = 30,000** (S5) | S\* = 30,000 | +₹3,00,000 ✓ | ₹0 exactly — no profit motive | **RS may refuse ⚠** |
+| **D ≥ 40,000** (S6, S7) | S\* = D ≥ 40,000 | Profitable ✓ | Profitable ✓ | **SC works ✓** |
+
+<Aside type="note">
+**Could NV make RS profitable by ordering ≥ 30,000 when D < 30,000?** Yes — but NV would then incur a massive loss (e.g., Scenario 2: NV orders 40,000 when D = 2,000 → NV loss = −₹3,60,000). **NV will never voluntarily do this.**
+
+This is the core tension: the action that saves the RS destroys the NV. No voluntary coordination is possible without an external mechanism.
+</Aside>
+
+---
+
+## Supply Chain Total Payoff Analysis
+
+<Badge text="SC = NV Profit + RS Profit" variant="note" />
+
+**SC total payoff = NV profit + RS profit** for each order size S and demand level D.
+
+### SC Full Payoff Matrix
+
+| Scenario | Demand | S=0 | S=1,000 | S=2,000 | S=10,000 | S=20,000 | S=30,000 | S=40,000 | S=5,00,000 |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0 | 0 | −1,55,000 | −1,60,000 | −2,00,000 | −2,50,000 | −3,00,000 | −3,50,000 | −26,50,000 |
+| 2–4 | 2,000 | 0 | −1,35,000 | **−1,20,000** | −1,60,000 | −2,10,000 | −2,60,000 | −3,10,000 | −26,10,000 |
+| 5 | 30,000 | 0 | −1,35,000 | −1,20,000 | 0 | +1,50,000 | **+3,00,000** | +2,50,000 | −20,50,000 |
+| 6 | 40,000 | 0 | −1,35,000 | −1,20,000 | 0 | +1,50,000 | +3,00,000 | **+4,50,000** | −18,50,000 |
+| 7 | 5,00,000 | 0 | −1,35,000 | −1,20,000 | 0 | +1,50,000 | +3,00,000 | +4,50,000 | **+73,50,000** |
+
+**Key SC finding:** When NV orders S\* = D, the SC total payoff is:
+
+| Scenario at S\* = D | NV Profit | RS Profit | SC Total | SC Viable? |
+|---|---|---|---|---|
+| **S1–S4 (D = 2,000)** | +₹20,000 | −₹1,40,000 | **−₹1,20,000** | **No ✗** |
+| **S5 (D = 30,000)** | +₹3,00,000 | ₹0 | +₹3,00,000 | Barely |
+| **S6 (D = 40,000)** | +₹4,00,000 | +₹50,000 | **+₹4,50,000** | **Yes ✓** |
+| **S7 (D = 5,00,000)** | Maximum | Maximum | **Maximum** | **Yes ✓** |
+
+<Aside type="note">
+**★ Key finding:** NV's best decision (S\* = D) is also the best possible decision for the total SC — **but only when D ≥ 30,000**. When D < 30,000, even the SC-optimal order (S\* = D) results in a net SC loss because RS's fixed costs cannot be recovered.
+</Aside>
+
+---
+
+## Three-Way Conflict: NV vs. Supplier vs. SC
+
+### Outcome at NV's Optimal Order Across All Scenarios
+
+| Scenario | Demand | NV's S\* | NV Profit | RS Profit | SC Total | RS Engage? |
+|---|---|---|---|---|---|---|
+| **1** | 0 | 0 | ₹0 | ₹0 (or −₹1,50,000 if operating) | ₹0 | Not needed |
+| **2–4** | 2,000 | 2,000 | **+₹20,000 ✓** | **−₹1,40,000 ✗** | **−₹1,20,000 ✗** | **No ✗** |
+| **5** | 30,000 | 30,000 | **+₹3,00,000 ✓** | **₹0 (breakeven)** | +₹3,00,000 | **Maybe ⚠** |
+| **6** | 40,000 | 40,000 | **+₹4,00,000 ✓** | **+₹50,000 ✓** | **+₹4,50,000 ✓** | **Yes ✓** |
+| **7** | 5,00,000 | 5,00,000 | **Maximum ✓** | **Maximum ✓** | **Maximum ✓** | **Yes ✓** |
+
+### What Each Player Wants — Preference Conflict
+
+| Player | Preferred Order Size | Why | Conflict? |
+|---|---|---|---|
+| **News Vendor** | S\* = D (match demand exactly) | Overstocking wastes procurement budget. Understocking wastes revenue opportunity. | — |
+| **Regional Supplier** | S as large as possible (> 30,000) | Fixed cost of ₹1,50,000 must be covered. Marginal profit = ₹5/unit — more units = more profit. | **YES ✗** — NV caps order at D |
+| **Supply Chain (Total)** | S\* = D (same as NV when D ≥ 30,000) | When D ≥ 30,000 and NV orders = D, total SC profit is maximised and both players are profitable. | No conflict (when D ≥ 30,000) |
+
+---
+
+## Core Conclusions — Deterministic Setting
+
+### NV's Rule
+
+<Aside type="note">
+**Always: S\* = D** — profit is highest, risk is lowest.
+
+The NV will never rationally deviate from this rule in the deterministic setting. At every demand level, ordering exactly D dominates all other options on both sides.
+</Aside>
+
+### Supplier's Dilemma
+
+<Aside type="note">
+RS wants the largest possible order size — but **cannot control it**. The NV decides S unilaterally based on demand knowledge that RS does not have.
+
+- **For D < 30,000:** RS refuses to engage → SC collapses
+- **For D = 30,000:** RS breaks even → barely participates
+- **For D ≥ 40,000:** RS is profitable — but still wishes NV would order even more
+
+**Scenarios where RS is profitable but NV is not** (e.g., S = 40,000 when D = 2,000) **will never occur** — the NV is rational and will never voluntarily accept a loss to benefit the RS.
+</Aside>
+
+### Supply Chain as a Whole
+
+<Aside type="note">
+**NV's best = SC's best ONLY when D ≥ 30,000 and NV matches demand.**
+
+When D < 30,000: NV's optimal order is also the best achievable for the SC — but it still results in an SC loss because RS cannot cover fixed costs and will refuse to participate.
+
+**★ Decentralised SC = SC performs well only when market demand is sufficiently large to make both players naturally profitable.**
+</Aside>
+
+---
+
+## What Coordination Would Look Like
+
+For the SC to function when D < 30,000, the NV must be **incentivised to deviate from S\* = D** — to order more than demand dictates, making RS viable, even when doing so hurts the NV individually.
+
+<Steps>
+1. **Identify the gap:** NV orders S\* = D < 30,000 → RS unviable → SC collapses
+2. **Design a coordination contract:** Restructure payoffs so NV gains by ordering more than D
+3. **Contract options:**
+   - **Buyback contract:** RS agrees to buy back unsold units from NV → NV's overstocking risk is reduced → NV willing to order more
+   - **Revenue sharing contract:** NV shares a portion of sales revenue with RS → RS reduces wholesale price → NV orders more → both benefit
+   - **Quantity flexibility contract:** RS commits to accepting returns up to a percentage of the order → NV's downside risk capped
+4. **Platform economy connection:** Platforms reduce information asymmetry and can enforce coordination contracts digitally — covered in upcoming sessions
+</Steps>
+
+<Aside type="tip">
+**★ Goal of coordination:** Make the NV willing to order closer to RS's preferred quantity while remaining profitable → SC total payoff is maximised → both players engage voluntarily.
+</Aside>
+
+---
+
+## Moving to Probabilistic Setting — Preview
+
+| Setting | Key Difference | NV's Challenge |
+|---|---|---|
+| **Deterministic (this session)** | D is known before S is chosen | NV always orders S\* = D perfectly — no uncertainty |
+| **Probabilistic (next session)** | D is unknown when S must be decided | NV must choose S before knowing actual demand → risk of over or understocking |
+
+<Aside type="note">
+In the probabilistic setting, the same SC conflict appears — but now with an additional layer of demand uncertainty. The NV can no longer simply match demand; it must balance:
+- **Overage cost:** Cost of procuring units that go unsold
+- **Underage cost:** Cost of lost sales when demand exceeds the order
+
+**The optimal S\* is no longer simply D.** It depends on the probability distribution of demand and the relative magnitude of overage vs. underage costs.
+</Aside>
+
+<Aside type="tip">
+**★ Exam Tip:** In the probabilistic setting, NV cannot perfectly match D. Overstocking costs and understocking costs both come into play. The optimal S\* is **NOT simply D anymore** — it is derived from the cost trade-off formula (covered next session).
+</Aside>
+
+---
+
+## Session Summary
+
+| Element | Key Result |
+|---|---|
+| **NV payoff curve** | Inverted-U shape, peaking at S\* = D for every demand level |
+| **NV dominant strategy** | Always order exactly S\* = D — no rational deviation in deterministic setting |
+| **RS payoff rule** | Profits only when S > 30,000. NV's best order may not satisfy this → RS refuses |
+| **SC total payoff** | NV's best = SC's best when D ≥ 30,000. SC total loss when D < 30,000. |
+| **Root conflict** | NV wants S = D. RS wants S as large as possible. These clash when D < 30,000. |
+| **Coordination needed** | When D < 30,000 — NV must be incentivised (via buyback/revenue sharing/quantity flexibility) to order beyond demand |
+| **Next session** | Probabilistic demand setting — same conflict + demand uncertainty → cost trade-off formula for optimal S\* |
+
+<Aside type="tip">
+**★ Exam Tip — Three conclusions to state in any exam answer on decentralised NVP:**
+1. NV always orders S\* = D (inverted-U profit curve peaks at S = D for any demand level)
+2. Supplier prefers S as large as possible — but cannot influence it; RS's profit depends only on S, not D
+3. SC alignment happens only when D ≥ RS's breakeven (30,000 units here); below this, decentralised SC collapses and coordination contracts are required
+</Aside>

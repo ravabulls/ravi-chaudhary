@@ -1,0 +1,297 @@
+---
+title: "Week 4 | Session 4: Decentralised vs. Centralised SC — News Vendor Problem (Deterministic)"
+description: "Introduces the News Vendor Problem as a classic single-period ordering model, works through seven demand scenarios under deterministic conditions to show how decentralised decision-making creates supply chain conflict, and previews the coordination mechanisms that resolve it."
+sidebar:
+  order: 20
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Digital Business in SC*
+
+---
+
+## Session Agenda & Context
+
+<Aside type="note">
+**Why this example?** SC coordination asks: how should decisions be made within a supply chain — centrally or independently? The News Vendor Problem (NVP) is the classic model that reveals what goes wrong when each player optimises for themselves alone.
+
+**Focus decision:** "How much to order?" — a lot-sizing and order quantity decision.
+
+**Relationship to EOQ:** Both deal with order quantity, but they are different models. EOQ = multi-period, continuous demand. NVP = **single-period**, one-shot ordering decision.
+
+**Link to platform economy:** This session builds the foundation — SC coordination failures → platform economy as the structural solution (covered in later sessions).
+</Aside>
+
+<Aside type="tip">
+**★ Exam Tip:** News Vendor Problem = **single-period ordering decision**. This definition distinguishes it from EOQ. Always state this when introducing the model.
+</Aside>
+
+---
+
+## The News Vendor Setting — Players & Objectives
+
+### Players
+
+| Player | Role | Objective |
+|---|---|---|
+| **News Vendor (NV)** | Observes market demand → places order → sells to end market | Maximise **own** profit |
+| **Regional Supplier (RS)** | Receives NV's order → decides whether to print and supply | Maximise **own** profit — can choose **not to supply** if the order is not viable |
+
+<Aside type="note">
+In practice, multiple News Vendors and multiple Regional Suppliers can exist simultaneously. This analysis simplifies to **one NV and one RS** to isolate the coordination and incentive problem cleanly.
+
+**Other possible objectives** for SC players include cost minimisation and emission targets — but this model uses profit maximisation throughout.
+</Aside>
+
+### Decision Sequence (Chronological)
+
+<Steps>
+1. **NV observes demand** → decides order quantity **S** → places order to RS
+2. **RS receives order** → decides whether to accept and supply (based on RS's own profitability assessment)
+</Steps>
+
+<Aside type="tip">
+**★ Exam Tip — The critical distinction:**
+- **Decentralised** = each player maximises their own profit independently — NV and RS each decide alone
+- **Centralised** = a central planner maximises **total SC profit** — both players' outcomes are optimised together
+
+This distinction drives every scenario analysis that follows.
+</Aside>
+
+---
+
+## Revenue & Cost Parameters
+
+| Parameter | News Vendor (₹/unit) | Regional Supplier (₹/unit) |
+|---|---|---|
+| **Retail price (p)** | ₹30 (price charged to end customer) | — |
+| **Wholesale price (w)** | ₹10 (paid to RS per unit ordered) | ₹10 (received from NV per unit supplied) |
+| **Distribution cost (c_d)** | ₹10 per unit sold | — |
+| **Manufacturing / operating cost (c_m)** | — | ₹5 per unit printed |
+| **Fixed facility cost (F)** | No fixed cost → always viable if demand > 0 | ₹1,50,000 per period |
+| **Net margin per unit sold** | ₹30 − ₹10 − ₹10 = **₹10 per unit** | ₹10 − ₹5 = **₹5 per unit** (above breakeven) |
+| **Breakeven quantity** | No fixed cost — always profitable if any unit sells | ₹1,50,000 ÷ ₹5 = **30,000 units** |
+
+---
+
+## Key Formulas
+
+### News Vendor Profit
+
+<Aside type="note">
+**Units sold = min(Demand D, Order S)**
+→ The NV can only sell what demand allows or what was ordered — whichever is lower.
+
+**NV Profit = [min(D, S) × (p − c_d)] − [S × w]**
+= [min(D, S) × ₹20] − [S × ₹10]
+
+| Condition | Outcome |
+|---|---|
+| **D = S** | NV sells everything → Profit = S × ₹10 |
+| **D < S** | NV sells only D units → overstocking loss on (S − D) units procured but unsold |
+| **D > S** | NV sells only S units → lost sales (underage) |
+</Aside>
+
+### Regional Supplier Profit
+
+<Aside type="note">
+**RS Profit = [S × (w − c_m)] − F**
+= [S × ₹5] − ₹1,50,000
+
+| Condition | Outcome |
+|---|---|
+| **S < 30,000** | RS makes a loss → has a rational motive to **refuse the order** |
+| **S = 30,000** | RS breaks exactly even → barely viable |
+| **S > 30,000** | Each additional unit earns ₹5 contribution margin → profitable |
+</Aside>
+
+---
+
+## Deterministic Setting — What It Means
+
+<Aside type="note">
+**Deterministic demand:** Demand is known with certainty before the order is placed. It can be a fixed constant or a function of price (as price increases, demand decreases).
+
+**Why use it?** It is the analytical baseline — it isolates the **incentive misalignment problem** from the demand uncertainty problem. Removing demand uncertainty lets us see the coordination failure in its purest form.
+
+**Is it realistic?** No — but that is not its purpose. The probabilistic setting (next session) adds demand uncertainty back in.
+</Aside>
+
+<Aside type="tip">
+**★ Exam Tip:** Deterministic ≠ realistic. Always explain *why* a setting is chosen — deterministic is used to isolate and analyse the incentive problem without adding the complexity of demand uncertainty simultaneously.
+</Aside>
+
+---
+
+## 7 Scenarios — Decentralised Decision Making (Deterministic)
+
+NV places order S given known demand D. Both players make independent profit-maximising decisions.
+
+| Scenario | Demand (D) | Order (S) | NV Profit (₹) | RS Profit (₹) | Who Profits? | Would NV Choose This? |
+|---|---|---|---|---|---|---|
+| **1** | 0 | 2,000 | −₹20,000 | −₹1,40,000 | Neither | No — better to order 0 |
+| **2** | 2,000 | 40,000 | −₹3,60,000 | +₹50,000 | Supplier only | No — NV loses badly |
+| **3** | 2,000 | 1,500 | +₹15,000 | −₹1,42,500 | NV only | No — S4 is better |
+| **4** | 2,000 | 2,000 | +₹20,000 | −₹1,40,000 | NV only | **Yes** (D < 30K; best NV option) |
+| **5** | 30,000 | 30,000 | +₹3,00,000 | ₹0 (breakeven) | NV only | **Yes** (NV profitable) |
+| **6** | 40,000 | 40,000 | +₹4,00,000 | +₹50,000 | **Both ✓** | **Yes — both win** |
+| **7** | > 40,000 | = D | Increases with D | Increases with D | **Both ✓** | **Yes — best outcome** |
+
+---
+
+## Scenario-by-Scenario Analysis
+
+### Scenarios 1–3: Demand Very Low (D ≪ Breakeven)
+
+<Badge text="D = 0 or 2,000 | RS Breakeven = 30,000" variant="danger" />
+
+**Scenario 1 (D=0, S=2,000):** NV sells 0 units → loses ₹20,000. RS prints 2,000 → loses ₹1,40,000. Neither player profits. NV would never choose this — ordering 0 is better.
+
+**Scenario 2 (D=2,000, S=40,000):** NV massively overstocks → loses ₹3,60,000. RS gets a large order → profits ₹50,000. Supplier profits but NV is destroyed. NV would never rationally choose this.
+
+**Scenario 3 (D=2,000, S=1,500):** NV slightly understocks → profits ₹15,000. RS order is far below breakeven → loses ₹1,42,500.
+
+<Aside type="note">
+**Critical insight:** Scenarios 1–3 will not actually occur in a decentralised setting. The NV always has a better option available — Scenario 4. These scenarios are included only to show why the NV always converges to ordering S = D.
+</Aside>
+
+---
+
+### Scenario 4: D = 2,000, S = 2,000 (NV Matches Demand)
+
+<Badge text="NV Profits — RS Loses — SC Conflict" variant="danger" />
+
+- **NV sells all 2,000 units → Profit = 2,000 × ₹10 = +₹20,000 ✓**
+- **RS prints 2,000 (well below 30,000 breakeven) → Loss = −₹1,40,000 ✗**
+
+<Aside type="note">
+**★ Key conflict point:** NV is profitable and has rationally made the best decision available to it. RS is deeply unprofitable.
+
+**RS's rational response:** Refuse to supply the order. If RS refuses → NV has no product to sell → SC collapses. The NV's individually rational decision inadvertently destroys the supply chain.
+</Aside>
+
+---
+
+### Scenario 5: D = 30,000, S = 30,000 (Demand = RS Breakeven)
+
+<Badge text="NV Profits — RS Breaks Even" variant="caution" />
+
+- **NV Profit = 30,000 × ₹10 = +₹3,00,000 ✓**
+- **RS Profit = 30,000 × ₹5 − ₹1,50,000 = ₹0 (exactly breakeven)**
+
+NV is profitable. RS is indifferent — barely viable, no incentive to invest or expand capacity. The SC technically functions, but only just.
+
+---
+
+### Scenarios 6 & 7: D ≥ 40,000 (Both Players Profitable)
+
+<Badge text="Both Profit — Aligned Incentives" variant="tip" />
+
+**Scenario 6 (D = 40,000, S = 40,000):**
+- NV Profit = +₹4,00,000 ✓
+- RS Profit = (40,000 × ₹5) − ₹1,50,000 = +₹50,000 ✓
+
+**Scenario 7 (D > 40,000, S = D):**
+- Both profits increase proportionally with demand
+- Both players prefer S7 > S6 > S5 — incentives are fully aligned when D ≥ 30,000
+
+<Aside type="tip">
+**Application of Concepts:** Note that NV and RS have aligned incentives **only when demand is high enough to cover the supplier's fixed costs**. This is the fundamental coordination problem — the NV's order quantity decision has externalities for the RS, but the NV has no incentive to internalise those externalities when deciding how much to order.
+</Aside>
+
+---
+
+## Key Insights — Decentralised vs. Centralised
+
+### News Vendor's Decision Rule (Decentralised)
+
+<Aside type="note">
+In a decentralised, deterministic setting, the NV's dominant strategy is always:
+
+**Order exactly S = D** (match demand precisely)
+
+| Rule | Reason |
+|---|---|
+| Never order S > D | Overstocking hurts the NV — unsold units generate a procurement cost but no revenue |
+| Never order S < D | Understocking leaves money on the table — profitable sales foregone |
+| Always order S = D | Maximises NV's own profit in every demand scenario |
+
+**The NV holds the power:** The NV's order quantity determines what the RS earns. The supplier's commercial fate is entirely in the NV's hands.
+</Aside>
+
+---
+
+### Impact of NV's Decision on the Regional Supplier
+
+| Demand Level | NV's Rational Order | NV Outcome | RS Outcome | SC Outcome |
+|---|---|---|---|---|
+| **D < 30,000** | S = D (< 30,000) | Profitable | Loss — may refuse to supply | **SC conflict → potential collapse** |
+| **D < 30,000, S forced > 30,000** | NV would never choose this | Loss | Profitable | NV refuses — not chosen |
+| **D ≥ 30,000** | S = D (≥ 30,000) | Profitable | Profitable or breakeven | **SC works ✓** |
+
+<Aside type="note">
+**★ The core finding of decentralised SC analysis:**
+
+The NV maximises its own profit → inadvertently causes SC conflict when market demand is below the supplier's breakeven. The SC is not optimised as a whole — it is optimised only from the NV's perspective.
+
+This is called **double marginalisation** in SC literature — each player takes a margin, and the cumulative effect reduces system-wide efficiency below what a central planner could achieve.
+</Aside>
+
+---
+
+### What Would Change Under Centralised Decision Making?
+
+A central planner optimising **total SC profit** would:
+
+- Only operate the SC when D ≥ 30,000 — ensuring both players are viable
+- Choose order quantities that guarantee RS profitability alongside NV profitability
+- Recognise that an order of S < 30,000 makes the system unviable — and either refuse to operate or find a way to compensate RS
+
+<Aside type="note">
+**The key challenge:** How do you get the NV to voluntarily order more than what demand dictates — even when doing so hurts the NV's own margin?
+
+This requires **coordination contracts** — mechanisms that change the incentive structure so that the NV's individually rational decision also becomes the collectively optimal decision.
+
+**Examples of coordination contracts** (covered in upcoming sessions): Buyback contracts | Revenue sharing | Quantity discounts
+</Aside>
+
+---
+
+## Limitation of the Deterministic Setting
+
+<Aside type="note">
+The deterministic setting assumed demand was known with certainty before the order was placed. This is analytically clean but unrealistic in practice.
+
+**Real demand is probabilistic:** The NV does not know exactly how many papers will sell tomorrow. Demand is a random variable — it could be high or low.
+
+The conflict scenarios (1–4) above become **structurally more complex** when demand is uncertain — because the NV must now decide S before knowing D, adding a new source of misalignment.
+
+**Next session:** The same NVP in a probabilistic demand setting → additional analytical challenges emerge → sets up the full coordination mechanisms and platform economy discussion.
+</Aside>
+
+---
+
+## Session Summary
+
+| Element | Detail |
+|---|---|
+| **Model** | News Vendor Problem — single-period ordering with 2 players (NV and RS) |
+| **NV profit formula** | min(D, S) × ₹20 − S × ₹10 |
+| **RS profit formula** | S × ₹5 − ₹1,50,000 \| Breakeven at S = 30,000 units |
+| **NV's dominant strategy (deterministic)** | Always order S = D — matches demand exactly |
+| **SC conflict zone** | D < 30,000 → NV profitable, RS not → RS may exit → SC collapses |
+| **Both viable zone** | D ≥ 30,000 → both NV and RS profitable → SC functions |
+| **Centralised improvement** | Needs coordination contracts to align NV's individual decisions with system-wide optimum |
+| **Next session** | Probabilistic demand setting + coordination mechanisms |
+
+<Aside type="tip">
+**★ Exam Tip — 10-mark answer on Decentralised vs. Centralised SC:**
+
+1. **Define both:** Decentralised = each player maximises own profit independently. Centralised = central planner maximises total SC profit.
+2. **Introduce the NVP:** Single-period ordering model with NV (retailer) and RS (supplier). State parameters — retail price ₹30, wholesale ₹10, distribution cost ₹10, manufacturing cost ₹5, RS fixed cost ₹1,50,000.
+3. **State the formulas:** NV Profit = min(D,S) × ₹20 − S × ₹10 | RS Profit = S × ₹5 − ₹1,50,000 | RS breakeven = 30,000 units.
+4. **Use the scenario table:** Show that NV always chooses S = D → when D < 30,000, NV profits but RS does not → RS may refuse to supply → SC conflict and collapse.
+5. **State the centralised solution:** Central planner would only operate when D ≥ 30,000 and needs coordination contracts (buyback, revenue sharing) to get the NV to internalise the RS's fixed costs.
+6. **End with what comes next:** Probabilistic setting adds demand uncertainty → coordination mechanisms + platform economy as structural solutions.
+</Aside>

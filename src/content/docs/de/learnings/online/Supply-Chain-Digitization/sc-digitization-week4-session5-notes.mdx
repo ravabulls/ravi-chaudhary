@@ -1,0 +1,287 @@
+---
+title: "Woche 4 | Sitzung 5: Zeitungshändler-Problem — Vollständige Auszahlungsanalyse & SC-Konflikt (Deterministisch)"
+description: "Vervollständigt das deterministische Zeitungshändler-Problem mit vollständigen Auszahlungskurven für Zeitungshändler, Regionslieferant und die gesamte SC — identifiziert den dreieckigen Konflikt zwischen Akteurszielen und stellt die Bedingungen fest, unter denen dezentralisierte SC-Ausrichtung möglich ist und nicht."
+sidebar:
+  order: 21
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply-Chain-Digitalisierung — Modul 3: Digitales Geschäft in der SC*
+
+---
+
+## Wiederholung — Aufbau & Wichtige Parameter
+
+<Aside type="note">
+**ZH-Entscheidung:** Wie viel beim Regionslieferanten bestellen (S), bei bekannter Nachfrage (N).
+
+**ZH-Gewinnformel:** min(N, S) × ₹20 − S × ₹10
+
+**RL-Gewinnformel:** S × ₹5 − ₹1,50.000 | Gewinnschwelle bei **S = 30.000 Einheiten**
+
+**Entscheidungsfolge:** ZH bestellt zuerst → RL entscheidet, ob er akzeptiert oder ablehnt.
+
+**Informationsasymmetrie:** ZH kennt die Marktnachfrage N. RL kennt nur die vom ZH aufgegebene Bestellmenge S — RL sieht die Nachfrage nicht direkt.
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** ZH hat **Informationsmacht** — kennt die Nachfrage. RL hat **operative Macht** — kann die Lieferung verweigern. Diese Asymmetrie ist die Wurzel des SC-Konflikts in dezentralisierten Settings.
+</Aside>
+
+---
+
+## ZH-Auszahlung — Form der Gewinnkurve
+
+<Aside type="note">
+**Die ZH-Auszahlung als Funktion der Bestellmenge S hat für jedes Nachfrageniveau N eine umgekehrt-U-Form:**
+
+| Bestellung vs. Nachfrage | Was passiert | ZH-Gewinn |
+|---|---|---|
+| **S < N** | ZH unterbestellt → verkauft nur S Einheiten | Positiv, aber unter Maximum — Geld wird liegen gelassen |
+| **S = N** | ZH trifft Nachfrage genau → verkauft alle Einheiten | **Maximaler Gewinn für ZH auf diesem Nachfrageniveau** |
+| **S > N** | ZH überbestellt → verkauft nur N Einheiten, zahlt vollen Großhandelspreis für (S−N) unverkaufte Einheiten | Gewinn fällt unter Maximum |
+| **S >> N** | Überschüssige Beschaffungskosten überwiegen den Erlös | Gewinn kann null erreichen oder tief negativ werden |
+</Aside>
+
+**Warum der ZH nie von S\* = N abweicht:**
+
+| Richtung | Kosten der Abweichung |
+|---|---|
+| **Mehr als N bestellen** | Jede Einheit über N wird für ₹10 Großhandelspreis beschafft, generiert aber ₹0 Erlös → reiner Verlust |
+| **Weniger als N bestellen** | Jede Einheit unter N ist ein verpasster Verkauf von ₹20 Nettoerlös (₹30 Preis − ₹10 Distribution) |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Die ZH-Auszahlungskurve **erreicht ihren Höhepunkt bei S = N für jedes Nachfrageniveau im deterministischen Setting**. Dies ist das wichtigste Ergebnis der ZHP-Analyse. Es klar und zuerst in jeder Prüfungsantwort zu diesem Thema nennen.
+</Aside>
+
+---
+
+## ZH-Auszahlung — Beste Entscheidung je Szenario
+
+| Szenario | Nachfrage (N) | Beste ZH-Bestellung (S\*) | ZH-Maximalgewinn | ZH-Auszahlungsform | Wählt ZH S\*? |
+|---|---|---|---|---|---|
+| **1** | 0 | **S\* = 0** | ₹0 | Jede Bestellung > 0 → Verlust. Nichts bestellen = ₹0. | **Ja — nichts bestellen** |
+| **2–4** | 2.000 | **S\* = 2.000** | **+₹20.000** | Steigt bis zum Höhepunkt bei S=N=2.000, fällt auf beiden Seiten. 40.000 bestellen → −₹3,60.000. | **Ja — Nachfrage treffen** |
+| **5** | 30.000 | **S\* = 30.000** | **+₹3,00.000** | Steigt gleichmäßig bis zum Höhepunkt bei S=30.000. Jede weitere Bestellung reduziert Gewinn. | **Ja — Nachfrage treffen** |
+| **6** | 40.000 | **S\* = 40.000** | **+₹4,00.000** | Steigt bis zum Höhepunkt bei S=N=40.000, fällt dann. 5 Lakh bestellen → tief unrentabel. | **Ja — Nachfrage treffen** |
+| **7** | 5,00.000 | **S\* = 5,00.000** | **Maximum** | Steigt bis zum Höhepunkt bei S=N=5,00.000. Würde noch höher gehen, wenn keine obere Nachfragegrenze existierte. | **Ja — Nachfrage treffen** |
+
+---
+
+## Vollständige ZH-Auszahlungsmatrix (Alle Bestellmengen × Alle Nachfragestufen)
+
+Die folgende Tabelle zeigt den ZH-Gewinn (₹) für jede Kombination aus Nachfrageszenario und Bestellmenge S:
+
+| Szenario | Nachfrage | S=0 | S=1.000 | S=2.000 | S=3.000 | S=5.000 | S=10.000 | S=20.000 | S=30.000 | S=40.000 | S=5,00.000 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0 | 0 | −10.000 | −20.000 | −30.000 | −50.000 | −1,00.000 | −2,00.000 | −3,00.000 | −4,00.000 | −50,00.000 |
+| 2–4 | 2.000 | 0 | +10.000 | **+20.000** | +10.000 | −10.000 | −60.000 | −1,60.000 | −2,60.000 | −3,60.000 | −49,60.000 |
+| 5 | 30.000 | 0 | +10.000 | +20.000 | +30.000 | +50.000 | +1,00.000 | +2,00.000 | **+3,00.000** | +2,00.000 | −44,00.000 |
+| 6 | 40.000 | 0 | +10.000 | +20.000 | +30.000 | +50.000 | +1,00.000 | +2,00.000 | +3,00.000 | **+4,00.000** | −42,00.000 |
+| 7 | 5,00.000 | 0 | +10.000 | +20.000 | +30.000 | +50.000 | +1,00.000 | +2,00.000 | +3,00.000 | +4,00.000 | **+50,00.000** |
+
+<Aside type="note">
+**Tabelle lesen:** Fettgedruckte Werte zeigen die gewinnmaximierende Bestellung je Szenario (S\* = N). Der Höhepunkt jeder Zeile liegt in der Spalte, in der S dem Nachfrageniveau der Zeile entspricht — dies bestätigt die universelle Regel S\* = N.
+
+**Wichtige Beobachtung:** Bestellen bei S > N reduziert immer den ZH-Gewinn. Die Spalte S = 5,00.000 ist für alle Szenarien außer Szenario 7 katastrophal, was bestätigt, dass der ZH in einem deterministischen Setting nie überbestellen würde.
+</Aside>
+
+---
+
+## RL-Auszahlung — Auswirkung der besten ZH-Entscheidungen
+
+<Badge text="RL-Perspektive" variant="caution" />
+
+### RL-Auszahlungsform
+
+<Aside type="note">
+RL-Gewinn steigt **monoton** mit der Bestellmenge S — je mehr der ZH bestellt, desto mehr verdient der RL:
+
+**RL-Gewinn = S × ₹5 − ₹1,50.000**
+
+| Bestellniveau | RL-Ergebnis |
+|---|---|
+| **S < 30.000** | RL macht immer Verlust — Fixkosten nicht gedeckt |
+| **S = 30.000** | RL bricht genau gleich auf — kein Gewinnmotiv zur Teilnahme |
+| **S > 30.000** | Jede zusätzliche Einheit bringt ₹5 Deckungsbeitrag → rentabel und wachsend |
+
+**Rationales RL-Verhalten:** Lieferung verweigern, wenn zu erwartende Bestellung S < 30.000 Einheiten — die Bestellung ist schlicht nicht kommerziell tragfähig.
+</Aside>
+
+### Vollständige RL-Auszahlungsmatrix (Alle Bestellmengen × Alle Nachfragestufen)
+
+RL-Auszahlung hängt nur von S ab (nicht direkt von N — RL kann Nachfrage nicht beobachten):
+
+| Szenario | Nachfrage | S=0 | S=1.000 | S=2.000 | S=10.000 | S=20.000 | S=30.000 | S=40.000 | S=5,00.000 |
+|---|---|---|---|---|---|---|---|---|---|
+| Alle Szenarien | Beliebig | 0 | −1,45.000 | −1,40.000 | −1,00.000 | −50.000 | **₹0** | +50.000 | +23,50.000 |
+
+<Aside type="note">
+**Kritische Beobachtung:** RL-Auszahlung ist **für alle Nachfrageszenarien bei einer gegebenen Bestellmenge S identisch** — da der RL-Gewinn nur von der bestellten Menge abhängt, nicht davon, was die Marktnachfrage tatsächlich ist. Der RL sieht die Nachfrage nie; er sieht nur S.
+
+Dies ist die Asymmetrie: **Der ZH-Gewinn variiert mit N, der RL-Gewinn nicht** — aber N bestimmt, welches S der ZH aufgibt. Der RL ist vollständig abhängig von den Marktkenntnissen des ZH.
+</Aside>
+
+### Wenn ZH seine beste Bestellung aufgibt (S\* = N) — Was passiert mit dem RL?
+
+| Nachfrageniveau | Rationale Bestellung des ZH | ZH-Ergebnis | RL-Ergebnis | SC-Ergebnis |
+|---|---|---|---|---|
+| **N < 30.000** (S1–S4) | S\* = N < 30.000 | Rentabel ✓ | Verlust bis −₹1,40.000 → **RL verweigert Lieferung** | **SC bricht zusammen ✗** |
+| **N = 30.000** (S5) | S\* = 30.000 | +₹3,00.000 ✓ | ₹0 genau — kein Gewinnmotiv | **RL könnte ablehnen ⚠** |
+| **N ≥ 40.000** (S6, S7) | S\* = N ≥ 40.000 | Rentabel ✓ | Rentabel ✓ | **SC funktioniert ✓** |
+
+<Aside type="note">
+**Könnte ZH den RL rentabel machen, indem er ≥ 30.000 bestellt, wenn N < 30.000?** Ja — aber ZH würde dann einen massiven Verlust erleiden (z. B. Szenario 2: ZH bestellt 40.000 bei N = 2.000 → ZH-Verlust = −₹3,60.000). **ZH wird das freiwillig nie tun.**
+
+Dies ist die Kernspannung: Die Aktion, die den RL rettet, zerstört den ZH. Ohne einen externen Mechanismus ist keine freiwillige Koordination möglich.
+</Aside>
+
+---
+
+## Gesamtauszahlungsanalyse der Lieferkette
+
+<Badge text="SC = ZH-Gewinn + RL-Gewinn" variant="note" />
+
+**SC-Gesamtauszahlung = ZH-Gewinn + RL-Gewinn** für jede Bestellmenge S und jedes Nachfrageniveau N.
+
+### Vollständige SC-Auszahlungsmatrix
+
+| Szenario | Nachfrage | S=0 | S=1.000 | S=2.000 | S=10.000 | S=20.000 | S=30.000 | S=40.000 | S=5,00.000 |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0 | 0 | −1,55.000 | −1,60.000 | −2,00.000 | −2,50.000 | −3,00.000 | −3,50.000 | −26,50.000 |
+| 2–4 | 2.000 | 0 | −1,35.000 | **−1,20.000** | −1,60.000 | −2,10.000 | −2,60.000 | −3,10.000 | −26,10.000 |
+| 5 | 30.000 | 0 | −1,35.000 | −1,20.000 | 0 | +1,50.000 | **+3,00.000** | +2,50.000 | −20,50.000 |
+| 6 | 40.000 | 0 | −1,35.000 | −1,20.000 | 0 | +1,50.000 | +3,00.000 | **+4,50.000** | −18,50.000 |
+| 7 | 5,00.000 | 0 | −1,35.000 | −1,20.000 | 0 | +1,50.000 | +3,00.000 | +4,50.000 | **+73,50.000** |
+
+**Wichtige SC-Erkenntnis:** Wenn ZH S\* = N bestellt, beträgt die SC-Gesamtauszahlung:
+
+| Szenario bei S\* = N | ZH-Gewinn | RL-Gewinn | SC-Gesamt | SC tragfähig? |
+|---|---|---|---|---|
+| **S1–S4 (N = 2.000)** | +₹20.000 | −₹1,40.000 | **−₹1,20.000** | **Nein ✗** |
+| **S5 (N = 30.000)** | +₹3,00.000 | ₹0 | +₹3,00.000 | Kaum |
+| **S6 (N = 40.000)** | +₹4,00.000 | +₹50.000 | **+₹4,50.000** | **Ja ✓** |
+| **S7 (N = 5,00.000)** | Maximum | Maximum | **Maximum** | **Ja ✓** |
+
+<Aside type="note">
+**★ Wichtige Erkenntnis:** Die beste Entscheidung des ZH (S\* = N) ist auch die beste mögliche Entscheidung für die gesamte SC — **aber nur wenn N ≥ 30.000**. Wenn N < 30.000, führt selbst die SC-optimale Bestellung (S\* = N) zu einem SC-Nettoverlust, da die Fixkosten des RL nicht gedeckt werden können.
+</Aside>
+
+---
+
+## Dreieckiger Konflikt: ZH vs. RL vs. SC
+
+### Ergebnis bei optimaler ZH-Bestellung über alle Szenarien
+
+| Szenario | Nachfrage | ZH's S\* | ZH-Gewinn | RL-Gewinn | SC-Gesamt | RL beteiligt? |
+|---|---|---|---|---|---|---|
+| **1** | 0 | 0 | ₹0 | ₹0 (oder −₹1,50.000 wenn aktiv) | ₹0 | Nicht nötig |
+| **2–4** | 2.000 | 2.000 | **+₹20.000 ✓** | **−₹1,40.000 ✗** | **−₹1,20.000 ✗** | **Nein ✗** |
+| **5** | 30.000 | 30.000 | **+₹3,00.000 ✓** | **₹0 (Gewinnschwelle)** | +₹3,00.000 | **Vielleicht ⚠** |
+| **6** | 40.000 | 40.000 | **+₹4,00.000 ✓** | **+₹50.000 ✓** | **+₹4,50.000 ✓** | **Ja ✓** |
+| **7** | 5,00.000 | 5,00.000 | **Maximum ✓** | **Maximum ✓** | **Maximum ✓** | **Ja ✓** |
+
+### Was jeder Akteur möchte — Präferenzkonflikt
+
+| Akteur | Bevorzugte Bestellmenge | Warum | Konflikt? |
+|---|---|---|---|
+| **Zeitungshändler** | S\* = N (Nachfrage genau treffen) | Überbestand verschwendet Beschaffungsbudget. Unterbestand verschwendet Erlöschancen. | — |
+| **Regionslieferant** | S so groß wie möglich (> 30.000) | Fixkosten von ₹1,50.000 müssen gedeckt werden. Grenzgewinn = ₹5/Einheit — mehr Einheiten = mehr Gewinn. | **JA ✗** — ZH begrenzt Bestellung auf N |
+| **Lieferkette (Gesamt)** | S\* = N (gleich wie ZH wenn N ≥ 30.000) | Wenn N ≥ 30.000 und ZH = N bestellt, wird der SC-Gesamtgewinn maximiert und beide Akteure sind rentabel. | Kein Konflikt (wenn N ≥ 30.000) |
+
+---
+
+## Kernschlussfolgerungen — Deterministisches Setting
+
+### Regel des Zeitungshändlers
+
+<Aside type="note">
+**Immer: S\* = N** — Gewinn ist am höchsten, Risiko am niedrigsten.
+
+Der ZH wird im deterministischen Setting rational nie von dieser Regel abweichen. Auf jedem Nachfrageniveau dominiert genau N zu bestellen alle anderen Optionen auf beiden Seiten.
+</Aside>
+
+### Dilemma des Regionslieferanten
+
+<Aside type="note">
+RL möchte die größtmögliche Bestellmenge — kann sie aber **nicht kontrollieren**. Der ZH entscheidet S einseitig auf Basis von Nachfragewissen, das der RL nicht hat.
+
+- **Für N < 30.000:** RL lehnt Teilnahme ab → SC bricht zusammen
+- **Für N = 30.000:** RL bricht gleich auf → nimmt kaum teil
+- **Für N ≥ 40.000:** RL ist rentabel — wünscht sich aber immer noch, der ZH würde noch mehr bestellen
+
+**Szenarien, in denen RL rentabel ist, ZH aber nicht** (z. B. S = 40.000 bei N = 2.000) **treten nie auf** — der ZH ist rational und wird nie freiwillig einen Verlust akzeptieren, um dem RL zu nützen.
+</Aside>
+
+### Lieferkette als Ganzes
+
+<Aside type="note">
+**Das Beste des ZH = das Beste der SC NUR wenn N ≥ 30.000 und ZH die Nachfrage trifft.**
+
+Wenn N < 30.000: Die optimale Bestellung des ZH ist auch die beste erreichbare für die SC — führt aber dennoch zu einem SC-Verlust, da der RL Fixkosten nicht decken kann und die Teilnahme verweigern wird.
+
+**★ Dezentralisierte SC = SC funktioniert gut nur wenn die Marktnachfrage groß genug ist, um beide Akteure von Natur aus rentabel zu machen.**
+</Aside>
+
+---
+
+## Wie Koordination aussehen würde
+
+Damit die SC bei N < 30.000 funktioniert, muss der ZH **angereizt werden, von S\* = N abzuweichen** — mehr zu bestellen als die Nachfrage vorgibt, um den RL tragfähig zu machen, selbst wenn das den ZH individuell schadet.
+
+<Steps>
+1. **Die Lücke identifizieren:** ZH bestellt S\* = N < 30.000 → RL nicht tragfähig → SC bricht zusammen
+2. **Koordinationsvertrag gestalten:** Auszahlungen so umstrukturieren, dass ZH durch Bestellen von mehr als N gewinnt
+3. **Vertragsoptionen:**
+   - **Rückkaufvertrag:** RL verpflichtet sich, unverkaufte Einheiten vom ZH zurückzukaufen → Überbestandsrisiko des ZH reduziert → ZH bereit, mehr zu bestellen
+   - **Umsatzbeteiligungsvertrag:** ZH teilt einen Teil des Umsatzes mit dem RL → RL senkt Großhandelspreis → ZH bestellt mehr → beide profitieren
+   - **Mengenflexibilitätsvertrag:** RL verpflichtet sich, Rückgaben bis zu einem Prozentsatz der Bestellung zu akzeptieren → Abwärtsrisiko des ZH begrenzt
+4. **Plattformökonomie-Verbindung:** Plattformen reduzieren Informationsasymmetrie und können Koordinationsverträge digital durchsetzen — in kommenden Sitzungen behandelt
+</Steps>
+
+<Aside type="tip">
+**★ Ziel der Koordination:** ZH dazu bringen, näher an der vom RL bevorzugten Menge zu bestellen, während er rentabel bleibt → SC-Gesamtauszahlung wird maximiert → beide Akteure nehmen freiwillig teil.
+</Aside>
+
+---
+
+## Übergang zum probabilistischen Setting — Vorschau
+
+| Setting | Wesentlicher Unterschied | Herausforderung des ZH |
+|---|---|---|
+| **Deterministisch (diese Sitzung)** | N ist bekannt, bevor S gewählt wird | ZH bestellt immer perfekt S\* = N — keine Unsicherheit |
+| **Probabilistisch (nächste Sitzung)** | N ist unbekannt, wenn S entschieden werden muss | ZH muss S wählen, bevor die tatsächliche Nachfrage bekannt ist → Risiko von Über- oder Unterbestand |
+
+<Aside type="note">
+Im probabilistischen Setting tritt der gleiche SC-Konflikt auf — aber jetzt mit einer zusätzlichen Ebene der Nachfrageunsicherheit. Der ZH kann die Nachfrage nicht mehr einfach treffen; er muss abwägen zwischen:
+- **Überbestandskosten:** Kosten für Beschaffung von Einheiten, die unverkauft bleiben
+- **Fehlmengenkosten:** Kosten für entgangene Verkäufe, wenn die Nachfrage die Bestellung übersteigt
+
+**Das optimale S\* ist nicht mehr einfach N.** Es hängt von der Wahrscheinlichkeitsverteilung der Nachfrage und der relativen Höhe von Überbestands- vs. Fehlmengenkosten ab.
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Im probabilistischen Setting kann ZH N nicht perfekt treffen. Überbestandskosten und Fehlmengenkosten spielen beide eine Rolle. Das optimale S\* ist **NICHT mehr einfach N** — es wird aus der Kostenkompromissformel abgeleitet (nächste Sitzung behandelt).
+</Aside>
+
+---
+
+## Zusammenfassung
+
+| Element | Kernergebnis |
+|---|---|
+| **ZH-Auszahlungskurve** | Umgekehrt-U-Form, Höhepunkt bei S\* = N für jedes Nachfrageniveau |
+| **Dominante Strategie des ZH** | Immer genau S\* = N bestellen — keine rationale Abweichung im deterministischen Setting |
+| **RL-Auszahlungsregel** | Gewinn nur wenn S > 30.000. Beste Bestellung des ZH erfüllt dies möglicherweise nicht → RL lehnt ab |
+| **SC-Gesamtauszahlung** | Das Beste des ZH = das Beste der SC wenn N ≥ 30.000. SC-Gesamtverlust wenn N < 30.000. |
+| **Grundkonflikt** | ZH will S = N. RL will S so groß wie möglich. Diese kollidieren wenn N < 30.000. |
+| **Koordination notwendig** | Wenn N < 30.000 — ZH muss (via Rückkauf/Umsatzbeteiligung/Mengenflexibilität) angereizt werden, über die Nachfrage hinaus zu bestellen |
+| **Nächste Sitzung** | Probabilistisches Nachfragesetting — gleicher Konflikt + Nachfrageunsicherheit → Kostenkompromissformel für optimales S\* |
+
+<Aside type="tip">
+**★ Prüfungstipp — Drei Schlussfolgerungen, die in jeder Prüfungsantwort zum dezentralisierten ZHP genannt werden müssen:**
+1. ZH bestellt immer S\* = N (umgekehrt-U-Gewinnkurve erreicht Höhepunkt bei S = N für jedes Nachfrageniveau)
+2. Lieferant bevorzugt S so groß wie möglich — kann es aber nicht beeinflussen; RL-Gewinn hängt nur von S ab, nicht von N
+3. SC-Ausrichtung tritt nur auf, wenn N ≥ RL-Gewinnschwelle (hier 30.000 Einheiten); darunter bricht dezentralisierte SC zusammen und Koordinationsverträge sind erforderlich
+</Aside>
