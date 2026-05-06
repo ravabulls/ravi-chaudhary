@@ -1,0 +1,123 @@
+---
+title: "Maritime CII Compliance Dashboard"
+description: "A learning project exploring IMO MARPOL Annex VI carbon intensity regulation through a real-time interactive dashboard."
+sidebar:
+  label: "Maritime CII Dashboard"
+  order: 1
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+A learning project exploring IMO MARPOL Annex VI carbon intensity regulation through a real-time interactive dashboard.
+
+---
+
+## What is this project
+
+The International Maritime Organization (IMO) introduced the Carbon Intensity Indicator (CII) framework under MARPOL Annex VI to measure and rate the carbon efficiency of ships in commercial operation. Starting 2023, every qualifying vessel must be assigned an annual A–E rating based on how much CO₂ it emits per unit of transport work done.
+
+This project is a self-built dashboard that implements the CII calculation methodology for a fictitious fleet of cruise ships, built entirely as a learning exercise to understand both the regulation and the tooling required to operationalise it.
+
+<Aside type="caution">
+**Disclaimer:** Vessel names used may correspond to real vessels, but all fuel consumption figures, distances, and operational data shown are fictitious or drawn from publicly available sources. Results may contain errors. This tool does not apply the correction factors and voyage adjustments defined in IMO Resolution MEPC.355(78). It is not suitable for regulatory reporting or any commercial decision.
+</Aside>
+
+---
+
+## What I learned
+
+### Regulatory side
+
+<Badge text="IMO / MARPOL Annex VI" variant="note" />
+
+- How CII is defined and calculated under **MEPC.352(78)** — the three metrics: cgDIST (mandatory), EEPI, and cbDIST (informational)
+- How the reference line is set per **MEPC.353(78)** using vessel-class parameters *a* and *c*
+- How annual required CII tightens each year under **MEPC.400(83)**, rising from a 5% reduction in 2023 to 21.5% by 2030
+- How the A–E rating is determined from the attained-to-required ratio using d-vectors in **MEPC.354(78)**
+- What the EU ETS phase-in means for cruise operators: 40% obligation in 2024, 70% in 2025, 100% from 2026
+
+### Technical side
+
+<Badge text="Python · Streamlit · Plotly" variant="success" />
+
+- Building a multi-page analytical dashboard in Python using **Streamlit**
+- Connecting to **Google Sheets** as a live data source via the published CSV API
+- Computing CII metrics in **pandas** from raw fuel consumption data merged with vessel master data
+- Building interactive **Plotly** charts (line trends, horizontal bars, donut pies, heatmaps, stacked bars) with custom dark themes
+- Making every chart title an interactive popover that explains the formula, key variables, and what to look for
+- Adding verification tables with a separate recalculated totals row — for single-vessel views, cgDIST/cbDIST/EEPI are recalculated from the summed CO₂ and distances rather than just displayed
+- Sidebar filters for year, month, owner, vessel, and fuel type
+- Deploying to **Streamlit Community Cloud** via GitHub
+
+---
+
+## Key features of the dashboard
+
+### Fleet Overview
+
+Monthly cgDIST and cbDIST trends for all vessels side by side, a CII League table with colour-coded A–E ratings and a required-CII marker, a rating distribution donut, and a CO₂ heatmap across vessels and months.
+
+### Vessel Analytics
+
+Drill into any vessel: monthly cgDIST vs the required threshold, fuel mix pie, monthly CO₂ bar, year-over-year CII performance with the tightening required line, and monthly and annual cbDIST trends.
+
+### Fuel & Emissions
+
+Stacked monthly fuel consumption by type, CO₂ ranking by vessel, fleet-average emission factor trend, and owner-group comparison where multiple operators are present.
+
+### CII Compliance
+
+Annual A–E rating matrix across all vessels and years, attained vs required side-by-side bar chart, and a full verification table showing every step of the calculation.
+
+### EU ETS Impact
+
+Estimated financial exposure per vessel based on the EU ETS phase-in schedule and an illustrative EUA price.
+
+### Data Explorer
+
+Full raw and calculated dataset with all derived fields, downloadable as CSV.
+
+---
+
+## Technology stack
+
+| Layer | Tool |
+|---|---|
+| Dashboard framework | Python · Streamlit |
+| Data visualisation | Plotly (Express + Graph Objects) |
+| Data processing | pandas · NumPy |
+| Data source | Google Sheets (published CSV) |
+| Deployment | Streamlit Community Cloud |
+| Version control | Git · GitHub |
+
+---
+
+## Live dashboard
+
+The app is deployed on Streamlit Community Cloud. You can interact with it in the frame below or open it directly in a new tab.
+
+[Open dashboard in new tab →](https://maritimedashboard.streamlit.app/)
+
+<Aside type="note">
+If the embed is blocked by your browser or the app is sleeping (free tier hibernates after inactivity), click the direct link above to open it in a new tab. The app may take 20–30 seconds to wake up on first load.
+</Aside>
+
+<div style="margin-top: 1rem;">
+  <iframe
+    src="https://maritimedashboard.streamlit.app/"
+    width="100%"
+    height="900"
+    style="border: 1px solid #1A2845; border-radius: 8px;"
+    allow="fullscreen"
+  ></iframe>
+</div>
+
+---
+
+## Regulatory references
+
+- **MEPC.352(78)** — Guidelines on the method of calculation of the attained CII and required CII
+- **MEPC.353(78)** — Guidelines on the reference lines for use with the CII
+- **MEPC.354(78)** — Guidelines on the operational CII rating of ships (A–E rating)
+- **MEPC.355(78)** — 2022 Interim guidelines on correction factors and voyage adjustments for CII calculations *(not implemented in this tool)*
+- **MEPC.400(83)** — 2025 Guidelines on the reduction factors for the required CII (replaces earlier MEPC.338/377)

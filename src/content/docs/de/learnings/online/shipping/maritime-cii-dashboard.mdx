@@ -1,0 +1,123 @@
+---
+title: "Maritimes CII-Compliance-Dashboard"
+description: "Ein Lernprojekt zur IMO-MARPOL-Anlage-VI-Kohlenstoffintensitätsregulierung durch ein interaktives Echtzeit-Dashboard."
+sidebar:
+  label: "Maritimes CII-Dashboard"
+  order: 1
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+Ein Lernprojekt zur Erkundung der IMO-MARPOL-Anlage-VI-Kohlenstoffintensitätsregulierung durch ein interaktives Echtzeit-Dashboard.
+
+---
+
+## Was ist dieses Projekt
+
+Die Internationale Seeschifffahrts-Organisation (IMO) hat den Carbon Intensity Indicator (CII) im Rahmen von MARPOL Anlage VI eingeführt, um die Kohlenstoffeffizienz von Schiffen im kommerziellen Betrieb zu messen und zu bewerten. Ab 2023 muss jedem qualifizierten Schiff eine jährliche A–E-Bewertung zugewiesen werden, basierend auf dem CO₂-Ausstoß pro Transportarbeitseinheit.
+
+Dieses Projekt ist ein selbst entwickeltes Dashboard, das die CII-Berechnungsmethodik für eine fiktive Kreuzfahrtflotte implementiert — vollständig als Lernprojekt, um sowohl die Regulierung als auch die technischen Werkzeuge zur Operationalisierung zu verstehen.
+
+<Aside type="caution">
+**Haftungsausschluss:** Die verwendeten Schiffsnamen können realen Schiffen entsprechen, aber alle Kraftstoffverbrauchsdaten, Distanzen und Betriebsdaten sind fiktiv oder aus öffentlich zugänglichen Quellen entnommen. Die Ergebnisse können Fehler enthalten. Dieses Tool wendet nicht die Korrekturfaktoren und Reiseanpassungen gemäß IMO-Resolution MEPC.355(78) an. Es ist nicht für regulatorische Meldepflichten oder kommerzielle Entscheidungen geeignet.
+</Aside>
+
+---
+
+## Was ich gelernt habe
+
+### Regulatorische Seite
+
+<Badge text="IMO / MARPOL Anlage VI" variant="note" />
+
+- Wie CII nach **MEPC.352(78)** definiert und berechnet wird — die drei Metriken: cgDIST (obligatorisch), EEPI und cbDIST (informativ)
+- Wie die Referenzlinie nach **MEPC.353(78)** mithilfe der Schiffsklassenparameter *a* und *c* festgelegt wird
+- Wie der jährlich erforderliche CII nach **MEPC.400(83)** schrittweise verschärft wird — von 5 % Reduzierung im Jahr 2023 auf 21,5 % bis 2030
+- Wie die A–E-Bewertung aus dem Verhältnis von erreichtem zu erforderlichem CII mithilfe von d-Vektoren nach **MEPC.354(78)** bestimmt wird
+- Was die EU-ETS-Einführung für Kreuzfahrtbetreiber bedeutet: 40 % Verpflichtung in 2024, 70 % in 2025, 100 % ab 2026
+
+### Technische Seite
+
+<Badge text="Python · Streamlit · Plotly" variant="success" />
+
+- Aufbau eines mehrseitigen Analyse-Dashboards in Python mit **Streamlit**
+- Anbindung an **Google Sheets** als Live-Datenquelle über die veröffentlichte CSV-API
+- Berechnung von CII-Metriken in **pandas** aus Rohdaten zum Kraftstoffverbrauch, zusammengeführt mit Schiffsstammdaten
+- Entwicklung interaktiver **Plotly**-Diagramme (Linientrends, horizontale Balken, Donut-Kreisdiagramme, Heatmaps, gestapelte Balken) mit benutzerdefinierten dunklen Designs
+- Gestaltung jedes Diagrammtitels als interaktives Popover mit Erläuterungen zur Formel, zu Schlüsselvariablen und zur Interpretation
+- Hinzufügen von Verifizierungstabellen mit einer separaten neu berechneten Summenzeile — für Einzelschiff-Ansichten werden cgDIST/cbDIST/EEPI aus den summierten CO₂- und Distanzwerten neu berechnet
+- Seitenleisten-Filter für Jahr, Monat, Eigentümer, Schiff und Kraftstofftyp
+- Bereitstellung auf der **Streamlit Community Cloud** über GitHub
+
+---
+
+## Hauptfunktionen des Dashboards
+
+### Flotten-Übersicht
+
+Monatliche cgDIST- und cbDIST-Trends aller Schiffe im Vergleich, eine CII-Rangliste mit farbcodierten A–E-Bewertungen und einer Markierung für den erforderlichen CII-Wert, ein Bewertungsverteilungs-Donut sowie eine CO₂-Heatmap über alle Schiffe und Monate.
+
+### Schiffsanalysen
+
+Detailanalyse für jedes Schiff: monatlicher cgDIST im Vergleich zum erforderlichen Schwellenwert, Kraftstoffmix-Kreisdiagramm, monatliches CO₂-Balkendiagramm, jährlicher CII-Leistungsvergleich mit der schrumpfenden Anforderungslinie sowie monatliche und jährliche cbDIST-Trends.
+
+### Kraftstoff & Emissionen
+
+Gestapelter monatlicher Kraftstoffverbrauch nach Typ, CO₂-Ranking nach Schiff, Flottendurchschnitt-Emissionsfaktor-Trend und Eigentümergruppen-Vergleich bei mehreren Betreibern.
+
+### CII-Konformität
+
+Jährliche A–E-Bewertungsmatrix über alle Schiffe und Jahre, erreichter vs. erforderlicher Wert im Balkendiagramm nebeneinander sowie eine vollständige Verifizierungstabelle mit jedem Schritt der Berechnung.
+
+### Auswirkungen des EU-ETS
+
+Geschätztes finanzielles Risiko pro Schiff basierend auf dem EU-ETS-Einführungsplan und einem illustrativen EUA-Preis.
+
+### Daten-Explorer
+
+Vollständiger Roh- und Berechnungsdatensatz mit allen abgeleiteten Feldern, als CSV herunterladbar.
+
+---
+
+## Technologie-Stack
+
+| Schicht | Tool |
+|---|---|
+| Dashboard-Framework | Python · Streamlit |
+| Datenvisualisierung | Plotly (Express + Graph Objects) |
+| Datenverarbeitung | pandas · NumPy |
+| Datenquelle | Google Sheets (veröffentlichte CSV) |
+| Bereitstellung | Streamlit Community Cloud |
+| Versionskontrolle | Git · GitHub |
+
+---
+
+## Live-Dashboard
+
+Die App ist in der Streamlit Community Cloud bereitgestellt. Sie können damit im Frame unten interagieren oder sie direkt in einem neuen Tab öffnen.
+
+[Dashboard in neuem Tab öffnen →](https://maritimedashboard.streamlit.app/)
+
+<Aside type="note">
+Wenn das Einbetten durch Ihren Browser blockiert wird oder die App schläft (der kostenlose Tarif hiberniert bei Inaktivität), klicken Sie auf den direkten Link oben, um sie in einem neuen Tab zu öffnen. Die App benötigt beim ersten Laden möglicherweise 20–30 Sekunden zum Starten.
+</Aside>
+
+<div style="margin-top: 1rem;">
+  <iframe
+    src="https://maritimedashboard.streamlit.app/"
+    width="100%"
+    height="900"
+    style="border: 1px solid #1A2845; border-radius: 8px;"
+    allow="fullscreen"
+  ></iframe>
+</div>
+
+---
+
+## Regulatorische Referenzen
+
+- **MEPC.352(78)** — Richtlinien zur Methode der Berechnung des erreichten CII und des erforderlichen CII
+- **MEPC.353(78)** — Richtlinien zu den Referenzlinien zur Verwendung mit dem CII
+- **MEPC.354(78)** — Richtlinien zur operativen CII-Bewertung von Schiffen (A–E-Bewertung)
+- **MEPC.355(78)** — Übergangsrichtlinien 2022 zu Korrekturfaktoren und Reiseanpassungen für CII-Berechnungen *(in diesem Tool nicht implementiert)*
+- **MEPC.400(83)** — Richtlinien 2025 zu den Reduktionsfaktoren für den erforderlichen CII (ersetzt frühere MEPC.338/377)

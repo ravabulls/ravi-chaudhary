@@ -1,0 +1,144 @@
+---
+title: "Ship Engine Digital Twin — Emissions & Decarbonisation Dashboard"
+description: "A production-grade marine engine simulation and alternative-fuel benchmarking tool built in Python and Streamlit, grounded in two-zone combustion physics and IMO regulatory frameworks."
+sidebar:
+  label: "Ship Engine Digital Twin"
+  order: 2
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+A production-grade marine engine simulation and alternative-fuel benchmarking tool built in Python and Streamlit, grounded in two-zone combustion physics and IMO regulatory frameworks.
+
+---
+
+## What I Built
+
+This project is a Ship Engine Digital Twin — a live, interactive simulation of a real marine diesel engine that computes emissions, NOx compliance, and fuel performance in real time. It is built entirely in Python and Streamlit and is grounded in the physics and regulatory frameworks from *State-of-the-Art Digital Twin Applications for Shipping Sector Decarbonisation* (Karakostas & Katsoulakos, IGI Global 2024).
+
+The dashboard has two tools:
+
+- **Emissions & NOx Calculator** — simulates a configurable two-stroke marine engine and computes NOx, CO₂, SOx, and specific fuel consumption at any operating point
+- **Alternative Fuel Benchmarking** — compares six marine fuels (HFO, MGO, LNG, Methanol, Ammonia, Hydrogen) across lifecycle GHG intensity, FuelEU Maritime compliance, cost, energy density, and technology readiness
+
+---
+
+## Why This Matters
+
+Shipping produces approximately 2.9% of global greenhouse gas emissions. The IMO has mandated a net-zero target by 2050, and intermediate regulations — MARPOL Annex VI NOx tiers, the IMO 2020 sulphur cap, CII ratings, and the EU's FuelEU Maritime regulation — are already reshaping how vessels are operated and fuelled.
+
+Digital twin technology allows ship operators and engineers to run these scenarios virtually, without touching the physical engine. This project demonstrates how a physics-based simulation can serve as a decision-support tool for:
+
+- Checking IMO MARPOL Tier I / II / III NOx compliance before entering an Emission Control Area
+- Understanding how changing fuel type, engine load, or operating RPM shifts the emissions profile
+- Evaluating alternative fuels on a well-to-wake lifecycle basis before committing to costly infrastructure changes
+- Generating IMO DCS compliance reports for regulatory submission
+
+---
+
+## Technical Approach
+
+### Two-Zone Combustion Model (Chapter 11)
+
+<Badge text="Core Physics Engine" variant="note" />
+
+The engine model splits the cylinder into two zones at every instant — a **burned zone** (hot combustion products, 1700–2100 K) and an **unburned zone** (fresh charge at intake temperature). This separation is what makes NOx modelling possible without a full 3D CFD simulation.
+
+The key physics implemented:
+
+- **Wiebe burn-fraction function** — models the heat release curve over the crank angle, determining how quickly fuel energy is released
+- **Burned-zone temperature** — calculated from an energy balance using fuel-specific specific heat of combustion products, corrected for the local air–fuel ratio
+- **Woschni heat-transfer correction (×0.87)** — accounts for convective heat losses to the cylinder walls; without it, T_burned is overpredicted and NOx is inflated
+- **Zeldovich extended mechanism** — thermal NOx formation rate proportional to [O₂]⁰·⁵ · exp(−38 000 / T) · (T / 2 200)²; rate is negligible below 1600 K and rises exponentially above it
+- **Carbon and sulphur balance** — CO₂ = SFC × C_fraction × 44/12; SOx = SFC × S_fraction × 2
+
+### IMO NOx Compliance Engine
+
+<Badge text="MARPOL Annex VI Regulation 13" variant="caution" />
+
+NOx limits from MARPOL Annex VI Regulation 13 are calculated precisely from engine speed:
+
+| RPM range | Engine type | Tier II limit |
+|---|---|---|
+| n < 130 RPM | Slow-speed, large 2-stroke | 14.4 g/kWh (flat) |
+| 130 ≤ n < 2000 RPM | Medium-speed | 44 × n⁻⁰·²³ g/kWh |
+| n ≥ 2000 RPM | High-speed | 7.7 g/kWh (flat) |
+
+Every computed operating point is checked against all three tiers and a compliance chip (PASS / FAIL) is shown live.
+
+### Fuel Database (Chapter 5)
+
+<Badge text="Six Marine Fuels" variant="success" />
+
+All six fuels are stored with combustion properties (LHV, carbon fraction, sulphur fraction, stoichiometric AFR, specific heat of products), lifecycle GHG values (WtW fossil and green pathways, TtW), IMO CO₂ emission factors per MEPC.245(66), cost, TRL, and port infrastructure availability. GHG values are cross-verified against IMO LCA Guidelines MEPC.376(80) and the FuelEU Maritime Regulation (EU) 2023/1805.
+
+| Fuel | Pathway |
+|---|---|
+| HFO (Heavy Fuel Oil) | Conventional fossil |
+| MGO (Marine Gas Oil) | Conventional fossil |
+| LNG (Liquefied Natural Gas) | Fossil + green (bio-LNG) |
+| Methanol | Fossil + green (e-methanol) |
+| Ammonia | Green (e-ammonia) |
+| Hydrogen | Green (e-hydrogen) |
+
+### CII and FuelEU Compliance
+
+The dashboard also computes IMO Carbon Intensity Indicator (CII) ratings per MEPC.338(76) for eight vessel types, and plots the full FuelEU Maritime GHG intensity trajectory from 2025 to 2050 — showing which fuels are compliant at which year under both fossil and green production pathways.
+
+---
+
+## Features
+
+- Live two-zone combustion diagram with burned-zone temperature, flame front, and real-time exhaust output values
+- NOx gauge and compliance status updating as you move any slider
+- Load-sweep chart (10%–100%) showing how all emissions change across the operating range
+- Fuel comparison bar charts across all six fuels at the same operating point
+- Voyage-level CO₂, NOx, SOx totals with fuel cost and EU ETS carbon cost
+- Multi-criteria radar chart for holistic fuel comparison
+- IMO CII rating calculator with A–E band visualisation
+- One-click IMO DCS compliance PDF report generation
+- Parameter guide explaining what every engine control does and what emission it drives
+- Contextual help tooltips on every slider
+
+---
+
+## Technologies
+
+| Layer | Stack |
+|---|---|
+| App framework | Python · Streamlit 1.45 |
+| Visualisation | Plotly 6 · custom SVG-free HTML/CSS diagrams |
+| Physics engine | Pure Python (math module) — no external simulation library |
+| PDF generation | ReportLab |
+| Data | Pandas |
+| Source reference | IGI Global 2024 · MARPOL Annex VI · MEPC.376(80) · FuelEU Maritime 2023/1805 |
+
+---
+
+## Live Application
+
+The full dashboard is embedded below. Use the sidebar to navigate between the Emissions & NOx Calculator and the Alternative Fuel Benchmarking tool.
+
+[Open dashboard in new tab →](https://shipdigitaltwin.streamlit.app/)
+
+<Aside type="note">
+If the embed is blocked by your browser or the app is sleeping (free tier hibernates after inactivity), click the direct link above to open it in a new tab. The app may take 20–30 seconds to wake up on first load.
+</Aside>
+
+<div style="margin-top: 1rem;">
+  <iframe
+    src="https://shipdigitaltwin.streamlit.app/"
+    width="100%"
+    height="900"
+    style="border: 1px solid #1E3A5F; border-radius: 8px;"
+    allow="fullscreen"
+  ></iframe>
+</div>
+
+---
+
+## Source
+
+<Aside type="tip">
+**Karakostas, B. & Katsoulakos, T. (Eds.).** *State-of-the-Art Digital Twin Applications for Shipping Sector Decarbonisation.* IGI Global, 2024. Physics validated against MARPOL Annex VI, ISO 8178, and IMO MEPC circulars.
+</Aside>

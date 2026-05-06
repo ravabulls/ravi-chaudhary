@@ -1,0 +1,144 @@
+---
+title: "Digitaler Schiffsmotor-Zwilling — Emissions- und Dekarbonisierungs-Dashboard"
+description: "Ein produktionsgrades Schiffsmotorsimulations- und Alternativkraftstoff-Benchmarking-Tool, entwickelt in Python und Streamlit, basierend auf Zwei-Zonen-Verbrennungsphysik und IMO-Regulierungsrahmen."
+sidebar:
+  label: "Digitaler Schiffsmotor-Zwilling"
+  order: 2
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+Ein produktionsgrades Schiffsmotorsimulations- und Alternativkraftstoff-Benchmarking-Tool, entwickelt in Python und Streamlit, basierend auf Zwei-Zonen-Verbrennungsphysik und IMO-Regulierungsrahmen.
+
+---
+
+## Was ich entwickelt habe
+
+Dieses Projekt ist ein digitaler Schiffsmotor-Zwilling — eine Live-Interaktive Simulation eines echten Schiffsdieselmotors, die Emissionen, NOx-Konformität und Kraftstoffleistung in Echtzeit berechnet. Es ist vollständig in Python und Streamlit entwickelt und basiert auf der Physik und den Regulierungsrahmen aus *State-of-the-Art Digital Twin Applications for Shipping Sector Decarbonisation* (Karakostas & Katsoulakos, IGI Global 2024).
+
+Das Dashboard bietet zwei Tools:
+
+- **Emissions- & NOx-Rechner** — simuliert einen konfigurierbaren Zweitakt-Schiffsmotor und berechnet NOx, CO₂, SOx und spezifischen Kraftstoffverbrauch an jedem Betriebspunkt
+- **Alternativkraftstoff-Benchmarking** — vergleicht sechs Schiffskraftstoffe (HFO, MGO, LNG, Methanol, Ammoniak, Wasserstoff) hinsichtlich Lebenszyklus-THG-Intensität, FuelEU-Maritime-Konformität, Kosten, Energiedichte und Technologiereifegrad
+
+---
+
+## Warum das wichtig ist
+
+Die Schifffahrt verursacht etwa 2,9 % der weltweiten Treibhausgasemissionen. Die IMO hat ein Netto-Null-Ziel bis 2050 vorgegeben, und Übergangsregelungen — MARPOL-Anlage-VI-NOx-Tiers, die IMO-Schwefelkappe 2020, CII-Bewertungen und die EU-FuelEU-Maritime-Verordnung — verändern bereits, wie Schiffe betrieben und betankt werden.
+
+Digitale Zwillings-Technologie ermöglicht es Schiffsbetreibern und Ingenieuren, diese Szenarien virtuell zu simulieren, ohne den physischen Motor zu berühren. Dieses Projekt zeigt, wie eine physikbasierte Simulation als Entscheidungsunterstützungstool dienen kann für:
+
+- Überprüfung der IMO-MARPOL-Tier-I/II/III-NOx-Konformität vor dem Einfahren in eine Emissionskontrollzone
+- Verständnis, wie sich die Änderung von Kraftstofftyp, Motorlast oder Betriebsdrehzahl auf das Emissionsprofil auswirkt
+- Bewertung alternativer Kraftstoffe auf Well-to-Wake-Lebenszyklus-Basis, bevor kostspielige Infrastrukturänderungen vorgenommen werden
+- Erstellung von IMO-DCS-Konformitätsberichten für regulatorische Einreichungen
+
+---
+
+## Technischer Ansatz
+
+### Zwei-Zonen-Verbrennungsmodell (Kapitel 11)
+
+<Badge text="Kern-Physik-Engine" variant="note" />
+
+Das Motormodell teilt den Zylinder zu jedem Zeitpunkt in zwei Zonen — eine **verbrannte Zone** (heiße Verbrennungsprodukte, 1700–2100 K) und eine **unverbrannte Zone** (Frischladung bei Einlasstemperatur). Diese Trennung ermöglicht NOx-Modellierung ohne vollständige 3D-CFD-Simulation.
+
+Die wichtigsten implementierten Physikmodelle:
+
+- **Wiebe-Brennverlaufsfunktion** — modelliert die Wärmefreisetzungskurve über den Kurbelwinkel und bestimmt, wie schnell Kraftstoffenergie freigesetzt wird
+- **Temperatur der verbrannten Zone** — aus einer Energiebilanz unter Verwendung des kraftstoffspezifischen spezifischen Wärmevermögens der Verbrennungsprodukte berechnet, korrigiert für das lokale Luft-Kraftstoff-Verhältnis
+- **Woschni-Wärmeübertragungs-Korrektur (×0,87)** — berücksichtigt konvektive Wärmeverluste an den Zylinderwänden; ohne diese Korrektur wird T_verbrannt überschätzt und NOx ist zu hoch
+- **Erweiterter Zeldovich-Mechanismus** — thermische NOx-Bildungsrate proportional zu [O₂]⁰·⁵ · exp(−38 000 / T) · (T / 2 200)²; vernachlässigbar unter 1600 K, steigt exponentiell darüber an
+- **Kohlenstoff- und Schwefelbilanz** — CO₂ = SFC × C-Anteil × 44/12; SOx = SFC × S-Anteil × 2
+
+### IMO-NOx-Compliance-Engine
+
+<Badge text="MARPOL Anlage VI Vorschrift 13" variant="caution" />
+
+NOx-Grenzwerte aus MARPOL Anlage VI Vorschrift 13 werden präzise aus der Motordrehzahl berechnet:
+
+| Drehzahlbereich | Motortyp | Tier-II-Grenzwert |
+|---|---|---|
+| n < 130 U/min | Langsamläufer, großer Zweitakter | 14,4 g/kWh (konstant) |
+| 130 ≤ n < 2000 U/min | Mittelschnellläufer | 44 × n⁻⁰·²³ g/kWh |
+| n ≥ 2000 U/min | Schnellläufer | 7,7 g/kWh (konstant) |
+
+Jeder berechnete Betriebspunkt wird gegen alle drei Tiers geprüft und ein Konformitäts-Chip (BESTANDEN / NICHT BESTANDEN) wird live angezeigt.
+
+### Kraftstoffdatenbank (Kapitel 5)
+
+<Badge text="Sechs Schiffskraftstoffe" variant="success" />
+
+Alle sechs Kraftstoffe sind mit Verbrennungseigenschaften (Hu, Kohlenstoffanteil, Schwefelanteil, stöchiometrisches LKV, spezifische Wärme der Produkte), Lebenszyklus-THG-Werten (WtW fossil und grüne Pfade, TtW), IMO-CO₂-Emissionsfaktoren nach MEPC.245(66), Kosten, TRL und Hafeninfrastrukturverfügbarkeit gespeichert. THG-Werte werden gegen IMO-LCA-Richtlinien MEPC.376(80) und die FuelEU-Maritime-Verordnung (EU) 2023/1805 gegengeprüft.
+
+| Kraftstoff | Pfad |
+|---|---|
+| HFO (Schweröl) | Konventionell fossil |
+| MGO (Marine-Gasöl) | Konventionell fossil |
+| LNG (Verflüssigtes Erdgas) | Fossil + grün (Bio-LNG) |
+| Methanol | Fossil + grün (E-Methanol) |
+| Ammoniak | Grün (E-Ammoniak) |
+| Wasserstoff | Grün (E-Wasserstoff) |
+
+### CII- und FuelEU-Konformität
+
+Das Dashboard berechnet auch IMO-Carbon-Intensity-Indicator-Bewertungen (CII) nach MEPC.338(76) für acht Schiffstypen und stellt den vollständigen FuelEU-Maritime-THG-Intensitätsverlauf von 2025 bis 2050 dar — es zeigt, welche Kraftstoffe in welchem Jahr unter fossilen und grünen Produktionspfaden konform sind.
+
+---
+
+## Funktionen
+
+- Live-Zwei-Zonen-Verbrennungsdiagramm mit Temperatur der verbrannten Zone, Flammenfront und Echtzeit-Abgaswerten
+- NOx-Anzeige und Konformitätsstatus, der sich bei jeder Slider-Bewegung aktualisiert
+- Lastsweep-Diagramm (10%–100%), das zeigt, wie sich alle Emissionen über den Betriebsbereich verändern
+- Kraftstoffvergleichs-Balkendiagramme für alle sechs Kraftstoffe am gleichen Betriebspunkt
+- Reise-CO₂-, NOx-, SOx-Summen mit Kraftstoffkosten und EU-ETS-Kohlenstoffkosten
+- Mehrkriterien-Radardiagramm für ganzheitlichen Kraftstoffvergleich
+- IMO-CII-Bewertungsrechner mit A–E-Band-Visualisierung
+- Ein-Klick-Erstellung von IMO-DCS-Konformitäts-PDF-Berichten
+- Parameter-Leitfaden, der erklärt, was jede Motorsteuerung bewirkt und welche Emission sie beeinflusst
+- Kontextbezogene Hilfe-Tooltips bei jedem Slider
+
+---
+
+## Technologien
+
+| Schicht | Stack |
+|---|---|
+| App-Framework | Python · Streamlit 1.45 |
+| Visualisierung | Plotly 6 · benutzerdefinierte SVG-freie HTML/CSS-Diagramme |
+| Physik-Engine | Reines Python (math-Modul) — keine externe Simulationsbibliothek |
+| PDF-Generierung | ReportLab |
+| Daten | Pandas |
+| Quellenreferenz | IGI Global 2024 · MARPOL Anlage VI · MEPC.376(80) · FuelEU Maritime 2023/1805 |
+
+---
+
+## Live-Anwendung
+
+Das vollständige Dashboard ist unten eingebettet. Verwenden Sie die Seitenleiste, um zwischen dem Emissions- & NOx-Rechner und dem Alternativkraftstoff-Benchmarking-Tool zu navigieren.
+
+[Dashboard in neuem Tab öffnen →](https://shipdigitaltwin.streamlit.app/)
+
+<Aside type="note">
+Wenn das Einbetten durch Ihren Browser blockiert wird oder die App schläft (der kostenlose Tarif hiberniert bei Inaktivität), klicken Sie auf den direkten Link oben, um sie in einem neuen Tab zu öffnen. Die App benötigt beim ersten Laden möglicherweise 20–30 Sekunden zum Starten.
+</Aside>
+
+<div style="margin-top: 1rem;">
+  <iframe
+    src="https://shipdigitaltwin.streamlit.app/"
+    width="100%"
+    height="900"
+    style="border: 1px solid #1E3A5F; border-radius: 8px;"
+    allow="fullscreen"
+  ></iframe>
+</div>
+
+---
+
+## Quelle
+
+<Aside type="tip">
+**Karakostas, B. & Katsoulakos, T. (Hrsg.).** *State-of-the-Art Digital Twin Applications for Shipping Sector Decarbonisation.* IGI Global, 2024. Physik validiert gegen MARPOL Anlage VI, ISO 8178 und IMO-MEPC-Rundschreiben.
+</Aside>
