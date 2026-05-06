@@ -48,7 +48,26 @@ export default defineConfig({
 					items: [
 						{ label: 'MBA Subjects', collapsed: true, autogenerate: { directory: 'learnings/mba' } },
 						{ label: 'Non-Fiction Books', collapsed: true, autogenerate: { directory: 'learnings/books' } },
-						{ label: 'Online Courses', collapsed: true, autogenerate: { directory: 'learnings/online', collapsed: true } },
+						{
+						label: 'Online Courses',
+						collapsed: true,
+						items: [
+							{ label: 'Overview', link: 'learnings/online' },
+							{
+								label: 'Supply Chain Digitization',
+								collapsed: true,
+								autogenerate: { directory: 'learnings/online/Supply-Chain-Digitization' },
+							},
+							{
+								label: 'Shipping',
+								collapsed: true,
+								items: [
+									{ label: 'Maritime CII Dashboard', link: 'learnings/online/shipping/maritime-cii-dashboard' },
+									{ label: 'Ship Engine Digital Twin', link: 'learnings/online/shipping/ship-engine-digital-twin' },
+								],
+							},
+						],
+					},
 					],
 				},
 			],
