@@ -39,14 +39,16 @@ export default defineConfig({
 				},
 				{
 					label: 'Resume',
+					collapsed: true,
 					autogenerate: { directory: 'resume' },
 				},
 				{
 					label: 'Learnings',
+					collapsed: true,
 					items: [
-						{ label: 'MBA Subjects', autogenerate: { directory: 'learnings/mba' } },
-						{ label: 'Non-Fiction Books', autogenerate: { directory: 'learnings/books' } },
-						{ label: 'Online Courses', autogenerate: { directory: 'learnings/online' } },
+						{ label: 'MBA Subjects', collapsed: true, autogenerate: { directory: 'learnings/mba' } },
+						{ label: 'Non-Fiction Books', collapsed: true, autogenerate: { directory: 'learnings/books' } },
+						{ label: 'Online Courses', collapsed: true, autogenerate: { directory: 'learnings/online', collapsed: true } },
 					],
 				},
 			],
