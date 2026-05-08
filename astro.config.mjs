@@ -46,7 +46,20 @@ export default defineConfig({
 					label: 'Learnings',
 					collapsed: true,
 					items: [
-						{ label: 'MBA Subjects', collapsed: true, autogenerate: { directory: 'learnings/mba' } },
+						{
+							label: 'MBA Subjects',
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: 'learnings/mba' },
+								{
+									label: 'Application',
+									collapsed: true,
+									items: [
+										{ label: 'Venture Clienting and AI', link: 'learnings/mba/application/venture-clienting-ai' },
+									],
+								},
+							],
+						},
 						{ label: 'Non-Fiction Books', collapsed: true, autogenerate: { directory: 'learnings/books' } },
 						{
 						label: 'Online Courses',

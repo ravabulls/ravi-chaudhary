@@ -1,0 +1,118 @@
+---
+title: "Venture Client Evaluation Dashboard"
+description: "An AI-powered decision-support tool for evaluating startups using the Venture Clienting methodology, built with a four-agent pipeline in Python and Streamlit."
+sidebar:
+  label: "Venture Clienting and AI"
+  order: 1
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+An AI-powered decision-support tool for evaluating startups using the Venture Clienting methodology, built with a four-agent pipeline in Python and Streamlit.
+
+---
+
+## Overview
+
+During the MBA programme, I designed and built an AI-powered decision-support tool for the Venture Client process — the corporate methodology for engaging startups as customers rather than as portfolio investments. The dashboard operationalises a multi-stage evaluation framework based on Oliver Gassmann's Venture Clienting methodology into a single interactive web application.
+
+The tool supports an innovation team in systematically assessing whether a startup is ready for a paid pilot engagement, replacing ad hoc spreadsheet reviews with a structured, reproducible scoring process.
+
+---
+
+## What I Built
+
+### Multi-Agent AI Evaluation Pipeline
+
+<Badge text="Four-Agent Committee" variant="note" />
+
+The core of the dashboard is a four-agent AI committee, each with a defined persona and specialisation, chained so each subsequent agent reads the previous agents' outputs before writing its own assessment:
+
+- **Agent 1 — Innovation Scout**: Evaluates Team, Traction, and Technology (the "3Ts" matchmaking layer)
+- **Agent 2 — Business Unit Director**: Scores Desirability, Feasibility, and Viability from a business perspective
+- **Agent 3 — Risk & Compliance Officer**: Assesses Compatibility, Capability, and Contextuality
+- **Agent 4 — Committee Chair**: Synthesises all three reports into a final recommendation with justification
+
+Every score is an integer from 1–5 with a cited data source, confidence level (high / medium / low), and structured reasoning covering evidence, implication, gap, and verdict. The system enforces an anti-hallucination rule: when evidence is missing, the score defaults to 3 with low confidence rather than fabricating a number.
+
+The pipeline supports four AI providers selectable at runtime: Anthropic Claude, OpenAI, Google Gemini, and Mistral.
+
+### Qualifying Checklist
+
+<Badge text="Binary Must-Have Criteria" variant="caution" />
+
+Before the AI agents run, the tool programmatically evaluates five binary must-have criteria from the Venture Clienting methodology:
+
+- Legal entity registration
+- HQ location and GDPR compliance zone
+- Adequate funding and runway (minimum 9 months required for pilot viability)
+- Reference clients as market validation evidence
+- Preliminary problem-solution fit based on ARR and product maturity
+
+Each criterion is assigned a green / amber / red status with an explanatory note. The qualifying score feeds into the composite evaluation.
+
+### Weighted Composite Scoring
+
+<Badge text="Three-Layer Scoring Model" variant="success" />
+
+The overall score is a weighted composite across three layers:
+
+| Layer | Weight | Source |
+|---|---|---|
+| Qualifying checklist | 20% | Objective inputs |
+| 3Ts average (Team, Traction, Technology) | 30% | AI Agent 1 |
+| Six dimensions weighted average | 50% | AI Agents 2 & 3 |
+
+Within the six dimensions, sub-weights reflect their relative importance: Desirability, Feasibility, and Viability at 20% each; Compatibility and Capability at 15% each; Contextuality at 10%. The final score drives a recommendation: Proceed to Pilot, Further Evaluation, or Decline.
+
+### Context Gathering
+
+Before any AI scoring, the tool automatically gathers external context about the startup:
+
+- Scrapes the startup's website for product descriptions, team information, and customer evidence
+- Runs a DuckDuckGo news search for recent press coverage and funding announcements
+- Combines scraped content, user-provided description, and structured inputs into a single context block passed to all agents
+
+### Pipeline Management
+
+The dashboard maintains a session-state pipeline of evaluated startups so an analyst can compare multiple candidates side by side. A pipeline overview page displays all startups with their scores, recommendations, and key metrics in a sortable table. Individual startup cards show the full AI reasoning, qualifying checklist, dimension breakdown chart, and a downloadable PDF evaluation report.
+
+### Input Sanity Checks
+
+A pre-submission validation layer runs before the AI is called, catching common data quality issues: problem statements that are too short, contradictions between funding stage and revenue (e.g. Series B but pre-revenue), critical runway below 3 months, and malformed website URLs. Errors block submission; warnings are surfaced to the analyst.
+
+### Visualisations
+
+- Dimension breakdown bar chart with score-based colours (green for 4–5, yellow for 3, orange for 2, red for 1) and opacity-encoded confidence levels
+- Radar/spider chart for comparing a startup's six dimensions against the acceptable threshold
+- Pipeline summary table with sortable columns
+
+---
+
+## Technical Stack
+
+| Component | Technology |
+|---|---|
+| Frontend & application | Python · Streamlit |
+| AI providers | Anthropic Claude · OpenAI · Google Gemini · Mistral |
+| Web scraping | BeautifulSoup · httpx |
+| News search | DuckDuckGo Search API |
+| PDF export | ReportLab |
+| Visualisations | Plotly |
+| Hosting | Streamlit Community Cloud |
+
+---
+
+## What I Learned
+
+Working on this project gave me hands-on experience designing a system where business logic (the Venture Clienting methodology), AI reasoning, and user experience all need to coexist. The biggest challenge was translating a qualitative framework from a management methodology book into precise, auditable scoring rules that an LLM follows consistently — which required careful prompt engineering, explicit anti-hallucination constraints, and structured output formats. I also learned a significant amount about deploying Python data applications, managing file paths across environments, and building for non-technical end users who need trustworthy outputs, not just fast ones.
+
+---
+
+## Live Application
+
+[Open dashboard in new tab →](https://dashboardventureclient.streamlit.app/)
+
+<Aside type="note">
+The app is hosted on Streamlit Community Cloud's free tier and may take 20–30 seconds to wake up on first load.
+</Aside>

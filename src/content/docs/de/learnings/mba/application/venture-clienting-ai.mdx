@@ -1,0 +1,118 @@
+---
+title: "Venture-Client-Bewertungs-Dashboard"
+description: "Ein KI-gestütztes Entscheidungsunterstützungstool zur Bewertung von Startups nach der Venture-Clienting-Methodik, entwickelt mit einer Vier-Agenten-Pipeline in Python und Streamlit."
+sidebar:
+  label: "Venture Clienting und KI"
+  order: 1
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+Ein KI-gestütztes Entscheidungsunterstützungstool zur Bewertung von Startups nach der Venture-Clienting-Methodik, entwickelt mit einer Vier-Agenten-Pipeline in Python und Streamlit.
+
+---
+
+## Überblick
+
+Während des MBA-Programms habe ich ein KI-gestütztes Entscheidungsunterstützungstool für den Venture-Client-Prozess entwickelt — die unternehmerische Methodik zur Einbindung von Startups als Kunden statt als Portfolioinvestitionen. Das Dashboard operationalisiert ein mehrstufiges Bewertungsframework basierend auf Oliver Gassmanns Venture-Clienting-Methodik in einer einzigen interaktiven Webanwendung.
+
+Das Tool unterstützt ein Innovationsteam bei der systematischen Beurteilung, ob ein Startup bereit für ein bezahltes Pilot-Engagement ist, und ersetzt Ad-hoc-Tabellenkalkulationen durch einen strukturierten, reproduzierbaren Bewertungsprozess.
+
+---
+
+## Was ich entwickelt habe
+
+### Multi-Agenten-KI-Bewertungspipeline
+
+<Badge text="Vier-Agenten-Komitee" variant="note" />
+
+Das Herzstück des Dashboards ist ein Vier-Agenten-KI-Komitee, jeder mit einer definierten Persona und Spezialisierung, so verkettet, dass jeder nachfolgende Agent die Ausgaben der vorherigen Agenten liest, bevor er seine eigene Einschätzung verfasst:
+
+- **Agent 1 — Innovation Scout**: Bewertet Team, Traktion und Technologie (die "3Ts" Matchmaking-Ebene)
+- **Agent 2 — Business Unit Director**: Bewertet Wünschbarkeit, Machbarkeit und Tragfähigkeit aus unternehmerischer Sicht
+- **Agent 3 — Risk & Compliance Officer**: Beurteilt Kompatibilität, Fähigkeit und Kontextualität
+- **Agent 4 — Committee Chair**: Fasst alle drei Berichte zu einer abschließenden Empfehlung mit Begründung zusammen
+
+Jede Bewertung ist eine ganze Zahl von 1–5 mit einer zitierten Datenquelle, einem Konfidenzniveau (hoch / mittel / niedrig) und einer strukturierten Begründung, die Belege, Implikation, Lücke und Urteil umfasst. Das System setzt eine Anti-Halluzinations-Regel durch: Wenn Belege fehlen, wird die Bewertung auf 3 mit niedrigem Konfidenzniveau gesetzt, anstatt eine Zahl zu erfinden.
+
+Die Pipeline unterstützt vier zur Laufzeit auswählbare KI-Anbieter: Anthropic Claude, OpenAI, Google Gemini und Mistral.
+
+### Qualifizierungs-Checkliste
+
+<Badge text="Binäre Muss-Kriterien" variant="caution" />
+
+Bevor die KI-Agenten ausgeführt werden, bewertet das Tool programmatisch fünf binäre Muss-Kriterien aus der Venture-Clienting-Methodik:
+
+- Registrierung als juristische Person
+- Hauptsitz und DSGVO-Konformitätszone
+- Ausreichende Finanzierung und Runway (mindestens 9 Monate für Pilot-Tragfähigkeit erforderlich)
+- Referenzkunden als Marktvalidierungsnachweis
+- Vorläufiger Problem-Lösungs-Fit basierend auf ARR und Produktreife
+
+Jedes Kriterium wird mit einem grünen / gelben / roten Status und einem erklärenden Hinweis versehen. Der Qualifizierungs-Score fließt in die Gesamtbewertung ein.
+
+### Gewichtete Gesamtbewertung
+
+<Badge text="Drei-Schichten-Bewertungsmodell" variant="success" />
+
+Der Gesamtscore ist ein gewichteter Komposit über drei Schichten:
+
+| Schicht | Gewichtung | Quelle |
+|---|---|---|
+| Qualifizierungs-Checkliste | 20% | Objektive Eingaben |
+| 3Ts-Durchschnitt (Team, Traktion, Technologie) | 30% | KI-Agent 1 |
+| Gewichteter Durchschnitt der sechs Dimensionen | 50% | KI-Agenten 2 & 3 |
+
+Innerhalb der sechs Dimensionen spiegeln die Teilgewichtungen deren relative Bedeutung wider: Wünschbarkeit, Machbarkeit und Tragfähigkeit je 20%; Kompatibilität und Fähigkeit je 15%; Kontextualität 10%. Der Endwert führt zu einer Empfehlung: Weiter zum Pilot, Weitere Bewertung erforderlich oder Ablehnen.
+
+### Kontexterfassung
+
+Vor jeder KI-Bewertung sammelt das Tool automatisch externen Kontext über das Startup:
+
+- Scraped die Website des Startups nach Produktbeschreibungen, Teaminformationen und Kundenbelegen
+- Führt eine DuckDuckGo-Nachrichtensuche nach aktueller Presseberichterstattung und Finanzierungsankündigungen durch
+- Kombiniert gescrapte Inhalte, die vom Nutzer bereitgestellte Beschreibung und strukturierte Eingaben zu einem einzigen Kontextblock, der an alle Agenten übergeben wird
+
+### Pipeline-Management
+
+Das Dashboard führt eine sitzungsbasierte Pipeline bewerteter Startups, sodass ein Analyst mehrere Kandidaten gleichzeitig vergleichen kann. Eine Pipeline-Übersichtsseite zeigt alle Startups mit ihren Scores, Empfehlungen und Schlüsselkennzahlen in einer sortierbaren Tabelle. Individuelle Startup-Karten zeigen die vollständige KI-Begründung, die Qualifizierungs-Checkliste, ein Dimensionsaufschlüsselungsdiagramm und einen herunterladbaren PDF-Bewertungsbericht.
+
+### Eingabe-Plausibilitätsprüfungen
+
+Eine Vorab-Validierungsebene wird ausgeführt, bevor die KI aufgerufen wird, und erkennt häufige Datenqualitätsprobleme: zu kurze Problemstellungen, Widersprüche zwischen Finanzierungsphase und Umsatz (z.B. Series B, aber noch kein Umsatz), kritischer Runway unter 3 Monaten und fehlerhafte Website-URLs. Fehler blockieren die Einreichung; Warnungen werden dem Analysten angezeigt.
+
+### Visualisierungen
+
+- Dimensionsaufschlüsselungs-Balkendiagramm mit score-basierten Farben (grün für 4–5, gelb für 3, orange für 2, rot für 1) und opazitätskodierten Konfidenzniveaus
+- Radar-/Spinnendiagramm zum Vergleich der sechs Dimensionen eines Startups mit dem akzeptablen Schwellenwert
+- Pipeline-Übersichtstabelle mit sortierbaren Spalten
+
+---
+
+## Technologie-Stack
+
+| Komponente | Technologie |
+|---|---|
+| Frontend & Anwendung | Python · Streamlit |
+| KI-Anbieter | Anthropic Claude · OpenAI · Google Gemini · Mistral |
+| Web-Scraping | BeautifulSoup · httpx |
+| Nachrichtensuche | DuckDuckGo Search API |
+| PDF-Export | ReportLab |
+| Visualisierungen | Plotly |
+| Hosting | Streamlit Community Cloud |
+
+---
+
+## Was ich gelernt habe
+
+Die Arbeit an diesem Projekt gab mir praktische Erfahrung in der Gestaltung eines Systems, in dem Geschäftslogik (die Venture-Clienting-Methodik), KI-Reasoning und Nutzererfahrung koexistieren müssen. Die größte Herausforderung bestand darin, ein qualitatives Framework aus einem Management-Methodologiebuch in präzise, nachvollziehbare Bewertungsregeln zu übersetzen, die ein LLM konsistent befolgt — was sorgfältiges Prompt-Engineering, explizite Anti-Halluzinations-Beschränkungen und strukturierte Ausgabeformate erforderte. Ich habe auch viel über das Deployment von Python-Datenanwendungen, die Verwaltung von Dateipfaden über verschiedene Umgebungen hinweg und die Entwicklung für nicht-technische Endnutzer gelernt, die vertrauenswürdige Ergebnisse benötigen, nicht nur schnelle.
+
+---
+
+## Live-Anwendung
+
+[Dashboard in neuem Tab öffnen →](https://dashboardventureclient.streamlit.app/)
+
+<Aside type="note">
+Die App wird auf dem kostenlosen Tarif der Streamlit Community Cloud gehostet und benötigt beim ersten Laden möglicherweise 20–30 Sekunden zum Starten.
+</Aside>
