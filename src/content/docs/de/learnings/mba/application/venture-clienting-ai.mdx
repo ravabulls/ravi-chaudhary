@@ -1,6 +1,6 @@
 ---
 title: "Venture-Client-Bewertungs-Dashboard"
-description: "Ein KI-gestütztes Entscheidungsunterstützungstool zur Bewertung von Startups nach der Venture-Clienting-Methodik, entwickelt mit einer Vier-Agenten-Pipeline in Python und Streamlit."
+description: "Ein KI-gestütztes Entscheidungsunterstützungstool, das ein Innovationsteam vom Startup-Scouting bis zur strukturierten Go/No-Go-Empfehlung begleitet, entwickelt mit einem Vier-Agenten-Komitee in Python und Streamlit."
 sidebar:
   label: "Venture Clienting und KI"
   order: 1
@@ -8,54 +8,62 @@ sidebar:
 
 import { Aside, Badge } from '@astrojs/starlight/components';
 
-Ein KI-gestütztes Entscheidungsunterstützungstool zur Bewertung von Startups nach der Venture-Clienting-Methodik, entwickelt mit einer Vier-Agenten-Pipeline in Python und Streamlit.
+Ein KI-gestütztes Entscheidungsunterstützungstool, das ein Innovationsteam vom Startup-Scouting bis zur strukturierten Go/No-Go-Empfehlung begleitet, entwickelt mit einem Vier-Agenten-Komitee in Python und Streamlit.
 
 ---
 
 ## Überblick
 
-Während des MBA-Programms habe ich ein KI-gestütztes Entscheidungsunterstützungstool für den Venture-Client-Prozess entwickelt — die unternehmerische Methodik zur Einbindung von Startups als Kunden statt als Portfolioinvestitionen. Das Dashboard operationalisiert ein mehrstufiges Bewertungsframework basierend auf Oliver Gassmanns Venture-Clienting-Methodik in einer einzigen interaktiven Webanwendung.
+Während meines MBA-Programms habe ich ein KI-gestütztes Entscheidungsunterstützungstool für den Venture-Client-Prozess entwickelt — die unternehmerische Methodik zur Einbindung von Startups als zahlende Kunden statt als Portfolioinvestitionen. Das Dashboard operationalisiert ein mehrstufiges Bewertungsframework basierend auf Oliver Gassmanns Venture-Clienting-Methodik in einer einzigen interaktiven Webanwendung und begleitet ein Innovationsteam vom initialen Startup-Scouting bis zur strukturierten Go/No-Go-Empfehlung.
 
-Das Tool unterstützt ein Innovationsteam bei der systematischen Beurteilung, ob ein Startup bereit für ein bezahltes Pilot-Engagement ist, und ersetzt Ad-hoc-Tabellenkalkulationen durch einen strukturierten, reproduzierbaren Bewertungsprozess.
+---
+
+## Der Venture-Client-Prozess
+
+Das Tool basiert auf den fünf kanonischen Phasen der Venture-Client-Methodik:
+
+**Discovery → Assessment → Buy → Pilot → Adoption**
+
+Jedes Startup im System ist mit seiner aktuellen Phase markiert. Das Dashboard ist speziell für die Assessment-Phase entwickelt — den analytisch intensivsten Schritt — und unterstützt den gesamten Prozess durch beschaffungsreife PDF-Berichte, Phasen-Tracking in der Pipeline und einen dedizierten Methodik-Referenz-Tab, der jede Phase, ihre Hauptaktivitäten und die Rolle des Tools erklärt.
 
 ---
 
 ## Was ich entwickelt habe
 
-### Multi-Agenten-KI-Bewertungspipeline
+### Multi-Agenten-KI-Bewertungskomitee
 
 <Badge text="Vier-Agenten-Komitee" variant="note" />
 
-Das Herzstück des Dashboards ist ein Vier-Agenten-KI-Komitee, jeder mit einer definierten Persona und Spezialisierung, so verkettet, dass jeder nachfolgende Agent die Ausgaben der vorherigen Agenten liest, bevor er seine eigene Einschätzung verfasst:
+Das Herzstück des Dashboards ist ein Vier-Agenten-KI-System, bei dem jeder Agent eine definierte Persona und einen klar abgegrenzten Verantwortungsbereich hat. Die Agenten sind verkettet — jeder nachfolgende Agent liest die Ausgaben der vorherigen Agenten, bevor er seine eigene Einschätzung verfasst:
 
-- **Agent 1 — Innovation Scout**: Bewertet Team, Traktion und Technologie (die "3Ts" Matchmaking-Ebene)
-- **Agent 2 — Business Unit Director**: Bewertet Wünschbarkeit, Machbarkeit und Tragfähigkeit aus unternehmerischer Sicht
-- **Agent 3 — Risk & Compliance Officer**: Beurteilt Kompatibilität, Fähigkeit und Kontextualität
-- **Agent 4 — Committee Chair**: Fasst alle drei Berichte zu einer abschließenden Empfehlung mit Begründung zusammen
+- **Agent 1 — Innovation Scout (Maria Chen)**: Bewertet Team, Traktion und Technologie — die „3Ts"-Matchmaking-Ebene, die beantwortet, ob das Startup real und bereit ist
+- **Agent 2 — Business Unit Director (Klaus Weber)**: Bewertet Wünschbarkeit, Machbarkeit und Tragfähigkeit aus unternehmerischer und kaufmännischer Perspektive
+- **Agent 3 — Risk & Compliance Officer (Dr. Anna Müller)**: Beurteilt Kompatibilität, Fähigkeit und Kontextualität — einschließlich rechtlicher, IP-, DSGVO- und Integrationsrisiken
+- **Agent 4 — Committee Chair (Heinrich Bauer)**: Fasst alle drei Berichte zusammen und gibt eine abschließende Empfehlung mit Begründung aus
 
-Jede Bewertung ist eine ganze Zahl von 1–5 mit einer zitierten Datenquelle, einem Konfidenzniveau (hoch / mittel / niedrig) und einer strukturierten Begründung, die Belege, Implikation, Lücke und Urteil umfasst. Das System setzt eine Anti-Halluzinations-Regel durch: Wenn Belege fehlen, wird die Bewertung auf 3 mit niedrigem Konfidenzniveau gesetzt, anstatt eine Zahl zu erfinden.
+Jede Bewertung ist eine ganze Zahl von 1 bis 5, begleitet von einer zitierten Datenquelle, einem Konfidenzniveau (hoch / mittel / niedrig) und einer strukturierten Begründung mit vier Elementen: dem verwendeten spezifischen Beleg, seiner Implikation für den Pilot, fehlenden Informationen und einem Ein-Satz-Urteil. Das System setzt eine Anti-Halluzinations-Regel durch: Wenn Belege unzureichend sind, wird die Bewertung auf 3 mit niedrigem Konfidenzniveau gesetzt, anstatt eine Zahl zu erfinden.
 
-Die Pipeline unterstützt vier zur Laufzeit auswählbare KI-Anbieter: Anthropic Claude, OpenAI, Google Gemini und Mistral.
+Die Pipeline unterstützt vier zur Laufzeit auswählbare KI-Anbieter — Anthropic Claude, OpenAI, Google Gemini und Mistral — mit einem konfigurierbaren Token-Budget pro Agent.
 
 ### Qualifizierungs-Checkliste
 
 <Badge text="Binäre Muss-Kriterien" variant="caution" />
 
-Bevor die KI-Agenten ausgeführt werden, bewertet das Tool programmatisch fünf binäre Muss-Kriterien aus der Venture-Clienting-Methodik:
+Bevor die KI-Agenten ausgeführt werden, bewertet das Tool programmatisch fünf binäre Muss-Kriterien, die direkt aus der Venture-Clienting-Methodik stammen:
 
-- Registrierung als juristische Person
-- Hauptsitz und DSGVO-Konformitätszone
-- Ausreichende Finanzierung und Runway (mindestens 9 Monate für Pilot-Tragfähigkeit erforderlich)
+- Registrierung als juristische Person (bestätigt über Finanzierungsdaten)
+- Hauptsitz und DSGVO-Konformitätszone (DACH / EU / Nicht-EU)
+- Ausreichende Finanzierung und Runway — mindestens 9 Monate erforderlich, um einen Pilot zu tragen
 - Referenzkunden als Marktvalidierungsnachweis
 - Vorläufiger Problem-Lösungs-Fit basierend auf ARR und Produktreife
 
-Jedes Kriterium wird mit einem grünen / gelben / roten Status und einem erklärenden Hinweis versehen. Der Qualifizierungs-Score fließt in die Gesamtbewertung ein.
+Jedes Kriterium erhält einen grünen / gelben / roten Status mit einem erklärenden Hinweis. Zwei oder mehr rote Flags lösen eine Ablehnungsempfehlung aus, unabhängig von den KI-Scores.
 
 ### Gewichtete Gesamtbewertung
 
 <Badge text="Drei-Schichten-Bewertungsmodell" variant="success" />
 
-Der Gesamtscore ist ein gewichteter Komposit über drei Schichten:
+Der Gesamtscore (0–100) kombiniert drei Bewertungsschichten mit festen Gewichtungen, die der Methodik entsprechen:
 
 | Schicht | Gewichtung | Quelle |
 |---|---|---|
@@ -63,29 +71,63 @@ Der Gesamtscore ist ein gewichteter Komposit über drei Schichten:
 | 3Ts-Durchschnitt (Team, Traktion, Technologie) | 30% | KI-Agent 1 |
 | Gewichteter Durchschnitt der sechs Dimensionen | 50% | KI-Agenten 2 & 3 |
 
-Innerhalb der sechs Dimensionen spiegeln die Teilgewichtungen deren relative Bedeutung wider: Wünschbarkeit, Machbarkeit und Tragfähigkeit je 20%; Kompatibilität und Fähigkeit je 15%; Kontextualität 10%. Der Endwert führt zu einer Empfehlung: Weiter zum Pilot, Weitere Bewertung erforderlich oder Ablehnen.
+Innerhalb der sechs Dimensionen spiegeln die Teilgewichtungen die strategische Priorität wider: Wünschbarkeit, Machbarkeit und Tragfähigkeit je 20%; Kompatibilität und Fähigkeit je 15%; Kontextualität 10%. Scores über 65 ohne kritische Flags ergeben eine Empfehlung „Weiter zum Pilot"; unter 45 oder ein Score von 1 bei Traktion oder Kontextualität ergibt „Ablehnen"; alles andere ist „Weitere Bewertung erforderlich".
 
 ### Kontexterfassung
 
-Vor jeder KI-Bewertung sammelt das Tool automatisch externen Kontext über das Startup:
+Vor jeder KI-Bewertung sammelt das Tool automatisch externe Informationen über das Startup:
 
-- Scraped die Website des Startups nach Produktbeschreibungen, Teaminformationen und Kundenbelegen
-- Führt eine DuckDuckGo-Nachrichtensuche nach aktueller Presseberichterstattung und Finanzierungsankündigungen durch
-- Kombiniert gescrapte Inhalte, die vom Nutzer bereitgestellte Beschreibung und strukturierte Eingaben zu einem einzigen Kontextblock, der an alle Agenten übergeben wird
+- Scraped die öffentliche Website des Startups nach Produktbeschreibungen, Teaminformationen und Kundenbelegen
+- Führt eine DuckDuckGo-Nachrichtensuche nach aktueller Presseberichterstattung, Finanzierungsankündigungen und Marktsignalen durch
+- Kombiniert gescrapte Inhalte, die vom Nutzer bereitgestellte Beschreibung und strukturierte Eingaben zu einem einzigen Kontextblock, der an alle vier Agenten übergeben wird
 
-### Pipeline-Management
+### Phasen-Tracking in der Pipeline
 
-Das Dashboard führt eine sitzungsbasierte Pipeline bewerteter Startups, sodass ein Analyst mehrere Kandidaten gleichzeitig vergleichen kann. Eine Pipeline-Übersichtsseite zeigt alle Startups mit ihren Scores, Empfehlungen und Schlüsselkennzahlen in einer sortierbaren Tabelle. Individuelle Startup-Karten zeigen die vollständige KI-Begründung, die Qualifizierungs-Checkliste, ein Dimensionsaufschlüsselungsdiagramm und einen herunterladbaren PDF-Bewertungsbericht.
+Jedem Startup in der Bewertungspipeline wird eine aktuelle Venture-Client-Phase zugewiesen — Discovery, Assessment, Buy, Pilot oder Adoption. Ein visueller Fortschrittsbalken auf jeder Startup-Karte zeigt die vollständige Fünf-Phasen-Reise, wobei abgeschlossene Phasen grün markiert und die aktive Phase hervorgehoben ist. Der Analyst kann ein Startup mit einer einzigen Dropdown-Auswahl in die nächste Phase verschieben, und die Pipeline-Tabelle spiegelt die aktuelle Phase aller bewerteten Startups gleichzeitig wider.
 
 ### Eingabe-Plausibilitätsprüfungen
 
-Eine Vorab-Validierungsebene wird ausgeführt, bevor die KI aufgerufen wird, und erkennt häufige Datenqualitätsprobleme: zu kurze Problemstellungen, Widersprüche zwischen Finanzierungsphase und Umsatz (z.B. Series B, aber noch kein Umsatz), kritischer Runway unter 3 Monaten und fehlerhafte Website-URLs. Fehler blockieren die Einreichung; Warnungen werden dem Analysten angezeigt.
+Eine Vorab-Validierungsebene wird ausgeführt, bevor die KI aufgerufen wird, und erkennt häufige Datenqualitätsprobleme:
+
+- Problemstellungen kürzer als 50 Zeichen (blockiert)
+- Startup-Beschreibungen unter 30 Wörtern (blockiert)
+- Widersprüche zwischen Finanzierungsphase und Umsatz (z.B. Series B, aber noch kein Umsatz)
+- Kritischer Runway unter 3 Monaten — markiert das Startup als nicht in der Lage, einen Pilot zu tragen
+- Fehlerhafte Website-URLs — Scraping wird mit einer Warnung übersprungen
+
+Fehler blockieren die Einreichung; Warnungen werden dem Analysten ohne Blockierung angezeigt.
+
+### DSGVO und Datenschutzkontrollen
+
+Da das Tool Startup-Daten an externe KI-Anbieter sendet, sind zwei Datenschutzkontrollen integriert:
+
+Ein **Daten- und Datenschutz-Panel** in der Seitenleiste listet genau auf, was an den KI-Anbieter übermittelt wird — Startup-Name, Beschreibung, Problemstellung, Finanzdaten, Zusammenfassung des strategischen Unternehmensprofils und öffentlich verfügbare gescrapte Inhalte — sowie Links zur API-Datenschutzrichtlinie jedes Anbieters, die bestätigt, dass API-Tier-Daten nicht für das KI-Training verwendet werden.
+
+Ein **Bestätigungs-Checkbox vor der Bewertung** verpflichtet den Analysten zu bestätigen, dass keine personenbezogenen Daten (Mitarbeiternamen, persönliche Kontakte) eingegeben wurden, bevor die KI-Bewertung gestartet wird. Dies dient als leichtgewichtige DSGVO-Compliance-Erinnerung, ohne den Arbeitsablauf zu blockieren.
+
+### Pipeline-Management und Vergleich
+
+Das Dashboard führt eine sitzungsbasierte Pipeline aller bewerteten Startups. Der Pipeline-Tab ermöglicht:
+
+- Trichterdiagramm, das zeigt, wie viele Startups sich in jeder Empfehlungsphase befinden
+- Wünschbarkeit-vs.-Tragfähigkeit-Blasendiagramm zum visuellen Vergleich aller Kandidaten
+- Multi-Startup-Radar-Overlay zum gleichzeitigen Vergleich aller bewerteten Startups über die sechs strategischen Dimensionen
+- Sortierbare Übersichtstabelle mit Scores, Empfehlung, Hauptsitz, Finanzierungsphase und aktueller VC-Prozessphase
 
 ### Visualisierungen
 
-- Dimensionsaufschlüsselungs-Balkendiagramm mit score-basierten Farben (grün für 4–5, gelb für 3, orange für 2, rot für 1) und opazitätskodierten Konfidenzniveaus
-- Radar-/Spinnendiagramm zum Vergleich der sechs Dimensionen eines Startups mit dem akzeptablen Schwellenwert
-- Pipeline-Übersichtstabelle mit sortierbaren Spalten
+- Tachodiagramm mit dem Gesamt-Composite-Score in Empfehlungsfarbe
+- Radardiagramme für 3Ts-Matchmaking und Sechs-Dimensionen-Bewertung
+- Dimensionsaufschlüsselungs-Balkendiagramm — Balkenfarbe kodiert das Score-Niveau (grün für 4–5, gelb für 3, orange für 2, rot für 1); Balkenopazität kodiert das KI-Konfidenzniveau (fest = hoch, halbtransparent = mittel, verblasst = niedrig)
+- Pipeline-Trichter und Vergleichs-Blasendiagramm über alle Kandidaten
+
+### PDF-Export
+
+Ein Ein-Klick-Export erstellt einen formatierten PDF-Bericht mit Startup-Identität, Problemstellung, Gesamtscore, Empfehlungs-Badge, Qualifizierungs-Checkliste mit Ampelfarben, allen neun KI-Scores mit Begründung und Datenquellen sowie Analystennamen und Datumsstempel. Der Bericht ist für die Präsentation vor einem internen Venture-Board formatiert.
+
+### Einheits-KPI-Dashboard
+
+Ein KPI-Tab aggregiert Kennzahlen über die gesamte Bewertungspipeline: Gesamtzahl bewerteter Startups, Anzahl der für den Pilot freigegebenen Startups, Pilot-Konversionsrate, Startups in weiterer Bewertung, Ablehnungsanzahl und Durchschnittswerte für Wünschbarkeit und Tragfähigkeit. Diese Kennzahlen verfolgen die Gesundheit des Scouting- und Bewertungsprozesses der Innovationseinheit im Laufe der Zeit, mit einem Branchen-Benchmark von 20–30% Konversionsrate von der Bewertung zum Pilot.
 
 ---
 
@@ -93,7 +135,7 @@ Eine Vorab-Validierungsebene wird ausgeführt, bevor die KI aufgerufen wird, und
 
 | Komponente | Technologie |
 |---|---|
-| Frontend & Anwendung | Python · Streamlit |
+| Frontend und Anwendung | Python · Streamlit |
 | KI-Anbieter | Anthropic Claude · OpenAI · Google Gemini · Mistral |
 | Web-Scraping | BeautifulSoup · httpx |
 | Nachrichtensuche | DuckDuckGo Search API |
@@ -105,7 +147,11 @@ Eine Vorab-Validierungsebene wird ausgeführt, bevor die KI aufgerufen wird, und
 
 ## Was ich gelernt habe
 
-Die Arbeit an diesem Projekt gab mir praktische Erfahrung in der Gestaltung eines Systems, in dem Geschäftslogik (die Venture-Clienting-Methodik), KI-Reasoning und Nutzererfahrung koexistieren müssen. Die größte Herausforderung bestand darin, ein qualitatives Framework aus einem Management-Methodologiebuch in präzise, nachvollziehbare Bewertungsregeln zu übersetzen, die ein LLM konsistent befolgt — was sorgfältiges Prompt-Engineering, explizite Anti-Halluzinations-Beschränkungen und strukturierte Ausgabeformate erforderte. Ich habe auch viel über das Deployment von Python-Datenanwendungen, die Verwaltung von Dateipfaden über verschiedene Umgebungen hinweg und die Entwicklung für nicht-technische Endnutzer gelernt, die vertrauenswürdige Ergebnisse benötigen, nicht nur schnelle.
+Dieses Projekt hat mir gezeigt, was es bedeutet, ein qualitatives Unternehmensframework in ein funktionierendes Softwaresystem zu übersetzen. Der schwierigste Teil war nicht der Code — es waren die Designentscheidungen: Wie bringt man ein LLM dazu, Bewertungsregeln konsistent zu befolgen, ohne Belege zu erfinden? Wie baut man ein Bewertungsmodell, das sowohl rigoros als auch für nicht-technische Stakeholder erklärbar ist? Wie geht man mit Datenschutz um, wenn das Tool Unternehmensstrategie an einen US-amerikanischen KI-Server sendet?
+
+Auf der technischen Seite habe ich praktische Erfahrung mit Multi-Agenten-Prompt-Verkettung, strukturiertem JSON-Output-Parsing, Streamlit-Sitzungsstatusverwaltung, PDF-Generierung und dem Deployment von Python-Anwendungen in die Cloud gesammelt. Ich habe auch gelernt, aus der Perspektive von Nutzern zu denken, die keine Softwareentwickler sind — jede Designentscheidung in der UI existiert, weil ein echter Analyst dem Output vertrauen muss, um ihn in einem Meeting präsentieren zu können.
+
+Das Feedback vom Venture-Client-Team bestätigte, dass die Framework-Ausrichtung des Tools — insbesondere die 5-Phasen-Prozessstruktur und die Sechs-Dimensionen-Bewertung — der Art entspricht, wie Praktiker tatsächlich über Startup-Bewertungen denken. Diese Validierung bedeutete mir mehr als die technische Umsetzung.
 
 ---
 
@@ -115,4 +161,10 @@ Die Arbeit an diesem Projekt gab mir praktische Erfahrung in der Gestaltung eine
 
 <Aside type="note">
 Die App wird auf dem kostenlosen Tarif der Streamlit Community Cloud gehostet und benötigt beim ersten Laden möglicherweise 20–30 Sekunden zum Starten.
+</Aside>
+
+---
+
+<Aside type="tip">
+**Gutmann, T., Greiss, S. & Hüttenhein, M.** *Venture Clienting.* Kogan Page, 2024.
 </Aside>
