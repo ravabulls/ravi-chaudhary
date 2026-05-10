@@ -1,0 +1,173 @@
+---
+title: "Week 9 | Session 3: K-means Clustering — Python Implementation (Google Colab)"
+description: "A practical guide to implementing K-means clustering in Python using Google Colab, covering data import, optimal K selection, and cluster visualization."
+sidebar:
+  order: 43
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Context & Session Goal
+- Libraries Used
+- Full Pipeline — 8 Steps
+- Step-by-Step Code & Explanation
+- Final Output — Centroid (DC) Locations
+- Key Python Notes for Exam / Practice
+</Aside>
+
+---
+
+## 1. Context & Session Goal
+
+- **Previous Sessions:** Concept — what K-means is, how the algorithm works, WCSS, Elbow Method.
+- **This Session:** Implementation — write Python code in Google Colab, reproduce the cluster output.
+- **Dataset:** `customer_location.csv` — 811 rows, 3 columns (serial no., latitude, longitude).
+
+<Aside type="note">
+**★** All code shown here can be run directly in Google Colab.
+</Aside>
+
+---
+
+## 2. Libraries Used
+
+| Library / Alias | Purpose |
+|---|---|
+| **pandas (pd)** | Data manipulation and analysis library — read CSV, create DataFrames. |
+| **numpy (np)** | Numerical Python — mathematical and logical operations on arrays. |
+| **matplotlib.pyplot (plt)** | Plotting library for Python — line charts, scatter plots. |
+| **seaborn (sn)** | High-level visualization library — attractive cluster plots with color coding. |
+| **sklearn.cluster.KMeans** | K-means clustering implementation — fit clusters, get labels & centroids. |
+
+---
+
+## 3. Full Pipeline — 8 Steps
+
+<Steps>
+1. **Import Data:** Load `customer_location.csv` using pandas.
+2. **Plot Raw Data:** Visualize all 811 points on a lat/long scatter plot (seaborn).
+3. **Select Features:** Drop serial number column — keep only latitude & longitude.
+4. **Find Optimal K:** Loop K=1 to 9, compute WCSS, plot Elbow Diagram.
+5. **Form Clusters:** Run `KMeans(n_clusters=4).fit()`. Assign IDs.
+6. **Plot Clusters:** Color-coded scatter plot.
+7. **Get Centroids:** Extract `cluster_centers_` (proposed DC locations).
+8. **Plot Centroids:** Superimpose markers ('x') on the cluster plot.
+</Steps>
+
+---
+
+## 4. Step-by-Step Code & Explanation
+
+### Step 1 — Import Data
+```python
+import pandas as pd
+df = pd.read_csv('customer_location.csv')
+df.head()
+```
+
+### Step 2 — Plot Raw Data
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sn
+
+sn.lmplot(x='latitude', y='longitude', data=df, fit_reg=False, height=4)
+plt.title('Customer Locations')
+plt.show()
+```
+
+### Step 3 — Select Features
+Remove irrelevant columns.
+```python
+new_df = df[['latitude', 'longitude']]
+```
+
+### Step 4 — Find Optimal K (Elbow Diagram)
+```python
+from sklearn.cluster import KMeans
+
+cluster_range = range(1, 10)      # K = 1 to 9
+cluster_errors = []               # empty list to store WCSS values
+
+for num_clusters in cluster_range:
+    clusters = KMeans(num_clusters)
+    clusters.fit(new_df)
+    cluster_errors.append(clusters.inertia_)  # inertia_ = WCSS
+
+plt.figure(figsize=(6, 4))
+plt.plot(cluster_range, cluster_errors, marker='o')
+plt.title('Elbow Diagram')
+plt.xlabel('Number of Clusters')
+plt.ylabel('Sum of Squared Error')
+plt.show()
+```
+
+### Step 5 — Form Clusters (K = 4)
+```python
+clusters_new = KMeans(4)          # set K = 4
+clusters_new.fit(new_df)          
+
+# Add cluster ID as a new column
+new_df.insert(loc=2, column='cluster_id', value=clusters_new.labels_)
+```
+
+### Step 6 — Plot Clusters
+```python
+sn.lmplot(x='latitude', y='longitude', data=new_df,
+          hue='cluster_id', fit_reg=False, height=4)
+plt.show()
+```
+
+### Step 7 — Extract Centroid Coordinates
+```python
+centers = np.array(clusters_new.cluster_centers_)
+print(centers)
+# Output Example:
+# Cluster 0:  [27.68,  80.90]
+```
+
+### Step 8 — Plot Centroids on Cluster Map
+```python
+sn.lmplot(x='latitude', y='longitude', data=new_df,
+          hue='cluster_id', fit_reg=False, height=4)
+
+plt.scatter(centers[:, 0], centers[:, 1], marker='x', s=100, c='black')
+plt.show()
+```
+
+---
+
+## 5. Final Output — Centroid (DC) Locations
+
+After running the full code, K-means returns 4 centroids — the proposed DC locations:
+
+| Cluster ID | Centroid Lat | Centroid Long | Proposed DC serves... |
+|---|---|---|---|
+| **0** | 27.68 | 80.90 | Blue cluster customers |
+| **1** | 27.42 | 81.15 | Orange cluster customers |
+| **2** | 27.31 | 80.83 | Green cluster customers |
+| **3** | 27.56 | 80.57 | Red cluster customers |
+
+<Aside type="note">
+**★** These centroid coordinates (lat, long) are the answer to WHERE to open each DC. Feed into an optimization model for cost refinement.
+</Aside>
+
+---
+
+## Session Summary
+
+- **Pipeline:** Import → Plot raw → Select features → Elbow diagram → Fit K=4 → Plot clusters → Get centroids → Plot centroids.
+- **Key output:** 4 centroid coordinates = proposed DC locations; 811 cluster IDs = customer-DC mapping.
+- **Tool:** Google Colab.
+
+<Aside type="tip">
+**★ Exam Tip:** `inertia_` = WCSS. `labels_` = cluster assignment per point. `cluster_centers_` = centroid (lat, long) per cluster.
+Drop irrelevant columns (e.g., serial no.) before fitting.
+</Aside>

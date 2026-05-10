@@ -1,0 +1,137 @@
+---
+title: "Woche 7 | Session 3: Aufbau des Regressionsbaums — MSE, Aufteilungslogik & Vorhersagebeispiele"
+description: "Ein tiefer Einblick in die algorithmische Konstruktion von Regressionsbäumen, mit Fokus auf den Mean Squared Error (MSE) als Aufteilungskriterium und praktischen Vorhersagebeispielen."
+sidebar:
+  order: 33
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- 4 Einzelhändler-Vorhersagebeispiele (A, B, C, D) — Anwendung des Regressionsbaums
+- Wie der Regressionsbaum aufgebaut wurde — Schritt-für-Schritt-Algorithmus
+- MSE (Mean Squared Error) — Formel, Berechnung und Rolle beim Baumaufbau
+- Berechnungsbeispiele für MSE bei Knoten 0, Knoten 1, Knoten 2
+- Stoppkriterien für Regressionsbäume — die gleichen 3 wie beim Klassifikationsbaum
+- Klassifikationsbaum vs. Regressionsbaum — nur ein Unterschied im Algorithmus
+</Aside>
+
+---
+
+## 4 Vorhersagebeispiele — Anwendung des Regressionsbaums
+
+| Einzelhändler | Region | Kredit (₹L) | Standort | Alter (J.) | Größe (K sqft) | Aktion (0/1) | Feiertage | Prognostizierte Nachfrage | Knoten |
+|---|---|---|---|---|---|---|---|---|---|
+| **A** | West | 10 | Urban | 12 | 8 ≤ 30.5 ✓ | 1 ✓ | 3 | **2360 Einheiten** | Knoten 4 |
+| **B** | Ost | 14 | Ländlich | 23 > 17.5 ✓ | 33 > 30.5 ✓ | 0 | 1 | **8227 Einheiten** | Knoten 6 |
+| **C** | Nord | 3 | Semi-Urban | 12 | 20 ≤ 30.5 ✓ | 1 ✓ | 2 | **2360 Einheiten** | Knoten 4 |
+| **D** | Süd | 20 | Urban | 20 | 12 ≤ 30.5 ✓ | 0 ✗ | 2 | **943 Einheiten** | Knoten 3 |
+
+### Erkenntnisse aus dem Durchlauf
+- **Einzelhändler A & C:** Landen im selben Knoten (Knoten 4 — 2360 Einheiten), obwohl sie in verschiedenen Regionen und an verschiedenen Standorten sind. Das Modell sagt uns: Diese Variablen sind nicht so wichtig wie Größe + Aktion.
+- **Einzelhändler B:** Großes + altes Geschäft. Landet in Knoten 6 — höchste Nachfrage, geringster Support.
+- **Einzelhändler D:** Kleines Geschäft + keine Aktion. Landet in Knoten 3 — geringste Nachfrage.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Wenn Sie den Regressionsbaum anwenden sollen — prüfen Sie NUR die 3 vom Modell ausgewählten Variablen (Geschäftsgröße, Aktion, Alter). Ignorieren Sie alle anderen Variablen, unabhängig davon, wie sehr sie sich zwischen den Einzelhändlern unterscheiden.
+</Aside>
+
+---
+
+## Wie der Regressionsbaum aufgebaut wurde
+
+Warum Größe (30.5K sq ft)? Warum Aktion bei Knoten 1? Die Entscheidungen des Algorithmus werden ausschließlich dadurch bestimmt, welche Variable + Cutoff den MSE an jedem Knoten maximal reduziert — nicht durch menschliches Ermessen.
+
+### 3-Schritte-Algorithmus zum Aufbau eines Regressionsbaums
+
+<Steps>
+1. **Alle Trainingsdaten in den Wurzelknoten (Knoten 0) legen:** 700 Beobachtungen in Knoten 0. Prognostizierte Nachfrage = ȳ = 2270. MSE = 8.151.813. Basisvorhersage = einfacher Durchschnitt.
+2. **Wurzel aufteilen anhand von Variable + Cutoff, die die MAXIMALE Reduktion des MSE bringt:** Alle Variablen + alle möglichen Cutoffs ausprobiert. Größe ≤ 30.5K sq ft brachte die maximale MSE-Reduktion.
+3. **Schritt 2 für jeden internen Knoten wiederholen, bis Stoppkriterien erfüllt sind:** Knoten 1 aufgeteilt nach Aktion. Knoten 2 aufgeteilt nach Alter. Stopp bei Tiefe 2.
+</Steps>
+
+---
+
+## Mean Squared Error (MSE) — Das Aufteilungskriterium
+
+**Definition:** MSE (Mittlerer quadratischer Fehler) = Durchschnitt der quadrierten Differenzen zwischen tatsächlicher Nachfrage und prognostizierter Nachfrage (Mittelwert).
+**Zweck:** Misst, wie sehr die Y-Werte um ihren Mittelwert innerhalb eines Knotens gestreut sind. Niedrigerer MSE = weniger Varianz = homogenere Gruppe = bessere Vorhersage.
+
+### Formel
+`MSE = (1/n) × Σᵢ₌₁ⁿ (yᵢ − ȳ)²`
+*(wobei yᵢ = tatsächliche Nachfrage von Einzelhändler i, ȳ = prognostizierte Nachfrage, n = Anzahl der Beobachtungen)*
+
+- **Quadrierter Fehler:** Die Quadrierung stellt sicher, dass sich negative und positive Fehler nicht aufheben, und bestraft große Abweichungen stärker.
+- **Mittelwert:** Die Division durch n normiert auf die Knotengröße → vergleichbar über Knoten unterschiedlicher Größe hinweg.
+
+### Rolle bei der Aufteilung
+An jedem Knoten: Alle (Variable, Cutoff) Kombinationen ausprobieren. Wähle (Variable, Cutoff), die die GRÖSSTE Reduktion des MSE bringt → dies ist der optimale Split.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Der MSE spielt bei einem Regressionsbaum dieselbe Rolle wie Gini/Entropie bei einem Klassifikationsbaum. Beide messen "Unreinheit" — bei Regression ist Unreinheit = Varianz von Y innerhalb des Knotens. Machen Sie diese Parallele in Prüfungsantworten immer deutlich.
+</Aside>
+
+---
+
+## Berechnungsbeispiele für MSE
+
+| Knoten | Beob. (n) | Prognostizierte Nachfrage (ȳ) | MSE Formel | MSE Wert | Interpretation |
+|---|---|---|---|---|---|
+| **Knoten 0 (Wurzel)** | 700 | 2270 | `Σ(yᵢ − 2270)² / 700` | 8.151.813 | Basiswert — keine Merkmalsinfo. Hoher MSE = schlechte Vorhersage. |
+| **Knoten 1 (Größe ≤ 30.5K)** | 612 | 1902 | `Σ(yᵢ − 1902)² / 612` | 6.605.698 | MSE reduziert vs. Knoten 0. Homogenere Gruppe. |
+| **Knoten 2 (Größe > 30.5K)** | 88 | 4829 | `Σ(yᵢ − 4829)² / 88` | 11.412.707 | Höherer MSE — große Geschäfte variieren stark in der Nachfrage. |
+| **Knoten 3 (Klein, keine Aktion)** | 198 | 943 | `Σ(yᵢ − 943)² / 198` | 2.384.088 | Niedriger MSE — kleine Geschäfte ohne Aktion clustern eng um 943. |
+
+### Warum jede Aufteilung den Gesamt-MSE reduziert
+Vor dem Split: Alle Einzelhändler in einer Gruppe → Mittelwert ȳ = 2270. Einzelhändler reichen von 0 bis 8000+ Einheiten → MSE sehr hoch.
+Nach Größen-Split: Kleine Geschäfte clustern um 1902. Große Geschäfte clustern um 4829. Jede Gruppe ist intern ähnlicher → niedrigerer MSE innerhalb jeder Gruppe.
+
+<Aside type="note">
+**★** Der Regressionsbaum-Algorithmus ist im Grunde eine Maschine zur Varianzreduktion. Jede Aufteilung teilt Einzelhändler in Segmente auf, in denen die Nachfrage ähnlicher ist — was den MSE innerhalb jedes Segments im Vergleich zur Gleichbehandlung aller Einzelhändler reduziert.
+</Aside>
+
+---
+
+## Stoppkriterien — Wann man aufhören sollte zu teilen
+
+| Stoppkriterium | Definition | Wie in diesem Beispiel verwendet |
+|---|---|---|
+| **Max. Baumtiefe** | Stoppt das Aufteilen, sobald der Baum eine vorgegebene Anzahl von Ebenen ab Wurzel erreicht | Tiefe = 2 hier verwendet. Danach nicht weiter aufgeteilt. |
+| **Min. Beobachtungen pro Knoten** | Teile nicht auf, wenn Knoten weniger als eine Mindestanzahl an Beobachtungen hat | Knoten 6 hat nur 32 Beob. (5%). Bei Schwelle = 10% würde ein Stopp ausgelöst. |
+| **Min. MSE Reduktion (Delta Schwelle)** | Teile nicht auf, wenn die maximal mögliche MSE-Reduktion unter einer Schwelle δ liegt | Verhindert, dass trivial kleine Verbesserungen unnötige Komplexität erzeugen. |
+
+- **Overfitting im Regressionsbaum:** Wenn nicht gestoppt wird → Baum erstellt schließlich ein Blatt pro Einzelhändler → MSE bei Trainingsdaten = 0 → aber Modell scheitert komplett bei neuen Einzelhändlern (Testdaten).
+
+---
+
+## Klassifikationsbaum vs. Regressionsbaum — Algorithmus-Vergleich
+
+| Aspekt des Baumaufbaus | Klassifikationsbaum (Maschinenausfall) | Regressionsbaum (Nachfrageprognose) |
+|---|---|---|
+| **Zielvariable (Y)** | Kategorisch (Ausfall / Kein Ausfall) | Kontinuierlich (Bestellmenge in Einheiten) |
+| **Vorhersage am Blattknoten** | Mehrheitsklasse + Wahrscheinlichkeit | Mittelwert (ȳ) aller Y-Werte in diesem Blatt |
+| **Aufteilungskriterium** | Gini-Index oder Entropie (Unreinheitsreduktion) | Mean Squared Error (MSE) (Varianzreduktion) |
+| **Stoppkriterien** | max. Tiefe, min. Beob., min. Gini-Reduktion | max. Tiefe, min. Beob., min. MSE-Reduktion (δ) |
+| **Hauptunterschied** | Nutzt Gini/Entropie als Metrik für Split-Qualität | Nutzt MSE als Metrik für Split-Qualität — die EINZIGE Änderung! |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Wenn nach "Wie unterscheidet sich ein Regressionsbaum von einem Klassifikationsbaum?" gefragt wird — sagen Sie: (1) Zielvariable ist kontinuierlich, nicht kategorisch. (2) Blattvorhersage = Mittelwert (ȳ), nicht Mehrheitsklasse. (3) Aufteilungskriterium = MSE-Reduktion, nicht Gini/Entropie-Reduktion. Alles andere ist gleich.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **4 Vorhersagebeispiele:** A & C → Knoten 4 (2360, Aktion + kleines Geschäft) | B → Knoten 6 (8227, groß + alt) | D → Knoten 3 (943, klein, keine Aktion)
+- **Aufbau-Algorithmus:** 3 Schritte — alle Daten in Wurzel legen → mit Variable/Cutoff aufteilen, die max. MSE-Reduktion bringt → wiederholen bis Stoppkriterien erfüllt
+- **MSE Formel:** `(1/n) × Σ(yᵢ − ȳ)²` | Misst Varianz innerhalb der Gruppe | Niedrigerer MSE = bessere, homogenere Gruppe
+- **MSE Werte:** Knoten 0 = 8.151.813 → Knoten 1 = 6.605.698 → Knoten 3 = 2.384.088 (MSE reduziert sich mit jedem Split)
+- **Stoppkriterien:** Max. Tiefe | Min. Beobachtungen pro Knoten | Min. MSE-Reduktion pro Split (δ Schwelle)
+- **vs. Klassifikationsbaum:** Einziger Unterschied = MSE ersetzt Gini/Entropie als Aufteilungsmetrik. Alle anderen Schritte sind identisch.
+- **Nächste Sessions:** Python-Implementierung des Regressionsbaums für diesen Nachfrageprognose-Fall + Fehlermetriken (MAE, RMSE, MAPE)

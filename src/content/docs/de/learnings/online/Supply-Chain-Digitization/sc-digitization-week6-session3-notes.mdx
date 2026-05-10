@@ -1,0 +1,213 @@
+---
+title: "Woche 6 | Session 3: Predictive Maintenance — Klassifikationsbaum-Fallstudie"
+description: "Eine Fallstudie über den Einsatz eines Klassifikationsbaums für die vorausschauende Wartung in einer Produktionsanlage, mit Details zur Modellauswahl, zu Geschäftsregeln und zur Anwendung."
+sidebar:
+  order: 28
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 2: Digital Business in der SC*
+
+---
+
+![Klassifikationsbaum der Entscheidungsfindung](/learnings/online/Supply-Chain-Digitization/sc_w6s3_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Kontext der Fallstudie — Produktionsanlage, Maschinenausfälle, Werksleiter
+- Erfasste Daten — 7 Eingabemerkmale + 1 Zielvariable (1000 Instanzen)
+- Gewähltes Modell — Klassifikationsbaum (Entscheidungsbaum) und warum
+- Output des Entscheidungsbaums — 4 Blattknoten mit Regeln, Wahrscheinlichkeiten und Support
+- Abgeleitete Geschäftsregeln — wie Mitarbeiter in der Fertigung das Modell nutzen
+- Zwei durchgeführte Vorhersagen (Maschine 1 und Maschine 2)
+- Nächste Session: Wie man den Klassifikationsbaum von Grund auf NEU ERSTELLT (Python-Praxis)
+</Aside>
+
+---
+
+## Kontext der Fallstudie — Das Problem
+
+- **Setting:** Produktionsanlage mit wiederkehrenden Produktionsausfällen in den letzten Monaten
+- **Problem:** Maschinen fallen 1-2 Mal pro Monat aus → Produktionsstopps → Kunden erhalten Produkte nicht pünktlich → Risiko der Kundenabwanderung
+- **Stakeholder:** Neuer Werksleiter (mit Data-Science-Hintergrund) wird zur Lösung eingesetzt
+- **Ziel:** Entwicklung eines Vorhersagemodells, um zu prognostizieren, WELCHE Maschine ausfallen wird, BEVOR sie tatsächlich kaputt geht → proaktive Korrekturmaßnahmen ergreifen → Produktionsausfälle eliminieren
+- **Genutzte Analyseart:** Predictive Analytics (Klassifikationsmodell) → fließt auch in Prescriptive Analytics ein (Wartung vor Ausfall einplanen)
+- **Gewähltes Modell:** Klassifikationsbaum (Teilmenge des Entscheidungsbaums) — gewählt, weil er für Mitarbeiter in der Fertigung interpretierbar ist, nicht nur für Data Scientists
+
+<Aside type="note">
+**★** Das Ziel ist NICHT zu verstehen, warum Maschinen ausfallen (diagnostisch). Es geht darum, vorherzusagen, WELCHE Maschine als Nächstes ausfällt (prädiktiv) → damit Korrekturmaßnahmen ergriffen werden können (präskriptiv). Dies ist "Predictive Maintenance" (Vorausschauende Wartung).
+</Aside>
+
+---
+
+## Erfasste Daten — 1000 Instanzen, 7 Merkmale + 1 Ziel
+
+- **Datensatzgröße:** 1000 historische Instanzen — jede repräsentiert eine Maschine über einen Beobachtungszeitraum
+- **Daten enthalten SOWOHL Ausfall- als auch Nicht-Ausfall-Instanzen:** Kritisch — das Modell muss lernen, zwischen beiden zu unterscheiden. Ein Modell, das nur Ausfalldaten hätte, wäre verzerrt.
+
+### Erfasste Merkmale und was sie repräsentieren
+
+| Merkmal (Eingabevariable) | Einheit / Skala | Was es repräsentiert |
+|---|---|---|
+| **Alter der Maschine** | Jahre | Wie lange die Maschine bereits in Betrieb ist. Ältere Maschinen → höheres Ausfallrisiko. |
+| **Auslastung** | % (0–100) | Prozentsatz der Zeit, in der die Maschine genutzt wird. Höhere Auslastung → mehr Verschleiß → höheres Ausfallrisiko. |
+| **MTBF (Mean Time Between Failures)** | Stunden/Tage | Durchschnittliche Zeit zwischen zwei aufeinanderfolgenden Ausfällen. Höhere MTBF → Maschine fällt seltener aus → geringeres aktuelles Risiko. |
+| **Ungeplante Ausfallzeit** | % | Prozentsatz der Zeit, in der die Maschine unerwartet stillstand (keine geplante Wartung). Höher = mehr historische Ausfallereignisse. |
+| **Ölkontamination (NAS-Wert)** | NAS-Skala | Sauberkeit des Maschinenöls. Höhere Kontamination = schmutziges Öl = höheres Risiko für mechanisches Versagen. |
+| **Einhaltung des Überholungsplans** | % (0–100) | Wie konsequent geplante Überholungen durchgeführt werden. 95,6% = Überholung nur in 4,4% der geplanten Fälle verpasst. Niedrigerer %-Satz = mehr verpasste Überholungen = höheres Ausfallrisiko. |
+| **Einhaltung des Schmierplans** | % (0–100) | Wie konsequent geplante Schmierungen durchgeführt werden. Niedriger = mehr verpasste Schmierungen = höhere Reibung = höheres Ausfallrisiko. |
+| **Maschinenausfall? (Zielvariable)** | Binär: 1/0 (Ja/Nein) | Ob die Maschine in diesem Fall tatsächlich ausgefallen ist (1) oder nicht (0). Dies ist es, was das Modell VORHERSAGEN muss. |
+
+*(Beispieldaten für die Instanzen 0-4 und 995-999 zum Trainieren und Testen des Modells bereitgestellt).*
+
+---
+
+## Warum ein Klassifikationsbaum (Entscheidungsbaum)?
+
+- **Problemtyp:** Binäre Klassifikation — Maschine FÄLLT AUS (1) oder FÄLLT NICHT AUS (0)
+- **Hauptanforderung:** Das Modell muss für die Arbeiter in der Fertigung (nicht nur für Data Scientists) interpretierbar sein → Der Entscheidungsbaum liefert klare WENN-DANN-Regeln
+- **Alternative Modelle:** Logistische Regression, Neuronale Netze, Random Forest — genau, aber für nicht-technisches Personal schwerer zu erklären
+- **Vorteil des Entscheidungsbaums:** Visuelle, regelbasierte Struktur → Arbeiter können einem einfachen Flussdiagramm folgen → kein Data-Science-Hintergrund nötig, um die Ergebnisse zu nutzen
+- **Output:** Vorhersage (Ausfall/kein Ausfall) + Wahrscheinlichkeit des Ausfalls + Support für diese Wahrscheinlichkeit
+
+<Aside type="tip">
+**★ Prüfungstipp:** Ein Klassifikationsbaum wird für die vorausschauende Wartung bevorzugt, da er Genauigkeit mit Interpretierbarkeit in Einklang bringt. Erwähnen Sie immer, WARUM ein Modell gewählt wurde — die Interpretierbarkeit für den Einsatz in der Fertigung ist hier der Hauptgrund.
+</Aside>
+
+---
+
+## Output des Entscheidungsbaums — 4 Blattknoten (Geschäftsregeln)
+
+- **Kernerkenntnis:** Von 7 Eingabemerkmalen verwendet das Modell nur 3 zur Vorhersage: Ölkontamination | MTBF | Auslastung
+- **Wurzelaufteilung (Knoten 0):** Erste Aufteilung erfolgt bei Ölkontamination am Schwellenwert 5,5
+  - Ölkontamination > 5,5 → gehe nach rechts (Knoten 2) → prüfe dann MTBF
+  - Ölkontamination ≤ 5,5 → gehe nach links (Knoten 1) → prüfe dann Auslastung
+- **Blattknoten (4 Endknoten — 3, 4, 5, 6):** Jeder gibt eine Vorhersage + Wahrscheinlichkeit + Support an
+
+### Blattknoten des Entscheidungsbaums — Geschäftsregeln für die Fertigung
+
+| Knoten | Bedingung 1 (Ölkontamination) | Bedingung 2 (Auslastung oder MTBF) | Vorhersage | Klassifikationsgenauigkeit (Wahrsch.) | Support |
+|---|---|---|---|---|---|
+| **3** | Öl ≤ 5,5 | Auslastung ≤ 92,05% | Fällt NICHT aus ✓ | 83% | 16% |
+| **4** | Öl ≤ 5,5 | Auslastung > 92,05% | FÄLLT AUS ✗ | 88% | 5% |
+| **5** | Öl > 5,5 | MTBF ≤ 23,95 | FÄLLT AUS ✗ | 77% | 70% |
+| **6** | Öl > 5,5 | MTBF > 23,95 | Fällt NICHT aus ✓ | 71% | 9% |
+
+### Die Ausgabe verstehen — Drei Schlüsselbegriffe
+1. **Vorhersage:** "FÄLLT AUS" oder "FÄLLT NICHT AUS" — die Einstufung des Modells für diese Kombination von Parameterwerten.
+2. **Genauigkeit / Wahrscheinlichkeit:** Wie viel % der Instanzen mit dieser Regelkombination hatten in historischen Daten tatsächlich dieses Ergebnis. Z.B. 77% bedeutet, dass 77 von 100 Maschinen mit Öl > 5,5 und MTBF ≤ 23,95 tatsächlich ausgefallen sind.
+3. **Support:** Wie viel % der gesamten 1000 Instanzen fallen in diesen Knoten. 70% Support = 700 von 1000 Trainingsinstanzen landen in Knoten 5. Hoher Support = Regel basiert auf mehr Daten = mehr Vertrauen in die Regel.
+
+<Aside type="note">
+**★** Hohe Genauigkeit + hoher Support = zuverlässigste Vorhersage. Knoten 5 (77% Genauigkeit, 70% Support) ist die wirkungsvollste Regel — sie deckt 70% aller Instanzen ab und prognostiziert einen Ausfall mit 77%iger Wahrscheinlichkeit.
+</Aside>
+
+---
+
+## Geschäftsregeln für die Fertigung — Wie Arbeiter das Modell nutzen
+
+Drucken Sie die 4 Geschäftsregeln aus und hängen Sie sie in der Fertigung auf. Arbeiter müssen nur 3 Parameter überwachen:
+1. Ölkontamination (NAS-Wert — Prüfung gegen Schwellenwert 5,5)
+2. MTBF (Mean Time Between Failures — Prüfung gegen Schwellenwert 23,95)
+3. Auslastung (% — Prüfung gegen Schwellenwert 92,05%)
+
+<Steps>
+1. Ölkontamination prüfen. Ist sie ≤ 5,5 oder > 5,5?
+   - Wenn > 5,5 → MTBF prüfen → Regel von Knoten 5 oder Knoten 6 folgen
+   - Wenn ≤ 5,5 → Auslastung prüfen → Regel von Knoten 3 oder Knoten 4 folgen
+2. Zweiten Parameter prüfen (MTBF oder Auslastung) → Sie erreichen einen von 4 Blattknoten.
+3. Vorhersage + Wahrscheinlichkeit ablesen → Wenn Maschine als ausfallend vorhergesagt wird → Manager warnen → sofortige vorbeugende Wartung planen.
+</Steps>
+
+<Aside type="note">
+**★** Einfachheit ist das Designziel. 3 Parameter, 4 Regeln, auf einem Blatt ausgedruckt. Jeder Arbeiter kann Maschinenausfälle vorhersagen, ohne etwas über maschinelles Lernen zu wissen.
+</Aside>
+
+---
+
+## Zwei durchgeführte Vorhersagen — Das Modell anwenden
+
+| Parameter | Maschine 1 (Beispiel aus dem Kurs) | Maschine 2 (Beispiel aus dem Kurs) |
+|---|---|---|
+| **Alter** | 11 Jahre | 4 Jahre |
+| **Auslastung** | 78% | 91% |
+| **MTBF** | 15 | 24 |
+| **Ungeplante Ausfallzeit** | 3% | 4% |
+| **Ölkontamination** | 8 (> 5,5) | 5 (≤ 5,5) |
+| **Überholungseinhaltung** | 92% | 88% |
+| **Schmierungseinhaltung** | 90% | 87% |
+| **Schritt 1: Ölkontamination prüfen** | 8 > 5,5 → gehe zu Zweig von Knoten 2 | 5 ≤ 5,5 → gehe zu Zweig von Knoten 1 |
+| **Schritt 2: 2. Parameter prüfen** | MTBF = 15 ≤ 23,95 → Knoten 5 | Auslastung = 91% ≤ 92,05% → Knoten 3 |
+| **Vorhersage** | FÄLLT AUS ✗ | Fällt NICHT aus ✓ |
+| **Genauigkeit / Wahrscheinlichkeit** | 77% | 83% |
+| **Support** | 70% | 16% |
+
+### Maschine 1 — Durchlauf
+- **Ölkontamination** = 8 → 8 > 5,5 → folge rechtem Zweig (Knoten 2)
+- **MTBF** = 15 → 15 ≤ 23,95 → Knoten 5
+- **Vorhersage:** Maschine FÄLLT AUS | Wahrscheinlichkeit = 77% | Support = 70%
+- **Aktion:** Sofort Wartungsteam alarmieren. Inspektion und Wartung vor dem Ausfall planen.
+
+### Maschine 2 — Durchlauf
+- **Ölkontamination** = 5 → 5 ≤ 5,5 → folge linkem Zweig (Knoten 1)
+- **Auslastung** = 91% → 91% ≤ 92,05% → Knoten 3
+- **Vorhersage:** Maschine fällt NICHT AUS | Wahrscheinlichkeit = 83% | Support = 16%
+- **Aktion:** Keine unmittelbare Wartung erforderlich. Normalbetrieb fortsetzen. Ölkontamination genau überwachen (Grenzwert bei 5, nah am Schwellenwert 5,5).
+
+<Aside type="tip">
+**★ Prüfungstipp:** Zeigen Sie bei jeder Prüfungsfrage zu diesem Modell immer den schrittweisen Weg durch den Baum. Geben Sie an (1) welcher Parameter zuerst geprüft wird, (2) in welchem Knoten Sie landen, (3) Vorhersage, Wahrscheinlichkeit und Support. Tun Sie dies für beide Maschinen, wenn danach gefragt wird.
+</Aside>
+
+---
+
+## Support interpretieren — Warum es wichtig ist
+
+- **Knoten 5:** 70% Support = 700 von 1000 Trainingsinstanzen fallen hierhin. Dies ist der datenreichste Knoten → Vorhersage ist am zuverlässigsten.
+- **Knoten 4:** 5% Support = nur 50 von 1000 Instanzen. Hohe Genauigkeit (88%), basiert aber auf sehr wenigen Datenpunkten → mit Vorsicht genießen.
+- **Knoten 6:** 9% Support = 90 Instanzen. Angemessen, aber nicht so stark wie Knoten 5.
+- **Knoten 3:** 16% Support = 160 Instanzen. Mittlerer Support — recht zuverlässig für die Vorhersage, dass kein Ausfall eintritt.
+
+**Faustregel:** Hoher Support + hohe Genauigkeit = handlungsfähigste Regel. Geringer Support, selbst bei hoher Genauigkeit = Vorhersage mit Vorsicht behandeln.
+
+---
+
+## Merkmalsauswahl — Warum nur 3 von 7 Parametern?
+
+Dem Modell wurden alle 7 Parameter vorgegeben, aber der Entscheidungsbaum hat herausgefunden, dass nur 3 für genaue Vorhersagen benötigt werden:
+- **Ölkontamination** — am stärksten differenzierende Variable (verwendet am Wurzelknoten)
+- **MTBF** — zweiter Split auf dem Zweig mit hoher Kontamination
+- **Auslastung** — zweiter Split auf dem Zweig mit geringer Kontamination
+- **Alter, ungeplante Ausfallzeit, Überholungseinhaltung, Schmierungseinhaltung:** Vom Modell nicht ausgewählt — entweder redundant (korreliert mit den 3 ausgewählten) oder weniger differenzierend
+
+**Vorteil:** Weniger Parameter zu überwachen → einfacher für Mitarbeiter in der Fertigung → geringerer Aufwand für Datenerfassung → schnellere Entscheidungsfindung
+
+<Aside type="note">
+**★** Entscheidungsbäume führen automatisch eine Merkmalsauswahl durch — sie splitten nur bei Variablen, die die Vorhersagegenauigkeit verbessern. Das macht sie nicht nur statistisch fundiert, sondern auch in der Praxis sehr nützlich.
+</Aside>
+
+---
+
+## Analysekette in dieser Fallstudie
+
+| Analyseart | Wie sie angewendet wurde |
+|---|---|
+| **Deskriptiv (Beschreibend)** | Vergangene Maschinendaten für 1000 Instanzen über 7 Parameter hinweg erfasst. Historische Ausfallrate ermittelt. Welche Maschinen fielen am häufigsten aus? Wie oft? Wann? |
+| **Diagnostisch** | Welche Parameter hängen mit Ausfällen zusammen? Ölkontamination, MTBF und Auslastung als am stärksten differenzierend identifiziert — diese erklären, WARUM Maschinen ausfallen. |
+| **Prädiktiv (Vorhersagend)** | Klassifikationsbaum mit 1000 Instanzen trainiert → Modell sagt vorher, ob eine Maschine bei aktuellen Parameterwerten ausfallen WIRD. Output: Ausfall/kein Ausfall + Wahrscheinlichkeit + Support. |
+| **Präskriptiv (Vorschreibend)** | Wenn das Modell einen Ausfall mit hoher Wahrscheinlichkeit vorhersagt → Aktion vorschreiben: vorbeugende Wartung planen, Ersatzteile bestellen, Ölsystem anpassen, Maschinenauslastung reduzieren. Ziel: den Ausfall verhindern, bevor er eintritt. |
+
+---
+
+## Zusammenfassung der Session
+
+- **Problem:** Produktionsanlage mit 1-2 Maschinenausfällen pro Monat → Produktionsstopps → Unzufriedenheit der Kunden
+- **Ansatz:** Predictive Maintenance (Vorausschauende Wartung) mittels Klassifikationsbaum-Modell
+- **Daten:** 1000 Instanzen | 7 Merkmale (Alter, Auslastung, MTBF, ungeplante Ausfallzeit, Ölkontamination, Überholungseinhaltung, Schmierungseinhaltung) + 1 Ziel (ausgefallen / nicht ausgefallen)
+- **Modell:** Klassifikationsbaum — interpretierbar, regelbasiert, durch nicht-technisches Fertigungspersonal anwendbar
+- **3 vom Modell ausgewählte Parameter:** Ölkontamination | MTBF | Auslastung (von 7 Eingabemerkmalen)
+- **4 Geschäftsregeln (Blattknoten):** Knoten 3 (fällt nicht aus, 83%, 16%) | Knoten 4 (fällt aus, 88%, 5%) | Knoten 5 (fällt aus, 77%, 70%) | Knoten 6 (fällt nicht aus, 71%, 9%)
+- **Vorhersage Maschine 1:** Öl = 8 > 5,5, MTBF = 15 ≤ 23,95 → Knoten 5 → FÄLLT AUS (77% Wahrscheinlichkeit)
+- **Vorhersage Maschine 2:** Öl = 5 ≤ 5,5, Auslastung = 91% ≤ 92,05% → Knoten 3 → Fällt NICHT AUS (83% Wahrscheinlichkeit)
+- **Nächste Session:** Diesen Klassifikationsbaum von Grund auf neu erstellen — Theorie + Python-Coding in der Praxis

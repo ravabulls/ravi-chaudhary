@@ -1,0 +1,160 @@
+---
+title: "Week 7 | Session 2: Demand Forecasting — Regression Tree Case Study (FMCG)"
+description: "A case study demonstrating how regression trees are used in FMCG demand forecasting to predict continuous order quantities and derive actionable business rules."
+sidebar:
+  order: 32
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Case study context — FMCG demand planning problem
+- Data setup — 1000 retailers, 7 independent variables, 1 target
+- Regression tree vs. classification tree — key difference
+- Regression tree output — all 7 nodes explained
+- How accuracy improves as nodes are added
+- 4 business rules derived from the model
+- Worked prediction — Retailer A
+- Support interpretation
+- Next session: how to build regression tree in Python
+</Aside>
+
+---
+
+## Case Study Context — The FMCG Problem
+
+- **Setting:** Large FMCG company with retailer network across India (South/East/West/North)
+- **Problem:** Demand planning head unsatisfied with forecast accuracy. Gap between actual and forecasted demand leads to either excess inventory OR lost sales.
+- **Trigger:** Manager attended AI-ML training → understood that AI-ML is needed given how quickly demand patterns are changing
+- **Goal:** Develop a better demand forecasting model to reduce the gap between actual and predicted demand → lower inventory holding cost + fewer lost sales
+- **Model chosen:** Regression Tree (decision tree with continuous output) — predicts the ORDER QUANTITY for each retailer
+
+<Aside type="tip">
+**★ Exam tip:** Know why regression tree was chosen: (1) demand is a continuous variable (number of units) → regression tree not classification tree. (2) Non-linear relationships between size, age, promotions and demand. (3) Interpretable business rules for demand planners.
+</Aside>
+
+---
+
+## Regression Tree vs. Classification Tree — Key Difference
+
+| Aspect | Classification Tree | Regression Tree |
+|---|---|---|
+| **Target variable (Y) type** | Categorical (e.g. Fail / Not Fail) | Continuous (e.g. Order quantity in units) |
+| **Prediction at leaf node** | Majority class label (e.g. "Failed") | Mean (ȳ) of all Y values in that node |
+| **Splitting criterion** | Gini index or Entropy (impurity-based) | Mean Squared Error (MSE) / Variance reduction |
+| **Used in this course for** | Predictive maintenance (Machine failure) | Retailer order quantity prediction |
+
+---
+
+## Data Setup — 1000 Retailers, 7 Features, 1 Target
+
+- **Dataset:** 1000 retailers (serial numbers 0 to 999). Each row = one retailer in one week.
+- **Train-test split:** 700 observations for training (70%) | 300 for testing (30%)
+- **Target (Y):** Order Quantity — continuous number of units ordered by that retailer in that week
+
+### 7 independent variables (features) + 1 target variable
+
+| # | Variable | Type / Unit | Why It Matters for Demand |
+|---|---|---|---|
+| **X1** | **Region** | Categorical (South/East/West/North) | Geographic demand patterns vary significantly by region. |
+| **X2** | **Balanced Credit Amount** | Continuous (₹ Lakhs) | Amount the retailer still owes the FMCG company. High outstanding balance → may affect their ordering behaviour. |
+| **X3** | **Location** | Categorical (Urban / Semi-urban / Rural) | Urban retailers typically serve higher footfall → higher demand expected. |
+| **X4** | **Age of Retailer** | Continuous (Years) | Older retailers have stronger customer relationships, loyal customer base → higher footfall. |
+| **X5** | **Size of Retail Store** | Continuous ('000 sq ft) | Larger store → more products displayed → higher customer footfall. |
+| **X6** | **Promotional Offer** | Binary (1 = offered, 0 = not offered) | Promotions directly boost demand. A promotional week → significantly higher orders placed. |
+| **X7** | **Number of Holidays** | Count (0, 1, 2, 3…) | More holidays → more shopping occasions → higher demand in that week. |
+| **Y** | **Order Quantity (Target)** | Continuous (Units ordered) | How many units the retailer orders in that week. |
+
+---
+
+## Regression Tree Output — All Nodes
+
+- **Model used:** Regression tree | Training data: 700 obs | Tree depth: 2
+- **Variables selected by model:** Size of store | Promotional offer | Age of store → model ignored Region, Balance Credit, Location, Holidays as less discriminatory
+
+### All 7 nodes — conditions, predicted demand (mean), observations, support
+
+| Node | Type | Conditions to Reach This Node | Split Variable & Threshold | Predicted Demand (ȳ) | Obs. | Support |
+|---|---|---|---|---|---|---|
+| **0 (Root)** | Internal | All training data | Size ≤ 30.5K sq ft | 2270 (baseline) | 700 | 100% |
+| **1** | Internal | Size of the store ≤ 30.5K sq ft | Promotion (0 or 1) | 1902 | 612 | 87% |
+| **2** | Internal | Size of the store > 30.5K sq ft | Age (≤ 17.5 yrs threshold) | 4829 | 88 | 13% |
+| **3 (Leaf)** | LEAF | Size ≤ 30.5K sq ft, Promotion = 0 | STOP | **943** | 198 | 28% |
+| **4 (Leaf)** | LEAF | Size ≤ 30.5K sq ft, Promotion = 1 | STOP | **2360** | 414 | 59% |
+| **5 (Leaf)** | LEAF | Size > 30.5K sq ft, Age ≤ 17.5 yrs | STOP | **2887** | 56 | 8% |
+| **6 (Leaf)** | LEAF | Size > 30.5K sq ft, Age > 17.5 yrs | STOP | **8227** | 32 | 5% |
+
+<Aside type="note">
+**★** In a regression tree, the leaf node prediction = mean (ȳ) of all Y values that fall into that node. Unlike classification tree which uses majority class. The more refined the node, the closer ȳ is to individual retailers' actual demand.
+</Aside>
+
+---
+
+## How Prediction Improves with Each Split
+
+| Stage | Information Used | Predicted Demand | Interpretation |
+|---|---|---|---|
+| **Node 0 (No info)** | None — random pick from 700 retailers | 2270 (ȳ for all) | Baseline: simple average of all 700 retailers' orders. |
+| **After Split 1 (Node 1)** | Store size ≤ 30.5K sq ft | 1902 (↓ from 2270) | Adding size info refines prediction for small stores. Now know they order less than average. |
+| **After Split 1 (Node 2)** | Store size > 30.5K sq ft | 4829 (↑ from 2270) | Large stores order much more. Prediction jumps to 4829. |
+| **After Split 2 (Node 4, Leaf)** | Size ≤ 30.5K + Promotion = 1 | 2360 (promo effect: +458) | Same small store but running a promotion → demand surges. |
+| **After Split 2 (Node 6, Leaf)** | Size > 30.5K + Age > 17.5 yrs | 8227 (old + large = highest) | Large AND old store = highest predicted demand. Loyal customer base + large display space = best combination. |
+
+**Core logic:** More relevant information about a retailer → more refined group it falls into → mean of that group is closer to its actual demand.
+
+---
+
+## 4 Business Rules — Shop Floor Reference Card
+
+| Rule | Condition 1 (Store Size) | Condition 2 (Promotion or Age) | Retailer Profile | Predicted Demand | Support |
+|---|---|---|---|---|---|
+| **R1 (Node 3)** | Size ≤ 30.5K sq ft | Promotion = 0 (No offer) | Small store, no promotion → low demand week | 943 units | 28% |
+| **R2 (Node 4)** | Size ≤ 30.5K sq ft | Promotion = 1 (Offer given) | Small store BUT promotion running → demand boosted | 2360 units | 59% |
+| **R3 (Node 5)** | Size > 30.5K sq ft | Age ≤ 17.5 yrs (Relatively new) | Large but newer store — not yet established strong customer base | 2887 units | 8% |
+| **R4 (Node 6)** | Size > 30.5K sq ft | Age > 17.5 yrs (Old, established) | Large AND old store → loyal customers, high footfall → highest demand | 8227 units | 5% |
+
+<Aside type="note">
+**★** 4 simple rules replace a complex forecasting process. Any demand planner without a data science background can use these rules to predict retailer demand for any given week.
+</Aside>
+
+### Worked Prediction — Retailer A
+**Given data for Retailer A:** Region: West | Balance Credit: ₹10 lakh | Location: Urban | Age: 12 years | **Store size: 8,000 sq ft (8K)** | **Promotional offer: Yes (1)** | Number of holidays: 3
+
+<Steps>
+1. Check store size: 8K sq ft ≤ 30.5K sq ft → go to Node 1 (left branch)
+2. Check promotion: Promotion = 1 → go to Node 4 (right branch of Node 1)
+3. Result: Node 4 → Predicted demand = **2360 units**
+</Steps>
+
+---
+
+## Support Interpretation — How Confident Is the Prediction?
+
+**Support** = % of training observations that fall into that leaf node.
+- **Node 4 (59% support):** Most reliable — covers majority of small-store + promotion retailers.
+- **Node 6 (5% support):** Lowest confidence — only 32 of 700 are large + old stores.
+
+<Aside type="note">
+**★** Node 6 predicts the highest demand (8227) but has the lowest support (5%). This does not mean the prediction is wrong — these large old stores probably DO order very high quantities. It just means fewer observations confirm it.
+</Aside>
+
+### Can We Improve Further? — Deeper Tree
+- **Yes:** Splitting nodes further with additional features → lower mean squared error within each leaf → predictions get closer to individual retailer actual demand.
+- **Trade-off:** Deeper tree = better training accuracy BUT higher risk of overfitting. Same stopping criteria apply as in classification tree (Max depth limit, Min observations, Min variance reduction).
+
+---
+
+## Session Summary
+
+- **Case:** FMCG company demand planning head → uses regression tree to predict retailer order quantities.
+- **Regression tree vs. classification tree:** Continuous target → leaf predicts mean (ȳ). Splitting criterion = variance reduction (not Gini).
+- **Model selects 3 of 7 features:** Store size | Promotional offer | Age of store
+- **4 leaf nodes → 4 business rules:** 943 (small, no promo) | 2360 (small + promo, 59% support) | 2887 (large + young) | 8227 (large + old — highest demand)
+- **Retailer A prediction:** Size = 8K sq ft (≤ 30.5K) | Promotion = 1 → Node 4 → Predicted demand = 2360 units
+- **Next session:** Build regression tree in Python + demand forecast error metrics (MAE, RMSE, MAPE)

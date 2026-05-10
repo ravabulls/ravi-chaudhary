@@ -1,0 +1,140 @@
+---
+title: "Week 8 | Session 3: Demand Allocation Model & Capacitated Plant Location Problem"
+description: "Learn how to optimize supply chain networks using Demand Allocation and Capacitated Plant Location models with linear programming in Excel Solver."
+sidebar:
+  order: 38
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+![Demand Allocation Overview](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image1.png)
+
+## Session Agenda
+
+<Aside type="note">
+- Recap — Week 8 So Far
+- Case Study — Two Telecom Equipment Manufacturers
+- Demand Allocation Model
+- Key Insight from Solution (Maxxio)
+- Merger Scenario — Maxvie
+- Capacitated Plant Location Problem (CPLP)
+- Results & Cost Comparison
+</Aside>
+
+---
+
+## 1. Recap — Week 8 So Far
+
+| Session | Topic | Method / Tool |
+|---|---|---|
+| **W8 S1** | Facility Selection | Break-Even Analysis |
+| **W8 S2** | Facility Location | Centre of Gravity + Excel Solver (GRG Nonlinear) |
+| **W8 S3** | Demand Allocation + CPLP | LP formulation + Excel Solver (Simplex LP / Binary) |
+
+<Aside type="note">
+**★** This session adds 2 new models: Demand Allocation (which plant serves which market?) and Capacitated Plant Location (which plants to open at all?).
+</Aside>
+
+---
+
+## 2. Case Study — Two Telecom Equipment Manufacturers
+
+**The Companies:** Maxxio (North+East India) and Wavie Communications (South+West India).
+Both companies have enough capacity to fulfill all market demand. The decision is HOW to allocate, not whether.
+
+![Case Study Data](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image2.png)
+
+---
+
+## 3. Demand Allocation Model
+
+**Question:** How much quantity should be shipped from which plant to which market to minimize total cost?
+
+### Notation
+- `Cij` = unit cost of production + transportation from plant i to market j
+- `Xij` = quantity to be shipped from plant i to market j (decision variable)
+- `Si` = supply capacity of plant i
+- `Dj` = demand at market j
+
+### LP Formulation — Demand Allocation
+- **Minimize Z:** `Σi Σj (Cij × Xij)` (total production + transportation cost)
+- **Supply constraint:** `Σj Xij ≤ Si` for all i (supply ≤ capacity)
+- **Demand constraint:** `Σi Xij = Dj` for all j (demand fully met)
+- **Non-negativity:** `Xij ≥ 0` for all i, j
+
+![Solver Solution](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image3.png)
+
+### Key Insight from Solution (Maxxio)
+The Kolkata facility is barely utilized despite fixed cost being incurred because of high production + shipping costs. But the fixed cost is still paid → inefficiency. This signals a need for a smarter model that also decides *which plants to open*.
+
+---
+
+## 4. Merger Scenario — Maxvie (Maxxio + Wavie)
+
+Management merges the companies into a new company: **Maxvie**.
+- Now has 5 plants and needs to serve 6 markets.
+- **New question:** Which plants to keep open? Can any be shut to reduce cost?
+
+This is a **Capacitated Plant Location Problem (CPLP)**.
+
+<Aside type="note">
+**★** Demand Allocation = how to ship. Capacitated Plant Location = which plants to open AND how to ship.
+</Aside>
+
+---
+
+## 5. Capacitated Plant Location Problem (CPLP)
+
+### What Changes from Demand Allocation?
+- Add a binary decision variable `yi` for each plant i:
+  - `yi = 1` → plant i is open
+  - `yi = 0` → plant i is closed
+- Add fixed cost `fi` for each plant to the objective function.
+
+### LP Formulation — CPLP
+- **Minimize Z:** `Σi Σj (Cij × Xij) + Σi (fi × yi)` (variable cost + fixed cost of open plants)
+- **Supply constraint:** `Σj Xij ≤ Si × yi` for all i (plant can only supply if open)
+- **Demand constraint:** `Σi Xij = Dj` for all j
+- **Binary variable:** `yi ∈ {0, 1}` for all i
+
+### Solving in Excel — Solver Settings
+- **Solving Method:** **Simplex LP** (model is linear — yi is handled via integer constraint).
+
+![CPLP Results](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image4.png)
+
+---
+
+## 6. Results & Cost Comparison
+
+**CPLP Solution (Maxvie — Merged):**
+- Optimal plants to keep open: **Chennai, Gurugram, Kolkata** (only 3 out of 5).
+- Plants closed: Delhi and Mumbai (saving their fixed costs).
+
+| Cost Component | Maxxio | Wavie | Combined (Pre-merger) | Maxvie Merged (CPLP) |
+|---|---|---|---|---|
+| **Total Monthly Cost** | 3.20 Cr | 2.53 Cr | ~5.73 Cr | **5.22 Cr** |
+
+Monthly saving from merger + network redesign: approximately **₹50 lakhs / month**.
+
+<Aside type="note">
+**★** Merger alone doesn't save cost — it's the network REDESIGN that reduces cost by closing inefficient plants.
+</Aside>
+
+---
+
+## Session Summary
+
+- **Demand Allocation Model:** Decides `Xij` to minimize variable cost — plants are fixed. (Simplex LP)
+- **CPLP:** Decides BOTH `Xij` (flow) AND `yi` (open/close plant) — minimizes variable + fixed cost. (Simplex LP with binary constraint)
+- **Merger result:** MaxV operates 3 plants instead of 5 → ~₹50L/month saving.
+
+<Aside type="tip">
+**★ Exam Tip:**
+Demand Allocation = LP with only Xij as variables. CPLP = LP with Xij + binary yi.
+Supply constraint in CPLP: `Σj Xij ≤ Si × yi` (ensures closed plant cannot supply).
+Simplex LP for CPLP; GRG Nonlinear for Centre of Gravity.
+</Aside>

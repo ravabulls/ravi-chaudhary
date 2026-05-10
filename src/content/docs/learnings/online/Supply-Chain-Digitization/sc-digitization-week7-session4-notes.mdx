@@ -1,0 +1,158 @@
+---
+title: "Week 7 | Session 4: Regression Tree in Python — Dummy Variables & Full Implementation"
+description: "A comprehensive guide on implementing a regression tree in Python, highlighting the crucial step of dummy variable encoding for categorical data."
+sidebar:
+  order: 34
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Why categorical variables need special treatment before model building
+- Dummy variable encoding — rule, formula, base category
+- How dummy variables are read — worked examples
+- Variable count: before (7 features) vs. after encoding (10 features)
+- Full Python code — Step by step (import → encode → split → build → print)
+- Output verification — Python output matches theory tree exactly
+- Next session: validate model on test data + error metrics
+</Aside>
+
+---
+
+## Why Categorical Variables Need Encoding
+
+**Problem:** Region has values "South", "East", "West", "North" — these are TEXT, not numbers. ML models (decision tree, random forest, logistic regression, etc.) cannot perform mathematical operations on text directly.
+
+**Solution:** Convert categorical text into binary (0/1) numerical dummy variables — one column per category (minus one base category).
+
+- **Rule:** If a categorical variable has `m` categories → create `(m − 1)` dummy variables. One category is left out as the "base category".
+- **Why (m − 1)?** The mth category is implied when all (m − 1) dummy variables = 0. Including all m would create perfect multicollinearity (dummy variable trap).
+- **Applies to:** ALL ML models. Always encode categorical variables first.
+
+<Aside type="tip">
+**★ Exam tip:** The dummy variable rule is m categories → (m-1) dummies, with one base category. Always state WHICH category is the base. For Region: East is base. For Location: Rural is base.
+</Aside>
+
+---
+
+## Dummy Variables Created — Region and Location
+
+| Variable | Categories (m) | Dummy Variables Created (m − 1) | Base Category (not created) | Interpretation Rule |
+|---|---|---|---|---|
+| **Region** | 4 (N, S, E, W) | `region_north`, `region_south`, `region_west` | **East** (all three dummies = 0) | If `region_south = 1` → South. If all three = 0 → East (base). |
+| **Location** | 3 (Rural, Semi-Urban, Urban) | `location_semi_urban`, `location_urban` | **Rural** (both dummies = 0) | If `location_urban = 1` → Urban. If both = 0 → Rural (base). |
+
+### How to Read Dummy Variables — Worked Examples
+
+| Obs. | Actual Region | `region_north` | `region_south` | `region_west` | Actual Location | `location_semi_urban` |
+|---|---|---|---|---|---|---|
+| **978** | South | 0 | **1** ✓ | 0 | Rural | 0 (Rural = base) |
+| **979** | West | 0 | 0 | **1** ✓ | Semi-Urban | **1** ✓ |
+| **981** | East (base) | 0 | 0 | 0 | Urban | 0, but `location_urban=1` |
+| **983** | North | **1** ✓ | 0 | 0 | Semi-Urban | **1** ✓ |
+
+<Aside type="note">
+**★ Key:** A retailer is in the base category when ALL dummy variables for that group = 0. No need for a separate column for the base category.
+</Aside>
+
+### Variable Count — Before vs. After Encoding
+
+| Variable | Before Encoding | After Encoding |
+|---|---|---|
+| **Region** | 1 column (text) | 3 columns: `region_north` \| `region_south` \| `region_west` |
+| **Location** | 1 column (text) | 2 columns: `location_semi_urban` \| `location_urban` |
+| **Numerical vars** | 5 columns | 5 columns (unchanged) |
+| **TOTAL FEATURES (X)** | **7 columns** | **10 columns (3 + 2 + 5)** |
+
+---
+
+## Full Python Code — 6 Steps
+
+```python
+# ── STEP 1: Import Data ───────────────────────────────────────────
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import tree
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv("demand.csv")
+
+# ── STEP 2: Define X (features) and Y (target) ────────────────────
+X_features = list(df.columns)
+X_features.remove("order_quantity")
+X_df = df[X_features]
+Y = df["order_quantity"]
+
+# ── STEP 3: Encode Categorical Variables (CRITICAL STEP) ──────────
+# pd.get_dummies() creates m-1 dummies and drops the first category
+encoded_df = pd.get_dummies(X_df, drop_first=True)
+X = encoded_df   # now 10 columns instead of 7
+
+# ── STEP 4: Train-Test Split ──────────────────────────────────────
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.30, random_state=42)
+
+# ── STEP 5: Build Regression Tree ────────────────────────────────
+# DecisionTreeRegressor used because target is CONTINUOUS
+regr = DecisionTreeRegressor(max_depth=2)
+regr.fit(X_train, Y_train)
+
+# ── STEP 6: Print / Visualise Tree ────────────────────────────────
+plt.figure(figsize=(15, 10))
+tree.plot_tree(regr, feature_names=X_train.columns, filled=True)
+plt.show()
+```
+
+### Key Python Functions
+- `pd.get_dummies(..., drop_first=True)`: Built-in pandas function. Creates all dummy variables automatically and removes the base category column. Must do BEFORE train-test split.
+- `DecisionTreeRegressor`: Used instead of `DecisionTreeClassifier` because the target (`order_quantity`) is CONTINUOUS. This is the key code difference.
+- **No criterion needed:** Regressor defaults to MSE (squared error) as the splitting criterion.
+
+---
+
+## Output Verification — Python Matches Theory Exactly
+
+| Node | Condition | Python Output (ȳ, Obs, MSE) | Theory Output (Session 7.2) | Match? |
+|---|---|---|---|---|
+| **0** | All 700 training obs. | ȳ=2270 \| n=700 MSE=8,151,813 | ȳ=2270 \| n=700 MSE=8,151,813 | ✓ Match |
+| **1** | Size ≤ 30.5K sq ft | ȳ=1902 \| n=612 | ȳ=1902 \| n=612 | ✓ Match |
+| **2** | Size > 30.5K sq ft | ȳ=4829 \| n=88 | ȳ=4829 \| n=88 | ✓ Match |
+| **3** | Size ≤ 30.5K, Promo = 0 | ȳ=943 \| n=198 | ȳ=943 \| n=198 | ✓ Match |
+| **4** | Size ≤ 30.5K, Promo = 1 | ȳ=2360 \| n=414 | ȳ=2360 \| n=414 | ✓ Match |
+| **5** | Size > 30.5K, Age ≤ 17.5 | ȳ=2887.3 \| n=56 | ȳ=2887 \| n=56 | ✓ Match (rounded) |
+| **6** | Size > 30.5K, Age > 17.5 | ȳ=8226.87 \| n=32 | ȳ=8227 \| n=32 | ✓ Match (rounded) |
+
+<Aside type="note">
+**★** Running the Python code replicates the exact same regression tree built manually. Both use the same algorithm (MSE minimisation) on the same 700 training observations → same splits, same ȳ, same MSE values.
+</Aside>
+
+### Code Difference: Classification Tree vs. Regression Tree
+
+| Code Element | Classification Tree (Machine Failure) | Regression Tree (Demand Forecast) |
+|---|---|---|
+| **sklearn import** | `DecisionTreeClassifier` | `DecisionTreeRegressor` |
+| **Splitting criterion** | `criterion="gini"` | Default: `squared_error` (MSE) |
+| **Dummy variable encoding** | Not needed | **REQUIRED** — Region and Location are categorical |
+| **Target variable type** | Categorical (0/1) | Continuous (units ordered) |
+
+<Aside type="tip">
+**★ Exam tip:** Dummy variable encoding is a MANDATORY data preprocessing step for any ML model with categorical variables. In code — use `pd.get_dummies(X_df, drop_first=True)`. In theory — m categories → (m−1) dummies, base category = all zeros.
+</Aside>
+
+---
+
+## Session Summary
+
+- **Categorical encoding:** Region (4 cats → 3 dummies, East=base) | Location (3 cats → 2 dummies, Rural=base). 7 features → 10 after encoding.
+- **Dummy rule:** m categories → (m−1) dummy variables. Base category = all zeros. Apply to ALL ML models.
+- **Code change:** `DecisionTreeRegressor` instead of `DecisionTreeClassifier`. Everything else identical.
+- **Key code steps:** Import → define X/Y → encode categoricals → split 70/30 → build RegTree (max_depth=2) → print
+- **Output matches theory:** All 7 nodes match (ȳ, n, MSE) exactly. Python replicates the hand-built theory tree.
+- **Next session:** Test model on 300 held-out observations. Compute MAE, RMSE, MAPE. Assess model quality.

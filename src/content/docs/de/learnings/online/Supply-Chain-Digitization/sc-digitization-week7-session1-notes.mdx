@@ -1,0 +1,132 @@
+---
+title: "Woche 7 | Session 1: KI-ML für Nachfrageprognose & Bedarfsplanung"
+description: "Untersucht die Notwendigkeit von KI und ML für die Nachfrageprognose im Zeitalter von Big Data, behandelt wichtige Modelle und den Einfluss externer Faktoren."
+sidebar:
+  order: 31
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Modul 3 Rückblick — Zusammenfassung der Vorlesungen 1–5
+- Warum Bedarfsplanung wichtig ist — Folgen von Prognosefehlern
+- Warum KI-ML benötigt wird — 4 Vs von Big Data und ihre Herausforderung für traditionelle Prognosen
+- KI-ML-Modelle zur Nachfrageprognose — 6 wichtige Modelle erklärt
+- Externe Faktoren — Wettbewerber, Wirtschaft, Politik, Social Media
+- Rahmenwerk zur Modellauswahl
+- Nächstes: Fallstudie + Fehlermetriken (nächste Session)
+</Aside>
+
+---
+
+## Warum Bedarfsplanung wichtig ist — Die Kosten von Prognosefehlern
+
+**Ziel des Bedarfsplaners:** Prognostizierte Nachfrage ≈ Tatsächliche Nachfrage. Jede Abweichung in beide Richtungen verursacht Kosten.
+
+| Szenario | Was passiert | Unmittelbare Auswirkung | Langfristige Auswirkung |
+|---|---|---|---|
+| **Tatsächlich > Prognose (Unter-Prognose)** | Nachfrage übersteigt verfügbaren Bestand. Kann nicht alle Bestellungen erfüllen. | Entgangene Umsätze. Kunden gehen zur Konkurrenz. | Kundenabwanderung. Umsatzverlust. Verlust von Marktanteilen. |
+| **Tatsächlich < Prognose (Über-Prognose)** | Mehr Bestand produziert/bestellt als Nachfrage. Überbestände bauen sich auf. | Lagerhaltungskosten. Verderb bei verderblichen Waren. | Gebundenes Kapital. Lagerkosten. Preisnachlässe zur Lagerräumung. |
+| **Tatsächlich = Prognose (Genaue Prognose)** | Produktion und Beschaffung sind auf die reale Nachfrage abgestimmt. | Keine Fehlbestände (Stockouts). Kein Überbestand. | Effiziente SC. Zufriedene Kunden. Optimales Betriebskapital. |
+
+- **Verderbliche Produkte:** Über-Prognosen sind besonders kostspielig — Verderb fügt den Haltekosten noch physische Verluste hinzu
+- **Entgangene Umsätze:** Schwerer zu quantifizieren als Überbestände — aber langfristig schädlicher durch Kundenabwanderung
+
+<Aside type="tip">
+**★ Prüfungstipp:** Wenn nach "Warum ist Bedarfsplanung wichtig?" gefragt wird — behandeln Sie BEIDE Richtungen: Unter-Prognose → entgangene Umsätze + Kundenabwanderung; Über-Prognose → Lagerhaltungskosten + Verderb. Eine Richtung reicht nicht.
+</Aside>
+
+---
+
+## Warum KI-ML benötigt wird — 4 Vs von Big Data im Nachfragekontext
+
+**Traditionelle Prognosetools:** Gleitender Durchschnitt, exponentielle Glättung, ARIMA — gut für stabile Trends und Saisonalität.
+**Problem:** Im heutigen Umfeld weisen Nachfragedaten alle 4 problematischen Vs gleichzeitig auf → traditionelle Tools scheitern an dieser Komplexität.
+
+### Big Data vs. Traditionelle Prognosen
+
+| V | Big Data Merkmal | Wie es in Nachfragedaten auftritt | Warum traditionelle Prognosen scheitern |
+|---|---|---|---|
+| **V1 Volume** | Riesige Datenmenge | Bestellungen 24/7 via Omni-Channel → Millionen von Datenpunkten kontinuierlich generiert | Nicht darauf ausgelegt, Millionen kontinuierlicher Datenpunkte in Echtzeit zu verarbeiten und daraus zu lernen |
+| **V2 Variety** | Mehrere Datentypen | Kundenbewertung als Text \| Bild \| Bewertung \| Audio-Feedback | Akzeptieren nur strukturierte numerische Daten — können Text, Bild, Audio nicht verarbeiten |
+| **V3 Velocity** | Echtzeitdaten | Bestellungen, Stornierungen, Warenkorb-Hinzufügungen passieren 24/7 in Echtzeit | Batch-basierte traditionelle Prognosen sind zu langsam, um auf Echtzeitverschiebungen zu reagieren |
+| **V4 Variability** | Instabile Muster | Kundenpräferenzen verschieben sich unvorhersehbar aufgrund von Trends, Aktionen, Richtlinien | Erfassen Saisonalität/Trend, können aber Social-Media-getriebene Schwankungen nicht modellieren |
+
+<Aside type="note">
+**★** KI-ML erfasst zusätzlich: Nicht-lineare Muster | Social-Media-getriebene Schwankungen | Unstrukturierte Datensignale | Echtzeit-Updates | Interaktionen zwischen mehreren Merkmalen gleichzeitig.
+</Aside>
+
+---
+
+## KI-ML-Modelle zur Nachfrageprognose — Überblick
+
+### Wichtige KI-ML-Modelle zur Nachfrageprognose
+
+| Modell | Output-Typ | Wichtige Annahme / Merkmal | Anwendungsfall für Nachfrageprognose |
+|---|---|---|---|
+| **Lineare Regression** | Kontinuierlich | Beziehung zwischen abhängiger und unabhängiger Variable ist LINEAR | Vorhersage verkaufter Einheiten basierend auf: historischen Verkäufen + Preisgestaltung + Aktionen. |
+| **Logistische Regression** | Kategorisch (Wahrsch.) | Abhängige Variable ist binär oder kategorisch — Wahrscheinlichkeit eines Ereignisses | Wahrscheinlichkeit der erfolgreichen Akzeptanz einer Produkteinführung oder Reaktionswahrscheinlichkeit auf Aktion. |
+| **Entscheidungsbaum** | Kategorisch oder Kontinuierlich | Regelbasierte Aufteilungen. Bewältigt nicht-lineare Beziehungen. | Identifiziert HAUPTTREIBER von Nachfrageschwankungen. Generiert interpretierbare Geschäftsregeln. |
+| **Random Forest** | Kategorisch oder Kontinuierlich | Ensemble aus mehreren Entscheidungsbäumen. Reduziert Overfitting. | Robustere Prognose, wenn ein einzelner Baum overfittet. Geht besser mit verrauschten Daten um. |
+| **Boosting-Algorithmen (XGBoost, LightGBM)** | Kategorisch oder Kontinuierlich | Sequenzielles Ensemble: Jedes Modell korrigiert Fehler des vorherigen. | Dynamische Prognose — passt sich an veränderte Bedingungen an. In der Industrie weit verbreitet. |
+| **Neuronale Netze (LSTM, CNN)** | Kontinuierlich oder Kategorisch | Erfasst hochkomplexe, nicht-lineare Muster. Verarbeitet strukturierte UND unstrukturierte Daten. | Am besten für unstrukturierte Daten (Textbewertungen, Bild-Feedback) und komplexe Zeitreihen (LSTM). |
+
+### Vertiefung der wichtigsten Modelle
+1. **Lineare Regression:** Einfach, schneidet aber schlecht ab, wenn die Nachfrage scharfe, nicht proportionale Reaktionen auf Veränderungen zeigt.
+2. **Logistische Regression:** Verknüpft Marketingausgaben mit dem erwarteten Nachfrageanstieg.
+3. **Entscheidungsbaum:** Identifiziert, WELCHE Faktoren die Nachfrage am meisten treiben. Einschränkung: Kann bei Trainingsdaten überanpassen (Overfitting).
+4. **Random Forest:** Bildet den Durchschnitt aus mehreren Bäumen → stabiler, weniger rauschempfindlich. Nachteil: Weniger interpretierbar.
+5. **Boosting-Algorithmen:** Werden heute am häufigsten im wettbewerbsorientierten ML und in Bedarfsplanungsteams der Industrie verwendet — schnell, präzise, skalierbar.
+6. **Neuronale Netze:** LSTM ist für Nachfrage-Zeitreihen weit verbreitet, um langfristige Abhängigkeiten zu erfassen. Nachteil: Am schwersten zu interpretieren.
+
+---
+
+## Externe Faktoren — Was kontinuierlich überwacht werden muss
+
+Herausforderung für Bedarfsplaner: Interne Daten allein reichen nicht aus. Externe Faktoren verschieben die Nachfragemuster ständig und müssen in das Modell integriert werden.
+
+| Externer Faktor | Wie er die Nachfrage beeinflusst | Wie KI-ML ihn integriert |
+|---|---|---|
+| **Aktionen von Mitbewerbern** | Kunden wechseln während einer Aktion zum Konkurrenten → Ihre Nachfrage sinkt | Boosting-Modelle nehmen Aktionsdaten als Merkmal auf und passen die Prognose an |
+| **Preisgestaltung der Mitbewerber** | Niedrigerer Preis → Nachfrage verschiebt sich. Treue Kunden wechseln. | Preiselastizität wird modelliert. Modell prognostiziert Nachfragerückgang. |
+| **Gesamtwirtschaft / BIP** | Wirtschaft wächst → Nachfrage steigt. Wirtschaft schrumpft → Ausgaben begrenzt. | Makroökonomische Indikatoren werden als Merkmale in Boosting-/Regressionsmodellen aufgenommen |
+| **Änderungen in der Regierungspolitik** | Vorschriften, Steuern oder Subventionen verschieben Nachfragemuster plötzlich | Werden als Dummy-Variablen oder Strukturbrüche in Zeitreihenmodellen behandelt |
+| **Social Media Trends** | Virales Produkt → Nachfragespitze. Negative Berichterstattung → Einbruch. | NLP bei Social-Media-Posts fließt in Neuronale Netze ein, um Stimmungsumschwünge früh zu erkennen |
+
+<Aside type="note">
+**★** Demand Sensing = Echtzeitüberwachung externer Faktoren (Social Media, Schritte der Konkurrenz, Wirtschaft, Politik) + kontinuierliche Einspeisung dieser Signale in KI-ML-Modelle.
+</Aside>
+
+---
+
+## Rahmenwerk zur Modellauswahl — Wie wählt man das richtige Modell?
+
+<Steps>
+1. **Output-Typ definieren:** Ist die Nachfrage eine Zahl (kontinuierlich)? → Regressionsmodelle. Ist es eine Kategorie? → Klassifikationsmodelle.
+2. **Verfügbare Datentypen bewerten:** Nur strukturierte numerische Daten → Lineare Regression, Entscheidungsbaum, Random Forest, Boosting | Unstrukturiert (Text, Bild, Audio) → Neuronale Netze
+3. **Nachfragemuster prüfen:** Stabiler Trend + Saisonalität → Traditionelle Tools können ausreichen | Hohe Variabilität, nicht-linear → KI-ML benötigt
+4. **Bedarf an Interpretierbarkeit berücksichtigen:** Muss man es dem Management erklären? → Entscheidungsbaum | Genauigkeit über Interpretierbarkeit? → Random Forest, XGBoost, LSTM
+5. **Modelle benchmarken:** Mehrere Modelle ausführen → Fehlermetriken vergleichen (MAE, RMSE, MAPE) → Modell mit geringstem Fehler auf Testdaten auswählen
+6. **Überwachen und neu trainieren:** Nachfragemuster entwickeln sich weiter. Modell regelmäßig neu trainieren oder Continuous-Learning-Pipeline einrichten.
+</Steps>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Wenn gefragt wird "Welches Modell sollte für die Nachfrageprognose verwendet werden?" — sagen Sie niemals, dass ein Modell immer das beste ist. Zeigen Sie die Auswahl-Logik: Output-Typ → Datentyp → Musterkomplexität → Interpretierbarkeit → Fehlervergleich.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Warum Bedarfsplanung:** Prognose ≠ Tatsächlich → entweder entgangene Umsätze (unter) oder Lagerkosten (über). Genaue Prognose = Umsatzschutz + Kostenkontrolle.
+- **Warum KI-ML benötigt wird:** 4 Vs der Nachfragedaten (Volume, Variety, Velocity, Variability) übersteigen das, was traditionelle Prognosetools bewältigen können.
+- **6 KI-ML-Modelle:** Lineare Regression | Logistische Regression | Entscheidungsbaum | Random Forest | Boosting (XGBoost, LightGBM) | Neuronale Netze (RNN, LSTM, CNN)
+- **Zu überwachende externe Faktoren:** Aktionen + Preise der Mitbewerber | BIP / Wirtschaft | Regierungspolitik | Social Media Trends
+- **Modellauswahl:** Modell auf Output-Typ, Datentyp, Musterkomplexität, Interpretierbarkeit und Fehler-Benchmark abstimmen.
+- **Nächste Session:** Fallstudie — Anwendung eines KI-ML-Modells auf ein Nachfrageprognose-Problem. Einführung von Fehlermetriken (MAE, RMSE, MAPE).

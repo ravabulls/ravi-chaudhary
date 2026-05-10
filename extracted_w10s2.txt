@@ -1,0 +1,201 @@
+Supply Chain Management (SCM) — NPTEL
+Week 10 · Session 2:  Track & Trace Systems — Technology Interface, Barcodes & QR Codes
+1.  Recap & Session Scope
+Last session: why product tracking & traceability matters — 5 challenges, 3-pronged improvement approach
+This session: technology focus — how track & trace systems work, major steps, and first two technologies (barcode & QR code)
+Next session: more technologies + how technology integrates with process and people
+
+2.  What are Track & Trace Systems?
+Technology-enabled systems that record, transmit and store product attributes at each stage of the SC
+Used across: sourcing, manufacturing, assembly, dispatch, transportation, last-mile, storage, consumption
+Common in: e-commerce (most visible to consumers), brick & mortar retail (scanning at checkout), B2B logistics
+Increasingly critical due to: growing e-retail, security & cybersecurity concerns in SC management
+
+Everyday Example — E-commerce Order Tracking
+The entire order-to-delivery journey is a live T&T system in action:
+
+1
+Order placed
+Customer buys on e-commerce app. Order created; product allocated at warehouse.
+2
+Dispatch notification
+Product scanned at origin warehouse. Customer notified: 'dispatched'. App shows product location.
+3
+In-transit updates
+At each transit hub, product is scanned. App updates location chronologically — customer sees full journey.
+4
+Out for delivery
+Local delivery station assigns delivery agent. Customer notified to be available.
+5
+Last-mile delivery
+Delivery agent scans product at customer doorstep. Proof of delivery captured.
+6
+Delivery confirmation
+Customer signs on device OR shares OTP. Triangulation complete — delivery verified.
+7
+Complaint reference
+If quality issue arises, delivery record serves as reference for complaint resolution.
+
+★  T&T systems provide a verifiable, timestamped record of every product event — from dispatch to delivery. This record enables both customer service and complaint resolution.
+
+3.  Key Concept — Triangulation of Information
+Triangulation = verifying a transaction using multiple independent data points simultaneously
+In e-commerce delivery: delivery agent scan + customer signature/OTP + timestamp + GPS = triangulated proof
+Prevents wrongful claims — product, receiver, location and time all recorded independently
+Equivalent in B2B SC: GRN (goods received note) + system scan + invoice match = triangulated receipt
+
+★  Triangulation = the reason T&T systems are legally defensible. Any one data point can be disputed; multiple corroborating records together cannot.
+
+4.  Four Major Steps in Any Track & Trace System
+All T&T systems — manual or technology-enabled — must cover all four steps:
+
+1
+Capture Attributes
+Decide which product attributes matter for the application
+Examples: serial no., batch no., production location, temperature, humidity, expiry date
+Application determines scope — e.g., movement tracking needs serial no. + location + time; cold chain also needs temperature
+2
+Data Capture & Transmission
+How is the attribute data actually collected? — manual (pen/paper) or automated (device-connected)
+Manual: prone to fatigue errors; slow for large volumes
+Technology: devices capture data and transmit via internet (cloud) OR store locally (temp hard drive) then transfer
+3
+Data Storage (Management)
+Store captured data securely — cloud or local database (not paper — high risk of loss/damage)
+Ensure data sanctity: access controls, backup, audit trails
+Database must be searchable — e.g., retrieve all records for a specific product 3 weeks ago
+4
+Data Sharing & Collaboration
+Share data with internal stakeholders: shop floor manager, senior management (audit), operations teams
+Share selectively with external stakeholders: e.g., 3PL client sees warehouse space/inventory status
+Enables real-time visibility and collaborative decision-making across the SC
+
+What Attributes to Capture? — Application Determines Scope
+Not all attributes need to be captured for every application — select based on need:
+Movement tracking only: serial number + location + timestamp
+Cold chain (pharma, food): above + temperature + humidity at each point
+Manufacturing component tracking: serial/batch no. + process stage + operator ID
+Customer-facing (e-commerce): order ID + transit hub locations + delivery confirmation
+
+5.  Manual System vs Technology System
+Manual systems are feasible at low scale — but fail at high volumes due to error and cost
+
+Dimension
+Manual System
+Technology System
+Data capture
+Manual sticker/label + handwriting or typing
+Devices auto-capture from label/tag directly
+Transmission
+Physical paper → manual data entry into Excel/DB
+Device connected via internet → auto-upload to cloud/DB
+Storage
+Paper records — high risk of loss, damage
+Secure cloud or local digital database
+Accuracy
+Error-prone — fatigue, transcription mistakes
+High — no manual transcription needed
+Speed / Volume
+Slow — viable only at low volume
+Fast — handles large volumes efficiently
+Per-item cost
+Very low
+Moderate (device investment) — low at scale
+Total cost (scale)
+Very HIGH — labour + time intensive
+Lower — automation reduces operational cost significantly
+
+Key insight: per-item cost of manual is low, but total cost at scale is very high — technology pays off at volume
+Technology options for data transmission: (1) internet-connected devices → cloud upload; (2) local device storage → USB/hard drive transfer
+
+6.  Technologies for Track & Trace — Overview
+Technologies exist on a spectrum from simple to sophisticated:
+Manual labelling → barcode → QR code → RFID → IoT sensors → blockchain (covered progressively)
+This session covers: Barcode and QR Code
+
+7.  Barcode Technology
+What is a Barcode?
+Sticker or label with encoded lines — 1D (vertical lines only) or 2D (vertical + horizontal lines)
+Lines represent encoded information — static, embedded at printing time
+Information capacity: limited — typically 1–4 attributes (serial no., batch, price, expiry)
+
+How to Capture / Read Barcode Data
+Requires: dedicated barcode scanner or handheld device
+Distance and angle between scanner and barcode must be precise — slight tilt = scan failure
+Product is brought to the scanner (checkout counters) OR scanner is brought to the product (warehouse)
+
+Applications
+Retail: checkout counter scanning for price + payment processing (most visible consumer use)
+Air cargo / baggage: sticker on luggage encodes flight + destination → scanned at conveyor systems to route correctly
+Manufacturing: components scanned one at a time to track usage in processes
+Healthcare: patient health records mapped to barcode on wristband or medication
+Usually placed on primary packaging (the item itself)
+
+8.  QR Code (Quick Response Code)
+What is a QR Code?
+An advanced version of barcode — 2D matrix pattern (squares, not just lines)
+Can appear on: physical stickers/labels AND in digital formats (screens, presentations, documents)
+Information capacity: very high — can link to websites, videos, Drive folders, databases, live data feeds
+
+Static vs Dynamic QR Codes
+Static QR: information encoded once at creation — cannot be changed later (like a barcode)
+Dynamic QR: content linked to a URL or database — can be updated in real-time without changing the QR code itself
+Example: a QR on packaging links to a product page — update the page content anytime; QR stays the same
+
+How to Capture / Read QR Data
+Requires: camera-enabled device + scanning app (smartphone, tablet, drone)
+More flexible than barcode — tolerates wider angles, greater distances — does not need to be perfectly aligned
+Drone application: drone with embedded camera flies over warehouse, scans QR codes on pallets/shelves → hands-free inventory scan
+
+Applications
+Secondary packaging: cartons, pallets, outer boxes — covers larger units than barcode
+Payments: UPI / merchant QR codes (consumer-facing)
+SC traceability: link QR to full product journey, certificates, compliance docs
+Drone inventory: automated warehouse scanning without human counting
+Software apps: QR as login, verification, or quick-access shortcut within systems
+
+9.  Barcode vs QR Code — Side-by-Side
+Attribute
+Barcode
+QR Code
+What it is
+Lines (bars) printed on sticker/label — 1D or 2D (horizontal + vertical)
+2D matrix pattern — advanced version of barcode. Physical or digital format.
+Info capacity
+Low — a few attributes only (serial no., batch, price, expiry date)
+High — can link to websites, videos, OneDrive/Google Drive, large datasets
+Info type
+Static only — encoded once, cannot change
+Static OR dynamic — dynamic QR content can be updated in real-time
+Scanner needed
+Specialized barcode reader or handheld device
+Camera-enabled device + app (mobile, drone camera, static camera)
+Distance/angle
+Must be very close; angle and distance must be precise — easy to fail
+More flexible — tolerates wider angles and distances; drone-compatible
+Placement
+Primary packaging (items); components in manufacturing
+Secondary packaging, pallets, cartons, equipment, software apps
+Common use
+Retail checkout counter scanning; air cargo baggage handling; patient health records
+Payment QR codes; product info pages; SC traceability; drone inventory scans
+Cost
+Very low — cheap to print; established technology
+Low to moderate — easy to generate; widely supported
+
+★  QR codes are strictly superior to barcodes in capacity, flexibility and format — but both are still widely used because barcodes are more established and cheaper for simple tasks.
+
+Session Summary
+T&T systems: record product attributes at each SC stage — used from sourcing to last-mile delivery
+E-commerce example: full 7-step chronology from order to delivery confirmation via T&T
+Triangulation: multiple independent data points verify a transaction — legally defensible
+4 steps of T&T: (1) Capture attributes, (2) Transmit data, (3) Store data, (4) Share & collaborate
+Manual vs tech: manual is cheap per item but fails at scale — technology needed for volume
+Barcode: static, low capacity, precise scanning, primary packaging — retail checkout, air cargo, manufacturing
+QR code: static or dynamic, high capacity, flexible scanning, secondary packaging — drones, payments, traceability
+Next session: more T&T technologies (RFID, sensors, IoT) + integration with process and people
+
+★ Exam Tip:  4 steps of T&T: Capture → Transmit → Store → Share. Know what happens at each step with examples.
+★ Exam Tip:  Barcode vs QR: barcode = static, low capacity, strict scanning angle, primary packaging. QR = static OR dynamic, high capacity, flexible angle, secondary packaging + digital formats.
+★ Exam Tip:  Triangulation = using multiple independent records (scan + signature + OTP) to irrefutably verify a transaction. Prevents wrongful claims.
+★ Exam Tip:  Dynamic QR codes can be updated in real-time without changing the physical QR. This makes them suitable for live data links (e.g., inventory dashboards, product tracking URLs).

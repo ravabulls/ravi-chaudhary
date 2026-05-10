@@ -1,0 +1,160 @@
+---
+title: "Woche 7 | Session 2: Nachfrageprognose — Regressionsbaum-Fallstudie (FMCG)"
+description: "Eine Fallstudie, die zeigt, wie Regressionsbäume in der FMCG-Nachfrageprognose eingesetzt werden, um kontinuierliche Bestellmengen vorherzusagen und handlungsrelevante Geschäftsregeln abzuleiten."
+sidebar:
+  order: 32
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Kontext der Fallstudie — FMCG-Bedarfsplanungsproblem
+- Datenaufbau — 1000 Einzelhändler, 7 unabhängige Variablen, 1 Ziel
+- Regressionsbaum vs. Klassifikationsbaum — Hauptunterschied
+- Output des Regressionsbaums — alle 7 Knoten erklärt
+- Wie sich die Genauigkeit durch das Hinzufügen von Knoten verbessert
+- 4 aus dem Modell abgeleitete Geschäftsregeln
+- Berechnungsbeispiel — Einzelhändler A
+- Interpretation des Supports
+- Nächste Session: Wie man einen Regressionsbaum in Python aufbaut
+</Aside>
+
+---
+
+## Kontext der Fallstudie — Das FMCG-Problem
+
+- **Setting:** Großes FMCG-Unternehmen mit einem Netzwerk von Einzelhändlern in ganz Indien
+- **Problem:** Leiter der Bedarfsplanung ist mit der Prognosegenauigkeit unzufrieden. Die Lücke zwischen tatsächlicher und prognostizierter Nachfrage führt entweder zu Überbeständen ODER zu entgangenen Umsätzen.
+- **Auslöser:** Manager nahm an einem KI-ML-Training teil → verstand, dass KI-ML notwendig ist, da sich Nachfragemuster schnell ändern
+- **Ziel:** Entwicklung eines besseren Modells zur Nachfrageprognose, um die Lücke zwischen tatsächlicher und prognostizierter Nachfrage zu verkleinern → geringere Lagerkosten + weniger entgangene Umsätze
+- **Gewähltes Modell:** Regressionsbaum (Entscheidungsbaum mit kontinuierlichem Output) — prognostiziert die BESTELLMENGE für jeden Einzelhändler
+
+<Aside type="tip">
+**★ Prüfungstipp:** Wissen Sie, warum ein Regressionsbaum gewählt wurde: (1) Nachfrage ist eine kontinuierliche Variable (Anzahl Einheiten) → Regressionsbaum, nicht Klassifikationsbaum. (2) Nicht-lineare Beziehungen zwischen Größe, Alter, Aktionen und Nachfrage. (3) Interpretierbare Geschäftsregeln für Bedarfsplaner.
+</Aside>
+
+---
+
+## Regressionsbaum vs. Klassifikationsbaum — Hauptunterschied
+
+| Aspekt | Klassifikationsbaum | Regressionsbaum |
+|---|---|---|
+| **Art der Zielvariablen (Y)** | Kategorisch (z.B. Ausfall / Kein Ausfall) | Kontinuierlich (z.B. Bestellmenge in Einheiten) |
+| **Vorhersage am Blattknoten** | Label der Mehrheitsklasse (z.B. "Ausgefallen") | Mittelwert (ȳ) aller Y-Werte in diesem Knoten |
+| **Aufteilungskriterium** | Gini-Index oder Entropie (unreinheitsbasiert) | Mean Squared Error (MSE) / Varianzreduktion |
+| **Verwendung in diesem Kurs für** | Predictive Maintenance (Maschinenausfall) | Vorhersage der Bestellmenge von Einzelhändlern |
+
+---
+
+## Datenaufbau — 1000 Einzelhändler, 7 Merkmale, 1 Ziel
+
+- **Datensatz:** 1000 Einzelhändler. Jede Zeile = ein Einzelhändler in einer Woche.
+- **Train-Test-Split:** 700 Beobachtungen fürs Training (70%) | 300 fürs Testen (30%)
+- **Ziel (Y):** Bestellmenge (Order Quantity) — kontinuierliche Anzahl an Einheiten, die dieser Einzelhändler in dieser Woche bestellt hat
+
+### 7 unabhängige Variablen (Merkmale) + 1 Zielvariable
+
+| # | Variable | Typ / Einheit | Warum es für die Nachfrage wichtig ist |
+|---|---|---|---|
+| **X1** | **Region** | Kategorisch (Süd/Ost/West/Nord) | Geografische Nachfragemuster variieren erheblich nach Region. |
+| **X2** | **Ausstehender Kreditbetrag** | Kontinuierlich (₹ Lakhs) | Betrag, den der Einzelhändler dem FMCG-Unternehmen noch schuldet. |
+| **X3** | **Standort** | Kategorisch (Urban / Semi-urban / Ländlich) | Städtische Einzelhändler haben typischerweise mehr Laufkundschaft → höhere Nachfrage. |
+| **X4** | **Alter des Einzelhändlers** | Kontinuierlich (Jahre) | Ältere Einzelhändler haben stärkere Kundenbeziehungen, treuen Kundenstamm → mehr Laufkundschaft. |
+| **X5** | **Größe des Geschäfts** | Kontinuierlich ('000 sq ft) | Größeres Geschäft → mehr ausgestellte Produkte → mehr Laufkundschaft. |
+| **X6** | **Aktionsangebot (Promotion)** | Binär (1 = angeboten, 0 = nicht angeboten) | Aktionen kurbeln die Nachfrage direkt an. In einer Aktionswoche → deutlich höhere Bestellungen. |
+| **X7** | **Anzahl an Feiertagen** | Zählung (0, 1, 2, 3…) | Mehr Feiertage → mehr Einkaufsanlässe → höhere Nachfrage in dieser Woche. |
+| **Y** | **Bestellmenge (Ziel)** | Kontinuierlich (Bestellte Einheiten) | Wie viele Einheiten der Einzelhändler in dieser Woche bestellt. |
+
+---
+
+## Output des Regressionsbaums — Alle Knoten
+
+- **Verwendetes Modell:** Regressionsbaum | Trainingsdaten: 700 Beob. | Baumtiefe: 2
+- **Vom Modell ausgewählte Variablen:** Größe des Geschäfts | Aktionsangebot | Alter des Geschäfts → Modell ignorierte Region, Kredit, Standort, Feiertage als weniger differenzierend
+
+### Alle 7 Knoten — Bedingungen, prognostizierte Nachfrage (Mittelwert), Support
+
+| Knoten | Typ | Bedingungen zum Erreichen dieses Knotens | Aufteilungsvariable & Schwellenwert | Prognostizierte Nachfrage (ȳ) | Beob. | Support |
+|---|---|---|---|---|---|---|
+| **0 (Wurzel)** | Intern | Alle Trainingsdaten | Größe ≤ 30.5K sq ft | 2270 (Basiswert) | 700 | 100% |
+| **1** | Intern | Größe des Geschäfts ≤ 30.5K sq ft | Aktion (0 oder 1) | 1902 | 612 | 87% |
+| **2** | Intern | Größe des Geschäfts > 30.5K sq ft | Alter (≤ 17.5 Jahre) | 4829 | 88 | 13% |
+| **3 (Blatt)** | BLATT | Größe ≤ 30.5K sq ft, Aktion = 0 | STOPP | **943** | 198 | 28% |
+| **4 (Blatt)** | BLATT | Größe ≤ 30.5K sq ft, Aktion = 1 | STOPP | **2360** | 414 | 59% |
+| **5 (Blatt)** | BLATT | Größe > 30.5K sq ft, Alter ≤ 17.5 Jahre | STOPP | **2887** | 56 | 8% |
+| **6 (Blatt)** | BLATT | Größe > 30.5K sq ft, Alter > 17.5 Jahre | STOPP | **8227** | 32 | 5% |
+
+<Aside type="note">
+**★** Bei einem Regressionsbaum entspricht die Vorhersage im Blattknoten dem Mittelwert (ȳ) aller Y-Werte, die in diesen Knoten fallen. Im Gegensatz zum Klassifikationsbaum, der die Mehrheitsklasse verwendet. Je verfeinerter der Knoten, desto näher liegt ȳ an der tatsächlichen Nachfrage des einzelnen Einzelhändlers.
+</Aside>
+
+---
+
+## Wie sich die Vorhersage mit jeder Aufteilung verbessert
+
+| Stufe | Verwendete Informationen | Prognostizierte Nachfrage | Interpretation |
+|---|---|---|---|
+| **Knoten 0 (Keine Info)** | Keine — Zufallsauswahl aus 700 Einzelhändlern | 2270 (ȳ für alle) | Basiswert: einfacher Durchschnitt aller Bestellungen. |
+| **Nach Split 1 (Knoten 1)** | Geschäftsgröße ≤ 30.5K sq ft | 1902 (↓ von 2270) | Hinzufügen von Größeninfos verfeinert Prognose für kleine Geschäfte. |
+| **Nach Split 1 (Knoten 2)** | Geschäftsgröße > 30.5K sq ft | 4829 (↑ von 2270) | Große Geschäfte bestellen viel mehr. Prognose springt auf 4829. |
+| **Nach Split 2 (Knoten 4)** | Größe ≤ 30.5K + Aktion = 1 | 2360 (Aktionseffekt: +458) | Gleiches kleines Geschäft, aber mit Aktion → Nachfrage steigt. |
+| **Nach Split 2 (Knoten 6)** | Größe > 30.5K + Alter > 17.5 J. | 8227 (alt + groß = am höchsten) | Großes UND altes Geschäft = höchste prognostizierte Nachfrage. |
+
+**Kernlogik:** Mehr relevante Informationen über einen Einzelhändler → verfeinerte Gruppe, in die er fällt → Mittelwert dieser Gruppe liegt näher an seiner tatsächlichen Nachfrage.
+
+---
+
+## 4 Geschäftsregeln — Referenzkarte für die Praxis
+
+| Regel | Bedingung 1 (Größe) | Bedingung 2 (Aktion oder Alter) | Profil des Einzelhändlers | Prognostizierte Nachfrage | Support |
+|---|---|---|---|---|---|
+| **R1 (Knoten 3)** | Größe ≤ 30.5K sq ft | Aktion = 0 (Kein Angebot) | Kleines Geschäft, keine Aktion → wöchentlich geringe Nachfrage | 943 Einheiten | 28% |
+| **R2 (Knoten 4)** | Größe ≤ 30.5K sq ft | Aktion = 1 (Angebot aktiv) | Kleines Geschäft ABER Aktion läuft → Nachfrage angekurbelt | 2360 Einheiten | 59% |
+| **R3 (Knoten 5)** | Größe > 30.5K sq ft | Alter ≤ 17.5 J. (Relativ neu) | Großes, aber neueres Geschäft — noch kein starker Kundenstamm | 2887 Einheiten | 8% |
+| **R4 (Knoten 6)** | Größe > 30.5K sq ft | Alter > 17.5 J. (Alt, etabliert) | Großes UND altes Geschäft → treue Kunden, hohe Laufkundschaft → höchste Nachfrage | 8227 Einheiten | 5% |
+
+<Aside type="note">
+**★** 4 einfache Regeln ersetzen einen komplexen Prognoseprozess. Jeder Bedarfsplaner ohne Data-Science-Hintergrund kann diese Regeln nutzen, um die Einzelhandelsnachfrage vorherzusagen.
+</Aside>
+
+### Berechnungsbeispiel — Einzelhändler A
+**Gegebene Daten für Einzelhändler A:** Region: West | Kredit: ₹10 Lakh | Standort: Urban | Alter: 12 Jahre | **Geschäftsgröße: 8.000 sq ft (8K)** | **Aktionsangebot: Ja (1)** | Anzahl Feiertage: 3
+
+<Steps>
+1. Geschäftsgröße prüfen: 8K sq ft ≤ 30.5K sq ft → gehe zu Knoten 1 (linker Zweig)
+2. Aktion prüfen: Aktion = 1 → gehe zu Knoten 4 (rechter Zweig von Knoten 1)
+3. Ergebnis: Knoten 4 → Prognostizierte Nachfrage = **2360 Einheiten**
+</Steps>
+
+---
+
+## Interpretation des Supports — Wie zuversichtlich ist die Vorhersage?
+
+**Support** = % der Trainingsbeobachtungen, die in diesen Blattknoten fallen.
+- **Knoten 4 (59% Support):** Am zuverlässigsten — deckt die Mehrheit der kleinen Geschäfte + Aktions-Einzelhändler ab.
+- **Knoten 6 (5% Support):** Geringste Zuversicht — nur 32 von 700 sind große + alte Geschäfte.
+
+<Aside type="note">
+**★** Knoten 6 prognostiziert die höchste Nachfrage (8227), hat aber den geringsten Support (5%). Das bedeutet nicht, dass die Vorhersage falsch ist — diese großen alten Geschäfte bestellen wahrscheinlich wirklich sehr große Mengen. Es bedeutet nur, dass weniger Beobachtungen dies bestätigen.
+</Aside>
+
+### Können wir uns noch weiter verbessern? — Tieferer Baum
+- **Ja:** Knoten mit zusätzlichen Merkmalen weiter aufteilen → geringerer Mean Squared Error innerhalb jedes Blattes → Vorhersagen rücken näher an die tatsächliche Nachfrage heran.
+- **Nachteil:** Tieferer Baum = bessere Trainingsgenauigkeit, ABER höheres Risiko für Overfitting. Es gelten die gleichen Stoppkriterien wie beim Klassifikationsbaum (Max. Tiefe, Min. Beobachtungen, Min. Varianzreduktion).
+
+---
+
+## Zusammenfassung der Session
+
+- **Fall:** Leiter der Bedarfsplanung eines FMCG-Unternehmens → nutzt Regressionsbaum zur Prognose von Bestellmengen.
+- **Regressionsbaum vs. Klassifikationsbaum:** Kontinuierliches Ziel → Blatt prognostiziert den Mittelwert (ȳ). Aufteilungskriterium = Varianzreduktion (nicht Gini).
+- **Modell wählt 3 von 7 Merkmalen:** Größe des Geschäfts | Aktionsangebot | Alter des Geschäfts
+- **4 Blattknoten → 4 Geschäftsregeln:** 943 (klein, keine Aktion) | 2360 (klein + Aktion, 59% Support) | 2887 (groß + jung) | 8227 (groß + alt — höchste Nachfrage)
+- **Vorhersage für Einzelhändler A:** Größe = 8K sq ft (≤ 30.5K) | Aktion = 1 → Knoten 4 → Prognostizierte Nachfrage = 2360 Einheiten
+- **Nächste Session:** Erstellen eines Regressionsbaums in Python + Fehlermetriken für Nachfrageprognosen (MAE, RMSE, MAPE)

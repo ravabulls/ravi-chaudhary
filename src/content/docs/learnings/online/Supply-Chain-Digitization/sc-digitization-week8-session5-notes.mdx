@@ -1,0 +1,138 @@
+---
+title: "Week 8 | Session 5: SC Network Design — LP Optimization & Final Comparison"
+description: "Discover how to use Linear Programming (LP) and Excel Solver to find the guaranteed optimal solution for Supply Chain Network Design, proving its superiority over heuristic approaches."
+sidebar:
+  order: 40
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+![LP Optimization Concept](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image1.png)
+
+## Session Agenda
+
+<Aside type="note">
+- Recap — Same Problem, Better Method
+- LP Formulation — SC Network Design
+- Objective Function
+- Constraints (Supply, Flow Balance, Demand)
+- Solving in Excel — Step-by-Step
+- Result & Final Comparison
+- Scalability & Practical Relevance
+</Aside>
+
+---
+
+## 1. Recap — Same Problem, Better Method
+
+**Same SC network as Session 4:** 2 Manufacturers, 3 Warehouses, 4 Retailers, 1 product.
+- **Objectives:** Find optimal distribution strategy to satisfy retailer demand and minimize total distribution costs.
+- **Session 4:** Solved using Heuristic 1 (₹9,61,000) and Heuristic 2 (₹7,57,000).
+- **This session:** Solve using Linear Programming (LP) + Excel Solver to get the *true optimal*.
+
+<Aside type="note">
+**★** Heuristics give good solutions fast. LP gives the BEST solution. This session proves LP beats both heuristics.
+</Aside>
+
+---
+
+## 2. LP Formulation — SC Network Design
+
+### Decision Variables — 18 total
+- **6 variables (M→W tier):** Quantity moved between each Manufacturer–Warehouse pair (e.g., `QM1W1`).
+- **12 variables (W→R tier):** Quantity moved between each Warehouse–Retailer pair (e.g., `XW1R1`).
+
+All initialized to 0 in Excel — Solver finds the optimal values.
+
+![Decision Variables](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image2.png)
+
+---
+
+## 3. Objective Function
+
+**Minimize total distribution cost** = sum of (unit shipping cost × quantity) for all pairs.
+*(In Excel: use `SUMPRODUCT`)*
+
+`Minimize Z = Σ (Shipping Cost × Q_MiWk) + Σ (Shipping Cost × X_WkRj)`
+
+---
+
+## 4. Constraints
+
+Three types of constraints — all must be satisfied simultaneously for a valid solution.
+
+| Constraint Type | Expression | What it ensures |
+|---|---|---|
+| **Supply** (2) | `QM1W1+QM1W2+QM1W3 ≤ 1,50,000` | Total shipped from each Mfr ≤ its capacity |
+| **Flow Balance** (3) | `Σ(in to W1) = Σ(out of W1)` | What comes into a WH must go out — no stockpiling |
+| **Demand** (4) | `XW1Rj+XW2Rj+XW3Rj = Dj` | All three WHs together must fulfill each retailer's demand |
+| **Non-negativity** | All `Q` and `X` variables ≥ 0 | Quantities cannot be negative |
+
+### Flow Balance Constraint — Key New Concept
+Ensures warehouses are pass-through nodes — they do not hold inventory.
+`For W1: QM1W1 + QM2W1 = XW1R1 + XW1R2 + XW1R3 + XW1R4`
+
+<Aside type="note">
+**★** Flow Balance is unique to multi-tier networks. Not present in single-tier Demand Allocation or CPLP. Learn to write it.
+</Aside>
+
+---
+
+## 5. Solving in Excel — Step-by-Step
+
+<Steps>
+1. **Set Objective:** Select the Total Cost cell → choose Minimize.
+2. **Changing Variable Cells:** Select ALL decision variable cells (18 cells).
+3. **Add Constraints:** Add supply, flow balance, and demand constraints.
+4. **Non-negativity:** Check 'Make unconstrained variables non-negative'.
+5. **Solving Method:** Select **Simplex LP** (model is fully linear).
+6. **Solve:** Click Solve → Keep Solver Solution.
+</Steps>
+
+![Excel Solver Setup](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image3.png)
+![Excel Solver Setup 2](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image4.png)
+![Excel Solver Setup 3](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image5.png)
+
+---
+
+## 6. Result & Final Comparison
+
+### LP Optimal Solution
+Solver confirms: all constraints and optimality conditions satisfied.
+**Total Distribution Cost = ₹6,89,000** ← global optimum.
+
+![Final Results](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image6.png)
+![Final LP Flow](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image7.png)
+
+### Approach Comparison
+
+| Approach | Method | Total Cost | Optimal? | Savings vs H1 |
+|---|---|---|---|---|
+| **Heuristic 1** | Cheapest WH for all | ₹9,61,000 | No | — |
+| **Heuristic 2** | Cheapest path per retailer | ₹7,57,000 | No | ₹2,04,000 |
+| **LP Optimization** | Simplex LP via Excel Solver | **₹6,89,000** | **Yes — guaranteed** | **₹2,72,000** |
+
+![Savings Comparison](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image8.png)
+![Conclusion](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image9.png)
+
+<Aside type="note">
+**★** The LP solution is guaranteed optimal — no other feasible distribution can cost less. This is the power of optimization.
+</Aside>
+
+---
+
+## Session Summary
+
+- **Problem:** 2 Mfr → 3 WH → 4 Retailers, minimize total shipping cost.
+- **Decision Variables:** 6 (Mfr→WH) + 12 (WH→Retailer) = 18 total.
+- **3 Constraints:** Supply (≤ capacity) | Flow Balance (in = out at WH) | Demand (= retailer req).
+- **Solver:** Simplex LP.
+- **Result:** LP = ₹6,89,000 (optimal). Beats heuristics significantly.
+
+<Aside type="tip">
+**★ Exam Tip:** Flow Balance constraint: `Σ(into WH) = Σ(out of WH)`. Total decision variables = `(no. Mfr × no. WH) + (no. WH × no. Retailers)`. LP always gives ≤ cost of any heuristic.
+</Aside>

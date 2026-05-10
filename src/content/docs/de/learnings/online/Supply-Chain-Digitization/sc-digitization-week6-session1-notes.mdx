@@ -1,0 +1,184 @@
+---
+title: "Woche 6 | Session 1: Analytics im SCM — Einführung & Big Data (6 Vs)"
+description: "Eine Einführung in Analytics im Supply Chain Management, Untersuchung der 4 Hauptmerkmale und des 6-Vs-Frameworks von Big Data."
+sidebar:
+  order: 26
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Was ist Analytics — Definition und 4 Hauptmerkmale
+- Warum Daten wichtig sind — globaler Datenwachstumstrend
+- Big Data — Definition und 6 Vs
+- V1 Volume (Volumen): E-Commerce-Bestellungen, Bestandszählung
+- V2 Variety (Vielfalt): Bild, Audio, Video, Text — SCM-Beispiele
+- V3 Velocity (Geschwindigkeit): GPS-Tracking, Überwachung der Augenbewegungen von Fahrern
+- V4 Variability (Variabilität): Nachfrageschwankungen bei Elektronik und FMCG
+- V5 Value (Wert) + V6 Veracity (Wahrhaftigkeit) — warum Datenqualität wichtig ist
+- Variety vs. Variability — wichtige Unterscheidung
+</Aside>
+
+---
+
+## Was ist Analytics? — Definition & 4 Merkmale
+
+**Analytics in einem Satz:** "Daten nutzen, um Modelle zu erstellen, die zu Entscheidungen führen, die Wert schaffen"
+
+<Steps>
+1. **Ziel definieren:** Vor jeder Analyse muss ein klares Ziel stehen. Welche Entscheidung versuche ich zu verbessern?
+2. **Daten sammeln:** Daten sind die Grundlage aller Analytics. Ohne gute Daten ist keine Analyse möglich.
+3. **Daten bereinigen & verarbeiten:** Rohdaten weisen oft Diskrepanzen, fehlende Werte und Fehler auf → müssen vor der Verwendung bereinigt werden
+4. **Modell erstellen:** Statistisches Modell | KI/ML-Modell | Optimierungsmodell — muss dem ursprünglichen Ziel dienen
+5. **Modell testen & validieren:** Sicherstellen, dass das Modell mit neuen Daten zuverlässig funktioniert, bevor es eingesetzt wird
+6. **Entscheidungen treffen:** Das Modell bietet eine analytische Grundlage für die Wahl zwischen mehreren möglichen Entscheidungen
+7. **Implementieren & Wert schaffen:** Die Entscheidung wird in der Organisation umgesetzt → muss messbaren Wert generieren
+</Steps>
+
+### 4 Hauptmerkmale von Analytics
+- **Daten:** Der Input — das Rohmaterial der Analytics
+- **Modell:** Der Motor — statistisch, KI/ML oder Optimierung
+- **Entscheidung:** Der Output — eine analytisch gestützte Wahl zwischen Alternativen
+- **Wertschöpfung:** Der Zweck — Analytics muss letztendlich der Organisation zugutekommen
+
+<Aside type="tip">
+**★ Prüfungstipp:** Wenn nach "Was ist Analytics?" gefragt wird — geben Sie die einzeilige Definition UND die 4 Merkmale an. Zeichnen Sie dann den Ablauf: Ziel → Daten → Bereinigen → Modell → Test → Entscheidung → Wert. Das zeigt volles Verständnis.
+</Aside>
+
+---
+
+## Warum Daten wichtig sind — Globales Datenwachstum
+
+Daten sind der wesentliche Treibstoff für Analytics. Ohne ausreichende, qualitativ hochwertige Daten — kein Modell, keine Entscheidung, kein Wert.
+**Trend:** Das globale Datenvolumen ist in den letzten 15 Jahren exponentiell gewachsen.
+
+### Erstellte, erfasste, kopierte & konsumierte globale Daten — 2010 bis 2025
+
+| Jahr | Globales Datenvolumen | Anmerkung |
+|---|---|---|
+| **2010** | 1,2 Billionen GB | Basis — Internet wird Mainstream |
+| **2015** | 15,5 Billionen GB | ~13-faches Wachstum in 5 Jahren — Verbreitung von mobilem Internet + Social Media |
+| **2020** | 59 Billionen GB | COVID beschleunigte die Digitalisierung → mehr Unternehmen wurden digital → mehr Daten generiert |
+| **2025 (prognostiziert)** | 175 Billionen GB | ~146-mal mehr als 2010 in 15 Jahren. Exponentielles Wachstum angetrieben durch IoT, E-Commerce, KI und Social Media. (Quelle: Statista) |
+
+- **COVID-Effekt:** Die Pandemie zwang zu massiver Digitalisierung über alle Branchen hinweg → mehr digitale Prozesse = mehr Daten
+- **Wichtigste Implikation:** Mit exponentiellem Datenwachstum kommt die Notwendigkeit, Big Data zu verstehen und damit umzugehen — daher das 6-Vs-Framework
+
+<Aside type="note">
+**★** Das Datenvolumen ist in 15 Jahren um das ~146-fache gewachsen. Deshalb ist "Big Data" nicht nur ein Modewort — es ist die neue operative Realität für jeden SCM-Experten.
+</Aside>
+
+---
+
+## Big Data — Das 6-Vs-Framework
+
+**Zweck:** Die 6 Vs helfen, die Natur von Big Data in jedem Kontext zu charakterisieren und zu verstehen
+- **Vier Haupt-Vs:** Volume | Variety | Velocity | Variability → die 4 Säulen von Big Data
+- **Zwei zusätzliche Vs:** Value | Veracity → betreffen Qualität und Nützlichkeit der Daten
+
+### Die 6 Vs von Big Data — Definition und SCM-Beispiele
+
+| # | V | Definition | SCM-Beispiel(e) |
+|---|---|---|---|
+| **1** | **Volume (Volumen)** | Riesige Datenmenge erstellt, erfasst, kopiert und konsumiert | E-Commerce-Bestellungen: 24/7, weltweit, Millionen von Kunden → Suchdaten, Merklisten, Checkout, Adresse, Zahlungsmethode. Bestandszählung: ERP-Daten vs. physische Zählung. |
+| **2** | **Variety (Vielfalt)** | Mehrere Datentypen und Quellen — Bild, Audio, Video, Text, numerisch | Kundenbewertungen: numerisch (Sternebewertung) + kategorisch (gut/schlecht) + Text (geschriebene Beschwerde) + Bild + Audio. Qualitätsprüfung: Bildanalyse vergleicht Chip-Fotos mit Benchmark. AGV im Lager: Videoanalysen. |
+| **3** | **Velocity (Geschwindigkeit)** | Daten werden in sehr hoher Geschwindigkeit generiert — in Echtzeit | GPS-Tracking von Lkw: Breiten- + Längengrad jede Sekunde erfasst. Fahreraugenüberwachung: Bild der Augen jede Sekunde erfasst → Alarm wird ausgelöst, wenn keine Bewegung für 2-3 Minuten. |
+| **4** | **Variability (Variabilität)** | Inkonsistenz innerhalb desselben Datentyps — Werte schwanken stark | Nachfragedaten für Elektronik: Spitzen während Diwali, fällt danach stark ab. Kundenverhalten hat die Nachfrage viel variabler gemacht. |
+| **5** | **Value (Wert)** | Daten müssen nützlich sein — handlungsrelevante Erkenntnisse generieren | Nicht alle gesammelten Daten sind nützlich. Daten, die nicht zu besseren Entscheidungen oder organisatorischem Nutzen führen, sind Kosten, kein Vermögenswert. |
+| **6** | **Veracity (Wahrhaftigkeit)** | Daten müssen genau sein und aus zuverlässigen Quellen stammen | Social Media liefert Echtzeitnachrichten in Sekunden — generiert aber auch Fehlinformationen. Garbage in → Garbage out: Wenn Eingabedaten falsch sind, ist auch der Modell-Output falsch. |
+
+---
+
+## Vertiefung der 6 Vs
+
+### V1 — Volume: Große Datenmenge
+- **Beispiel 1: E-Commerce-Bestelldaten**
+  - Millionen von Kunden weltweit → enormes Volumen, das jede Sekunde generiert wird
+- **Beispiel 2: Bestandszählung im Lager**
+  - **Problem:** ERP-System zeigt 10 Einheiten einer SKU → physische Zählung zeigt 9 oder 11
+  - **Lösung:** Regelmäßige physische Bestandszählung → physischen Bestand mit ERP abgleichen → generiert große Datensätze
+
+### V2 — Variety: Mehrere Datentypen & Quellen
+Datentypen: Bild | Audio | Video | Text | Numerisch/Kategorisch
+- **Beispiel 1: Kundenbewertungsdaten** (Numerisch, Kategorisch, Text, Bild, Audio)
+- **Beispiel 2: Bildanalyse zur Qualitätsprüfung** (Mikrochip-Schaltkreise werden an der Produktionslinie fotografiert → mit Benchmark verglichen)
+- **Beispiel 3: Videoanalyse zur Bestandszählung** (Drohne mit Videokamera fliegt über alle Gänge → scannt QR-Codes)
+
+<Aside type="tip">
+**★ Prüfungstipp:** Nennen Sie für V2 Variety — immer mindestens 3 Datentypen (Text, Bild, Video) mit je einem spezifischen SCM-Beispiel. Die Chip-Inspektion und die Drohnen-Bestandszählung eignen sich sehr gut für Prüfungen.
+</Aside>
+
+### V3 — Velocity: Daten werden in hoher Geschwindigkeit in Echtzeit generiert
+- **Beispiel 1: GPS-Tracking von Lkw**
+  - GPS erfasst Breiten- und Längengrad jede Sekunde → Echtzeit-Sichtbarkeit der Flotte
+- **Beispiel 2: Überwachung der Fahreraugen**
+  - Bild der Augen des Fahrers wird jede Sekunde erfasst → bei Nicht-Bewegung über 2-3 Minuten → Alarm ausgelöst
+
+### V4 — Variability: Inkonsistenz innerhalb der Daten
+**Definition:** Derselbe Datentyp weist große Wertschwankungen auf — oft unvorhersehbar
+- **Beispiel 1: Nachfragedaten — Elektronik**
+  - Verkäufe während Festivals sehr hoch → fallen danach stark ab
+- **Beispiel 2: FMCG-Beautyprodukte**
+  - Ein Produkt, das sich letztes Jahr massenhaft verkauft hat, verkauft sich dieses Jahr möglicherweise schlecht
+
+#### Variety vs. Variability — wichtige Unterscheidung
+| V | Was es bedeutet | Analogie | SCM-Beispiel |
+|---|---|---|---|
+| **Variety (Vielfalt)** | Verschiedene ARTEN von Daten — Bild, Audio, Video, Text, Zahlen | Verschiedene Früchte in einem Korb (Äpfel, Orangen, Bananen) | Kundenbewertung hat: numerische Bewertung + Text + Bild + Audiosuche |
+| **Variability (Variabilität)** | Inkonsistenz INNERHALB einer Datenart — Werte ändern sich unvorhersehbar | Gleiche Fruchtart, aber unterschiedliche Reife, Größe, Süße | Nachfrage nach Elektronik: niedrig im Jan, sehr hoch im Okt, wieder niedrig im Nov |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Variety vs. Variability ist ein sehr häufiger Verwechslungspunkt. Verwenden Sie die Frucht-Analogie. Das müssen Sie im Schlaf können.
+</Aside>
+
+### V5 — Value: Daten müssen nützlich sein
+- **Definition:** Generierte Daten müssen sich in organisatorischem Nutzen niederschlagen — bessere Entscheidungen, Kosteneinsparungen oder Umsatzwachstum
+- Wichtige Frage: "Welche Entscheidung ermöglichen diese Daten — und schafft diese Entscheidung Wert?"
+
+### V6 — Veracity: Daten müssen genau und vertrauenswürdig sein
+- **Definition:** Daten müssen aus zuverlässigen Quellen stammen und frei von Fehlern, Fälschungen oder Manipulationen sein
+- **Grundprinzip:** "Garbage in → Garbage out"
+- **Verantwortung:** Validieren Sie immer die Zuverlässigkeit der Datenquelle, prüfen Sie auf Anomalien und überprüfen Sie Daten, bevor Sie sie verwenden
+
+<Aside type="note">
+**★** Veracity ist das am schwersten zu managende V. Volume, Velocity und Variety können mit Technologie bewältigt werden. Die Vertrauenswürdigkeit von Daten erfordert menschliches Urteilsvermögen und strenge Validierungsprozesse.
+</Aside>
+
+---
+
+## Checkliste für Praktiker — Wie man die 6 Vs überwacht
+
+| # | V | Was vor der Verwendung von Daten zu prüfen ist |
+|---|---|---|
+| **1** | **Volume** | Ist der Datensatz groß genug, um ein zuverlässiges Modell zu erstellen? Habe ich ausreichend historische Daten? |
+| **2** | **Variety** | Erfasse ich alle relevanten Datentypen? Reicht reiner Text oder benötige ich auch Bild-/Videodaten? |
+| **3** | **Velocity** | Kann mein System Echtzeitdaten verarbeiten? Gibt es Latenzen bei der Datenerfassung? |
+| **4** | **Variability** | Wie stabil sind diese Daten über die Zeit? Muss ich saisonale Spitzen oder Social-Media-getriebene Schwankungen berücksichtigen? |
+| **5** | **Value** | Führt der Output meines Modells zu einer Entscheidung, die messbaren Wert schafft? Ist es wert, diese Daten zu sammeln? |
+| **6** | **Veracity** | Woher stammen diese Daten? Ist die Quelle vertrauenswürdig? Wurde sie validiert? |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Für jede 10-Punkte-Frage zu Big Data — definieren Sie Big Data → nennen Sie die 6 Vs mit je einem SCM-Beispiel → heben Sie die Unterscheidung Variety vs. Variability hervor → erklären Sie Veracity als das am schwersten zu managende V.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Analytics in einem Satz:** "Daten nutzen, um Modelle zu erstellen, die zu Entscheidungen führen, die Wert schaffen"
+- **4 Analytics-Merkmale:** Daten \| Modell \| Entscheidung \| Wertschöpfung
+- **Datenvolumen:** 1,2 Billionen GB (2010) → 175 Billionen GB (2025 prognostiziert) — exponentielles Wachstum getrieben durch Digitalisierung und COVID
+- **Big Data:** Charakterisiert durch 6 Vs — Volume, Variety, Velocity, Variability (4 Hauptsäulen) + Value + Veracity
+- **V1 Volume:** E-Commerce-Bestelldaten (24/7 global) \| Bestandszählungsdaten
+- **V2 Variety:** Kundenbewertungen (Text + Bild + Audio) \| Chip-Qualitätsprüfung (Bildanalyse) \| Drohnen-Bestandszählung (Videoanalyse)
+- **V3 Velocity:** GPS-Lkw-Tracking (sekundengenaue Ortung) \| Überwachung der Fahreraugen (Echtzeit-Schläfrigkeitserkennung)
+- **V4 Variability:** Elektronik-Nachfrage (Diwali-Spitze) \| FMCG-Beauty (Social-Media-getriebene Nachfrageschwankungen)
+- **V5 Value:** Daten müssen eine Entscheidung ermöglichen, die organisatorischen Nutzen schafft. Daten ohne Wert sind Kosten.
+- **V6 Veracity:** Daten müssen genau + aus vertrauenswürdigen Quellen sein. Garbage in → Garbage out.
+- **Nächste Session:** Arten von Analytics (Deskriptiv, Diagnostisch, Prädiktiv, Präskriptiv) + Anwendungen im SCM

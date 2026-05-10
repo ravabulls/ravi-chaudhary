@@ -1,0 +1,129 @@
+---
+title: "Woche 9 | Session 5: DEA — Linearisierung, Excel Solver & Interpretation der Ergebnisse"
+description: "Erfahren Sie, wie Sie das nicht-lineare Modell der Data Envelopment Analysis (DEA) in ein Problem der linearen Programmierung umwandeln, es in Excel lösen und die Effizienzergebnisse interpretieren."
+sidebar:
+  order: 45
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Linearisierung des DEA-Modells](/learnings/online/Supply-Chain-Digitization/sc_w9s5_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Session 4
+- Umwandlung von nicht-linearer DEA in lineare Programmierung
+- Linearisiertes DEA-Modell — Standort 1 (Beispiel)
+- Allgemeines DEA-Modell
+- Excel Solver — Setup & Schritte
+- Effizienzergebnisse — Alle 9 Standorte
+- Wie man DEA-Ergebnisse interpretiert — Fokus auf Gewichte
+</Aside>
+
+---
+
+## 1. Rückblick — Session 4
+
+- **DEA-Modell formuliert:** Maximiere gewichteten Output ÷ gewichteten Input für jeden Standort, unter der Bedingung, dass die Effizienz aller Standorte ≤ 1 ist.
+- **Problem:** Das Modell ist nicht-linear — Entscheidungsvariablen kommen sowohl im Zähler als auch im Nenner vor.
+- **Diese Session:** Das Modell linearisieren, im Excel Solver lösen und Ergebnisse interpretieren.
+
+---
+
+## 2. Umwandlung von nicht-linearer DEA in lineare Programmierung
+
+Warum nicht-linear? Sowohl Zähler `(V1·Y1 + V2·Y2)` als auch Nenner `(U1·X1 + U2·X2)` enthalten Entscheidungsvariablen → `Y/X` Typ = nicht-linear.
+Strategie: Zwei separate Transformationen anwenden.
+
+| Transformation | Warum es funktioniert |
+|---|---|
+| **1. Nebenbedingung (Nicht-linear zu Linear):**<br/>`(V·Y) / (U·X) ≤ 1` → `V·Y − U·X ≤ 0` | Nenner auf die rechte Seite multiplizieren. Der Nenner ist positiv, also bleibt die Ungleichungsrichtung erhalten. |
+| **2. Zielfunktion (Nicht-linear zu Linear):**<br/>Maximieren `(V·Y) / (U·X)`<br/>**Nebenbedingung hinzufügen:** `U·X = 1`<br/>→ **Lineare Zielfunktion:** Maximieren `V·Y` | Nenner über eine zusätzliche Gleichheitsbedingung auf 1 fixieren. Die Zielfunktion reduziert sich auf die Maximierung des Zählers. |
+
+<Aside type="note">
+**★** Nach der Linearisierung: Alle 9 Effizienzbedingungen werden linear UND die Zielfunktion wird linear → standardmäßiges LP, lösbar mit Simplex.
+</Aside>
+
+---
+
+## 3. Linearisiertes DEA-Modell — Standort 1 (Beispiel)
+
+- **Zielfunktion (linear):** Maximieren `92·V1 + 80·V2`
+- **Nebenbedingung 0 (Nenner = 1):** `32·U1 + 88·U2 = 1` *(ändert sich pro Standort)*
+- **Nebenbedingungen 1–9 (Effizienz ≤ 1):** *(linear, fest für alle Läufe)*
+  - F1: `92·V1 + 80·V2 − 32·U1 − 88·U2 ≤ 0`
+  - F2: `88·V1 + 78·V2 − 35·U1 − 94·U2 ≤ 0`
+  - ... *(wiederholen für F3 bis F9)*
+
+### Entscheidungsvariablen & Nicht-Negativität
+`V1, V2, U1, U2 ≥ ε` (Nutzen Sie ε = 0,000001 — niemals exakt 0, um Nullgewichte zu vermeiden).
+
+---
+
+## 4. Allgemeines DEA-Modell (m Inputs, s Outputs, n Standorte)
+
+| Komponente | Ausdruck (linearisiert, für Standort `p`) | Notizen |
+|---|---|---|
+| **Zielfunktion** *(ändert sich pro Lauf)* | Maximieren: `Σ(k=1 bis s) Vk · Ykp` | Gewichtete Summe der Outputs. |
+| **Zusätzl. Bedingung** *(ändert sich)*| `Σ(j=1 bis m) Uj · Xjp = 1` | Fixiert Nenner = 1. Nur Inputs von Standort `p`. |
+| **Effizienzbedingungen** *(gleich)*| Für jedes `i = 1 bis n`: `Σ Vk·Yki − Σ Uj·Xji ≤ 0` | Stellt sicher, dass keine Effizienz > 1 ist. |
+| **Nicht-Negativität** | `Vk ≥ ε > 0`, `Uj ≥ ε > 0` | Nutzen Sie ε = 0,000001 (nicht 0), damit Parameter relevant bleiben. |
+
+---
+
+## 5. Excel Solver — Setup & Schritte
+
+<Steps>
+1. **Daten eingeben:** Daten + Variablenzellen anlegen. VLOOKUP für Koeffizienten nutzen.
+2. **Zielzelle festlegen:** Z.B. `92·V1 + 80·V2` (Maximieren).
+3. **Variablenzellen ändern:** `V1, V2, U1, U2` Zellen auswählen.
+4. **Nebenbedingung 0 hinzufügen:** `32·U1 + 88·U2 = 1`.
+5. **Nebenbedingungen 1–9 hinzufügen:** Alle 9 Standort-Bedingungen `≤ 0`.
+6. **Lösen:** **Simplex LP** wählen, untere Grenze = `ε`. Ergebnisse notieren und 9 Mal wiederholen.
+</Steps>
+
+---
+
+## 6. Effizienzergebnisse — Alle 9 Standorte
+
+| Standort | Effizienz | Lücke | Parameter mit höchstem Gewicht | Status |
+|---|---|---|---|---|
+| **F4** | 100% | 0% | — | **Effizient ★** |
+| **F7** | 100% | 0% | — | **Effizient ★** |
+| **F1** | 95.72% | 4.28% | OEE (V2 am höchsten) | Nicht effizient |
+| **F9** | 92.00% | 8.00% | Zykluszeit (U1 = 0.033) | Nicht effizient |
+| **F2** | 87.00% | 13.00% | OEE & Ressourcenauslastung | Nicht effizient |
+| **F8** | 76.00% | 24.00% | OEE (V2 = 0.011) | Nicht effizient |
+
+*(F4 und F7 dienen als Benchmarks auf der Effizienzgrenze. F8 ist am ineffizientesten).*
+
+---
+
+## 7. Wie man DEA-Ergebnisse interpretiert — Fokus auf Gewichte
+
+Der Parameter mit dem höchsten Gewicht ist derjenige, auf den die Effizienz am empfindlichsten reagiert. Fokussieren Sie Verbesserungen dort.
+
+| Szenario | Bedeutung | Aktion |
+|---|---|---|
+| **Effizienz = 100%** | Standort liegt auf der Effizienzgrenze | Keine Verbesserung nötig — Benchmark |
+| **Output-Gewicht (Vk) am höchsten** | Dieser Output ist am empfindlichsten | Output-Wert erhöhen |
+| **Input-Gewicht (Uj) am höchsten** | Dieser Input zieht Effizienz nach unten | Input-Wert reduzieren |
+| **Mehrere hohe Gewichte** | Output & Input tragen zur Ineffizienz bei | Beides gleichzeitig verbessern |
+
+---
+
+## Zusammenfassung der Session
+
+- **Nicht-linear → LP:** Nenner kreuzweise multiplizieren; Nenner=1 Bedingung für Zielfunktion hinzufügen.
+- **Solver:** Simplex LP, 9 Läufe. `ε > 0` als untere Grenze.
+- **Ergebnisse:** F4 und F7 (100%) sind effizient. F8 (76%) ist am ineffizientesten.
+- **Interpretation:** Parameter mit höchstem Gewicht = wichtigster Verbesserungsbereich.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Linearisierung erfordert zwei Schritte: Nebenbedingungen (Kreuzmultiplikation) und Zielfunktion (Nenner auf 1 fixieren). NUR die Zielfunktion und die Nenner=1 Bedingung ändern sich pro Standort. Die 9 Effizienzbedingungen (≤ 0) sind in allen Läufen identisch. Verwenden Sie `ε` (Epsilon) als untere Grenze, NICHT 0.
+</Aside>

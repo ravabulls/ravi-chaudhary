@@ -1,0 +1,127 @@
+---
+title: "Week 8 | Session 4: SC Network Design — Heuristic Approaches (H1 & H2)"
+description: "An introduction to 2-tier Supply Chain Network Design using rule-based heuristic approaches (H1 and H2) to find practical distribution solutions quickly."
+sidebar:
+  order: 39
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+![Heuristic Approaches Overview](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image1.png)
+
+## Session Agenda
+
+<Aside type="note">
+- Case — SC Network Design Problem
+- What is a Heuristic?
+- Heuristic 1 — Cheapest Warehouse First
+- Heuristic 2 — Cheapest End-to-End Path per Retailer
+- Heuristic Comparison & Open Question
+</Aside>
+
+---
+
+## 1. Case — SC Network Design Problem
+
+**Network Structure:** 2-tier network (Manufacturer → Warehouse → Retailer).
+- **Manufacturers:** M1, M2
+- **Warehouses:** W1, W2, W3
+- **Retailers:** R1, R2, R3, R4
+
+![Network Structure](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image2.png)
+
+**Assumptions:** Production and handling costs are the same across facilities (simplified). Only transportation costs vary.
+
+**Objective:** Find the optimal distribution strategy — which manufacturer supplies which warehouse, and which warehouse serves which retailer — to minimize total distribution cost.
+
+![Cost Matrix](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image3.png)
+
+---
+
+## 2. What is a Heuristic?
+
+A rule-based, practical approach to find a *good* (not necessarily optimal) solution.
+- Faster and simpler than full LP optimization.
+- Different heuristics can give different costs for the same problem.
+- Useful as a starting point.
+
+<Aside type="note">
+**★** Heuristic = good solution quickly. LP = best solution (but more effort). Always compare both.
+</Aside>
+
+---
+
+## 3. Heuristic 1 — Cheapest Warehouse First
+
+### Logic
+<Steps>
+1. Pick the warehouse with lowest total shipping cost to all retailers.
+2. Route all retailer demand through that warehouse.
+3. Pick the cheapest manufacturer to supply that warehouse — exhaust its capacity first.
+4. Fulfill remaining demand from the next manufacturer.
+</Steps>
+
+### Applying to the Case
+- **W1** has the lowest cost to all 4 retailers.
+- **M1** is cheaper to W1 and supplies first (capacity 1,50,000). Supplies R1, R2, R3 fully, and 2,000 units to R4.
+- **M2** supplies the balance for R4 (68,000 units).
+
+![Heuristic 1 Solution](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image4.png)
+![Heuristic 1 Flow](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image5.png)
+
+**Result:** Total Cost = **₹9,61,000**
+
+---
+
+## 4. Heuristic 2 — Cheapest End-to-End Path per Retailer
+
+### Logic
+- For each retailer individually, evaluate all 6 possible paths (2 Manufacturers × 3 Warehouses).
+- Select the path (M → W → Retailer) with the minimum total cost.
+- Apply capacity constraints *after* selecting paths.
+
+![Heuristic 2 Paths](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image6.png)
+![Heuristic 2 Details](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image7.png)
+
+### Applying to the Case
+- R1, R2, R3: Best path is M1 → W1.
+- R4: Tie between M1→W1 and M2→W2. Since M1's capacity is almost full, the balance of 68,000 goes via **M2 → W2**.
+
+![Heuristic 2 Flow](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image8.png)
+
+**Result:** Total Cost = **₹7,57,000** ← better than H1. (H2 routes R4 via W2 instead of W1).
+
+---
+
+## 5. Heuristic Comparison & Open Question
+
+| | Heuristic 1 | Heuristic 2 | Optimal (next session) |
+|---|---|---|---|
+| **Logic** | Pick cheapest WH globally, then cheapest Mfr | Find cheapest end-to-end path per retailer | LP / solver |
+| **Total Cost** | ₹9,61,000 | ₹7,57,000 | ? (≤ ₹7,57,000) |
+
+![Heuristic Comparison](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image9.png)
+
+H2 improved cost by ~21% over H1 simply by evaluating full paths.
+**But:** Is H2 the best possible? We don't know yet. The next session will solve this using LP/Solver to find the true optimal.
+
+<Aside type="note">
+**★** Heuristics are path-dependent — the order in which you assign demand changes your result. Only LP guarantees the global optimum.
+</Aside>
+
+---
+
+## Session Summary
+
+- **SC Network Design:** 2-tier problem (Mfr → WH → Retailer). Minimize total cost.
+- **Heuristic 1:** Pick cheapest WH for all retailers → assign cheapest Mfr first. Cost: ₹9,61,000.
+- **Heuristic 2:** Evaluate full end-to-end path per retailer → pick min cost path. Cost: ₹7,57,000.
+- **Key insight:** H2 beats H1 because it considers the full Mfr→WH→Retailer path.
+
+<Aside type="tip">
+**★ Exam Tip:** H1 logic = cheapest warehouse globally. H2 logic = cheapest path per retailer. H2 cost is always ≤ H1 cost. Heuristics are feasible but not necessarily optimal.
+</Aside>

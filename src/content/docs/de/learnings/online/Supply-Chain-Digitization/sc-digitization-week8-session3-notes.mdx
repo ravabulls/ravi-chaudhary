@@ -1,0 +1,140 @@
+---
+title: "Woche 8 | Session 3: Nachfrageallokationsmodell & Kapazitiertes Standortproblem"
+description: "Erfahren Sie, wie Sie Supply-Chain-Netzwerke mit Modellen zur Nachfrageallokation und kapazitierten Standortplanung mittels linearer Programmierung im Excel Solver optimieren."
+sidebar:
+  order: 38
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Überblick zur Nachfrageallokation](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Woche 8 bisher
+- Fallstudie — Zwei Hersteller von Telekommunikationsausrüstung
+- Modell zur Nachfrageallokation (Demand Allocation Model)
+- Wichtige Erkenntnis aus der Lösung (Maxxio)
+- Fusions-Szenario — Maxvie
+- Kapazitiertes Standortproblem (Capacitated Plant Location Problem - CPLP)
+- Ergebnisse & Kostenvergleich
+</Aside>
+
+---
+
+## 1. Rückblick — Woche 8 bisher
+
+| Session | Thema | Methode / Tool |
+|---|---|---|
+| **W8 S1** | Standortauswahl | Break-Even-Analyse |
+| **W8 S2** | Standortfestlegung | Center of Gravity + Excel Solver (GRG Nichtlinear) |
+| **W8 S3** | Nachfrageallokation + CPLP | LP-Formulierung + Excel Solver (Simplex LP / Binär) |
+
+<Aside type="note">
+**★** Diese Session fügt 2 neue Modelle hinzu: Nachfrageallokation (welches Werk bedient welchen Markt?) und Kapazitierte Standortplanung (welche Werke sollen überhaupt geöffnet werden?).
+</Aside>
+
+---
+
+## 2. Fallstudie — Zwei Hersteller von Telekommunikationsausrüstung
+
+**Die Unternehmen:** Maxxio (Nord- & Ostindien) und Wavie Communications (Süd- & Westindien).
+Beide Unternehmen haben genug Kapazität, um die gesamte Marktnachfrage zu decken. Die Entscheidung ist, WIE zugeteilt wird, nicht ob.
+
+![Fallstudiendaten](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image2.png)
+
+---
+
+## 3. Modell zur Nachfrageallokation
+
+**Frage:** Wie viel Menge soll von welchem Werk zu welchem Markt geliefert werden, um die Gesamtkosten zu minimieren?
+
+### Notation
+- `Cij` = Stückkosten (Produktion + Transport) vom Werk i zum Markt j
+- `Xij` = Menge, die vom Werk i zum Markt j geliefert werden soll (Entscheidungsvariable)
+- `Si` = Lieferkapazität von Werk i
+- `Dj` = Nachfrage auf Markt j
+
+### LP-Formulierung — Nachfrageallokation
+- **Z minimieren:** `Σi Σj (Cij × Xij)` (Gesamtproduktions- + Transportkosten)
+- **Angebotsbeschränkung:** `Σj Xij ≤ Si` für alle i (Angebot ≤ Kapazität)
+- **Nachfragebeschränkung:** `Σi Xij = Dj` für alle j (Nachfrage vollständig gedeckt)
+- **Nicht-Negativität:** `Xij ≥ 0` für alle i, j
+
+![Solver Lösung](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image3.png)
+
+### Wichtige Erkenntnis aus der Lösung (Maxxio)
+Die Einrichtung in Kolkata wird trotz anfallender Fixkosten kaum genutzt, da die Produktions- und Versandkosten hoch sind. Aber die Fixkosten werden trotzdem bezahlt → Ineffizienz. Dies signalisiert den Bedarf an einem intelligenteren Modell, das auch entscheidet, *welche Werke geöffnet werden sollen*.
+
+---
+
+## 4. Fusions-Szenario — Maxvie (Maxxio + Wavie)
+
+Das Management fusioniert die Unternehmen zu einem neuen Unternehmen: **Maxvie**.
+- Hat nun 5 Werke und muss 6 Märkte beliefern.
+- **Neue Frage:** Welche Werke sollen offen bleiben? Können welche geschlossen werden, um Kosten zu senken?
+
+Dies ist ein **Kapazitiertes Standortproblem (CPLP)**.
+
+<Aside type="note">
+**★** Nachfrageallokation = wie geliefert wird. Kapazitierte Standortplanung = welche Werke geöffnet werden UND wie geliefert wird.
+</Aside>
+
+---
+
+## 5. Kapazitiertes Standortproblem (CPLP)
+
+### Was ändert sich gegenüber der Nachfrageallokation?
+- Fügen Sie eine binäre Entscheidungsvariable `yi` für jedes Werk i hinzu:
+  - `yi = 1` → Werk i ist geöffnet
+  - `yi = 0` → Werk i ist geschlossen
+- Fügen Sie die Fixkosten `fi` für jedes Werk zur Zielfunktion hinzu.
+
+### LP-Formulierung — CPLP
+- **Z minimieren:** `Σi Σj (Cij × Xij) + Σi (fi × yi)` (Variable Kosten + Fixkosten der offenen Werke)
+- **Angebotsbeschränkung:** `Σj Xij ≤ Si × yi` für alle i (Werk kann nur liefern, wenn es offen ist)
+- **Nachfragebeschränkung:** `Σi Xij = Dj` für alle j
+- **Binäre Variable:** `yi ∈ {0, 1}` für alle i
+
+### Lösung in Excel — Solver-Einstellungen
+- **Lösungsmethode:** **Simplex LP** (Modell ist linear — yi wird über einen Integer-Constraint behandelt).
+
+![CPLP Ergebnisse](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image4.png)
+
+---
+
+## 6. Ergebnisse & Kostenvergleich
+
+**CPLP-Lösung (Maxvie — Fusioniert):**
+- Optimale Werke, die offen bleiben sollen: **Chennai, Gurugram, Kolkata** (nur 3 von 5).
+- Geschlossene Werke: Delhi und Mumbai (Einsparung ihrer Fixkosten).
+
+| Kostenkomponente | Maxxio | Wavie | Kombiniert (Vor Fusion) | Maxvie Fusioniert (CPLP) |
+|---|---|---|---|---|
+| **Monatliche Gesamtkosten** | 3.20 Cr | 2.53 Cr | ~5.73 Cr | **5.22 Cr** |
+
+Monatliche Einsparung durch Fusion + Netzwerk-Redesign: ca. **₹50 Lakhs / Monat**.
+
+<Aside type="note">
+**★** Eine Fusion allein spart keine Kosten — erst das REDESIGN des Netzwerks senkt die Kosten durch Schließung ineffizienter Werke.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Nachfrageallokationsmodell:** Bestimmt `Xij`, um variable Kosten zu minimieren — Werke sind fixiert. (Simplex LP)
+- **CPLP:** Bestimmt SOWOHL `Xij` (Fluss) ALS AUCH `yi` (Werk auf/zu) — minimiert variable + Fixkosten. (Simplex LP mit binärer Einschränkung)
+- **Fusionsergebnis:** MaxV betreibt 3 statt 5 Werke → ~₹50L/Monat Ersparnis.
+
+<Aside type="tip">
+**★ Prüfungstipp:**
+Nachfrageallokation = LP mit nur Xij als Variablen. CPLP = LP mit Xij + binärem yi.
+Angebotsbeschränkung in CPLP: `Σj Xij ≤ Si × yi` (stellt sicher, dass ein geschlossenes Werk nichts liefern kann).
+Simplex LP für CPLP; GRG-Nichtlinear für Center of Gravity.
+</Aside>

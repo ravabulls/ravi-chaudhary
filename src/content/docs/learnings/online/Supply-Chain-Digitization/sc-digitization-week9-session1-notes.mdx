@@ -1,0 +1,112 @@
+---
+title: "Week 9 | Session 1: Intelligent Decision Tools — DC Location Problem & K-means Clustering (Intro)"
+description: "An introduction to using intelligent decision tools like K-means Clustering to solve complex Distribution Center (DC) location and customer segmentation problems."
+sidebar:
+  order: 41
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+![K-means Clustering DC Location Problem](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image1.png)
+
+## Session Agenda
+
+<Aside type="note">
+- Module 3 — Topics Covered So Far
+- Case Study — Pharma Company Expansion
+- The DC Count Tradeoff
+- K-means Clustering — Introduction
+- Why is Centroid the Best DC Location?
+- How K-means Answers Both Decisions
+</Aside>
+
+---
+
+## 1. Case Study — Pharma Company Expansion
+
+**Background:** A pharmaceutical company wants to expand into a new region and has collected location data (latitude & longitude) for 811 prospective customers.
+
+![Customer Locations](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image2.png)
+
+### The Core Problem
+Need to decide: where to open Distribution Centers (DCs) to serve these 811 customers.
+1. **Decision 1:** Where to locate DCs? (How many? At what coordinates?)
+2. **Decision 2:** Which customers served by which DC? (How to segment?)
+
+<Aside type="note">
+**★** This is a LOCATION + SEGMENTATION problem — both must be solved together. K-means clustering solves both simultaneously.
+</Aside>
+
+---
+
+## 2. The DC Count Tradeoff
+
+As the number of DCs increases, customers per DC decreases → faster service → responsiveness improves. However, fixed + variable cost per DC × more DCs → total cost increases.
+
+| No. of DCs | Customers per DC | Responsiveness | Total Cost |
+|---|---|---|---|
+| **1** | All 811 | Low ↓ | Low ↓ (cheapest) |
+| **3–4** | ~200 each | ↑↑ | ↑↑ |
+| **6** | ~135 each | High ↑↑↑ | High ↑↑↑ (expensive) |
+
+Need to find the **optimal K** (number of clusters) that balances responsiveness with cost.
+
+![Tradeoff Graph](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image3.png)
+
+---
+
+## 3. K-means Clustering — Introduction
+
+**What is K-means Clustering?** An unsupervised machine learning technique for grouping data points into `K` clusters.
+- **Input:** dataset with coordinates (lat, long) + value of K.
+- **Output:** (1) cluster assignment for each data point, (2) centroid of each cluster.
+
+### K-means Concept Applied to This Case
+
+| Concept | Explanation |
+|---|---|
+| **K (input)** | Number of clusters = number of DCs to open. User defines K. |
+| **Output 1 — Segmentation** | Each of 811 customers assigned to exactly 1 cluster. |
+| **Output 2 — Centroid** | Center point of each cluster = proposed DC location (lat, long). |
+
+---
+
+## 4. Why is Centroid the Best DC Location?
+
+Centroid = geometric center of all customer coordinates in that cluster.
+Distance from centroid to each cluster member is minimized on average. Placing the DC at the centroid → minimum average travel distance to all assigned customers.
+
+<Aside type="note">
+**★** Centroid = optimal DC location within a cluster because it minimizes total distance from DC to all customers in that cluster.
+</Aside>
+
+---
+
+## 5. How K-means Answers Both Decisions
+
+- **Decision 1 — Customer Segmentation:** K-means automatically assigns each of 811 customers to exactly 1 cluster based on spatial proximity.
+- **Decision 2 — DC Location:** The centroid of each cluster gives the latitude and longitude of the proposed DC.
+
+![K-means Output Examples](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image4.png)
+
+### Remaining Open Question
+K-means solves BOTH decisions for a given K — but what is the right K? Is K = 1, 3, 4, 5, or 6 optimal? This is answered using the **Elbow Method** (covered in the next session).
+
+---
+
+## Session Summary
+
+- **Problem:** 811 customer locations (lat/long) — where to open DCs, how to assign customers.
+- **Tradeoff:** More DCs → better responsiveness, higher cost.
+- **K-means Clustering:** unsupervised ML technique — groups customers into K clusters.
+- **Output 1:** Segmentation (customer assigned to 1 DC).
+- **Output 2:** Centroid (proposed DC location).
+- **Why centroid?** Minimizes average distance from DC to all customers in that cluster.
+
+<Aside type="tip">
+**★ Exam Tip:** K-means solves TWO problems at once: (1) customer segmentation and (2) DC location via centroids. Centroid = optimal DC location because it minimizes average travel distance.
+</Aside>

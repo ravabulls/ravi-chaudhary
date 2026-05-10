@@ -1,0 +1,190 @@
+---
+title: "Woche 6 | Session 2: Arten von Analytics & SCM-Anwendungen"
+description: "Schlüsselt die vier Arten von Analytics (Deskriptiv, Diagnostisch, Prädiktiv, Präskriptiv) auf und detailliert ihre spezifischen Anwendungen entlang der SCM-Wertschöpfungskette."
+sidebar:
+  order: 27
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Vier Arten von Analytics — Deskriptiv, Diagnostisch, Prädiktiv, Präskriptiv
+- Drei durchgängige Praxisbeispiele über Analytics-Typen hinweg
+- Analytics entlang der SCM-Wertschöpfungskette — Beschaffung bis letzte Meile
+- Predictive Maintenance, Slotting-Optimierung, Demand Sensing, Fahrerermüdung
+</Aside>
+
+---
+
+## Vier Arten von Analytics — Überblick
+
+| # | Typ | Kernfrage | Zeitorientierung | Typische Methoden / Tools |
+|---|---|---|---|---|
+| **1** | **Deskriptiv** | Was ist passiert? | Nur vergangene Daten | Balkendiagramme, Dashboards (Power BI, Tableau), Mittelwert, Standardabweichung |
+| **2** | **Diagnostisch** | Warum ist es passiert? | Vergangene Daten — Ursachenforschung | Ursachenanalyse, Drill-Down-Analyse, Korrelationsanalyse |
+| **3** | **Prädiktiv** | Was wird passieren? | Vergangene Daten → Modell → Zukunftsprognose | Statistische Prognosen, ML-Modelle (Regression, Neuronale Netze) |
+| **4** | **Präskriptiv** | Was sollte getan werden? | Zukunftsorientiert — Handlungsempfehlung | Optimierungsmodelle (LP, MIP), Simulation, Decision Support |
+
+**Wichtiges mentales Modell:** Deskriptiv → Diagnostisch → Prädiktiv → Präskriptiv = eine Kette. Jede Ebene baut auf der vorherigen auf.
+**Präskriptiv = Optimierung:** Kosten minimieren | Gewinn maximieren | Risiko minimieren — unter realen Bedingungen
+
+<Aside type="tip">
+**★ Prüfungstipp:** Kennen Sie alle vier Arten mit (1) der Kernfrage, die sie beantworten, (2) ob sie rückwärts oder vorwärts gerichtet sind, und (3) einem SCM-Beispiel für jede. Diese vier Arten werden immer abgefragt.
+</Aside>
+
+---
+
+## 1. Deskriptive Analytics — "Was ist passiert?"
+
+- **Definition:** Analysiert vergangene Daten, um zusammenzufassen, was aufgetreten ist — Durchschnitt, Median, Standardabweichung, Trends, Muster
+- **Output:** Diagramme, Dashboards, zusammenfassende Statistiken
+- **Tools:** Power BI | Tableau | Excel-Dashboards | Balkendiagramme | Kreisdiagramme
+
+### SCM-Beispiele
+- **Nachfrageanalyse:** Wie hoch war die durchschnittliche Nachfrage pro Monat für jede SKU in den letzten 2–3 Jahren?
+- **FMCG-CEO-Dashboard:** Wie viele Einheiten sind in jedem DC? Welches Lager hat unverkäufliche Ware?
+- **Qualitätsüberwachung:** Welche Produkte (X, Y, Z) weisen Qualitätsmängel auf? Über welchen Zeitraum?
+- **Mitarbeiterleistung:** Welche Kommissionierer/Packer in einer E-Commerce-Sortieranlage haben ihre Zeitvorgaben erfüllt?
+
+<Aside type="note">
+**★** Deskriptive Analytics ist der Ausgangspunkt — sie zeigt Ihnen, wo das Problem liegt. Aber sie sagt Ihnen NICHT, warum. Dafür bedarf es diagnostischer Analytics.
+</Aside>
+
+---
+
+## 2. Diagnostische Analytics — "Warum ist es passiert?"
+
+- **Definition:** Gräbt in vergangenen Daten, um die Grundursachen von Ereignissen zu identifizieren — warum die Leistung von den Erwartungen abwich
+- **Output:** Grundursache identifiziert | Korrekturmaßnahme ausgelöst
+- **Analogie:** Mikroskop — Zoomen Sie in die Daten, um das zugrunde liegende Problem zu finden
+
+### SCM-Beispiele
+- **Produkttnachfrage gesunken:** Deskriptiv zeigt, dass die Nachfrage nach Produkt A fiel. Diagnostisch fragt: Warum? → Konkurrent trat in den Markt ein → Korrekturmaßnahme: Neupositionierung, Preisanpassung
+- **Produkttnachfrage gestiegen:** Deskriptiv zeigt, dass die Nachfrage nach Produkt B stieg. Diagnostisch identifiziert, WARUM sie stieg → Ursache replizieren, um Wachstum aufrechtzuerhalten
+- **Qualitätsfehler:** Produkt Z hat Qualitätsprobleme. Diagnostisch verfolgt Grundursache zurück: Komponente C1 ist defekt → Komponente C1 wurde von Lieferant 1 geliefert → Lieferant 1 benachrichtigt
+
+<Aside type="note">
+**★** Bei diagnostischer Analytics geht es darum, Kausalität zu verstehen — was hat das Ergebnis verursacht? Ohne Diagnose sind Korrekturmaßnahmen bloßes Raten.
+</Aside>
+
+---
+
+## 3. Prädiktive Analytics — "Was wird passieren?"
+
+- **Definition:** Nutzt vergangene Daten, um Modelle zu erstellen, die zukünftige Ergebnisse vorhersagen — Nachfrage, Maschinenausfall, ETA bei Lieferung, Mitarbeiterleistung
+- **Output:** Prognosewerte mit zugehöriger Wahrscheinlichkeit oder Konfidenzintervall
+- **Tools:** Statistische Modelle (ARIMA, exponentielle Glättung) | ML-Modelle (Regression, Neuronale Netze, Zeitreihen)
+
+### SCM-Beispiele
+- **Nachfrageprognose:** Vorhersage der Nachfrage für jede SKU für die nächsten 15 Tage, 2 Monate, 6 Monate. ML wird für hohe Variabilität benötigt, die durch Social Media getrieben wird.
+- **Predictive Maintenance (Vorausschauende Wartung):** Modell sagt voraus: "Diese Maschine wird in 2–3 Tagen ausfallen." → Wartung proaktiv geplant → vermeidet Produktionsstopp
+- **Vorhersage der Mitarbeitereffizienz:** Vergangene Leistungsdaten nutzen, um den Effizienzwert jedes Mitarbeiters für die nächsten 6 Monate vorherzusagen
+- **ETA von Überseelieferungen:** Vorhersage des tatsächlichen Ankunftsdatums einer Sendung (z.B. 5 Tage Verzögerung oder 4 Tage früher) → Produktionsplan entsprechend anpassen
+
+<Aside type="note">
+**★** Prädiktive Analytics ersetzt Raten durch datengesteuerte Voraussicht. Sie ist die Brücke zwischen dem Wissen, was passiert ist (deskriptiv), und der Entscheidung, was dagegen zu tun ist (präskriptiv).
+</Aside>
+
+---
+
+## 4. Präskriptive Analytics — "Was sollte getan werden?"
+
+- **Definition:** Nutzt Vorhersagen und Optimierung, um die beste Entscheidung oder Maßnahme zu empfehlen — Kosten minimieren, Gewinn maximieren, Risiko minimieren, abhängig von betrieblichen Einschränkungen
+- **Kernmethode:** Optimierung (Linear Programming, Mixed Integer Programming, Simulation)
+- **Output:** Eine empfohlene Maßnahme oder Entscheidung — nicht nur eine Prognose
+
+### SCM-Beispiele
+- **Kapazitätserweiterung:** Prädiktiv besagt, dass die Nachfrage die Kapazität übersteigen wird. Präskriptiv fragt: Soll ich ein neues Werk bauen oder auslagern? Wenn ein neues Werk, WO? Welche KAPAZITÄT?
+- **Lieferantenauswahl:** Lieferant 1 disqualifiziert. Präskriptiv optimiert die Auswahl basierend auf Kosten, Vorlaufzeit, Reaktionsfähigkeit und Qualität → entscheidet, welcher Lieferant gewählt wird UND wie viel bei jedem bestellt wird.
+- **Personalzuteilung:** Vorhergesagte Effizienzwerte nutzen, um Mitarbeitern während der Diwali-Hochphase Aufgaben zuzuweisen: Beste Performer → schnellste, fehlerempfindliche Aufgaben.
+- **Slotting-Optimierung:** In einem Lager, welches Produkt kommt in welchen Stellplatz? Schnelldreher in die Nähe des Versands, oft zusammen bestellte Artikel in dieselbe Zone (Clustering).
+
+<Aside type="note">
+**★** Präskriptive Analytics = Optimierung. Sie sagt nicht nur vorher — sie sagt Ihnen, WAS ZU TUN IST. Sie ist die fortschrittlichste und handlungsorientierteste Form der Analytics.
+</Aside>
+
+---
+
+## Drei durchgängige Praxisbeispiele (Alle 4 Analytics-Typen)
+
+### Beispiel 1 — Bedarfs- & Kapazitätsplanung
+| Schritt | Was getan wird |
+|---|---|
+| **Deskriptiv** | Balken-/Kreisdiagramm der vergangenen Nachfrage pro Produkt (A und B). Nachfrage nach Produkt B steigt deutlich; Produkt A fällt. |
+| **Diagnostisch** | Produkt A fiel → Konkurrent betrat den Markt. Produkt B stieg → neuer Anwendungsfall entdeckt, positiver Social-Media-Buzz. |
+| **Prädiktiv** | Prognostiziere Nachfrage nach Produkt B für die nächsten 2–3 Jahre. Nachfrage wird aktuelle Werkskapazität in 18 Monaten übersteigen. |
+| **Präskriptiv** | Entscheiden: neues Werk vs. Outsourcing. Wenn neues Werk: Standort + Kapazität optimieren. Wenn Outsourcing: 3PL-Hersteller auswählen. |
+
+### Beispiel 2 — Qualitätsfehler & Lieferantenmanagement
+| Schritt | Was getan wird |
+|---|---|
+| **Deskriptiv** | Verfolge Qualitätsfehler bei Produkten X, Y, Z. Produkt Z hat wiederholte Qualitätsfehler in den letzten 4–5 Monaten. |
+| **Diagnostisch** | Ursachenanalyse bei ausgefallenen Produkt Z Einheiten → defekte Komponente C1 → C1 wurde von Lieferant 1 geliefert → Lieferant 1 benachrichtigt. |
+| **Prädiktiv** | Prognostiziere Wahrscheinlichkeit für weitere Qualitätsfehler, wenn Lieferant 1 bleibt. Prognostiziere auch zukünftige Qualität, Kosten alternativer Lieferanten. |
+| **Präskriptiv** | Optimiere Lieferantenauswahl aus Lieferanten 2–5. Kriterien: Kosten + Lieferzeit + Reaktionsfähigkeit + Qualitätsbilanz. |
+
+### Beispiel 3 — Personalzuteilung in E-Commerce Sortieranlage
+| Schritt | Was getan wird |
+|---|---|
+| **Deskriptiv** | Analysiere vergangene Leistung jedes Kommissionierers/Packers — wer Zeitpläne einhielt, wer nicht, wer die wenigsten Sortierfehler hatte. |
+| **Diagnostisch** | Warum haben bestimmte Mitarbeiter unterdurchschnittlich abgeschnitten? Ermüdung? Unklarer Prozess? Falsche Zonenzuordnung? |
+| **Prädiktiv** | Prognostiziere Effizienzwert jedes Mitarbeiters für die nächsten 6 Monate. Ordne Mitarbeiter in hohe / mittlere / niedrige Effizienzklassen ein. |
+| **Präskriptiv** | Teile Mitarbeiter basierend auf vorhergesagter Effizienz Aufgaben zu. Während der Festival-Hochphase: teile bestbewertete Mitarbeiter den schnellsten Jobs zu. |
+
+---
+
+## Analytics entlang der SCM-Wertschöpfungskette — Referenz
+
+| SCM-Bereich | Deskriptiv (Was ist passiert?) | Diagnostisch (Warum?) | Prädiktiv (Was wird passieren?) | Präskriptiv (Was tun?) |
+|---|---|---|---|---|
+| **Beschaffung** | Analysiere vergangene Lieferantenkosten, Qualität, Lieferzeit | Warum hat Lieferant X im letzten Quartal schlecht abgeschnitten? | Prognostiziere zukünftige Lieferantenkosten, Vorlaufzeit, Zuverlässigkeit | Wähle optimale(n) Lieferanten aus + entscheide Bestellmenge bei jedem |
+| **Fertigung & Qualität** | Identifiziere, welches Produkt/Komponente Qualitätsfehler hat | Ursache: Welche Komponente C1 ist defekt? Welcher Lieferant? | Prognostiziere Maschinenausfall bevor er auftritt (Predictive Maintenance) | Wähle Ersatzlieferant. Optimiere Wartungsplan. |
+| **Lagerhaltung** | Bestandszählungsbericht — vergleiche ERP vs. physisch. | Warum zeigen bestimmte SKUs immer Diskrepanzen? | Prognostiziere Mitarbeitereffizienzwerte. Prognostiziere Schnelldreher. | Slotting-Optimierung. Zonenbildung. Arbeitszuteilung an Kommissionierer. |
+| **Logistik & Transport** | GPS-Verfolgung der Lieferhistorie. Fahreraugendaten. | Warum hatte Lkw auf Route X letzte Woche Verspätung? | Prognostiziere ETA von Überseelieferungen. Prognostiziere Fahrerermüdung. | Routenoptimierung. Flottenzuweisung. Fahrerplanung. |
+| **Bedarfsplanung** | Vergangene Nachfrage nach SKU, Zone, Monat. | Warum ist die Nachfrage nach Produkt A gesunken? | Prognostiziere Nachfrage für nächste 15 Tage, 2 Monate, 6 Monate. | Kapazitätserweiterungsplanung. Anlagenstandort. Bestandsvorpositionierung. |
+
+### Highlights der Bereiche — Wichtige SCM Analytics Anwendungen
+
+#### Beschaffung
+- **Lieferantenauswahl:** Mehrere Lieferanten verfügbar → präskriptive Optimierung wählt den besten basierend auf Kosten, Vorlaufzeit, Qualität, Reaktionsfähigkeit
+- **Entscheidung über Bestellmenge:** Wenn Lieferant ausgewählt ist, wie viel bei jedem bestellen?
+
+#### Fertigung — Predictive Maintenance
+- **Definition:** Modell analysiert Maschinensensordaten → sagt Ausfall 2–3 Tage vorher voraus → Wartungsteam wird proaktiv eingeplant
+- **Genutzte Daten:** Vibration, Temperatur, Betriebsstunden, Fehlercodes — sensorbasierte Echtzeitdaten
+
+#### Lagerhaltung — Slotting-Optimierung & Zonenbildung
+- **Slotting:** Entscheiden, welches Produkt welchen Stellplatz im Lager belegt → Schnelldreher in der Nähe des Versands
+- **Zonenbildung (Zoning):** Clustering-Algorithmus gruppiert oft zusammen bestellte Produkte → werden in derselben Zone gelagert → geringere Kommissionierzeit + weniger Fehler
+
+#### Logistik — Vorhersage von Überseelieferungsverzögerungen
+- **Analytics-Lösung:** ML-Modell sagt tatsächliches Ankunftsdatum voraus → Produktionsplan wird im Voraus angepasst → vermeidet Haltekosten (frühe Ankunft) oder Produktionsstopp (späte Ankunft)
+
+#### Bedarfsplanung — Das schwierigste Prognoseproblem
+- **Warum schwierig:** Konsumentenverhalten wird von Social Media, Influencern und schnell wechselnden Vorlieben getrieben.
+- **Demand Sensing:** Echtzeit-Verfolgung von Nachfragesignalen (Social Media, Suchtrends), um Prognosen kontinuierlich zu aktualisieren
+- **ML-Modelle:** Besser als traditionelle Modelle für hochvariable Nachfrage, weil sie nicht-lineare Muster und externe Signale erfassen.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Bei einer 10-Punkte-Frage zu SCM Analytics — wählen Sie EINEN Bereich (z.B. Lagerhaltung oder Bedarfsplanung) und gehen Sie alle 4 Analytics-Arten mit spezifischen Beispielen durch. Eine zusammenhängende Geschichte ist stärker als verstreute Beispiele.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **4 Analytics-Typen:** Deskriptiv (Vergangenheit) → Diagnostisch (Warum) → Prädiktiv (Zukunft) → Präskriptiv (Handlung)
+- **Präskriptiv = Optimierung:** Kosten minimieren / Gewinn maximieren / Risiko minimieren, abhängig von Einschränkungen
+- **3 vollständige Praxisbeispiele:** (1) Bedarfs- + Kapazitätsplanung \| (2) Qualitätsfehler + Lieferantenauswahl \| (3) Personalzuteilung in Sortieranlage
+- **Beschaffungs-Analytics:** Lieferantenauswahl + Bestellmengenoptimierung + prädiktive Kosten/Vorlaufzeit
+- **Fertigung:** Bildanalyse für Qualität \| Predictive Maintenance → ungeplante Ausfallzeiten vermeiden
+- **Lagerhaltung:** Slotting-Optimierung \| Zonenbildung (Clustering) \| Videoanalyse-Drohnen-Bestandszählung
+- **Logistik:** ETA-Vorhersage für Überseelieferungen \| Fahrerermüdungserkennung (Bildanalyse)
+- **Bedarfsplanung:** ML > traditionelle Modelle für hochvariable Nachfrage \| Demand Sensing \| Mehrere Prognosehorizonte
+- **Nächstes:** KI/ML für Prognosen + Python in der Praxis

@@ -1,0 +1,132 @@
+---
+title: "Woche 10 | Session 2: Track & Trace Systeme — Technologie-Schnittstelle, Barcodes & QR-Codes"
+description: "Erkunden Sie die Kernkomponenten von Track & Trace Systemen und vertiefen Sie sich in grundlegende Tracking-Technologien wie Barcodes und QR-Codes."
+sidebar:
+  order: 47
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Was sind Track & Trace Systeme?
+- Schlüsselkonzept — Triangulation von Informationen
+- Vier Hauptschritte in jedem Track & Trace System
+- Manuelles System vs. Technologie-System
+- Barcode-Technologie
+- QR-Code (Quick Response Code)
+- Barcode vs. QR-Code — direkter Vergleich
+</Aside>
+
+---
+
+## 1. Was sind Track & Trace Systeme?
+
+Technologiegestützte Systeme, die Produktattribute auf jeder SC-Stufe aufzeichnen, übertragen und speichern. Genutzt in Beschaffung, Produktion, Versand, Transport, Lagerung und Konsum.
+
+### Alltagsbeispiel — E-Commerce Bestellverfolgung
+1. Bestellung aufgegeben
+2. Versandbenachrichtigung (Scan am Ursprung)
+3. Transit-Updates (Scan an Transit-Hubs)
+4. In Zustellung
+5. Last-Mile-Lieferung (Scan an der Haustür)
+6. Lieferbestätigung (Unterschrift/OTP)
+7. Referenz für Reklamationen
+
+<Aside type="note">
+**★** T&T-Systeme bieten einen überprüfbaren, mit Zeitstempel versehenen Datensatz jedes Produktereignisses — und ermöglichen so Kundenservice und Reklamationslösung.
+</Aside>
+
+---
+
+## 2. Schlüsselkonzept — Triangulation von Informationen
+
+**Triangulation** = Verifizierung einer Transaktion durch gleichzeitige Nutzung mehrerer unabhängiger Datenpunkte.
+- *E-Commerce-Lieferung:* Scan durch Lieferant + Kundenunterschrift/OTP + Zeitstempel + GPS = triangulierter Nachweis.
+- *B2B SC:* Wareneingangsschein + System-Scan + Rechnungsabgleich = triangulierter Empfang.
+
+<Aside type="note">
+**★** Triangulation macht T&T-Systeme rechtlich belastbar. Ein einzelner Datenpunkt kann angefochten werden; mehrere bestätigende Aufzeichnungen zusammen jedoch nicht.
+</Aside>
+
+---
+
+## 3. Vier Hauptschritte in jedem Track & Trace System
+
+Alle T&T-Systeme müssen diese vier Schritte abdecken:
+
+<Steps>
+1. **Attribute erfassen:** Entscheiden, welche Attribute wichtig sind (z.B. Seriennummer, Charge, Standort, Temperatur).
+2. **Datenerfassung & Übertragung:** Wie werden Daten gesammelt? Manuell (Stift/Papier) oder automatisiert (Geräte laden in die Cloud).
+3. **Datenspeicherung (Management):** Sicher speichern in Cloud/lokaler DB. Durchsuchbarkeit und Audit-Trails sicherstellen.
+4. **Datenaustausch & Kollaboration:** Mit internen und externen Stakeholdern für Echtzeit-Sichtbarkeit teilen.
+</Steps>
+
+---
+
+## 4. Manuelles System vs. Technologie-System
+
+Manuelle Systeme sind bei geringem Volumen machbar, versagen aber bei hohem Volumen aufgrund von Fehlern und Kosten.
+
+| Dimension | Manuelles System | Technologie-System |
+|---|---|---|
+| **Datenerfassung** | Manueller Aufkleber + Handschrift | Geräte erfassen automatisch |
+| **Speicherung** | Papierakten (hohes Verlustrisiko) | Sichere Cloud/lokale digitale DB |
+| **Genauigkeit** | Fehleranfällig (Ermüdung, Übertragung) | Hoch (keine manuelle Übertragung) |
+| **Geschwindigkeit / Volumen**| Langsam — nur bei geringem Volumen rentabel | Schnell — bewältigt große Volumen |
+| **Gesamtkosten (Skalierung)**| Sehr HOCH (arbeits- & zeitintensiv) | Geringer (Automatisierung senkt Kosten) |
+
+---
+
+## 5. Barcode-Technologie
+
+- **Was es ist:** Aufkleber/Etikett mit codierten Linien (1D oder 2D).
+- **Informationskapazität:** Begrenzt (1–4 Attribute wie Seriennr., Charge, Preis, Verfallsdatum).
+- **Lesen:** Erfordert speziellen Barcode-Scanner. Abstand und Winkel müssen präzise sein.
+- **Anwendungen:** Einzelhandelskasse, Luftfrachtgepäck, Fertigungskomponenten, Gesundheitswesen. Meist auf der **Primärverpackung**.
+
+---
+
+## 6. QR-Code (Quick Response Code)
+
+- **Was es ist:** Erweitertes 2D-Matrixmuster. Physisches oder digitales Format.
+- **Informationskapazität:** Sehr hoch (kann auf URLs, Datenbanken, Videos verlinken).
+- **Statisch vs. Dynamisch:** Statisch kann nicht geändert werden. Dynamisch verlinkt auf eine URL/DB und kann in Echtzeit aktualisiert werden, ohne den Code selbst zu ändern.
+- **Lesen:** Kamerafähiges Gerät (Smartphone, Drohne). Toleriert breitere Winkel und größere Entfernungen.
+- **Anwendungen:** Sekundärverpackung (Kartons/Paletten), Zahlungen (UPI), Drohnen-Inventur, SC-Rückverfolgbarkeit.
+
+---
+
+## 7. Barcode vs. QR-Code — direkter Vergleich
+
+| Attribut | Barcode | QR-Code |
+|---|---|---|
+| **Was es ist** | Linien auf Etikett (1D/2D) | 2D-Matrixmuster |
+| **Info-Kapazität** | Gering (wenige Attribute) | Hoch (verlinkt auf Web, große Datensätze) |
+| **Info-Typ** | Nur statisch | Statisch ODER dynamisch |
+| **Scanner nötig** | Spezieller Barcode-Leser | Kamerafähiges Gerät + App |
+| **Distanz/Winkel** | Muss präzise sein | Flexibel (drohnenkompatibel) |
+| **Platzierung** | Primärverpackung | Sekundärverpackung, digital |
+
+<Aside type="note">
+**★** QR-Codes sind in Bezug auf Kapazität und Flexibilität klar überlegen — aber Barcodes werden weiterhin häufig genutzt, da sie etabliert und für einfache Aufgaben günstig sind.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **T&T-Systeme:** Erfassen Produktattribute auf jeder SC-Stufe.
+- **Triangulation:** Verifizierung von Transaktionen mit mehreren unabhängigen Datenpunkten.
+- **4 Schritte:** Attribute erfassen → Daten übertragen → Daten speichern → Daten teilen.
+- **Barcode:** Statisch, geringe Kapazität, strenger Scan-Winkel, Primärverpackung.
+- **QR-Code:** Statisch oder dynamisch, hohe Kapazität, flexibler Winkel, Sekundärverpackung.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Dynamische QR-Codes können in Echtzeit aktualisiert werden, ohne den physischen QR-Code zu ändern, was sie ideal für Live-Datenlinks macht. Triangulation verhindert falsche Ansprüche, indem Aufzeichnungen rechtlich belastbar gemacht werden.
+</Aside>

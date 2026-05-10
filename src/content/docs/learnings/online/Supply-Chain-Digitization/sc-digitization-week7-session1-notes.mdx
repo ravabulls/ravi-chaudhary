@@ -1,0 +1,132 @@
+---
+title: "Week 7 | Session 1: AI-ML for Demand Forecasting & Demand Planning"
+description: "Explores the necessity of AI and ML for demand forecasting in the era of Big Data, covering key models and the impact of external factors."
+sidebar:
+  order: 31
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Module 3 recap — Lectures 1–5 summary
+- Why demand planning matters — consequences of forecast errors
+- Why AI-ML is needed — 4 Vs of big data and their challenge to traditional forecasting
+- AI-ML models for demand forecasting — 6 key models explained
+- External factors — competitor, economy, policy, social media
+- Model selection framework
+- Next: case study + error metrics (next session)
+</Aside>
+
+---
+
+## Why Demand Planning Matters — The Cost of Forecast Errors
+
+**Demand planner's goal:** Forecasted demand ≈ Actual demand. Any deviation in either direction creates cost.
+
+| Scenario | What Happens | Immediate Impact | Long-term Impact |
+|---|---|---|---|
+| **Actual > Forecast (Under-forecasting)** | Demand exceeds available stock. Cannot fulfil all orders. | Lost sales. Customers go to competitors. | Customer churn. Revenue loss. Market share erosion. |
+| **Actual < Forecast (Over-forecasting)** | More stock produced/ordered than demand. Excess inventory accumulates. | Inventory holding cost. Spoilage if perishable. | Tied-up capital. Warehouse cost. Markdowns to clear stock. |
+| **Actual = Forecast (Accurate forecast)** | Production and procurement aligned with real demand. | No stockouts. No excess inventory. | Efficient SC. Happy customers. Optimal working capital. |
+
+- **Perishable products:** Over-forecasting is especially costly — spoilage adds physical loss on top of holding cost
+- **Lost sales:** Harder to quantify than excess inventory — but more damaging long-term through customer churn
+
+<Aside type="tip">
+**★ Exam tip:** If asked "why is demand forecasting important?" — address BOTH directions: under-forecast → lost sales + customer churn; over-forecast → inventory holding cost + spoilage. One direction is not enough.
+</Aside>
+
+---
+
+## Why AI-ML is Needed — 4 Vs of Big Data in Demand Context
+
+**Traditional forecasting tools:** Moving average, exponential smoothing, ARIMA — good for stable trends and seasonality.
+**Problem:** In today's environment, demand data has all 4 problematic Vs simultaneously → traditional tools fail to handle this complexity.
+
+### Big Data vs. Traditional Forecasting
+
+| V | Big Data Characteristic | How It Appears in Demand Data | Why Traditional Forecasting Fails |
+|---|---|---|---|
+| **V1 Volume** | Huge data | Orders placed 24/7 via omni-channel → millions of data points continuously generated | Not built to process and learn from millions of continuous data points in real-time |
+| **V2 Variety** | Multiple data types | Customer review as text | Image | Rating | Audio feedback | Only accept structured numerical data — cannot process text, image, audio |
+| **V3 Velocity** | Real-time data | Orders, cancellations, cart additions happening 24/7 in real time | Batch-based traditional forecasting too slow to respond to real-time shifts |
+| **V4 Variability** | Unstable patterns | Customer preferences shift unpredictably due to trends, promotions, policies | Capture seasonality/trend but cannot model social-media-driven swings |
+
+<Aside type="note">
+**★** AI-ML captures additionally: Non-linear patterns | Social media-driven swings | Unstructured data signals | Real-time updates | Interactions between multiple features simultaneously.
+</Aside>
+
+---
+
+## AI-ML Models for Demand Forecasting — Overview
+
+### Key AI-ML models used for demand forecasting
+
+| Model | Output Type | Key Assumption / Feature | Demand Forecasting Use Case |
+|---|---|---|---|
+| **Linear Regression** | Continuous | Relationship between dependent and independent variable is LINEAR | Predict units sold based on: historical sales + pricing + promotions. Simple baseline. |
+| **Logistic Regression** | Categorical (probability) | Dependent variable is binary or categorical — probability of an event | Predict probability of successful adoption of a new product launch or promotion response. |
+| **Decision Tree** | Categorical or Continuous | Rule-based splits. Handles non-linear relationships. | Identify KEY DRIVERS of demand variation (price, season). Generates interpretable business rules. |
+| **Random Forest** | Categorical or Continuous | Ensemble of multiple decision trees. Reduces overfitting. | More robust demand forecasting when single tree overfits. Handles noisy data better. |
+| **Boosting Algorithms (XGBoost, LightGBM)** | Categorical or Continuous | Sequential ensemble: each model corrects errors of the previous one. | Dynamic forecasting — adapts to changing conditions (competitor pricing, economy). Widely used in industry. |
+| **Neural Networks (LSTM, CNN)** | Continuous or Categorical | Captures highly complex, non-linear patterns. Handles structured AND unstructured data. | Best for unstructured data (text reviews, image feedback) and complex time-series (LSTM). |
+
+### Deep Dive into Key Models
+1. **Linear Regression:** Simple, but underperforms when demand has sharp, non-proportional responses to changes.
+2. **Logistic Regression:** Links marketing spend to expected demand uplift.
+3. **Decision Tree:** Identifies WHICH factors drive demand variation most. Limitation: May overfit to training data.
+4. **Random Forest:** Averages multiple trees → more stable, less sensitive to noise. Trade-off: Less interpretable.
+5. **Boosting Algorithms:** Most widely used in competitive ML and industry demand planning teams today — fast, accurate, scalable.
+6. **Neural Networks:** LSTM is widely used for demand time-series to capture long-term dependencies. Trade-off: Hardest to interpret.
+
+---
+
+## External Factors — What Must Be Monitored Continuously
+
+Demand planner's challenge: Internal data alone is not enough. External factors constantly shift demand patterns and must be incorporated into the model.
+
+| External Factor | How It Affects Demand | How AI-ML Incorporates It |
+|---|---|---|
+| **Competitor promotions** | Customer shifts to competitor → your demand drops | Boosting models ingest promotion data as a feature and adjust forecast |
+| **Competitor pricing** | Lower price → demand shifts. Loyal customers switch. | Price elasticity modelled. Model predicts demand reduction and adjusts plan. |
+| **Overall economy / GDP** | Economy growing → demand rises. Contracting → spending limited. | Macroeconomic indicators included as features in boosting/regression models |
+| **Government policy changes** | Regulations, taxes, or subsidies suddenly shift demand | Treated as dummy variables or structural breaks in time-series models |
+| **Social media trends** | Viral product → demand spike. Negative coverage → drop. | NLP on social media posts feeds into neural network models to detect sentiment early |
+
+<Aside type="note">
+**★** Demand sensing = real-time monitoring of external factors (social media, competitor moves, economy, policy) + feeding those signals into AI-ML models continuously.
+</Aside>
+
+---
+
+## How to Select the Right Model — Framework
+
+<Steps>
+1. **Define the output type:** Is demand a number (continuous)? → Regression models. Is it a category? → Classification models.
+2. **Assess data type available:** Structured numerical data only → Linear regression, Decision tree, Random forest, Boosting | Unstructured (text, image, audio) → Neural networks
+3. **Check demand pattern:** Stable trend + seasonality → Traditional tools may suffice | High variability, non-linear → AI-ML needed
+4. **Consider interpretability need:** Need to explain to management? → Decision tree (most interpretable) | Accuracy over interpretability? → Random forest, XGBoost, LSTM
+5. **Benchmark models:** Run multiple models → compare error metrics (MAE, RMSE, MAPE) → select model with lowest error on test data
+6. **Monitor and retrain:** Demand patterns evolve. Re-train model periodically or set up continuous learning pipeline to stay current.
+</Steps>
+
+<Aside type="tip">
+**★ Exam tip:** When asked "which model should be used for demand forecasting?" — never say one model is always best. Show the selection logic: output type → data type → pattern stability → interpretability need → error comparison.
+</Aside>
+
+---
+
+## Session Summary
+
+- **Why demand planning:** Forecast ≠ Actual → either lost sales (under) or inventory cost (over). Accurate forecast = revenue protection + cost control.
+- **Why AI-ML needed:** 4 Vs of demand data (Volume, Variety, Velocity, Variability) exceed what traditional forecasting tools can handle.
+- **6 AI-ML models:** Linear regression | Logistic regression | Decision tree | Random forest | Boosting (XGBoost, LightGBM) | Neural networks (RNN, LSTM, CNN)
+- **External factors to monitor:** Competitor promotions + pricing | GDP / economy | Government policy | Social media trends
+- **Model selection:** Match model to output type, data type, pattern complexity, interpretability need, and error benchmark.
+- **Next session:** Case study — apply an AI-ML model to a demand forecasting problem. Introduce error metrics (MAE, RMSE, MAPE).

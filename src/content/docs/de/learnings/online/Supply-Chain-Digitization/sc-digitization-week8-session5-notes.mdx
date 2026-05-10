@@ -1,0 +1,138 @@
+---
+title: "Woche 8 | Session 5: SC-Netzwerkdesign — LP-Optimierung & Finaler Vergleich"
+description: "Erfahren Sie, wie Sie Linear Programming (LP) und den Excel Solver nutzen, um die garantiert optimale Lösung für das Supply-Chain-Netzwerkdesign zu finden und so die Überlegenheit gegenüber heuristischen Ansätzen zu beweisen."
+sidebar:
+  order: 40
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Konzept der LP-Optimierung](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Gleiches Problem, bessere Methode
+- LP-Formulierung — SC-Netzwerkdesign
+- Zielfunktion
+- Nebenbedingungen (Angebot, Flussbilanz, Nachfrage)
+- Lösung in Excel — Schritt für Schritt
+- Ergebnis & Finaler Vergleich
+- Skalierbarkeit & Praxisrelevanz
+</Aside>
+
+---
+
+## 1. Rückblick — Gleiches Problem, bessere Methode
+
+**Gleiches SC-Netzwerk wie in Session 4:** 2 Hersteller, 3 Lager, 4 Einzelhändler, 1 Produkt.
+- **Ziele:** Finden der optimalen Distributionsstrategie zur Erfüllung der Einzelhändlernachfrage und zur Minimierung der Gesamtdistributionskosten.
+- **Session 4:** Gelöst mit Heuristik 1 (₹9.61.000) und Heuristik 2 (₹7.57.000).
+- **Diese Session:** Lösung mit Linear Programming (LP) + Excel Solver, um das *wahre Optimum* zu erhalten.
+
+<Aside type="note">
+**★** Heuristiken liefern schnell gute Lösungen. LP liefert die BESTE Lösung. Diese Session beweist, dass LP beide Heuristiken schlägt.
+</Aside>
+
+---
+
+## 2. LP-Formulierung — SC-Netzwerkdesign
+
+### Entscheidungsvariablen — insgesamt 18
+- **6 Variablen (M→W Ebene):** Bewegte Menge zwischen jedem Hersteller-Lager-Paar (z.B. `QM1W1`).
+- **12 Variablen (W→R Ebene):** Bewegte Menge zwischen jedem Lager-Einzelhändler-Paar (z.B. `XW1R1`).
+
+Alle werden in Excel mit 0 initialisiert — der Solver findet die optimalen Werte.
+
+![Entscheidungsvariablen](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image2.png)
+
+---
+
+## 3. Zielfunktion
+
+**Gesamtdistributionskosten minimieren** = Summe aus (Stückversandkosten × Menge) für alle Paare.
+*(In Excel: `SUMMENPRODUKT` verwenden)*
+
+`Z minimieren = Σ (Versandkosten × Q_MiWk) + Σ (Versandkosten × X_WkRj)`
+
+---
+
+## 4. Nebenbedingungen
+
+Drei Arten von Nebenbedingungen — alle müssen gleichzeitig erfüllt sein für eine gültige Lösung.
+
+| Art der Nebenbedingung | Ausdruck | Was sie sicherstellt |
+|---|---|---|
+| **Angebot** (2) | `QM1W1+QM1W2+QM1W3 ≤ 1.50.000` | Gesamtlieferung jedes Herstellers ≤ seiner Kapazität |
+| **Flussbilanz** (3) | `Σ(in W1) = Σ(aus W1)` | Was in ein Lager kommt, muss auch hinaus — keine Vorratshaltung |
+| **Nachfrage** (4) | `XW1Rj+XW2Rj+XW3Rj = Dj` | Alle 3 Lager zusammen müssen die Nachfrage jedes Einzelhändlers erfüllen |
+| **Nicht-Negativität** | Alle `Q`- und `X`-Variablen ≥ 0 | Mengen können nicht negativ sein |
+
+### Flussbilanz (Flow Balance) — Wichtiges neues Konzept
+Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Bestände.
+`Für W1: QM1W1 + QM2W1 = XW1R1 + XW1R2 + XW1R3 + XW1R4`
+
+<Aside type="note">
+**★** Die Flussbilanz ist einzigartig für mehrstufige Netzwerke. Nicht vorhanden bei einstufiger Nachfrageallokation oder CPLP. Lernen Sie, wie man sie aufstellt.
+</Aside>
+
+---
+
+## 5. Lösung in Excel — Schritt für Schritt
+
+<Steps>
+1. **Ziel festlegen:** Wählen Sie die Zelle für die Gesamtkosten → auf Minimieren setzen.
+2. **Variablenzellen ändern:** Wählen Sie ALLE Zellen der Entscheidungsvariablen (18 Zellen).
+3. **Nebenbedingungen hinzufügen:** Fügen Sie Angebots-, Flussbilanz- und Nachfragebedingungen hinzu.
+4. **Nicht-Negativität:** Haken bei 'Nicht eingeschränkte Variablen nicht-negativ machen' setzen.
+5. **Lösungsmethode:** Wählen Sie **Simplex LP** (Modell ist vollständig linear).
+6. **Lösen:** Klicken Sie auf Lösen → Solver-Lösung beibehalten.
+</Steps>
+
+![Excel Solver Setup](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image3.png)
+![Excel Solver Setup 2](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image4.png)
+![Excel Solver Setup 3](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image5.png)
+
+---
+
+## 6. Ergebnis & Finaler Vergleich
+
+### Optimale LP-Lösung
+Der Solver bestätigt: Alle Nebenbedingungen und Optimalitätsbedingungen sind erfüllt.
+**Gesamtdistributionskosten = ₹6.89.000** ← globales Optimum.
+
+![Finale Ergebnisse](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image6.png)
+![Finaler LP-Fluss](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image7.png)
+
+### Ansatz-Vergleich
+
+| Ansatz | Methode | Gesamtkosten | Optimal? | Ersparnis vs. H1 |
+|---|---|---|---|---|
+| **Heuristik 1** | Günstigstes Lager für alle | ₹9.61.000 | Nein | — |
+| **Heuristik 2** | Günstigster Pfad pro Einzelhändler | ₹7.57.000 | Nein | ₹2.04.000 |
+| **LP-Optimierung** | Simplex LP über Excel Solver | **₹6.89.000** | **Ja — garantiert** | **₹2.72.000** |
+
+![Ersparnisvergleich](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image8.png)
+![Fazit](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image9.png)
+
+<Aside type="note">
+**★** Die LP-Lösung ist garantiert optimal — keine andere machbare Verteilung kann weniger kosten. Das ist die Macht der Optimierung.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Problem:** 2 Hersteller → 3 Lager → 4 Einzelhändler, Minimierung der Gesamtversandkosten.
+- **Entscheidungsvariablen:** 6 (Hersteller→Lager) + 12 (Lager→Einzelhändler) = insgesamt 18.
+- **3 Nebenbedingungen:** Angebot (≤ Kapazität) | Flussbilanz (in = out im Lager) | Nachfrage (= Bedarf Einzelhändler).
+- **Solver:** Simplex LP.
+- **Ergebnis:** LP = ₹6.89.000 (optimal). Schlägt Heuristiken deutlich.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Flussbilanz: `Σ(in Lager) = Σ(aus Lager)`. Gesamte Entscheidungsvariablen = `(Anz. Hersteller × Anz. Lager) + (Anz. Lager × Anz. Einzelhändler)`. LP liefert immer ≤ Kosten als jede Heuristik.
+</Aside>

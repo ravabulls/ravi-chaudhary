@@ -1,0 +1,122 @@
+---
+title: "Week 9 | Session 2: K-means Clustering — Algorithm, WCSS & Elbow Method"
+description: "A deep dive into the inner workings of the K-means algorithm, understanding Within-Cluster Sum of Squares (WCSS), and using the Elbow Method to find the optimal number of clusters."
+sidebar:
+  order: 42
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+![K-means Clustering Concepts](/learnings/online/Supply-Chain-Digitization/sc_w9s2_image1.png)
+
+## Session Agenda
+
+<Aside type="note">
+- Recap — Session 1
+- K-means Clustering — 5-Step Algorithm
+- Key Formulas — Euclidean Distance & Centroid
+- Within-Cluster Sum of Squares (WCSS)
+- Elbow Method — Determining Optimal K
+- K-means Output → Input to Optimization Model
+</Aside>
+
+---
+
+## 1. K-means Clustering — 5-Step Algorithm
+
+Assume `K` is already decided (e.g., K = 3 means we want 3 DCs).
+
+<Steps>
+1. **Randomly select K initial centroids:** Choose K arbitrary points as starting locations.
+2. **Calculate Euclidean distance:** From every point to each centroid. Each customer gets K distance values.
+3. **Assign each data point to its nearest centroid:** Form clusters.
+4. **Recompute centroid for each cluster:** New centroid = average of all points currently in that cluster.
+5. **Repeat steps 3 & 4 until convergence:** Convergence = centroids stop moving AND no data point changes its cluster.
+</Steps>
+
+<Aside type="note">
+**★** Final stable centroids = proposed DC locations; final clusters = customer zones.
+</Aside>
+
+---
+
+## 2. Key Formulas
+
+### Euclidean Distance — Step 2
+Distance from customer `(xi, yi)` to centroid `k` `(μk, ηk)`:
+`d(i → k) = √ [ (xi − μk)² + (yi − ηk)² ]`
+
+### Centroid Recalculation — Step 4
+After forming clusters, recompute each centroid as the mean of its members:
+`New centroid = ( Σxi / n , Σyi / n )`
+*(x-coordinate = average of all xi in cluster; y-coordinate = average of all yi in cluster)*
+
+---
+
+## 3. Within-Cluster Sum of Squares (WCSS)
+
+**WCSS** = sum of squared distances from every point to its cluster centroid.
+- Measures how compact / tight the clusters are.
+- Lower WCSS = customers are closer to their DC = better responsiveness.
+
+### How WCSS Changes with K
+As K increases, WCSS always decreases — more clusters mean tighter groupings.
+- **K = 1:** All 811 in one cluster → WCSS is maximum.
+- **K = 811:** Every customer is its own cluster → WCSS = 0 (infeasible).
+
+Neither extreme is practical → need to find the sweet spot using the Elbow Method.
+
+---
+
+## 4. Elbow Method — Determining Optimal K
+
+### Concept
+Plot WCSS (y-axis) vs K (x-axis). The curve drops steeply at first, then flattens. The bend = **elbow**.
+The K at the elbow = optimal number of DCs (best balance of responsiveness vs cost).
+Beyond elbow: adding more DCs gives little additional benefit in WCSS but raises cost significantly.
+
+### Reading the Elbow Chart
+- 1 → 2 clusters: large gain
+- 2 → 3 clusters: large gain
+- 3 → 4 clusters: significant gain
+- 4 → 5 clusters: small gain
+- 5 → 6+: very marginal reduction
+**Elbow at K = 4 → optimal number of DCs = 4**
+
+*(K = 5 is acceptable if budget allows, but final decision depends on strategic targets)*
+
+<Aside type="note">
+**★** Elbow = point where marginal WCSS reduction stops being significant. The K at the elbow = optimal cluster count.
+</Aside>
+
+---
+
+## 5. K-means Output → Input to Optimization Model
+
+K-means gives cluster centroids (proposed DC lat/long) and customer-to-DC mapping. These are then fed into a full optimization model to refine the solution further.
+
+| Stage | Detail |
+|---|---|
+| **K-means Output** | Cluster centroids (proposed DC locations), Customer-to-DC mapping |
+| **Used as input to...** | Optimization model (LP / CPLP) |
+| **Optimization adds...**| Capacity constraints, demand constraints, transport cost, vehicle routing |
+| **Final output** | Exact DC locations, which DC serves which customers, routing plan |
+
+---
+
+## Session Summary
+
+- **K-means Algorithm:** 5 steps — random centroids → distance calc → assign → recompute centroid → repeat till convergence.
+- **Euclidean Distance:** `d = √[(xi−μk)² + (yi−ηk)²]`
+- **Centroid Formula:** `(Σxi/n, Σyi/n)`
+- **WCSS:** Σ squared distances from each point to its centroid. Lower = tighter clusters.
+- **Elbow Method:** Plot WCSS vs K, find bend. K at elbow is optimal number of DCs.
+- **Case result:** Elbow at K = 4. K-means outputs feed into LP optimization model for final refinement.
+
+<Aside type="tip">
+**★ Exam Tip:** WCSS always decreases as K increases. Extremes (K=1 or K=n) are not practical. K-means centroids serve as INPUT to an optimization model; K-means alone does not account for capacity or cost.
+</Aside>

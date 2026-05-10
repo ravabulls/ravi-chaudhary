@@ -1,0 +1,174 @@
+---
+title: "Woche 6 | Session 4: Aufbau eines Klassifikationsbaums — Gini-Index, Aufteilung & Stoppkriterien"
+description: "Ein tiefer Einblick in den Algorithmus hinter Klassifikationsbäumen, Erklärung von Unreinheitsmaßen (Gini-Index, Entropie), der Logik der Knotenaufteilung und Stoppkriterien zur Vermeidung von Overfitting."
+sidebar:
+  order: 29
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Konzepte der Unreinheit](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image1.png)
+![Aufteilung des Klassifikationsbaums](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image2.png)
+![Gini-Index vs Entropie Diagramm](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image3.png)
+![Knoten 0 Wurzel-Aufteilung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image4.png)
+![Visualisierung der Genauigkeitsverbesserung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image5.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — was das Modell macht (aus Session 3); jetzt: WIE es aufgebaut wurde
+- Schritt 1 — Wurzelknoten: Basisgenauigkeit ohne Merkmale
+- Unreinheitsmaße — Gini-Index und Entropie: Formeln, Beispiele, Graph
+- Schritt 2 — Aufteilungslogik: Wähle Variable + Cutoff, die die Unreinheit maximal reduzieren
+- Schritt 3 — Verfolgung aller Knotenaufteilungen mit Gini-Werten und Unreinheitsreduktion
+- Stoppkriterien — wann man aufhören sollte zu teilen
+- Overfitting — warum ein Stopp notwendig ist
+- Zusammenfassung — 4-Schritte-Algorithmus zum Aufbau eines Klassifikationsbaums
+- Nächste Session: Python in der Praxis — dieses exakte Modell im Code erstellen
+</Aside>
+
+---
+
+## Rückblick — Session 3 vs. Session 4
+
+- **Session 3:** Zeigte den OUTPUT des Klassifikationsbaums — 4 Blattknoten-Regeln, Vorhersagen, wie man ihn in der Fertigung einsetzt
+- **Session 4:** Erklärt, WIE der Baum aufgebaut wurde — der Algorithmus dahinter
+- **Kernlogik des Algorithmus:** Wiederholtes Aufteilen (Splitten) von Knoten durch Auswahl der Variablen und des Cutoffs, die die Unreinheit maximal reduzieren → bis ein Stoppkriterium erfüllt ist
+
+---
+
+## Schritt 1 — Start mit dem Wurzelknoten (Knoten 0)
+
+- **Trainingsdaten:** 700 Instanzen (Modell nutzt 700, kompletter Datensatz hat 1000 — 700 werden für das Training genutzt)
+- **An der Wurzel (keine Merkmalsinformationen):** 447 Maschinen sind ausgefallen (Ja) | 253 sind nicht ausgefallen (Nein)
+- **Basiswahrscheinlichkeit:** 447/700 = 64% Wahrscheinlichkeit, dass eine zufällig gewählte Maschine ausfällt
+- **Problem der Basis:** 64% unabhängig von Alter, Auslastung, Ölkontamination etc. — ignoriert alle nützlichen Informationen
+- **Ziel des Baums:** Merkmale einbeziehen, um die Genauigkeit über die 64% Basis hinaus zu verbessern
+- **Gini bei Knoten 0:** 1 − (0,64² + 0,36²) = 1 − (0,41 + 0,13) = 0,46 (nah am Maximum von 0,5 → hochgradig unreine Daten → Verbesserungspotenzial)
+
+<Aside type="note">
+**★** Startgenauigkeit = 64% (Basis). Durch das Aufteilen von Knoten anhand von Merkmalen verbessert sich die Genauigkeit an den Blattknoten auf 77%, 83%, 88%. Diese Verbesserung macht das Modell wertvoll.
+</Aside>
+
+---
+
+## Unreinheitsmaße — Gini-Index & Entropie
+
+**Warum Unreinheit?**
+Unreinheit = Zufälligkeit in einem Knoten. Ein reiner Knoten = alle Beobachtungen gehören zu einer Klasse → perfekte Vorhersage.
+Je geringer die Unreinheit an jedem Blattknoten, desto höher die Klassifikationsgenauigkeit.
+Ziel bei jeder Aufteilung: Wähle Variable + Cutoff, die die Unreinheit am stärksten reduzieren.
+
+### Formeln
+- **Gini-Index-Formel:** `Gini(t) = 1 − Σᵢ [ P(Klasse i | Knoten t) ]²`
+  - Für binär (k=2): `Gini(t) = 1 − (p₁² + p₂²)`
+  - Bereich: 0 (perfekt rein) bis 0,5 (50-50 Aufteilung — maximale Unreinheit)
+- **Entropie-Formel:** `Entropie(t) = − Σᵢ P(Klasse i | Knoten t) × log₂[ P(Klasse i | Knoten t) ]`
+  - Bereich: 0 (perfekt rein) bis 1 (50-50 Aufteilung — maximale Unreinheit)
+
+### Gini- und Entropie-Werte für Schlüsselszenarien
+
+| Szenario | Klasse 1 (%) | Klasse 2 (%) | Gini-Index `1 − Σp²` | Entropie `-Σp·log₂(p)` | Unreinheitsgrad |
+|---|---|---|---|---|---|
+| **Alle in Klasse 1** | 100% | 0% | 1 − (1² + 0²) = 0 | −(1·log₂1 + 0·log₂0) = 0 | Null ✓ (Rein) |
+| **Alle in Klasse 2** | 0% | 100% | 1 − (0² + 1²) = 0 | −(0·log₂0 + 1·log₂1) = 0 | Null ✓ (Rein) |
+| **50-50 Aufteilung** | 50% | 50% | 1 − (0,5² + 0,5²) = 0,5 | −(0,5·log₂0,5 + 0,5·log₂0,5) = 1 | Maximum ✗ |
+| **Knoten 0 (Wurzel)** | 64% | 36% | 1 − (0,64² + 0,36²) = 0,46 | — | Hoch (nah am Max) |
+
+### Wichtige Erkenntnis aus dem Unreinheitsgraphen
+- **Form:** Umgekehrtes U — symmetrisch um 0,5
+- Sowohl Gini als auch Entropie starten bei 0 (alle in einer Klasse) → steigen auf das Maximum bei 0,5 (50-50 Aufteilung) → fallen zurück auf 0
+- **Implikation:** Beim Aufteilen eines Knotens wollen wir Beobachtungen WEG von 0,5 zu einem der Enden (0 oder 1) bewegen → Unreinheit reduzieren → Genauigkeit verbessern
+
+<Aside type="tip">
+**★ Prüfungstipp:** Kennen Sie beide Formeln. Wissen Sie, dass Gini max = 0,5 und Entropie max = 1 (für binäre Klassifikation). Ein Unreinheitswert von 0 bedeutet ein reiner Knoten.
+</Aside>
+
+---
+
+## Aufteilungslogik — Wie man Variable und Cutoff auswählt
+
+Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit ALLEN möglichen Cutoff-Werten ausprobiert. Für jedes (Variable, Cutoff) Paar wird die gewichtete Reduktion der Unreinheit berechnet.
+
+- **Formel zur Reduktion der Unreinheit:**
+  `ΔImpurity = Gini(Elternknoten) − [ w_links × Gini(linkes Kind) + w_rechts × Gini(rechtes Kind) ]`
+  wobei `w_links = (Beobachtungen im linken Kind) / (Beob. im Elternknoten)`
+- **Wahl:** Das (Variable, Cutoff) Paar, das das GRÖSSTE ΔImpurity liefert → das ist die beste Aufteilung
+
+<Aside type="tip">
+**★ Prüfungstipp:** Sie sollten ΔImpurity berechnen können. Höheres ΔImpurity = besserer Split.
+</Aside>
+
+---
+
+## Verfolgung der Aufteilung Knoten für Knoten — Der vollständige Baum
+
+### Alle Knoten — Beobachtungen, Gini, Aufteilungsvariable, Cutoff, Reduktion
+
+| Knoten | Beobachtungen | Ja% / Nein% | Gini | Aufteilungsvariable | Cut-off | Reduktion der Unreinheit | Kindknoten |
+|---|---|---|---|---|---|---|---|
+| **0 (Wurzel)** | 700 gesamt (447 Ja, 253 Nein) | 64% / 36% | 0,46 | Ölkontamination | 5,5 | 0,052 (Maximum) | → Knoten 1, Knoten 2 |
+| **1** | 141 gesamt | Öl ≤ 5,5 | 0,44 | Auslastung | 92,05% | 0,38 (Max bei Knoten 1) | → Knoten 3, Knoten 4 |
+| **2** | 559 gesamt (72% Ja) | Öl > 5,5 | 0,40 | MTBF | 23,95 | 0,11 (Max bei Knoten 2) | → Knoten 5, Knoten 6 |
+| **3 (Blatt)** | 109 Beob. | 17% / 83% | 0,28 | STOPP | — | — | Vorhersage: FÄLLT NICHT AUS |
+| **4 (Blatt)** | ~35 Beob. | 88% / 12% | 0,21 | STOPP | — | — | Vorhersage: FÄLLT AUS |
+| **5 (Blatt)** | 493 Beob. | 77% / 23% | 0,35 | STOPP | — | — | Vorhersage: FÄLLT AUS |
+| **6 (Blatt)** | 66 Beob. | 29% / 71% | 0,41 | STOPP | — | — | Vorhersage: FÄLLT NICHT AUS |
+
+### Genauigkeitsentwicklung — Wie jede Aufteilung die Vorhersage verbessert
+| Stufe | Verfügbare Informationen | Beste Vorhersagegenauigkeit | Interpretation |
+|---|---|---|---|
+| **Knoten 0 (Keine Info)** | Keine — wir wissen nur, dass die Maschine existiert | 64% (Basis) | 64% Ausfallwahrscheinlichkeit basierend auf reiner Historie. |
+| **Nach Split 1 (Knoten 2)** | Ölkontamination > 5,5 | 72% (+8%) | Die Information hoher Ölkontamination verbessert die Genauigkeit. |
+| **Nach Split 2 (Knoten 5)** | Öl > 5,5 UND MTBF ≤ 23,95 | 77% (+5%) | MTBF-Informationen erhöhen die Genauigkeit auf 77%. |
+| **Knoten 4 (Bestes Blatt)** | Öl ≤ 5,5 UND Auslastung > 92,05% | 88% (+24%) | Höchste Genauigkeit — überlastete Maschinen fallen sehr wahrscheinlich aus. |
+
+**Fazit:** Jede Aufteilung fügt Informationen hinzu → die Genauigkeit steigt. Jede zusätzliche Aufteilung bringt weniger Genauigkeitsverbesserung als die vorherige (abnehmender Grenznutzen) → Grund zum Aufhören.
+
+---
+
+## Stoppkriterien & Overfitting
+
+**Warum ein Stopp entscheidend ist — Overfitting:**
+Ohne Stopp: Baum teilt sich weiter auf → schließlich hat jedes Blatt nur 1 Beobachtung → 100% Genauigkeit auf Trainingsdaten.
+- **Problem:** Modell hat Trainingsdaten "auswendig gelernt", anstatt Muster zu lernen → schlechte Genauigkeit bei neuen Testdaten (Overfitting).
+- **Lösung:** Stoppkriterien anwenden, um ein einfacheres, allgemeingültigeres Modell zu erstellen.
+
+### Drei Stoppkriterien, die bei Klassifikationsbäumen verwendet werden
+
+| Stoppkriterium | Definition | Wie in diesem Beispiel verwendet |
+|---|---|---|
+| **Max. Baumtiefe** | Stoppt das Aufteilen, sobald der Baum eine vorgegebene maximale Tiefe erreicht. | Tiefe = 2 verwendet. Keine weitere Aufteilung danach. |
+| **Min. Beobachtungen pro Knoten** | Teile keinen Knoten auf, wenn er weniger als eine Mindestanzahl (oder %) an Beobachtungen enthält. | Knoten 6 hat ~9% und Knoten 4 ~5%, würde bei min=10% einen Stopp auslösen. |
+| **Min. Reduktion der Unreinheit** | Nicht aufteilen, wenn der Reinheitsgewinn unter einem Schwellenwert (Epsilon) liegt. | Verhindert winzige, bedeutungslose Aufteilungen. |
+
+<Aside type="note">
+**★** Stoppkriterien verhindern Overfitting. Ein gutes Modell sagt UNGESEHENE Daten genau voraus und passt nicht perfekt auf Trainingsdaten.
+</Aside>
+
+---
+
+## 4-Schritte-Algorithmus — Wie man einen Klassifikationsbaum aufbaut
+
+<Steps>
+1. **Start bei der Wurzel:** Lege alle Trainingsdaten in den Wurzelknoten (Knoten 0). Berechne den initialen Gini-Index (oder Entropie).
+2. **Finde den besten Split:** Probiere für jeden Knoten alle möglichen (Variable, Cutoff) Kombinationen aus. Wähle diejenige mit der maximalen Reduktion der Unreinheit (ΔImpurity).
+3. **Wiederholen:** Wende Schritt 2 auf jeden neu erstellten internen Knoten an. Teile weiter auf, bis ein Stoppkriterium erfüllt ist.
+4. **Stoppen und klassifizieren:** Weise jedem Blattknoten die Mehrheitsklasse als Vorhersage zu. Berichte Wahrscheinlichkeit = Anteil dieser Klasse im Blatt, und Support = Anteil der Trainingsdaten in diesem Blatt.
+</Steps>
+
+---
+
+## Zusammenfassung der Session
+
+- **Wurzelknoten-Basis:** 700 Beobachtungen | 64% Ausfallrate | Gini = 0,46 — hohe Unreinheit, Verbesserung nötig
+- **Unreinheitsmaße:** Gini-Index = 1 − Σp² | Entropie = −Σp·log₂(p). Beide = 0 für reine Knoten, Maximum bei 50-50 Aufteilung.
+- **Aufteilungskriterium:** Wähle (Variable, Cutoff) mit maximaler ΔImpurity
+- **Genauigkeitsentwicklung:** 64% (Basis) → 72% (nach Öl-Split) → 77%/88% (nach 2. Split)
+- **Stoppkriterien:** Max. Tiefe | Min. Beobachtungen pro Knoten | Min. ΔImpurity
+- **Overfitting:** Kein Stopp → 100% Trainingsgenauigkeit, aber schlechte Testgenauigkeit. Stopp = essenziell für Verallgemeinerung.
+- **Nächste Session:** Python in der Praxis — dieses exakte Modell im Code implementieren

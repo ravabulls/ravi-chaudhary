@@ -1,0 +1,210 @@
+---
+title: "Woche 5 | Session 1: News Vendor Problem — Probabilistische Nachfrage"
+description: "Überführt das News Vendor Problem von einem deterministischen zu einem probabilistischen Umfeld und erklärt erwartete Auszahlungen und optimale Bestellstrategien."
+sidebar:
+  order: 22
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 2: Digital Business in der SC*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick: deterministische vs. probabilistische Umgebungen
+- Probabilistische Nachfrageverteilung — Aufbau und Parameter
+- Verkaufsmatrix: Verkaufte Einheiten = min(D, S)
+- NV-Gewinnmatrix über alle Nachfrage-Bestell-Kombinationen
+- Erwartungswert-Rahmenwerk — wie ein risikoneutraler NV entscheidet
+- Kernergebnis: optimale Bestellung S* ≠ D im probabilistischen Umfeld
+- Ausblick: Lieferanten- + SC-Auszahlungen, Verträge und Plattformökonomie (nächste Session)
+</Aside>
+
+---
+
+## Deterministisch vs. Probabilistisch — Was hat sich geändert?
+
+### Deterministisches Umfeld (Sessions 4 & 5)
+- Die Nachfrage D ist vor der Bestellung mit Sicherheit bekannt
+- Zwei Arten: (1) D ist eine bekannte Konstante | (2) D ist eine bekannte Funktion einer anderen Variablen (z.B. Preis)
+- **Dominante NV-Strategie:** Bestelle immer S* = D — sicher, keine Unsicherheit
+
+### Probabilistisches Umfeld (Diese Session)
+- D ist nicht mit Sicherheit bekannt — es ist nur eine Wahrscheinlichkeitsverteilung möglicher Nachfrageniveaus bekannt
+- Der NV muss die Bestellung aufgeben, BEVOR die Nachfrage realisiert wird — die Entscheidung fällt unter Unsicherheit
+- **Risiko zweier Fehler:** Überbestand (S > D) → unverkaufte Einheiten, Beschaffungskosten verschwendet | Unterbestand (S < D) → entgangene Verkäufe
+- S* = D ist nicht mehr garantiert optimal — muss Überbestandskosten vs. Unterbestandskosten abwägen
+
+<Aside type="tip">
+**★ Prüfungstipp:** Der wesentliche Wechsel von deterministisch zu probabilistisch = der NV kennt D bei der Bestellung nicht mehr. Er muss erwartete Auszahlungen zur Entscheidung nutzen. Stellen Sie dies immer klar heraus.
+</Aside>
+
+---
+
+## Probabilistische Nachfrageverteilung — Dieses Beispiel
+
+**Typ:** Diskrete Wahrscheinlichkeitsverteilung — 5 mögliche Nachfrageniveaus
+**Diskret:** In einer bestimmten Periode kann nur ein Szenario eintreten. Die Szenarien schließen sich gegenseitig aus.
+*Alternative:* Kontinuierliche Verteilungen (z.B. Normal-, Poissonverteilung) — gleiche Logik gilt, komplexere Mathematik
+
+| S# | Nachfrageniveau (D) | Wahrscheinlichkeit P(D) | Interpretation |
+|---|---|---|---|
+| 1 | 10.000 Einheiten | 20% | Szenario mit geringer Nachfrage — 1 zu 5 Chance |
+| 2 | 20.000 Einheiten | 15% | Unterdurchschnittliche Nachfrage |
+| 3 | 30.000 Einheiten | 10% | Moderate Nachfrage — unwahrscheinlichstes Szenario |
+| 4 | 40.000 Einheiten | 25% | Überdurchschnittliche Nachfrage — ziemlich wahrscheinlich |
+| 5 | 50.000 Einheiten | 30% | Hohe Nachfrage — wahrscheinlichstes Szenario |
+| **Gesamt** | — | **100%** | Diskrete Verteilung — genau ein Szenario tritt pro Periode ein |
+
+- Hinweis: Wahrscheinlichkeiten summieren sich auf 100% → gültige Verteilung ✓
+- Wahrscheinlichstes Ergebnis: D = 50.000 (30% Chance) → aber NV kann nicht garantieren, dass dies eintritt
+- Unwahrscheinlichstes: D = 30.000 (10% Chance)
+
+<Aside type="tip">
+**★ Prüfungstipp:** Überprüfen Sie immer, ob sich Wahrscheinlichkeiten zu 1 summieren. In Prüfungsfragen — erklären Sie, was jede Wahrscheinlichkeit in einfacher Sprache bedeutet, bevor Sie Erwartungswerte berechnen.
+</Aside>
+
+---
+
+## Das Entscheidungsproblem — Was sollte der NV bestellen?
+
+- **NV-Ziel:** Gewinnmaximierung
+- **Angenommener NV-Typ:** Risikoneutraler rationaler Akteur → maximiert den erwarteten (durchschnittlichen) Gewinn, nicht den Worst-Case oder Best-Case
+- **Was der NV im Voraus weiß:** Die Wahrscheinlichkeitsverteilung von D — NICHT das tatsächliche realisierte D
+- **Entscheidungswerkzeug:** Erwartungswert der Auszahlungen = Summe von (Wahrscheinlichkeit × Gewinn) über alle Nachfrageszenarien
+- **Formel:** E[Gewinn | S] = Σ P(Dᵢ) × π(S, Dᵢ) für alle Nachfrageszenarien i
+
+<Aside type="note">
+**★** Risikoneutraler NV = maximiert den erwarteten Gewinn. Dies ist die Standardannahme in der NVP-Literatur. Ein risikoaverser NV würde Abwärtsszenarien stärker gewichten.
+</Aside>
+
+---
+
+## Schritt 1 — Verkaufsmatrix: Verkaufte Einheiten = min(D, S)
+
+**Regel:** Verkaufte Einheiten = min(Nachfrage D, Bestellung S) — immer die kleinere der beiden
+- Wenn S > D: Überschüssiger Bestand bleibt unverkauft → D bestimmt die Verkäufe (nachfragebegrenzt)
+- Wenn S < D: Bestand ist erschöpft, bevor die gesamte Nachfrage gedeckt ist → S bestimmt die Verkäufe (angebotsbegrenzt)
+- Wenn S = D: perfekte Übereinstimmung → gesamte Nachfrage gedeckt, kein Restbestand (diagonale Zellen unten)
+
+| Bestellmenge (S) → <br> Nachfrage (D) ↓ | S=10K | S=20K | S=30K | S=40K | S=50K | Muster |
+|---|---|---|---|---|---|---|
+| **D=10.000** | 10K | 10K | 10K | 10K | 10K | D deckelt Verkäufe |
+| **D=20.000** | 10K | 20K | 20K | 20K | 20K | D deckelt Verkäufe |
+| **D=30.000** | 10K | 20K | 30K | 30K | 30K | D deckelt Verkäufe |
+| **D=40.000** | 10K | 20K | 30K | 40K | 40K | D deckelt Verkäufe |
+| **D=50.000** | 10K | 20K | 30K | 40K | 50K | S deckelt Verkäufe |
+
+- Hervorgehobene Diagonale (S = D): maximal mögliche Verkäufe für dieses Nachfrageniveau
+- Unterhalb der Diagonale (D > S): angebotsbegrenzt, Verkäufe = S (entgangene Verkäufe treten auf)
+- Oberhalb der Diagonale (D < S): nachfragebegrenzt, Verkäufe = D (unverkaufter Bestand tritt auf)
+
+---
+
+## Schritt 2 — NV-Gewinnmatrix
+
+**Formel:** NV-Gewinn = min(D, S) × ₹20 − S × ₹10
+- ₹20 = Nettomarge pro verkaufter Einheit (Einzelhandel ₹30 − Vertrieb ₹10)
+- S × ₹10 = Gesamtbeschaffungskosten, die an den Lieferanten gezahlt werden (unabhängig davon, wie viele verkauft werden)
+
+| Parameter | Wert |
+|---|---|
+| Marktpreis (P) (Rs./Einheit) | 30 |
+| Vertriebskosten (Rs./Einheit) | 10 |
+| Großhandelspreis (W) (Rs./Einheit) | 10 |
+| Fertigungs- & Betriebskosten des Lieferanten (Rs./Einheit) | 5 |
+| Fixkosten für Lieferanten (Rs.) | 150000 |
+
+| Bestellmenge (S) → <br> Nachfrage (D) ↓ | S=10K | S=20K | S=30K | S=40K | S=50K | Logik |
+|---|---|---|---|---|---|---|
+| **D=10.000** | +₹1L | ₹0 | −₹1L | −₹2L | −₹3L | S > D → Verlust wächst |
+| **D=20.000** | +₹1L | +₹2L | +₹1L | ₹0 | −₹1L | Höhepunkt bei S=D |
+| **D=30.000** | +₹1L | +₹2L | +₹3L | +₹2L | +₹1L | Höhepunkt bei S=D |
+| **D=40.000** | +₹1L | +₹2L | +₹3L | +₹4L | +₹3L | Höhepunkt bei S=D |
+| **D=50.000** | +₹1L | +₹2L | +₹3L | +₹4L | +₹5L | Höhepunkt bei S=D |
+
+- **Diagonale (S = D):** Immer der höchste Gewinn für jede Zeile (jedes Nachfrageniveau) — bestätigt die deterministische Regel
+- **Bewegung nach rechts von der Diagonale (S > D):** Gewinn fällt — jede zusätzliche Einheit, die gekauft, aber nicht verkauft wird, kostet ₹10 ohne Umsatz
+- **Bewegung nach links von der Diagonale (S < D):** Gewinn fällt ebenfalls — entgangene Verkäufe von je ₹20, die hätten erzielt werden können
+- **S = 10K Zeile:** Immer +₹1L unabhängig von der Nachfrage — sicher, lässt aber Geld auf dem Tisch, wenn D hoch ist
+- **S = 40K wenn D = 10K:** −₹2L → die Bestellung des 4-fachen der Nachfrage, wenn die Nachfrage nur 10K Einheiten beträgt = große verschwenderische Beschaffung
+
+<Aside type="tip">
+**★ Prüfungstipp:** Seien Sie in der Lage, eine Zelle der Gewinnmatrix von Grund auf neu zu berechnen. Z.B. S=30K, D=20K → Verkäufe = min(20K, 30K) = 20K → Gewinn = 20K×20 − 30K×10 = 4.00.000 − 3.00.000 = +₹1L.
+</Aside>
+
+---
+
+## Schritt 3 — Erwartete Gewinnberechnung (Risikoneutraler NV)
+
+Berechne für jede Bestellmenge S: `E[Gewinn | S] = Σ P(Dᵢ) × NV Gewinn(S, Dᵢ)`
+*Excel-Methode:* SUMMENPRODUKT von Wahrscheinlichkeitsvektor und Gewinnspalte für diese Bestellmenge
+
+| Bestellmenge (S) | P=20% D=10K | P=15% D=20K | P=10% D=30K | P=25% D=40K | P=30% D=50K | E[Gewinn] (₹) | NV wählt? |
+|---|---|---|---|---|---|---|---|
+| **S = 10.000** | +₹1L | +₹1L | +₹1L | +₹1L | +₹1L | ₹1.00.000 | Nein |
+| **S = 20.000** | ₹0 | +₹2L | +₹2L | +₹2L | +₹2L | ₹1.60.000 | Nein |
+| **S = 30.000** | −₹1L | +₹1L | +₹3L | +₹3L | +₹3L | ₹1.90.000 | Nein |
+| **S = 40.000 ★** | −₹2L | ₹0 | +₹2L | +₹4L | +₹4L | ₹2.00.000 ★ | **JA ✓** |
+| **S = 50.000** | −₹3L | −₹1L | +₹1L | +₹3L | +₹5L | ₹1.50.000 | Nein |
+
+### Schritt-für-Schritt-Beispiele
+- **E[Gewinn | S = 10.000]:** Gleicher Gewinn (+₹1L) über alle Nachfrageniveaus → E[Gewinn] = 20%×1L + 15%×1L + 10%×1L + 25%×1L + 30%×1L = ₹1.00.000. Sichere Wahl, verpasst aber das Aufwärtspotenzial bei hoher Nachfrage.
+- **E[Gewinn | S = 20.000]:** ₹0 bei D=10K (kein Gewinn kein Verlust) | +₹2L für D ≥ 20K. E[Gewinn] = 20%×0 + (15%+10%+25%+30%)×2L = 0,8 × 2.00.000 = ₹1.60.000
+- **E[Gewinn | S = 40.000] — OPTIMAL ★:** Gewinne: D=10K → −₹2L | D=20K → ₹0 | D=30K → +₹2L | D=40K → +₹4L | D=50K → +₹4L. E[Gewinn] = 20%×(−2L) + 15%×0 + 10%×2L + 25%×4L + 30%×4L = −40.000 + 0 + 20.000 + 1.00.000 + 1.20.000 = ₹2.00.000 ← am höchsten ✓
+
+---
+
+## Kernergebnis — Probabilistisches Umfeld
+
+- **Optimale NV-Bestellung:** S* = 40.000 Einheiten → E[Gewinn] = ₹2.00.000
+- **Wichtig:** S* = 40.000 ≠ irgendein spezifisches Nachfrageniveau. Es ist NICHT einfach "Anpassung an D"
+- Der NV ist bereit, das Risiko einzugehen, 40K zu bestellen, auch wenn es manchmal zu Verlusten führt (wenn D = 10K) — weil der Erwartungswert über alle Szenarien bei S = 40K am höchsten ist
+- Eine Bestellung von S = 50K reduziert E[Gewinn] wieder auf ₹1.50.000 — die Strafe für Überbestand überwiegt das Aufwärtspotenzial bei hoher Nachfrage
+
+**Warum S* > erwartete Nachfrage?** Szenarien mit hoher Nachfrage (D=40K, 30%; D=50K, 25%) sind wahrscheinlich genug, dass der Vorteil des zusätzlichen Bestands den Nachteil des Überbestands im Fall von geringer Nachfrage überwiegt.
+Tradeoff im Kern des NVP: **Überbestandskosten** (Kosten für zu viel Bestellen) vs. **Unterbestandskosten** (Kosten für zu wenig Bestellen)
+
+<Aside type="note">
+**★** Im probabilistischen Umfeld → gleicht das optimale S* Überbestands- und Unterbestandskosten aus. S* hängt von der Nachfrageverteilung UND den Kosten-/Umsatzparametern ab — NICHT nur von der erwarteten Nachfrage.
+</Aside>
+
+<Aside type="tip">
+**★ Prüfungstipp:** Sagen Sie nicht S* = E[D] im probabilistischen NVP. Das ist falsch. S* wird durch den Vergleich der erwarteten Auszahlungen über mögliche Bestellmengen hinweg gefunden. Kennen Sie die Formel: E[Gewinn|S] = Σ P(Dᵢ) × π(S, Dᵢ).
+</Aside>
+
+---
+
+## Deterministisch vs. Probabilistisch — Seite an Seite
+
+| Aspekt | Deterministisch | Probabilistisch |
+|---|---|---|
+| **Nachfragewissen** | Vor der Bestellung genau bekannt | Nur als Wahrscheinlichkeitsverteilung bekannt |
+| **NV-Entscheidungsregel** | S* = D (Nachfrage immer anpassen) | S* = arg max E[Gewinn \| S] |
+| **Risiko** | Keines — D ist sicher | Verlust durch Überbestand ODER entgangene Verkäufe — nicht vermeidbar |
+| **S* vs. Nachfrage** | S* = D (exakte Übereinstimmung) | S* kann von jedem spezifischen D abweichen (hier: S*=40K, kein D=40K sicher) |
+| **Erwarteter NV-Gewinn** | Genauer Gewinn im Voraus bekannt | ₹2.00.000 (erwartet, nicht garantiert) |
+| **SC-Konflikt?** | Ja — wenn D < RS-Breakeven (30K) | Wird in der nächsten Session analysiert |
+
+---
+
+## Ausblick — Was kommt als Nächstes
+
+- **Nächste Session:** Analyse der Lieferantenauszahlung unter probabilistischem Umfeld — macht S*=40K den RS profitabel?
+- **Danach:** Verträge als Koordinationsinstrument — einfache Verträge + beliebte Verträge (z.B. Buyback, Revenue Sharing)
+- **Abschließend:** Wie die Plattformökonomie die Koordination erleichtert — die Brücke vom NVP zur realen SC-Digitalisierung
+
+---
+
+## Zusammenfassung der Session
+
+- **Probabilistisches NVP:** D ist ungewiss — der NV kennt nur die Wahrscheinlichkeitsverteilung, nicht das tatsächliche D
+- **Nachfrageverteilung:** 5 diskrete Szenarien: 10K(20%), 20K(15%), 30K(10%), 40K(25%), 50K(30%)
+- **Verkaufsregel:** Verkaufte Einheiten = min(D, S) — immer
+- **NV-Gewinn pro Zelle:** min(D,S) × ₹20 − S × ₹10
+- **Entscheidungsrahmen:** Risikoneutraler NV maximiert E[Gewinn \| S] = Σ P(Dᵢ) × Gewinn(S, Dᵢ)
+- **Ergebnis:** S* = 40.000 Einheiten → E[Gewinn] = ₹2.00.000 (höchster Wert unter allen Optionen)
+- **Kernerkenntnis:** S* ≠ D im probabilistischen Umfeld. Bestimmt durch das Abwägen von Überbestands- vs. Unterbestandskosten über alle Szenarien hinweg.

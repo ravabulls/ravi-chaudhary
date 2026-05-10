@@ -1,0 +1,148 @@
+---
+title: "Woche 7 | Session 5: Modellevaluierung, Overfitting, Random Forest & Fehlermetriken"
+description: "Lernen Sie, wie man Prognosemodelle evaluiert, Overfitting mit Random Forests identifiziert und abschwächt und wichtige Fehlermetriken wie MSE, MAD und MAPE versteht."
+sidebar:
+  order: 35
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Overfitting und Random Forest Konzept](/learnings/online/Supply-Chain-Digitization/sc_w7s5_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Modellleistungsmessung — MSE auf Testdaten (300 Beobachtungen)
+- Können wir den MSE reduzieren? — Auswirkung einer zunehmenden Baumtiefe
+- Overfitting (Überanpassung) — Simulation von Trainings- vs. Test-MSE über die Tiefen 2–12
+- Optimale Baumtiefe = 5
+- Random Forest — Konzept, Bootstrap-Sampling, Merkmalsrandomisierung
+- Random Forest vs. einzelner Regressionsbaum — MSE-Vergleich
+- Fehlermetriken — MSE, MAD, MAPE, Bias, Tracking Signal
+- Rahmenwerk zur Modellauswahl — 7-Schritte-Prozess
+</Aside>
+
+---
+
+## Schritt 1 — Modellleistung auf Testdaten messen
+
+**Testdaten:** 300 zurückgehaltene Beobachtungen aus dem Datensatz mit 1000 Einzelhändlern. Wurden NIEMALS beim Training verwendet.
+Für jeden der 300 Einzelhändler: `yᵢ` = tatsächliche Bestellmenge | `ŷᵢ` = vom Regressionsbaum prognostiziert
+
+- **MSE-Formel (Testdaten):** `MSE = (1/n) × Σᵢ₌₁ⁿ (yᵢ − ŷᵢ)²`
+- **Ergebnis bei Tiefe = 2:** MSE (Test) = 5.662.511
+- **Ergebnis bei Tiefe = 2 (Training):** MSE (Training) = 5.996.464
+
+<Aside type="note">
+**★** Evaluieren Sie das Modell IMMER anhand von TESTDATEN — nicht anhand von Trainingsdaten. Der Trainings-MSE wird immer sinken, je komplexer das Modell wird. Der Test-MSE zeigt, wie das Modell bei NEUEN, ungesehenen Einzelhändlern abschneidet.
+</Aside>
+
+### Python-Code für Test-Vorhersage und MSE
+```python
+from sklearn.metrics import mean_squared_error
+
+# Auf Testdaten vorhersagen
+y_pred_test = reg_tree.predict(X_test)
+ 
+# MSE auf Testdaten berechnen
+mse_test = mean_squared_error(Y_test, y_pred_test)
+print("Test MSE:", mse_test)
+# Ausgabe: Test MSE: 5662511.xx
+```
+
+---
+
+## Overfitting — Simulation von Trainings- vs. Test-MSE
+
+**Hypothese:** Wenn wir Knoten öfter aufteilen (tieferer Baum) → verfeinerte Segmente → niedrigerer MSE.
+- **Bei TRAININGSDATEN:** Ja — der MSE sinkt immer mit zunehmender Tiefe.
+- **Bei TESTDATEN:** Sinkt zunächst → steigt dann wieder. Das Modell beginnt, die Trainingsdaten auswendig zu lernen, anstatt allgemeine Muster zu erkennen → scheitert bei neuen Einzelhändlern. Das nennt man **Overfitting** (Überanpassung).
+
+### MSE-Werte bei jeder Tiefe
+| Baumtiefe | Trainings-MSE | Test-MSE | Interpretation |
+|---|---|---|---|
+| **2 (Basis)** | 5.996.464 | 5.662.511 | Startpunkt. Test-MSE etwas niedriger als Training. |
+| **3, 4** | ↓ Reduziert | ↓ Reduziert | Beide verbessern sich — mehr Splits helfen. |
+| **5 ← Optimal** | ↓ Reduziert | **Minimum ★** | Beste Testleistung. Optimale Baumtiefe = 5. |
+| **6** | ↓ Sinkt weiter | ↑ Beginnt zu steigen | OVERFITTING BEGINNT. Testleistung verschlechtert sich. |
+| **7–12** | ↓ → 0 (auswendig lernen) | ↑ Steigt weiter | Schweres Overfitting. Test-Vorhersage unbrauchbar. |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Overfitting wird immer gefragt. Definieren Sie es → zeigen Sie das Muster von Trainings- vs. Test-MSE → erklären Sie, dass die Lösung in Stoppkriterien (max. Tiefe, min. Beobachtungen) ODER dem Wechsel zu einer Ensemble-Methode wie Random Forest besteht.
+</Aside>
+
+---
+
+## Random Forest Algorithmus — Die Lösung für Overfitting
+
+**Random Forest** = viele Entscheidungsbäume, die auf randomisierten Teilmengen von Daten und Merkmalen basieren.
+**Ensemble-Modellierung:** Statt 1 Modell → baue `k` Modelle → kombiniere Vorhersagen. Die Durchschnittsbildung über viele Bäume gleicht Einzelfehler aus → genauer und stabiler.
+
+### Zwei Quellen der Zufälligkeit
+1. **Bootstrap-Sampling:** Ziehen von `k` zufälligen Stichproben MIT ZURÜCKLEGEN. Jeder Baum trainiert mit einer anderen Stichprobe.
+2. **Merkmalsrandomisierung:** Jeder Baum nutzt eine zufällige Teilmenge der Merkmale (z.B. 3 von 10). Verschiedene Bäume fokussieren sich auf unterschiedliche Aspekte.
+
+### 4-Schritte-Algorithmus
+<Steps>
+1. **Bootstrap-Sampling:** Erstelle `k` verschiedene Trainingsstichproben.
+2. **Merkmale randomisieren:** Jeder Baum nutzt eine zufällige Teilmenge der Merkmale.
+3. **`k` Bäume aufbauen:** Baue `k` Regressionsbäume → jeder liefert eine prognostizierte Nachfrage (`ŷ`).
+4. **Vorhersagen kombinieren:** Durchschnitt der `k` prognostizierten Nachfragen: `Ŷ_final = (ŷ₁ + ŷ₂ + … + ŷₖ) / k`
+</Steps>
+
+<Aside type="note">
+**★** Random Forest vs. einzelner Entscheidungsbaum: Einzelner Baum = leicht zu interpretieren, aber anfällig für Overfitting. Random Forest = schwerer zu interpretieren (20+ Bäume), aber viel genauer und robuster bei neuen Daten.
+</Aside>
+
+### Ergebnisse — Random Forest vs. einzelner Regressionsbaum
+| Modell | Max. Tiefe | Test-MSE | Besser? |
+|---|---|---|---|
+| **Einzelner Regressionsbaum** (Tiefe 2) | 2 | 5.662.511 | Referenz |
+| **Einzelner Regressionsbaum** (Tiefe 5) | 5 | ~44,xx,xxx | Besser als Tiefe 2 |
+| **Random Forest** (20 Bäume, Tiefe 5) | 5 (pro Baum) | **3.721.603** ★ | **Am besten ✓ (~34% niedriger als Tiefe 2)** |
+
+---
+
+## Fehlermetriken für Nachfrageprognosen — Alle 5 Maße
+
+**Fehlerterm:** `eₜ = Fₜ − Dₜ` (wobei Fₜ = Prognose, Dₜ = Tatsächlich)
+
+| Metrik | Vollständiger Name | Formel | Wann verwenden / Interpretation |
+|---|---|---|---|
+| **MSE** | Mean Squared Error | `(1/n) × Σ(Fₜ − Dₜ)²` | Bestraft große Fehler. Gut für Modellvergleiche. Nicht in Originaleinheiten. |
+| **MAD** | Mean Absolute Deviation | `(1/n) × Σ\|Fₜ − Dₜ\|` | Leichter zu interpretieren (gleiche Einheit wie Nachfrage). Robuster gegen Ausreißer. |
+| **MAPE** | Mean Absolute % Error | `(100/n) × Σ\|Fₜ − Dₜ\| / Dₜ` | Am verständlichsten fürs Management ("im Schnitt X% daneben"). Skalenunabhängig. |
+| **Bias** | Forecast Bias (Prognose-Verzerrung) | `(1/n) × Σ(Fₜ − Dₜ)` | Misst systematische Über-/Unterschätzung. Sollte nahe 0 liegen. |
+| **Tracking Signal** | Tracking Signal | `Bias / MAD` | Signalisiert, ob das Modell abdriftet. Löst Überprüfung aus, wenn außerhalb von ±4 bis ±6. |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Kennen Sie alle 5 Metriken mit Formeln und wissen Sie, wann jede bevorzugt wird. MSE und MAPE werden am häufigsten geprüft. Bias und Tracking Signal betreffen die Richtung des systematischen Fehlers.
+</Aside>
+
+---
+
+## Rahmenwerk zur Modellauswahl — 7-Schritte-Prozess
+
+| # | Schritt | Beispiel aus diesem Kurs |
+|---|---|---|
+| **1** | **Daten verstehen** | 7 Einzelhändler-Merkmale: kategoriale Variablen codiert. Auf Ausreißer geprüft. |
+| **2** | **Evaluierungsmetrik wählen** | MSE gewählt. MAPE besser fürs Management-Reporting. |
+| **3** | **Daten aufteilen** | 70% Training \| 30% Test. Testdaten NUR für finale Evaluierung nutzen. |
+| **4** | **Mit mehreren Algorithmen experimentieren** | Regressionsbaum vs. Random Forest getestet. RF gewinnt. |
+| **5** | **Hyperparameter-Tuning** | Tiefen 2–12 getestet, um optimale Tiefe=5 zu finden. |
+| **6** | **Interpretierbarkeit berücksichtigen** | Einzelner Baum: sehr interpretierbar. Random Forest: schwerer zu erklären, aber genauer. |
+| **7** | **Ressourcenbeschränkungen prüfen** | 20-Baum Random Forest ist machbar. 1000+ Baum XGBoost braucht evtl. Cloud. |
+
+---
+
+## Modul 3 — Komplette Zusammenfassung
+
+- **Analytics + Big Data:** Daten → Modell → Entscheidung → Wert. Big Data 6 Vs.
+- **Arten von Analytics:** Deskriptiv → Diagnostisch → Prädiktiv → Präskriptiv.
+- **Predictive Maintenance:** Klassifikationsbaum (Gini). Output: 4 Blattknoten-Regeln. Python-Implementierung.
+- **Nachfrageprognose:** Regressionsbaum (MSE). Output: kontinuierliche Bestellmengen. Python: Dummy-Variablen.
+- **Random Forest & Evaluierung:** Overfitting, Bootstrap, Fehlermetriken (MSE, MAD, MAPE).

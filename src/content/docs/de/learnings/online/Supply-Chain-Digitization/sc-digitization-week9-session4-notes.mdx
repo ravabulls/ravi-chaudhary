@@ -1,0 +1,124 @@
+---
+title: "Woche 9 | Session 4: Intelligente Entscheidungstools — Effizienzmessung & Data Envelopment Analysis (DEA)"
+description: "Eine Einführung in die Data Envelopment Analysis (DEA) zur Messung der Effizienz über mehrere Produktionsstätten hinweg, unter Verwendung mehrerer Inputs und Outputs."
+sidebar:
+  order: 44
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Konzept der Data Envelopment Analysis](/learnings/online/Supply-Chain-Digitization/sc_w9s4_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Kontext — Neue Fallstudie
+- Fallstudie — Automobilunternehmen: 9 Produktionsstätten
+- Was ist Effizienz? — 1 Input, 1 Output Beispiel
+- Effizienzgrenze (Efficient Frontier)
+- Effizienz mit mehreren Inputs & Outputs
+- DEA-Modellformulierung & Schnellübersicht
+</Aside>
+
+---
+
+## 1. Fallstudie — Automobilunternehmen: 9 Produktionsstätten
+
+**Problemstellung:** Das Management möchte die Effizienz von 9 Produktionsstätten messen, um herauszufinden, welche effizient sind, welche nicht und wo Verbesserungen möglich sind.
+*Verbesserungsoptionen:* Outputs erhöhen ODER Inputs reduzieren.
+
+### Erfasste Parameter
+- **Output 1:** Produktionsertrag (Yield) (% fehlerfreie Produkte)
+- **Output 2:** OEE (Overall Equipment Effectiveness) (%)
+- **Input 1:** Zykluszeit (Minuten)
+- **Input 2:** Ressourcenauslastung (%)
+
+<Aside type="note">
+**★** Höhere Outputs = besser. Niedrigere Inputs = besser. Effizienz = mehr Output pro Inputeinheit erhalten.
+</Aside>
+
+![Daten des Automobilunternehmens](/learnings/online/Supply-Chain-Digitization/sc_w9s4_image2.png)
+
+---
+
+## 2. Was ist Effizienz? — 1 Input, 1 Output Beispiel
+
+### Grundlegende Effizienzformel
+`Effizienz = Output / Input`  *(Bedingung: Effizienz ≤ 1)*
+
+**Normalisieren:** Teilen Sie alle rohen Verhältnisse durch das maximale Verhältnis über alle Standorte. Dies stellt sicher, dass die maximale Effizienz = 1,0 ist und alle anderen ≤ 1 sind.
+
+| Standort | Input | Output | Output / Input | ÷ Max (1.33) | Effizienz | Status |
+|---|---|---|---|---|---|---|
+| **A** | 2 | 1 | 0.50 | 0.375 | 37.5% | Nicht effizient |
+| **B** | 3 | 4 | 1.33 | 1.000 | 100% | **Effizient ★** |
+| **C** | 5 | 5 | 1.00 | 0.750 | 75% | Nicht effizient |
+
+*(Maximales rohes Verhältnis = 1,33. B ist effizient. A und C sind es nicht.)*
+
+---
+
+## 3. Effizienzgrenze (Efficient Frontier)
+
+Eine Linie/Kurve, die alle Standorte mit einer Effizienz = 1,0 verbindet.
+- **Effiziente Standorte** liegen bereits AUF der Grenze.
+- **Ineffiziente Standorte** liegen UNTERHALB der Grenze.
+
+### Wie man einen ineffizienten Standort effizient macht
+Zwei Strategien:
+1. **Output erhöhen:** mit demselben Input mehr produzieren → bewegt sich NACH OBEN zur Grenze.
+2. **Input reduzieren:** denselben Output mit weniger Input produzieren → bewegt sich NACH LINKS zur Grenze.
+
+<Aside type="note">
+**★** DEA verrät BEIDES: Wie weit ein Standort von der Grenze entfernt ist UND um wie viel er Inputs/Outputs verbessern muss, um effizient zu werden.
+</Aside>
+
+---
+
+## 4. Effizienz mit mehreren Inputs & Outputs
+
+Bei 2 Outputs und 2 Inputs funktioniert ein einfaches O/I-Verhältnis nicht mehr — es wird eine gewichtete Formel benötigt.
+
+`Effizienz = Gewichtete Summe der Outputs ÷ Gewichtete Summe der Inputs`
+`= (V1·Y1 + V2·Y2) ÷ (U1·X1 + U2·X2) ≤ 1`
+
+- `V1, V2` = Gewichtungen für Output 1 und Output 2.
+- `U1, U2` = Gewichtungen für Input 1 und Input 2.
+Diese Gewichtungen sind **Entscheidungsvariablen** — der Solver findet die optimalen Werte.
+
+---
+
+## 5. DEA-Modellformulierung
+
+**Data Envelopment Analysis (DEA)** — Optimierungsmodell zum Finden von Effizienzwerten für jeden Standort.
+Führen Sie das Modell 9 Mal aus — einmal pro Standort. Nur die Zielfunktion ändert sich. Die Nebenbedingungen bleiben gleich.
+
+| Komponente | Ausdruck (für Standort k) | Erklärung |
+|---|---|---|
+| **Zielfunktion** *(ändert sich pro Standort)* | Maximieren: `(Yk1·V1 + Yk2·V2) ÷ (Xk1·U1 + Xk2·U2)` | Maximiere gewichteten Output ÷ gewichteten Input für Zielstandort `k`. |
+| **Nebenbedingung** *(gleich für alle)* | Für jedes `i = 1 bis 9`: `(Yi1·V1 + Yi2·V2) ÷ (Xi1·U1 + Xi2·U2) ≤ 1` | Stellt sicher, dass KEINEM Standort eine Effizienz > 1 erlaubt ist. |
+| **Entscheidungsvariablen** | `V1, V2`, `U1, U2` | 4 Unbekannte. |
+| **Nicht-Negativität** | `V1, V2, U1, U2 ≥ 0` | Gewichtungen können nicht negativ sein. |
+
+Für jeden Standortlauf: Der Solver findet `V1, V2, U1, U2`, die die Effizienz dieses Standorts maximieren, ohne dass ein anderer Standort 1 überschreitet.
+
+<Aside type="note">
+**★** DEA nutzt NICHT für alle Standorte die gleichen Gewichte. Jeder Standort erhält die GÜNSTIGSTEN Gewichte, um seinen eigenen Effizienzwert zu maximieren.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Problem:** Effizienzmessung von 9 Standorten (2 Inputs, 2 Outputs).
+- **Effizienz:** Output/Input, so normalisiert, dass max = 1.
+- **Mehrere I/O:** Gewichtete Summen verwenden. `Effizienz = (V1·Y1+V2·Y2) ÷ (U1·X1+U2·X2) ≤ 1`
+- **DEA-Modell:** LP wird 9 Mal gelöst — die Zielfunktion ändert sich pro Standort, die Nebenbedingungen sind identisch.
+
+<Aside type="tip">
+**★ Prüfungstipp:** DEA wird separat für JEDEN Standort gelöst. Die Zielfunktion ändert sich jedes Mal, aber die Nebenbedingungen bleiben gleich. DEA-Gewichte sind Entscheidungsvariablen; der Solver findet die günstigsten Gewichte für jeden Standort.
+</Aside>

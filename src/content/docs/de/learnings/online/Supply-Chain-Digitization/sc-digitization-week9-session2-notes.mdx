@@ -1,0 +1,122 @@
+---
+title: "Woche 9 | Session 2: K-means Clustering — Algorithmus, WCSS & Elbow-Methode"
+description: "Ein tiefer Einblick in die Funktionsweise des K-means-Algorithmus, das Verständnis der Fehlerquadratsumme innerhalb von Clustern (WCSS) und die Nutzung der Elbow-Methode, um die optimale Anzahl von Clustern zu finden."
+sidebar:
+  order: 42
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![K-means Clustering Konzepte](/learnings/online/Supply-Chain-Digitization/sc_w9s2_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Session 1
+- K-means Clustering — 5-Schritte-Algorithmus
+- Wichtige Formeln — Euklidische Distanz & Zentroid
+- Fehlerquadratsumme innerhalb von Clustern (WCSS)
+- Elbow-Methode — Bestimmung des optimalen K
+- K-means Output → Input für Optimierungsmodell
+</Aside>
+
+---
+
+## 1. K-means Clustering — 5-Schritte-Algorithmus
+
+Angenommen, `K` steht bereits fest (z.B. K = 3 bedeutet, wir wollen 3 DCs).
+
+<Steps>
+1. **Zufällige Auswahl von K initialen Zentroiden:** Wählen Sie K beliebige Punkte als Startpositionen.
+2. **Berechnung der euklidischen Distanz:** Von jedem Punkt zu jedem Zentroid. Jeder Kunde erhält K Distanzwerte.
+3. **Zuweisung jedes Datenpunkts zum nächstgelegenen Zentroid:** Cluster bilden.
+4. **Neuberechnung des Zentroids für jeden Cluster:** Neuer Zentroid = Durchschnitt aller aktuell in diesem Cluster befindlichen Punkte.
+5. **Schritte 3 & 4 wiederholen bis zur Konvergenz:** Konvergenz = Zentroide bewegen sich nicht mehr UND kein Datenpunkt wechselt seinen Cluster.
+</Steps>
+
+<Aside type="note">
+**★** Finale stabile Zentroide = vorgeschlagene DC-Standorte; finale Cluster = Kundenzonen.
+</Aside>
+
+---
+
+## 2. Wichtige Formeln
+
+### Euklidische Distanz — Schritt 2
+Distanz vom Kunden `(xi, yi)` zum Zentroid `k` `(μk, ηk)`:
+`d(i → k) = √ [ (xi − μk)² + (yi − ηk)² ]`
+
+### Zentroid-Neuberechnung — Schritt 4
+Nach der Clusterbildung wird jeder Zentroid als Mittelwert seiner Mitglieder neu berechnet:
+`Neuer Zentroid = ( Σxi / n , Σyi / n )`
+*(x-Koordinate = Durchschnitt aller xi im Cluster; y-Koordinate = Durchschnitt aller yi im Cluster)*
+
+---
+
+## 3. Fehlerquadratsumme innerhalb von Clustern (WCSS)
+
+**WCSS (Within-Cluster Sum of Squares)** = Summe der quadrierten Distanzen von jedem Punkt zu seinem Cluster-Zentroid.
+- Misst, wie kompakt / eng die Cluster sind.
+- Niedrigerer WCSS = Kunden sind näher an ihrem DC = bessere Reaktionsfähigkeit.
+
+### Wie sich der WCSS mit K verändert
+Wenn K steigt, sinkt der WCSS immer — mehr Cluster bedeuten engere Gruppierungen.
+- **K = 1:** Alle 811 in einem Cluster → WCSS ist maximal.
+- **K = 811:** Jeder Kunde ist sein eigener Cluster → WCSS = 0 (nicht machbar).
+
+Kein Extrem ist praktisch → den optimalen Mittelweg findet man mit der Elbow-Methode.
+
+---
+
+## 4. Elbow-Methode — Bestimmung des optimalen K
+
+### Konzept
+Tragen Sie den WCSS (y-Achse) gegen K (x-Achse) auf. Die Kurve fällt anfangs steil ab und flacht dann ab. Der Knick = **Elbow** (Ellenbogen).
+Das K am Ellenbogen = optimale Anzahl von DCs (beste Balance aus Reaktionsfähigkeit vs. Kosten).
+Nach dem Ellenbogen: Mehr DCs bringen nur noch wenig Nutzen beim WCSS, erhöhen aber die Kosten erheblich.
+
+### Das Elbow-Diagramm lesen
+- 1 → 2 Cluster: großer Gewinn
+- 2 → 3 Cluster: großer Gewinn
+- 3 → 4 Cluster: signifikanter Gewinn
+- 4 → 5 Cluster: kleiner Gewinn
+- 5 → 6+: sehr marginale Reduktion
+**Elbow bei K = 4 → optimale Anzahl an DCs = 4**
+
+*(K = 5 ist akzeptabel, wenn das Budget es zulässt, aber die endgültige Entscheidung hängt von strategischen Zielen ab)*
+
+<Aside type="note">
+**★** Elbow = Punkt, an dem die marginale WCSS-Reduktion aufhört signifikant zu sein. Das K am Elbow = optimale Clusteranzahl.
+</Aside>
+
+---
+
+## 5. K-means Output → Input für Optimierungsmodell
+
+K-means liefert Cluster-Zentroide (vorgeschlagene DC-Koordinaten) und Kunden-DC-Zuweisung. Diese fließen dann in ein vollständiges Optimierungsmodell ein, um die Lösung weiter zu verfeinern.
+
+| Phase | Detail |
+|---|---|
+| **K-means Output** | Cluster-Zentroide (vorgeschlagene DC-Standorte), Kunden-zu-DC-Zuweisung |
+| **Wird als Input genutzt für...** | Optimierungsmodell (LP / CPLP) |
+| **Optimierung fügt hinzu...**| Kapazitätsbeschränkungen, Nachfragebeschränkungen, Transportkosten, Tourenplanung |
+| **Finaler Output** | Exakte DC-Standorte, welches DC welche Kunden bedient, Tourenplan |
+
+---
+
+## Zusammenfassung der Session
+
+- **K-means Algorithmus:** 5 Schritte — zufällige Zentroide → Distanz berechnen → zuweisen → Zentroid neu berechnen → wiederholen bis Konvergenz.
+- **Euklidische Distanz:** `d = √[(xi−μk)² + (yi−ηk)²]`
+- **Zentroid-Formel:** `(Σxi/n, Σyi/n)`
+- **WCSS:** Σ quadrierte Distanzen von jedem Punkt zu seinem Zentroid. Niedriger = engere Cluster.
+- **Elbow-Methode:** WCSS vs K auftragen, Knick finden. K am Elbow ist optimale Anzahl an DCs.
+- **Fallstudien-Ergebnis:** Elbow bei K = 4. K-means Outputs dienen als Input für LP-Optimierungsmodell zur finalen Verfeinerung.
+
+<Aside type="tip">
+**★ Prüfungstipp:** WCSS sinkt immer, wenn K steigt. Extreme (K=1 oder K=n) sind unpraktisch. K-means Zentroide dienen als INPUT für ein Optimierungsmodell; K-means allein berücksichtigt weder Kapazität noch Kosten.
+</Aside>

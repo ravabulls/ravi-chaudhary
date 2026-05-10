@@ -1,0 +1,210 @@
+---
+title: "Week 5 | Session 1: News Vendor Problem — Probabilistic Demand Setting"
+description: "Transitions the News Vendor Problem from a deterministic to a probabilistic setting, explaining expected payoffs and optimal order strategies."
+sidebar:
+  order: 22
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 2: Digital Business in SC*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Recap: deterministic vs. probabilistic settings
+- Probabilistic demand distribution — setup and parameters
+- Sales matrix: units sold = min(D, S)
+- NV profit matrix across all demand-order combinations
+- Expected value framework — how a risk-neutral NV decides
+- Key result: optimal order S* ≠ D in probabilistic setting
+- Preview: supplier + SC payoffs, contracts, and platform economy (next session)
+</Aside>
+
+---
+
+## Deterministic vs. Probabilistic — What Changed?
+
+### Deterministic Setting (Sessions 4 & 5)
+- Demand D is known with certainty before the order is placed
+- Two types: (1) D is a known constant | (2) D is a known function of another variable (e.g. price)
+- **NV dominant strategy:** Always order S* = D — safe, no uncertainty
+
+### Probabilistic Setting (This Session)
+- D is not known with certainty — only a probability distribution of possible demand levels is known
+- NV must place order BEFORE demand is realised — decision is made under uncertainty
+- **Risk of two errors:** Overstock (S > D) → unsold units, procurement cost wasted | Understock (S < D) → lost sales
+- S* = D no longer guaranteed to be optimal — must balance overage cost vs. underage cost
+
+<Aside type="tip">
+**★ Exam tip:** The key shift from deterministic to probabilistic = NV no longer knows D when ordering. Must use expected payoffs to decide. Always state this clearly.
+</Aside>
+
+---
+
+## Probabilistic Demand Distribution — This Example
+
+**Type:** Discrete probability distribution — 5 possible demand levels
+**Discrete:** Only one scenario can realise in a given period. Scenarios are mutually exclusive.
+*Alternative:* Continuous distributions (e.g. Normal, Poisson) — same logic applies, more complex math
+
+| S# | Demand Level (D) | Probability P(D) | Interpretation |
+|---|---|---|---|
+| 1 | 10,000 units | 20% | Low demand scenario — 1 in 5 chance |
+| 2 | 20,000 units | 15% | Below-average demand |
+| 3 | 30,000 units | 10% | Moderate demand — least likely scenario |
+| 4 | 40,000 units | 25% | Above-average demand — fairly likely |
+| 5 | 50,000 units | 30% | High demand — most likely scenario |
+| **Total** | — | **100%** | Discrete distribution — exactly one scenario realises per period |
+
+- Note: Probabilities sum to 100% → valid distribution ✓
+- Most likely outcome: D = 50,000 (30% chance) → but NV cannot guarantee this will occur
+- Least likely: D = 30,000 (10% chance)
+
+<Aside type="tip">
+**★ Exam tip:** Always verify probabilities sum to 1. In exam questions — state what each probability means in plain language before computing expected values.
+</Aside>
+
+---
+
+## The Decision Problem — What Should NV Order?
+
+- **NV objective:** Maximise profit
+- **NV type assumed:** Risk-neutral rational player → maximises expected (average) profit, not worst-case or best-case
+- **What NV knows in advance:** The probability distribution of D — NOT the actual realised D
+- **Decision tool:** Expected value of payoffs = sum of (probability × profit) across all demand scenarios
+- **Formula:** E[Profit | S] = Σ P(Dᵢ) × π(S, Dᵢ) for all demand scenarios i
+
+<Aside type="note">
+**★** Risk-neutral NV = maximise expected profit. This is the standard assumption in NVP literature. A risk-averse NV would weight downside scenarios more heavily.
+</Aside>
+
+---
+
+## Step 1 — Sales Matrix: Units Sold = min(D, S)
+
+**Rule:** Units sold = min(Demand D, Order S) — always the smaller of the two
+- If S > D: excess stock sits unsold → D determines sales (demand-limited)
+- If S < D: run out of stock before all demand is met → S determines sales (supply-limited)
+- If S = D: perfect match → all demand met, no leftover stock (diagonal cells below)
+
+| Order Size (S) → <br> Demand (D) ↓ | S=10K | S=20K | S=30K | S=40K | S=50K | Pattern |
+|---|---|---|---|---|---|---|
+| **D=10,000** | 10K | 10K | 10K | 10K | 10K | D caps sales |
+| **D=20,000** | 10K | 20K | 20K | 20K | 20K | D caps sales |
+| **D=30,000** | 10K | 20K | 30K | 30K | 30K | D caps sales |
+| **D=40,000** | 10K | 20K | 30K | 40K | 40K | D caps sales |
+| **D=50,000** | 10K | 20K | 30K | 40K | 50K | S caps sales |
+
+- Highlighted diagonal (S = D): maximum possible sales for that demand level
+- Below diagonal (D > S): supply-limited, sales = S (lost sales occur)
+- Above diagonal (D < S): demand-limited, sales = D (unsold stock occurs)
+
+---
+
+## Step 2 — NV Profit Matrix
+
+**Formula:** NV Profit = min(D, S) × ₹20 − S × ₹10
+- ₹20 = net margin per unit sold (retail ₹30 − distribution ₹10)
+- S × ₹10 = total procurement cost paid to supplier (regardless of how many are sold)
+
+| Parameters | Value |
+|---|---|
+| Market Price (P) (Rs./unit) | 30 |
+| Distribution Cost (Rs./unit) | 10 |
+| Wholesale Selling Price (W) (Rs./unit) | 10 |
+| Supplier's Manufacturing & Operating Costs (Rs./unit) | 5 |
+| Fixed Costs for Supplier (Rs.) | 150000 |
+
+| Order Size (S) → <br> Demand (D) ↓ | S=10K | S=20K | S=30K | S=40K | S=50K | Logic |
+|---|---|---|---|---|---|---|
+| **D=10,000** | +₹1L | ₹0 | −₹1L | −₹2L | −₹3L | S > D → loss grows |
+| **D=20,000** | +₹1L | +₹2L | +₹1L | ₹0 | −₹1L | Peak at S=D |
+| **D=30,000** | +₹1L | +₹2L | +₹3L | +₹2L | +₹1L | Peak at S=D |
+| **D=40,000** | +₹1L | +₹2L | +₹3L | +₹4L | +₹3L | Peak at S=D |
+| **D=50,000** | +₹1L | +₹2L | +₹3L | +₹4L | +₹5L | Peak at S=D |
+
+- **Diagonal (S = D):** Always the peak profit for each row (each demand level) — confirms deterministic rule
+- **Moving right of diagonal (S > D):** Profit falls — each extra unit bought but not sold costs ₹10 with no revenue
+- **Moving left of diagonal (S < D):** Profit also falls — missed sales of ₹20 each that could have been earned
+- **S = 10K row:** Always +₹1L regardless of demand — safe but leaves money on the table when D is high
+- **S = 40K when D = 10K:** −₹2L → ordering 4× demand with demand only 10K units = large wasteful procurement
+
+<Aside type="tip">
+**★ Exam tip:** Be able to compute one cell of the profit matrix from scratch. E.g. S=30K, D=20K → sales = min(20K, 30K) = 20K → profit = 20K×20 − 30K×10 = 4,00,000 − 3,00,000 = +₹1L.
+</Aside>
+
+---
+
+## Step 3 — Expected Profit Calculation (Risk-Neutral NV)
+
+For each order size S, compute: `E[Profit | S] = Σ P(Dᵢ) × NV Profit(S, Dᵢ)`
+*Excel method:* SUMPRODUCT of probability vector and profit column for that order size
+
+| Order Size (S) | P=20% D=10K | P=15% D=20K | P=10% D=30K | P=25% D=40K | P=30% D=50K | E[Profit] (₹) | NV Choose? |
+|---|---|---|---|---|---|---|---|
+| **S = 10,000** | +₹1L | +₹1L | +₹1L | +₹1L | +₹1L | ₹1,00,000 | No |
+| **S = 20,000** | ₹0 | +₹2L | +₹2L | +₹2L | +₹2L | ₹1,60,000 | No |
+| **S = 30,000** | −₹1L | +₹1L | +₹3L | +₹3L | +₹3L | ₹1,90,000 | No |
+| **S = 40,000 ★** | −₹2L | ₹0 | +₹2L | +₹4L | +₹4L | ₹2,00,000 ★ | **YES ✓** |
+| **S = 50,000** | −₹3L | −₹1L | +₹1L | +₹3L | +₹5L | ₹1,50,000 | No |
+
+### Step-by-Step Examples
+- **E[Profit | S = 10,000]:** Same profit (+₹1L) across all demand levels → E[Profit] = 20%×1L + 15%×1L + 10%×1L + 25%×1L + 30%×1L = ₹1,00,000. Safe choice but misses upside when demand is high.
+- **E[Profit | S = 20,000]:** ₹0 when D=10K (no profit no loss) | +₹2L for D ≥ 20K. E[Profit] = 20%×0 + (15%+10%+25%+30%)×2L = 0.8 × 2,00,000 = ₹1,60,000
+- **E[Profit | S = 40,000] — OPTIMAL ★:** Profits: D=10K → −₹2L | D=20K → ₹0 | D=30K → +₹2L | D=40K → +₹4L | D=50K → +₹4L. E[Profit] = 20%×(−2L) + 15%×0 + 10%×2L + 25%×4L + 30%×4L = −40,000 + 0 + 20,000 + 1,00,000 + 1,20,000 = ₹2,00,000 ← highest ✓
+
+---
+
+## Key Result — Probabilistic Setting
+
+- **NV optimal order:** S* = 40,000 units → E[Profit] = ₹2,00,000
+- **Important:** S* = 40,000 ≠ any specific demand level. It is NOT simply "match D"
+- The NV is willing to risk ordering 40K even though it sometimes leads to loss (when D = 10K) — because the expected value across all scenarios is highest at S = 40K
+- Ordering S = 50K reduces E[Profit] back to ₹1,50,000 — overstocking penalty outweighs high-demand upside
+
+**Why S* > expected demand?** High-demand scenarios (D=40K, 30%; D=50K, 25%) are probable enough that the upside of extra stock outweighs the downside of overstocking in the low-demand case.
+Tradeoff at core of NVP: **Overage cost** (cost of ordering too much) vs. **Underage cost** (cost of ordering too little)
+
+<Aside type="note">
+**★** In probabilistic setting → optimal S* balances overage and underage costs. S* depends on the demand distribution AND the cost/revenue parameters — NOT just on expected demand.
+</Aside>
+
+<Aside type="tip">
+**★ Exam tip:** Do not say S* = E[D] in probabilistic NVP. That is wrong. S* is found by comparing expected payoffs across possible order sizes. Know the formula: E[Profit|S] = Σ P(Dᵢ) × π(S, Dᵢ).
+</Aside>
+
+---
+
+## Deterministic vs. Probabilistic — Side-by-Side
+
+| Aspect | Deterministic | Probabilistic |
+|---|---|---|
+| **Demand knowledge** | Known exactly before order | Known only as a probability distribution |
+| **NV decision rule** | S* = D (always match demand) | S* = arg max E[Profit \| S] |
+| **Risk** | None — D is certain | Overstock loss OR lost sales — cannot be avoided |
+| **S* vs. demand** | S* = D (exact match) | S* may differ from any specific D (here: S*=40K, no D=40K certain) |
+| **NV expected profit** | Exact profit known in advance | ₹2,00,000 (expected, not guaranteed) |
+| **SC conflict?** | Yes — when D < RS breakeven (30K) | To be analysed in next session |
+
+---
+
+## What Comes Next — Preview
+
+- **Next session:** Supplier payoff analysis under probabilistic setting — does S*=40K make RS profitable?
+- **Then:** contracts as a coordination tool — simple contracts + popular contracts (e.g. buyback, revenue sharing)
+- **Finally:** how platform economy facilitates coordination — the bridge from NVP to real-world SC digitization
+
+---
+
+## Session Summary
+
+- **Probabilistic NVP:** D is uncertain — NV knows only the probability distribution, not the actual D
+- **Demand distribution:** 5 discrete scenarios: 10K(20%), 20K(15%), 30K(10%), 40K(25%), 50K(30%)
+- **Sales rule:** Units sold = min(D, S) — always
+- **NV profit per cell:** min(D,S) × ₹20 − S × ₹10
+- **Decision framework:** Risk-neutral NV maximises E[Profit \| S] = Σ P(Dᵢ) × profit(S, Dᵢ)
+- **Result:** S* = 40,000 units → E[Profit] = ₹2,00,000 (highest across all options)
+- **Key insight:** S* ≠ D in probabilistic setting. Determined by balancing overage vs. underage costs across all scenarios.

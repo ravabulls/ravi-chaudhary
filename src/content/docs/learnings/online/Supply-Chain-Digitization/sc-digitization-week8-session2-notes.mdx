@@ -1,0 +1,145 @@
+---
+title: "Week 8 | Session 2: Facility Location Decision — Centre of Gravity Method"
+description: "Explores the Centre of Gravity method for determining the optimal coordinates of a new facility to minimize total transportation costs."
+sidebar:
+  order: 37
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+![Centre of Gravity Method Concept](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image1.png)
+
+## Session Agenda
+
+<Aside type="note">
+- Recap — Previous Session vs. This Session
+- Case Study — Cooking Range Manufacturer
+- Centre of Gravity Method — Concept and Key Variables
+- Key Formulas — Euclidean Distance & Total Cost
+- Solving in Excel — Step-by-Step
+- Excel Solver — Settings Detail
+- Result & Decision — What if it's not feasible?
+</Aside>
+
+---
+
+## 1. Recap — Facility Selection vs. Facility Location
+
+- **Last session:** Break-Even Analysis for facility selection — choosing best from existing options at a given volume.
+- **This session:** Facility Location Decision — finding the optimal coordinates for a brand new facility.
+
+<Aside type="note">
+**★** Facility Selection = choose from given options. Facility Location = find where to build new.
+</Aside>
+
+---
+
+## 2. Case Study — Cooking Range Manufacturer
+
+**Background:**
+- Manufacturer currently has a single assembly factory near Mumbai serving the entire Indian market alone.
+- Rapid demand growth observed → CEO decides to build a second factory.
+- **Task for SC Manager:** Find the optimal location for this new factory.
+
+**Network Structure:**
+- **Supply Sources:** Parts plants in Chennai, Kolkata, Hyderabad (3 nodes)
+- **Markets:** Delhi, Bangalore, Mumbai, Pune, Chennai (5 nodes)
+- **New Factory:** (X, Y) Unknown — to be determined.
+
+**Given Data:**
+- Coordinate locations (X, Y) of all supply sources and markets
+- Demand at each market and supply quantity from each parts plant
+- Shipping cost per unit per mile
+
+<Aside type="tip">
+**★ Goal:** Find optimal (X, Y) coordinates for the new factory that MINIMIZES total transportation cost.
+</Aside>
+
+---
+
+## 3. Centre of Gravity Method — Concept
+
+Analytical approach based on coordinate locations of supply sources & markets. Considers demand, supply quantities, and distances to find the location that minimizes total weighted transportation cost.
+
+| Variable | Meaning |
+|---|---|
+| **X, Y** | Coordinates of the new facility (decision variables — unknown) |
+| **Xi, Yi** | Coordinates of supply source / market node `i` |
+| **F** | Shipping cost per unit per mile |
+| **D** | Quantity to be shipped |
+| **d** | Distance between the new facility and a given node (calculated) |
+
+---
+
+## 4. Key Formulas
+
+### Euclidean Distance Formula
+Used to calculate the straight-line distance between the new facility (X, Y) and any node (Xi, Yi).
+
+`d = √ [ (X – Xi)² + (Y – Yi)² ]`
+
+*(Applied for each of the 3 supply sources and 5 markets → 8 distances in total)*
+
+### Total Transportation Cost Formula
+Cost = sum of (shipping cost × quantity × distance) over ALL nodes.
+
+`Total Cost = Σ (F × D × d)`
+
+*(In Excel: use `SUMPRODUCT` function)*
+
+---
+
+## 5. Solving in Excel — Step-by-Step
+
+<Steps>
+1. **Data Entry:** Enter shipping cost (F), quantity (D), and coordinates (X, Y) for all nodes.
+2. **Define Decision Variables:** Create two cells for X and Y (new factory) — initialize both to 0.
+3. **Distance Calculation:** Use Euclidean distance formula for every supply source and market node.
+4. **Total Transportation Cost:** Use `SUMPRODUCT` function: `Total Cost = Σ (F × D × d)`
+5. **Optimize using Solver:** Data tab → Solver. Objective = minimize Total Cost. Variables = X, Y cells. Method = **GRG Nonlinear**.
+</Steps>
+
+![Excel Solver Configuration](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image2.png)
+
+---
+
+## 6. Excel Solver — Settings Detail
+
+- **Set Objective:** Select the Total Cost cell → set to Minimize.
+- **Changing Variable Cells:** Select X and Y cells (decision variables).
+- **Solving Method:** Use **GRG Nonlinear** — because the cost function is non-linear (due to the square root in the distance formula).
+
+---
+
+## 7. Result & Decision
+
+- **After optimization:** X ≈ 500, Y ≈ 600 (initially 0, 0)
+- These coordinates correspond to approximately **Delhi**.
+- **Decision:** Locate the new factory near Delhi to minimize total transportation cost.
+
+### What if the Optimal Location is Not Feasible?
+- Real-world constraints may prevent building exactly at (500, 600) due to land unavailability, regulations, lack of infrastructure, etc.
+- **Solution:** Explore nearby areas close to the optimal coordinates. Choose the nearest feasible location that meets secondary criteria (infrastructure, labour).
+
+<Aside type="note">
+**★** Centre of Gravity gives a STARTING POINT — not a final answer. Use it to narrow the search, then apply judgment.
+</Aside>
+
+---
+
+## Session Summary
+
+- **Facility Location:** Strategic decision to find WHERE to build a new facility from scratch.
+- **Centre of Gravity:** Uses coordinates + demand + shipping cost to find cost-minimizing location.
+- **Euclidean Distance:** `d = √[(X–Xi)² + (Y–Yi)²]`
+- **Total Cost:** `Σ(F × D × d)` — minimized using Excel Solver (GRG Nonlinear).
+- **Result:** Optimal (X, Y) ≈ Delhi area; if infeasible, explore nearby locations.
+
+<Aside type="tip">
+**★ Exam Tip:** Centre of Gravity ≠ Break-Even Analysis. CoG finds location of a NEW facility. BEA selects from EXISTING options.
+Solver method = GRG Nonlinear (because of square root in distance formula → non-linear cost function).
+</Aside>

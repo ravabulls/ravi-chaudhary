@@ -1,0 +1,145 @@
+---
+title: "Woche 8 | Session 2: Standortentscheidung — Center-of-Gravity-Methode"
+description: "Untersucht die Center-of-Gravity-Methode zur Bestimmung der optimalen Koordinaten einer neuen Einrichtung, um die Gesamttransportkosten zu minimieren."
+sidebar:
+  order: 37
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Konzept der Center-of-Gravity-Methode](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Letzte Session vs. Diese Session
+- Fallstudie — Hersteller von Küchenherden
+- Center-of-Gravity-Methode (Schwerpunktverfahren) — Konzept und Variablen
+- Wichtige Formeln — Euklidische Distanz & Gesamtkosten
+- Lösung in Excel — Schritt für Schritt
+- Excel Solver — Details zu den Einstellungen
+- Ergebnis & Entscheidung — Was, wenn es nicht machbar ist?
+</Aside>
+
+---
+
+## 1. Rückblick — Standortauswahl vs. Standortfestlegung
+
+- **Letzte Session:** Break-Even-Analyse zur Standortauswahl — Wahl des Besten aus bestehenden Optionen bei gegebenem Volumen.
+- **Diese Session:** Entscheidung zur Standortfestlegung — Finden der optimalen Koordinaten für eine komplett neue Einrichtung.
+
+<Aside type="note">
+**★** Standortauswahl = Auswahl aus gegebenen Optionen. Standortfestlegung = Finden, wo neu gebaut werden soll.
+</Aside>
+
+---
+
+## 2. Fallstudie — Hersteller von Küchenherden
+
+**Hintergrund:**
+- Ein Hersteller hat derzeit eine einzige Montagefabrik in der Nähe von Mumbai, die den gesamten indischen Markt bedient.
+- Schnelles Nachfragewachstum beobachtet → CEO beschließt den Bau einer zweiten Fabrik.
+- **Aufgabe für den SC-Manager:** Finden Sie den optimalen Standort für diese neue Fabrik.
+
+**Netzwerkstruktur:**
+- **Lieferquellen:** Teilewerke in Chennai, Kolkata, Hyderabad (3 Knoten)
+- **Märkte:** Delhi, Bangalore, Mumbai, Pune, Chennai (5 Knoten)
+- **Neue Fabrik:** (X, Y) Unbekannt — noch zu bestimmen.
+
+**Gegebene Daten:**
+- Koordinaten (X, Y) aller Lieferquellen und Märkte
+- Nachfrage an jedem Markt und Liefermenge aus jedem Teilewerk
+- Versandkosten pro Einheit pro Meile
+
+<Aside type="tip">
+**★ Ziel:** Finden Sie die optimalen (X, Y) Koordinaten für die neue Fabrik, welche die Gesamttransportkosten MINIMIEREN.
+</Aside>
+
+---
+
+## 3. Center-of-Gravity-Methode — Konzept
+
+Ein analytischer Ansatz basierend auf den Koordinaten von Lieferquellen & Märkten. Berücksichtigt Nachfrage, Liefermengen und Entfernungen, um den Standort zu finden, der die gewichteten Gesamttransportkosten minimiert.
+
+| Variable | Bedeutung |
+|---|---|
+| **X, Y** | Koordinaten der neuen Einrichtung (Entscheidungsvariablen — unbekannt) |
+| **Xi, Yi** | Koordinaten der Lieferquelle / des Marktknotens `i` |
+| **F** | Versandkosten pro Einheit pro Meile |
+| **D** | Zu versendende Menge |
+| **d** | Distanz zwischen der neuen Einrichtung und einem bestimmten Knoten (berechnet) |
+
+---
+
+## 4. Wichtige Formeln
+
+### Formel für euklidische Distanz
+Wird verwendet, um die geradlinige Distanz zwischen der neuen Einrichtung (X, Y) und jedem Knoten (Xi, Yi) zu berechnen.
+
+`d = √ [ (X – Xi)² + (Y – Yi)² ]`
+
+*(Wird für jede der 3 Lieferquellen und 5 Märkte angewendet → insgesamt 8 Distanzen)*
+
+### Formel für Gesamttransportkosten
+Kosten = Summe aus (Versandkosten × Menge × Distanz) über ALLE Knoten.
+
+`Gesamtkosten = Σ (F × D × d)`
+
+*(In Excel: Verwenden Sie die Funktion `SUMMENPRODUKT`)*
+
+---
+
+## 5. Lösung in Excel — Schritt für Schritt
+
+<Steps>
+1. **Dateneingabe:** Geben Sie Versandkosten (F), Menge (D) und Koordinaten (X, Y) für alle Knoten ein.
+2. **Entscheidungsvariablen definieren:** Erstellen Sie zwei Zellen für X und Y (neue Fabrik) — setzen Sie beide anfangs auf 0.
+3. **Distanzberechnung:** Verwenden Sie die euklidische Distanzformel für jede Lieferquelle und jeden Marktknoten.
+4. **Gesamttransportkosten:** Verwenden Sie `SUMMENPRODUKT`: `Gesamtkosten = Σ (F × D × d)`
+5. **Mit Solver optimieren:** Daten → Solver. Ziel = Gesamtkosten minimieren. Variablen = X, Y Zellen. Methode = **GRG-Nichtlinear**.
+</Steps>
+
+![Excel Solver Konfiguration](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image2.png)
+
+---
+
+## 6. Excel Solver — Details zu den Einstellungen
+
+- **Ziel festlegen:** Wählen Sie die Zelle mit den Gesamtkosten → auf Minimieren setzen.
+- **Variablenzellen ändern:** Wählen Sie die X- und Y-Zellen (Entscheidungsvariablen).
+- **Lösungsmethode:** Verwenden Sie **GRG-Nichtlinear** — weil die Kostenfunktion nicht-linear ist (aufgrund der Quadratwurzel in der Distanzformel).
+
+---
+
+## 7. Ergebnis & Entscheidung
+
+- **Nach Optimierung:** X ≈ 500, Y ≈ 600 (anfangs 0, 0)
+- Diese Koordinaten entsprechen ungefähr **Delhi**.
+- **Entscheidung:** Platzieren Sie die neue Fabrik in der Nähe von Delhi, um die Gesamttransportkosten zu minimieren.
+
+### Was, wenn der optimale Standort nicht machbar ist?
+- Beschränkungen in der realen Welt können den Bau exakt bei (500, 600) verhindern, z.B. fehlendes Land, Vorschriften, fehlende Infrastruktur.
+- **Lösung:** Erkunden Sie nahe gelegene Gebiete in der Nähe der optimalen Koordinaten. Wählen Sie den nächstgelegenen machbaren Standort, der sekundäre Kriterien (Infrastruktur, Personal) erfüllt.
+
+<Aside type="note">
+**★** Die Center-of-Gravity-Methode liefert einen STARTPUNKT — keine endgültige Antwort. Nutzen Sie sie, um die Suche einzugrenzen, und wenden Sie dann Ihr Urteilsvermögen an.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Standortfestlegung:** Strategische Entscheidung, um zu finden, WO eine neue Einrichtung von Grund auf gebaut werden soll.
+- **Center-of-Gravity:** Nutzt Koordinaten + Nachfrage + Versandkosten, um einen kostenminimierenden Standort zu finden.
+- **Euklidische Distanz:** `d = √[(X–Xi)² + (Y–Yi)²]`
+- **Gesamtkosten:** `Σ(F × D × d)` — minimiert mit Excel Solver (GRG-Nichtlinear).
+- **Ergebnis:** Optimale (X, Y) ≈ Region Delhi; falls nicht machbar, nahegelegene Standorte erkunden.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Center of Gravity ≠ Break-Even-Analyse. CoG findet den Standort einer NEUEN Einrichtung. BEA wählt aus BESTEHENDEN Optionen aus.
+Solver-Methode = GRG-Nichtlinear (wegen Quadratwurzel in Distanzformel → nicht-lineare Kostenfunktion).
+</Aside>

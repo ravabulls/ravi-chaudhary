@@ -1,0 +1,137 @@
+---
+title: "Week 7 | Session 3: Building the Regression Tree — MSE, Splitting Logic & Worked Predictions"
+description: "A deep dive into the algorithmic construction of regression trees, focusing on Mean Squared Error (MSE) as the splitting criterion and practical worked predictions."
+sidebar:
+  order: 33
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- 4 retailer worked predictions (A, B, C, D) — applying the regression tree
+- How the regression tree was built — step-by-step algorithm
+- MSE (Mean Squared Error) — formula, calculation, and role in tree building
+- Worked MSE calculations for Node 0, Node 1, Node 2
+- Stopping criteria for regression tree — same 3 as classification tree
+- Classification tree vs. regression tree — only one difference in the algorithm
+</Aside>
+
+---
+
+## 4 Retailer Predictions — Applying the Regression Tree
+
+| Retailer | Region | Balance (₹L) | Location | Age (yrs) | Size (K sqft) | Promo (0/1) | Holidays | Predicted Demand | Node |
+|---|---|---|---|---|---|---|---|---|---|
+| **A** | West | 10 | Urban | 12 | 8 ≤ 30.5 ✓ | 1 ✓ | 3 | **2360 units** | Node 4 |
+| **B** | East | 14 | Rural | 23 > 17.5 ✓ | 33 > 30.5 ✓ | 0 | 1 | **8227 units** | Node 6 |
+| **C** | North | 3 | Semi-Urban | 12 | 20 ≤ 30.5 ✓ | 1 ✓ | 2 | **2360 units** | Node 4 |
+| **D** | South | 20 | Urban | 20 | 12 ≤ 30.5 ✓ | 0 ✗ | 2 | **943 units** | Node 3 |
+
+### Walkthrough Insights
+- **Retailers A & C:** Land in the same node (Node 4 — 2360 units) despite being in different regions and locations. The model tells us: those variables don't matter as much as size + promotion.
+- **Retailer B:** Large store + old store. Lands in Node 6 — highest demand, lowest support.
+- **Retailer D:** Small store + no promotion. Lands in Node 3 — lowest demand.
+
+<Aside type="tip">
+**★ Exam tip:** When asked to apply the regression tree — ONLY check the 3 variables selected by the model (store size, promotion, age). Ignore all other variables regardless of how they differ between retailers.
+</Aside>
+
+---
+
+## How the Regression Tree Was Built
+
+Why Size (30.5K sq ft)? Why Promotion at Node 1? The algorithm's choices are determined entirely by which variable + cutoff maximally reduces MSE at each node — not by human judgment.
+
+### 3-Step Algorithm for Building a Regression Tree
+
+<Steps>
+1. **Place all training data in root node (Node 0):** 700 observations in Node 0. Predicted demand = ȳ = 2270. MSE = 8,151,813. Baseline prediction = simple average.
+2. **Split root using the variable + cutoff that gives MAXIMUM reduction in MSE:** Tried all variables + all possible cutoffs. Size ≤ 30.5K sq ft gave maximum MSE reduction.
+3. **Repeat Step 2 for each internal node until stopping criteria is met:** Node 1 split using Promotion. Node 2 split using Age. Stop at depth 2.
+</Steps>
+
+---
+
+## Mean Squared Error (MSE) — The Splitting Criterion
+
+**Definition:** MSE = Average of squared differences between actual demand and predicted demand (mean).
+**Purpose:** Measures how spread out the Y values are around their mean within a node. Lower MSE = less variance = more homogeneous group = better prediction.
+
+### Formula
+`MSE = (1/n) × Σᵢ₌₁ⁿ (yᵢ − ȳ)²`
+*(where yᵢ = actual demand for retailer i, ȳ = predicted demand, n = number of observations)*
+
+- **Squared error:** Using squares ensures negative and positive errors don't cancel out, and penalises large deviations more heavily.
+- **Mean:** Dividing by n normalises for node size → comparable across nodes of different sizes.
+
+### Role in Splitting
+At each node: Try all (variable, cutoff) combinations. Select the (variable, cutoff) that gives the LARGEST reduction in MSE → this is the optimal split.
+
+<Aside type="tip">
+**★ Exam tip:** MSE plays the same role in a regression tree as Gini/Entropy does in a classification tree. Both measure "impurity" — for regression, impurity = variance of Y within the node. Always make this parallel explicit in exam answers.
+</Aside>
+
+---
+
+## Worked MSE Calculations
+
+| Node | Obs. (n) | Predicted Demand (ȳ) | MSE Formula | MSE Value | Interpretation |
+|---|---|---|---|---|---|
+| **Node 0 (Root)** | 700 | 2270 | `Σ(yᵢ − 2270)² / 700` | 8,151,813 | Baseline — no feature info. High MSE = bad prediction. |
+| **Node 1 (Size ≤ 30.5K)** | 612 | 1902 | `Σ(yᵢ − 1902)² / 612` | 6,605,698 | MSE reduced vs. Node 0. More homogeneous group. |
+| **Node 2 (Size > 30.5K)** | 88 | 4829 | `Σ(yᵢ − 4829)² / 88` | 11,412,707 | Higher MSE — large stores vary widely in demand. |
+| **Node 3 (Small, No Promo)** | 198 | 943 | `Σ(yᵢ − 943)² / 198` | 2,384,088 | Lower MSE — no-promo small stores cluster tightly around 943. |
+
+### Why Each Split Reduces Overall MSE
+Before split: All retailers in one group → mean ȳ = 2270. Retailers range from 0 to 8000+ units → MSE very high.
+After size split: Small stores cluster around 1902. Large stores cluster around 4829. Each group is more similar internally → lower MSE within each group.
+
+<Aside type="note">
+**★** The regression tree algorithm is fundamentally a variance reduction machine. Each split partitions retailers into segments where demand is more similar — reducing the MSE within each segment compared to treating all retailers the same.
+</Aside>
+
+---
+
+## Stopping Criteria — When to Stop Splitting
+
+| Stopping Criterion | Definition | Applied in This Example |
+|---|---|---|
+| **Max tree depth** | Stop splitting once the tree reaches a pre-set number of levels from root node | Depth = 2 used here. Not split further. |
+| **Min. observations per node** | Do not split if node has fewer than a minimum number of observations | Node 6 has only 32 obs (5%). If threshold = 10%, it would trigger a stop. |
+| **Min. MSE reduction (Delta threshold)** | Do not split if the max possible MSE reduction is below a threshold value δ | Prevents trivially small improvements from creating unnecessary complexity. |
+
+- **Overfitting in regression tree:** If no stopping → tree eventually creates one leaf per retailer → MSE on training data = 0 → but model fails completely on new retailers (test data).
+
+---
+
+## Classification Tree vs. Regression Tree — Algorithm Comparison
+
+| Aspect of Building the Tree | Classification Tree (Machine Failure) | Regression Tree (Demand Forecast) |
+|---|---|---|
+| **Target variable (Y)** | Categorical (Fail / Not Fail) | Continuous (Order Quantity in units) |
+| **Leaf node prediction** | Majority class label + probability | Mean (ȳ) of all Y values in that leaf |
+| **Splitting criterion** | Gini Index or Entropy (impurity reduction) | Mean Squared Error (MSE) (variance reduction) |
+| **Stopping criteria** | max depth, min obs, min Gini reduction | max depth, min obs, min MSE reduction (δ) |
+| **Core difference** | Uses Gini/Entropy as split quality metric | Uses MSE as split quality metric — ONLY change needed! |
+
+<Aside type="tip">
+**★ Exam tip:** If asked "how does a regression tree differ from a classification tree?" — say: (1) Target variable is continuous, not categorical. (2) Leaf prediction = mean (ȳ), not majority class. (3) Splitting criterion = MSE reduction, not Gini/Entropy reduction. Everything else is the same.
+</Aside>
+
+---
+
+## Session Summary
+
+- **4 retailer predictions:** A & C → Node 4 (2360, promo + small store) | B → Node 6 (8227, large + old) | D → Node 3 (943, small, no promo)
+- **Build algorithm:** 3 steps — place all data in root → split using variable/cutoff with max MSE reduction → repeat until stopping criteria
+- **MSE formula:** `(1/n) × Σ(yᵢ − ȳ)²` | Measures within-group variance | Lower MSE = better, more homogeneous group
+- **MSE values:** Node 0 = 8,151,813 → Node 1 = 6,605,698 → Node 3 = 2,384,088 (MSE reduces with each split)
+- **Stopping criteria:** Max depth | Min observations per node | Min MSE reduction per split (δ threshold)
+- **vs. Classification tree:** Only difference = MSE replaces Gini/Entropy as splitting metric. All other steps are identical.
+- **Next sessions:** Python implementation of regression tree for this demand forecasting case + error metrics (MAE, RMSE, MAPE)

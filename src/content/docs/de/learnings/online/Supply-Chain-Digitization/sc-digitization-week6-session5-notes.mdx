@@ -1,0 +1,169 @@
+---
+title: "Woche 6 | Session 5: Klassifikationsbaum in Python — Volle Praxis mit Code"
+description: "Eine Schritt-für-Schritt-Anleitung zum Erstellen und Evaluieren eines Klassifikationsbaums für die vorausschauende Wartung mit Python, pandas und scikit-learn."
+sidebar:
+  order: 30
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![Python Code Implementierung](/learnings/online/Supply-Chain-Digitization/sc_w6s5_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Verwendete Bibliotheken — pandas, sklearn, matplotlib
+- Schritt 1: Daten importieren (maintenance.csv → DataFrame)
+- Schritt 2: Variablen auflisten, X (Merkmale) und Y (Ziel) definieren
+- Schritt 3: In Trainings- (70%) und Testdaten (30%) aufteilen
+- Schritt 4: Klassifikationsbaum erstellen (Gini, max_depth=2)
+- Schritt 5: Entscheidungsbaum ausgeben / visualisieren
+- Schritt 6: Auf Testdaten vorhersagen, Confusion Matrix lesen, Genauigkeit berechnen
+- Ausführung in Google Colab
+</Aside>
+
+---
+
+## Session-Kontext — Von der Theorie zum Code
+
+- **Sessions 3 & 4:** Zeigten den Output des Modells und erklärten WIE es aufgebaut ist (Gini, Knotenaufteilung, Stoppkriterien)
+- **Session 5:** Reproduzieren genau desselben Outputs mit Python-Code — schließt den Kreis von Theorie zu Implementierung
+- **Plattform:** Google Colab — browserbasierte Python-Umgebung, keine lokale Installation nötig
+- **Datendatei:** `maintenance.csv` — 1000 Zeilen, 8 Spalten (derselbe Datensatz wie in Sessions 3 & 4)
+- **Erwarteter Output:** Gleiche Entscheidungsbaum-Struktur, gleiche Gini-Werte, gleiche Knotenzahlen wie in den Theorie-Folien
+
+---
+
+## Verwendete Bibliotheken
+
+| Bibliothek | Importieren als / Von | Zweck in diesem Modell |
+|---|---|---|
+| **pandas** | `import pandas as pd` | Datenmanipulation und -analyse. Wird verwendet, um die CSV-Datei zu lesen und den DataFrame zu erstellen. |
+| **sklearn (scikit-learn)** | `from sklearn import...` | Machine-Learning-Bibliothek. Bietet Entscheidungsbaum-Klassifikator, Train-Test-Split, Confusion Matrix und Genauigkeitswert. |
+| **matplotlib** | `import matplotlib.pyplot as plt` | Plotting-Bibliothek. Wird verwendet, um das Entscheidungsbaum-Diagramm zu visualisieren und zu drucken. |
+
+---
+
+## Komplette Code-Referenz — Alle Schritte zusammen
+
+```python
+# ── SCHRITT 1: Bibliotheken & Daten importieren ─────────────────
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import tree
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+df = pd.read_csv("maintenance.csv")
+
+# ── SCHRITT 2: Merkmale (X) und Ziel (Y) definieren ─────────────
+X_features = list(df.columns)
+X_features.remove("machine_failure")
+X = df[X_features]
+Y = df["machine_failure"]
+
+# ── SCHRITT 3: Train-Test-Aufteilung ────────────────────────────
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.30, random_state=42)
+
+# ── SCHRITT 4: Klassifikationsbaum erstellen ────────────────────
+clf = DecisionTreeClassifier(criterion="gini", max_depth=2)
+clf.fit(X_train, Y_train)
+
+# ── SCHRITT 5: Baum ausgeben ────────────────────────────────────
+plt.figure(figsize=(15, 10))
+tree.plot_tree(clf,
+    feature_names=X_train.columns,
+    class_names=["Not Failed", "Failed"],
+    filled=True)
+plt.show()
+
+# ── SCHRITT 6: Vorhersagen & Evaluieren ─────────────────────────
+Y_pred = clf.predict(X_test)
+cm = confusion_matrix(Y_test, Y_pred)
+acc = accuracy_score(Y_test, Y_pred)
+print("Confusion Matrix:\n", cm)
+print("Accuracy:", acc)
+```
+
+---
+
+## Schritt-für-Schritt Aufschlüsselung
+
+### Schritt 1 — Daten importieren
+- `pd.read_csv()`: Liest die CSV-Datei und speichert sie als DataFrame (`df`) — eine Tabelle mit beschrifteten Zeilen und Spalten.
+- Nach diesem Schritt: `df` hat 1000 Zeilen und 8 Spalten einschließlich des Ziels (`machine_failure`).
+
+### Schritt 2 — X (Merkmale) und Y (Ziel) definieren
+- `X`: 7 unabhängige Variablen (alle Spalten außer `machine_failure`) — werden verwendet, um Y vorherzusagen.
+- `Y`: Spalte `machine_failure` — was das Modell vorhersagen muss (0 = nicht ausgefallen, 1 = ausgefallen).
+
+### Schritt 3 — Train-Test-Aufteilung (70/30)
+- **Warum aufteilen?** Wenn das Modell mit denselben Daten trainiert und getestet wird → künstlich überhöhte Genauigkeit (Overfitting). Testdaten müssen zurückgehalten und DÜRFEN NIEMALS beim Training verwendet werden.
+- `test_size=0.30`: 30% = 300 Beobachtungen zum Testen. 70% = 700 zum Training.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Erklären Sie immer, WARUM ein Train-Test-Split nötig ist (um Overfitting zu vermeiden und eine unvoreingenommene Schätzung der Modellgenauigkeit bei neuen Daten zu erhalten). Erwähnen Sie 70/30 und dass Testdaten vom Modell während des Trainings nie gesehen werden.
+</Aside>
+
+### Schritt 4 — Klassifikationsbaum erstellen
+- `criterion="gini"`: Nutzt den Gini-Unreinheitsindex, um zu entscheiden, welche Variable und welcher Cutoff zum Aufteilen jedes Knotens verwendet wird.
+- `max_depth=2`: Stoppt die Aufteilung, nachdem 2 Ebenen von der Wurzel erreicht wurden. Verhindert Overfitting. Produziert 4 Blattknoten.
+- `clf.fit(X_train, Y_train)`: Trainiert das Modell — der Algorithmus findet die besten Splits unter Verwendung von 700 Trainingsbeobachtungen.
+
+### Schritt 5 — Entscheidungsbaum visualisieren
+- Der Output entspricht exakt dem Diagramm aus Session 3: Gleiche Splits (Ölkontamination → MTBF / Auslastung), gleiche Gini-Werte, gleiche Stichprobenzahlen.
+- **Knoten 0 (Wurzel):** 700 Samples | Gini = 0,462 | Split: `oil_contamination ≤ 5.5`
+
+### Schritt 6 — Auf Testdaten vorhersagen und Modell evaluieren
+
+#### 6a. Vorhersagen generieren
+- `clf.predict(X_test)`: Wendet das trainierte Modell auf die 300 Testbeobachtungen an — produziert vorhergesagte Y-Werte.
+
+#### 6b. Confusion Matrix (Wahrheitsmatrix)
+
+|  | Vorhergesagt: FÄLLT NICHT AUS (0) | Vorhergesagt: FÄLLT AUS (1) |
+|---|---|---|
+| **Tatsächlich: FÄLLT NICHT AUS (0)** | 57 ✓ True Negative (Richtig Negativ) | 65 ✗ False Positive (Falsch Positiv) |
+| **Tatsächlich: FÄLLT AUS (1)** | 16 ✗ False Negative (Falsch Negativ) | 162 ✓ True Positive (Richtig Positiv) |
+
+- **True Negative (57):** Modell hat richtig vorhergesagt, dass die Maschine NICHT ausfällt — tatsächlich auch nicht ausgefallen.
+- **True Positive (162):** Modell hat richtig vorhergesagt, dass die Maschine AUSFÄLLT — tatsächlich auch ausgefallen.
+- **False Positive (65):** Modell hat AUSFALL vorhergesagt — Maschine ist aber NICHT ausgefallen (Fehlalarm).
+- **False Negative (16):** Modell hat KEINEN AUSFALL vorhergesagt — Maschine ist aber AUSGEFALLEN (verpasster Ausfall — in der Praxis viel gefährlicher).
+
+#### 6c. Genauigkeitswert (Accuracy)
+- **Genauigkeit = 73%:** 73 von 100 Testinstanzen werden richtig vorhergesagt. `(57 + 162) / 300 = 0,73`.
+- **Vergleich zur Basis:** Wenn das Modell immer "FÄLLT AUS" (Mehrheitsklasse, 64%) vorhersagen würde → 64% Genauigkeit. Das Modell erreicht 73% → bedeutsame Verbesserung.
+
+<Aside type="note">
+**★** 73% Testgenauigkeit auf ungesehenen Daten. Modell ist verallgemeinerbar. Die 16 False Negatives (verpasste Ausfälle) sind das Hauptrisiko, das in einem Werk überwacht werden muss.
+</Aside>
+
+---
+
+## Ausführung in Google Colab
+
+1. Browser öffnen → zu colab.research.google.com gehen → mit Google-Konto anmelden
+2. Neues Notebook → `maintenance.csv` über das Datei-Upload-Symbol (linke Seitenleiste) hochladen
+3. Den kompletten Code von oben kopieren und in eine Codezelle einfügen
+4. Zellen nacheinander ausführen (Shift + Enter oder auf den ▶ Button klicken)
+5. Das Entscheidungsbaum-Diagramm wird im Ausgabebereich gerendert. Confusion Matrix und Genauigkeit werden unten gedruckt.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Sie sollten in der Lage sein, den 6-Schritte-Codeablauf (Import → X/Y definieren → aufteilen → aufbauen → ausgeben → evaluieren) aus dem Gedächtnis aufzuschreiben. Wissen Sie, was jeder Schritt macht. Kennen Sie den Aufbau der Confusion Matrix — TP, TN, FP, FN.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Session 3:** Setup der Fallstudie + OUTPUT des Entscheidungsbaums — 4 Blattknoten, Geschäftsregeln, 2 Vorhersagebeispiele
+- **Session 4:** WIE der Baum aufgebaut wird — Gini-Index, Entropie, Logik der Knotenaufteilung, Stoppkriterien, Overfitting
+- **Session 5 (diese Session):** Python-Implementierung — 6-Schritte-Code, exakt gleicher verifizierter Output, Confusion Matrix, 73% Testgenauigkeit
+- **Nächstes Modul:** KI/ML für Bedarfsplanung — weitere Predictive-Analytics-Anwendungen im SCM

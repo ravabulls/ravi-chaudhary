@@ -1,0 +1,158 @@
+---
+title: "Woche 7 | Session 4: Regressionsbaum in Python — Dummy-Variablen & Volle Implementierung"
+description: "Ein umfassender Leitfaden zur Implementierung eines Regressionsbaums in Python, der den entscheidenden Schritt der Dummy-Variablen-Codierung für kategoriale Daten hervorhebt."
+sidebar:
+  order: 34
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Warum kategoriale Variablen vor dem Modellaufbau eine Sonderbehandlung benötigen
+- Dummy-Variablen-Codierung — Regel, Formel, Basiskategorie
+- Wie Dummy-Variablen gelesen werden — Praxisbeispiele
+- Anzahl der Variablen: vorher (7 Merkmale) vs. nach der Codierung (10 Merkmale)
+- Kompletter Python-Code — Schritt für Schritt (Import → Codieren → Aufteilen → Aufbauen → Ausgeben)
+- Output-Verifizierung — Python-Output entspricht exakt dem theoretischen Baum
+- Nächste Session: Modell auf Testdaten validieren + Fehlermetriken
+</Aside>
+
+---
+
+## Warum kategoriale Variablen codiert werden müssen
+
+**Problem:** Die Region hat die Werte "Süd", "Ost", "West", "Nord" — das ist TEXT, keine Zahlen. ML-Modelle (Entscheidungsbaum, Random Forest, Logistische Regression etc.) können keine direkten mathematischen Operationen mit Text durchführen.
+
+**Lösung:** Wandeln Sie kategorialen Text in binäre (0/1) numerische Dummy-Variablen um — eine Spalte pro Kategorie (abzüglich einer Basiskategorie).
+
+- **Regel:** Wenn eine kategoriale Variable `m` Kategorien hat → erstellen Sie `(m − 1)` Dummy-Variablen. Eine Kategorie wird als "Basiskategorie" weggelassen.
+- **Warum (m − 1)?** Die m-te Kategorie ist impliziert, wenn alle (m − 1) Dummy-Variablen = 0 sind. Das Einbeziehen aller m würde perfekte Multikollinearität (Dummy-Variablen-Falle) erzeugen.
+- **Gilt für:** ALLE ML-Modelle. Codieren Sie kategoriale Variablen immer zuerst.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Die Regel für Dummy-Variablen lautet: m Kategorien → (m-1) Dummies, mit einer Basiskategorie. Geben Sie immer an, WELCHE Kategorie die Basis ist. Für Region: Ost ist Basis. Für Standort: Ländlich ist Basis.
+</Aside>
+
+---
+
+## Erstellte Dummy-Variablen — Region und Standort
+
+| Variable | Kategorien (m) | Erstellte Dummy-Variablen (m − 1) | Basiskategorie (nicht erstellt) | Interpretationsregel |
+|---|---|---|---|---|
+| **Region** | 4 (N, S, O, W) | `region_north`, `region_south`, `region_west` | **Ost** (alle drei Dummies = 0) | Wenn `region_south = 1` → Süd. Wenn alle drei = 0 → Ost (Basis). |
+| **Standort** | 3 (Ländlich, Semi-Urban, Urban) | `location_semi_urban`, `location_urban` | **Ländlich** (beide Dummies = 0) | Wenn `location_urban = 1` → Urban. Wenn beide = 0 → Ländlich (Basis). |
+
+### Wie Dummy-Variablen gelesen werden — Praxisbeispiele
+
+| Beob. | Tatsächliche Region | `region_north` | `region_south` | `region_west` | Tatsächlicher Standort | `location_semi_urban` |
+|---|---|---|---|---|---|---|
+| **978** | Süd | 0 | **1** ✓ | 0 | Ländlich | 0 (Ländlich = Basis) |
+| **979** | West | 0 | 0 | **1** ✓ | Semi-Urban | **1** ✓ |
+| **981** | Ost (Basis) | 0 | 0 | 0 | Urban | 0, aber `location_urban=1` |
+| **983** | Nord | **1** ✓ | 0 | 0 | Semi-Urban | **1** ✓ |
+
+<Aside type="note">
+**★ Wichtig:** Ein Einzelhändler befindet sich in der Basiskategorie, wenn ALLE Dummy-Variablen für diese Gruppe = 0 sind. Es ist keine separate Spalte für die Basiskategorie nötig.
+</Aside>
+
+### Anzahl der Variablen — Vorher vs. Nachher
+
+| Variable | Vor der Codierung | Nach der Codierung |
+|---|---|---|
+| **Region** | 1 Spalte (Text) | 3 Spalten: `region_north` \| `region_south` \| `region_west` |
+| **Standort** | 1 Spalte (Text) | 2 Spalten: `location_semi_urban` \| `location_urban` |
+| **Numerische Variablen** | 5 Spalten | 5 Spalten (unverändert) |
+| **GESAMTMERKMALE (X)** | **7 Spalten** | **10 Spalten (3 + 2 + 5)** |
+
+---
+
+## Kompletter Python-Code — 6 Schritte
+
+```python
+# ── SCHRITT 1: Daten importieren ──────────────────────────────────
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import tree
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv("demand.csv")
+
+# ── SCHRITT 2: X (Merkmale) und Y (Ziel) definieren ───────────────
+X_features = list(df.columns)
+X_features.remove("order_quantity")
+X_df = df[X_features]
+Y = df["order_quantity"]
+
+# ── SCHRITT 3: Kategoriale Variablen codieren (KRITISCHER SCHRITT)
+# pd.get_dummies() erstellt m-1 Dummies und lässt die erste Kategorie weg
+encoded_df = pd.get_dummies(X_df, drop_first=True)
+X = encoded_df   # jetzt 10 Spalten statt 7
+
+# ── SCHRITT 4: Train-Test-Aufteilung ──────────────────────────────
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.30, random_state=42)
+
+# ── SCHRITT 5: Regressionsbaum erstellen ──────────────────────────
+# DecisionTreeRegressor wird verwendet, da das Ziel KONTINUIERLICH ist
+regr = DecisionTreeRegressor(max_depth=2)
+regr.fit(X_train, Y_train)
+
+# ── SCHRITT 6: Baum ausgeben / visualisieren ──────────────────────
+plt.figure(figsize=(15, 10))
+tree.plot_tree(regr, feature_names=X_train.columns, filled=True)
+plt.show()
+```
+
+### Wichtige Python-Funktionen
+- `pd.get_dummies(..., drop_first=True)`: Integrierte pandas-Funktion. Erstellt alle Dummy-Variablen automatisch und entfernt die Spalte der Basiskategorie. Muss VOR dem Train-Test-Split gemacht werden.
+- `DecisionTreeRegressor`: Wird anstelle von `DecisionTreeClassifier` verwendet, weil das Ziel (`order_quantity`) KONTINUIERLICH ist. Das ist der wichtigste Code-Unterschied.
+- **Kein Kriterium nötig:** Regressor nutzt standardmäßig MSE (Squared Error) als Aufteilungskriterium.
+
+---
+
+## Output-Verifizierung — Python entspricht exakt der Theorie
+
+| Knoten | Bedingung | Python Output (ȳ, Obs, MSE) | Theorie Output (Session 7.2) | Übereinstimmung? |
+|---|---|---|---|---|
+| **0** | Alle 700 Trainings-Beob. | ȳ=2270 \| n=700 MSE=8,151,813 | ȳ=2270 \| n=700 MSE=8,151,813 | ✓ Ja |
+| **1** | Größe ≤ 30.5K sq ft | ȳ=1902 \| n=612 | ȳ=1902 \| n=612 | ✓ Ja |
+| **2** | Größe > 30.5K sq ft | ȳ=4829 \| n=88 | ȳ=4829 \| n=88 | ✓ Ja |
+| **3** | Größe ≤ 30.5K, Aktion = 0 | ȳ=943 \| n=198 | ȳ=943 \| n=198 | ✓ Ja |
+| **4** | Größe ≤ 30.5K, Aktion = 1 | ȳ=2360 \| n=414 | ȳ=2360 \| n=414 | ✓ Ja |
+| **5** | Größe > 30.5K, Alter ≤ 17.5 | ȳ=2887.3 \| n=56 | ȳ=2887 \| n=56 | ✓ Ja (gerundet) |
+| **6** | Größe > 30.5K, Alter > 17.5 | ȳ=8226.87 \| n=32 | ȳ=8227 \| n=32 | ✓ Ja (gerundet) |
+
+<Aside type="note">
+**★** Das Ausführen des Python-Codes repliziert exakt denselben manuell erstellten Regressionsbaum. Beide verwenden denselben Algorithmus (MSE-Minimierung) auf denselben 700 Trainingsbeobachtungen → gleiche Splits, gleiches ȳ, gleiche MSE-Werte.
+</Aside>
+
+### Code-Unterschied: Klassifikationsbaum vs. Regressionsbaum
+
+| Code-Element | Klassifikationsbaum (Maschinenausfall) | Regressionsbaum (Nachfrageprognose) |
+|---|---|---|
+| **sklearn Import** | `DecisionTreeClassifier` | `DecisionTreeRegressor` |
+| **Aufteilungskriterium** | `criterion="gini"` | Standard: `squared_error` (MSE) |
+| **Dummy-Variablen-Codierung** | Nicht nötig | **ERFORDERLICH** — Region und Standort sind kategorial |
+| **Art der Zielvariablen** | Kategorisch (0/1) | Kontinuierlich (bestellte Einheiten) |
+
+<Aside type="tip">
+**★ Prüfungstipp:** Die Dummy-Variablen-Codierung ist ein OBLIGATORISCHER Datenvorverarbeitungsschritt für jedes ML-Modell mit kategorialen Variablen. Im Code — verwenden Sie `pd.get_dummies(X_df, drop_first=True)`. In der Theorie — m Kategorien → (m−1) Dummies, Basiskategorie = alle Nullen.
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Kategoriale Codierung:** Region (4 Kat. → 3 Dummies, Ost=Basis) | Standort (3 Kat. → 2 Dummies, Ländlich=Basis). 7 Merkmale → 10 nach Codierung.
+- **Dummy-Regel:** m Kategorien → (m−1) Dummy-Variablen. Basiskategorie = alle Nullen. Gilt für ALLE ML-Modelle.
+- **Code-Änderung:** `DecisionTreeRegressor` statt `DecisionTreeClassifier`. Alles andere identisch.
+- **Wichtige Code-Schritte:** Import → X/Y definieren → kategoriale Variablen codieren → 70/30 aufteilen → RegTree aufbauen (max_depth=2) → ausgeben
+- **Output entspricht der Theorie:** Alle 7 Knoten stimmen exakt überein (ȳ, n, MSE). Python repliziert den handgemachten Theorie-Baum.
+- **Nächste Session:** Modell auf 300 zurückgehaltenen Test-Beobachtungen testen. MAE, RMSE, MAPE berechnen. Modellqualität bewerten.

@@ -1,0 +1,190 @@
+---
+title: "Week 6 | Session 2: Types of Analytics & SCM Applications"
+description: "Breaks down the four types of analytics (Descriptive, Diagnostic, Predictive, Prescriptive) and details their specific applications across the SCM value chain."
+sidebar:
+  order: 27
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Four types of analytics — Descriptive, Diagnostic, Predictive, Prescriptive
+- Three end-to-end worked examples across analytics types
+- Analytics across the SCM value chain — Procurement to Last Mile
+- Predictive maintenance, slotting optimisation, demand sensing, driver fatigue
+</Aside>
+
+---
+
+## Four Types of Analytics — Overview
+
+| # | Type | Core Question | Time Orientation | Typical Methods / Tools |
+|---|---|---|---|---|
+| **1** | **Descriptive** | What has happened? | Past data only | Bar charts, dashboards (Power BI, Tableau), mean, std. deviation |
+| **2** | **Diagnostic** | Why did it happen? | Past data — root cause investigation | Root cause analysis, drill-down analysis, correlation analysis |
+| **3** | **Predictive** | What will happen? | Past data → model → future forecast | Statistical forecasting, ML models (regression, neural nets) |
+| **4** | **Prescriptive** | What should be done? | Future-focused — action recommendation | Optimisation models (LP, MIP), simulation, decision support |
+
+**Key mental model:** Descriptive → Diagnostic → Predictive → Prescriptive = a chain. Each level builds on the previous one.
+**Prescriptive = Optimisation:** Minimise cost | Maximise profit | Minimise risk — subject to real-world constraints
+
+<Aside type="tip">
+**★ Exam tip:** Know all four types with (1) the core question it answers, (2) whether it looks backward or forward, and (3) one SCM example for each. These four types are always asked.
+</Aside>
+
+---
+
+## 1. Descriptive Analytics — "What Has Happened?"
+
+- **Definition:** Analyses past data to summarise what occurred — average, median, standard deviation, trends, patterns
+- **Output:** Charts, dashboards, summary statistics
+- **Tools:** Power BI | Tableau | Excel dashboards | Bar charts | Pie charts
+
+### SCM Examples
+- **Demand analysis:** What was avg. demand per month for each SKU over the past 2–3 years?
+- **FMCG CEO dashboard:** How many units in each DC? Which warehouse has dead stock?
+- **Quality monitoring:** Which products (X, Y, Z) have quality failures? Over what time period?
+- **Worker performance:** Which pickers/packers in an e-commerce sorting facility met their timeline targets?
+
+<Aside type="note">
+**★** Descriptive analytics is the starting point — it shows you where the problem is. But it does NOT tell you why. That requires diagnostic analytics.
+</Aside>
+
+---
+
+## 2. Diagnostic Analytics — "Why Did It Happen?"
+
+- **Definition:** Digs into past data to identify root causes of events — why performance deviated from expectations
+- **Output:** Root cause identified | Corrective action triggered
+- **Analogy:** Microscope — zoom into the data to find the underlying problem
+
+### SCM Examples
+- **Product demand down:** Descriptive shows Product A demand fell. Diagnostic asks: Why? → Competitor entered market → corrective action: reposition, price adjustment
+- **Product demand up:** Descriptive shows Product B demand rose. Diagnostic identifies WHY it rose → replicate the cause to sustain growth
+- **Quality failure:** Product Z has quality issues. Diagnostic traces root cause: Component C1 is defective → Component C1 supplied by Supplier 1 → Supplier 1 notified
+
+<Aside type="note">
+**★** Diagnostic analytics is about understanding causality — what caused the outcome? Without diagnosis, corrective action is guesswork.
+</Aside>
+
+---
+
+## 3. Predictive Analytics — "What Will Happen?"
+
+- **Definition:** Uses past data to build models that forecast future outcomes — demand, machine failure, delivery ETA, worker performance
+- **Output:** Forecast values with associated probability or confidence range
+- **Tools:** Statistical models (ARIMA, exponential smoothing) | ML models (regression, neural networks, time series)
+
+### SCM Examples
+- **Demand forecasting:** Predict demand for each SKU for next 15 days, 2 months, 6 months. ML is needed for high variability driven by social media.
+- **Predictive maintenance:** Model predicts: "This machine will break down in 2–3 days." → Maintenance scheduled proactively → avoids production stoppage
+- **Worker efficiency prediction:** Use past performance data to predict each worker's efficiency score for the next 6 months
+- **Overseas shipment ETA:** Predict actual arrival date of a shipment (e.g., 5-day delay or 4-day early) → plan production schedule accordingly
+
+<Aside type="note">
+**★** Predictive analytics replaces guesswork with data-driven foresight. It is the bridge between knowing what happened (descriptive) and deciding what to do about it (prescriptive).
+</Aside>
+
+---
+
+## 4. Prescriptive Analytics — "What Should Be Done?"
+
+- **Definition:** Uses predictions and optimisation to recommend the best decision or action — minimise cost, maximise profit, minimise risk, subject to operational constraints
+- **Core technique:** Optimisation (Linear Programming, Mixed Integer Programming, Simulation)
+- **Output:** A recommended action or decision — not just a forecast
+
+### SCM Examples
+- **Capacity expansion:** Predictive says demand will exceed capacity. Prescriptive asks: Should I build a new plant or outsource? If new plant, WHERE? What CAPACITY?
+- **Supplier selection:** Supplier 1 disqualified. Prescriptive optimises selection based on cost, lead time, responsiveness, and quality → decides which supplier to choose AND how much to order.
+- **Worker allocation:** Use predicted efficiency scores to assign workers to jobs during Diwali surge: Best performers → fastest, error-sensitive roles.
+- **Slotting optimisation:** In a warehouse, which product goes in which slot? Fast-moving near dispatch, items ordered together in same zone (clustering).
+
+<Aside type="note">
+**★** Prescriptive analytics = optimisation. It does not just predict — it tells you WHAT TO DO. It is the most advanced and most actionable form of analytics.
+</Aside>
+
+---
+
+## Three End-to-End Worked Examples (All 4 Analytics Types)
+
+### Example 1 — Demand & Capacity Planning
+| Step | What Is Done |
+|---|---|
+| **Descriptive** | Bar/pie chart of past demand per product (A and B). Product B demand is clearly rising; Product A is falling. |
+| **Diagnostic** | Product A fell → competitor entered market. Product B rose → new use case discovered, positive social media buzz. |
+| **Predictive** | Forecast demand for Product B for next 2–3 years. Demand will exceed current plant capacity within 18 months. |
+| **Prescriptive** | Decide: new plant vs. outsource. If new plant: optimise location + capacity. If outsource: select 3PL manufacturer. |
+
+### Example 2 — Quality Failure & Supplier Management
+| Step | What Is Done |
+|---|---|
+| **Descriptive** | Track quality failures across Products X, Y, Z. Product Z has repeated quality failures for last 4–5 months. |
+| **Diagnostic** | Root cause analysis on failed Product Z units → defective Component C1 → C1 was supplied by Supplier 1 → Supplier 1 notified. |
+| **Predictive** | Predict likelihood of continued quality failure if Supplier 1 remains. Also predict alternative suppliers' future quality, cost. |
+| **Prescriptive** | Optimise supplier selection from Suppliers 2–5. Criteria: cost + delivery time + responsiveness + quality record. |
+
+### Example 3 — Worker Allocation in E-Commerce Sorting Facility
+| Step | What Is Done |
+|---|---|
+| **Descriptive** | Analyse past performance of each picker/packer — who met timelines, who did not, who had the fewest sorting errors. |
+| **Diagnostic** | Why did certain workers underperform? Fatigue? Unclear process? Wrong zone assignment? |
+| **Predictive** | Predict each worker's efficiency score for next 6 months. Rank workers into high / medium / low efficiency bands. |
+| **Prescriptive** | Allocate workers to tasks based on predicted efficiency. During festival peak: assign highest-rated workers to fastest-moving jobs. |
+
+---
+
+## Analytics Across the SCM Value Chain — Master Reference
+
+| SCM Domain | Descriptive (What happened?) | Diagnostic (Why?) | Predictive (What will happen?) | Prescriptive (What to do?) |
+|---|---|---|---|---|
+| **Procurement** | Analyse past supplier cost, quality, delivery time | Why did supplier X underperform last quarter? | Predict future supplier cost, lead time, reliability | Select optimal supplier(s) + decide order quantity from each |
+| **Manufacturing & Quality** | Identify which product/component has quality failures | Root cause: Which component C1 is defective? Which supplier? | Predict machine failure before it occurs (predictive maintenance) | Select replacement supplier. Optimise maintenance schedule. |
+| **Warehousing** | Inventory count report — compare ERP vs. physical. | Why are certain SKUs always showing discrepancy? | Predict worker efficiency scores. Predict fast-moving items. | Slotting optimisation. Zoning. Work allocation to pickers. |
+| **Logistics & Transport** | GPS track delivery history. Driver eyeball data. | Why did truck delay on Route X last week? | Predict ETA of overseas shipments. Predict driver drowsiness. | Route optimisation. Fleet assignment. Driver scheduling. |
+| **Demand Planning** | Past demand by SKU, zone, month. Sales trends. | Why did demand for Product A drop? Competitor entry? | Forecast demand for next 15 days, 2 months, 6 months per SKU. | Capacity expansion planning. Plant location. Inventory pre-positioning. |
+
+### Domain Highlights — Key SCM Analytics Applications
+
+#### Procurement
+- **Supplier selection:** Multiple suppliers available → prescriptive optimisation selects best based on cost, lead time, quality, responsiveness
+- **Order quantity decision:** Once supplier is selected, how much to order from each?
+
+#### Manufacturing — Predictive Maintenance
+- **Definition:** Model analyses machine sensor data → predicts failure 2–3 days before it occurs → maintenance team scheduled proactively
+- **Data used:** Vibration, temperature, operating hours, error codes — sensor-based real-time data
+
+#### Warehousing — Slotting Optimisation & Zoning
+- **Slotting:** Decide which product occupies which slot in the warehouse → fast-moving near dispatch
+- **Zoning:** Clustering algorithm groups products frequently ordered together → kept in the same zone → lower picking time + fewer errors
+
+#### Logistics — Overseas Shipment Delay Prediction
+- **Analytics fix:** ML model predicts actual arrival date → production schedule adjusted in advance → avoids holding costs (early arrival) or production stoppage (late arrival)
+
+#### Demand Planning — The Hardest Forecasting Problem
+- **Why difficult:** Consumer behaviour is driven by social media, influencers, and fast-changing preferences.
+- **Demand sensing:** Real-time tracking of demand signals (social media, search trends) to update forecast continuously
+- **ML models:** Better than traditional models for high-variability demand because they capture non-linear patterns and external signals.
+
+<Aside type="tip">
+**★ Exam tip:** For a 10-mark SCM analytics question — pick ONE domain (e.g. warehousing or demand planning) and walk through all 4 analytics types with specific examples. Using one coherent domain story is stronger than scattered examples.
+</Aside>
+
+---
+
+## Session Summary
+
+- **4 analytics types:** Descriptive (past) → Diagnostic (why) → Predictive (future) → Prescriptive (action)
+- **Prescriptive = optimisation:** Minimise cost / maximise profit / minimise risk, subject to constraints
+- **3 full worked examples:** (1) Demand + capacity planning \| (2) Quality failure + supplier selection \| (3) Worker allocation in sorting facility
+- **Procurement analytics:** Supplier selection + order quantity optimisation + predictive cost/lead time
+- **Manufacturing:** Image analytics for quality \| Predictive maintenance → avoid unplanned downtime
+- **Warehousing:** Slotting optimisation \| Zoning (clustering) \| Video analytics drone inventory count
+- **Logistics:** Overseas shipment ETA prediction \| Driver drowsiness detection (image analytics)
+- **Demand planning:** ML > traditional models for high-variability demand \| Demand sensing \| Multiple forecast horizons
+- **Next:** AI/ML for forecasting + Python hands-on

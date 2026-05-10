@@ -1,0 +1,112 @@
+---
+title: "Woche 9 | Session 1: Intelligente Entscheidungstools — Problem der DC-Standortwahl & K-means Clustering (Intro)"
+description: "Eine Einführung in die Nutzung intelligenter Entscheidungstools wie K-means Clustering zur Lösung komplexer Probleme der Standortwahl von Distributionszentren (DC) und der Kundensegmentierung."
+sidebar:
+  order: 41
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+
+---
+
+![K-means Clustering DC-Standort-Problem](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image1.png)
+
+## Session-Agenda
+
+<Aside type="note">
+- Modul 3 — Bisher behandelte Themen
+- Fallstudie — Expansion eines Pharmaunternehmens
+- Der Zielkonflikt bei der Anzahl der DCs
+- K-means Clustering — Einführung
+- Warum ist der Zentroid der beste DC-Standort?
+- Wie K-means beide Entscheidungen beantwortet
+</Aside>
+
+---
+
+## 1. Fallstudie — Expansion eines Pharmaunternehmens
+
+**Hintergrund:** Ein Pharmaunternehmen möchte in eine neue Region expandieren und hat Standortdaten (Breiten- & Längengrade) von 811 potenziellen Kunden gesammelt.
+
+![Kundenstandorte](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image2.png)
+
+### Das Kernproblem
+Es muss entschieden werden: Wo sollen Distributionszentren (DCs) eröffnet werden, um diese 811 Kunden zu bedienen?
+1. **Entscheidung 1:** Wo sollen die DCs liegen? (Wie viele? Bei welchen Koordinaten?)
+2. **Entscheidung 2:** Welche Kunden werden von welchem DC bedient? (Wie segmentieren?)
+
+<Aside type="note">
+**★** Dies ist ein STANDORT- + SEGMENTIERUNGSPROBLEM — beides muss zusammen gelöst werden. K-means Clustering löst beides gleichzeitig.
+</Aside>
+
+---
+
+## 2. Der Zielkonflikt bei der Anzahl der DCs
+
+Mit zunehmender Anzahl von DCs sinkt die Kundenanzahl pro DC → schnellerer Service → Reaktionsfähigkeit steigt. Jedoch: Fixe + variable Kosten pro DC × mehr DCs → Gesamtkosten steigen.
+
+| Anz. der DCs | Kunden pro DC | Reaktionsfähigkeit | Gesamtkosten |
+|---|---|---|---|
+| **1** | Alle 811 | Gering ↓ | Niedrig ↓ (am günstigsten) |
+| **3–4** | ~200 pro DC | ↑↑ | ↑↑ |
+| **6** | ~135 pro DC | Hoch ↑↑↑ | Hoch ↑↑↑ (teuer) |
+
+Es muss das **optimale K** (Anzahl der Cluster) gefunden werden, das Reaktionsfähigkeit und Kosten ausbalanciert.
+
+![Tradeoff-Diagramm](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image3.png)
+
+---
+
+## 3. K-means Clustering — Einführung
+
+**Was ist K-means Clustering?** Eine unüberwachte (unsupervised) Machine-Learning-Technik zur Gruppierung von Datenpunkten in `K` Cluster.
+- **Input:** Datensatz mit Koordinaten (Lat, Long) + Wert von K.
+- **Output:** (1) Cluster-Zuweisung für jeden Datenpunkt, (2) Zentroid jedes Clusters.
+
+### K-means Konzept angewendet auf diese Fallstudie
+
+| Konzept | Erklärung |
+|---|---|
+| **K (Input)** | Anzahl der Cluster = Anzahl der zu öffnenden DCs. Nutzer definiert K. |
+| **Output 1 — Segmentierung** | Jeder der 811 Kunden wird genau 1 Cluster zugewiesen. |
+| **Output 2 — Zentroid** | Mittelpunkt jedes Clusters = vorgeschlagener DC-Standort (Lat, Long). |
+
+---
+
+## 4. Warum ist der Zentroid der beste DC-Standort?
+
+Zentroid = geometrischer Mittelpunkt aller Kundenkoordinaten in diesem Cluster.
+Die Distanz vom Zentroid zu jedem Clustermitglied ist im Durchschnitt minimiert. Platzierung des DC am Zentroid → minimale durchschnittliche Fahrstrecke zu allen zugewiesenen Kunden.
+
+<Aside type="note">
+**★** Zentroid = optimaler DC-Standort innerhalb eines Clusters, weil er die Gesamtdistanz vom DC zu allen Kunden in diesem Cluster minimiert.
+</Aside>
+
+---
+
+## 5. Wie K-means beide Entscheidungen beantwortet
+
+- **Entscheidung 1 — Kundensegmentierung:** K-means weist automatisch jeden der 811 Kunden genau 1 Cluster zu, basierend auf räumlicher Nähe.
+- **Entscheidung 2 — DC-Standort:** Der Zentroid jedes Clusters liefert den Breiten- und Längengrad des vorgeschlagenen DC.
+
+![K-means Output Beispiele](/learnings/online/Supply-Chain-Digitization/sc_w9s1_image4.png)
+
+### Verbleibende offene Frage
+K-means löst BEIDE Entscheidungen für ein gegebenes K — aber was ist das richtige K? Ist K = 1, 3, 4, 5 oder 6 optimal? Dies wird mit der **Elbow-Methode** (in der nächsten Session behandelt) beantwortet.
+
+---
+
+## Zusammenfassung der Session
+
+- **Problem:** 811 Kundenstandorte (Lat/Long) — wo DCs eröffnen, wie Kunden zuweisen.
+- **Zielkonflikt:** Mehr DCs → bessere Reaktionsfähigkeit, höhere Kosten.
+- **K-means Clustering:** unüberwachte ML-Technik — gruppiert Kunden in K Cluster.
+- **Output 1:** Segmentierung (Kunde wird 1 DC zugewiesen).
+- **Output 2:** Zentroid (vorgeschlagener DC-Standort).
+- **Warum Zentroid?** Minimiert die durchschnittliche Distanz vom DC zu allen Kunden in diesem Cluster.
+
+<Aside type="tip">
+**★ Prüfungstipp:** K-means löst ZWEI Probleme auf einmal: (1) Kundensegmentierung und (2) DC-Standort via Zentroide. Zentroid = optimaler DC-Standort, weil er die durchschnittliche Fahrstrecke minimiert.
+</Aside>
