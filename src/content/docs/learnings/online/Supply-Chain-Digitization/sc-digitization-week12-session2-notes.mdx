@@ -1,0 +1,187 @@
+---
+title: "Week 12 | Session 2: Industry 4.0 Pillars 1–3: IoT, Cloud Computing & H/V System Integration"
+description: "Deep dive into the first three Industry 4.0 pillars — IoT (4-step sequence, 3 types, SC applications, challenges), Cloud Computing (4 deployment types, IaaS/PaaS/SaaS service models), and Horizontal & Vertical System Integration (definitions, examples, decision logic)."
+sidebar:
+  order: 58
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 4: Digital Infrastructure*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Pillar 1 — IoT: What is IoT? 4-Step Sequence, 3 Types, SC Applications, Challenges, Emerging Trends
+- Pillar 2 — Cloud Computing: What is Cloud? Deployment Types, Service Models (IaaS/PaaS/SaaS)
+- Pillar 3 — Horizontal & Vertical System Integration: Definitions, Examples, Decision Logic
+</Aside>
+
+<Aside type="note">
+**★** IoT, Cloud, and H/V Integration work as a system: **IoT collects data → Cloud stores and shares it → H/V Integration defines who it flows to and in what direction.**
+</Aside>
+
+---
+
+# Pillar 1 — IoT (Internet of Things)
+
+## 1. What is IoT?
+
+![IoT, Cloud & H/V Integration Framework](/learnings/online/Supply-Chain-Digitization/sc_w12s2_image1.png)
+
+**Definition:** a network of interconnected physical devices, vehicles, buildings and other objects embedded with sensors, actuators and connectivity.
+
+- **Role:** collects data from the physical world and exchanges it — enabling digital representation of real-world events.
+- Bridges the gap between the physical world and the digital world.
+- Supports real-time insights and automation **without human intervention**.
+
+**RFID & GPS — Key IoT-Adjacent Technologies:**
+- **RFID:** tracks and manages inventory and assets using embedded chips and readers.
+- **GPS:** determines location of shipments and vehicles in real time.
+- Both serve the IoT data-collection purpose — integral to IoT ecosystems.
+
+---
+
+## 2. How IoT Works — 4-Step Sequence
+
+<Steps>
+1. **Collect:** Devices, sensors (temperature, pressure, vibration), RFID and GPS capture data from the physical world. Select technology based on what you need to measure.
+2. **Communicate:** Captured data is sent to a central system over the internet. Protocols must be followed for secure transmission. Channels: Wi-Fi, Bluetooth, LPWAN, or direct internet connection.
+3. **Analyze:** Data is processed and analyzed — in cloud or at the edge. Visualization, outlier detection, anomaly identification. Critical conditions trigger alerts.
+4. **Act:** Based on analysis, automated or manual actions are initiated. Forms: alerts, emails, notifications, automated control signals. Closes the loop: physical event → digital capture → decision → physical response.
+</Steps>
+
+<Aside type="note">
+Step 2 (Communicate) relies on **Cloud Computing**. Step 3 (Analyze) relies on **Big Data Analytics**. IoT is not standalone — it requires 3–4 Industry 4.0 technologies working together.
+</Aside>
+
+---
+
+## 3. Three Types of IoT
+
+| Type | Usage, Data Volume & Examples |
+|---|---|
+| **IIoT — Industrial IoT** | Used in industrial and manufacturing environments — MES (Manufacturing Execution Systems). Enables machine-to-machine (M2M) communication. Generates **large volumes** of high-frequency process data. Example: predictive maintenance sensors on factory equipment. |
+| **CIoT — Consumer IoT** | Used by individuals in everyday life. Wearables, smart home appliances, personal monitoring devices. **Small data volume** — connects to mobile apps. Example: fitness tracker sending health data to a phone app. |
+| **CmIoT — Commercial IoT** | Used in commercial premises — offices, supermarkets, hotels, hospitals. Applications: environmental monitoring, lighting control, asset tracking. Data collected to centralized cloud → analytics. |
+
+<Aside type="note">
+**★** IIoT generates the most data (industrial processes). CIoT generates the least (personal devices). CmIoT covers commercial premises. All three route data to a central system for analytics.
+</Aside>
+
+---
+
+## 4. IoT Applications in Supply Chain
+
+| SC Application | How IoT Helps |
+|---|---|
+| **Real-time inventory & resource tracking** | Visibility of inventory location and quantity at all SC nodes |
+| **Predictive maintenance** | Sensors analyze equipment condition → anticipate failure → minimize downtime before breakdown |
+| **Inventory optimization** | Tracking data feeds inventory decisions → reduces excess inventory and stockouts |
+| **Improved decision-making** | Data captured and analyzed → better planning insights → smarter SC decisions |
+
+---
+
+## 5. IoT — Implementation Challenges
+
+| Challenge | Explanation |
+|---|---|
+| **Investment Cost** | Heavy upfront investment required — infrastructure, devices, connectivity |
+| **Security & Privacy** | Critical data captured at multiple points must be secured and kept private |
+| **Scalability** | IoT system must handle growing data volume as more SC partners join |
+| **Integration** | Compatibility between new IoT systems and existing legacy systems is a major technical challenge |
+| **Human Behaviour** | Management resistance and change aversion are common barriers |
+
+---
+
+## 6. Emerging Trends in IoT for Supply Chain
+
+- **Edge Computing:** process data closer to the source (at the device/sensor level) → faster decisions, lower latency.
+- **Blockchain Integration:** ensures transparency and traceability of data collected via IoT — prevents record tampering.
+- **AI/ML Integration:** apply predictive analytics on IoT-collected data → forecast failures, optimize routes, adjust inventory.
+- **Environmental Impact Reduction:** IoT-enabled monitoring supports sustainability goals — track emissions, energy use, waste.
+
+---
+
+# Pillar 2 — Cloud Computing
+
+## 7. What is Cloud Computing?
+
+**Definition:** delivery of computing services — servers, storage, software, databases, networking — over the internet.
+
+- Economy of scale for the provider → **no upfront capex** for the user.
+- Enables: data storage, processing, collaboration, and running AI/ML — all at scale, accessible from anywhere.
+- Classified in two independent ways: **by deployment model** AND **by service model**.
+
+---
+
+## 8. Cloud Deployment Types
+
+| Type | Who Uses It | Security | Examples |
+|---|---|---|---|
+| **Public** | Shared infrastructure; accessible to all; low cost | Low | Google Apps, AWS |
+| **Private** | Dedicated to single org; org owns and manages infra | Highest | HPE, Dell, IBM |
+| **Community** | Shared by multiple orgs with similar needs (e.g., govt agencies, universities) | Moderate | Cisco Community Cloud |
+| **Hybrid** | Combination of public + private (public for web, private for customer DB) | Mixed | Azure, IBM |
+
+**Selection rule:** choose based on cost vs security trade-off and whether data is sensitive. **Hybrid is most flexible.**
+
+---
+
+## 9. Cloud Service Models (IaaS / PaaS / SaaS)
+
+| Model | What is Provided | User Control | Example |
+|---|---|---|---|
+| **IaaS** — Infrastructure as a Service | Access to hardware: storage, network, OS, virtual servers. User manages above the infrastructure layer. | Highest flexibility + control | Amazon Web Services (AWS) |
+| **PaaS** — Platform as a Service | Platform for app development: OS, database, programming environment, web server. User manages apps + data. | High — manages resources clearly | Microsoft Azure |
+| **SaaS** — Software as a Service | Access to software applications on pay-per-use basis. Most convenient — user just uses the application. | Lowest — just access the app | Gmail, Google Docs, Office 365 |
+
+<Aside type="note">
+**★** As you move from **IaaS → PaaS → SaaS**: user control decreases, convenience increases. IaaS gives most flexibility; SaaS gives least control but is easiest to use.
+</Aside>
+
+---
+
+# Pillar 3 — Horizontal & Vertical System Integration
+
+## 10. H/V Integration
+
+This is a **strategy** rather than a standalone technology — it defines HOW IoT, cloud, and analytics are deployed.
+
+| Type | Definition, Purpose & Example |
+|---|---|
+| **Horizontal Integration** | Connects activities operating at the **same level** — within or across organizations. Purpose: coordination and synchronization of similar functions. Example: integrating production planning + scheduling + MES across multiple factories within the same company. |
+| **Vertical Integration** | Connects players **in sequence** — upstream ↔ downstream across the SC. Purpose: end-to-end visibility, control, and optimization across the chain. Example: integrating PLM → MES → ERP → SC. |
+
+### Decision: Which Type to Use?
+
+| Problem | Solution |
+|---|---|
+| Same-level coordination problem (e.g., factories not synchronized) | Horizontal integration |
+| End-to-end visibility problem (e.g., no traceability from design to delivery) | Vertical integration |
+| Large organizations often need both simultaneously | Both H + V |
+
+---
+
+## Session Summary
+
+- **IoT:** network of connected devices that collect + communicate + analyze + act on data. Bridges physical and digital worlds without human intervention.
+- **IoT 4 steps:** Collect (sensors, RFID, GPS) → Communicate (Wi-Fi, Bluetooth, LPWAN) → Analyze (cloud/edge, outlier detection) → Act (alerts, auto-control).
+- **3 IoT types:** IIoT (industrial, high volume, M2M) | CIoT (consumer, low volume, personal) | CmIoT (commercial, offices, hospitals).
+- **Cloud deployment:** Public / Private / Community / Hybrid — chosen based on cost vs security.
+- **Cloud service models:** IaaS (infrastructure, most control) | PaaS (platform, app dev) | SaaS (software, most convenient).
+- **H/V Integration:** Horizontal = same-level coordination. Vertical = sequential upstream-downstream linkage.
+
+<Aside type="tip">
+**★ Exam Tip:** IoT 4-step working: (1) Collect (sensors/RFID/GPS), (2) Communicate (Wi-Fi/Bluetooth/LPWAN), (3) Analyze (cloud/edge + anomaly detection), (4) Act (alerts/notifications/auto-control).
+
+**★ Exam Tip:** 3 IoT types: IIoT (industrial, M2M, high volume) | CIoT (consumer, personal devices, low volume) | CmIoT (commercial, offices/hospitals/hotels, asset tracking).
+
+**★ Exam Tip:** Cloud deployment: Public (low cost, low security, AWS/Google) | Private (high security, single org, IBM/Dell) | Community (shared by similar orgs) | Hybrid (mix of public + private).
+
+**★ Exam Tip:** Cloud service models: IaaS = hardware/infra (AWS) | PaaS = platform/dev environment (Azure) | SaaS = software access (Gmail, Office 365). Control decreases as you go IaaS → SaaS.
+
+**★ Exam Tip:** H = horizontal integration (same level, e.g., production planning + MES + scheduling). V = vertical integration (sequential chain, e.g., PLM → MES → ERP → SC).
+</Aside>

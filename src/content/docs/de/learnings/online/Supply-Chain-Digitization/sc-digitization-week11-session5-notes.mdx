@@ -1,0 +1,197 @@
+---
+title: "Woche 11 | Session 5: Netzwerkoptimierung mit Kapazitätsnebenbedingungen & Supply Chain Control Tower"
+description: "Ersetzen der Big-M-Unbegrenzt-Kapazitätsannahme durch realistische Kapazitätsnebenbedingungen im Netzwerkoptimierungsmodell — mit dramatischen Gewinnauswirkungen. Dann vollständige Einführung in den Supply Chain Control Tower: Definition, Anwendungsfälle, Fähigkeiten, Vorteile und Technologien."
+sidebar:
+  order: 56
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+**Teil 1 — Netzwerkoptimierung mit Kapazitätsnebenbedingungen**
+- Modellmodifikation — Ersetzen von Big M durch tatsächliche Kapazität
+- Kapazitätsnebenbedingung angewendet — Aurangabad-Fabrik
+- Ergebnisse — Mit vs. ohne Kapazitätsnebenbedingung
+
+**Teil 2 — Supply Chain Control Tower**
+- Was ist ein Supply Chain Control Tower?
+- Control Tower Anwendungsfälle
+- Control Tower Schlüsselfähigkeiten
+- Vorteile des Supply Chain Control Towers
+- Technologien zum Aufbau eines Control Towers
+</Aside>
+
+---
+
+# Teil 1 — Netzwerkoptimierung mit Kapazitätsnebenbedingungen
+
+## 1. Modellmodifikation — Ersetzen von Big M durch tatsächliche Kapazität
+
+In Session 4 hatten Fabriken und DCs **unbegrenzte Kapazität** (dargestellt durch M). Diese Session ersetzt M durch **tatsächliche Einrichtungskapazität** — macht das Modell realistischer.
+
+### Nebenbedingungsmodifikation
+
+**Session 4 (unbegrenzte Kapazität):**
+```
+Σj xij ≤ M × yi    ∀i
+```
+
+**Diese Session (realistische Kapazität):**
+```
+Σj xij ≤ KapFab_i × yi    ∀i    (KapFab_i = tatsächliche Kapazität von Fabrik i)
+Σk qjk ≤ KapDC_j × zj    ∀j    (KapDC_j = tatsächliche Kapazität von DC j)
+```
+
+- Wenn yᵢ = 0 (Fabrik geschlossen): RHS = 0 → kann nichts liefern.
+- Wenn yᵢ = 1 (Fabrik offen): RHS = KapFab_i → **auf tatsächliche Produktionskapazität begrenzt**.
+
+<Aside type="note">
+**★** Eine kleine Änderung in der Nebenbedingung wandelt ein unbegrenztes Kapazitätsmodell in ein **realistisches kapazitätsbeschränktes Modell** um. Alle anderen Teile der Formulierung bleiben identisch.
+</Aside>
+
+---
+
+## 2. Kapazitätsnebenbedingung angewendet — Aurangabad-Fabrik
+
+Kapazitätsnebenbedingung nur bei **Aurangabad** hinzugefügt; Nashik und beide DCs bleiben unbeschränkt.
+
+| SKU | Min Durchsatz/Jahr (Einheiten) | Max Durchsatz/Jahr (Einheiten) | Nashik Kapazität |
+|---|---|---|---|
+| SKU 1 | 10.000 | 25.000 | Unbegrenzt (keine Nebenbedingung) |
+| SKU 2 | 10.000 | 25.000 | Unbegrenzt (keine Nebenbedingung) |
+| SKU 3 | 10.000 | 25.000 | Unbegrenzt (keine Nebenbedingung) |
+| SKU 4 | 10.000 | 25.000 | Unbegrenzt (keine Nebenbedingung) |
+
+---
+
+## 3. Ergebnisse — Mit vs. ohne Kapazitätsnebenbedingung
+
+| Aspekt | Ohne Nebenbedingung (Session 4) | Mit Nebenbedingung (Diese Session) |
+|---|---|---|
+| **Kapazitätsnebenbedingung** | M (unbegrenzt) für alle Einrichtungen | Aurangabad: min 10.000 / max 25.000 Einheiten pro SKU/Jahr |
+| **Nashik-Fabrik** | Nicht geöffnet | **Geöffnet** — notwendig, um Aurangabads begrenzte Kapazität zu ergänzen |
+| **Aurangabad-Fabrik** | Geöffnet — einzige Fabrik | Geöffnet — aber kapazitätsbeschränkt |
+| **VAPI DC** | Geöffnet | Geöffnet |
+| **V1D DC** | Nicht geöffnet | Nicht geöffnet |
+| **Produktfluss** | Aurangabad → VAPI → alle 4 Märkte | Aurangabad + Nashik → VAPI → alle 4 Märkte |
+| **Gesamtgewinn** | **5,9 Mio. $** | **1,4 Mio. $** |
+| **Gewinnauswirkung** | — | Rückgang von ca. 4,5 Mio. $ durch Kapazitätslimit |
+
+### Warum öffneten beide Fabriken?
+- Aurangabad ist auf **25.000 Einheiten/SKU/Jahr** begrenzt — reicht nicht aus, um den verdoppelten Bedarf allein zu decken.
+- Um den vollen Bedarf aller 4 Märkte zu decken, muss das Modell auch **Nashik-Fabrik** öffnen.
+- Nashik hat **höhere Produktionskosten** (7$/Einheit vs. 5$/Einheit) → reduziert Gewinn erheblich.
+
+<Aside type="note">
+**★** Kapazitätsnebenbedingungen zwingen das Modell, teurere Alternativen zu öffnen. **Kapazitätslimits → mehr Einrichtungen benötigt → höhere Kosten → niedrigerer Gewinn.** Dies ist der reale Trade-off der Einrichtungsdimensionierung.
+</Aside>
+
+---
+
+# Teil 2 — Supply Chain Control Tower
+
+## 4. Was ist ein Supply Chain Control Tower?
+
+**Definition:** ein zentralisierter Hub, der **Echtzeit-Sichtbarkeit und Kontrolle** über jeden Aspekt der Supply Chain bietet.
+
+- Ermöglicht Unternehmen, umfangreiche SC-Aktivitäten über eine **einheitliche Plattform** zu überwachen.
+- End-to-End integriert mit allen Informationsmanagementsystemen (ERP, WMS, TMS, IoT usw.).
+- Verbindet: Rohstofflieferanten → Sub-Lieferanten → Hersteller → Händler → Einzelhändler → Verbraucher.
+
+<Aside type="note">
+**★** Control Tower = das **'Nervenzentrum'** der Supply Chain — alle Daten fließen hinein, alle Entscheidungen fließen heraus.
+</Aside>
+
+---
+
+## 5. Control Tower — Anwendungsfälle
+
+| Anwendungsfall / Branche | Herausforderung → Wie der Control Tower hilft |
+|---|---|
+| **FMCG — Snacks** *(Sonnenblumenöl-SC)* | Mehrere geografisch verteilte Lieferanten, saisonale Nachfrage, variierende Vorlaufzeiten, Transportunterbrechungen. CT bietet: Echtzeit-Verfolgung von Rohstoffen vom Lieferanten zur Anlage. **CT-Aktion:** LKW durch Unfall verzögert → CT leitet Sendung automatisch um → verhindert Produktionsstopp. |
+| **FMCG — Molkerei / Verderbliche Lebensmittel** | Nationales DC-Netzwerk + Kühlfahrzeugflotte; komplexes Routing; keine Echtzeit-Sichtbarkeit. CT integriert KI-ML + Echtzeit-Verkehrsdaten → optimiert Lieferrouten + Zeitpläne. Betrachtet: Verkehr, Wetter, Bestellvolumen → pünktliche Lieferung + minimaler Kraftstoffverbrauch. |
+| **Lackherstellung** *(Mehrere Werke)* | Mehrere Werke in Regionen, Bestandsoptimierung über Werke + DCs, variierte Lieferantenvorlaufzeiten. CT bietet: Echtzeit-Sichtbarkeit von Produktion + Bestand an ALLEN Einrichtungen gleichzeitig. Produktionsmanager + zentrale Planer arbeiten zusammen, um Geräteausfälle und Materialmangel zu beheben. |
+
+---
+
+## 6. Control Tower — Schlüsselfähigkeiten
+
+| Fähigkeit | Was sie tut |
+|---|---|
+| **Echtzeit-Sichtbarkeit** | End-to-End-Sicht auf gesamte SC — Standort, Bestand, Sendungen, Produktion — alles in Echtzeit |
+| **Datenintegration** | Zieht Daten aus ERP, WMS, TMS, IoT-Sensoren, GPS, Lieferantensystemen in eine einheitliche Plattform |
+| **Prozessautomatisierung** | Automatisiert repetitive SC-Prozesse — Bestellgenerierung, Versandplanung, Alarme |
+| **Datenanalyse & Einblicke** | Analysiert SC-Daten → umsetzbare Einblicke (Dashboards, KPI-Berichte) |
+| **Nachfrage- & Angebotsprognose** | Sagt künftige Nachfrage und Angebot mit KI/ML vorher → ermöglicht proaktive Planung |
+| **Produktionsplanung & -kontrolle** | Bestimmt was, wo und wie viel zu produzieren ist — über mehrere Werke hinweg — optimal |
+| **Bestandsoptimierung** | Findet optimale Lagerbestände an jeder Fabrik und jedem DC |
+| **Ausnahmemanagement** | Erkennt Störungen → löst automatisch Wiederherstellungsmaßnahmen aus |
+| **KPI-Tracking** | Kontinuierliche Überwachung von Leistungskennzahlen — markiert unterdurchschnittliche Bereiche sofort |
+| **Entscheidungsunterstützung** | Echtzeit-analytische Entscheidungsunterstützung — nicht nur Sichtbarkeit, sondern Empfehlungen |
+
+---
+
+## 7. Vorteile des Supply Chain Control Towers
+
+- **Verbesserter Servicelevel:** pünktliche Lieferungen, Nachfrage gedeckt, weniger Fehlbestände.
+- **Reduzierte Kosten:** optimierte Routen, reduzierter Überbestand, weniger störungsbedingter Verlust.
+- **Umsatzmaximierung:** Nachfrage erfasst, weniger entgangene Verkäufe durch Fehlbestände oder Verzögerungen.
+- **Erhöhte Effizienz:** Automatisierung nicht-wertschöpfender Aufgaben, bessere Ressourcenzuweisung.
+- **Bessere Zusammenarbeit:** geteilte Sichtbarkeit mit SC-Partnern über Regionen und Zeitzonen.
+- **Compliance & Governance:** überwacht regulatorische Anforderungen; signalisiert Verstöße automatisch.
+- **Kontinuierliche Verbesserung:** KPI-Tracking identifiziert schwache Bereiche; ermöglicht datengetriebene Verbesserungszyklen.
+- **Störungsreaktion:** identifiziert automatisch alternativen Lieferanten oder Route, wenn der primäre ausfällt.
+
+---
+
+## 8. Technologien zum Aufbau eines Control Towers
+
+| Technologie | Rolle im Control Tower |
+|---|---|
+| **Datenintegrationsplattformen** | ERP, WMS, TMS, IoT-Sensoren, GPS — Daten von allen SC-Knoten in eine Ansicht sammeln |
+| **Kollaborations- & Kommunikations-Tools** | Nahtlose Kommunikation + Informationsaustausch über alle SC-Stakeholder |
+| **Blockchain** | Verbessert Transparenz, Rückverfolgbarkeit und Sicherheit in SC-Transaktionen |
+| **Analytik & Visualisierung** | Dashboards zur Echtzeit-KPI-Visualisierung; Analysetools für Einblicke und automatisierte Entscheidungen |
+| **KI & ML Algorithmen** | Prognosen (Nachfrage + Angebot), Wiederherstellungspläne bei Störungen, Bestandsoptimierung |
+| **Optimierungsalgorithmen** | Berechnet optimale Produktionspläne, Lagerbestände, Lieferrouten — präskriptive Schicht des CT |
+| **Cloud-Infrastruktur** | Speichert riesige SC-Daten; ermöglicht Echtzeitzugriff von überall; unterstützt KI/ML-Berechnungen |
+
+---
+
+## Woche 11 — Vollständige Zusammenfassung
+
+| Session | Schlüsselthemen |
+|---|---|
+| **S1** | DT-Einführung: Definition, 5 Typen, 4 Schlüsseltechnologien, 3 DT-Komponenten |
+| **S2** | GFA-Fall: Optimierungsmodell, 3 Distanzformeln, Excel Solver (GRG Nichtlinear). Ergebnis: DC in Mumbai. |
+| **S3** | GFA Hands-On: Excel-Formelkette, SUMPRODUKT, AnyLogistix Multi-SKU-Demo. |
+| **S4** | Netzwerkoptimierung: 4 Entscheidungsvariablen, Gewinnmaximierungsmodell, Big M, Flussausgleich. Ergebnis: Aurangabad + VAPI, Gewinn 5,9 Mio. $. |
+| **S5** | Netzwerkoptimierung mit Kapazitätsnebenbedingungen: M durch tatsächliche Kapazität ersetzen. Ergebnis: beide Fabriken benötigt, Gewinn auf 1,4 Mio. $ gesunken. + Supply Chain Control Tower. |
+
+---
+
+## Zusammenfassung der Session
+
+- **Kapazitätsnebenbedingungsmodifikation:** M durch KapFab_i (oder KapDC_j) in Kapazitätsnebenbedingungen ersetzen. Eine Änderung; große Auswirkung.
+- **Ergebnis mit Kapazität:** Aurangabad begrenzt → Nashik muss auch öffnen → Gewinn sinkt von 5,9 Mio. $ auf 1,4 Mio. $.
+- **Managementeinblick:** Kapazitätsnebenbedingungen erzwingen teurere Alternativen — realer Trade-off der Einrichtungsdimensionierung.
+- **Control Tower:** zentralisierter Hub → Echtzeit-End-to-End-Sichtbarkeit + automatisierte Entscheidungsunterstützung + KPI-Überwachung.
+- **3 Anwendungsfälle:** FMCG-Rohstoff (Sonnenblumenöl) | Molkerei-Verderbliches + Routing | Lack-Mehrwerks-Bestand.
+- **10 Fähigkeiten:** Sichtbarkeit, Integration, Automatisierung, Analyse, Prognose, Produktionsplanung, Bestand, Ausnahmemanagement, KPI-Tracking, Entscheidungsunterstützung.
+- **7 Technologien:** Datenintegration | Kollaboration | Blockchain | Analytik + Viz | KI/ML | Optimierung | Cloud.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Kapazitätsnebenbedingungsmodifikation: M durch KapFab_i in Fabriks-NB, KapDC_j in DC-NB ersetzen. Wenn yᵢ=0: RHS=0 → keine Ausgabe. Wenn yᵢ=1: RHS=tatsächliche Kapazität.
+
+**★ Prüfungstipp:** Hinzufügen der Kapazitätsnebenbedingung öffnete Nashik-Fabrik (teurer) → Gewinn sank von 5,9 Mio. $ auf 1,4 Mio. $. Kapazitätslimits erzwingen teure Alternativen — wichtiger Managementeinblick.
+
+**★ Prüfungstipp:** Control Tower Definition: zentralisierter Hub für Echtzeit-SC-Sichtbarkeit + Kontrolle. Schlüsselfähigkeiten: Echtzeit-Sichtbarkeit, Ausnahmemanagement, Entscheidungsunterstützung, KPI-Tracking.
+
+**★ Prüfungstipp:** Technologien für Control Tower: ERP/WMS/TMS/IoT (Datenintegration) + Blockchain (Rückverfolgbarkeit) + KI/ML + Optimierung (Entscheidungsintelligenz) + Cloud (Speicher + Berechnung + Kollaboration).
+</Aside>

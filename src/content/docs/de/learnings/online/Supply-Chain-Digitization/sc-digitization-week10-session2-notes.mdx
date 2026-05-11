@@ -1,6 +1,6 @@
 ---
-title: "Woche 10 | Session 2: Track & Trace Systeme — Technologie-Schnittstelle, Barcodes & QR-Codes"
-description: "Erkunden Sie die Kernkomponenten von Track & Trace Systemen und vertiefen Sie sich in grundlegende Tracking-Technologien wie Barcodes und QR-Codes."
+title: "Woche 10 | Session 2: Track & Trace-Systeme — Technologie, Barcodes & QR-Codes"
+description: "Erkundung der Kernkomponenten von Track & Trace-Systemen sowie grundlegender Verfolgungstechnologien wie Barcodes und QR-Codes."
 sidebar:
   order: 48
 ---
@@ -14,80 +14,78 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 ## Session-Agenda
 
 <Aside type="note">
-- Was sind Track & Trace Systeme?
+- Was sind Track & Trace-Systeme?
 - Schlüsselkonzept — Triangulation von Informationen
-- Vier Hauptschritte in jedem Track & Trace System
-- Manuelles System vs. Technologie-System
+- Vier Hauptschritte in jedem Track & Trace-System
+- Manuelles System vs. Technologiesystem
 - Barcode-Technologie
 - QR-Code (Quick Response Code)
-- Barcode vs. QR-Code — direkter Vergleich
+- Barcode vs. QR-Code — Gegenüberstellung
 </Aside>
 
 ---
 
-## 1. Was sind Track & Trace Systeme?
+## 1. Was sind Track & Trace-Systeme?
 
-Technologiegestützte Systeme, die Produktattribute auf jeder SC-Stufe aufzeichnen, übertragen und speichern. Genutzt in Beschaffung, Produktion, Versand, Transport, Lagerung und Konsum.
+Technologiegestützte Systeme, die Produktattribute an jeder Stufe der SC aufzeichnen, übertragen und speichern. Eingesetzt in Beschaffung, Fertigung, Versand, Transport, Lagerung und Verbrauch.
 
-### Alltagsbeispiel — E-Commerce Bestellverfolgung
+### Alltagsbeispiel — E-Commerce-Sendungsverfolgung
 1. Bestellung aufgegeben
-2. Versandbenachrichtigung (Scan am Ursprung)
-3. Transit-Updates (Scan an Transit-Hubs)
-4. In Zustellung
-5. Last-Mile-Lieferung (Scan an der Haustür)
+2. Versandbenachrichtigung (Scan am Ursprungsort)
+3. Aktualisierungen während des Transits (Scan an Umschlagpunkten)
+4. Zustellung steht bevor
+5. Letzte-Meile-Lieferung (Scan an der Haustür)
 6. Lieferbestätigung (Unterschrift/OTP)
-7. Referenz für Reklamationen
+7. Beschwerdereferenz
 
 <Aside type="note">
-**★** T&T-Systeme bieten einen überprüfbaren, mit Zeitstempel versehenen Datensatz jedes Produktereignisses — und ermöglichen so Kundenservice und Reklamationslösung.
+**★** T&T-Systeme bieten einen verifizierbaren, zeitgestempelten Nachweis jedes Produktereignisses — was sowohl den Kundenservice als auch die Beschwerdelösung ermöglicht.
 </Aside>
 
 ---
 
 ## 2. Schlüsselkonzept — Triangulation von Informationen
 
-**Triangulation** = Verifizierung einer Transaktion durch gleichzeitige Nutzung mehrerer unabhängiger Datenpunkte.
-- *E-Commerce-Lieferung:* Scan durch Lieferant + Kundenunterschrift/OTP + Zeitstempel + GPS = triangulierter Nachweis.
-- *B2B SC:* Wareneingangsschein + System-Scan + Rechnungsabgleich = triangulierter Empfang.
+**Triangulation** = Verifizierung einer Transaktion mit mehreren unabhängigen Datenpunkten gleichzeitig.
+- *E-Commerce-Lieferung:* Scan des Zustellers + Kundenunterschrift/OTP + Zeitstempel + GPS = triangulierter Nachweis.
+- *B2B SC:* WE-Schein + Systemscan + Rechnungsabgleich = triangulierter Wareneingang.
 
 <Aside type="note">
-**★** Triangulation macht T&T-Systeme rechtlich belastbar. Ein einzelner Datenpunkt kann angefochten werden; mehrere bestätigende Aufzeichnungen zusammen jedoch nicht.
+**★** Triangulation macht T&T-Systeme rechtlich vertretbar. Ein einzelner Datenpunkt kann angefochten werden; mehrere korroborierenden Aufzeichnungen zusammen nicht.
 </Aside>
 
 ---
 
-## 3. Vier Hauptschritte in jedem Track & Trace System
-
-Alle T&T-Systeme müssen diese vier Schritte abdecken:
+## 3. Vier Hauptschritte in jedem Track & Trace-System
 
 <Steps>
-1. **Attribute erfassen:** Entscheiden, welche Attribute wichtig sind (z.B. Seriennummer, Charge, Standort, Temperatur).
-2. **Datenerfassung & Übertragung:** Wie werden Daten gesammelt? Manuell (Stift/Papier) oder automatisiert (Geräte laden in die Cloud).
-3. **Datenspeicherung (Management):** Sicher speichern in Cloud/lokaler DB. Durchsuchbarkeit und Audit-Trails sicherstellen.
-4. **Datenaustausch & Kollaboration:** Mit internen und externen Stakeholdern für Echtzeit-Sichtbarkeit teilen.
+1. **Attribute erfassen:** Entscheiden, welche Attribute wichtig sind (z.B. Seriennr., Charge, Standort, Temperatur).
+2. **Datenerfassung & -übertragung:** Wie werden Daten erfasst? Manuell (Stift/Papier) oder automatisiert (Geräte laden in die Cloud hoch).
+3. **Datenspeicherung (Management):** Sicher in der Cloud/lokaler DB speichern. Durchsuchbarkeit und Audit-Trails sicherstellen.
+4. **Datenaustausch & Zusammenarbeit:** Mit internen und externen Stakeholdern teilen, um Echtzeit-Transparenz zu ermöglichen.
 </Steps>
 
 ---
 
-## 4. Manuelles System vs. Technologie-System
+## 4. Manuelles System vs. Technologiesystem
 
-Manuelle Systeme sind bei geringem Volumen machbar, versagen aber bei hohem Volumen aufgrund von Fehlern und Kosten.
+Manuelle Systeme sind bei geringem Volumen machbar, scheitern aber bei hohem Volumen aufgrund von Fehlern und Kosten.
 
-| Dimension | Manuelles System | Technologie-System |
+| Dimension | Manuelles System | Technologiesystem |
 |---|---|---|
-| **Datenerfassung** | Manueller Aufkleber + Handschrift | Geräte erfassen automatisch |
+| **Datenerfassung** | Manuelle Beschriftung + Handschrift | Geräte erfassen automatisch |
 | **Speicherung** | Papierakten (hohes Verlustrisiko) | Sichere Cloud/lokale digitale DB |
-| **Genauigkeit** | Fehleranfällig (Ermüdung, Übertragung) | Hoch (keine manuelle Übertragung) |
-| **Geschwindigkeit / Volumen**| Langsam — nur bei geringem Volumen rentabel | Schnell — bewältigt große Volumen |
-| **Gesamtkosten (Skalierung)**| Sehr HOCH (arbeits- & zeitintensiv) | Geringer (Automatisierung senkt Kosten) |
+| **Genauigkeit** | Fehleranfällig (Ermüdung, Übertragungsfehler) | Hoch (keine manuelle Übertragung) |
+| **Geschwindigkeit / Volumen** | Langsam — nur bei geringem Volumen machbar | Schnell — verarbeitet große Volumina |
+| **Gesamtkosten (Skalierung)** | Sehr HOCH (arbeits- und zeitintensiv) | Niedriger (Automatisierung reduziert Kosten) |
 
 ---
 
 ## 5. Barcode-Technologie
 
-- **Was es ist:** Aufkleber/Etikett mit codierten Linien (1D oder 2D).
-- **Informationskapazität:** Begrenzt (1–4 Attribute wie Seriennr., Charge, Preis, Verfallsdatum).
-- **Lesen:** Erfordert speziellen Barcode-Scanner. Abstand und Winkel müssen präzise sein.
+- **Was es ist:** Aufkleber/Etikett mit kodierten Linien (1D oder 2D).
+- **Informationskapazität:** Begrenzt (1–4 Attribute wie Seriennr., Charge, Preis, Ablaufdatum).
+- **Lesen:** Erfordert dedizierten Barcode-Scanner. Abstand und Winkel müssen präzise sein.
 - **Anwendungen:** Einzelhandelskasse, Luftfrachtgepäck, Fertigungskomponenten, Gesundheitswesen. Meist auf der **Primärverpackung**.
 
 ---
@@ -97,36 +95,36 @@ Manuelle Systeme sind bei geringem Volumen machbar, versagen aber bei hohem Volu
 - **Was es ist:** Erweitertes 2D-Matrixmuster. Physisches oder digitales Format.
 - **Informationskapazität:** Sehr hoch (kann auf URLs, Datenbanken, Videos verlinken).
 - **Statisch vs. Dynamisch:** Statisch kann nicht geändert werden. Dynamisch verlinkt auf eine URL/DB und kann in Echtzeit aktualisiert werden, ohne den Code selbst zu ändern.
-- **Lesen:** Kamerafähiges Gerät (Smartphone, Drohne). Toleriert breitere Winkel und größere Entfernungen.
-- **Anwendungen:** Sekundärverpackung (Kartons/Paletten), Zahlungen (UPI), Drohnen-Inventur, SC-Rückverfolgbarkeit.
+- **Lesen:** Kameragestütztes Gerät (Smartphone, Drohne). Toleriert breitere Winkel und Abstände.
+- **Anwendungen:** Sekundärverpackung (Kartons/Paletten), Zahlungen (UPI), Drohneninventur, SC-Rückverfolgbarkeit.
 
 ---
 
-## 7. Barcode vs. QR-Code — direkter Vergleich
+## 7. Barcode vs. QR-Code — Gegenüberstellung
 
 | Attribut | Barcode | QR-Code |
 |---|---|---|
-| **Was es ist** | Linien auf Etikett (1D/2D) | 2D-Matrixmuster |
-| **Info-Kapazität** | Gering (wenige Attribute) | Hoch (verlinkt auf Web, große Datensätze) |
-| **Info-Typ** | Nur statisch | Statisch ODER dynamisch |
-| **Scanner nötig** | Spezieller Barcode-Leser | Kamerafähiges Gerät + App |
-| **Distanz/Winkel** | Muss präzise sein | Flexibel (drohnenkompatibel) |
+| **Was es ist** | Linien auf Etikett gedruckt (1D/2D) | 2D-Matrixmuster |
+| **Informationskapazität** | Niedrig (wenige Attribute) | Hoch (Links zu Web, große Datensätze) |
+| **Informationstyp** | Nur statisch | Statisch ODER dynamisch |
+| **Scanner benötigt** | Spezialisiertes Barcode-Lesegerät | Kameragestütztes Gerät + App |
+| **Abstand/Winkel** | Muss präzise sein | Flexibel (drohnenkompatibel) |
 | **Platzierung** | Primärverpackung | Sekundärverpackung, digital |
 
 <Aside type="note">
-**★** QR-Codes sind in Bezug auf Kapazität und Flexibilität klar überlegen — aber Barcodes werden weiterhin häufig genutzt, da sie etabliert und für einfache Aufgaben günstig sind.
+**★** QR-Codes sind in Kapazität und Flexibilität klar überlegen — aber Barcodes bleiben weit verbreitet, weil sie für einfache Aufgaben etabliert und kostengünstig sind.
 </Aside>
 
 ---
 
 ## Zusammenfassung der Session
 
-- **T&T-Systeme:** Erfassen Produktattribute auf jeder SC-Stufe.
+- **T&T-Systeme:** Zeichnen Produktattribute an jeder SC-Stufe auf.
 - **Triangulation:** Verifizierung von Transaktionen mit mehreren unabhängigen Datenpunkten.
 - **4 Schritte:** Attribute erfassen → Daten übertragen → Daten speichern → Daten teilen.
-- **Barcode:** Statisch, geringe Kapazität, strenger Scan-Winkel, Primärverpackung.
-- **QR-Code:** Statisch oder dynamisch, hohe Kapazität, flexibler Winkel, Sekundärverpackung.
+- **Barcode:** Statisch, geringe Kapazität, strikter Scanwinkel, Primärverpackung.
+- **QR-Code:** Statisch oder dynamisch, hohe Kapazität, flexibler Winkel, Sekundärverpackung + digital.
 
 <Aside type="tip">
-**★ Prüfungstipp:** Dynamische QR-Codes können in Echtzeit aktualisiert werden, ohne den physischen QR-Code zu ändern, was sie ideal für Live-Datenlinks macht. Triangulation verhindert falsche Ansprüche, indem Aufzeichnungen rechtlich belastbar gemacht werden.
+**★ Prüfungstipp:** Dynamische QR-Codes können in Echtzeit aktualisiert werden, ohne den physischen QR zu ändern — geeignet für Live-Datenlinks. Triangulation verhindert unberechtigte Ansprüche, indem Aufzeichnungen rechtlich vertretbar gemacht werden.
 </Aside>

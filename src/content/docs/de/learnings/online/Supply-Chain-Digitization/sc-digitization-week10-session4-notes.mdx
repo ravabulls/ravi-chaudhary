@@ -1,0 +1,165 @@
+---
+title: "Woche 10 | Session 4: Informationssysteme in der SCM — ERP-Überblick, MRP, Anwendungsfälle & Implementierung"
+description: "Wechsel von Hardware-T&T zu Software-Informationssystemen. Verstehen, warum ERP benötigt wird, die fünf operativen Treiber, MRP vs. ERP, Schlüsselmodule, Anwendungsfälle zur Modulintegration und die besonderen Herausforderungen von ERP in einer Mehranbieter-Supply Chain."
+sidebar:
+  order: 50
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Kontext — Von Hardware zu Software
+- Warum Informationssysteme in der SCM benötigt werden
+- Fünf Bedürfnisse, die ERP-Implementierung antreiben
+- Was ist ERP — Enterprise Resource Planning?
+- Grundlage — MRP vs. ERP
+- ERP-Anwendungsbereiche / Module
+- ERP-Anwendungsfälle — Wie Module verbunden sind
+- ERP in der SCM — Vorteile & Herausforderungen
+</Aside>
+
+---
+
+## 1. Kontext — Von Hardware zu Software
+
+Vorherige Sessions behandelten **Hardware** (Barcodes, QR, RFID, Sensoren) — die Datenerfassungsschicht. Diese Session wechselt zu **Software** — den Informationssystemen, die diese Daten verwalten, planen und darauf reagieren.
+
+<Aside type="note">
+**★** Hardware (T&T) **erfasst** die Daten. Software (ERP/WMS/TMS) **verwaltet, plant und handelt** auf Basis dieser Daten. Beide sind für die digitale SC-Infrastruktur unerlässlich.
+</Aside>
+
+Drei Schlüssel-Informationssysteme in der SCM: **ERP** *(diese Session)*, **WMS** und **TMS** *(nächste Session)*.
+
+---
+
+## 2. Warum Informationssysteme in der SCM benötigt werden
+
+Eine Supply Chain hat viele Prozesse, viele Entitäten, viele simultane Interaktionen. Ohne strukturierte Systeme operieren Organisationen im **Zufallsmodus** — schwer, Leistung zu messen oder Referenzpunkte zu halten. Informationssysteme bringen: **Transparenz + Effizienz + strukturierte Entscheidungsunterstützung**.
+
+<Aside type="note">
+**★** Feuerlöschen (tägliche reaktive Entscheidungsfindung) = der **Feind der Effizienz**. ERP ermöglicht proaktive Planung und automatisierte Ausführung, um dies zu eliminieren.
+</Aside>
+
+Schlüsselprinzip: IS sollten basierend auf **organisatorischem Bedarf** ausgewählt werden — nicht weil ein Wettbewerber es nutzt.
+
+---
+
+## 3. Fünf Bedürfnisse, die ERP-Implementierung antreiben
+
+<Steps>
+1. **Planung:** Aufgaben für nahe und ferne Zukunft über alle SC-Prozesse hinweg identifizieren. Vermeidet tägliches Feuerlöschen — ermöglicht längere Zeithorizonte.
+2. **Ausführung:** Plan in tägliche Aktionen umwandeln — wer was mit welchen Ressourcen tut. Inventarsortierung, Versand, Rechnungsstellung, Abrechnung passieren täglich.
+3. **Automatisierung:** Repetitive Aufgaben (z.B. Erinnerungs-E-Mails an Lieferanten) → automatisieren, um menschliche Kapazität für wertschöpfende Arbeit freizusetzen.
+4. **Überwachung:** Lagerbestände, versandte Bestellungen, Personalanwesenheit, Gerätestatus über Dashboards verfolgen. Probleme frühzeitig erkennen.
+5. **Kontrolle:** Auf Überwachungsdaten reagieren — fehlerhafte Linie stoppen, Zeitplan anpassen, Verzögerung eskalieren. Kann manuell oder automatisiert sein. Schließt den Regelkreis: planen → ausführen → überwachen → kontrollieren → neu planen.
+</Steps>
+
+---
+
+## 4. Was ist ERP — Enterprise Resource Planning?
+
+**ERP** = ein Softwaresystem (oder eine Sammlung von Anwendungen), das Geschäftsprozesse in einer gesamten Organisation verwaltet.
+
+- **Enterprise** = Verbindung mehrerer Entitäten/Prozesse, die Wert für einen Kunden liefern.
+- Basiert auf: großen Mengen **transaktionaler Daten, die durch Formeln und Regeln miteinander verbunden** sind.
+
+### Implementierungsmöglichkeiten
+
+| Ansatz | Beispiele | Anmerkungen |
+|---|---|---|
+| **Standardsoftware** | SAP, Oracle, Tally | Marktlösungen für spezifische Module |
+| **In-house entwickelt** | Open-Source-Tools, Tabellenkalkulationen | Für spezifische/benutzerdefinierte Prozesse geeignet |
+| **Cloud-basiertes ERP** | Zunehmend beliebt | Vermeidet lokale Serverabhängigkeit; überall zugänglich |
+
+---
+
+## 5. Grundlage — MRP vs. ERP
+
+ERP entstand aus MRP — Material Requirements Planning — geht jedoch weit darüber hinaus:
+
+| Attribut | MRP | ERP |
+|---|---|---|
+| **Vollständiger Name** | Materialbedarfsplanung | Enterprise Resource Planning |
+| **Umfang** | Eng — Produktion/Fertigung | Weit — alle Geschäftsfunktionen |
+| **Schlüssel-Inputs** | BOM + Bestandsaufzeichnungen + Vorlaufzeiten + Bedarf | Alle MRP-Inputs + Finanz- + HR- + funktionsübergreifende Daten |
+| **Schlüssel-Outputs** | Was produzieren/kaufen, wann, wie viel | Integrierte Pläne — Terminplanung, Budgetierung, Rechnungsstellung, Berichterstattung |
+| **Fokus** | Wann welche Komponenten herstellen/kaufen | Ressourcen, Informationen und Entscheidungen im gesamten Unternehmen verwalten |
+| **Branchen** | Montage, Fertigung | Alle Branchen — Service, Fertigung, Handel, SC |
+
+### MRP-Schlüssel-Inputs
+- **Stückliste (BOM):** hierarchische Aufschlüsselung der Komponenten für das Endprodukt.
+- **Bestandsaufzeichnungen:** aktuell verfügbarer Bestand. **Vorlaufzeiten:** Dauer jedes Schritts.
+- **Bedarfsplan:** was produziert werden muss und wann.
+
+---
+
+## 6. ERP-Anwendungsbereiche / Module
+
+| ERP-Modul | Was es verwaltet |
+|---|---|
+| **Rechnungswesen & Finanzen** | Budgetierung, Rechnungsstellung, Kreditoren/Debitoren, Ausgabenanalyse |
+| **HR & Personalplanung** | Urlaubsverwaltung, Gehaltsabrechnung, Überstundenberechnung, Einstellungsplanung |
+| **Projektmanagement** | Aktivitätsverfolgung, Kostenüberwachung, Stakeholder-Sichtbarkeit |
+| **Beschaffung** | Lieferantenregistrierung, Lieferplanung, Bestellgenerierung, Zahlungsverknüpfung |
+| **Materialwirtschaft** | Bestandsverfolgung, BOM-Verwaltung, Bestandsabstimmung |
+| **Anlagenverwaltung** | Anlagenstandort, Nutzungsverfolgung, Wartungsplanung |
+| **Produktion / Betrieb** | Produktionsplanung, Kapazitätsplanung, MRP-Outputs |
+| **Vertrieb & Distribution** | Auftragsverwaltung, Versandverfolgung, Kundenrechnungsstellung |
+
+---
+
+## 7. ERP-Anwendungsfälle — Wie Module verbunden sind
+
+### Anwendungsfall 1 — Beratungsunternehmen
+ERP verbindet: Projektpipeline → Berater-Kompetenzen → Kapazitätsplanung → Einstellungsbedarf → protokollierte Beraterstunden → Kundenrechnungsstellung → Gehälter + Überstundenlohn. Befreit Berater von administrativen Aufgaben.
+
+### Anwendungsfall 2 — Beschaffung / Lieferantenmanagement
+Lieferant in ERP registriert → erhält Lieferplan direkt über System → protokolliert Versanddaten → Unternehmen erhält Bestätigung → WE-Schein im ERP gespeichert → löst Kreditorenbuchhaltung aus → Rechnung wird lieferantenseitig erstellt → Ausgabenanalyse ermöglicht.
+
+<Aside type="note">
+**★** ERP ist ein System **verbundener Formeln** — wenn sich ein Input ändert, aktualisieren sich alle nachgelagerten Outputs automatisch. Das ersetzt manuelle Dateneingabe über Abteilungen hinweg.
+</Aside>
+
+---
+
+## 8. ERP in der SCM — Vorteile & Herausforderungen
+
+| ✅ Vorteile | ❌ Herausforderungen im SC-Kontext |
+|---|---|
+| Verbindet mehrere Entitäten auf einer digitalen Plattform | Onboarding aller SC-Partner ist schwierig — unterschiedliche Größen, ERP-Systeme, digitale Reife |
+| Reduziert den Bedarf an häufigen persönlichen Interaktionen | Kleine Lieferanten haben möglicherweise kein ERP — können es sich nicht leisten |
+| Schafft transparente, nachvollziehbare Geschäftstransaktionen | Prozess-Software-Fit-Problem: Montage ≠ Lagerhaltung — gleiches ERP passt möglicherweise nicht |
+| Ermöglicht langfristige Planung statt täglichem Feuerlöschen | Lieferant mit mehreren Kunden: Onboarding auf 3+ verschiedene ERP-Systeme sehr kostspielig |
+| Automatisiert repetitive Aufgaben; unterstützt Audit-Trails | ERP in SC selten vollständig durchgängig — Lücken zwischen Partnern bleiben |
+
+### Workarounds für SC-ERP-Lücken
+- **Lieferantenmanagement-Investitionen:** kleinen Lieferanten helfen, grundlegende digitale Werkzeuge einzusetzen.
+- **Modulspezifische Einführung:** ERP nur für Prozessuntermengen implementieren, wo es gut integriert.
+- **Entkoppelte Module:** ein ERP für bestimmte Partner; separates Modul für andere.
+
+---
+
+## Zusammenfassung der Session
+
+- **5 ERP-Bedürfnisse:** Planung, Ausführung, Automatisierung, Überwachung, Kontrolle — jedes eliminiert eine andere Ineffizienz.
+- **ERP-Definition:** Softwaresystem, das Geschäftsprozesse im gesamten Unternehmen über transaktionale Daten verbindet.
+- **MRP → ERP:** MRP ist eng (Produktion/Fertigung). ERP erstreckt sich auf alle Geschäftsfunktionen.
+- **ERP-Module:** Rechnungswesen, HR, Projektmanagement, Beschaffung, Materialwirtschaft, Anlagen, Produktion, Vertrieb.
+- **ERP-Typen:** Standardsoftware (SAP, Oracle, Tally), In-house oder Cloud-basiert — angetrieben durch Bedarf, nicht Trend.
+- **SC-Herausforderungen:** Partner-Onboarding, Prozess-Software-Fit, Lieferant mit mehreren Kunden → ERP selten vollständig durchgängig in SC.
+
+<Aside type="tip">
+**★ Prüfungstipp:** 5 Bedürfnisse für ERP: Planung, Ausführung, Automatisierung, Überwachung, Kontrolle. Was jedes adressiert und ein kurzes Beispiel kennen.
+
+**★ Prüfungstipp:** MRP vs. ERP: MRP = eng (Produktion, BOM-basiert). ERP = weit (alle Geschäftsfunktionen inkl. Finanzen, HR, Beschaffung). ERP entstand aus MRP.
+
+**★ Prüfungstipp:** ERP basiert auf vernetzten transaktionalen Daten — Formeln verbinden Module, sodass eine Änderung in einem (z.B. Versand protokolliert) andere automatisch aktualisiert (z.B. Rechnung ausgelöst).
+
+**★ Prüfungstipp:** SC-ERP-Herausforderung: nicht alle Partner haben dasselbe ERP oder überhaupt ein ERP. Verschiedene Prozesstypen (Montage vs. Lagerhaltung) passen möglicherweise nicht in dasselbe ERP — vollständig durchgängiges ERP in der SC ist selten.
+</Aside>

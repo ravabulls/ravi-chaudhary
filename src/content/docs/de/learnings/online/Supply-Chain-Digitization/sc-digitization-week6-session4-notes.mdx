@@ -11,12 +11,6 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-![Konzepte der Unreinheit](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image1.png)
-![Aufteilung des Klassifikationsbaums](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image2.png)
-![Gini-Index vs Entropie Diagramm](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image3.png)
-![Knoten 0 Wurzel-Aufteilung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image4.png)
-![Visualisierung der Genauigkeitsverbesserung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image5.png)
-
 ## Session-Agenda
 
 <Aside type="note">
@@ -58,6 +52,8 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Unreinheitsmaße — Gini-Index & Entropie
 
+![Konzepte der Unreinheit](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image1.png)
+
 **Warum Unreinheit?**
 Unreinheit = Zufälligkeit in einem Knoten. Ein reiner Knoten = alle Beobachtungen gehören zu einer Klasse → perfekte Vorhersage.
 Je geringer die Unreinheit an jedem Blattknoten, desto höher die Klassifikationsgenauigkeit.
@@ -80,6 +76,9 @@ Ziel bei jeder Aufteilung: Wähle Variable + Cutoff, die die Unreinheit am stär
 | **Knoten 0 (Wurzel)** | 64% | 36% | 1 − (0,64² + 0,36²) = 0,46 | — | Hoch (nah am Max) |
 
 ### Wichtige Erkenntnis aus dem Unreinheitsgraphen
+
+![Gini-Index vs Entropie Diagramm](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image3.png)
+
 - **Form:** Umgekehrtes U — symmetrisch um 0,5
 - Sowohl Gini als auch Entropie starten bei 0 (alle in einer Klasse) → steigen auf das Maximum bei 0,5 (50-50 Aufteilung) → fallen zurück auf 0
 - **Implikation:** Beim Aufteilen eines Knotens wollen wir Beobachtungen WEG von 0,5 zu einem der Enden (0 oder 1) bewegen → Unreinheit reduzieren → Genauigkeit verbessern
@@ -91,6 +90,8 @@ Ziel bei jeder Aufteilung: Wähle Variable + Cutoff, die die Unreinheit am stär
 ---
 
 ## Aufteilungslogik — Wie man Variable und Cutoff auswählt
+
+![Aufteilung des Klassifikationsbaums](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image2.png)
 
 Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit ALLEN möglichen Cutoff-Werten ausprobiert. Für jedes (Variable, Cutoff) Paar wird die gewichtete Reduktion der Unreinheit berechnet.
 
@@ -107,6 +108,8 @@ Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit A
 
 ## Verfolgung der Aufteilung Knoten für Knoten — Der vollständige Baum
 
+![Knoten 0 Wurzel-Aufteilung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image4.png)
+
 ### Alle Knoten — Beobachtungen, Gini, Aufteilungsvariable, Cutoff, Reduktion
 
 | Knoten | Beobachtungen | Ja% / Nein% | Gini | Aufteilungsvariable | Cut-off | Reduktion der Unreinheit | Kindknoten |
@@ -120,6 +123,9 @@ Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit A
 | **6 (Blatt)** | 66 Beob. | 29% / 71% | 0,41 | STOPP | — | — | Vorhersage: FÄLLT NICHT AUS |
 
 ### Genauigkeitsentwicklung — Wie jede Aufteilung die Vorhersage verbessert
+
+![Visualisierung der Genauigkeitsverbesserung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image5.png)
+
 | Stufe | Verfügbare Informationen | Beste Vorhersagegenauigkeit | Interpretation |
 |---|---|---|---|
 | **Knoten 0 (Keine Info)** | Keine — wir wissen nur, dass die Maschine existiert | 64% (Basis) | 64% Ausfallwahrscheinlichkeit basierend auf reiner Historie. |

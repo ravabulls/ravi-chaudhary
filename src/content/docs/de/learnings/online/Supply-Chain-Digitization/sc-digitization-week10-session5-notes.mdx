@@ -1,0 +1,179 @@
+---
+title: "Woche 10 | Session 5: Informationssysteme — WMS & TMS (Lager- & Transportmanagementsysteme)"
+description: "Detaillierte Untersuchung von Warehouse Management Systems (WMS) und Transportation Management Systems (TMS) — Umfang, Schlüsselfunktionalitäten, Terminologie und Integration mit ERP und T&T-Systemen zur Bildung einer vollständigen digitalen SC-Infrastruktur."
+sidebar:
+  order: 51
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Session 4 (ERP)
+- WMS vs. TMS — Schnellvergleich
+- Warehouse Management System (WMS) — Typen, Layout & Aktivitäten
+- WMS-Schlüsselfunktionalitäten
+- Transportation Management System (TMS) — Fokus & Terminologie
+- TMS-Schlüsselfunktionalitäten
+- Integration — Wie ERP, WMS & TMS verbunden sind
+- Implementierungsüberlegungen für WMS & TMS
+</Aside>
+
+---
+
+## 1. WMS vs. TMS — Schnellvergleich
+
+![WMS & TMS — Lager- und Transportinformationssysteme](/learnings/online/Supply-Chain-Digitization/sc_w10s5_image1.png)
+
+<Aside type="note">
+**★** ERP = unternehmensweite Scope. WMS = **innerhalb des Lagers**. TMS = **zwischen Einrichtungen** (Bewegung). Alle drei können integriert werden, sind aber eigenständige Systeme.
+</Aside>
+
+| Attribut | WMS | TMS |
+|---|---|---|
+| **Vollständiger Name** | Warehouse Management System | Transportation Management System |
+| **Fokus** | Aktivitäten **innerhalb** des Lagers/Einrichtung | Material-**bewegung zwischen** Einrichtungen |
+| **Umfang** | Empfang → Einlagerung → Lagerung → Kommissionierung → Versand | Fracht, Routing, Dock-Planung, Hofverwaltung |
+| **Einrichtungstypen** | Lager, DC, Fulfillment Center, Sortierlager, Cross-Dock | Fernverkehr, letzte Meile, Einrichtungsübergreifender Transport |
+| **Verknüpft mit** | ERP (Materialmodul), TMS | ERP (Lieferantenmodul), WMS |
+| **Entwickelt** | In-house oder beschafft (gleicher oder anderer Anbieter als ERP) | In-house oder beschafft — oft mit WMS integriert |
+
+---
+
+## 2. Warehouse Management System (WMS)
+
+### Warum WMS ein separates System von ERP ist
+Lageraktivitäten sind sehr spezifisch für Produkttyp, Einrichtungslayout und Prozess — nicht allgemeingültig für alle Unternehmen. ERP verwaltet gemeinsame Geschäftsfunktionen (Finanzen, HR, Projekte) — keine granularen Lageroperationen. WMS und ERP kommen oft vom gleichen Anbieter, sind aber **separate Module** — Integration ist erforderlich.
+
+### Lagereinrichtungstypen, die WMS abdeckt
+
+| Einrichtungstyp | Merkmale |
+|---|---|
+| **Lager** | Langfristige Lagerung — Artikel können monatelang vor dem Bewegen verbleiben |
+| **Distribution Center (DC)** | Kürzerer Aufenthalt — regelmäßige Kommissionierung und Versand an Einzelhändler |
+| **Fulfillment Center** | E-Commerce-fokussiert — schnelle Einzelbestellungserfüllung |
+| **Sortierlager / Cross-Dock** | Artikel kommen an und verlassen in 8–12 Stunden — keine Langzeitlagerung |
+
+### Lagerlayout — Schlüsselterminologie
+
+| Begriff | Definition |
+|---|---|
+| **Palettenpositionen** | Individuelle Lagerslots (jedes Quadrat = 1 Palette in der Draufsicht). Können vertikal auf Regalen gestapelt werden. |
+| **Gangfläche** | Bewegungskorridor zwischen Lagerreihen — kein Lager, nur Transit. |
+| **Eingangsdocks** | Bereich, wo eingehende Fahrzeuge Materialien abladen (mehrere Docks möglich). |
+| **Ausgangsdock** | Bereich, wo ausgehende Fahrzeuge Materialien für den Versand laden. |
+| **Hof** | Freifläche um das Gebäude — Fahrzeugparkplatz und große Geräte. |
+| **SKU** | Stock Keeping Unit — eine spezifische Produktart + Größe + Einheit (z.B. Shampoo 200ml). |
+
+### Kernsequenz der Lageraktivitäten
+
+<Steps>
+1. **Empfang (Eingehend):** Materialien kommen an Eingangsdocks an. Artikel werden entladen, gescannt (T&T-Integration), WE-Schein erstellt.
+2. **Einlagerung:** Artikel werden vom Eingangsbereich zum zugewiesenen Lagerplatz bewegt. WMS liefert Sequenzierung zur Minimierung der Wegestrecke.
+3. **Lagerung:** Artikel werden für geplante Dauer gehalten. WMS zeigt Echtzeit-Palettenpositionsverfügbarkeit. Verfolgt Auslastung nach Zone, Regal, Position.
+4. **Kommissionierung:** Bestellungen eingehen → WMS erstellt Kommissionierliste (Sequenz + Menge). Kommissionierer oder automatisiertes Equipment folgt der Liste.
+5. **Bereitstellung & Versand:** Kommissionierte Artikel werden in den Ausgangsbereich gebracht (Staging). Auf Fahrzeug geladen. Ausgehender WE-Schein-Äquivalent erstellt. Dock durch TMS zugewiesen.
+</Steps>
+
+---
+
+## 3. WMS — Schlüsselfunktionalitäten
+
+| WMS-Funktionalität | Was sie tut |
+|---|---|
+| **Echtzeit-Visualisierung** | Zeigt Draufsicht auf Lager — Palettenpositionen: voll, leer, teilweise leer. Farbkodiert nach Status. Sofortiger Überblick über Kapazitätsauslastung. |
+| **Platzzuweisung / Slotting** | Entscheidungsunterstützung: SKUs basierend auf Bewegungsgeschwindigkeit (Schnelldreher nahe Ausgang), Größe, Produkttyp zuweisen. Schlägt optimale Palettenposition für eingehendes Produkt vor. |
+| **Wareneingangsmanagement** | Erfasst Eingangsabschluss — alle Paletten entladen? WE-Schein erstellt? Integriert mit T&T-Scanning. Verknüpft mit ERP-Materialmodul. |
+| **Einlagerungssequenzierung** | Sagt Operator: zuerst Position A besuchen, dann B — minimiert Wegestrecke. |
+| **Kommissionierlistenerstellung** | Basierend auf eingegangenen Bestellungen — erstellt geordnete Kommissionierliste mit Mengen und Standorten. Minimiert Wegestrecke; verarbeitet Teil- und Massenentnahmen. |
+| **Leistungsberichterstattung** | Tägliche Produktivitätskennzahlen: Durchsatz, Auslastung %, Geräteauslastung, Kommissioniererproduktivität. |
+
+<Aside type="note">
+**★** WMS = **Echtzeit-Inventartransparenz + Aktivitätssequenzierung + Leistungsberichterstattung**. Es sagt Ihnen, WO sich Dinge befinden und WAS als nächstes zu tun ist.
+</Aside>
+
+---
+
+## 4. Transportation Management System (TMS)
+
+TMS verwaltet die **Bewegung von Materialien zwischen Einrichtungen** — Fabrik → Lager → DC → Einzelhandelsgeschäft. Abdeckung: Personal, Ausrüstung, Vertragsbedingungen, regulatorische Compliance, Routenplanung.
+
+### TMS-Schlüsselterminologie
+
+| Begriff | Definition |
+|---|---|
+| **FTL** | Full Truck Load — Fahrzeug wird für eine Sendung voll genutzt |
+| **LTL** | Less than Truck Load — Fahrzeug trägt Teilladungen; kann mehrere Sendungen kombinieren |
+| **Backhaul** | Rückfahrt des Fahrzeugs nach Lieferung — zurück zum Lager ODER zur nächsten Abholung |
+| **Dock** | Be-/Entladebereich an einem Lager — gleicher Begriff in Lager und Hafenkontext |
+| **Hofverwaltung** | Verwaltung des Fahrzeug- und Geräteparkbereichs um das Lagergebäude |
+
+### TMS-Schlüsselfunktionalitäten
+
+| TMS-Funktionalität | Was sie tut |
+|---|---|
+| **Dock-Planung** | Welches Fahrzeug geht zu welchem Dock? Wann ist ein Dock frei? Nächstes Fahrzeug zuweisen. Verbindet TMS mit WMS — Dockverfügbarkeit hängt vom Lager-Kommissionier-/Ladefrotschritt ab. |
+| **Hofverwaltung** | Verwaltet Freifläche — Parken von Fahrzeugen, die auf Dockzuweisung warten. Positionierung von Geräten (Kräne, Gabelstapler). |
+| **Frachtmanagement** | Modusauswahl: Straße vs. See vs. Luft — Entscheidungsunterstützung basierend auf Kosten, Geschwindigkeit, Dringlichkeit. FTL vs. LTL-Entscheidungen zur Maximierung der Fahrzeugauslastung. |
+| **Dokumentation** | Automatische Erstellung von Versanddokumenten, Lieferaufträgen, Zollpapieren. |
+| **Fahrzeugrouting** | Für letzte-Meile-/Mehrfachstop-Lieferungen: optimale Reihenfolge der Einzelhandelsgeschäfte bestimmen. Minimiert Gesamtdistanz/-zeit. Backhaul-Entscheidung: zurück zum Lager oder zur nächsten Abholung? |
+
+<Aside type="note">
+**★** TMS = **Entscheidungsunterstützung für BEWEGUNG**. Es beantwortet: welcher Modus, welche Route, welches Dock, welches Fahrzeug und wann. Eliminiert manuelle Routenplanung und Dokumentation.
+</Aside>
+
+---
+
+## 5. Integration — Wie ERP, WMS & TMS verbunden sind
+
+Alle drei Systeme sind miteinander verbunden — Daten fließen kontinuierlich zwischen ihnen:
+
+| Integration | Datenfluss & Zweck |
+|---|---|
+| **ERP ↔ WMS** | Produktionsplan informiert Lager über erwarteten Eingang. Versanddaten aktualisieren ERP-Materialmodul. Ausgabedaten fließen in ERP-Finanzen. |
+| **ERP ↔ TMS** | Lieferantenlieferpläne aus ERP-Beschaffungsmodul informieren TMS-Dock-Planung. Frachtkosten fließen zurück in ERP für Ausgabenanalyse. |
+| **WMS ↔ TMS** | WMS sagt TMS, wann Dock frei und Artikel ladebereit sind. TMS sagt WMS Fahrzeugankunftszeit, damit Dock vorgeklärt werden kann. |
+| **WMS ↔ T&T** | Barcode-/RFID-Scans am Eingangsdock aktualisieren WMS-Inventar in Echtzeit. Scan bei Kommissionierung bestätigt, was abgeholt und geladen wurde. |
+| **TMS ↔ T&T** | Fahrzeugverfolgung (GPS, Telematik) aktualisiert TMS mit Live-Fahrzeugstandort und Lieferbestätigung beim Kunden. |
+
+**End-to-End-Flussbeispiel:** Produktion abgeschlossen in Fabrik (ERP) → LKW versendet (TMS) → kommt am Dock an (WMS Dock-Planung) → Artikel eingescannt (T&T → WMS) → Kommissionierliste für Einzelhandelsbestellungen erstellt (WMS) → Fahrzeug zu Geschäften geleitet (TMS).
+
+---
+
+## 6. Implementierungsüberlegungen für WMS & TMS
+
+| Implementierungsfrage | Warum wichtig |
+|---|---|
+| **Unternehmensgröße?** | Bestimmt, welche Module implementiert und ob beschafft oder intern entwickelt werden sollen |
+| **ERP-Integration möglich?** | Wenn WMS/TMS-Daten nicht in ERP fließen können, ist der Wert des Systems stark reduziert |
+| **Partner-WMS/TMS-Kompatibilität?** | Kann Ihr Lager-WMS mit dem TMS Ihres Lieferanten oder Kunden kommunizieren? |
+| **Digitale Bereitschaft des Personals?** | Mitarbeiter müssen auf Geräten und Software geschult werden — nicht nur operationale Aufgaben |
+| **Anpassungsfähigkeit an Änderungen?** | Produktmix-Änderungen, Nachfrageschwankungen, Regulierungsänderungen — kann das System sich anpassen? |
+| **Routing-Komplexität?** | Komplexe Mehrfachstop- oder Multimode-Routing-Anforderungen bestimmen, wie ausgefeilt ein TMS benötigt wird |
+| **Skalierbarkeit?** | Fähigkeit zur schnellen Anpassung bestimmt, wie schnell das Unternehmen skalieren kann |
+
+---
+
+## Zusammenfassung der Session
+
+- **WMS:** verwaltet Aktivitäten innerhalb des Lagers — Empfang, Einlagerung, Lagerung, Kommissionierung, Versand, Leistungskennzahlen.
+- **TMS:** verwaltet Materialbewegung zwischen Einrichtungen — Dock-Planung, Hofverwaltung, Fracht, Routing, Dokumentation.
+- **Schlüsselbegriffe:** Dock, Gang, Palettenposition, SKU, FTL, LTL, Backhaul, Hof, Cross-Dock, Sortierlager.
+- **WMS-Funktionalitäten:** Echtzeit-Visualisierung, Slotting, WE-Schein, Einlagerungssequenzierung, Kommissionierliste, Leistungsberichterstattung.
+- **TMS-Funktionalitäten:** Dock-Planung, Hofverwaltung, Frachtmodusauswahl, Dokumentation, Fahrzeugrouting.
+- **Integration:** ERP ↔ WMS ↔ TMS ↔ T&T — alle verbunden. Daten fließen in einer gut gestalteten SC-IS-Landschaft über alle Systeme.
+
+<Aside type="tip">
+**★ Prüfungstipp:** WMS ≠ ERP. ERP verwaltet gemeinsame Geschäftsfunktionen. WMS verwaltet lagerspezifische Aktivitäten. Sie integrieren, sind aber separate Module.
+
+**★ Prüfungstipp:** 5 Lageraktivitäten in Reihenfolge: Empfang → Einlagerung → Lagerung → Kommissionierung → Versand (Staging). WMS bietet Entscheidungsunterstützung bei jedem Schritt.
+
+**★ Prüfungstipp:** TMS-Schlüsselentscheidungen: welches Dock, welcher Modus (FTL/LTL/Straße/See), welche Route (Mehrfachstop-Einzelhandelslieferung), Backhaul-Plan. Jeder wird durch TMS statt manuelle Planung automatisiert.
+
+**★ Prüfungstipp:** Integration ist entscheidend: WMS-Dockverfügbarkeit speist TMS-Planung; TMS-Fahrzeugankunft speist WMS-Dock-Vorbereitung. T&T-Scandaten speisen WMS-Inventar. Wenn ein System isoliert ist, sinkt sein Wert erheblich.
+</Aside>

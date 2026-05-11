@@ -1,0 +1,193 @@
+---
+title: "Woche 10 | Session 3: T&T-Systeme — RFID, Sensoren, Verpackungsebenen, Prozessdesign & Vorteile"
+description: "Vertiefung in RFID und drahtlose Sensortechnologien, Verpackungshierarchie, rückwärts gerichtete Produktrückverfolgung, Prozessdesignfragen vor der T&T-Implementierung sowie Vorteile und Herausforderungen von Track & Trace-Systemen."
+sidebar:
+  order: 49
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Rückblick — Sessions 1 & 2
+- RFID — Radio Frequency Identification Tags
+- Drahtlose Sensoren & IoT — Echtzeit-Überwachung
+- Alle vier Technologien — Gegenüberstellung
+- Verpackungsebenen — Labellinghierarchie
+- Produktrückverfolgung — Zeitstempel entlang der SC
+- Prozessdesign — Schlüsselfragen vor der T&T-Implementierung
+- Menschen — Schulung & Veränderungsmanagement
+- Vorteile & Herausforderungen von T&T-Systemen
+</Aside>
+
+---
+
+## 1. RFID — Radio Frequency Identification Tags
+
+Tags mit eingebetteten Chips, die Informationen speichern und via Radiofrequenzsignale an ein RFID-Lesegerät übermitteln. Wesentlicher Unterschied zu Barcode/QR: **keine Nähe oder präziser Winkel erforderlich** — das Lesegerät kann sich in der Ferne befinden.
+
+### Hauptvorteile gegenüber Barcode / QR
+
+| Vorteil | Erklärung |
+|---|---|
+| **Keine Sichtlinie erforderlich** | Tag kann sich in einem verschlossenen Behälter befinden und trotzdem gelesen werden. |
+| **Scan während der Bewegung** | Kein Anhalten erforderlich — kritisch für Förderbänder. |
+| **Massenscan** | Ganzen Container oder Palette scannen, ohne ihn zu öffnen. |
+| **Kein manueller Eingriff** | Tore öffnen automatisch, sobald der Tag identifiziert ist. |
+
+### Anwendungen
+- **Fertigungs-/Montagelinien:** Artikel bewegen sich auf dem Förderband — automatisch an jeder Arbeitsstation gescannt.
+- **Container & Paletten:** Im- und Export — Container beim Passieren der Hafenzone scannen.
+- **Mauterhebung (FASTag — Indien):** Fahrzeug-RFID löst automatische Mautabbuchung und Torfreigabe aus.
+- **Fahrzeugflottenverfolgung:** Eingebetteter Tag verfolgt Bewegung durch Kontrollpunkte.
+- **Tier-/Tierverfolgung:** Tag unter der Haut eingebettet — ohne das Tier zu verletzen gescannt.
+
+---
+
+## 2. Drahtlose Sensoren & IoT — Echtzeit-Überwachung
+
+Geräte, die Produkt-/Umgebungsbedingungen **kontinuierlich in Echtzeit** erfassen (nicht nur an Scanpunkten). Verbunden mit IoT-Plattformen — Daten werden via Internet in die Cloud oder lokalen Speicher gestreamt.
+
+<Aside type="note">
+**★** Drahtlose Sensoren = die **EINZIGE** Technologie, die **kontinuierliche Echtzeitdaten** liefert. Barcode, QR und RFID liefern punktuelle Daten nur bei Scanereignissen.
+</Aside>
+
+### Was können Sensoren erfassen?
+
+| Datentyp | Beispiele | Hauptanwendungsfall |
+|---|---|---|
+| **Klimabedingungen** | Temperatur, Luftfeuchtigkeit, Druck | Pharma, Lebensmittel, Blut, IV-Flüssigkeiten — Kühlkette |
+| **Standort** | GPS-basierte Positionierung | Live-Transitverfolgung |
+| **Fahrzeugstatus (Telematik)** | Geschwindigkeit, Kraftstoff, Vibration, Verschleiß, Ausfallwarnungen | Entlegene Routen, hochwertige Fracht |
+
+### Telematik
+Verfolgung von Fahrzeugbewegungsparametern mithilfe von Sensoren. Produkte werden **indirekt über die Fahrzeugumgebung** überwacht — besonders nützlich für entlegene Routen mit schlechten Straßen, wo Vibrationen Produkte beschädigen können.
+
+---
+
+## 3. Alle vier Technologien — Gegenüberstellung
+
+Kosten steigen mit zunehmender Datenanreicherung und Automatisierung: **Barcode → QR → RFID → Drahtlose Sensoren**
+
+| Attribut | Barcode | QR-Code | RFID | Drahtloser Sensor |
+|---|---|---|---|---|
+| **Format** | Linien auf Aufkleber | 2D-Muster — physisch oder digital | Chip in Tag eingebettet | Hardware-Sensoren + IoT-Geräte |
+| **Datenerfassung** | Punktueller Scan | Punktueller Scan | Ausgelöst durch Lesersignal | Kontinuierlicher Echtzeitstrom |
+| **Näheerfordernis** | Sehr nah + präziser Winkel | Flexibler Winkel/Abstand | Keine Nähe — Fernlesen möglich | Produkt muss in Sensorzone sein |
+| **Informationskapazität** | Niedrig | Hoch (Links zu Web/Daten) | Mittel — chip-gespeicherte Daten | Hoch — kontinuierlicher Mehrstromstrom |
+| **Kosten** | Sehr niedrig | Niedrig | Mittel | Hoch |
+| **Am besten für** | Einzelhandelskasse, Frachtgut | Sekundärpack, Paletten, Zahlungen | Förderbänder, Container, Maut | Kühlkette, Telematik, Pharma, Lebensmittel |
+
+---
+
+## 4. Verpackungsebenen — Labellinghierarchie
+
+Tags und Codes können auf verschiedenen Verpackungsebenen angebracht werden — die Wahl hängt von der **erforderlichen Verfolgungsgranularität** ab.
+
+| Verpackungsebene | Was es ist | Typisch erfasste Infos | Verwendete Technologie |
+|---|---|---|---|
+| **Primär (Artikelebene)** | Das Produkt selbst — z.B. Flasche, Karton | Seriennr., Charge, Ablauf, Preis | Barcode (am häufigsten), RFID-Chip eingebettet |
+| **Sekundär (Kartonebene)** | Mehrere Einheiten in einem Karton | Kartoncode, Inhaltsbeschreibung, Menge | QR-Code, Barcode auf Kartonseite |
+| **Tertiär (Palettenebene)** | Viele Kartons auf einer Holzpalette | Paletten-ID, Inhalt, Herkunft, Ziel | QR-Code, RFID-Tag (kein Auspacken nötig) |
+| **Container / Fahrzeug** | Container auf Schiff/LKW oder das Fahrzeug selbst | Container-ID, Fahrzeugnr., Route, Zeitstempel | RFID (passiv/aktiv), Telematik-Sensoren |
+
+<Aside type="note">
+**★** Regel: **auf der Ebene verfolgen, auf der man managen will.** B2B-Massensendungen → Palettenebene. Konsumenteneinzelhandel → Artikelebene (Primärverpackung).
+</Aside>
+
+---
+
+## 5. Produktrückverfolgung — Zeitstempel entlang der SC
+
+Die Stärke von T&T: Zeitstempeldaten an jedem Scanpunkt erstellen eine **vollständige Produkthistorie** — eine lückenlose chronologische Aufzeichnung.
+
+### Walkthrough — Verbraucherreklamationsszenario
+
+<Steps>
+1. **Verbraucherreklamation im Einzelhandel:** Kunde meldet Qualitätsproblem. T&T-Referenz: Kassen-Scan → identifiziert Produktcode + Zeitstempel.
+2. **Einzelhandel → Lager:** Produktcode zurückverfolgt zu Kartonscan beim DC-Versand. Identifiziert, auf welcher Palette und wann.
+3. **Lager → Fabrik:** Paletten-Scan beim Fabrikversand + Ankunftsscan beim Lager zeigt Transitzeit und Verzögerungen.
+4. **Fabrik — Charge/Linie:** Kartonscan beim Fabrikversand → verknüpft mit Produktionscharge + Datum → zeigt Fertigungskontext.
+5. **Fabrik → Lieferanten:** Wenn Fertigung nicht das Problem ist — weitere Rückverfolgung zu Rohstoffankunftsdaten → zeigt Beschaffungsverzögerungen.
+</Steps>
+
+<Aside type="note">
+**★** Rückverfolgung = **rückwärtsgerichtete Rekonstruktion mithilfe von Zeitstempeln**. Jedes Scanereignis ist ein Knoten in der Produkthistorie. Fehlende Scans = Lücken in der Rückverfolgbarkeit.
+</Aside>
+
+---
+
+## 6. Prozessdesign — Schlüsselfragen vor der T&T-Implementierung
+
+| Prozessdesignfrage | Was zu berücksichtigen ist |
+|---|---|
+| **Überwachungsumfang?** | End-to-end SC oder nur bestimmte Stufen? Abhängig vom zu lösenden Problem. |
+| **Interessante Daten?** | Nur Bewegung? Oder auch Gesundheit (Temperatur, Luftfeuchtigkeit)? Bestimmt Technologiewahl. |
+| **Parallel oder sequenziell?** | Ist Scannen eine separate Aktivität oder kann es neben einem anderen Prozess stattfinden? |
+| **Übertragung & Speicherung?** | On-Premise-Server oder Cloud? Welche Datenbank/ERP? Integration mit vorhandenem IT? |
+| **An welchen Stufen erfasst?** | WE-Schein beim Empfang? Regelmäßige Inventuren? Vor dem Versand? Echtzeit-in-Transit? |
+| **Manuell oder automatisiert?** | Wenn Labelling/Scanning die Produktivität beeinträchtigt → automatisieren. Volumen und Kosten-Nutzen-Analyse. |
+| **Kaufmännische Renditen?** | T&T braucht Zeit zur Stabilisierung. Klare Meilensteine für ROI setzen. Finanzanalyse vorab. |
+| **Energieanforderungen?** | Sensoren und RFID benötigen Strom — Batterie oder Elektrizität. In Betriebskosten einrechnen. |
+| **Dokumentationsverknüpfung?** | Wie fließen Scandaten in WE-Scheine, ASN, Rechnungen, Audit-Trails ein? |
+
+---
+
+## 7. Menschen — Schulung & Veränderungsmanagement
+
+### Schulungsinhalte für Personal
+- **Labelling:** Codes korrekt anbringen; Etikettenposition für Scan zugänglich.
+- **Scannen:** Geringe Qualifikation für Routineaufgaben; höher für Abrechnungs-/Inventarkontexte.
+- **Datenverwaltung:** Korrekte Speicherung von Aufzeichnungen, Datenbankintegrität.
+- **Entscheidungsfindung aus Daten:** Dashboards interpretieren, Verfolgungsdaten für Prozessüberprüfungen nutzen.
+
+### Veränderungsmanagement
+
+Der Wechsel von papierbasierten zu automatisierten T&T-Systemen erfordert einen **Mentalitätswandel** — nicht nur eine Werkzeugänderung. Personal, dessen Arbeit manuelle Verfolgung war, kann Angst vor Jobverlust haben.
+
+<Steps>
+1. **Umgeschultes Personal** — in höherwertige Aufgaben (Datenanalyse, Entscheidungsunterstützung) umsetzen.
+2. **Regelmäßige Schulungsprogramme** mit klarer Kommunikation über Jobsicherheitspläne durchführen.
+3. **Erwartungen managen** — schlechtes Veränderungsmanagement = Implementierungsversagen, auch wenn die Technologie gut ist.
+</Steps>
+
+---
+
+## 8. Vorteile & Herausforderungen von T&T-Systemen
+
+| ✅ Vorteile | ❌ Herausforderungen |
+|---|---|
+| Authentische zeitgestempelte Produktdaten | Hohe Implementierungskosten — steigen mit IoT, Blockchain, mehr Kontrollpunkten |
+| Echtzeit-Transparenz des Inventarstatus | Datenspeicherung & -analyse erfordert ebenfalls Technologieinvestition |
+| Verfolgt Produktivität von SC-Prozessen | Veränderungsmanagement — Migration von Papier zu Automatisierung ist disruptiv |
+| Reduziert Fehler und SC-Probleme | Personal-Umschulung nötig — ältere Rollen können wegfallen |
+| Ermöglicht SC-Partner-Zusammenarbeit | Technologie entwickelt sich — häufige Neugestaltung verursacht Disruption |
+| Ermöglicht schnelle Rücksendungen (E-Commerce) | Neues T&T-System muss mit vorhandenem IT/ERP integriert werden |
+| Definiert Vertragsklauseln mit 3PL-Partnern | Mehrere Tagging-Systeme (RFID + QR) müssen möglicherweise integriert werden |
+| Ermöglicht Überwachung UND Kontrolle | Renditen sind nicht sofort — Systemstabilisierung dauert Monate |
+
+---
+
+## Zusammenfassung der Session
+
+- **RFID:** eingebetteter Chip, Fernlesen, Scan während Bewegung, keine Sichtlinie — Förderbänder, Container, Maut, Tierverfolgung.
+- **Drahtlose Sensoren + IoT:** kontinuierlicher Echtzeit-Datenstrom — Temperatur, Luftfeuchtigkeit, GPS, Telematik.
+- **Telematik:** Fahrzeugbewegungsüberwachung — Geschwindigkeit, Kraftstoff, Vibration, Route.
+- **Kostenreihenfolge:** Barcode < QR < RFID < Drahtlose Sensoren. Höhere Kosten = reichhaltigere Echtzeitdaten.
+- **Verpackungsebenen:** Primär (Artikel) → Sekundär (Karton) → Tertiär (Palette) → Container/Fahrzeug.
+- **Produktrückverfolgung:** rückwärts gerichtete Zeitstempelkette — Reklamation im Einzelhandel → Einzelhandel → Lager → Fabrik → Lieferant.
+
+<Aside type="tip">
+**★ Prüfungstipp:** RFID-Vorteil gegenüber Barcode/QR: keine Nähe, keine Sichtlinie, Scan während Bewegung, Massenscan. FASTag ist ein reales RFID-Beispiel.
+
+**★ Prüfungstipp:** Drahtlose Sensoren = EINZIGE Technologie mit kontinuierlichen Echtzeitdaten. Barcode/QR/RFID = punktuell (nur beim Scannen). Diese Unterscheidung ist entscheidend.
+
+**★ Prüfungstipp:** Produktrückverfolgung = rückwärtsgerichtete Rekonstruktion mithilfe von Zeitstempeln. Die Rückverfolgung zeigt, ob ein Qualitäts-/Verzögerungsproblem in der Fertigung, im Transit, bei der Lagerung oder im Einzelhandel liegt.
+
+**★ Prüfungstipp:** Veränderungsmanagement ist eine Herausforderung, weil die Migration von Papier zu Automatisierung Arbeitsplätze verdrängt. Lösung = Umschulung, nicht nur Neutraining mit neuen Werkzeugen.
+</Aside>

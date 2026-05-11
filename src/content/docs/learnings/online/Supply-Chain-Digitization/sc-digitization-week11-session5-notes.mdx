@@ -1,0 +1,205 @@
+---
+title: "Week 11 | Session 5: Network Optimization with Capacity Constraints & Supply Chain Control Tower"
+description: "Replace the Big M unlimited capacity assumption with realistic capacity constraints in the network optimization model — observing the dramatic profit impact. Then a full introduction to the Supply Chain Control Tower: definition, use cases, capabilities, benefits and enabling technologies."
+sidebar:
+  order: 56
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 4: Digital Infrastructure*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+**Part 1 — Network Optimization with Capacity Constraints**
+- Model Modification — Replacing Big M with Actual Capacity
+- Capacity Constraint Applied — Aurangabad Factory
+- Results — With vs Without Capacity Constraint
+
+**Part 2 — Supply Chain Control Tower**
+- What is a Supply Chain Control Tower?
+- Control Tower Use Cases
+- Control Tower Key Capabilities
+- Benefits of Supply Chain Control Tower
+- Technologies Needed to Build a Control Tower
+</Aside>
+
+---
+
+# Part 1 — Network Optimization with Capacity Constraints
+
+## 1. Model Modification — Replacing Big M with Actual Capacity
+
+In Session 4, factories and DCs had **unlimited capacity** represented by M (a very large number). This session replaces M with **actual facility capacity** — making the model more realistic.
+
+### Constraint Modification
+
+**Session 4 (unlimited capacity):**
+```
+Σj xij ≤ M × yi    ∀i
+```
+
+**This session (realistic capacity):**
+```
+Σj xij ≤ CapFac_i × yi    ∀i    (CapFac_i = actual capacity of factory i)
+Σk qjk ≤ CapDC_j × zj    ∀j    (CapDC_j = actual capacity of DC j)
+```
+
+- If yᵢ = 0 (factory closed): RHS = 0 → cannot ship anything.
+- If yᵢ = 1 (factory open): RHS = CapFac_i → **limited to actual production capacity**.
+
+<Aside type="note">
+**★** One small change in the constraint transforms an unlimited capacity model into a **realistic capacity-constrained model**. All other parts of the formulation remain identical.
+</Aside>
+
+---
+
+## 2. Capacity Constraint Applied — Aurangabad Factory
+
+Capacity constraint added **only at Aurangabad**; Nashik and both DCs remain unconstrained.
+
+| SKU | Min Throughput/yr (units) | Max Throughput/yr (units) | Nashik Capacity |
+|---|---|---|---|
+| SKU 1 | 10,000 | 25,000 | Unlimited (no constraint) |
+| SKU 2 | 10,000 | 25,000 | Unlimited (no constraint) |
+| SKU 3 | 10,000 | 25,000 | Unlimited (no constraint) |
+| SKU 4 | 10,000 | 25,000 | Unlimited (no constraint) |
+
+**Purpose:** study how adding a capacity constraint at one facility changes the optimal network.
+
+---
+
+## 3. Results — With vs Without Capacity Constraint
+
+| Aspect | Without Constraint (Session 4) | With Constraint (This Session) |
+|---|---|---|
+| **Capacity constraint** | M (unlimited) for all facilities | Aurangabad: min 10,000 / max 25,000 units per SKU/year |
+| **Nashik factory** | Not opened | **Opened** — needed to supplement Aurangabad's limited capacity |
+| **Aurangabad factory** | Opened — sole factory | Opened — but constrained |
+| **VAPI DC** | Opened | Opened |
+| **V1D DC** | Not opened | Not opened |
+| **Product flow** | Aurangabad → VAPI → all 4 markets | Aurangabad + Nashik → VAPI → all 4 markets |
+| **Total Profit** | **$5.9 million** | **$1.4 million** |
+| **Profit impact** | — | Drop of ~$4.5 million due to capacity limit |
+
+### Why Did Both Factories Open?
+- Aurangabad is **capped at 25,000 units/SKU/year** — not enough to serve all doubled demand alone.
+- To meet the full demand at all 4 markets, the model must open **Nashik factory** as well.
+- Nashik has **higher production cost** ($7/unit vs $5/unit) → reduces profit significantly.
+
+<Aside type="note">
+**★** Capacity constraints force the model to open more expensive alternatives. **Capacity limits → need more facilities → higher cost → lower profit.** This is the core real-world trade-off of facility sizing.
+</Aside>
+
+---
+
+# Part 2 — Supply Chain Control Tower
+
+## 4. What is a Supply Chain Control Tower?
+
+**Definition:** a centralized hub that provides **real-time visibility and command** over every facet of the supply chain.
+
+- Enables businesses to oversee and govern extensive SC activities through a **unified platform**.
+- End-to-end integrated with all information management systems (ERP, WMS, TMS, IoT, etc.).
+- Connects: raw material suppliers → sub-suppliers → manufacturers → distributors → retailers → consumers.
+
+<Aside type="note">
+**★** Control Tower = the **'nerve center'** of the supply chain — all data flows into it, all decisions flow out of it.
+</Aside>
+
+---
+
+## 5. Control Tower — Use Cases
+
+| Use Case / Industry | Challenge → How Control Tower Helps |
+|---|---|
+| **FMCG — Snacks** *(Sunflower Oil SC)* | Multiple geographically spread suppliers, seasonal demand, varying lead times, transport disruptions. CT provides: real-time tracking of raw material from supplier to plant. **CT action:** truck delayed due to accident → CT auto-reroutes shipment or expedites another → prevents production stoppage. Result: reduced transport + holding costs; better procurement agility. |
+| **FMCG — Dairy / Perishable Foods** | National DC network + refrigerated truck fleet; complex routing; no real-time visibility. CT integrates AI-ML + real-time traffic data → optimizes delivery routes + schedules. Considers traffic, weather, order volume → on-time delivery + minimum fuel consumption. Dispatchers can track shipment location, condition, provide accurate ETA. |
+| **Paint Manufacturing** *(Multi-plant)* | Multiple plants across regions, inventory optimization across plants + DCs, varied supplier lead times. CT provides: real-time visibility of production + inventory at ALL facilities simultaneously. Production managers + central planners collaborate to address breakdowns, material shortages. CT extends to suppliers: monitors raw material availability → auto-adjusts production plan. |
+
+---
+
+## 6. Control Tower — Key Capabilities
+
+| Capability | What it Does |
+|---|---|
+| **Real-time Visibility** | End-to-end view of entire SC — location, inventory, shipments, production — all in real time |
+| **Data Integration** | Pulls data from ERP, WMS, TMS, IoT sensors, GPS, supplier systems into one unified platform |
+| **Process Automation** | Automates repetitive SC processes — order generation, dispatch scheduling, alerts |
+| **Data Analytics & Insights** | Analyzes SC data → actionable insights for managers (dashboards, KPI reports) |
+| **Demand & Supply Forecasting** | Predicts future demand and supply using AI/ML → enables proactive planning |
+| **Production Planning & Control** | Determines what to produce, where, how much — across multiple plants — optimally |
+| **Inventory Optimization** | Finds optimal inventory levels at each factory and DC — balances understocking vs overstocking |
+| **Exception Management** | Detects disruptions (road block, supplier delay, equipment failure) → auto-triggers recovery action |
+| **KPI Tracking** | Continuous monitoring of key performance indicators — flags underperforming areas immediately |
+| **Decision Support** | Real-time analytical decision-making support — not just visibility, but recommendations |
+
+**Exception management example:** truck en route hits a road blockage → CT detects → auto-reroutes to fastest alternate path → customer receives on time.
+
+---
+
+## 7. Benefits of Supply Chain Control Tower
+
+- **Improved service level:** deliveries on time, demand met, fewer stockouts.
+- **Reduced cost:** optimized routes, reduced excess inventory, less disruption-related loss.
+- **Revenue maximization:** demand captured, fewer lost sales due to stockouts or delays.
+- **Increased efficiency:** automation of non-value-added tasks, better resource allocation.
+- **Better collaboration:** shared visibility with SC partners across regions and time zones.
+- **Compliance & governance:** monitors regulatory requirements; signals violations automatically.
+- **Continuous improvement:** KPI tracking identifies weak areas; enables data-driven improvement cycles.
+- **Disruption response:** auto-identifies alternate supplier or route when primary fails.
+
+---
+
+## 8. Technologies Needed to Build a Control Tower
+
+| Technology | Role in Control Tower |
+|---|---|
+| **Data Integration Platforms** | ERP, WMS, TMS, IoT sensors, GPS — collect data from all SC nodes into one view |
+| **Collaboration & Communication Tools** | Seamless communication + information sharing across all SC stakeholders (different regions, time zones) |
+| **Blockchain** | Enhances transparency, traceability and security in SC transactions and data exchanges |
+| **Analytics & Visualization** | Dashboards that visualize KPIs in real time; analytics tools for insights and automated decisions |
+| **AI & ML Algorithms** | Forecasting (demand + supply), disruption recovery plans, inventory optimization, production scheduling |
+| **Optimization Algorithms** | Compute optimal production plans, inventory levels, delivery routes — the prescriptive layer of the CT |
+| **Cloud Infrastructure** | Stores vast SC data; enables real-time access from anywhere; supports collaboration + AI/ML compute |
+
+<Aside type="note">
+Cloud is foundational: enables real-time access + collaboration across geographies + stores the data needed for AI/ML to function. AI/ML + optimization together: AI/ML **forecasts** future; optimization **prescribes** what to do — both needed for automated decision-making.
+</Aside>
+
+---
+
+## Week 11 — Full Summary
+
+| Session | Key Topics |
+|---|---|
+| **S1** | DT introduction: definition, 5 types (product → network of networks), 4 enabling technologies, 3 DT components |
+| **S2** | GFA case: optimization model, 3 distance formulas, Excel Solver (GRG Non-linear). Result: DC at Mumbai. |
+| **S3** | GFA hands-on: Excel formula chain (d_long→d_lat→A→C→dist), SUMPRODUCT, AnyLogistix multi-SKU demo. |
+| **S4** | Network Optimization: 4 decision variables (yᵢ, zⱼ, xᵢⱼ, qⱼₖ), maximize profit model, Big M, flow balance. Result: Aurangabad + VAPI, profit $5.9M. |
+| **S5** | Network Optimization with capacity constraints: replace M with actual capacity. Result: both factories needed, profit drops to $1.4M. + Supply Chain Control Tower. |
+
+---
+
+## Session Summary
+
+- **Capacity constraint modification:** replace M with CapFac_i (or CapDC_j) in capacity constraints. One change; big impact.
+- **Result with capacity:** Aurangabad capped → Nashik must also open → profit drops $5.9M to $1.4M.
+- **Managerial insight:** capacity constraints force more expensive alternatives — real-world trade-off of facility sizing.
+- **Control tower:** centralized hub → real-time end-to-end visibility + automated decision support + KPI monitoring.
+- **3 use cases:** FMCG raw material (sunflower oil) | Dairy perishables + routing | Paint multi-plant inventory.
+- **10 capabilities:** visibility, integration, automation, analytics, forecasting, production planning, inventory, exception mgmt, KPI tracking, decision support.
+- **7 technologies:** Data integration | Collaboration | Blockchain | Analytics + visualization | AI/ML | Optimization | Cloud.
+
+<Aside type="tip">
+**★ Exam Tip:** Capacity constraint modification: replace M with CapFac_i in factory constraint, CapDC_j in DC constraint. If yᵢ=0: RHS=0 → no output. If yᵢ=1: RHS=actual capacity (not unlimited anymore).
+
+**★ Exam Tip:** Adding capacity constraint opened Nashik factory (more expensive) → profit dropped from $5.9M to $1.4M. Capacity limits force expensive alternatives — key managerial insight.
+
+**★ Exam Tip:** Control Tower definition: centralized hub for real-time SC visibility + command. Key capabilities: real-time visibility, exception management, decision support, KPI tracking.
+
+**★ Exam Tip:** Technologies for Control Tower: ERP/WMS/TMS/IoT (data integration) + Blockchain (traceability) + AI/ML + Optimization (decision intelligence) + Cloud (storage + compute + collaboration).
+</Aside>

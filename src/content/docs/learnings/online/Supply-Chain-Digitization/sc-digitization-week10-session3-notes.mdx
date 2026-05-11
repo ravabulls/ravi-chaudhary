@@ -1,0 +1,208 @@
+---
+title: "Week 10 | Session 3: T&T Systems — RFID, Sensors, Packaging Levels, Process Design & Benefits"
+description: "Deep dive into RFID and wireless sensor technologies, packaging hierarchy for labelling, backward product tracing, process design questions before implementing T&T, and the benefits & challenges of Track & Trace systems."
+sidebar:
+  order: 49
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 4: Digital Infrastructure*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Recap — Sessions 1 & 2
+- RFID — Radio Frequency Identification Tags
+- Wireless Sensors & IoT — Real-Time Monitoring
+- All Four Technologies — Side-by-Side
+- Levels of Product Labelling — Packaging Hierarchy
+- Product Tracing — Connecting Timestamps Across the SC
+- Process Design — Key Questions Before Implementing T&T
+- People — Training & Change Management
+- Benefits & Challenges of T&T Systems
+</Aside>
+
+---
+
+## 1. RFID — Radio Frequency Identification Tags
+
+Tags with embedded chips that store information and relay it via radio frequency signals to an RFID reader. Key difference from barcode/QR: **no close proximity or precise angle needed** — reader can be remote.
+
+### Key Advantages Over Barcode / QR
+
+| Advantage | Explanation |
+|---|---|
+| **No line-of-sight required** | Tag can be inside a sealed container and still be read. |
+| **Scan-on-the-move** | No stopping required — critical for conveyor lines. |
+| **Bulk scanning** | Scan a whole container or pallet without opening it. |
+| **No manual intervention** | Gates open automatically once tag is identified. |
+
+### Applications
+- **Manufacturing / assembly lines:** items move on conveyor — scanned automatically at each workstation.
+- **Containers & pallets:** import/export — scan container moving through port zone without stopping.
+- **Toll collection (FASTag — India):** vehicle RFID triggers automatic toll debit and gate opening.
+- **Vehicle fleet tracking:** embedded tag tracks movement through checkpoints.
+- **Pet / animal tracking:** tag embedded under skin — scanned without harming the animal.
+
+---
+
+## 2. Wireless Sensors & IoT — Real-Time Monitoring
+
+Devices that capture product/environment conditions **continuously in real time** (not just at scan points). Connected to IoT platforms — data streamed via internet to cloud or local storage.
+
+<Aside type="note">
+**★** Wireless sensors = the **ONLY** technology giving **continuous real-time data**. Barcode, QR, and RFID give point-in-time data only at scan events.
+</Aside>
+
+### What Data Can Sensors Capture?
+
+| Data Type | Examples | Key Use Case |
+|---|---|---|
+| **Climatic conditions** | Temperature, humidity, pressure | Pharma, food, blood, IV fluids — cold chain |
+| **Location** | GPS-based position | Live transit tracking |
+| **Vehicle status (Telematics)** | Speed, fuel, vibration, wear & tear, breakdown alerts | Remote routes, high-value cargo |
+
+### Telematics
+Tracking vehicle movement parameters using sensors. Products are monitored **indirectly via the vehicle's environment** — especially useful for remote routes with poor roads where vibration can damage products.
+
+---
+
+## 3. All Four Technologies — Side-by-Side
+
+Cost increases as data richness and automation increases: **Barcode → QR → RFID → Wireless Sensors**
+
+| Attribute | Barcode | QR Code | RFID | Wireless Sensor |
+|---|---|---|---|---|
+| **Format** | Lines on sticker | 2D matrix — physical or digital | Embedded chip in tag | Hardware sensors + IoT devices |
+| **Data capture** | Point-in-time scan | Point-in-time scan | Triggered by reader signal | Continuous real-time stream |
+| **Proximity req.** | Very close + precise angle | Flexible angle/distance | No close proximity — remote | Product must be near sensor zone |
+| **Info capacity** | Low (few attributes) | High (links to web/data) | Moderate — chip-stored data | High — continuous multi-param stream |
+| **Static/Dynamic** | Static only | Static or dynamic | Static (read/write models exist) | Dynamic — live data at every moment |
+| **Cost** | Very low | Low | Moderate | High |
+| **Best for** | Retail checkout, cargo bags | Secondary pack, pallets, payments | Conveyor lines, containers, tolls | Cold chain, telematics, pharma, food |
+
+---
+
+## 4. Levels of Product Labelling — Packaging Hierarchy
+
+Tags and codes can be applied at different packaging levels — choice depends on the **granularity of tracking needed**.
+
+| Packaging Level | What it Is | Typical Info Captured | Technology Used |
+|---|---|---|---|
+| **Primary (Item level)** | The product itself — e.g., a bottle, box, blister pack | Unit serial no., batch, expiry, price | Barcode (most common), RFID chip embedded |
+| **Secondary (Carton level)** | Multiple units packed in a carton / inner box | Carton code, contents description, quantity | QR code, barcode on carton face |
+| **Tertiary (Pallet level)** | Many cartons stacked on a wooden pallet for B2B transport | Pallet ID, contents, origin, destination | QR code, RFID tag (no need to unpack to scan) |
+| **Container / Vehicle** | Container on ship/truck, or the vehicle itself | Container ID, vessel/vehicle no., route, timestamp | RFID (passive/active), telematics sensors on vehicle |
+
+<Aside type="note">
+**★** Rule: **track at the level you want to manage.** B2B bulk shipments → pallet-level. Retail consumer transactions → item-level (primary pack).
+</Aside>
+
+---
+
+## 5. Product Tracing — Connecting Timestamps Across the SC
+
+The power of T&T: timestamp data at every scan point creates a **complete product trace** — a full chronological history. This trace can be used to root-cause quality issues or diagnose service delays.
+
+### Walkthrough — Consumer Complaint Scenario
+
+<Steps>
+1. **Consumer complaint at retail:** Customer reports quality issue. T&T reference: checkout scan at retail → identifies product code + timestamp.
+2. **Retail → Warehouse:** Product code traced to carton scan at DC dispatch. Identifies which pallet it left on and when.
+3. **Warehouse → Factory:** Pallet scan at factory dispatch + arrival scan at warehouse reveals transit time and any delays.
+4. **Factory — batch/line:** Carton scan at factory dispatch → linked to production batch + date → reveals manufacturing context.
+5. **Factory → Suppliers:** If manufacturing is not the issue — trace further upstream to raw material arrival records at factory → reveals procurement delays or material issues.
+</Steps>
+
+<Aside type="note">
+**★** Trace = **backward reconstruction using timestamps**. Every scan event is a node in the product's history. Missing scans = gaps in traceability.
+</Aside>
+
+---
+
+## 6. Process Design — Key Questions Before Implementing T&T
+
+Technology alone is not enough — **process design** determines what to track, when, how, and for whom.
+
+| Process Design Question | What to Consider |
+|---|---|
+| **Scope of monitoring?** | End-to-end SC or only certain stages? Depends on the problem being solved. |
+| **Data of interest?** | Movement only? Or also health (temperature, humidity)? Connects to technology choice. |
+| **Parallel or sequential?** | Is scanning a separate activity or can it happen alongside another process (e.g., conveyor)? |
+| **Transmission & storage?** | On-premise servers or cloud? Which database/ERP? How does data integrate with existing IT? |
+| **At which stages captured?** | GRN at receipt? Cycle counts? Pre-dispatch? Real-time in-transit? Define scan checkpoints. |
+| **Manual or automated?** | If labelling/scanning hampers productivity → automate. Depends on volume and cost-benefit. |
+| **Commercial returns?** | T&T takes time to stabilize. Set clear milestones for ROI. Do financial analysis first. |
+| **Energy requirements?** | Sensors and RFID need power — battery or electricity. Factor into operational cost. |
+| **Documentation linkage?** | How does scan data feed into GRN, ASN (Advance Ship Notice), invoices, audit trails? |
+
+---
+
+## 7. People — Training & Change Management
+
+### What Personnel Need to Be Trained On
+- **Labelling:** how to apply codes correctly; label position must be accessible for scanning.
+- **Scanning:** low skill for routine tasks; higher for billing/inventory contexts.
+- **Data management:** storing records correctly, maintaining database integrity.
+- **Decision-making from data:** interpreting dashboards, using tracking data to review processes.
+
+### Automation Reduces Training Need
+
+RFID + sensors can automate scanning — no person needed at the scan point. The **Amazon Go example**: customer picks item → product scanned automatically → billed via app on exit → no cashier, no checkout. This represents the shift from **monitoring-only** to **monitoring + control systems**.
+
+### Change Management
+
+Migrating from paper-based to automated T&T requires a **mindset shift** — not just a tool change. Personnel whose jobs were manual tracking may face job displacement concerns.
+
+<Steps>
+1. **Re-skill displaced personnel** — redeploy to higher-value tasks (data analysis, decision support).
+2. **Run regular training programs** with clear communication of job security plans.
+3. **Manage expectations** — poor change management = implementation failure even if the technology is good.
+</Steps>
+
+---
+
+## 8. Benefits & Challenges of T&T Systems
+
+| ✅ Benefits | ❌ Challenges |
+|---|---|
+| Authentic timestamped product data | High implementation cost — escalates with IoT, blockchain, more checkpoints |
+| Real-time visibility of inventory status | Data storage & analysis also requires technology investment |
+| Tracks productivity of SC processes | Change management — migrating from paper to automated is disruptive |
+| Reduces errors and SC issues | Personnel re-skilling needed — older roles may be eliminated |
+| Enables SC partner collaboration | Technology evolves — frequent redesign creates disruption |
+| Enables quick refunds / returns (e-commerce) | New T&T system must integrate with existing IT/ERP |
+| Defines contract clauses with 3PL players | Multiple tagging systems (RFID + QR) may need integration |
+| Enables monitoring AND control (automated alerts) | Returns are not immediate — system stabilization takes months |
+
+<Aside type="note">
+**★** Key principle: T&T ROI takes time. Do not expect immediate returns — system stabilization takes months. Plan financially for this lag period.
+</Aside>
+
+---
+
+## Session Summary
+
+- **RFID:** embedded chip, remote read, scan-on-move, no line-of-sight — conveyors, containers, tolls, pet tracking.
+- **Wireless sensors + IoT:** real-time continuous data stream — temperature, humidity, GPS, telematics — cold chain, pharma, food.
+- **Telematics:** vehicle movement monitoring — speed, fuel, vibration, route — indirect product health via vehicle environment.
+- **Cost order:** Barcode < QR < RFID < Wireless Sensors. Higher cost = richer real-time data.
+- **Packaging levels:** Primary (item) → Secondary (carton) → Tertiary (pallet) → Container/vehicle. Label at the level you manage.
+- **Product trace:** backward timestamp chain — complaint at retail → retail → WH → factory → supplier.
+- **Process design:** 9 key questions — scope, data type, parallel/sequential, storage, checkpoints, automation, ROI, energy, documentation.
+- **People:** train on labelling, scanning, data mgmt, decisions. Automate where possible. Manage change carefully.
+- **Benefits:** authentic data, visibility, productivity tracking, collaboration, contracts, monitoring + control.
+- **Challenges:** high cost, data storage investment, change management, IT integration, technology redesign disruption.
+
+<Aside type="tip">
+**★ Exam Tip:** RFID advantage over barcode/QR: no close proximity, no line-of-sight, scan-on-move, bulk scan (whole container). FASTag is a real-world RFID example.
+
+**★ Exam Tip:** Wireless sensors = ONLY technology giving continuous real-time data. Barcode/QR/RFID = point-in-time (only when scanned). This distinction is key.
+
+**★ Exam Tip:** Product trace = backward reconstruction using timestamps at each packaging scan point. The trace reveals whether a quality/delay issue is at manufacturing, transit, storage, or retail.
+
+**★ Exam Tip:** Change management is a challenge because paper-to-automation migration displaces jobs. Solution = re-skilling, not just retraining on new tools.
+</Aside>

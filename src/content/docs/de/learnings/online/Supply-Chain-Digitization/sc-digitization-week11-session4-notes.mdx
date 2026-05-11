@@ -1,0 +1,182 @@
+---
+title: "Woche 11 | Session 4: SC Digital Twin — Netzwerkoptimierung (Excel + AnyLogistix)"
+description: "Über die GFA hinaus zur Netzwerkoptimierung — gleichzeitige Entscheidung über zu öffnende Fabriken und DCs sowie Produktflussrouting zur Gewinnmaximierung. Vollständige Modellformulierung mit binären und kontinuierlichen Variablen, Big-M-Trick, Flussausgleichsnebenbedingung und Simplex-LP-Lösung."
+sidebar:
+  order: 55
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Kontext — Von GFA zur Netzwerkoptimierung
+- GFA vs. Netzwerkoptimierung — Vergleich
+- Fallstudie — Pharmaunternehmen Netzwerkneuentwurf
+- Entscheidungsvariablen
+- Zielfunktion — Gewinn maximieren
+- Nebenbedingungen
+- Excel Solver — Einrichtung & Ergebnisse
+- Optimale Lösung — Ergebnisse
+- AnyLogistix — Netzwerkoptimierungsmodul
+</Aside>
+
+---
+
+## 1. Kontext — Von GFA zur Netzwerkoptimierung
+
+GFA fand den optimalen DC-Standort von Grund auf — 1 DC, Transportkosten minimieren.
+
+**Diese Session:** Nachfrage hat sich verdoppelt, eine neue Fabrik wird benötigt, der bestehende DC-Mietvertrag läuft aus. Muss **gleichzeitig entscheiden**: welche Fabrik öffnen, welches DC öffnen und wie Flüsse routen.
+
+<Aside type="note">
+**★** Netzwerkoptimierung = **welche Knoten öffnen** (binär) UND **wie viel zwischen ihnen fließen** (kontinuierlich). Viel reichere Entscheidung als GFA.
+</Aside>
+
+### GFA vs. Netzwerkoptimierung — Vergleich
+
+| Attribut | GFA (Sessions 2 & 3) | Netzwerkoptimierung (Diese Session) |
+|---|---|---|
+| **Beantwortete Frage** | WO ein neues DC von Grund auf platzieren? | Welche Fabriken/DCs öffnen UND wie Flüsse routen? |
+| **Ziel** | Transportkosten minimieren | Gewinn maximieren (Umsatz − alle Kosten) |
+| **Entscheidungsvariablen** | xDC (Breite), yDC (Länge) — 2 Variablen | yᵢ (Fabrik offen), zⱼ (DC offen), xᵢⱼ (Flüsse), qⱼₖ (Flüsse) |
+| **Variablentyp** | Kontinuierlich — Breite/Länge sind reelle Zahlen | Gemischt-ganzzahlig — binär (yᵢ, zⱼ) + kontinuierlich (xᵢⱼ, qⱼₖ) |
+| **Lösungsmethode** | GRG Nichtlinear (sphärische Distanz nichtlinear) | **Simplex LP** (alle linearen Nebenbedingungen und Ziel) |
+| **Kostenkomponen** | Distanz × Nachfrage × Transportkosten | Fixkosten + Produktion + Ein-/Ausgangskosten + Transport |
+
+---
+
+## 2. Fallstudie — Pharmaunternehmen Netzwerkneuentwurf
+
+![Netzwerkoptimierung — Fallaufbau](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image1.png)
+
+**Hintergrund:**
+- Nachfrage in der Westregion wird sich in den nächsten 3 Jahren **verdoppeln** — aktuelle Kapazität unzureichend.
+- Neue Fabrik bei: **Nashik** ODER **Aurangabad** einrichten.
+- DC in Mumbai (aus GFA) Mietvertrag läuft ab — Umzug zu: **VAPI** ODER **V1D (Viwandi)**.
+- Märkte bleiben: Pune, Mumbai, Ahmedabad, Surat — aber Nachfrage jetzt verdoppelt.
+
+### Alle Knotendaten
+
+| Knoten | Standort | Prod-/Proc-Kosten/Einheit | Schlüsseldistanzen |
+|---|---|---|---|
+| **Fabrik 1** | Nashik | 7$/Einheit Produktion | → VAPI 144 km, → V1D 129 km |
+| **Fabrik 2** | Aurangabad | 5$/Einheit Produktion | → VAPI 322 km, → V1D 297 km |
+| **DC 1** | VAPI | 0.25$ Ein-/Ausgang | → Mumbai 169 km, Pune 298 km, Surat 102 km, Ahm 346 km |
+| **DC 2** | V1D (Viwandi) | 0.50$ Ein-/Ausgang | → Mumbai 35 km, Pune 151 km, Surat 254 km, Ahm 487 km |
+
+**Transportkosten:** 0,001$/km/Einheit. **Umsatz:** 15$ pro verkaufter Einheit.
+
+---
+
+## 3. Entscheidungsvariablen
+
+![Netzwerkoptimierungsmodell — Entscheidungsvariablen](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image2.png)
+
+| Variable | Typ | Bedeutung |
+|---|---|---|
+| **yᵢ** | Binär {0,1} | = 1 wenn i-te Fabrik OFFEN; = 0 wenn NICHT offen. i = 1 (Nashik), i = 2 (Aurangabad) |
+| **zⱼ** | Binär {0,1} | = 1 wenn j-tes DC OFFEN; = 0 wenn NICHT offen. j = 1 (VAPI), j = 2 (V1D) |
+| **xᵢⱼ** | Kontinuierlich ≥ 0 | Von i-ter Fabrik zu j-tem DC gelieferte Menge |
+| **qⱼₖ** | Kontinuierlich ≥ 0 | Von j-tem DC zu k-tem Kunden gelieferte Menge (k = 1..4 Märkte) |
+
+**Big M:** eine sehr große Zahl. Wenn Einrichtung **offen** (y=1 oder z=1), Kapazität = M (unbegrenzt). Wenn **geschlossen** (=0), Kapazität = 0.
+
+---
+
+## 4. Zielfunktion — Gewinn maximieren
+
+```
+Maximiere Z = Umsatz − Fabrik-Fixkosten − DC-Fixkosten
+            − Produktionskosten − Eingangskosten − Ausgangskosten
+            − Fabrik→DC Transportkosten − DC→Kunden Transportkosten
+```
+
+| Kosten-/Umsatzkomponente | Ausdruck | Erklärung |
+|---|---|---|
+| **Umsatz** | Σⱼ Σₖ (Rev × qⱼₖ) | Rev = 15$/Einheit. Gesamtumsatz = verkaufte Einheiten × Preis. |
+| **Fabrik-Fixkosten** | Σᵢ (FK_Fabrik_i × yᵢ) | Wenn yᵢ = 0: Kosten = 0. Wenn yᵢ = 1: Fixkosten entstehen. |
+| **DC-Fixkosten** | Σⱼ (FK_DC_j × zⱼ) | Wenn zⱼ = 0: Kosten = 0. Wenn zⱼ = 1: Fixkosten entstehen. |
+| **Produktionskosten** | Σᵢ Σⱼ (PK_i × xᵢⱼ) | PK_i = Produktionskosten/Einheit (7$ Nashik, 5$ Aurangabad). |
+| **Eingangsverarbeitung** | Σᵢ Σⱼ (EK_j × xᵢⱼ) | EK_j = Kosten/Einheit für Eingangsverarbeitung im DC j. |
+| **Ausgangsverarbeitung** | Σⱼ Σₖ (AK_j × qⱼₖ) | AK_j = Kosten/Einheit für Ausgangsverarbeitung im DC j. |
+| **Fabrik→DC Transport** | Σᵢ Σⱼ (TK × dist_ij × xᵢⱼ) | TK = 0,001$/km/Einheit. |
+| **DC→Kunden Transport** | Σⱼ Σₖ (TK × dist_jk × qⱼₖ) | dist_jk = km von DC j zu Kunde k. |
+
+---
+
+## 5. Nebenbedingungen
+
+| Nebenbedingung | Ausdruck | Was sie durchsetzt |
+|---|---|---|
+| **Bedarfserfüllung** | Σⱼ qⱼₖ = Dₖ ∀k | Gesamtlieferungen an Kunde k müssen dem vollständigen Bedarf entsprechen. |
+| **Fabrikkapazität** | Σⱼ xᵢⱼ ≤ M × yᵢ ∀i | Wenn Fabrik i offen: kann bis zu M Einheiten liefern. Wenn geschlossen: Kapazität = 0. |
+| **DC-Kapazität** | Σₖ qⱼₖ ≤ M × zⱼ ∀j | Wenn DC j offen: kann bis zu M Einheiten verarbeiten. Wenn geschlossen: nichts. |
+| **Flussausgleich im DC** | Σᵢ xᵢⱼ = Σₖ qⱼₖ ∀j | Was in jedes DC fließt, muss gleich dem sein, was herausfließt. Kein Bestand im DC. |
+| **Binäre Variablen** | yᵢ, zⱼ ∈ {0, 1} | Fabrik öffnen/schließen und DC öffnen/schließen sind binäre Entscheidungen. |
+| **Nichtnegativität** | xᵢⱼ, qⱼₖ ≥ 0 | Flussmengen können nicht negativ sein. |
+
+<Aside type="note">
+**★** Flussausgleich: Σᵢ xᵢⱼ = Σₖ qⱼₖ für jedes DC j. Gesamtzufluss = Gesamtabfluss. **DCs sind Durchlaufknoten, keine Lagerungspunkte.**
+</Aside>
+
+---
+
+## 6. Excel Solver — Einrichtung & Ergebnisse
+
+![Excel Solver Setup — Netzwerkoptimierung](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image3.png)
+
+| Solver-Einstellung | Wert / Detail |
+|---|---|
+| **Zielzelle** | Gesamtgewinn-Zelle (Umsatz − Kosten) |
+| **Auf** | **Max** (Maximieren) |
+| **Veränderliche Variablen** | yᵢ (Fabrik binär), zⱼ (DC binär), xᵢⱼ (Fabrik→DC Flüsse), qⱼₖ (DC→Kunden Flüsse) |
+| **Methode** | **Simplex LP** — Ziel und alle Nebenbedingungen sind linear |
+| **Ergebnis** | **Aurangabad Fabrik: OFFEN. VAPI DC: OFFEN. Nashik + V1D: GESCHLOSSEN. Gewinn = ₹59,27,495** |
+
+**Warum Simplex LP (nicht GRG Nichtlinear)?** Distanzen werden als feste Eingaben (km-Werte) gegeben — nicht über sphärische Formel berechnet. Zielfunktion und alle Nebenbedingungen sind **linear** in den Entscheidungsvariablen.
+
+---
+
+## 7. Optimale Lösung — Ergebnisse
+
+![AnyLogistix Netzwerkoptimierungsergebnis](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image4.png)
+
+**Zu öffnende Einrichtungen:**
+- **Fabrik: Aurangabad — OFFEN** (niedrigere Produktionskosten 5$/Einheit vs. Nashik 7$/Einheit)
+- **DC: VAPI — OFFEN** (niedrigere Ein-/Ausgangskosten 0.25$ vs. V1D 0.50$)
+- Nashik-Fabrik: GESCHLOSSEN. V1D (Viwandi) DC: GESCHLOSSEN.
+
+![Flussdetails — Aurangabad zu VAPI](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image5.png)
+
+**Produktfluss:**
+- Aurangabad Fabrik → VAPI DC → alle 4 Märkte.
+- VAPI DC → Mumbai: 3,59,160 Einheiten. → Pune: 3,15,360 Einheiten. → Surat & Ahmedabad: Bedarf gedeckt.
+
+**Optimaler Gewinn: ₹59,27,495** — identisch aus Excel Solver und AnyLogistix.
+
+---
+
+## Zusammenfassung der Session
+
+- **Kontext:** Nachfrage verdoppelt → neue Fabrik + DC benötigt. Kandidaten: Nashik/Aurangabad, VAPI/V1D.
+- **4 Entscheidungen:** Fabriken öffnen (yᵢ), DCs öffnen (zⱼ), Fabrik→DC Flüsse (xᵢⱼ), DC→Kunden Flüsse (qⱼₖ).
+- **Ziel:** Gewinn maximieren = Umsatz − alle 7 Kostenkomponen (Fix + variabel + Transport).
+- **Big-M-Trick:** Wenn Einrichtung geschlossen (0) → Kapazität = 0. Offen (1) → Kapazität = M (unbegrenzt).
+- **Flussausgleich:** Zufluss zu DC = Abfluss von DC. DCs sind Durchläufer — kein Bestand.
+- **Solver: Simplex LP** (lineares Modell, binäre Ganzzahlnebenbedingungen). Kontrast mit GFA → GRG Nichtlinear.
+- **Ergebnis:** Aurangabad Fabrik + VAPI DC. Gewinn = ₹59,27,495. Identisch aus Excel und AnyLogistix.
+
+<Aside type="tip">
+**★ Prüfungstipp:** 4 Entscheidungsvariablen: yᵢ (Fabrik offen/geschlossen, binär), zⱼ (DC offen/geschlossen, binär), xᵢⱼ (Fabrik→DC Fluss, kontinuierlich), qⱼₖ (DC→Kunden Fluss, kontinuierlich).
+
+**★ Prüfungstipp:** Big-M-Nebenbedingung: Σⱼ xᵢⱼ ≤ M × yᵢ. Wenn yᵢ=0 → Kapazität=0. Wenn yᵢ=1 → Kapazität=M. M durch tatsächliche Kapazität ersetzen, um realistische Kapazitätslimits hinzuzufügen.
+
+**★ Prüfungstipp:** Flussausgleich im DC: Σᵢ xᵢⱼ = Σₖ qⱼₖ für jedes j. Alle Zuflüsse müssen Abflüssen entsprechen — DCs halten keinen Bestand.
+
+**★ Prüfungstipp:** Netzwerkoptimierungs-Solver = Simplex LP (linear). GFA-Solver = GRG Nichtlinear (sphärische Distanzformel). Zu wissen WARUM jede Methode verwendet wird, ist entscheidend.
+</Aside>

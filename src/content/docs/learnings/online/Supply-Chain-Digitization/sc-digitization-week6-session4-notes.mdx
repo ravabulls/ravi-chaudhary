@@ -11,12 +11,6 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-![Impurity concepts](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image1.png)
-![Classification tree splitting](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image2.png)
-![Gini index vs Entropy graph](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image3.png)
-![Node 0 root split](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image4.png)
-![Accuracy improvement visualization](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image5.png)
-
 ## Session Agenda
 
 <Aside type="note">
@@ -58,6 +52,8 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Impurity Measures — Gini Index & Entropy
 
+![Impurity concepts](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image1.png)
+
 **Why Impurity?**
 Impurity = randomness in a node. A pure node = all observations belong to one class → perfect prediction.
 The lower the impurity at each leaf node, the higher the accuracy of classification.
@@ -80,6 +76,9 @@ Goal at every split: choose the variable + cutoff that reduces impurity the most
 | **Node 0 (Root)** | 64% | 36% | 1 − (0.64² + 0.36²) = 0.46 | — | High (near max) |
 
 ### Key Insight from Impurity Graph
+
+![Gini index vs Entropy graph](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image3.png)
+
 - **Shape:** Inverted U — symmetric around 0.5
 - Both Gini and Entropy start at 0 (all in one class) → rise to maximum at 0.5 (50-50 split) → fall back to 0 (all in other class)
 - **Implication:** When splitting a node, we want to move observations AWAY from 0.5 towards either end (0 or 1) → reduce impurity → improve accuracy
@@ -91,6 +90,8 @@ Goal at every split: choose the variable + cutoff that reduces impurity the most
 ---
 
 ## Splitting Logic — How to Choose Variable and Cutoff
+
+![Classification tree splitting](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image2.png)
 
 At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL possible cutoff values. For each (variable, cutoff) pair, calculate weighted reduction in impurity.
 
@@ -107,6 +108,8 @@ At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL pos
 
 ## Node-by-Node Splitting Trace — Full Tree
 
+![Node 0 root split](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image4.png)
+
 ### All nodes — observations, Gini, splitting variable, cutoff, impurity reduction
 
 | Node | Obs. Count | Yes% / No% | Gini | Split Variable | Cut-off | Reduction in Impurity | Child Nodes |
@@ -120,6 +123,9 @@ At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL pos
 | **6 (Leaf)** | 66 obs. | 29% / 71% | 0.41 | STOP | — | — | Predict: NOT FAIL |
 
 ### Accuracy Progression — How Each Split Improves Prediction
+
+![Accuracy improvement visualization](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image5.png)
+
 | Stage | Information Available | Best Prediction Accuracy | Interpretation |
 |---|---|---|---|
 | **Node 0 (No info)** | None — just know the machine exists | 64% (baseline) | 64% chance it will fail based solely on history. |

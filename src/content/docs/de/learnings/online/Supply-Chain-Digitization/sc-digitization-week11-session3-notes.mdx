@@ -1,0 +1,158 @@
+---
+title: "Woche 11 | Session 3: GFA Hands-On — Excel Solver Formeln & AnyLogistix (Multi-SKU)"
+description: "Schritt-für-Schritt-Walkthrough der Excel-Haversine-Formelkette für GFA, Solver-Konfiguration und ein erweitertes Multi-SKU-Szenario mit AnyLogistix — inklusive vollständiger Digital-Twin-Ausgabe mit Karte, Routen und SKU-Flussaufschlüsselung."
+sidebar:
+  order: 54
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Fallstudienerinnerung
+- Excel — Formelaufbau (Sphärische Distanz)
+- Excel Solver — Einstellungen & Ausgabe
+- Erweitertes Szenario — Mehrere SKUs & Tagesbedarf
+- AnyLogistix — GFA Schritt für Schritt (Hands-On)
+- Excel vs. AnyLogistix — Ausgabevergleich
+</Aside>
+
+---
+
+## 1. Fallstudienerinnerung
+
+| Parameter | Wert |
+|---|---|
+| **4 Märkte** | Pune (M1), Mumbai (M2), Ahmedabad (M3), Surat (M4) |
+| **Bekannt** | Jahresbedarf + Breiten-/Längengrad pro Markt |
+| **Unbekannt** | xDC (Breitengrad), yDC (Längengrad) des neuen DCs |
+| **Ziel** | Minimiere Z = Σ (Nachfrage_i × Distanz_i × 1$/km/Einheit) |
+| **Ausgangs-DC** | Breitengrad = 20, Längengrad = 72 → Z = 12,44,89,119 (nicht optimal) |
+
+<Aside type="note">
+**★** Gleiches Ergebnis aus beiden Tools: Optimaler DC = Breitengrad 19.09, Längengrad 72.87 = Mumbai. Diese Session zeigt, WIE man es selbst reproduziert.
+</Aside>
+
+---
+
+## 2. Excel — Formelaufbau (Sphärische Distanz)
+
+![Excel Formel-Setup — GFA Sphärische Distanz](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image1.png)
+
+Die Distanzformel erfordert **5 Zwischenberechnungen** bevor die km-Distanz erreicht wird.
+
+**Schlüsselzellreferenzen:** `B7 = xDC`, `B8 = yDC`, `D2 = xᵢ` (Breitengrad Markt i), `E2 = yᵢ` (Längengrad Markt i).
+
+| Schritt | Zelle / Variable | Excel-Formel | Erklärung |
+|---|---|---|---|
+| 1 | `d_long` | `=BOGENMASS(B8 − E2)` | Längengradunterschied in Bogenmaß |
+| 2 | `d_lat` | `=BOGENMASS(B7 − D2)` | Breitengradunterschied in Bogenmaß |
+| 3 | `A` | `=SIN(d_lat/2)^2 + COS(BOGENMASS(D2)) * COS(BOGENMASS(B7)) * SIN(d_long/2)^2` | Haversine-Zwischenterm |
+| 4 | `C` | `=2 * ARCTAN2(WURZEL(1−A), WURZEL(A))` | Zentralwinkel in Bogenmaß |
+| 5 | `Distanz` | `=6371 * C` | Distanz in km = Erdradius (6371 km) × Zentralwinkel |
+| 6 | `Gesamtkosten` | `=SUMPRODUKT(Distanzen, Nachfragen, Kosten)` | Eine Formel gibt Gesamtkosten über alle 4 Märkte |
+
+```
+Schritt 1 — d_long   = BOGENMASS(B8 − E2)
+Schritt 2 — d_lat    = BOGENMASS(B7 − D2)
+Schritt 3 — A        = SIN(d_lat/2)^2 + COS(BOGENMASS(D2)) * COS(BOGENMASS(B7)) * SIN(d_long/2)^2
+Schritt 4 — C        = 2 * ARCTAN2(WURZEL(1−A), WURZEL(A))
+Schritt 5 — Distanz  = 6371 * C    [km, berücksichtigt Erdkrümmung]
+Schritt 6 — Gesamtkosten = SUMPRODUKT(Distanzen, Nachfragen, Kosten)
+```
+
+**B7 und B8 bleiben feste Referenzen** — sie sind die Entscheidungsvariablen.
+
+<Aside type="note">
+**★** Nichtlinearer Solver (GRG) erforderlich, weil ARCTAN2 und SIN/COS in der Distanzformel die Zielfunktion nichtlinear machen. Simplex LP funktioniert hier NICHT.
+</Aside>
+
+---
+
+## 3. Excel Solver — Einstellungen & Ausgabe
+
+![Excel Solver Konfiguration](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image2.png)
+
+| Solver-Feld | Wert / Einstellung |
+|---|---|
+| **Zielzelle setzen** | Zelle B9 (Gesamtkosten) |
+| **Auf** | Min (Minimieren) |
+| **Veränderbare Variablenzellen** | B7:B8 (Breiten- und Längengrad des DCs) |
+| **Nebenbedingungen** | Keine — DC kann überall platziert werden |
+| **Lösungsmethode** | **GRG Nichtlinear** — sphärische Formel ist nichtlinear |
+| **Optimale Ausgabe** | B7 = 19.09, B8 = 72.87 → **Mumbai** |
+| **Minimierte Kosten** | ₹9,73,92,135 (vs ₹12,44,89,119 bei Startwert 20, 72) |
+
+---
+
+## 4. Erweitertes Szenario — Mehrere SKUs & Tagesbedarf
+
+| Szenario | Bedarfseinträge |
+|---|---|
+| Session 2 (Basis) | 1 Produkt × 4 Märkte = **4 Einträge** (jährlich) |
+| Session 3 (Erweitert) | 4 SKUs × 4 Märkte = **16 Einträge** (Tagesbedarf) |
+| Echte Unternehmen | 20–100 SKUs × tausende Märkte → Excel nicht geeignet |
+
+Excel-Beschränkung: kann LP/NLP-Modelle mit mehr als ca. 200 Entscheidungsvariablen nicht effizient lösen. **Lösung:** AnyLogistix verwenden.
+
+---
+
+## 5. AnyLogistix — GFA Schritt für Schritt (Hands-On)
+
+![AnyLogistix Multi-SKU Eingabe](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image3.png)
+
+<Steps>
+1. **Herunterladen & Installieren:** anylogic.com → Academic-Tab → ALX Educational Toolkit → AnyLogistix Personal Learning Edition (PLE) herunterladen — kostenlos für Studenten.
+2. **GFA-Modul öffnen:** AnyLogistix starten → **'Green Field Analysis'** Modul auswählen.
+3. **Kundendaten eingeben:** 4 Kunden hinzufügen: Pune, Mumbai, Ahmedabad, Surat. Breiten-/Längengrad manuell eingeben ODER Stadtname eintippen → **automatisches Ausfüllen** der Koordinaten aus Datenbank.
+4. **Bedarfsdaten eingeben:** Für jeden Kunden Tagesbedarf pro SKU eingeben. 4 SKUs × 4 Märkte = 16 Einträge (z.B. Pune SKU1 = 130 Einheiten/Tag).
+5. **Produktdaten eingeben:** Produkte definieren: SKU1, SKU2, SKU3, SKU4 mit Einheitentyp.
+6. **GFA-Experiment ausführen:** Auf Ausführen klicken → Optimierer führt das sphärisch-gewichtete Nachfragemodell automatisch aus → Ergebnis in Sekunden.
+7. **Ausgabe lesen:** Optimaler DC: **Breitengrad 19.096, Längengrad 72.877 (Mumbai)**. Karte zeigt DC-Standort mit Verbindungen zu allen 4 Kunden.
+8. **Flüsse erkunden:** Flusstabelle ansehen: DC → Ahmedabad, SKU1: 43.800 Einheiten, 437.988 km Distanz, Flusskosten. Alle 16 SKU-Markt-Flüsse sichtbar.
+</Steps>
+
+---
+
+## 6. Excel vs. AnyLogistix — Ausgabevergleich
+
+![AnyLogistix GFA Kartenergebnis](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image4.png)
+
+| Ausgabe / Funktion | Excel Solver | AnyLogistix |
+|---|---|---|
+| **Optimaler Breitengrad** | 19.09 | 19.096 |
+| **Optimaler Längengrad** | 72.87 | 72.877 |
+| **Standort** | Mumbai | Mumbai |
+| **Kartenvisualisierung** | Nein (nur Zellwerte) | Ja — auf geografischer Karte |
+| **Flussaufschlüsselung** | Nein | Ja — pro SKU pro Route |
+| **Multi-SKU-Unterstützung** | Begrenzt | Ja — 4+ SKUs |
+| **Skalierung möglich** | ~4 Märkte | Tausende von Märkten |
+
+<Aside type="note">
+**★** Beide Tools bestätigen: Mumbai (19.09, 72.87) ist der optimale DC-Standort. **Excel zum Modell verstehen. AnyLogistix zum Skalieren.**
+</Aside>
+
+---
+
+## Zusammenfassung der Session
+
+- **Excel-Formelkette:** d_long → d_lat → A → C → Distanz (= 6371 × C) → SUMPRODUKT für Gesamtkosten.
+- **Schlüsselzellen:** B7 = xDC, B8 = yDC (Entscheidungsvariablen). B9 = Gesamtkosten (Ziel).
+- **Solver:** B9 minimieren, B7:B8 ändern, **GRG Nichtlinear**, keine Nebenbedingungen → optimal: 19.09, 72.87 (Mumbai).
+- **Erweiterter Fall:** 4 SKUs × 4 Märkte = 16 Bedarfseinträge, Tagesbedarf — Excel zu begrenzt → AnyLogistix benötigt.
+- **Beide Ausgaben übereinstimmen:** DC optimaler Standort = Breitengrad 19.096, Längengrad 72.877 = Mumbai.
+
+<Aside type="tip">
+**★ Prüfungstipp:** Excel-Formelkette für sphärische Distanz: (1) d_long = BOGENMASS(yDC − yᵢ), (2) d_lat = BOGENMASS(xDC − xᵢ), (3) A = Haversine-Formel, (4) C = 2×ARCTAN2(...), (5) Distanz = 6371×C.
+
+**★ Prüfungstipp:** SUMPRODUKT(Distanzen, Nachfragen, Kosten) berechnet Gesamttransportkosten in einer Formel — multipliziert entsprechende Elemente und summiert über alle Märkte.
+
+**★ Prüfungstipp:** Excel-Beschränkung: ca. 200 Entscheidungsvariablen max. Für 4 SKUs × 4000 Märkte = 16.000 Variablen → Excel kann nicht lösen → AnyLogistix benötigt.
+
+**★ Prüfungstipp:** AnyLogistix-Module: (1) Green Field Analysis — wo neues DC platzieren, (2) Network Optimization — wie über mehrere DCs routen, (3) Simulation. Dieser Kurs behandelt 1 und 2.
+</Aside>

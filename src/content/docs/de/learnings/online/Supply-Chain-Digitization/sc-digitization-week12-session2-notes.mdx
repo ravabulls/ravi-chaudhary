@@ -1,0 +1,187 @@
+---
+title: "Woche 12 | Session 2: Industrie-4.0-Säulen 1–3: IoT, Cloud Computing & H/V Systemintegration"
+description: "Tiefeneinblick in die ersten drei Industrie-4.0-Säulen — IoT (4-Schritte-Sequenz, 3 Typen, SC-Anwendungen, Herausforderungen), Cloud Computing (4 Bereitstellungstypen, IaaS/PaaS/SaaS-Servicemodelle) und Horizontale & Vertikale Systemintegration (Definitionen, Beispiele, Auswahllogik)."
+sidebar:
+  order: 58
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+
+---
+
+## Session-Agenda
+
+<Aside type="note">
+- Säule 1 — IoT: Was ist IoT? 4-Schritte-Sequenz, 3 Typen, SC-Anwendungen, Herausforderungen, Neue Trends
+- Säule 2 — Cloud Computing: Was ist Cloud? Bereitstellungstypen, Servicemodelle (IaaS/PaaS/SaaS)
+- Säule 3 — Horizontale & Vertikale Systemintegration: Definitionen, Beispiele, Auswahllogik
+</Aside>
+
+<Aside type="note">
+**★** IoT, Cloud und H/V Integration wirken als System: **IoT erfasst Daten → Cloud speichert und teilt sie → H/V Integration definiert, wohin sie fließen und in welche Richtung.**
+</Aside>
+
+---
+
+# Säule 1 — IoT (Internet of Things)
+
+## 1. Was ist IoT?
+
+![IoT, Cloud & H/V Integrationsrahmen](/learnings/online/Supply-Chain-Digitization/sc_w12s2_image1.png)
+
+**Definition:** ein Netzwerk miteinander verbundener physischer Geräte, Fahrzeuge, Gebäude und anderer Objekte, eingebettet mit Sensoren, Aktoren und Konnektivität.
+
+- **Rolle:** Erfasst Daten aus der physischen Welt und tauscht sie aus — ermöglicht die digitale Darstellung realer Ereignisse.
+- Überbrückt die Lücke zwischen der physischen Welt und der digitalen Welt.
+- Unterstützt Echtzeit-Erkenntnisse und Automatisierung **ohne menschliches Eingreifen**.
+
+**RFID & GPS — Schlüssel-IoT-Technologien:**
+- **RFID:** verfolgt und verwaltet Bestände und Vermögenswerte mit eingebetteten Chips und Lesern.
+- **GPS:** bestimmt den Standort von Sendungen und Fahrzeugen in Echtzeit.
+- Beide dienen dem IoT-Datenerfassungszweck — integral in IoT-Ökosystemen.
+
+---
+
+## 2. Wie IoT funktioniert — 4-Schritte-Sequenz
+
+<Steps>
+1. **Erfassen:** Geräte, Sensoren (Temperatur, Druck, Vibration), RFID und GPS erfassen Daten aus der physischen Welt. Technologie basierend darauf auswählen, was gemessen werden soll.
+2. **Kommunizieren:** Erfasste Daten werden über das Internet an ein zentrales System gesendet. Protokolle müssen für sichere Übertragung befolgt werden. Kanäle: WLAN, Bluetooth, LPWAN oder direkte Internetverbindung.
+3. **Analysieren:** Daten werden verarbeitet und analysiert — in der Cloud oder am Edge. Visualisierung, Ausreißererkennung, Anomalieerkennung. Kritische Zustände lösen Alerts aus.
+4. **Handeln:** Basierend auf der Analyse werden automatisierte oder manuelle Aktionen eingeleitet. Formen: Alerts, E-Mails, Benachrichtigungen, automatisierte Steuersignale. Schließt den Kreislauf: physisches Ereignis → digitale Erfassung → Entscheidung → physische Reaktion.
+</Steps>
+
+<Aside type="note">
+Schritt 2 (Kommunizieren) basiert auf **Cloud Computing**. Schritt 3 (Analysieren) basiert auf **Big-Data-Analyse**. IoT ist nicht eigenständig — es erfordert 3–4 Industrie-4.0-Technologien, die zusammenarbeiten.
+</Aside>
+
+---
+
+## 3. Drei Typen von IoT
+
+| Typ | Nutzung, Datenvolumen & Beispiele |
+|---|---|
+| **IIoT — Industrielles IoT** | In industriellen und Fertigungsumgebungen eingesetzt — MES (Manufacturing Execution Systems). Ermöglicht Maschine-zu-Maschine-Kommunikation (M2M). Erzeugt **große Volumina** hochfrequenter Prozessdaten. Beispiel: Predictive-Maintenance-Sensoren an Fabrikausrüstung. |
+| **CIoT — Consumer IoT** | Von Einzelpersonen im Alltag verwendet. Wearables, intelligente Haushaltsgeräte, persönliche Überwachungsgeräte. **Kleines Datenvolumen** — verbindet sich mit mobilen Apps. Beispiel: Fitness-Tracker, der Gesundheitsdaten an eine Telefon-App sendet. |
+| **CmIoT — Commercial IoT** | In gewerblichen Räumlichkeiten eingesetzt — Büros, Supermärkte, Hotels, Krankenhäuser. Anwendungen: Umweltüberwachung, Lichtsteuerung, Asset-Tracking. Daten werden in zentralisierter Cloud gesammelt → Analyse. |
+
+<Aside type="note">
+**★** IIoT erzeugt die meisten Daten (industrielle Prozesse). CIoT erzeugt die wenigsten (persönliche Geräte). CmIoT deckt gewerbliche Räumlichkeiten ab. Alle drei leiten Daten an ein zentrales System zur Analyse weiter.
+</Aside>
+
+---
+
+## 4. IoT-Anwendungen in der Supply Chain
+
+| SC-Anwendung | Wie IoT hilft |
+|---|---|
+| **Echtzeit-Bestands- & Ressourcenverfolgung** | Sichtbarkeit von Bestandsstandort und -menge an allen SC-Knoten |
+| **Predictive Maintenance** | Sensoren analysieren Gerätezustand → Ausfall antizipieren → Ausfallzeiten minimieren vor dem Ausfall |
+| **Bestandsoptimierung** | Verfolgungsdaten fließen in Bestandsentscheidungen → reduziert Überbestand und Lieferengpässe |
+| **Verbesserte Entscheidungsfindung** | Daten erfasst und analysiert → bessere Planungserkenntnisse → intelligentere SC-Entscheidungen |
+
+---
+
+## 5. IoT — Implementierungsherausforderungen
+
+| Herausforderung | Erklärung |
+|---|---|
+| **Investitionskosten** | Hohe Anfangsinvestition erforderlich — Infrastruktur, Geräte, Konnektivität |
+| **Sicherheit & Datenschutz** | Kritische Daten, die an mehreren Punkten erfasst werden, müssen gesichert und privat gehalten werden |
+| **Skalierbarkeit** | IoT-System muss wachsendes Datenvolumen verarbeiten können, wenn mehr SC-Partner beitreten |
+| **Integration** | Kompatibilität zwischen neuen IoT-Systemen und bestehenden Legacy-Systemen ist eine große technische Herausforderung |
+| **Menschliches Verhalten** | Managementwiderstand und Veränderungsaversion sind häufige Barrieren |
+
+---
+
+## 6. Neue Trends im IoT für Supply Chain
+
+- **Edge Computing:** Daten näher an der Quelle verarbeiten (auf der Geräte-/Sensorebene) → schnellere Entscheidungen, niedrigere Latenz.
+- **Blockchain-Integration:** Sorgt für Transparenz und Rückverfolgbarkeit von über IoT gesammelten Daten — verhindert Aufzeichnungsmanipulation.
+- **KI/ML-Integration:** Predictive Analytics auf IoT-gesammelten Daten anwenden → Ausfälle prognostizieren, Routen optimieren, Bestände anpassen.
+- **Reduzierung von Umweltauswirkungen:** IoT-fähiges Monitoring unterstützt Nachhaltigkeitsziele — Emissionen, Energieverbrauch, Abfall verfolgen.
+
+---
+
+# Säule 2 — Cloud Computing
+
+## 7. Was ist Cloud Computing?
+
+**Definition:** Bereitstellung von Computing-Diensten — Server, Speicher, Software, Datenbanken, Netzwerke — über das Internet.
+
+- Skaleneffekte für den Anbieter → **keine Anfangs-Capex** für den Nutzer.
+- Ermöglicht: Datenspeicherung, -verarbeitung, Zusammenarbeit und KI/ML — alles in großem Maßstab, von überall zugänglich.
+- In zwei unabhängigen Dimensionen klassifiziert: **nach Bereitstellungsmodell** UND **nach Servicemodell**.
+
+---
+
+## 8. Cloud-Bereitstellungstypen
+
+| Typ | Wer verwendet es | Sicherheit | Beispiele |
+|---|---|---|---|
+| **Öffentlich** | Gemeinsam genutzte Infrastruktur; für alle zugänglich; geringe Kosten | Niedrig | Google Apps, AWS |
+| **Privat** | Dediziert für eine einzelne Org; Org besitzt und verwaltet Infrastruktur | Höchste | HPE, Dell, IBM |
+| **Community** | Geteilt von mehreren Orgs mit ähnlichen Bedürfnissen (z.B. Regierungsbehörden, Universitäten) | Moderat | Cisco Community Cloud |
+| **Hybrid** | Kombination aus öffentlich + privat (öffentlich für Web, privat für Kunden-DB) | Gemischt | Azure, IBM |
+
+**Auswahlregel:** Wahl basierend auf Kosten-Sicherheits-Kompromiss und ob Daten sensibel sind. **Hybrid ist am flexibelsten.**
+
+---
+
+## 9. Cloud-Servicemodelle (IaaS / PaaS / SaaS)
+
+| Modell | Was bereitgestellt wird | Benutzerkontrolle | Beispiel |
+|---|---|---|---|
+| **IaaS** — Infrastructure as a Service | Zugang zu Hardware: Speicher, Netzwerk, OS, virtuelle Server. Benutzer verwaltet über der Infrastrukturschicht. | Höchste Flexibilität + Kontrolle | Amazon Web Services (AWS) |
+| **PaaS** — Platform as a Service | Plattform für App-Entwicklung: OS, Datenbank, Programmierumgebung, Webserver. Benutzer verwaltet Apps + Daten. | Hoch — verwaltet Ressourcen klar | Microsoft Azure |
+| **SaaS** — Software as a Service | Zugang zu Softwareanwendungen auf Pay-per-use-Basis. Am bequemsten — Benutzer verwendet nur die Anwendung. | Niedrigste — einfach auf App zugreifen | Gmail, Google Docs, Office 365 |
+
+<Aside type="note">
+**★** Beim Übergang von **IaaS → PaaS → SaaS**: Benutzerkontrolle nimmt ab, Bequemlichkeit nimmt zu. IaaS gibt die meiste Flexibilität; SaaS gibt die geringste Kontrolle, ist aber am einfachsten zu verwenden.
+</Aside>
+
+---
+
+# Säule 3 — Horizontale & Vertikale Systemintegration
+
+## 10. H/V Integration
+
+Dies ist eine **Strategie** und keine eigenständige Technologie — sie definiert, WIE IoT, Cloud und Analyse eingesetzt werden.
+
+| Typ | Definition, Zweck & Beispiel |
+|---|---|
+| **Horizontale Integration** | Verbindet Aktivitäten, die auf der **gleichen Ebene** operieren — innerhalb oder zwischen Organisationen. Zweck: Koordination und Synchronisation ähnlicher Funktionen. Beispiel: Integration von Produktionsplanung + Terminierung + MES über mehrere Fabriken innerhalb desselben Unternehmens. |
+| **Vertikale Integration** | Verbindet Akteure **sequenziell** — stromaufwärts ↔ stromabwärts über die SC. Zweck: End-to-End-Sichtbarkeit, Kontrolle und Optimierung über die gesamte Kette. Beispiel: Integration von PLM → MES → ERP → SC. |
+
+### Entscheidung: Welchen Typ verwenden?
+
+| Problem | Lösung |
+|---|---|
+| Koordinationsproblem auf gleicher Ebene (z.B. Fabriken nicht synchronisiert) | Horizontale Integration |
+| End-to-End-Sichtbarkeitsproblem (z.B. keine Rückverfolgbarkeit von Design bis Lieferung) | Vertikale Integration |
+| Große Organisationen benötigen oft beide gleichzeitig | Beide H + V |
+
+---
+
+## Zusammenfassung der Session
+
+- **IoT:** Netzwerk verbundener Geräte, die Daten erfassen + kommunizieren + analysieren + darauf reagieren. Überbrückt physische und digitale Welt ohne menschliches Eingreifen.
+- **IoT 4 Schritte:** Erfassen (Sensoren, RFID, GPS) → Kommunizieren (WLAN, Bluetooth, LPWAN) → Analysieren (Cloud/Edge, Ausreißererkennung) → Handeln (Alerts, automatische Steuerung).
+- **3 IoT-Typen:** IIoT (industriell, hohes Volumen, M2M) | CIoT (Verbraucher, niedriges Volumen, persönlich) | CmIoT (gewerblich, Büros, Krankenhäuser).
+- **Cloud-Bereitstellung:** Öffentlich / Privat / Community / Hybrid — basierend auf Kosten-Sicherheits-Kompromiss gewählt.
+- **Cloud-Servicemodelle:** IaaS (Infrastruktur, meiste Kontrolle) | PaaS (Plattform, App-Entwicklung) | SaaS (Software, am bequemsten).
+- **H/V Integration:** Horizontal = Koordination auf gleicher Ebene. Vertikal = sequenzielle Upstream-Downstream-Verknüpfung.
+
+<Aside type="tip">
+**★ Prüfungstipp:** IoT 4-Schritte-Funktionsweise: (1) Erfassen (Sensoren/RFID/GPS), (2) Kommunizieren (WLAN/Bluetooth/LPWAN), (3) Analysieren (Cloud/Edge + Anomalieerkennung), (4) Handeln (Alerts/Benachrichtigungen/automatische Steuerung).
+
+**★ Prüfungstipp:** 3 IoT-Typen: IIoT (industriell, M2M, hohes Volumen) | CIoT (Verbraucher, persönliche Geräte, niedriges Volumen) | CmIoT (gewerblich, Büros/Krankenhäuser/Hotels, Asset-Tracking).
+
+**★ Prüfungstipp:** Cloud-Bereitstellung: Öffentlich (geringe Kosten, geringe Sicherheit, AWS/Google) | Privat (hohe Sicherheit, einzelne Org, IBM/Dell) | Community (von ähnlichen Orgs geteilt) | Hybrid (Mix aus öffentlich + privat).
+
+**★ Prüfungstipp:** Cloud-Servicemodelle: IaaS = Hardware/Infra (AWS) | PaaS = Plattform/Entwicklungsumgebung (Azure) | SaaS = Software-Zugang (Gmail, Office 365). Kontrolle nimmt beim Übergang IaaS → SaaS ab.
+
+**★ Prüfungstipp:** H = Horizontale Integration (gleiche Ebene, z.B. Produktionsplanung + MES + Terminierung). V = Vertikale Integration (sequenzielle Kette, z.B. PLM → MES → ERP → SC).
+</Aside>

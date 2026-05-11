@@ -1,0 +1,184 @@
+---
+title: "Week 10 | Session 5: Information Systems — WMS & TMS (Warehouse & Transportation Management Systems)"
+description: "Detailed study of Warehouse Management Systems (WMS) and Transportation Management Systems (TMS) — their scope, key functionalities, terminology, and how they integrate with ERP and T&T systems to form a complete digital SC infrastructure."
+sidebar:
+  order: 51
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Course: Supply Chain Digitization — Module 4: Digital Infrastructure*
+
+---
+
+## Session Agenda
+
+<Aside type="note">
+- Recap — Session 4 (ERP)
+- WMS vs TMS — Quick Comparison
+- Warehouse Management System (WMS) — Types, Layout & Activities
+- WMS Key Functionalities
+- Transportation Management System (TMS) — Focus & Terminology
+- TMS Key Functionalities
+- Integration — How ERP, WMS & TMS Connect
+- Implementation Considerations for WMS & TMS
+</Aside>
+
+---
+
+## 1. WMS vs TMS — Quick Comparison
+
+![WMS & TMS — Warehouse & Transportation Information Systems](/learnings/online/Supply-Chain-Digitization/sc_w10s5_image1.png)
+
+<Aside type="note">
+**★** ERP = enterprise-wide. WMS = **inside the warehouse**. TMS = **between facilities** (movement). All three can be integrated but are distinct systems.
+</Aside>
+
+| Attribute | WMS | TMS |
+|---|---|---|
+| **Full name** | Warehouse Management System | Transportation Management System |
+| **Focus** | Activities **inside** the warehouse/facility | Material **movement between** facilities |
+| **Scope** | Receiving → Put away → Storage → Picking → Dispatch | Freight, routing, dock scheduling, yard management |
+| **Facility types** | Warehouse, DC, fulfillment center, sort center, cross-dock | Long-haul, last-mile, inter-facility transport |
+| **Linked to** | ERP (materials module), TMS | ERP (vendor module), WMS |
+| **Developed** | In-house or procured (same or different vendor as ERP) | In-house or procured — often integrated with WMS |
+
+---
+
+## 2. Warehouse Management System (WMS)
+
+### Why WMS is a Separate System from ERP
+Warehouse activities are very specific to the product type, facility layout, and process — not common across all businesses. ERP handles common business functions (finance, HR, projects) — not granular warehouse ops. WMS and ERP are often from the same vendor but are **separate modules** — integration is required.
+
+### Warehouse Facility Types WMS Covers
+
+| Facility Type | Characteristics |
+|---|---|
+| **Warehouse** | Long-term storage — items may stay months before moving |
+| **Distribution Center (DC)** | Shorter hold — regular picking and dispatching to retailers |
+| **Fulfillment Center** | E-commerce focused — fast individual order fulfillment |
+| **Sort Center / Cross-dock** | Items arrive and leave within 8–12 hours — no long-term storage |
+
+### Warehouse Layout — Key Terminology
+
+| Term | Definition |
+|---|---|
+| **Pallet positions** | Individual storage slots (each square = 1 pallet from top view). Can be stacked vertically on racks. |
+| **Aisle space** | Movement corridor between storage rows — no storage, only transit. |
+| **Inbound docks** | Area where incoming vehicles unload materials (multiple docks possible). |
+| **Outbound dock** | Area where outgoing vehicles load materials for dispatch. |
+| **Yard** | Open space around building — vehicle parking and large equipment. |
+| **SKU** | Stock Keeping Unit — a specific product type + size + unit (e.g., shampoo 200ml). |
+
+### Core Warehouse Activity Sequence
+
+<Steps>
+1. **Receiving (Inbound):** Materials arrive at inbound docks. Items unloaded, scanned (T&T integration), GRN generated.
+2. **Put Away:** Items moved from inbound to designated storage location. WMS provides sequencing to minimize travel. Location assigned based on SKU movement speed, size, etc.
+3. **Storage:** Items held for planned duration. WMS shows real-time pallet position availability. Tracks utilization by zone, rack, position.
+4. **Picking:** Orders received → WMS generates pick list (sequence + quantity). Picker or automated equipment follows list. Picking order minimizes travel distance.
+5. **Staging & Dispatch:** Picked items moved to outbound area (staging). Loaded onto vehicle. Outbound GRN-equivalent generated. Dock allocated by TMS.
+</Steps>
+
+---
+
+## 3. WMS — Key Functionalities
+
+| WMS Functionality | What it Does |
+|---|---|
+| **Real-time Visualization** | Shows top-view of warehouse — pallet positions: full, empty, partially empty. Color-coded by status. Instant snapshot of capacity utilization. |
+| **Space Allocation / Slotting** | Decision support: where to assign SKUs based on movement speed (fast-movers near outbound), size, product type. Suggests optimal pallet position for each incoming product. |
+| **Goods Receipt Management** | Records inbound completion — all pallets unloaded? GRN generated? Integrated with T&T scanning. Links to ERP materials module. |
+| **Put Away Sequencing** | Tells operator: visit position A first, then B — minimizes travel distance. Also handles multi-pallet put away sequencing. |
+| **Pick List Generation** | Based on orders received — generates ordered pick list with quantities and locations. Assigns pickers and equipment. Minimizes travel; handles partial and bulk picks. |
+| **Performance Reporting** | Daily productivity metrics: throughput, utilization %, equipment utilization, picker productivity. Zone-level and facility-level reporting. |
+
+<Aside type="note">
+**★** WMS = **real-time inventory visibility + activity sequencing + performance reporting**. It tells you WHERE things are and WHAT to do next.
+</Aside>
+
+---
+
+## 4. Transportation Management System (TMS)
+
+TMS manages the **movement of materials between facilities** — factory → warehouse → DC → retail store. Covers: manpower, equipment, commercial terms, regulatory compliance, route planning.
+
+### TMS Key Terminology
+
+| Term | Definition |
+|---|---|
+| **FTL** | Full Truck Load — vehicle used to full capacity for one consignment |
+| **LTL** | Less than Truck Load — vehicle carries partial loads; may combine multiple consignments |
+| **Backhaul** | Return journey of vehicle after delivery — goes to warehouse OR proceeds to another pickup |
+| **Dock** | Loading/unloading bay at a warehouse — same term used in warehousing and port contexts |
+| **Yard management** | Managing vehicle and equipment parking area around the warehouse building |
+
+### TMS Key Functionalities
+
+| TMS Functionality | What it Does |
+|---|---|
+| **Dock Scheduling** | Which vehicle goes to which dock? When will a dock be free? Assign next vehicle. Connects TMS with WMS — dock availability depends on warehouse pick/load progress. |
+| **Yard Management** | Manages open space — parking of vehicles awaiting dock allocation. Positioning of heavy equipment (cranes, forklifts). Tracks what is in the yard and when it needs to move. |
+| **Freight Management** | Mode selection: road vs sea vs air — decision support based on cost, speed, urgency. FTL vs LTL decisions to maximize vehicle utilization. Compares freight costs across options. |
+| **Documentation** | Auto-generates shipping documents, delivery orders, customs paperwork. Handles regulatory/compliance requirements for inter-state or international shipments. |
+| **Vehicle Routing** | For last-mile / multi-stop deliveries: decides optimal order of retail stores to visit. Minimizes total distance/time. Determines backhaul: return to warehouse or proceed to another pickup? |
+
+<Aside type="note">
+**★** TMS = **decision support for MOVEMENT**. It answers: which mode, which route, which dock, which vehicle, and when. Eliminates manual route planning and documentation.
+</Aside>
+
+---
+
+## 5. Integration — How ERP, WMS & TMS Connect
+
+All three systems are interrelated — data flows between them continuously:
+
+| Integration | Data Flow & Purpose |
+|---|---|
+| **ERP ↔ WMS** | Production schedule informs warehouse of expected inbound. Dispatch records update ERP materials module. Spend data flows to ERP finance. |
+| **ERP ↔ TMS** | Vendor delivery schedules from ERP procurement module inform TMS dock scheduling. Freight costs flow back to ERP for spend analysis. |
+| **WMS ↔ TMS** | WMS tells TMS when dock is clear and items are ready for loading. TMS tells WMS vehicle arrival time so dock can be pre-cleared. |
+| **WMS ↔ T&T** | Barcode/RFID scans at inbound dock update WMS inventory in real time. Pick scan confirms what has been picked and loaded. |
+| **TMS ↔ T&T** | Vehicle tracking (GPS, telematics) updates TMS with live vehicle location and delivery confirmation at customer point. |
+
+**End-to-end flow example:** Production completes at factory (ERP) → truck dispatched (TMS) → arrives at dock (WMS dock scheduling) → items scanned in (T&T → WMS) → pick list generated for retail orders (WMS) → vehicle routed to stores (TMS).
+
+---
+
+## 6. Implementation Considerations for WMS & TMS
+
+| Implementation Question | Why it Matters |
+|---|---|
+| **Scale of business?** | Determines which modules to implement and whether to procure or build in-house |
+| **ERP integration possible?** | If WMS/TMS data cannot feed into ERP, value of the system is severely reduced |
+| **Partner WMS/TMS fit?** | Can your warehouse WMS talk to your vendor's or client's TMS? Cross-system compatibility is key |
+| **Digital readiness of people?** | Staff must be trained on devices and software — not just operational tasks |
+| **Adaptability to change?** | Product mix changes, demand variability, regulation changes — can the system adapt? |
+| **Routing complexity?** | Complex multi-stop or multi-mode routing requirements determine how sophisticated a TMS is needed |
+| **Scalability?** | Ability to adapt quickly determines how fast the business can scale. Rigid systems slow growth. |
+
+<Aside type="note">
+India context: massive warehousing infrastructure development underway — WMS adoption accelerating. PM Gati Shakti initiative driving logistics digitization. Shop floor warehouse staff must be digitally upskilled — purely operational training is no longer sufficient.
+</Aside>
+
+---
+
+## Session Summary
+
+- **WMS:** manages activities inside the warehouse — receiving, put away, storage, picking, dispatch, performance metrics.
+- **TMS:** manages material movement between facilities — dock scheduling, yard mgmt, freight, routing, documentation.
+- **Key terms:** dock, aisle, pallet position, SKU, FTL, LTL, backhaul, yard, cross-dock, sort center.
+- **WMS functionalities:** real-time visualization, slotting, GRN, put away sequencing, pick list, performance reporting.
+- **TMS functionalities:** dock scheduling, yard management, freight mode selection, documentation, vehicle routing.
+- **Integration:** ERP ↔ WMS ↔ TMS ↔ T&T — all linked. Data flows across all systems in a well-designed SC IS landscape.
+- **WMS vs ERP:** separate because warehouse activities are too specific for generic ERP — same vendor possible but different modules.
+
+<Aside type="tip">
+**★ Exam Tip:** WMS ≠ ERP. ERP handles common business functions. WMS handles warehouse-specific activities. They integrate but are separate modules.
+
+**★ Exam Tip:** 5 warehouse activities in order: Receiving → Put Away → Storage → Picking → Dispatch (staging). WMS provides decision support at every step.
+
+**★ Exam Tip:** TMS key decisions: which dock, which mode (FTL/LTL/road/sea), which route (multi-stop retail delivery), backhaul plan. Each is automated via TMS rather than manual planning.
+
+**★ Exam Tip:** Integration matters: WMS dock availability feeds TMS scheduling; TMS vehicle arrival feeds WMS dock prep. T&T scan data feeds WMS inventory. If any system is isolated, its value drops sharply.
+</Aside>
