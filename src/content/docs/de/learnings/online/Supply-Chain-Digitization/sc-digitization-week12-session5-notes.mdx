@@ -1,6 +1,6 @@
 ---
-title: "Woche 12 | Session 5: Blockchain + Industrie-4.0-Technologie × SC-Funktionskartierung & IoT-Fallstudien"
-description: "Blockchain-Definition, 3-Schritte-Prozess (Transaktion → Kettenbildung → Unveränderlichkeit), 5 Netzwerktypen und die vollständige Industrie-4.0-Technologie × SC-Funktions-Anwendbarkeitsmatrix. Dazu fünf IoT-Fallstudien für Planung, Beschaffung, Produktion, Bestand und Distribution."
+title: "Woche 12 | Session 5: Industrie-4.0-Fallstudien — Robotik, AR/VR, Additive Fertigung & Blockchain über SC-Funktionen"
+description: "Abschlusssession: Fallstudien zu Robotik (5 Fälle — RPA + AMRs), AR/VR (3 Fälle), Additive Fertigung (1 Fall) und Blockchain (2 Fälle) über SC-Funktionen. Vollständige 16-Fallstudien-Referenztabelle und Kurszusammenfassung."
 sidebar:
   order: 61
 ---
@@ -14,142 +14,170 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 ## Session-Agenda
 
 <Aside type="note">
-- Blockchain — Definition & Rolle
-- Wie Blockchain funktioniert — 3-Schritte-Prozess
-- Typen von Blockchain-Netzwerken
-- Industrie-4.0-Technologien × SC-Funktionen — Anwendungsmatrix
-- IoT — Fallstudien über 5 SC-Funktionen
+- Sessionkontext — Letzte Session des Kurses
+- Robotik — Fallstudien über 4 SC-Funktionen (RPA + AMRs)
+- AR / VR — Fallstudien über 3 SC-Funktionen
+- Additive Fertigung — Fallstudie (Produktion)
+- Blockchain — Fallstudien über 2 SC-Funktionen
+- Vollständige 16-Fallstudien-Referenztabelle (Sessions 4 & 5)
+- Kurszusammenfassung
 </Aside>
 
 ---
 
-## 1. Blockchain — Definition & Rolle
+## 1. Sessionkontext
 
-**Definition:** eine verteilte Ledger-Technologie, bei der sichere und transparente Aufzeichnung von Transaktionen und Daten über ein Netzwerk von Computern erfolgt.
+Woche 12 behandelte: Digitalisierungspyramide → Industrie 4.0 (9 Säulen) → Blockchain → I4.0 × SC-Funktionskartierung → IoT-Fallstudien (Session 4).
 
-Zwei definierende Eigenschaften — **beide gleichzeitig**:
-- **Sicher:** manipulationssicher, kryptografisch geschützt.
-- **Transparent:** für alle autorisierten Netzwerkmitglieder sichtbar.
-
-Funktionsweise: Transaktionen werden in Blöcken gesammelt und als **chronologische Kette** aufgezeichnet — daher 'Blockchain'.
-
-In Industrie 4.0: Blockchain ist ein Enabler der Digitalisierung — kritisch für SC-Transparenz und Rückverfolgbarkeit.
-
-### Blockchain in der SC — Was sie ermöglicht
-- Lieferanten, Anbieter, Materialquellen und Preise über die SC hinweg verfolgen.
-- Sichere, manipulationssichere Aufzeichnung aller Transaktionen und Produktbewegungen.
-- Schafft **Vertrauen** zwischen SC-Partnern — keine einzelne Partei kann die gemeinsame Geschichte ändern.
-- Anwendungen: Finanzen, Supply Chain, Gesundheitswesen, Wahlen und jede Domäne mit Multi-Party-Transaktionen.
-
-<Aside type="note">
-**★** Blockchain ist KEINE gewöhnliche Datenbank. Es ist ein **verteiltes, manipulationserkennbares Register, das keine einzelne Partei kontrolliert** — dies macht es einzigartig geeignet für Multi-Partner-SC-Transaktionen.
-</Aside>
-
----
-
-## 2. Wie Blockchain funktioniert — 3-Schritte-Prozess
-
-<Steps>
-1. **Transaktionsaufzeichnung:** Wenn eine Transaktion stattfindet, werden alle Details als **Datenblock** erfasst. Aufgezeichnete Details: wer, wann, wo, zu welchem Zweck, wie viel — vollständige Transaktionsmetadaten. Der Block = ein vollständiger, strukturierter Datensatz einer Transaktion.
-2. **Blockchain-Bildung:** Mehrere Blöcke werden in chronologischer Reihenfolge verknüpft → eine Kette wird gebildet. Bevor ein neuer Block hinzugefügt wird, muss er vom Netzwerk über einen **Konsensmechanismus** **VALIDIERT** werden. Konsens stellt sicher, dass keine einzelne Partei betrügerische Daten hinzufügen kann — alle Netzwerkmitglieder müssen zustimmen.
-3. **Unveränderlichkeit:** Jeder neue Block **re-verifiziert auch den vorherigen Block** beim Hinzufügen → stärkt die Kette. Ergebnis: Daten in der Blockchain sind manipulationserkennbar — jede Änderung ist sofort erkennbar. Unveränderlich = kann von keinem böswilligen Akteur rückwirkend geändert werden → vertrauenswürdiges Ledger für alle Mitglieder.
-</Steps>
-
-**Konsensmechanismus:** Bevor ein Block hinzugefügt wird, müssen alle Netzwerkmitglieder zustimmen, dass er gültig ist — verhindert jeden einzelnen betrügerischen Eintrag.
-
-**Kryptografische Verknüpfung:** Jeder Block enthält einen kryptografischen Verweis auf den vorherigen Block → das Ändern eines Blocks würde die Kette unterbrechen → sofort erkennbar.
-
-<Aside type="note">
-**★** Transaktion → Block → Validierung (Konsens) → Der Kette hinzugefügt → Unveränderlich. Dieser 3-Schritte-Zyklus schafft Vertrauen **ohne zentrale Autorität**.
-</Aside>
-
----
-
-## 3. Typen von Blockchain-Netzwerken
-
-| Netzwerktyp | Wer kontrolliert / beitritt | Geschwindigkeit | Sicherheit | Typische Nutzung |
-|---|---|---|---|---|
-| **Öffentlich** | Jeder — offener Zugang, vollständig dezentralisiert | Langsamer | Sicherer (dezentralisiert) | Kryptowährung, dezentralisierte Apps |
-| **Privat** | Einzelne Org regiert und kontrolliert, wer teilnimmt | Schneller | Hoch (begrenzter Zugang) | Interne Prozessstreamlinierung, Effizienzverbesserung |
-| **Permissioned** | Teilnehmer benötigen Genehmigung einer Regierungsbehörde zum Beitritt | Schnell | Hoch | Wo hohe Kontrolle über Netzwerkmitgliedschaft erforderlich ist |
-| **Konsortium** | Gruppe vorausgewählter Orgs regiert gemeinsam das Netzwerk | Schnell | Hoch | Inter-Org-Zusammenarbeit an einem gemeinsamen Projekt, keine einzelne Regierungsorg |
-| **Hybrid** | Kombination aus zwei oder mehr der obigen | Variiert | Variiert | Komplexe Unternehmensumgebungen, die Flexibilität benötigen |
-
-### Auswahllogik
-
-| Bedarf | Netzwerktyp |
-|---|---|
-| Offenheit + Dezentralisierung | **Öffentlich** (z.B. Kryptowährung) |
-| Einzelne Org, interne Prozesse | **Privat** (schneller, mehr kontrolliert) |
-| Mitgliedschaftsgenehmigung erforderlich | **Permissioned** |
-| Mehrere Orgs teilen ein Projekt | **Konsortium** (keine einzelne Regierungsorg) |
-| Komplexer Mix von Anforderungen | **Hybrid** |
-
----
-
-## 4. Industrie-4.0-Technologien × SC-Funktionen — Anwendungsmatrix
-
-![Industrie-4.0-Technologie × SC-Funktionsmatrix](/learnings/online/Supply-Chain-Digitization/sc_w12s4_image1.png)
-
-Verschiedene I4.0-Technologien gelten für verschiedene SC-Funktionen. Diese Matrix zeigt die indikative Anwendbarkeit:
-
-| Technologie | Planung & Prognose | Beschaffung | Produktion & Fertigung | Bestandsmanagement | Distribution & Logistik | Kundenservice |
-|---|---|---|---|---|---|---|
-| **KI / ML** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **IoT** | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| **Cloud Computing** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **Big-Data-Analyse** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **Simulation / Digital Twin** | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| **Blockchain** | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| **Autonome Roboter** | — | — | ✓ | ✓ | ✓ | — |
-| **AR** | — | — | ✓ | ✓ | ✓ | — |
-| **Additive Fertigung** | — | — | ✓ | — | — | — |
-
-**Schlüsselbeobachtungen:**
-- **KI/ML und Cloud/Big Data** sind auf alle 6 SC-Funktionen anwendbar — größte horizontale Reichweite.
-- **Autonome Roboter und Additive Fertigung** sind spezifischer für Produktion/Logistik/Bestand.
-- Diese Matrix zeigt **indikative** Anwendbarkeit — die tatsächliche Eignung hängt vom spezifischen Geschäftskontext ab.
-
----
-
-## 5. IoT — Fallstudien über 5 SC-Funktionen
+Diese Abschlusssession vervollständigt die Fallstudienreihe mit **Robotik**, **AR/VR**, **Additiver Fertigung** und **Blockchain** über verschiedene SC-Funktionen.
 
 *Hinweis: Alle Unternehmensnamen sind hypothetisch — Fälle für Lernzwecke entwickelt.*
 
-| SC-Funktion | Unternehmen & Branche | Herausforderung → IoT-Lösung → Ergebnis |
+---
+
+## 2. Robotik — Fallstudien über 4 SC-Funktionen
+
+Robotik umfasst sowohl **physische Roboter** (AMRs — Autonome Mobile Roboter) als auch **Softwareautomatisierung** (RPA — Robotic Process Automation).
+
+| SC-Funktion | Unternehmen & Kontext | Herausforderung → Lösung → Ergebnis |
 |---|---|---|
-| **Planung & Prognose** | **Omega Foods** *(Lebensmittelhändler)* | **Herausforderung:** schlechte Nachfrageprognose für verderbliche Waren → Verderb oder Rückstände. **IoT-Lösung:** intelligente Sensoren verfolgen Temperatur + Lagerbestände in Lagern und Lieferwagen in Echtzeit. **Ergebnis:** Verbrauchsrate + Haltbarkeit prognostizieren → Lieferpläne anpassen → gezielte Aktionen → Verderb reduziert. |
-| **Beschaffung** | **Acme Pharmaceuticals** *(Medikamentenhersteller)* | **Herausforderung:** häufige Lieferengpässe und Verzögerungen durch manuelle Bestandsverfolgung. **IoT-Lösung:** intelligente Sensoren in Regalen und Materialgestellen → Echtzeitbestandsdaten → automatische Bestellauslösung unter Schwellenwert. **Ergebnis:** Lieferengpässe eliminiert, Beschaffungszyklus über Smart Contracts optimiert, Gesamtkosten reduziert. |
-| **Produktion & Fertigung** | **Newton Instruments** *(Geigenhersteller)* | **Herausforderung:** Aufrechterhaltung optimaler Luftfeuchtigkeit kritisch für Geigenqualität — Schwankungen verursachen Risse und Verformungen → Abfall und Verzögerungen. **IoT-Lösung:** Luftfeuchtigkeitssensoren in der Werkstatt → intelligente Lüftungsklappen passen Luftstrom automatisch an. **Ergebnis:** konsistent kontrollierte Umgebung → erhöhter Ertrag → Abfall reduziert → Qualität erhalten. |
-| **Bestandsmanagement** | **Vendor Guitars** *(Instrumentenhersteller)* | **Herausforderung:** Instrumente gehen während des Versands verloren → beeinträchtigt Kundenservice und Betriebseffizienz. **IoT-Lösung:** Standortverfolgungssensoren in Gitarrenkoffer eingebettet → Echtzeit-Sichtbarkeit über die gesamte SC. **Ergebnis:** verlorene Instrumente eliminiert, Lieferungen beschleunigt, Logistik optimiert, Kundenzufriedenheit verbessert. |
-| **Distribution & Logistik** | **Best Pharmaceuticals** *(Medikamentenhändler)* | **Herausforderung:** Verderb temperatursensitiver Medikamente aufgrund inkonsistenter Kühlkettenbedingungen. **IoT-Lösung:** Sensoren in Versandbehältern verfolgen Temperatur und Luftfeuchtigkeit in Echtzeit. **Ergebnis:** vollständige Sichtbarkeit des Sendungszustands → Routen und Lagerung optimiert → Medikamentenqualität erhalten. |
+| **Beschaffung** | **BioCarrel Pharma** *(Medikamentenhersteller)* | **Herausforderung:** langsame, fehleranfällige manuelle Beschaffung und Lieferantenverwaltung. **Lösung:** RPA (Softwarebots) — Echtzeit-Marktanalyse, automatisiertes Vendor-Onboarding, Preisverhandlung, Auftragsabwicklung. **Ergebnis:** Beschaffungszyklen verkürzt, Lieferengpässe minimiert, Kosteneinsparungen durch bessere Verhandlung + weniger Fehler. |
+| **Produktion & Fertigung** | **Yani** *(Ukulelehersteller)* | **Herausforderung:** begrenzte Produktionskapazität durch Abhängigkeit von raren erfahrenen Lautenbauern — Nachfrage übersteigt Angebot. **Lösung:** Roboterarm mit Sensoren + Werkzeugen für Wiederholungsaufgaben (Holzschneiden, Erstzusammenbau). **Ergebnis:** höherer Output + konsistente Qualität durch Roboter. Lautenbauer können sich auf aufwändige Handwerkskunst konzentrieren → das Beste aus beiden: Roboterpräzision + menschliche Expertise. |
+| **Bestandsmanagement** | **Bulb Boutique** *(Leuchtmittelhändler)* | **Herausforderung:** großes Lager + zerbrechliche Leuchtmittel → langsame, schadensanfällige Auftragsabwicklung. **Lösung:** Roboter-Kommissioniersystem mit AMRs und Bildsensoren — Regale scannen, Leuchtmittel präzise identifizieren und entnehmen. **Ergebnis:** Kommissionierzeiten deutlich reduziert, Schäden an zerbrechlichen Leuchtmitteln minimiert → schnellere, genauere Abwicklung → Unternehmen erweitert Produktpalette. |
+| **Distribution & Logistik** | **Bookworm Central** *(Gebrauchte Bücher)* | **Herausforderung:** langsame Bearbeitung → unzufriedene Kunden. **Lösung:** Robotersortieranlage (AMRs): Bücher identifizieren, sortieren und fotografieren; alle Daten automatisch hochladen → beschleunigt die Erfassung. **Ergebnis:** Bearbeitungszeit drastisch reduziert, Kundenzufriedenheit verbessert. |
+| **Kundenservice** | **Shelf Reliance** *(Buchhandelskette)* | **Herausforderung:** lange Wartezeiten beim stationären Abholen von Online-Bestellungen — manuelles Holen von hohen Regalen ist langsam. **Lösung:** Roboter-Entnahmesystem (AMRs + digitale Karten + Greifer) — Bücher schnell lokalisieren und entnehmen. **Ergebnis:** Wartezeiten deutlich reduziert → bessere Kundenerfahrung; Mitarbeiter von der Entnahme befreit → können Kunden beim Stöbern + mit persönlichen Empfehlungen helfen. |
 
-### Übergreifende Beobachtungen
+### Robotik — Schlüsselbeobachtungen
 
-- **Gemeinsames IoT-Muster:** Echtzeit-Sensordaten → Analyse-Engine → automatisierte Aktion oder optimierte Entscheidung.
-- **IoT-Vorteile in allen Fällen:** Verderb reduziert, Lieferengpässe eliminiert, Kundenservice verbessert, Qualitätserhaltung, Kostensenkung.
-- In allen 5 Fällen verhindert die IoT-Implementierung entweder ein Problem (proaktiv) oder ermöglicht eine schnellere Erholung (reaktiv).
+- **RPA (Software)** übernimmt datenbezogene Beschaffungsaufgaben. **AMRs (physisch)** übernehmen Lagerbewegungen. Beide sind 'Robotik' unter Industrie 4.0.
+- **Konsistentes Muster:** Roboter übernehmen Wiederholungsaufgaben → Menschen für höherwertige, urteilsintensive Arbeit freigesetzt.
 
 <Aside type="note">
-**★** IoT in der SC = erfassen → übertragen → analysieren → handeln. Jede Fallstudie demonstriert ein anderes 'Erfassen'-Ziel: Temperatur, Lagerbestand, Luftfeuchtigkeit, Standort oder Sendungszustand.
+**★** RPA vs. Physische Roboter: RPA = Softwarebots für datenintensive Aufgaben (Marktanalyse, Vendor-Onboarding, Auftragsabwicklung). AMRs = autonome mobile Roboter für physische Lagerbewegungen (Kommissionierung, Sortierung, Entnahme). Wissen, welcher Typ in welchem Kontext eingesetzt wird.
+</Aside>
+
+---
+
+## 3. AR / VR — Fallstudien über 3 SC-Funktionen
+
+**AR (Augmented Reality)** überlagert digitale Informationen auf die reale Welt. **VR (Virtual Reality)** schafft eine vollständig digitale, immersive Umgebung. Werden oft zusammen eingesetzt.
+
+| SC-Funktion | Unternehmen & Kontext | Herausforderung → Lösung → Ergebnis |
+|---|---|---|
+| **Beschaffung** | **ACME Furniture** *(Möbelhersteller)* | **Herausforderung:** internationale Lieferanten — Reisen zur Qualitätskontrolle nicht möglich; herkömmliche Ferninspektion unzureichend. **Lösung:** Einkäufer nutzen AR-Headsets für virtuelle Touren durch Lieferantenwerkstätten + Ferninspektion von Produktionslinien und Materialien. Vor-Ort-Inspektoren nutzen AR-Tablets für Echtzeit-Qualitätsprüfungen mit hervorgehobenen Schlüsselmaßen. **Ergebnis:** Reisekosten deutlich gesenkt; Lieferantenmanagement effektiver; bessere Qualitätskontrolle und fundiertere Beschaffungsentscheidungen. |
+| **Produktion & Fertigung** | **Honey Ale Aerospace** *(Flugzeugkomponenten)* | **Herausforderung:** Verkabelungsinstallation in komplexen Flugzeugen — papierbasierte Handbücher führen zu Fehlinterpretationen und Verzögerungen. **Lösung:** Techniker tragen AR-Brillen, die digitale Kabelpfade + Verbindungspunkte auf die reale Flugzeugstruktur überlagern. VR-Simulationen ermöglichen Ingenieuren, virtuelle Begehungen des Flugzeugs durchzuführen, um Wartungsherausforderungen zu identifizieren und Zugangspunkte zu optimieren. **Ergebnis:** Verkabelungsfehler minimiert, Montagegeschwindigkeit verbessert, Sicherheitsprotokoll eingehalten, langfristige Wartbarkeit verbessert. |
+| **Kundenservice** | **Mika** *(Globaler Möbelriese)* | **Herausforderung:** Kunden kaufen impulsiv ohne Möbel in ihrer Wohnung zu visualisieren → hohe Rückgabequoten. **Lösung:** AR-Showroom — Kunden platzieren 3D-Möbelmodelle mit Smartphone oder Tablet im eigenen Wohnraum, von zu Hause aus. **Ergebnis:** bessere Kaufentscheidungen → höhere Kundenzufriedenheit, Umsatz gesteigert, Rückgaben deutlich reduziert. |
+
+### AR/VR — Schlüsselbeobachtungen
+
+- **AR überbrückt die physisch-digitale Lücke** bei komplexen Aufgaben (Verkabelungsinstallation, Fernqualitätskontrolle) — reduziert Fehler ohne physische Anwesenheit.
+- **Für Kunden** beseitigt AR die Unsicherheit, wie ein Produkt im eigenen Kontext aussehen wird → reduziert Rückgaben.
+
+<Aside type="note">
+**★** AR in der SC: überlagert digitale Informationen auf die physische Umgebung. Eingesetzt für: Fernlieferanteninspektion (ACME Furniture), Verkabelungsmontage (Honey Ale Aerospace) und Kunden-Produktvisualisierung (Mika). Reduziert Fehler, Reisekosten und Rückgabequoten.
+</Aside>
+
+---
+
+## 4. Additive Fertigung — Fallstudie
+
+| SC-Funktion | Unternehmen & Kontext | Herausforderung → Lösung → Ergebnis |
+|---|---|---|
+| **Produktion & Fertigung** | **Robopulse** *(Spielzeughersteller)* | **Herausforderung:** defektes Zahnrad im Star-Roboter-Spielzeug. Herkömmliche Beschaffung/Fertigung = wochenlange Vorlaufzeit. Weihnachtssaisonnachfrage kann nicht warten. **Lösung:** Ingenieure designten und 3D-druckten ein Ersatzzahnrad aus hochfestem Nylon innerhalb von Tagen — nur notwendiges Material verwendet, komplexes Design direkt gedruckt. **Ergebnis:** Produktion innerhalb von Tagen (nicht Wochen) wiederaufgenommen. Termintreue gewahrt. Erheblicher finanzieller Verlust verhindert. Abfall minimiert — nur benötigtes Material verwendet. |
+
+### Additive Fertigung — Schlüsselbeobachtungen
+
+- **Geschwindigkeitsvorteil:** Tage statt Wochen — entscheidend, wenn die Vorlaufzeit der Engpass ist.
+- **Kein Werkzeugbedarf:** das komplexe Design wird direkt gedruckt → keine Formen oder Sondermaschinen nötig.
+- **Material:** hochfestes Nylon — zeigt, dass AM Hochleistungswerkstoffe verarbeitet, nicht nur Prototypen.
+- **Minimaler Abfall:** nur das exakt benötigte Material wird verwendet.
+
+<Aside type="note">
+**★** Hauptvorteile der Additiven Fertigung gegenüber traditioneller: Geschwindigkeit (Tage statt Wochen), kein Werkzeug nötig, exakte Anpassung nach Spezifikation, minimaler Abfall. Am besten für dringende, komplexe oder kundenspezifische Teile — Robopulse-Zahnradfall ist das Musterbeispiel.
+</Aside>
+
+---
+
+## 5. Blockchain — Fallstudien über 2 SC-Funktionen
+
+| SC-Funktion | Unternehmen & Kontext | Herausforderung → Lösung → Ergebnis |
+|---|---|---|
+| **Beschaffung** | **Oceanic Limited** *(Meeresfrüchte-Lieferant)* | **Herausforderung:** Kunden wollen Nachweis, dass Thunfisch nachhaltig beschafft wird — komplexe Papiernachweise und möglicher Betrug machen das schwierig. **Lösung:** Blockchain-Plattform — jeder Fang mit Herkunft, Schiffs-ID und Fangmethode aufgezeichnet → unveränderliches, transparentes Ledger für alle Teilnehmer zugänglich. **Ergebnis:** Verbraucher gewinnen Vertrauen in nachhaltige Praktiken. Papiernachweise vereinfacht. Kosten gesenkt. Transaktionen beschleunigt. Betrugsrisiko eliminiert. |
+| **Distribution & Logistik** | **Rainforest Raindrops** *(Teehändler)* | **Herausforderung:** Unternehmen möchte Transparenz über den gesamten Weg des Tees von der Ernte bis ins Regal bringen; bestehendes System intransparent. **Lösung:** Blockchain-basiertes Tracking — jeder Schritt von der Ernte bis zur Verpackung auf einem sicheren, gemeinsamen digitalen Ledger aufgezeichnet. **Ergebnis:** Kunden können Herkunft des Tees nachverfolgen, Fairtrade-Preise verifizieren, ethische Beschaffung bestätigen → Kundenvertrauen gestärkt, Beziehungen zu Bauern gefestigt, Handel nachhaltiger und ethischer. |
+
+### Blockchain — Schlüsselbeobachtungen
+
+- Beide Fälle nutzen Blockchain für **Rückverfolgbarkeit** (physischen Weg nachverfolgen) und **Transparenz** (Aufzeichnungen sichtbar und vertrauenswürdig machen).
+- Blockchain ist besonders leistungsstark, wenn **mehrere Parteien** (Fischer, Händler, Einzelhändler, Verbraucher) denselben Daten vertrauen müssen ohne eine einzelne kontrollierende Autorität.
+
+<Aside type="note">
+**★** Blockchain in der SC = Rückverfolgbarkeit + Transparenz. Oceanic = verfolgen, welcher Fisch woher beschafft wird (Beschaffungsintegrität). Rainforest Raindrops = Tee-Weg von der Ernte bis ins Regal verfolgen (Distributions-Transparenz). Beide: unveränderliches Ledger für Vertrauensaufbau in Multi-Partner-Ketten.
+</Aside>
+
+---
+
+## 6. Vollständige Fallstudien-Referenz — Alle 16 Fälle (Sessions 4 & 5)
+
+*Alle Fallstudien aus Sessions 4 und 5 — vollständige prüfungsfertige Referenz.*
+
+| Technologie | SC-Funktion | Unternehmen | Kernherausforderung | Lösung → Kernergebnis |
+|---|---|---|---|---|
+| **IoT** | Planung & Prognose | Omega Foods | Verderb & Rückstände bei verderblichen Waren | Sensoren (Temp. + Bestand) → Verbrauchsrate + Haltbarkeit prognostizieren → Zeitpläne anpassen |
+| **IoT** | Beschaffung | Acme Pharma | Lieferengpässe durch manuelle Bestandsverfolgung | Regalensoren → Echtzeit-Bestand → PO automatisch auslösen → Engpässe eliminiert |
+| **IoT** | Produktion & Fertigung | Newton Instruments | Luftfeuchtigkeitsschwankungen beschädigen Geigen | Feuchtigkeitssensoren → Lüftungsklappen auto-anpassen → konsistente Qualität, weniger Abfall |
+| **IoT** | Bestandsmanagement | Vendor Guitars | Gitarren gehen beim Versand verloren | Ortungssensoren in Koffer → Echtzeit-Sichtbarkeit → verlorene Artikel eliminiert |
+| **IoT** | Distribution & Logistik | Best Pharmaceuticals | Medikamentenverderb durch inkonsistente Kühlkette | Containersensoren (Temp. + Feuchte) → Routen + Lagerung optimiert → Qualität erhalten |
+| **Robotik** | Beschaffung | BioCarrel Pharma | Langsame, fehleranfällige manuelle Beschaffung | RPA-Bots: Marktanalyse, Vendor-Onboarding, Auftragsabwicklung → Zyklen verkürzt, Kosteneinsparung |
+| **Robotik** | Produktion & Fertigung | Yani (Ukulelehersteller) | Kapazität begrenzt durch Mangel an erfahrenen Lautenbauern | Roboterarm für Schneiden + Montage → höherer Output; Lautenbauer fokussieren auf Handwerkskunst |
+| **Robotik** | Bestandsmanagement | Bulb Boutique | Langsame Abwicklung; Leuchtmittel zerbrechlich im großen Lager | AMRs + Bildsensoren: Regale scannen, präzise entnehmen → schnellere Kommissionierung, weniger Schäden |
+| **Robotik** | Distribution & Logistik | Bookworm Central | Langsame Bearbeitung, unzufriedene Kunden (Gebrauchtbücher) | Robotersortierung (AMRs): sortieren + fotografieren, Daten hochladen → schnellere Erfassung |
+| **Robotik** | Kundenservice | Shelf Reliance | Lange Wartezeiten bei stationärer Online-Bestellabholung | Roboterentnahme (AMRs + Karten + Greifer): schnell lokalisieren + entnehmen → weniger Wartezeit |
+| **AR / VR** | Beschaffung | ACME Furniture | Qualitätskontrolle internationaler Lieferanten ohne Reisen | AR-Headsets: virtuelle Lieferantentouren + Ferninspektion; AR-Tablets vor Ort → Reisekosten gesenkt |
+| **AR / VR** | Produktion & Fertigung | Honey Ale Aerospace | Verkabelungsfehler in komplexer Flugzeugmontage | AR-Brillen überlagern Kabelpfade; VR-Simulationen für Ingenieure → Fehler reduziert, Tempo erhöht |
+| **AR / VR** | Kundenservice | Mika (Möbelriese) | Hohe Rückgaben; Kunden können Möbel nicht zu Hause visualisieren | AR-Showroom: 3D-Modelle im eigenen Raum platzieren → bessere Entscheidungen, weniger Rückgaben |
+| **Additive Fertigung** | Produktion & Fertigung | Robopulse (Spielzeug) | Defektes Zahnrad verzögert Weihnachtsproduktion; herkömmliche Beschaffung dauert Wochen | 3D-Druck Zahnrad in hochfestem Nylon in Tagen → Produktion rechtzeitig wiederaufgenommen |
+| **Blockchain** | Beschaffung | Oceanic Limited (Meeresfrüchte) | Betrugsrisiko + komplexe Papiernachweise für nachhaltigen Thunfisch | Blockchain: Fang aufgezeichnet (Herkunft, Schiff, Methode) → unveränderliches Ledger → Betrug eliminiert |
+| **Blockchain** | Distribution & Logistik | Rainforest Raindrops (Tee) | Intransparenz des Tee-Wegs von der Ernte bis ins Regal | Blockchain-Tracking: jeder Schritt auf sicherem Ledger → Kunden verifizieren Herkunft + Fairtrade |
+
+---
+
+## 7. Kurszusammenfassung
+
+### Module 1–3 (frühere Wochen)
+- SC-Strategie, Beschaffung (Kraljic-Matrix), SC-Netzwerkdesign (Break-Even, CoG, Heuristiken, LP)
+- SC-Analytik: K-means-Clustering, DEA, SC-Netzwerkoptimierung (CPLP, LP mit Big M)
+- Produktverfolgung und Rückverfolgbarkeit: Barcode, QR, RFID, Funksensoren, Verpackungsebenen
+- Informationssysteme: ERP, WMS, TMS — Definitionen, Module, Integration, Implementierung
+
+### Modul 4 (Wochen 11–12)
+- **Digital Twin:** 5 Typen, 3 Komponenten, 7 Anwendungsfälle, GFA + Netzwerkoptimierung mit AnyLogistix
+- **Digitalisierungspyramide**, Industrie 4.0: 4 industrielle Revolutionen, 9 Säulen im Detail
+- **Blockchain:** verteiltes Ledger, 3-Schritte-Prozess, 5 Netzwerktypen
+- **I4.0 × SC-Funktionsmatrix:** welche Technologie wo anwendbar
+- **Fallstudien:** IoT (5) + Robotik (5) + AR/VR (3) + Additive Fertigung (1) + Blockchain (2) = **16 gesamt**
+
+<Aside type="tip">
+**★ Abschlussbotschaft:** Digitalisierung dient nicht der Technologie um ihrer selbst willen — es geht darum, reale SC-Probleme (Verderb, Verzögerungen, Lieferengpässe, Betrug, Qualitätsmängel) mit dem **richtigen Werkzeug für den richtigen Prozess** zu lösen.
 </Aside>
 
 ---
 
 ## Zusammenfassung der Session
 
-- **Blockchain:** verteiltes Ledger — sicher + transparent. 3 Schritte: Transaktionsaufzeichnung → Blockchain-Bildung (Konsens) → Unveränderlichkeit.
-- **5 Netzwerktypen:** Öffentlich (offen, dezentralisiert) | Privat (einzelne Org, schnell) | Permissioned (genehmigungsbasiert) | Konsortium (Multi-Org, keine einzelne Autorität) | Hybrid (Mix).
-- **SC-Anwendung:** Lieferanten/Anbieter/Materialien verfolgen, manipulationssichere Aufzeichnungen, schafft Partnervertrauen.
-- **I4.0 × SC-Matrix:** KI/ML + Cloud + Big Data → alle 6 Funktionen. IoT → 5 Funktionen (excl. Kundenservice). Roboter + AR → Produktion, Bestand, Logistik. Additiv → nur Produktion.
-- **5 IoT-Fallstudien:** Omega Foods (Prognose) | Acme Pharma (Beschaffung) | Newton Instruments (Fertigung) | Vendor Guitars (Bestand) | Best Pharma (Distribution/Kühlkette).
+- **Robotik (5 Fälle):** BioCarrel (RPA für Beschaffung) | Yani (Roboter + Lautenbauer für Produktion) | Bulb Boutique (AMRs für Bestandskommissionierung) | Bookworm Central (Sortierung für Distribution) | Shelf Reliance (Entnahme für Kundenservice)
+- **AR/VR (3 Fälle):** ACME Furniture (Fernlieferanten-QK) | Honey Ale Aerospace (Verkabelungsmontage) | Mika (Kunden-Möbelvisualisierung)
+- **Additive Fertigung (1 Fall):** Robopulse — 3D-gedrucktes Zahnrad in Tagen statt Wochen für traditionelle Beschaffung
+- **Blockchain (2 Fälle):** Oceanic (nachhaltiger Thunfisch-Nachweis) | Rainforest Raindrops (Tee-Weg-Transparenz)
+- **Konsistentes Muster:** SC-Problem identifizieren → richtige I4.0-Technologie wählen → implementieren → erreichen: Kostensenkung, Qualitätsverbesserung, Geschwindigkeitssteigerung oder Vertrauensaufbau
 
 <Aside type="tip">
-**★ Prüfungstipp:** Blockchain 3 Schritte: (1) Transaktionsaufzeichnung — alle Details als Block erfassen, (2) Blockchain-Bildung — Blöcke chronologisch über Konsensmechanismus verknüpfen, (3) Unveränderlichkeit — jede Hinzufügung re-verifiziert vorherige Blöcke, macht Daten manipulationserkennbar.
+**★ Prüfungstipp:** Robotiktypen in der SC: RPA = Softwarebots für Datenaufgaben (Beschaffung, Auftragsabwicklung). AMRs = physische Roboter für Lagerbewegungen (Kommissionierung, Sortierung, Entnahme). Wissen, welcher in welchem Kontext und für welches Unternehmen.
 
-**★ Prüfungstipp:** 5 Blockchain-Netzwerktypen: Öffentlich (offen, langsam, dezentralisiert — Krypto), Privat (einzelne Org, schnell — intern), Permissioned (Genehmigung erforderlich), Konsortium (Multi-Org, gemeinsames Projekt), Hybrid (Kombination).
+**★ Prüfungstipp:** AR in der SC: überlagert digitale Informationen auf die physische Umgebung — für Fernlieferanteninspektion (ACME Furniture), Verkabelungsmontage (Honey Ale Aerospace) und Kunden-Produktvisualisierung (Mika). Reduziert Fehler, Reisekosten und Rückgabequoten.
 
-**★ Prüfungstipp:** Konsensmechanismus = alle Netzwerkmitglieder müssen validieren und zustimmen, bevor ein Block hinzugefügt wird. Dies verhindert, dass eine einzelne Partei betrügerische Daten hinzufügt — der Kernsicherheitsmechanismus der Blockchain.
+**★ Prüfungstipp:** Hauptvorteile der Additiven Fertigung: Geschwindigkeit (Tage statt Wochen), kein Werkzeug nötig, exakte Anpassung, minimaler Abfall. Am besten für dringende, komplexe oder kundenspezifische Teile — Robopulse-Zahnradfall ist das Musterbeispiel.
 
-**★ Prüfungstipp:** IoT-Fallmuster: einen Zustand erfassen (Temperatur, Bestand, Luftfeuchtigkeit, Standort) → Echtzeit-Daten übertragen → analysieren → handeln (auto-anpassen, Bestellung auslösen, Route optimieren). Anwendbar auf Planung, Beschaffung, Produktion, Bestand, Distribution.
+**★ Prüfungstipp:** Blockchain in der SC = Rückverfolgbarkeit + Transparenz. Oceanic = nachhaltiger Fischnachweis (Beschaffung). Rainforest Raindrops = Ernte-bis-Regal-Tracking (Distribution). Beide: unveränderliches geteiltes Ledger, Multi-Partner-Vertrauen, Betrug eliminiert.
+
+**★ Prüfungstipp:** Alle 16 Fallstudien folgen derselben Logik — Herausforderung (SC-Problem) → Technologie (richtiges I4.0-Werkzeug) → Ergebnis (Kosten/Abfall/Fehler reduziert ODER Qualität/Geschwindigkeit/Vertrauen verbessert). Diesen Rahmen in Prüfungsantworten nutzen.
 </Aside>
