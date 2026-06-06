@@ -6,2595 +6,13 @@ sidebar:
   order: 9
 ---
 
-## Query 1 — File Discovery & Metadata Tagging
-
-```
-let
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
-    ),
-
-    // Rename columns with spaces to avoid reference issues
-    RenameColumns = Table.RenameColumns(
-        FilteredToIncoming,
-        {
-            {"Folder Path", "FolderPath"},
-            {"Date Modified", "DateModified"},
-            {"Date Created", "DateCreated"},
-            {"Date accessed", "DateAccessed"}
-        }
-    ),
-
-    // Keep only Excel files
-    FilteredToExcel = Table.SelectRows(
-        RenameColumns,
-        each [Extension] = ".xlsx" or [Extension] = ".xls"
-    ),
-
-    // Split folder path into parts for dynamic extraction
-    AddPathParts = Table.AddColumn(
-        FilteredToExcel,
-        "Path_Parts",
-        each Text.Split([FolderPath], "/")
-    ),
-
-    AddIncomingIndex = Table.AddColumn(
-        AddPathParts,
-        "Incoming_Index",
-        each List.PositionOf([Path_Parts], "Incoming")
-    ),
-
-    // Fleet = segment right after "Incoming"
-    AddFleet = Table.AddColumn(
-        AddIncomingIndex,
-        "Fleet",
-        each if [Incoming_Index] >= 0
-             then [Path_Parts]{[Incoming_Index] + 1}
-             else "Unknown"
-    ),
-
-    // Year_Folder = segment right after Fleet
-    AddYearFolder = Table.AddColumn(
-        AddFleet,
-        "Year_Folder",
-        each
-            let
-                YearText = [Path_Parts]{[Incoming_Index] + 2}
-            in
-                if Value.Is(Value.FromText(YearText), type number)
-                then Number.FromText(YearText)
-                else null
-    ),
-
-    // Data_Type from file name
-    AddDataType = Table.AddColumn(
-        AddYearFolder,
-        "Data_Type",
-        each if Text.Contains(Text.Upper([Name]), "ACT") then "ACT"
-             else if Text.Length([Name]) > 3
-                  and Text.Start([Name], 1) = "F"
-                  and Text.Contains([Name], "_FY") then "Forecast"
-             else "Unknown"
-    ),
-
-    // Forecast_Number = two digits after "F"
-    AddForecastNumber = Table.AddColumn(
-        AddDataType,
-        "Forecast_Number",
-        each if [Data_Type] = "Forecast"
-             then Text.Middle([Name], 1, 2)
-             else null
-    ),
-
-    // FY_Year extraction
-    AddFYYear = Table.AddColumn(
-        AddForecastNumber,
-        "FY_Year",
-        each if [Data_Type] = "Forecast"
-             then
-                let
-                    FYPos = Text.PositionOf([Name], "_FY"),
-                    YearText = Text.Middle([Name], FYPos + 3, 4)
-                in
-                    if Value.Is(Value.FromText(YearText), type number)
-                    then Number.FromText(YearText)
-                    else null
-             else [Year_Folder]
-    ),
-
-    // Flag forecast files — only include if FY_Year = current year
-    AddCurrentYear = Table.AddColumn(
-        AddFYYear,
-        "Current_Year",
-        each Date.Year(DateTime.LocalNow())
-    ),
-
-    AddIncludeFlag = Table.AddColumn(
-        AddCurrentYear,
-        "Include_File",
-        each if [Data_Type] = "ACT" then true
-             else if [Data_Type] = "Forecast"
-                  and [FY_Year] = [Current_Year] then true
-             else false
-    ),
-
-    FilterIncluded = Table.SelectRows(
-        AddIncludeFlag,
-        each [Include_File] = true
-    ),
-
-    // Remove helper columns
-    RemoveHelpers = Table.RemoveColumns(
-        FilterIncluded,
-        {"Path_Parts", "Incoming_Index", "Current_Year", "Include_File"}
-    ),
-
-    // Final column selection
-    SelectColumns = Table.SelectColumns(
-        RemoveHelpers,
-        {"Content", "Name", "Extension", "DateModified",
-         "DateCreated", "FolderPath", "Fleet",
-         "Year_Folder", "Data_Type", "Forecast_Number", "FY_Year"}
-    )
-
-in
-    SelectColumns
-```
-
-## Query 2 — Sample File Sheet Extraction
-
-```
-let
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
-    ),
-
-    // Get only our sample file
-    SampleFile = Table.SelectRows(
-        FilteredToIncoming,
-        each [Name] = "COSTAFY23ACT.xlsx"
-    ),
-
-    // Extract the binary content
-    FileContent = SampleFile{0}[Content],
-
-    // Open as Excel workbook
-    OpenWorkbook = Excel.Workbook(FileContent, null, true),
-
-    // Get the first sheet
-    FirstSheet = OpenWorkbook{0}[Data]
-
-in
-    FirstSheet
-```
-
-## Query 3 — Column Selection & Row Cleaning
-
-```
-let
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
-    ),
-
-    SampleFile = Table.SelectRows(
-        FilteredToIncoming,
-        each [Name] = "COSTAFY23ACT.xlsx"
-    ),
-
-    FileContent = SampleFile{0}[Content],
-
-    OpenWorkbook = Excel.Workbook(FileContent, null, true),
-
-    FirstSheet = OpenWorkbook{0}[Data],
-
-    // Keep only columns we need
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {"Column3", "Column4", "Column5", "Column6",
-         "Column8", "Column9", "Column10", "Column11",
-         "Column12", "Column13", "Column14", "Column15",
-         "Column16", "Column17", "Column18", "Column19"}
-    ),
-
-    // Remove rows where both Column3 and Column4 are null
-    RemoveEmptyRows = Table.SelectRows(
-        KeepColumns,
-        each not ([Column3] = null and [Column4] = null)
-    ),
-
-    // Remove the days rows (Column3 = "# DAYS")
-    RemoveDaysRows = Table.SelectRows(
-        RemoveEmptyRows,
-        each [Column3] <> "# DAYS"
-    ),
-
-    // Remove the month names row (Column8 = "DEC")
-    RemoveMonthRow = Table.SelectRows(
-        RemoveDaysRows,
-        each [Column8] <> "DEC"
-    ),
-
-    // Add Parameter column
-    // When Column5 = "SHIP CLASS" → this is a header row → take Column4 as parameter name
-    // Otherwise null — we will fill down next
-    AddParameter = Table.AddColumn(
-        RemoveMonthRow,
-        "Parameter",
-        each if [Column5] = "SHIP CLASS"
-             then [Column4]
-             else null
-    ),
-
-    // Fill Parameter downward so every vessel row gets tagged
-    FillParameter = Table.FillDown(
-        AddParameter,
-        {"Parameter"}
-    ),
-
-    // Now remove the block header rows
-    // They are identified by Column5 = "SHIP CLASS"
-    RemoveHeaderRows = Table.SelectRows(
-        FillParameter,
-        each [Column5] <> "SHIP CLASS"
-    )
-
-in
-    RemoveHeaderRows
-```
-
-## Query 4 — Full Transform: Unpivot, Pivot & Metadata
+## Query 1 — File\_List
 
 ```
 let
     // =========================================================
-    // METADATA
-    // =========================================================
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
-    ),
-
-    RenameMetaCols = Table.RenameColumns(
-        FilteredToIncoming,
-        {
-            {"Folder Path", "FolderPath"},
-            {"Date modified", "DateModified"},
-            {"Date created", "DateCreated"},
-            {"Date accessed", "DateAccessed"}
-        }
-    ),
-
-    SampleFile = Table.SelectRows(
-        RenameMetaCols,
-        each [Name] = "COSTAFY23ACT.xlsx"
-    ),
-
-    // Extract metadata values
-    FileName    = SampleFile{0}[Name],
-    FilePath    = SampleFile{0}[FolderPath],
-    DateMod     = SampleFile{0}[DateModified],
-    DateCre     = SampleFile{0}[DateCreated],
-    DateAcc     = SampleFile{0}[DateAccessed],
-    FileContent = SampleFile{0}[Content],
-
-    // =========================================================
-    // OPEN WORKBOOK
-    // =========================================================
-    OpenWorkbook = Excel.Workbook(FileContent, null, true),
-    SheetName    = OpenWorkbook{0}[Name],
-    FirstSheet   = OpenWorkbook{0}[Data],
-
-    // =========================================================
-    // EXTRACT MONTH NAMES FROM ROW 4
-    // =========================================================
-    MonthRow = Table.SelectRows(
-        FirstSheet,
-        each [Column8] = "DEC"
-    ),
-
-    MonthMapping = [
-        Column8  = Record.Field(MonthRow{0}, "Column8"),
-        Column9  = Record.Field(MonthRow{0}, "Column9"),
-        Column10 = Record.Field(MonthRow{0}, "Column10"),
-        Column11 = Record.Field(MonthRow{0}, "Column11"),
-        Column12 = Record.Field(MonthRow{0}, "Column12"),
-        Column13 = Record.Field(MonthRow{0}, "Column13"),
-        Column14 = Record.Field(MonthRow{0}, "Column14"),
-        Column15 = Record.Field(MonthRow{0}, "Column15"),
-        Column16 = Record.Field(MonthRow{0}, "Column16"),
-        Column17 = Record.Field(MonthRow{0}, "Column17"),
-        Column18 = Record.Field(MonthRow{0}, "Column18"),
-        Column19 = Record.Field(MonthRow{0}, "Column19")
-    ],
-
-    // =========================================================
-    // KEEP ONLY RELEVANT COLUMNS
-    // =========================================================
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {"Column1", "Column3", "Column4", "Column5", "Column6",
-         "Column8", "Column9", "Column10", "Column11",
-         "Column12", "Column13", "Column14", "Column15",
-         "Column16", "Column17", "Column18", "Column19"}
-    ),
-
-    // =========================================================
-    // REMOVE UNWANTED ROWS
-    // =========================================================
-    RemoveMonthRow = Table.SelectRows(
-        KeepColumns,
-        each [Column8] <> "DEC"
-    ),
-
-    RemoveDaysRows = Table.SelectRows(
-        RemoveMonthRow,
-        each [Column3] <> "# DAYS"
-    ),
-
-    RemoveCheckRows = Table.SelectRows(
-        RemoveDaysRows,
-        each [Column1] <> "Check"
-    ),
-
-    RemoveEmptyRows = Table.SelectRows(
-        RemoveCheckRows,
-        each not ([Column3] = null and [Column4] = null)
-    ),
-
-    // =========================================================
-    // ADD PARAMETER COLUMN
-    // Block header row detected by Column5 = "SHIP CLASS"
-    // Column4 in that row = parameter name
-    // Fill down to all vessel rows below
-    // =========================================================
-    AddParameter = Table.AddColumn(
-        RemoveEmptyRows,
-        "Parameter",
-        each if [Column5] = "SHIP CLASS"
-             then Text.From([Column4])
-             else null
-    ),
-
-    FillParameter = Table.FillDown(
-        AddParameter,
-        {"Parameter"}
-    ),
-
-    // =========================================================
-    // EXTRACT SHIP CLASS AND ALB
-    // Only from ALBDs FULL MONTH block
-    // =========================================================
-    AddShipClass = Table.AddColumn(
-        FillParameter,
-        "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column5] <> "SHIP CLASS"
-                and [Column5] <> null
-                and Text.From([Column5]) <> "0"
-             then Text.From([Column5])
-             else null
-    ),
-
-    AddALB = Table.AddColumn(
-        AddShipClass,
-        "ALB",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column6] <> null
-                and [Column6] <> 0
-             then [Column6]
-             else null
-    ),
-
-    FillShipALB = Table.FillDown(
-        AddALB,
-        {"Ship_Class", "ALB"}
-    ),
-
-    // =========================================================
-    // KEEP ONLY VALID VESSEL ROWS
-    // =========================================================
-    KeepVesselRows = Table.SelectRows(
-        FillShipALB,
-        each
-            // Must have a text vessel name in Column4
-            [Column4] <> null
-            and [Column4] <> 0
-            and Text.From([Column4]) <> "0"
-            and Text.From([Column4]) <> "0.00"
-            // Must not be a block header row
-            and [Column5] <> "SHIP CLASS"
-            // Must not be a fleet total row
-            // Fleet total rows have purely numeric Column3
-            // Vessel rows have alphanumeric like LO346
-            and not (
-                Text.Length(
-                    Text.Remove(
-                        Text.From([Column3]),
-                        {"0".."9"}
-                    )
-                ) = 0
-            )
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS
-    // =========================================================
-    RenameMonthCols = Table.RenameColumns(
-        KeepVesselRows,
-        {
-            {"Column4",  "Vessel_Name"},
-            {"Column3",  "Vessel_Code"},
-            {"Column8",  MonthMapping[Column8]},
-            {"Column9",  MonthMapping[Column9]},
-            {"Column10", MonthMapping[Column10]},
-            {"Column11", MonthMapping[Column11]},
-            {"Column12", MonthMapping[Column12]},
-            {"Column13", MonthMapping[Column13]},
-            {"Column14", MonthMapping[Column14]},
-            {"Column15", MonthMapping[Column15]},
-            {"Column16", MonthMapping[Column16]},
-            {"Column17", MonthMapping[Column17]},
-            {"Column18", MonthMapping[Column18]},
-            {"Column19", MonthMapping[Column19]}
-        }
-    ),
-
-    // Drop columns no longer needed
-    DropExtraCols = Table.RemoveColumns(
-        RenameMonthCols,
-        {"Column1", "Column5", "Column6", "Vessel_Code"}
-    ),
-
-    // =========================================================
-    // UNPIVOT MONTH COLUMNS
-    // =========================================================
-    UnpivotMonths = Table.UnpivotOtherColumns(
-        DropExtraCols,
-        {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
-        "Month",
-        "Value"
-    ),
-
-    // =========================================================
-    // PIVOT PARAMETERS INTO COLUMNS
-    // =========================================================
-    PivotParameters = Table.Pivot(
-        UnpivotMonths,
-        List.Distinct(UnpivotMonths[Parameter]),
-        "Parameter",
-        "Value",
-        List.Sum
-    ),
-
-    // =========================================================
-    // ADD CALENDAR YEAR AND MONTH NUMBER
-    // FY runs DEC(year-1) to NOV(year)
-    // =========================================================
-    FYYear = 2023,
-
-    AddCalendarYear = Table.AddColumn(
-        PivotParameters,
-        "Calendar_Year",
-        each if [Month] = "DEC"
-             then FYYear - 1
-             else FYYear
-    ),
-
-    AddMonthNumber = Table.AddColumn(
-        AddCalendarYear,
-        "Month_Number",
-        each if [Month] = "JAN" then 1
-             else if [Month] = "FEB" then 2
-             else if [Month] = "MAR" then 3
-             else if [Month] = "APR" then 4
-             else if [Month] = "MAY" then 5
-             else if [Month] = "JUN" then 6
-             else if [Month] = "JUL" then 7
-             else if [Month] = "AUG" then 8
-             else if [Month] = "SEP" then 9
-             else if [Month] = "OCT" then 10
-             else if [Month] = "NOV" then 11
-             else if [Month] = "DEC" then 12
-             else null
-    ),
-
-    // =========================================================
-    // ADD ALL METADATA COLUMNS
-    // =========================================================
-    AddMeta1  = Table.AddColumn(AddMonthNumber, "Source_File",   each FileName),
-    AddMeta2  = Table.AddColumn(AddMeta1,       "Source_Path",   each FilePath),
-    AddMeta3  = Table.AddColumn(AddMeta2,       "Sheet_Name",    each SheetName),
-    AddMeta4  = Table.AddColumn(AddMeta3,       "Date_Modified", each DateMod),
-    AddMeta5  = Table.AddColumn(AddMeta4,       "Date_Created",  each DateCre),
-    AddMeta6  = Table.AddColumn(AddMeta5,       "Date_Accessed", each DateAcc),
-    AddMeta7  = Table.AddColumn(AddMeta6,       "Fleet",         each "Costa"),
-    AddMeta8  = Table.AddColumn(AddMeta7,       "Year_Folder",   each 2023),
-    AddMeta9  = Table.AddColumn(AddMeta8,       "Data_Type",     each "ACT"),
-    AddMeta10 = Table.AddColumn(AddMeta9,       "FY_Year",       each FYYear),
-
-    // =========================================================
-    // FINAL COLUMN ORDERING
-    // =========================================================
-    ReorderColumns = Table.ReorderColumns(
-        AddMeta10,
-        {
-            "Source_File", "Source_Path", "Sheet_Name",
-            "Date_Modified", "Date_Created", "Date_Accessed",
-            "Fleet", "Year_Folder", "Data_Type", "FY_Year",
-            "Vessel_Name", "Ship_Class", "ALB",
-            "Calendar_Year", "Month", "Month_Number"
-        }
-        & List.Difference(
-            Table.ColumnNames(AddMeta10),
-            {
-                "Source_File", "Source_Path", "Sheet_Name",
-                "Date_Modified", "Date_Created", "Date_Accessed",
-                "Fleet", "Year_Folder", "Data_Type", "FY_Year",
-                "Vessel_Name", "Ship_Class", "ALB",
-                "Calendar_Year", "Month", "Month_Number"
-            }
-        )
-    )
-
-in
-    ReorderColumns
-```
-
-## Query 5 — Full Transform with Buffering (Costa FY2023 ACT)
-
-
-```
-let
-    // =========================================================
-    // SOURCE AND FILE FILTER
-    // =========================================================
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming/Costa/2023")
-    ),
-
-    RenameMetaCols = Table.RenameColumns(
-        FilteredToIncoming,
-        {
-            {"Folder Path", "FolderPath"},
-            {"Date modified", "DateModified"},
-            {"Date created", "DateCreated"},
-            {"Date accessed", "DateAccessed"}
-        }
-    ),
-
-    SampleFile = Table.SelectRows(
-        RenameMetaCols,
-        each [Name] = "COSTAFY23ACT.xlsx"
-    ),
-
-    // Extract metadata values
-    FileName    = SampleFile{0}[Name],
-    FilePath    = SampleFile{0}[FolderPath],
-    DateMod     = SampleFile{0}[DateModified],
-    DateCre     = SampleFile{0}[DateCreated],
-    DateAcc     = SampleFile{0}[DateAccessed],
-    FileContent = SampleFile{0}[Content],
-
-    // =========================================================
-    // OPEN WORKBOOK AND BUFFER IMMEDIATELY
-    // Table.Buffer loads entire sheet into memory
-    // Stops repeated SharePoint calls on every step
-    // =========================================================
-    OpenWorkbook = Excel.Workbook(FileContent, null, true),
-    SheetName    = OpenWorkbook{0}[Name],
-    FirstSheet   = Table.Buffer(OpenWorkbook{0}[Data]),
-
-    // =========================================================
-    // EXTRACT MONTH NAMES FROM ROW WHERE Column8 = "DEC"
-    // =========================================================
-    MonthRow = Table.SelectRows(
-        FirstSheet,
-        each [Column8] = "DEC"
-    ),
-
-    M1  = Record.Field(MonthRow{0}, "Column8"),
-    M2  = Record.Field(MonthRow{0}, "Column9"),
-    M3  = Record.Field(MonthRow{0}, "Column10"),
-    M4  = Record.Field(MonthRow{0}, "Column11"),
-    M5  = Record.Field(MonthRow{0}, "Column12"),
-    M6  = Record.Field(MonthRow{0}, "Column13"),
-    M7  = Record.Field(MonthRow{0}, "Column14"),
-    M8  = Record.Field(MonthRow{0}, "Column15"),
-    M9  = Record.Field(MonthRow{0}, "Column16"),
-    M10 = Record.Field(MonthRow{0}, "Column17"),
-    M11 = Record.Field(MonthRow{0}, "Column18"),
-    M12 = Record.Field(MonthRow{0}, "Column19"),
-
-    // =========================================================
-    // KEEP ONLY RELEVANT COLUMNS
-    // =========================================================
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {
-            "Column1", "Column3", "Column4",
-            "Column5", "Column6",
-            "Column8", "Column9", "Column10",
-            "Column11", "Column12", "Column13",
-            "Column14", "Column15", "Column16",
-            "Column17", "Column18", "Column19"
-        }
-    ),
-
-    // =========================================================
-    // REMOVE UNWANTED ROWS
-    // =========================================================
-    RemoveMonthRow = Table.SelectRows(
-        KeepColumns,
-        each [Column8] <> "DEC"
-    ),
-
-    RemoveDaysRows = Table.SelectRows(
-        RemoveMonthRow,
-        each [Column3] <> "# DAYS"
-    ),
-
-    RemoveCheckRows = Table.SelectRows(
-        RemoveDaysRows,
-        each [Column1] <> "Check"
-    ),
-
-    RemoveEmptyRows = Table.SelectRows(
-        RemoveCheckRows,
-        each not ([Column3] = null and [Column4] = null)
-    ),
-
-    // =========================================================
-    // ADD PARAMETER COLUMN
-    // Header row detected by Column5 = "SHIP CLASS"
-    // Column4 in header row = parameter name
-    // Fill down to vessel rows below
-    // =========================================================
-    AddParameter = Table.AddColumn(
-        RemoveEmptyRows,
-        "Parameter",
-        each if [Column5] = "SHIP CLASS"
-             then Text.From([Column4])
-             else null
-    ),
-
-    FillParameter = Table.FillDown(
-        AddParameter,
-        {"Parameter"}
-    ),
-
-    // =========================================================
-    // EXTRACT SHIP CLASS AND ALB
-    // Only from ALBDs FULL MONTH block
-    // =========================================================
-    AddShipClass = Table.AddColumn(
-        FillParameter,
-        "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column5] <> "SHIP CLASS"
-                and [Column5] <> null
-                and Text.From([Column5]) <> "0"
-             then Text.From([Column5])
-             else null
-    ),
-
-    AddALB = Table.AddColumn(
-        AddShipClass,
-        "ALB",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column6] <> null
-                and [Column6] <> 0
-             then [Column6]
-             else null
-    ),
-
-    FillShipALB = Table.FillDown(
-        AddALB,
-        {"Ship_Class", "ALB"}
-    ),
-
-    // =========================================================
-    // KEEP ONLY VALID VESSEL ROWS
-    // =========================================================
-    KeepVesselRows = Table.SelectRows(
-        FillShipALB,
-        each
-            [Column4] <> null
-            and [Column4] <> 0
-            and Text.From([Column4]) <> "0"
-            and Text.From([Column4]) <> "0.00"
-            and [Column5] <> "SHIP CLASS"
-            and not (
-                Text.Length(
-                    Text.Remove(
-                        Text.From([Column3]),
-                        {"0".."9"}
-                    )
-                ) = 0
-            )
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS
-    // =========================================================
-    RenameColumns = Table.RenameColumns(
-        KeepVesselRows,
-        {
-            {"Column3", "Vessel_Code"},
-            {"Column4", "Vessel_Name"},
-            {"Column5", "Ship_Class_Raw"},
-            {"Column6", "ALB_Raw"},
-            {"Column8",  M1},
-            {"Column9",  M2},
-            {"Column10", M3},
-            {"Column11", M4},
-            {"Column12", M5},
-            {"Column13", M6},
-            {"Column14", M7},
-            {"Column15", M8},
-            {"Column16", M9},
-            {"Column17", M10},
-            {"Column18", M11},
-            {"Column19", M12}
-        }
-    ),
-
-    // Drop columns no longer needed
-    DropExtraCols = Table.RemoveColumns(
-        RenameColumns,
-        {"Column1", "Vessel_Code", "Ship_Class_Raw", "ALB_Raw"}
-    ),
-
-    // =========================================================
-    // UNPIVOT MONTH COLUMNS INTO ROWS
-    // =========================================================
-    UnpivotMonths = Table.UnpivotOtherColumns(
-        DropExtraCols,
-        {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
-        "Month",
-        "Value"
-    ),
-
-    // =========================================================
-    // BUFFER BEFORE PIVOT
-    // Critical - loads all data into memory before pivot
-    // Prevents repeated SharePoint calls during pivot
-    // =========================================================
-    BufferBeforePivot = Table.Buffer(UnpivotMonths),
-
-    // Get distinct parameter list from buffered data
-    ParameterList = List.Buffer(
-        List.Distinct(BufferBeforePivot[Parameter])
-    ),
-
-    // =========================================================
-    // PIVOT PARAMETERS INTO COLUMNS
-    // Each parameter becomes one column
-    // One vessel one month one row
-    // =========================================================
-    PivotParameters = Table.Pivot(
-        BufferBeforePivot,
-        ParameterList,
-        "Parameter",
-        "Value",
-        List.Sum
-    ),
-
-    // =========================================================
-    // ADD CALENDAR YEAR AND MONTH NUMBER
-    // FY runs DEC(year-1) to NOV(year)
-    // =========================================================
-    FYYear = 2023,
-
-    AddCalendarYear = Table.AddColumn(
-        PivotParameters,
-        "Calendar_Year",
-        each if [Month] = "DEC"
-             then FYYear - 1
-             else FYYear
-    ),
-
-    AddMonthNumber = Table.AddColumn(
-        AddCalendarYear,
-        "Month_Number",
-        each if [Month] = "JAN" then 1
-             else if [Month] = "FEB" then 2
-             else if [Month] = "MAR" then 3
-             else if [Month] = "APR" then 4
-             else if [Month] = "MAY" then 5
-             else if [Month] = "JUN" then 6
-             else if [Month] = "JUL" then 7
-             else if [Month] = "AUG" then 8
-             else if [Month] = "SEP" then 9
-             else if [Month] = "OCT" then 10
-             else if [Month] = "NOV" then 11
-             else if [Month] = "DEC" then 12
-             else null
-    ),
-
-    // =========================================================
-    // ADD ALL METADATA COLUMNS
-    // =========================================================
-    AddMeta1  = Table.AddColumn(AddMonthNumber, "Source_File",   each FileName),
-    AddMeta2  = Table.AddColumn(AddMeta1,       "Source_Path",   each FilePath),
-    AddMeta3  = Table.AddColumn(AddMeta2,       "Sheet_Name",    each SheetName),
-    AddMeta4  = Table.AddColumn(AddMeta3,       "Date_Modified", each DateMod),
-    AddMeta5  = Table.AddColumn(AddMeta4,       "Date_Created",  each DateCre),
-    AddMeta6  = Table.AddColumn(AddMeta5,       "Date_Accessed", each DateAcc),
-    AddMeta7  = Table.AddColumn(AddMeta6,       "Fleet",         each "Costa"),
-    AddMeta8  = Table.AddColumn(AddMeta7,       "Year_Folder",   each 2023),
-    AddMeta9  = Table.AddColumn(AddMeta8,       "Data_Type",     each "ACT"),
-    AddMeta10 = Table.AddColumn(AddMeta9,       "FY_Year",       each FYYear),
-
-    // =========================================================
-    // FINAL COLUMN ORDERING
-    // Metadata first then vessel info then dates then parameters
-    // =========================================================
-    ReorderColumns = Table.ReorderColumns(
-        AddMeta10,
-        {
-            "Source_File", "Source_Path", "Sheet_Name",
-            "Date_Modified", "Date_Created", "Date_Accessed",
-            "Fleet", "Year_Folder", "Data_Type", "FY_Year",
-            "Vessel_Name", "Ship_Class", "ALB",
-            "Calendar_Year", "Month", "Month_Number"
-        }
-        & List.Difference(
-            Table.ColumnNames(AddMeta10),
-            {
-                "Source_File", "Source_Path", "Sheet_Name",
-                "Date_Modified", "Date_Created", "Date_Accessed",
-                "Fleet", "Year_Folder", "Data_Type", "FY_Year",
-                "Vessel_Name", "Ship_Class", "ALB",
-                "Calendar_Year", "Month", "Month_Number"
-            }
-        )
-    )
-
-in
-    ReorderColumns
-```
-
-## Query 6 — Forecast File Test (AIDA FY2026)
-
-```
-let
-    // =========================================================
-    // SOURCE AND FILE FILTER
-    // =========================================================
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming/AIDA/2026")
-    ),
-
-    RenameMetaCols = Table.RenameColumns(
-        FilteredToIncoming,
-        {
-            {"Folder Path", "FolderPath"},
-            {"Date modified", "DateModified"},
-            {"Date created", "DateCreated"},
-            {"Date accessed", "DateAccessed"}
-        }
-    ),
-
-    SampleFile = Table.SelectRows(
-        RenameMetaCols,
-        each [Name] = "F05_FY2026.xlsx"
-    ),
-
-    // Extract metadata values
-    FileName    = SampleFile{0}[Name],
-    FilePath    = SampleFile{0}[FolderPath],
-    DateMod     = SampleFile{0}[DateModified],
-    DateCre     = SampleFile{0}[DateCreated],
-    DateAcc     = SampleFile{0}[DateAccessed],
-    FileContent = SampleFile{0}[Content],
-
-    // =========================================================
-    // OPEN WORKBOOK AND BUFFER IMMEDIATELY
-    // =========================================================
-    OpenWorkbook = Excel.Workbook(FileContent, null, true),
-    SheetName    = OpenWorkbook{0}[Name],
-    FirstSheet   = Table.Buffer(OpenWorkbook{0}[Data]),
-
-    // =========================================================
-    // EXTRACT MONTH NAMES FROM ROW WHERE Column8 = "DEC"
-    // =========================================================
-    MonthRow = Table.SelectRows(
-        FirstSheet,
-        each [Column8] = "DEC"
-    ),
-
-    M1  = Record.Field(MonthRow{0}, "Column8"),
-    M2  = Record.Field(MonthRow{0}, "Column9"),
-    M3  = Record.Field(MonthRow{0}, "Column10"),
-    M4  = Record.Field(MonthRow{0}, "Column11"),
-    M5  = Record.Field(MonthRow{0}, "Column12"),
-    M6  = Record.Field(MonthRow{0}, "Column13"),
-    M7  = Record.Field(MonthRow{0}, "Column14"),
-    M8  = Record.Field(MonthRow{0}, "Column15"),
-    M9  = Record.Field(MonthRow{0}, "Column16"),
-    M10 = Record.Field(MonthRow{0}, "Column17"),
-    M11 = Record.Field(MonthRow{0}, "Column18"),
-    M12 = Record.Field(MonthRow{0}, "Column19"),
-
-    // =========================================================
-    // KEEP ONLY RELEVANT COLUMNS
-    // =========================================================
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {
-            "Column1", "Column3", "Column4",
-            "Column5", "Column6",
-            "Column8", "Column9", "Column10",
-            "Column11", "Column12", "Column13",
-            "Column14", "Column15", "Column16",
-            "Column17", "Column18", "Column19"
-        }
-    ),
-
-    // =========================================================
-    // REMOVE UNWANTED ROWS
-    // =========================================================
-
-    // Remove month names row
-    RemoveMonthRow = Table.SelectRows(
-        KeepColumns,
-        each [Column8] <> "DEC"
-    ),
-
-    // Remove days rows
-    RemoveDaysRows = Table.SelectRows(
-        RemoveMonthRow,
-        each [Column3] <> "# DAYS"
-    ),
-
-    // Remove Check rows
-    RemoveCheckRows = Table.SelectRows(
-        RemoveDaysRows,
-        each [Column1] <> "Check"
-    ),
-
-    // Remove completely empty rows
-    RemoveEmptyRows = Table.SelectRows(
-        RemoveCheckRows,
-        each not ([Column3] = null and [Column4] = null)
-    ),
-
-    // =========================================================
-    // ADD PARAMETER COLUMN
-    // Header row detected by Column5 = "SHIP CLASS"
-    // Column4 in header row = parameter name
-    // Fill down to vessel rows below
-    // =========================================================
-    AddParameter = Table.AddColumn(
-        RemoveEmptyRows,
-        "Parameter",
-        each if [Column5] = "SHIP CLASS"
-             then Text.From([Column4])
-             else null
-    ),
-
-    FillParameter = Table.FillDown(
-        AddParameter,
-        {"Parameter"}
-    ),
-
-    // =========================================================
-    // EXTRACT SHIP CLASS AND ALB
-    // Only from ALBDs FULL MONTH block
-    // =========================================================
-    AddShipClass = Table.AddColumn(
-        FillParameter,
-        "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column5] <> "SHIP CLASS"
-                and [Column5] <> null
-                and Text.From([Column5]) <> "0"
-             then Text.From([Column5])
-             else null
-    ),
-
-    AddALB = Table.AddColumn(
-        AddShipClass,
-        "ALB",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column6] <> null
-                and [Column6] <> 0
-             then [Column6]
-             else null
-    ),
-
-    FillShipALB = Table.FillDown(
-        AddALB,
-        {"Ship_Class", "ALB"}
-    ),
-
-    // =========================================================
-    // KEEP ONLY VALID VESSEL ROWS
-    // =========================================================
-    KeepVesselRows = Table.SelectRows(
-        FillShipALB,
-        each
-            // Column4 must be a proper vessel name
-            [Column4] <> null
-            and [Column4] <> 0
-            and Text.From([Column4]) <> "0"
-            and Text.From([Column4]) <> "0.00"
-            // Not a block header row
-            and [Column5] <> "SHIP CLASS"
-            // Not a fleet total row
-            // Fleet totals have purely numeric Column3
-            // Vessel codes are alphanumeric like AI123 etc
-            and not (
-                Text.Length(
-                    Text.Remove(
-                        Text.From([Column3]),
-                        {"0".."9"}
-                    )
-                ) = 0
-            )
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS
-    // =========================================================
-    RenameColumns = Table.RenameColumns(
-        KeepVesselRows,
-        {
-            {"Column3", "Vessel_Code"},
-            {"Column4", "Vessel_Name"},
-            {"Column5", "Ship_Class_Raw"},
-            {"Column6", "ALB_Raw"},
-            {"Column8",  M1},
-            {"Column9",  M2},
-            {"Column10", M3},
-            {"Column11", M4},
-            {"Column12", M5},
-            {"Column13", M6},
-            {"Column14", M7},
-            {"Column15", M8},
-            {"Column16", M9},
-            {"Column17", M10},
-            {"Column18", M11},
-            {"Column19", M12}
-        }
-    ),
-
-    // Drop columns no longer needed
-    DropExtraCols = Table.RemoveColumns(
-        RenameColumns,
-        {"Column1", "Vessel_Code", "Ship_Class_Raw", "ALB_Raw"}
-    ),
-
-    // =========================================================
-    // UNPIVOT MONTH COLUMNS INTO ROWS
-    // =========================================================
-    UnpivotMonths = Table.UnpivotOtherColumns(
-        DropExtraCols,
-        {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
-        "Month",
-        "Value"
-    ),
-
-    // =========================================================
-    // BUFFER BEFORE PIVOT
-    // Critical - loads all data into memory before pivot
-    // Prevents repeated SharePoint calls during pivot
-    // =========================================================
-    BufferBeforePivot = Table.Buffer(UnpivotMonths),
-
-    // Get distinct parameter list from buffered data
-    ParameterList = List.Buffer(
-        List.Distinct(BufferBeforePivot[Parameter])
-    ),
-
-    // =========================================================
-    // PIVOT PARAMETERS INTO COLUMNS
-    // Each parameter becomes one column
-    // One vessel one month one row
-    // =========================================================
-    PivotParameters = Table.Pivot(
-        BufferBeforePivot,
-        ParameterList,
-        "Parameter",
-        "Value",
-        List.Sum
-    ),
-
-    // =========================================================
-    // ADD CALENDAR YEAR AND MONTH NUMBER
-    // FY runs DEC(year-1) to NOV(year)
-    // For FY2026: DEC = 2025, JAN-NOV = 2026
-    // =========================================================
-    FYYear = 2026,
-
-    AddCalendarYear = Table.AddColumn(
-        PivotParameters,
-        "Calendar_Year",
-        each if [Month] = "DEC"
-             then FYYear - 1
-             else FYYear
-    ),
-
-    AddMonthNumber = Table.AddColumn(
-        AddCalendarYear,
-        "Month_Number",
-        each if [Month] = "JAN" then 1
-             else if [Month] = "FEB" then 2
-             else if [Month] = "MAR" then 3
-             else if [Month] = "APR" then 4
-             else if [Month] = "MAY" then 5
-             else if [Month] = "JUN" then 6
-             else if [Month] = "JUL" then 7
-             else if [Month] = "AUG" then 8
-             else if [Month] = "SEP" then 9
-             else if [Month] = "OCT" then 10
-             else if [Month] = "NOV" then 11
-             else if [Month] = "DEC" then 12
-             else null
-    ),
-
-    // =========================================================
-    // ADD ALL METADATA COLUMNS
-    // Fleet and FY_Year are dynamic from file metadata
-    // =========================================================
-    AddMeta1  = Table.AddColumn(AddMonthNumber,  "Source_File",     each FileName),
-    AddMeta2  = Table.AddColumn(AddMeta1,        "Source_Path",     each FilePath),
-    AddMeta3  = Table.AddColumn(AddMeta2,        "Sheet_Name",      each SheetName),
-    AddMeta4  = Table.AddColumn(AddMeta3,        "Date_Modified",   each DateMod),
-    AddMeta5  = Table.AddColumn(AddMeta4,        "Date_Created",    each DateCre),
-    AddMeta6  = Table.AddColumn(AddMeta5,        "Date_Accessed",   each DateAcc),
-    AddMeta7  = Table.AddColumn(AddMeta6,        "Fleet",           each "AIDA"),
-    AddMeta8  = Table.AddColumn(AddMeta7,        "Year_Folder",     each 2026),
-    AddMeta9  = Table.AddColumn(AddMeta8,        "Data_Type",       each "Forecast"),
-    AddMeta10 = Table.AddColumn(AddMeta9,        "Forecast_Number", each "05"),
-    AddMeta11 = Table.AddColumn(AddMeta10,       "FY_Year",         each FYYear),
-
-    // =========================================================
-    // FINAL COLUMN ORDERING
-    // Metadata first then vessel info then dates then parameters
-    // =========================================================
-    ReorderColumns = Table.ReorderColumns(
-        AddMeta11,
-        {
-            "Source_File", "Source_Path", "Sheet_Name",
-            "Date_Modified", "Date_Created", "Date_Accessed",
-            "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-            "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-            "Calendar_Year", "Month", "Month_Number"
-        }
-        & List.Difference(
-            Table.ColumnNames(AddMeta11),
-            {
-                "Source_File", "Source_Path", "Sheet_Name",
-                "Date_Modified", "Date_Created", "Date_Accessed",
-                "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-                "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-                "Calendar_Year", "Month", "Month_Number"
-            }
-        )
-    )
-
-in
-    ReorderColumns
-```
-
-## Query 7 — fn\_ProcessFile (Step 1: Function)
-
-```
-(FileRow as record) as table =>
-
-let
-    // =========================================================
-    // EXTRACT METADATA FROM FILE ROW
-    // =========================================================
-    FileName       = FileRow[Name],
-    FilePath       = FileRow[FolderPath],
-    DateMod        = FileRow[DateModified],
-    DateCre        = FileRow[DateCreated],
-    DateAcc        = FileRow[DateAccessed],
-    Fleet          = FileRow[Fleet],
-    Year_Folder    = FileRow[Year_Folder],
-    Data_Type      = FileRow[Data_Type],
-    Forecast_Num   = FileRow[Forecast_Number],
-    FYYear         = FileRow[FY_Year],
-    FileContent    = FileRow[Content],
-
-    // =========================================================
-    // OPEN WORKBOOK AND BUFFER IMMEDIATELY
-    // =========================================================
-    OpenWorkbook = Excel.Workbook(FileContent, null, true),
-    SheetName    = OpenWorkbook{0}[Name],
-    FirstSheet   = Table.Buffer(OpenWorkbook{0}[Data]),
-
-    // =========================================================
-    // EXTRACT MONTH NAMES FROM ROW WHERE Column8 = "DEC"
-    // =========================================================
-    MonthRow = Table.SelectRows(
-        FirstSheet,
-        each [Column8] = "DEC"
-    ),
-
-    M1  = Record.Field(MonthRow{0}, "Column8"),
-    M2  = Record.Field(MonthRow{0}, "Column9"),
-    M3  = Record.Field(MonthRow{0}, "Column10"),
-    M4  = Record.Field(MonthRow{0}, "Column11"),
-    M5  = Record.Field(MonthRow{0}, "Column12"),
-    M6  = Record.Field(MonthRow{0}, "Column13"),
-    M7  = Record.Field(MonthRow{0}, "Column14"),
-    M8  = Record.Field(MonthRow{0}, "Column15"),
-    M9  = Record.Field(MonthRow{0}, "Column16"),
-    M10 = Record.Field(MonthRow{0}, "Column17"),
-    M11 = Record.Field(MonthRow{0}, "Column18"),
-    M12 = Record.Field(MonthRow{0}, "Column19"),
-
-    // =========================================================
-    // KEEP ONLY RELEVANT COLUMNS
-    // =========================================================
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {
-            "Column1", "Column3", "Column4",
-            "Column5", "Column6",
-            "Column8", "Column9", "Column10",
-            "Column11", "Column12", "Column13",
-            "Column14", "Column15", "Column16",
-            "Column17", "Column18", "Column19"
-        }
-    ),
-
-    // =========================================================
-    // REMOVE UNWANTED ROWS
-    // =========================================================
-    RemoveMonthRow = Table.SelectRows(
-        KeepColumns,
-        each [Column8] <> "DEC"
-    ),
-
-    RemoveDaysRows = Table.SelectRows(
-        RemoveMonthRow,
-        each [Column3] <> "# DAYS"
-    ),
-
-    RemoveCheckRows = Table.SelectRows(
-        RemoveDaysRows,
-        each [Column1] <> "Check"
-    ),
-
-    RemoveEmptyRows = Table.SelectRows(
-        RemoveCheckRows,
-        each not ([Column3] = null and [Column4] = null)
-    ),
-
-    // =========================================================
-    // ADD PARAMETER COLUMN
-    // Header row detected by Column5 = "SHIP CLASS"
-    // Fill down parameter name to all vessel rows below
-    // =========================================================
-    AddParameter = Table.AddColumn(
-        RemoveEmptyRows,
-        "Parameter",
-        each if [Column5] = "SHIP CLASS"
-             then Text.From([Column4])
-             else null
-    ),
-
-    FillParameter = Table.FillDown(
-        AddParameter,
-        {"Parameter"}
-    ),
-
-    // =========================================================
-    // EXTRACT SHIP CLASS AND ALB
-    // Only from ALBDs FULL MONTH block
-    // =========================================================
-    AddShipClass = Table.AddColumn(
-        FillParameter,
-        "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column5] <> "SHIP CLASS"
-                and [Column5] <> null
-                and Text.From([Column5]) <> "0"
-             then Text.From([Column5])
-             else null
-    ),
-
-    AddALB = Table.AddColumn(
-        AddShipClass,
-        "ALB",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column6] <> null
-                and [Column6] <> 0
-             then [Column6]
-             else null
-    ),
-
-    FillShipALB = Table.FillDown(
-        AddALB,
-        {"Ship_Class", "ALB"}
-    ),
-
-    // =========================================================
-    // KEEP ONLY VALID VESSEL ROWS
-    // =========================================================
-    KeepVesselRows = Table.SelectRows(
-        FillShipALB,
-        each
-            [Column4] <> null
-            and [Column4] <> 0
-            and Text.From([Column4]) <> "0"
-            and Text.From([Column4]) <> "0.00"
-            and [Column5] <> "SHIP CLASS"
-            and not (
-                Text.Length(
-                    Text.Remove(
-                        Text.From([Column3]),
-                        {"0".."9"}
-                    )
-                ) = 0
-            )
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS
-    // =========================================================
-    RenameColumns = Table.RenameColumns(
-        KeepVesselRows,
-        {
-            {"Column3", "Vessel_Code"},
-            {"Column4", "Vessel_Name"},
-            {"Column5", "Ship_Class_Raw"},
-            {"Column6", "ALB_Raw"},
-            {"Column8",  M1},
-            {"Column9",  M2},
-            {"Column10", M3},
-            {"Column11", M4},
-            {"Column12", M5},
-            {"Column13", M6},
-            {"Column14", M7},
-            {"Column15", M8},
-            {"Column16", M9},
-            {"Column17", M10},
-            {"Column18", M11},
-            {"Column19", M12}
-        }
-    ),
-
-    DropExtraCols = Table.RemoveColumns(
-        RenameColumns,
-        {"Column1", "Vessel_Code", "Ship_Class_Raw", "ALB_Raw"}
-    ),
-
-    // =========================================================
-    // UNPIVOT MONTH COLUMNS INTO ROWS
-    // =========================================================
-    UnpivotMonths = Table.UnpivotOtherColumns(
-        DropExtraCols,
-        {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
-        "Month",
-        "Value"
-    ),
-
-    // =========================================================
-    // BUFFER BEFORE PIVOT
-    // =========================================================
-    BufferBeforePivot = Table.Buffer(UnpivotMonths),
-
-    ParameterList = List.Buffer(
-        List.Distinct(BufferBeforePivot[Parameter])
-    ),
-
-    // =========================================================
-    // PIVOT PARAMETERS INTO COLUMNS
-    // =========================================================
-    PivotParameters = Table.Pivot(
-        BufferBeforePivot,
-        ParameterList,
-        "Parameter",
-        "Value",
-        List.Sum
-    ),
-
-    // =========================================================
-    // ADD CALENDAR YEAR AND MONTH NUMBER
-    // =========================================================
-    AddCalendarYear = Table.AddColumn(
-        PivotParameters,
-        "Calendar_Year",
-        each if [Month] = "DEC"
-             then FYYear - 1
-             else FYYear
-    ),
-
-    AddMonthNumber = Table.AddColumn(
-        AddCalendarYear,
-        "Month_Number",
-        each if [Month] = "JAN" then 1
-             else if [Month] = "FEB" then 2
-             else if [Month] = "MAR" then 3
-             else if [Month] = "APR" then 4
-             else if [Month] = "MAY" then 5
-             else if [Month] = "JUN" then 6
-             else if [Month] = "JUL" then 7
-             else if [Month] = "AUG" then 8
-             else if [Month] = "SEP" then 9
-             else if [Month] = "OCT" then 10
-             else if [Month] = "NOV" then 11
-             else if [Month] = "DEC" then 12
-             else null
-    ),
-
-    // =========================================================
-    // ADD ALL METADATA COLUMNS
-    // =========================================================
-    AddMeta1  = Table.AddColumn(AddMonthNumber,  "Source_File",     each FileName),
-    AddMeta2  = Table.AddColumn(AddMeta1,        "Source_Path",     each FilePath),
-    AddMeta3  = Table.AddColumn(AddMeta2,        "Sheet_Name",      each SheetName),
-    AddMeta4  = Table.AddColumn(AddMeta3,        "Date_Modified",   each DateMod),
-    AddMeta5  = Table.AddColumn(AddMeta4,        "Date_Created",    each DateCre),
-    AddMeta6  = Table.AddColumn(AddMeta5,        "Date_Accessed",   each DateAcc),
-    AddMeta7  = Table.AddColumn(AddMeta6,        "Fleet",           each Fleet),
-    AddMeta8  = Table.AddColumn(AddMeta7,        "Year_Folder",     each Year_Folder),
-    AddMeta9  = Table.AddColumn(AddMeta8,        "Data_Type",       each Data_Type),
-    AddMeta10 = Table.AddColumn(AddMeta9,        "Forecast_Number", each Forecast_Num),
-    AddMeta11 = Table.AddColumn(AddMeta10,       "FY_Year",         each FYYear),
-
-    // =========================================================
-    // FINAL COLUMN ORDERING
-    // =========================================================
-    ReorderColumns = Table.ReorderColumns(
-        AddMeta11,
-        {
-            "Source_File", "Source_Path", "Sheet_Name",
-            "Date_Modified", "Date_Created", "Date_Accessed",
-            "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-            "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-            "Calendar_Year", "Month", "Month_Number"
-        }
-        & List.Difference(
-            Table.ColumnNames(AddMeta11),
-            {
-                "Source_File", "Source_Path", "Sheet_Name",
-                "Date_Modified", "Date_Created", "Date_Accessed",
-                "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-                "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-                "Calendar_Year", "Month", "Month_Number"
-            }
-        )
-    )
-
-in
-    ReorderColumns
-```
-
-## Query 8 — File\_List (Step 2: File List)
-
-```
-let
-    // =========================================================
-    // SOURCE
-    // =========================================================
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS WITH SPACES
-    // =========================================================
-    RenameMetaCols = Table.RenameColumns(
-        FilteredToIncoming,
-        {
-            {"Folder Path", "FolderPath"},
-            {"Date modified", "DateModified"},
-            {"Date created", "DateCreated"},
-            {"Date accessed", "DateAccessed"}
-        }
-    ),
-
-    // =========================================================
-    // KEEP ONLY EXCEL FILES
-    // =========================================================
-    FilteredToExcel = Table.SelectRows(
-        RenameMetaCols,
-        each [Extension] = ".xlsx" or [Extension] = ".xls"
-    ),
-
-    // =========================================================
-    // EXTRACT FLEET DYNAMICALLY
-    // Fleet = folder name immediately after "Incoming"
-    // =========================================================
-    AddPathParts = Table.AddColumn(
-        FilteredToExcel,
-        "Path_Parts",
-        each Text.Split([FolderPath], "/")
-    ),
-
-    AddIncomingIndex = Table.AddColumn(
-        AddPathParts,
-        "Incoming_Index",
-        each List.PositionOf([Path_Parts], "Incoming")
-    ),
-
-    AddFleet = Table.AddColumn(
-        AddIncomingIndex,
-        "Fleet",
-        each if [Incoming_Index] >= 0
-             then [Path_Parts]{[Incoming_Index] + 1}
-             else "Unknown"
-    ),
-
-    // =========================================================
-    // EXTRACT YEAR FOLDER
-    // Year = folder name immediately after Fleet
-    // =========================================================
-    AddYearFolder = Table.AddColumn(
-        AddFleet,
-        "Year_Folder",
-        each
-            let
-                YearText = [Path_Parts]{[Incoming_Index] + 2}
-            in
-                if Value.Is(Value.FromText(YearText), type number)
-                then Number.FromText(YearText)
-                else null
-    ),
-
-    // =========================================================
-    // EXTRACT DATA TYPE
-    // ACT files contain "ACT" in name
-    // Forecast files start with F and contain "_FY"
-    // =========================================================
-    AddDataType = Table.AddColumn(
-        AddYearFolder,
-        "Data_Type",
-        each if Text.Contains(Text.Upper([Name]), "ACT") then "ACT"
-             else if Text.Start([Name], 1) = "F"
-                  and Text.Contains([Name], "_FY") then "Forecast"
-             else "Unknown"
-    ),
-
-    // =========================================================
-    // EXTRACT FORECAST NUMBER
-    // Two digits after F e.g. F05_FY2026 = 05
-    // =========================================================
-    AddForecastNumber = Table.AddColumn(
-        AddDataType,
-        "Forecast_Number",
-        each if [Data_Type] = "Forecast"
-             then Text.Middle([Name], 1, 2)
-             else null
-    ),
-
-    // =========================================================
-    // EXTRACT FY YEAR
-    // ACT files = Year_Folder
-    // Forecast files = 4 digits after _FY in filename
-    // =========================================================
-    AddFYYear = Table.AddColumn(
-        AddForecastNumber,
-        "FY_Year",
-        each if [Data_Type] = "Forecast"
-             then
-                let
-                    FYPos    = Text.PositionOf([Name], "_FY"),
-                    YearText = Text.Middle([Name], FYPos + 3, 4)
-                in
-                    if Value.Is(Value.FromText(YearText), type number)
-                    then Number.FromText(YearText)
-                    else null
-             else [Year_Folder]
-    ),
-
-    // =========================================================
-    // CURRENT YEAR FOR FILE INCLUSION LOGIC
-    // =========================================================
-    CurrentYear = Date.Year(DateTime.LocalNow()),
-
-    AddCurrentYear = Table.AddColumn(
-        AddFYYear,
-        "Current_Year",
-        each CurrentYear
-    ),
-
-    // =========================================================
-    // FILE INCLUSION RULES
-    // Current year folder → Forecast files only
-    // Older year folders → ACT files only
-    // =========================================================
-    AddIncludeFlag = Table.AddColumn(
-        AddCurrentYear,
-        "Include_File",
-        each
-            // Current year: include forecast only
-            if [Year_Folder] = CurrentYear
-               and [Data_Type] = "Forecast" then true
-            // Older years: include ACT only
-            else if [Year_Folder] < CurrentYear
-               and [Data_Type] = "ACT" then true
-            else false
-    ),
-
-    FilterIncluded = Table.SelectRows(
-        AddIncludeFlag,
-        each [Include_File] = true
-    ),
-
-    // =========================================================
-    // REMOVE HELPER COLUMNS
-    // =========================================================
-    RemoveHelpers = Table.RemoveColumns(
-        FilterIncluded,
-        {"Path_Parts", "Incoming_Index", "Current_Year",
-         "Include_File", "Extension", "Attributes"}
-    )
-
-in
-    RemoveHelpers
-```
-
-## Query 9 — GHG\_KPI\_Combined (Step 3: Final Output)
-
-```
-let
-    // =========================================================
-    // GET FILE LIST
-    // =========================================================
-    FileList = File_List,
-
-    // =========================================================
-    // CONVERT TO LIST OF RECORDS
-    // Each record = one file row passed to function
-    // =========================================================
-    FileRecords = Table.ToRecords(FileList),
-
-    // =========================================================
-    // APPLY FUNCTION TO EACH FILE
-    // Each file processed individually
-    // Results collected into a list of tables
-    // =========================================================
-    ProcessedTables = List.Transform(
-        FileRecords,
-        each fn_ProcessFile(_)
-    ),
-
-    // =========================================================
-    // COMBINE ALL TABLES
-    // Table.Combine handles different columns per file
-    // Missing columns filled with null automatically
-    // =========================================================
-    CombinedTable = Table.Combine(ProcessedTables),
-
-    // =========================================================
-    // FINAL SORT
-    // Sort by Fleet, FY_Year, Vessel_Name, Month_Number
-    // =========================================================
-    SortedTable = Table.Sort(
-        CombinedTable,
-        {
-            {"Fleet",        Order.Ascending},
-            {"FY_Year",      Order.Ascending},
-            {"Vessel_Name",  Order.Ascending},
-            {"Month_Number", Order.Ascending}
-        }
-    )
-
-in
-    SortedTable
-```
-
-## Query 10 — Workbook Open with Error Handling (Replace fn\_ProcessFile Block)
-
-```
-    // Buffer file content immediately to prevent re-downloading
-    BufferedContent = Binary.Buffer(FileContent),
-    OpenWorkbook    = Excel.Workbook(BufferedContent, null, true),
-    SheetName       = OpenWorkbook{0}[Name],
-    RawSheet        = OpenWorkbook{0}[Data],
-
-    // Replace all error values in cells with null
-    // Prevents #VALUE #DIV0 #NA errors from crashing query
-    FirstSheet = Table.Buffer(
-        Table.TransformColumns(
-            Table.ReplaceErrorValues(
-                RawSheet,
-                List.Transform(
-                    Table.ColumnNames(RawSheet),
-                    each {_, null}
-                )
-            ),
-            {}
-        )
-    ),
-```
-
-## Query 11 — Buffer Content in File\_List (Replace RemoveHelpers Block)
-
-```
-    // Buffer file content to prevent repeated SharePoint downloads
-    AddBufferedContent = Table.TransformColumns(
-        FilterIncluded,
-        {"Content", each Binary.Buffer(_)}
-    ),
-
-    RemoveHelpers = Table.RemoveColumns(
-        AddBufferedContent,
-        {"Path_Parts", "Incoming_Index", "Current_Year",
-         "Include_File", "Extension", "Attributes"}
-    )
-```
-
-## Query 12 — Table.Buffer Entire File\_List (Final Block of Query 8)
-
-```
-    RemoveHelpers = Table.RemoveColumns(
-        AddBufferedContent,
-        {"Path_Parts", "Incoming_Index", "Current_Year",
-         "Include_File", "Extension", "Attributes"}
-    ),
-
-    // Buffer entire file list including all content binaries
-    // This ensures SharePoint is called exactly once
-    // All subsequent processing reads from memory only
-    BufferedFileList = Table.Buffer(RemoveHelpers)
-
-in
-    BufferedFileList
-```
-
-## Query 13 — Updated FileList Reference in Query 9
-
-```
-let
-    // =========================================================
-    // GET FILE LIST - BUFFER IMMEDIATELY
-    // Ensures file list and all content read once from SharePoint
-    // =========================================================
-    FileList = Table.Buffer(File_List),
-```
-
-## Query 14 — File\_List Final Version
-
-```
-let
-    // =========================================================
-    // SOURCE — SINGLE SHAREPOINT CALL
-    // =========================================================
-    Source = SharePoint.Files(
-        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
-        [ApiVersion = 15]
-    ),
-
-    FilteredToIncoming = Table.SelectRows(
-        Source,
-        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS WITH SPACES
-    // =========================================================
-    RenameMetaCols = Table.RenameColumns(
-        FilteredToIncoming,
-        {
-            {"Folder Path", "FolderPath"},
-            {"Date modified", "DateModified"},
-            {"Date created", "DateCreated"},
-            {"Date accessed", "DateAccessed"}
-        }
-    ),
-
-    // =========================================================
-    // KEEP ONLY EXCEL FILES
-    // =========================================================
-    FilteredToExcel = Table.SelectRows(
-        RenameMetaCols,
-        each [Extension] = ".xlsx" or [Extension] = ".xls"
-    ),
-
-    // =========================================================
-    // BUFFER ALL BINARY CONTENT IMMEDIATELY
-    // Each file downloaded once and stored in memory
-    // =========================================================
-    BufferContent = Table.TransformColumns(
-        FilteredToExcel,
-        {"Content", each Binary.Buffer(_)}
-    ),
-
-    // =========================================================
-    // EXTRACT FLEET DYNAMICALLY
-    // =========================================================
-    AddPathParts = Table.AddColumn(
-        BufferContent,
-        "Path_Parts",
-        each Text.Split([FolderPath], "/")
-    ),
-
-    AddIncomingIndex = Table.AddColumn(
-        AddPathParts,
-        "Incoming_Index",
-        each List.PositionOf([Path_Parts], "Incoming")
-    ),
-
-    AddFleet = Table.AddColumn(
-        AddIncomingIndex,
-        "Fleet",
-        each if [Incoming_Index] >= 0
-             then [Path_Parts]{[Incoming_Index] + 1}
-             else "Unknown"
-    ),
-
-    AddYearFolder = Table.AddColumn(
-        AddFleet,
-        "Year_Folder",
-        each
-            let
-                YearText = [Path_Parts]{[Incoming_Index] + 2}
-            in
-                if Value.Is(Value.FromText(YearText), type number)
-                then Number.FromText(YearText)
-                else null
-    ),
-
-    AddDataType = Table.AddColumn(
-        AddYearFolder,
-        "Data_Type",
-        each if Text.Contains(Text.Upper([Name]), "ACT") then "ACT"
-             else if Text.Start([Name], 1) = "F"
-                  and Text.Contains([Name], "_FY") then "Forecast"
-             else "Unknown"
-    ),
-
-    AddForecastNumber = Table.AddColumn(
-        AddDataType,
-        "Forecast_Number",
-        each if [Data_Type] = "Forecast"
-             then Text.Middle([Name], 1, 2)
-             else null
-    ),
-
-    AddFYYear = Table.AddColumn(
-        AddForecastNumber,
-        "FY_Year",
-        each if [Data_Type] = "Forecast"
-             then
-                let
-                    FYPos    = Text.PositionOf([Name], "_FY"),
-                    YearText = Text.Middle([Name], FYPos + 3, 4)
-                in
-                    if Value.Is(Value.FromText(YearText), type number)
-                    then Number.FromText(YearText)
-                    else null
-             else [Year_Folder]
-    ),
-
-    CurrentYear = Date.Year(DateTime.LocalNow()),
-
-    AddIncludeFlag = Table.AddColumn(
-        AddFYYear,
-        "Include_File",
-        each
-            if [Year_Folder] = CurrentYear
-               and [Data_Type] = "Forecast" then true
-            else if [Year_Folder] < CurrentYear
-               and [Data_Type] = "ACT" then true
-            else false
-    ),
-
-    FilterIncluded = Table.SelectRows(
-        AddIncludeFlag,
-        each [Include_File] = true
-    ),
-
-    RemoveHelpers = Table.RemoveColumns(
-        FilterIncluded,
-        {"Path_Parts", "Incoming_Index",
-         "Include_File", "Extension", "Attributes"}
-    ),
-
-    // =========================================================
-    // CRITICAL — BUFFER ENTIRE TABLE INCLUDING CONTENT
-    // This is the single point where SharePoint is accessed
-    // Everything after this reads from memory only
-    // =========================================================
-    FinalBuffer = Table.Buffer(RemoveHelpers)
-
-in
-    FinalBuffer
-```
-
-## Query 15 — GHG\_KPI\_Combined Final Version
-
-```
-let
-    // =========================================================
-    // GET BUFFERED FILE LIST
-    // Already downloaded and in memory — no SharePoint calls
-    // =========================================================
-    FileList = Table.Buffer(File_List),
-
-    // =========================================================
-    // PROCESS EACH FILE INLINE
-    // Using Table.AddColumn instead of List.Transform
-    // Prevents re-evaluation of File_List
-    // =========================================================
-    AddWorkbook = Table.AddColumn(
-        FileList,
-        "Workbook",
-        each Table.Buffer(
-            Excel.Workbook([Content], null, true)
-        )
-    ),
-
-    AddSheetName = Table.AddColumn(
-        AddWorkbook,
-        "Sheet_Name",
-        each [Workbook]{0}[Name]
-    ),
-
-    AddRawData = Table.AddColumn(
-        AddSheetName,
-        "RawData",
-        each Table.Buffer(
-            Table.ReplaceErrorValues(
-                [Workbook]{0}[Data],
-                List.Transform(
-                    Table.ColumnNames([Workbook]{0}[Data]),
-                    each {_, null}
-                )
-            )
-        )
-    ),
-
-    // =========================================================
-    // DROP WORKBOOK COLUMN — NO LONGER NEEDED
-    // =========================================================
-    DropWorkbook = Table.RemoveColumns(
-        AddRawData,
-        {"Workbook", "Content"}
-    ),
-
-    // =========================================================
-    // CONVERT TO LIST OF RECORDS FOR PROCESSING
-    // =========================================================
-    FileRecords = Table.ToRecords(DropWorkbook),
-
-    // =========================================================
-    // PROCESS EACH FILE
-    // =========================================================
-    ProcessedTables = List.Transform(
-        FileRecords,
-        each fn_ProcessFile(_)
-    ),
-
-    // =========================================================
-    // COMBINE ALL TABLES
-    // Missing columns filled with null automatically
-    // =========================================================
-    CombinedTable = Table.Combine(ProcessedTables),
-
-    // =========================================================
-    // FINAL SORT
-    // =========================================================
-    SortedTable = Table.Sort(
-        CombinedTable,
-        {
-            {"Fleet",        Order.Ascending},
-            {"FY_Year",      Order.Ascending},
-            {"Vessel_Name",  Order.Ascending},
-            {"Month_Number", Order.Ascending}
-        }
-    )
-
-in
-    SortedTable
-```
-
-## Query 16 — fn\_ProcessFile Final Version
-
-```
-(FileRow as record) as table =>
-
-let
-    // =========================================================
-    // EXTRACT METADATA FROM FILE ROW
-    // RawData already buffered in master query
-    // =========================================================
-    FileName       = FileRow[Name],
-    FilePath       = FileRow[FolderPath],
-    DateMod        = FileRow[DateModified],
-    DateCre        = FileRow[DateCreated],
-    DateAcc        = FileRow[DateAccessed],
-    Fleet          = FileRow[Fleet],
-    Year_Folder    = FileRow[Year_Folder],
-    Data_Type      = FileRow[Data_Type],
-    Forecast_Num   = FileRow[Forecast_Number],
-    FYYear         = FileRow[FY_Year],
-    SheetName      = FileRow[Sheet_Name],
-    FirstSheet     = FileRow[RawData],
-
-    // =========================================================
-    // EXTRACT MONTH NAMES FROM ROW WHERE Column8 = "DEC"
-    // =========================================================
-    MonthRow = Table.SelectRows(
-        FirstSheet,
-        each [Column8] = "DEC"
-    ),
-
-    M1  = Record.Field(MonthRow{0}, "Column8"),
-    M2  = Record.Field(MonthRow{0}, "Column9"),
-    M3  = Record.Field(MonthRow{0}, "Column10"),
-    M4  = Record.Field(MonthRow{0}, "Column11"),
-    M5  = Record.Field(MonthRow{0}, "Column12"),
-    M6  = Record.Field(MonthRow{0}, "Column13"),
-    M7  = Record.Field(MonthRow{0}, "Column14"),
-    M8  = Record.Field(MonthRow{0}, "Column15"),
-    M9  = Record.Field(MonthRow{0}, "Column16"),
-    M10 = Record.Field(MonthRow{0}, "Column17"),
-    M11 = Record.Field(MonthRow{0}, "Column18"),
-    M12 = Record.Field(MonthRow{0}, "Column19"),
-
-    // =========================================================
-    // KEEP ONLY RELEVANT COLUMNS
-    // =========================================================
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {
-            "Column1", "Column3", "Column4",
-            "Column5", "Column6",
-            "Column8", "Column9", "Column10",
-            "Column11", "Column12", "Column13",
-            "Column14", "Column15", "Column16",
-            "Column17", "Column18", "Column19"
-        }
-    ),
-
-    // =========================================================
-    // REMOVE UNWANTED ROWS
-    // =========================================================
-    RemoveMonthRow = Table.SelectRows(
-        KeepColumns,
-        each [Column8] <> "DEC"
-    ),
-
-    RemoveDaysRows = Table.SelectRows(
-        RemoveMonthRow,
-        each [Column3] <> "# DAYS"
-    ),
-
-    RemoveCheckRows = Table.SelectRows(
-        RemoveDaysRows,
-        each [Column1] <> "Check"
-    ),
-
-    RemoveEmptyRows = Table.SelectRows(
-        RemoveCheckRows,
-        each not ([Column3] = null and [Column4] = null)
-    ),
-
-    // =========================================================
-    // ADD PARAMETER COLUMN
-    // =========================================================
-    AddParameter = Table.AddColumn(
-        RemoveEmptyRows,
-        "Parameter",
-        each if [Column5] = "SHIP CLASS"
-             then Text.From([Column4])
-             else null
-    ),
-
-    FillParameter = Table.FillDown(
-        AddParameter,
-        {"Parameter"}
-    ),
-
-    // =========================================================
-    // EXTRACT SHIP CLASS AND ALB
-    // Only from ALBDs FULL MONTH block
-    // =========================================================
-    AddShipClass = Table.AddColumn(
-        FillParameter,
-        "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column5] <> "SHIP CLASS"
-                and [Column5] <> null
-                and Text.From([Column5]) <> "0"
-             then Text.From([Column5])
-             else null
-    ),
-
-    AddALB = Table.AddColumn(
-        AddShipClass,
-        "ALB",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column6] <> null
-                and [Column6] <> 0
-             then [Column6]
-             else null
-    ),
-
-    FillShipALB = Table.FillDown(
-        AddALB,
-        {"Ship_Class", "ALB"}
-    ),
-
-    // =========================================================
-    // KEEP ONLY VALID VESSEL ROWS
-    // =========================================================
-    KeepVesselRows = Table.SelectRows(
-        FillShipALB,
-        each
-            [Column4] <> null
-            and [Column4] <> 0
-            and Text.From([Column4]) <> "0"
-            and Text.From([Column4]) <> "0.00"
-            and [Column5] <> "SHIP CLASS"
-            and not (
-                Text.Length(
-                    Text.Remove(
-                        Text.From([Column3]),
-                        {"0".."9"}
-                    )
-                ) = 0
-            )
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS
-    // =========================================================
-    RenameColumns = Table.RenameColumns(
-        KeepVesselRows,
-        {
-            {"Column3", "Vessel_Code"},
-            {"Column4", "Vessel_Name"},
-            {"Column5", "Ship_Class_Raw"},
-            {"Column6", "ALB_Raw"},
-            {"Column8",  M1},
-            {"Column9",  M2},
-            {"Column10", M3},
-            {"Column11", M4},
-            {"Column12", M5},
-            {"Column13", M6},
-            {"Column14", M7},
-            {"Column15", M8},
-            {"Column16", M9},
-            {"Column17", M10},
-            {"Column18", M11},
-            {"Column19", M12}
-        }
-    ),
-
-    DropExtraCols = Table.RemoveColumns(
-        RenameColumns,
-        {"Column1", "Vessel_Code", "Ship_Class_Raw", "ALB_Raw"}
-    ),
-
-    // =========================================================
-    // UNPIVOT MONTH COLUMNS INTO ROWS
-    // =========================================================
-    UnpivotMonths = Table.UnpivotOtherColumns(
-        DropExtraCols,
-        {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
-        "Month",
-        "Value"
-    ),
-
-    // =========================================================
-    // BUFFER BEFORE PIVOT
-    // =========================================================
-    BufferBeforePivot = Table.Buffer(UnpivotMonths),
-
-    ParameterList = List.Buffer(
-        List.Distinct(BufferBeforePivot[Parameter])
-    ),
-
-    // =========================================================
-    // PIVOT PARAMETERS INTO COLUMNS
-    // =========================================================
-    PivotParameters = Table.Pivot(
-        BufferBeforePivot,
-        ParameterList,
-        "Parameter",
-        "Value",
-        List.Sum
-    ),
-
-    // =========================================================
-    // ADD CALENDAR YEAR AND MONTH NUMBER
-    // =========================================================
-    AddCalendarYear = Table.AddColumn(
-        PivotParameters,
-        "Calendar_Year",
-        each if [Month] = "DEC"
-             then FYYear - 1
-             else FYYear
-    ),
-
-    AddMonthNumber = Table.AddColumn(
-        AddCalendarYear,
-        "Month_Number",
-        each if [Month] = "JAN" then 1
-             else if [Month] = "FEB" then 2
-             else if [Month] = "MAR" then 3
-             else if [Month] = "APR" then 4
-             else if [Month] = "MAY" then 5
-             else if [Month] = "JUN" then 6
-             else if [Month] = "JUL" then 7
-             else if [Month] = "AUG" then 8
-             else if [Month] = "SEP" then 9
-             else if [Month] = "OCT" then 10
-             else if [Month] = "NOV" then 11
-             else if [Month] = "DEC" then 12
-             else null
-    ),
-
-    // =========================================================
-    // ADD ALL METADATA COLUMNS
-    // =========================================================
-    AddMeta1  = Table.AddColumn(AddMonthNumber,  "Source_File",     each FileName),
-    AddMeta2  = Table.AddColumn(AddMeta1,        "Source_Path",     each FilePath),
-    AddMeta3  = Table.AddColumn(AddMeta2,        "Sheet_Name",      each SheetName),
-    AddMeta4  = Table.AddColumn(AddMeta3,        "Date_Modified",   each DateMod),
-    AddMeta5  = Table.AddColumn(AddMeta4,        "Date_Created",    each DateCre),
-    AddMeta6  = Table.AddColumn(AddMeta5,        "Date_Accessed",   each DateAcc),
-    AddMeta7  = Table.AddColumn(AddMeta6,        "Fleet",           each Fleet),
-    AddMeta8  = Table.AddColumn(AddMeta7,        "Year_Folder",     each Year_Folder),
-    AddMeta9  = Table.AddColumn(AddMeta8,        "Data_Type",       each Data_Type),
-    AddMeta10 = Table.AddColumn(AddMeta9,        "Forecast_Number", each Forecast_Num),
-    AddMeta11 = Table.AddColumn(AddMeta10,       "FY_Year",         each FYYear),
-
-    // =========================================================
-    // FINAL COLUMN ORDERING
-    // =========================================================
-    ReorderColumns = Table.ReorderColumns(
-        AddMeta11,
-        {
-            "Source_File", "Source_Path", "Sheet_Name",
-            "Date_Modified", "Date_Created", "Date_Accessed",
-            "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-            "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-            "Calendar_Year", "Month", "Month_Number"
-        }
-        & List.Difference(
-            Table.ColumnNames(AddMeta11),
-            {
-                "Source_File", "Source_Path", "Sheet_Name",
-                "Date_Modified", "Date_Created", "Date_Accessed",
-                "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-                "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-                "Calendar_Year", "Month", "Month_Number"
-            }
-        )
-    )
-
-in
-    ReorderColumns
-```
-
-## Query 17 — GHG\_KPI\_Combined (Next Version)
-
-```
-let
-    // =========================================================
-    // GET BUFFERED FILE LIST
-    // All files already filtered and content buffered
-    // No further SharePoint calls happen after this
-    // =========================================================
-    FileList = Table.Buffer(File_List),
-
-    FileRecords = Table.ToRecords(FileList),
-
-    ProcessedTables = List.Transform(
-        FileRecords,
-        each fn_ProcessFile(_)
-    ),
-
-    CombinedTable = Table.Combine(ProcessedTables),
-
-    SortedTable = Table.Sort(
-        CombinedTable,
-        {
-            {"Fleet",        Order.Ascending},
-            {"FY_Year",      Order.Ascending},
-            {"Vessel_Name",  Order.Ascending},
-            {"Month_Number", Order.Ascending}
-        }
-    )
-
-in
-    SortedTable
-```
-
-## Query 18 — fn\_ProcessFile (Next Version)
-
-```
-(FileRow as record) as table =>
-
-let
-    // =========================================================
-    // EXTRACT METADATA
-    // No Source_Path — removed as not required
-    // Refresh_DateTime replaces Date_Accessed
-    // =========================================================
-    FileName       = FileRow[Name],
-    DateMod        = FileRow[DateModified],
-    DateCre        = FileRow[DateCreated],
-    RefreshTime    = DateTime.LocalNow(),
-    Fleet          = FileRow[Fleet],
-    Year_Folder    = FileRow[Year_Folder],
-    Data_Type      = FileRow[Data_Type],
-    Forecast_Num   = FileRow[Forecast_Number],
-    FYYear         = FileRow[FY_Year],
-
-    // =========================================================
-    // OPEN WORKBOOK FROM BUFFERED CONTENT
-    // Content already in memory — no SharePoint call
-    // =========================================================
-    OpenWorkbook = Excel.Workbook(FileRow[Content], null, true),
-    SheetName    = OpenWorkbook{0}[Name],
-    RawSheet     = OpenWorkbook{0}[Data],
-
-    // Replace all cell errors with null
-    CleanSheet = Table.ReplaceErrorValues(
-        RawSheet,
-        List.Transform(
-            Table.ColumnNames(RawSheet),
-            each {_, null}
-        )
-    ),
-
-    // Buffer sheet into memory immediately
-    FirstSheet = Table.Buffer(CleanSheet),
-
-    // =========================================================
-    // EXTRACT MONTH NAMES FROM ROW WHERE Column8 = "DEC"
-    // =========================================================
-    MonthRow = Table.SelectRows(FirstSheet, each [Column8] = "DEC"),
-
-    M1  = Record.Field(MonthRow{0}, "Column8"),
-    M2  = Record.Field(MonthRow{0}, "Column9"),
-    M3  = Record.Field(MonthRow{0}, "Column10"),
-    M4  = Record.Field(MonthRow{0}, "Column11"),
-    M5  = Record.Field(MonthRow{0}, "Column12"),
-    M6  = Record.Field(MonthRow{0}, "Column13"),
-    M7  = Record.Field(MonthRow{0}, "Column14"),
-    M8  = Record.Field(MonthRow{0}, "Column15"),
-    M9  = Record.Field(MonthRow{0}, "Column16"),
-    M10 = Record.Field(MonthRow{0}, "Column17"),
-    M11 = Record.Field(MonthRow{0}, "Column18"),
-    M12 = Record.Field(MonthRow{0}, "Column19"),
-
-    // =========================================================
-    // KEEP ONLY RELEVANT COLUMNS
-    // =========================================================
-    KeepColumns = Table.SelectColumns(
-        FirstSheet,
-        {
-            "Column1", "Column3", "Column4",
-            "Column5", "Column6",
-            "Column8", "Column9", "Column10",
-            "Column11", "Column12", "Column13",
-            "Column14", "Column15", "Column16",
-            "Column17", "Column18", "Column19"
-        }
-    ),
-
-    // =========================================================
-    // REMOVE UNWANTED ROWS
-    // =========================================================
-    RemoveMonthRow  = Table.SelectRows(KeepColumns,     each [Column8] <> "DEC"),
-    RemoveDaysRows  = Table.SelectRows(RemoveMonthRow,  each [Column3] <> "# DAYS"),
-    RemoveCheckRows = Table.SelectRows(RemoveDaysRows,  each [Column1] <> "Check"),
-    RemoveEmptyRows = Table.SelectRows(RemoveCheckRows, each not ([Column3] = null and [Column4] = null)),
-
-    // =========================================================
-    // ADD PARAMETER COLUMN — FILL DOWN
-    // =========================================================
-    AddParameter = Table.AddColumn(
-        RemoveEmptyRows, "Parameter",
-        each if [Column5] = "SHIP CLASS" then Text.From([Column4]) else null
-    ),
-
-    FillParameter = Table.FillDown(AddParameter, {"Parameter"}),
-
-    // =========================================================
-    // EXTRACT SHIP CLASS AND ALB
-    // Only from ALBDs FULL MONTH block
-    // =========================================================
-    AddShipClass = Table.AddColumn(
-        FillParameter, "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column5] <> "SHIP CLASS"
-                and [Column5] <> null
-                and Text.From([Column5]) <> "0"
-             then Text.From([Column5])
-             else null
-    ),
-
-    AddALB = Table.AddColumn(
-        AddShipClass, "ALB",
-        each if [Parameter] = "ALBDs FULL MONTH"
-                and [Column6] <> null
-                and [Column6] <> 0
-             then [Column6]
-             else null
-    ),
-
-    FillShipALB = Table.FillDown(AddALB, {"Ship_Class", "ALB"}),
-
-    // =========================================================
-    // KEEP ONLY VALID VESSEL ROWS
-    // =========================================================
-    KeepVesselRows = Table.SelectRows(
-        FillShipALB,
-        each
-            [Column4] <> null
-            and [Column4] <> 0
-            and Text.From([Column4]) <> "0"
-            and Text.From([Column4]) <> "0.00"
-            and [Column5] <> "SHIP CLASS"
-            and not (
-                Text.Length(
-                    Text.Remove(Text.From([Column3]), {"0".."9"})
-                ) = 0
-            )
-    ),
-
-    // =========================================================
-    // RENAME COLUMNS
-    // =========================================================
-    RenameColumns = Table.RenameColumns(
-        KeepVesselRows,
-        {
-            {"Column3", "Vessel_Code"}, {"Column4", "Vessel_Name"},
-            {"Column5", "Ship_Class_Raw"}, {"Column6", "ALB_Raw"},
-            {"Column8",  M1},  {"Column9",  M2},  {"Column10", M3},
-            {"Column11", M4},  {"Column12", M5},  {"Column13", M6},
-            {"Column14", M7},  {"Column15", M8},  {"Column16", M9},
-            {"Column17", M10}, {"Column18", M11}, {"Column19", M12}
-        }
-    ),
-
-    DropExtraCols = Table.RemoveColumns(
-        RenameColumns,
-        {"Column1", "Vessel_Code", "Ship_Class_Raw", "ALB_Raw"}
-    ),
-
-    // =========================================================
-    // UNPIVOT MONTH COLUMNS
-    // =========================================================
-    UnpivotMonths = Table.UnpivotOtherColumns(
-        DropExtraCols,
-        {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
-        "Month", "Value"
-    ),
-
-    // =========================================================
-    // BUFFER BEFORE PIVOT
-    // =========================================================
-    BufferBeforePivot = Table.Buffer(UnpivotMonths),
-    ParameterList     = List.Buffer(List.Distinct(BufferBeforePivot[Parameter])),
-
-    // =========================================================
-    // PIVOT PARAMETERS INTO COLUMNS
-    // One vessel one month one row
-    // =========================================================
-    PivotParameters = Table.Pivot(
-        BufferBeforePivot, ParameterList, "Parameter", "Value", List.Sum
-    ),
-
-    // =========================================================
-    // ADD CALENDAR YEAR AND MONTH NUMBER
-    // =========================================================
-    AddCalendarYear = Table.AddColumn(
-        PivotParameters, "Calendar_Year",
-        each if [Month] = "DEC" then FYYear - 1 else FYYear
-    ),
-
-    AddMonthNumber = Table.AddColumn(
-        AddCalendarYear, "Month_Number",
-        each if [Month] = "JAN" then 1
-             else if [Month] = "FEB" then 2
-             else if [Month] = "MAR" then 3
-             else if [Month] = "APR" then 4
-             else if [Month] = "MAY" then 5
-             else if [Month] = "JUN" then 6
-             else if [Month] = "JUL" then 7
-             else if [Month] = "AUG" then 8
-             else if [Month] = "SEP" then 9
-             else if [Month] = "OCT" then 10
-             else if [Month] = "NOV" then 11
-             else if [Month] = "DEC" then 12
-             else null
-    ),
-
-    // =========================================================
-    // ADD METADATA COLUMNS
-    // Refresh_DateTime = actual time query was run
-    // =========================================================
-    AddMeta1  = Table.AddColumn(AddMonthNumber, "Source_File",      each FileName),
-    AddMeta2  = Table.AddColumn(AddMeta1,       "Sheet_Name",       each SheetName),
-    AddMeta3  = Table.AddColumn(AddMeta2,       "Date_Modified",    each DateMod),
-    AddMeta4  = Table.AddColumn(AddMeta3,       "Date_Created",     each DateCre),
-    AddMeta5  = Table.AddColumn(AddMeta4,       "Refresh_DateTime", each RefreshTime),
-    AddMeta6  = Table.AddColumn(AddMeta5,       "Fleet",            each Fleet),
-    AddMeta7  = Table.AddColumn(AddMeta6,       "Year_Folder",      each Year_Folder),
-    AddMeta8  = Table.AddColumn(AddMeta7,       "Data_Type",        each Data_Type),
-    AddMeta9  = Table.AddColumn(AddMeta8,       "Forecast_Number",  each Forecast_Num),
-    AddMeta10 = Table.AddColumn(AddMeta9,       "FY_Year",          each FYYear),
-
-    // =========================================================
-    // FINAL COLUMN ORDERING
-    // =========================================================
-    ReorderColumns = Table.ReorderColumns(
-        AddMeta10,
-        {
-            "Source_File", "Sheet_Name",
-            "Date_Modified", "Date_Created", "Refresh_DateTime",
-            "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-            "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-            "Calendar_Year", "Month", "Month_Number"
-        }
-        & List.Difference(
-            Table.ColumnNames(AddMeta10),
-            {
-                "Source_File", "Sheet_Name",
-                "Date_Modified", "Date_Created", "Refresh_DateTime",
-                "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
-                "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
-                "Calendar_Year", "Month", "Month_Number"
-            }
-        )
-    )
-
-in
-    ReorderColumns
-```
-
-## Query 19 — File\_List (Next Version)
-
-```
-let
-    // =========================================================
-    // SOURCE — METADATA ONLY, NO CONTENT DOWNLOADED YET
+    // SINGLE SHAREPOINT CALL — METADATA ONLY FIRST
+    // No content downloaded at this stage
     // =========================================================
     Source = SharePoint.Files(
         "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
@@ -2623,33 +41,37 @@ let
         }
     ),
 
-    // =========================================================
-    // FIX DATE COLUMNS — PROPER DATETIME FORMAT
-    // =========================================================
+    // Fix date columns to proper datetime format
     FixDates = Table.TransformColumns(
         RenameMetaCols,
         {
-            {"DateModified", each if _ = null then null else DateTime.From(_), type datetime},
-            {"DateCreated",  each if _ = null then null else DateTime.From(_), type datetime}
+            {"DateModified", each if _ = null then null
+                else DateTime.From(_), type datetime},
+            {"DateCreated",  each if _ = null then null
+                else DateTime.From(_), type datetime}
         }
     ),
 
     // =========================================================
     // EXTRACT FLEET DYNAMICALLY
     // Fleet = folder immediately after Incoming
+    // Works for any new fleet added in future
     // =========================================================
     AddPathParts = Table.AddColumn(
-        FixDates, "Path_Parts",
+        FixDates,
+        "Path_Parts",
         each Text.Split([FolderPath], "/")
     ),
 
     AddIncomingIndex = Table.AddColumn(
-        AddPathParts, "Incoming_Index",
+        AddPathParts,
+        "Incoming_Index",
         each List.PositionOf([Path_Parts], "Incoming")
     ),
 
     AddFleet = Table.AddColumn(
-        AddIncomingIndex, "Fleet",
+        AddIncomingIndex,
+        "Fleet",
         each if [Incoming_Index] >= 0
              then [Path_Parts]{[Incoming_Index] + 1}
              else "Unknown"
@@ -2657,7 +79,8 @@ let
 
     // Year = folder immediately after Fleet
     AddYearFolder = Table.AddColumn(
-        AddFleet, "Year_Folder",
+        AddFleet,
+        "Year_Folder",
         each
             let YearText = [Path_Parts]{[Incoming_Index] + 2}
             in  if Value.Is(Value.FromText(YearText), type number)
@@ -2667,9 +90,12 @@ let
 
     // =========================================================
     // DATA TYPE DETECTION
+    // ACT files contain ACT in name
+    // Forecast files start with F and contain _FY
     // =========================================================
     AddDataType = Table.AddColumn(
-        AddYearFolder, "Data_Type",
+        AddYearFolder,
+        "Data_Type",
         each if Text.Contains(Text.Upper([Name]), "ACT") then "ACT"
              else if Text.Start([Name], 1) = "F"
                   and Text.Contains([Name], "_FY") then "Forecast"
@@ -2677,14 +103,16 @@ let
     ),
 
     AddForecastNumber = Table.AddColumn(
-        AddDataType, "Forecast_Number",
+        AddDataType,
+        "Forecast_Number",
         each if [Data_Type] = "Forecast"
              then Text.Middle([Name], 1, 2)
              else null
     ),
 
     AddFYYear = Table.AddColumn(
-        AddForecastNumber, "FY_Year",
+        AddForecastNumber,
+        "FY_Year",
         each if [Data_Type] = "Forecast"
              then
                 let
@@ -2705,28 +133,26 @@ let
     CurrentYear = Date.Year(DateTime.LocalNow()),
 
     AddIncludeFlag = Table.AddColumn(
-        AddFYYear, "Include_File",
+        AddFYYear,
+        "Include_File",
         each
-            if [Year_Folder] = CurrentYear and [Data_Type] = "Forecast" then true
-            else if [Year_Folder] < CurrentYear and [Data_Type] = "ACT" then true
+            if [Year_Folder] = CurrentYear
+               and [Data_Type] = "Forecast" then true
+            else if [Year_Folder] < CurrentYear
+               and [Data_Type] = "ACT" then true
             else false
     ),
 
-    // Apply filter BEFORE any content is downloaded
-    FilterIncluded = Table.SelectRows(AddIncludeFlag, each [Include_File] = true),
-
-    // =========================================================
-    // BUFFER CONTENT ONLY FOR FILTERED FILES
-    // Only 2-3 files downloaded not all 18
-    // =========================================================
-    BufferContent = Table.TransformColumns(
-        FilterIncluded,
-        {"Content", each Binary.Buffer(_)}
+    // Apply filter BEFORE downloading any content
+    // Only files that pass this filter get downloaded
+    FilterIncluded = Table.SelectRows(
+        AddIncludeFlag,
+        each [Include_File] = true
     ),
 
-    // Remove helper columns
+    // Remove helper columns before buffering
     RemoveHelpers = Table.RemoveColumns(
-        BufferContent,
+        FilterIncluded,
         {
             "Path_Parts", "Incoming_Index",
             "Include_File", "Extension",
@@ -2735,9 +161,265 @@ let
         }
     ),
 
-    // Buffer entire table — single SharePoint evaluation
-    FinalBuffer = Table.Buffer(RemoveHelpers)
+    // =========================================================
+    // BUFFER CONTENT ONLY FOR INCLUDED FILES
+    // This is the ONLY point where files are downloaded
+    // Correct placement: AFTER all filtering is done
+    // =========================================================
+    BufferContent = Table.TransformColumns(
+        RemoveHelpers,
+        {"Content", each Binary.Buffer(_)}
+    ),
+
+    // Buffer entire table into memory
+    // Prevents any further SharePoint evaluation
+    FinalBuffer = Table.Buffer(BufferContent)
 
 in
     FinalBuffer
+```
+
+## Query 2 — cmg\_ghg\_master\_query
+
+```
+let
+    // =========================================================
+    // GET BUFFERED FILE LIST
+    // All content already in memory — zero SharePoint calls below
+    // =========================================================
+    FileList = Table.Buffer(File_List),
+
+    // Capture refresh time ONCE here outside the row loop
+    // Keeping DateTime.LocalNow() here prevents privacy firewall
+    // from triggering on every file row
+    RefreshTime = DateTime.LocalNow(),
+
+    // =========================================================
+    // PROCESS EACH FILE INLINE
+    // Table.AddColumn keeps everything in one evaluation context
+    // No function calls = no context boundaries = no re-downloads
+    // =========================================================
+    AddProcessed = Table.AddColumn(
+        FileList,
+        "ProcessedData",
+        each
+            let
+                // Local metadata for this file row
+                FYYear_v    = [FY_Year],
+                Fleet_v     = [Fleet],
+                Year_v      = [Year_Folder],
+                DataType_v  = [Data_Type],
+                FcstNum_v   = [Forecast_Number],
+                FileName_v  = [Name],
+                DateMod_v   = [DateModified],
+                DateCre_v   = [DateCreated],
+
+                // Open workbook from buffered binary
+                Wb          = Excel.Workbook([Content], null, true),
+                SheetName_v = Wb{0}[Name],
+                SheetData   = Wb{0}[Data],
+
+                // Replace all cell errors with null
+                CleanData   = Table.ReplaceErrorValues(
+                    SheetData,
+                    List.Transform(
+                        Table.ColumnNames(SheetData),
+                        each {_, null}
+                    )
+                ),
+
+                // Buffer sheet into memory
+                FirstSheet  = Table.Buffer(CleanData),
+
+                // Extract month names from row where Column8 = DEC
+                MonthRow    = Table.SelectRows(FirstSheet, each [Column8] = "DEC"),
+                M1  = Record.Field(MonthRow{0}, "Column8"),
+                M2  = Record.Field(MonthRow{0}, "Column9"),
+                M3  = Record.Field(MonthRow{0}, "Column10"),
+                M4  = Record.Field(MonthRow{0}, "Column11"),
+                M5  = Record.Field(MonthRow{0}, "Column12"),
+                M6  = Record.Field(MonthRow{0}, "Column13"),
+                M7  = Record.Field(MonthRow{0}, "Column14"),
+                M8  = Record.Field(MonthRow{0}, "Column15"),
+                M9  = Record.Field(MonthRow{0}, "Column16"),
+                M10 = Record.Field(MonthRow{0}, "Column17"),
+                M11 = Record.Field(MonthRow{0}, "Column18"),
+                M12 = Record.Field(MonthRow{0}, "Column19"),
+
+                // Keep only relevant columns
+                KeepCols = Table.SelectColumns(FirstSheet, {
+                    "Column1", "Column3", "Column4",
+                    "Column5", "Column6",
+                    "Column8", "Column9", "Column10",
+                    "Column11", "Column12", "Column13",
+                    "Column14", "Column15", "Column16",
+                    "Column17", "Column18", "Column19"
+                }),
+
+                // Remove unwanted rows
+                R1 = Table.SelectRows(KeepCols,
+                    each [Column8] <> "DEC"),
+                R2 = Table.SelectRows(R1,
+                    each [Column3] <> "# DAYS"),
+                R3 = Table.SelectRows(R2,
+                    each [Column1] <> "Check"),
+                R4 = Table.SelectRows(R3,
+                    each not ([Column3] = null and [Column4] = null)),
+
+                // Add parameter column and fill down
+                AddPar  = Table.AddColumn(R4, "Parameter",
+                    each if [Column5] = "SHIP CLASS"
+                         then Text.From([Column4])
+                         else null),
+                FillPar = Table.FillDown(AddPar, {"Parameter"}),
+
+                // Extract Ship Class and ALB from ALBDs FULL MONTH only
+                AddSC = Table.AddColumn(FillPar, "Ship_Class",
+                    each if [Parameter] = "ALBDs FULL MONTH"
+                            and [Column5] <> "SHIP CLASS"
+                            and [Column5] <> null
+                            and Text.From([Column5]) <> "0"
+                         then Text.From([Column5])
+                         else null),
+
+                AddALB_col = Table.AddColumn(AddSC, "ALB",
+                    each if [Parameter] = "ALBDs FULL MONTH"
+                            and [Column6] <> null
+                            and [Column6] <> 0
+                         then [Column6]
+                         else null),
+
+                FillSALB = Table.FillDown(
+                    AddALB_col, {"Ship_Class", "ALB"}),
+
+                // Keep only valid vessel rows
+                VesselRows = Table.SelectRows(FillSALB,
+                    each
+                        [Column4] <> null
+                        and [Column4] <> 0
+                        and Text.From([Column4]) <> "0"
+                        and Text.From([Column4]) <> "0.00"
+                        and [Column5] <> "SHIP CLASS"
+                        and not (
+                            Text.Length(
+                                Text.Remove(
+                                    Text.From([Column3]),
+                                    {"0".."9"}
+                                )
+                            ) = 0
+                        )
+                ),
+
+                // Rename columns
+                Renamed = Table.RenameColumns(VesselRows, {
+                    {"Column3", "Vessel_Code"},
+                    {"Column4", "Vessel_Name"},
+                    {"Column5", "SC_Raw"},
+                    {"Column6", "ALB_Raw"},
+                    {"Column8",  M1},  {"Column9",  M2},
+                    {"Column10", M3},  {"Column11", M4},
+                    {"Column12", M5},  {"Column13", M6},
+                    {"Column14", M7},  {"Column15", M8},
+                    {"Column16", M9},  {"Column17", M10},
+                    {"Column18", M11}, {"Column19", M12}
+                }),
+
+                Dropped = Table.RemoveColumns(Renamed,
+                    {"Column1", "Vessel_Code", "SC_Raw", "ALB_Raw"}),
+
+                // Unpivot month columns into rows
+                Unpivoted = Table.UnpivotOtherColumns(Dropped,
+                    {"Vessel_Name", "Ship_Class", "ALB", "Parameter"},
+                    "Month", "Value"),
+
+                // Buffer before pivot
+                Buf       = Table.Buffer(Unpivoted),
+                ParamList = List.Buffer(List.Distinct(Buf[Parameter])),
+
+                // Pivot parameters into columns
+                // One vessel one month one row
+                Pivoted = Table.Pivot(
+                    Buf, ParamList, "Parameter", "Value", List.Sum),
+
+                // Add calendar year
+                WithYear = Table.AddColumn(Pivoted, "Calendar_Year",
+                    each if [Month] = "DEC"
+                         then FYYear_v - 1
+                         else FYYear_v),
+
+                // Add month number
+                WithMNum = Table.AddColumn(WithYear, "Month_Number",
+                    each if [Month] = "JAN" then 1
+                         else if [Month] = "FEB" then 2
+                         else if [Month] = "MAR" then 3
+                         else if [Month] = "APR" then 4
+                         else if [Month] = "MAY" then 5
+                         else if [Month] = "JUN" then 6
+                         else if [Month] = "JUL" then 7
+                         else if [Month] = "AUG" then 8
+                         else if [Month] = "SEP" then 9
+                         else if [Month] = "OCT" then 10
+                         else if [Month] = "NOV" then 11
+                         else if [Month] = "DEC" then 12
+                         else null),
+
+                // Add all metadata columns
+                A1  = Table.AddColumn(WithMNum, "Source_File",
+                          each FileName_v),
+                A2  = Table.AddColumn(A1,  "Sheet_Name",
+                          each SheetName_v),
+                A3  = Table.AddColumn(A2,  "Date_Modified",
+                          each DateMod_v),
+                A4  = Table.AddColumn(A3,  "Date_Created",
+                          each DateCre_v),
+                A5  = Table.AddColumn(A4,  "Refresh_DateTime",
+                          each RefreshTime),
+                A6  = Table.AddColumn(A5,  "Fleet",
+                          each Fleet_v),
+                A7  = Table.AddColumn(A6,  "Year_Folder",
+                          each Year_v),
+                A8  = Table.AddColumn(A7,  "Data_Type",
+                          each DataType_v),
+                A9  = Table.AddColumn(A8,  "Forecast_Number",
+                          each FcstNum_v),
+                A10 = Table.AddColumn(A9,  "FY_Year",
+                          each FYYear_v),
+
+                // Reorder columns — metadata first then data
+                FixedCols = {
+                    "Source_File", "Sheet_Name",
+                    "Date_Modified", "Date_Created", "Refresh_DateTime",
+                    "Fleet", "Year_Folder", "Data_Type", "Forecast_Number",
+                    "FY_Year", "Vessel_Name", "Ship_Class", "ALB",
+                    "Calendar_Year", "Month", "Month_Number"
+                },
+
+                Reordered = Table.ReorderColumns(A10,
+                    FixedCols &
+                    List.Difference(Table.ColumnNames(A10), FixedCols))
+
+            in
+                Reordered
+    ),
+
+    // =========================================================
+    // COMBINE ALL PROCESSED TABLES
+    // Table.Combine handles different columns per file
+    // Missing parameters filled with null automatically
+    // =========================================================
+    CombinedTable = Table.Combine(AddProcessed[ProcessedData]),
+
+    // Final sort
+    SortedTable = Table.Sort(
+        CombinedTable,
+        {
+            {"Fleet",        Order.Ascending},
+            {"FY_Year",      Order.Ascending},
+            {"Vessel_Name",  Order.Ascending},
+            {"Month_Number", Order.Ascending}
+        }
+    )
+
+in
+    SortedTable
 ```
