@@ -146,3 +146,34 @@ let
 in
     SelectColumns
 ```
+
+## Query 2 — Sample File Sheet Extraction
+
+```
+let
+    // Get the specific file Content from our file list
+    Source = SP_Source,
+
+    FilteredToIncoming = Table.SelectRows(
+        Source,
+        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
+    ),
+
+    // Get only our sample file
+    SampleFile = Table.SelectRows(
+        FilteredToIncoming,
+        each [Name] = "COSTAFY23ACT.xlsx"
+    ),
+
+    // Extract the binary content
+    FileContent = SampleFile{0}[Content],
+
+    // Open as Excel workbook
+    OpenWorkbook = Excel.Workbook(FileContent, null, true),
+
+    // Get the first sheet
+    FirstSheet = OpenWorkbook{0}[Data]
+
+in
+    FirstSheet
+```
