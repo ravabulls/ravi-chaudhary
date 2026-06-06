@@ -179,3 +179,75 @@ let
 in
     FirstSheet
 ```
+
+## Query 3 — Column Selection & Row Cleaning
+
+```
+let
+    Source = SharePoint.Files(
+        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
+        [ApiVersion = 15]
+    ),
+
+    FilteredToIncoming = Table.SelectRows(
+        Source,
+        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
+    ),
+
+    // Get only our sample file
+    SampleFile = Table.SelectRows(
+        FilteredToIncoming,
+        each [Name] = "COSTAFY23ACT.xlsx"
+    ),
+
+    // Extract the binary content
+    FileContent = SampleFile{0}[Content],
+
+    // Open as Excel workbook
+    OpenWorkbook = Excel.Workbook(FileContent, null, true),
+
+    // Get the first sheet
+    FirstSheet = OpenWorkbook{0}[Data],
+
+    // Keep only columns we need
+    // Column3=VesselCode, Column4=ParameterName/VesselName
+    // Column5=ShipClass, Column6=ALB
+    // Column8 to Column19 = DEC to NOV
+    KeepColumns = Table.SelectColumns(
+        FirstSheet,
+        {"Column3", "Column4", "Column5", "Column6",
+         "Column8", "Column9", "Column10", "Column11",
+         "Column12", "Column13", "Column14", "Column15",
+         "Column16", "Column17", "Column18", "Column19"}
+    ),
+
+    // Remove rows where both Column3 and Column4 are null
+    RemoveEmptyRows = Table.SelectRows(
+        KeepColumns,
+        each not ([Column3] = null and [Column4] = null)
+    ),
+
+    // Remove the days rows (Column3 = "# DAYS")
+    RemoveDaysRows = Table.SelectRows(
+        RemoveEmptyRows,
+        each [Column3] <> "# DAYS"
+    ),
+
+    // Remove the block header rows (Column5 = "SHIP CLASS")
+    RemoveHeaderRows = Table.SelectRows(
+        RemoveDaysRows,
+        each [Column5] <> "SHIP CLASS"
+    ),
+
+    // Now extract month names row separately before removing it
+    // Month names row is where Column8 = "DEC"
+    // We will use this later for unpivoting
+    // For now just remove it too
+    RemoveMonthRow = Table.SelectRows(
+        RemoveHeaderRows,
+        each [Column8] <> "DEC"
+    )
+
+in
+    RemoveMonthRow
+```
