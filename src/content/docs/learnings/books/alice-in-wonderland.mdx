@@ -1746,3 +1746,19 @@ in
         )
     ),
 ```
+
+## Query 11 — Buffer Content in File\_List (Replace RemoveHelpers Block)
+
+```
+    // Buffer file content to prevent repeated SharePoint downloads
+    AddBufferedContent = Table.TransformColumns(
+        FilterIncluded,
+        {"Content", each Binary.Buffer(_)}
+    ),
+
+    RemoveHelpers = Table.RemoveColumns(
+        AddBufferedContent,
+        {"Path_Parts", "Incoming_Index", "Current_Year",
+         "Include_File", "Extension", "Attributes"}
+    )
+```
