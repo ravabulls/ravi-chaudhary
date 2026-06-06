@@ -20,19 +20,28 @@ let
         each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
     ),
 
+    // Rename columns with spaces to avoid reference issues
+    RenameColumns = Table.RenameColumns(
+        FilteredToIncoming,
+        {
+            {"Folder Path", "FolderPath"},
+            {"Date Modified", "DateModified"},
+            {"Date Created", "DateCreated"},
+            {"Date accessed", "DateAccessed"}
+        }
+    ),
+
     // Keep only Excel files
     FilteredToExcel = Table.SelectRows(
-        FilteredToIncoming,
+        RenameColumns,
         each [Extension] = ".xlsx" or [Extension] = ".xls"
     ),
 
     // Split folder path into parts for dynamic extraction
-    // Fleet is always the segment immediately after "Incoming"
-    // Year is always the segment immediately after Fleet
     AddPathParts = Table.AddColumn(
         FilteredToExcel,
         "Path_Parts",
-        each Text.Split([Folder Path], "/")
+        each Text.Split([FolderPath], "/")
     ),
 
     AddIncomingIndex = Table.AddColumn(
@@ -45,7 +54,7 @@ let
     AddFleet = Table.AddColumn(
         AddIncomingIndex,
         "Fleet",
-        each if [Incoming_Index] >= 0 
+        each if [Incoming_Index] >= 0
              then [Path_Parts]{[Incoming_Index] + 1}
              else "Unknown"
     ),
@@ -54,7 +63,7 @@ let
     AddYearFolder = Table.AddColumn(
         AddFleet,
         "Year_Folder",
-        each 
+        each
             let
                 YearText = [Path_Parts]{[Incoming_Index] + 2}
             in
@@ -63,9 +72,7 @@ let
                 else null
     ),
 
-    // Data_Type from file name — ACT or Forecast
-    // ACT files contain "ACT" in name
-    // Forecast files start with "F" followed by digits and contain "_FY"
+    // Data_Type from file name
     AddDataType = Table.AddColumn(
         AddYearFolder,
         "Data_Type",
@@ -76,8 +83,7 @@ let
              else "Unknown"
     ),
 
-    // Forecast_Number = the two digits after "F" in forecast file name
-    // e.g. F01_FY2026.xlsx → "01"
+    // Forecast_Number = two digits after "F"
     AddForecastNumber = Table.AddColumn(
         AddDataType,
         "Forecast_Number",
@@ -87,15 +93,12 @@ let
     ),
 
     // FY_Year extraction
-    // For ACT files → use Year_Folder directly
-    // For Forecast files → extract 4 digit year from file name e.g. F01_FY2026.xlsx → 2026
     AddFYYear = Table.AddColumn(
         AddForecastNumber,
         "FY_Year",
         each if [Data_Type] = "Forecast"
-             then 
+             then
                 let
-                    // Find "_FY" position and take 4 digits after it
                     FYPos = Text.PositionOf([Name], "_FY"),
                     YearText = Text.Middle([Name], FYPos + 3, 4)
                 in
@@ -105,43 +108,38 @@ let
              else [Year_Folder]
     ),
 
-    // Current year for forecast filtering logic later
-    // Only forecast files from current year will be processed
+    // Flag forecast files — only include if FY_Year = current year
     AddCurrentYear = Table.AddColumn(
         AddFYYear,
         "Current_Year",
         each Date.Year(DateTime.LocalNow())
     ),
 
-    // Flag whether this file should be included in processing
-    // ACT files: always include
-    // Forecast files: only if FY_Year = current year
     AddIncludeFlag = Table.AddColumn(
         AddCurrentYear,
         "Include_File",
         each if [Data_Type] = "ACT" then true
-             else if [Data_Type] = "Forecast" 
+             else if [Data_Type] = "Forecast"
                   and [FY_Year] = [Current_Year] then true
              else false
     ),
 
-    // Apply the include filter
     FilterIncluded = Table.SelectRows(
         AddIncludeFlag,
         each [Include_File] = true
     ),
 
-    // Remove helper columns no longer needed
+    // Remove helper columns
     RemoveHelpers = Table.RemoveColumns(
         FilterIncluded,
         {"Path_Parts", "Incoming_Index", "Current_Year", "Include_File"}
     ),
 
-    // Final column selection and ordering
+    // Final column selection
     SelectColumns = Table.SelectColumns(
         RemoveHelpers,
-        {"Content", "Name", "Extension", "Date Modified",
-         "Date Created", "Folder Path", "Fleet",
+        {"Content", "Name", "Extension", "DateModified",
+         "DateCreated", "FolderPath", "Fleet",
          "Year_Folder", "Data_Type", "Forecast_Number", "FY_Year"}
     )
 
