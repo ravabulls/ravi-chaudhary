@@ -1721,3 +1721,28 @@ let
 in
     SortedTable
 ```
+
+## Query 10 — Workbook Open with Error Handling (Replace fn\_ProcessFile Block)
+
+```
+    // Buffer file content immediately to prevent re-downloading
+    BufferedContent = Binary.Buffer(FileContent),
+    OpenWorkbook    = Excel.Workbook(BufferedContent, null, true),
+    SheetName       = OpenWorkbook{0}[Name],
+    RawSheet        = OpenWorkbook{0}[Data],
+
+    // Replace all error values in cells with null
+    // Prevents #VALUE #DIV0 #NA errors from crashing query
+    FirstSheet = Table.Buffer(
+        Table.TransformColumns(
+            Table.ReplaceErrorValues(
+                RawSheet,
+                List.Transform(
+                    Table.ColumnNames(RawSheet),
+                    each {_, null}
+                )
+            ),
+            {}
+        )
+    ),
+```
