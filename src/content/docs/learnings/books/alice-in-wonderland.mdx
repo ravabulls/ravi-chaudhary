@@ -194,25 +194,18 @@ let
         each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
     ),
 
-    // Get only our sample file
     SampleFile = Table.SelectRows(
         FilteredToIncoming,
         each [Name] = "COSTAFY23ACT.xlsx"
     ),
 
-    // Extract the binary content
     FileContent = SampleFile{0}[Content],
 
-    // Open as Excel workbook
     OpenWorkbook = Excel.Workbook(FileContent, null, true),
 
-    // Get the first sheet
     FirstSheet = OpenWorkbook{0}[Data],
 
     // Keep only columns we need
-    // Column3=VesselCode, Column4=ParameterName/VesselName
-    // Column5=ShipClass, Column6=ALB
-    // Column8 to Column19 = DEC to NOV
     KeepColumns = Table.SelectColumns(
         FirstSheet,
         {"Column3", "Column4", "Column5", "Column6",
@@ -233,21 +226,36 @@ let
         each [Column3] <> "# DAYS"
     ),
 
-    // Remove the block header rows (Column5 = "SHIP CLASS")
-    RemoveHeaderRows = Table.SelectRows(
+    // Remove the month names row (Column8 = "DEC")
+    RemoveMonthRow = Table.SelectRows(
         RemoveDaysRows,
-        each [Column5] <> "SHIP CLASS"
+        each [Column8] <> "DEC"
     ),
 
-    // Now extract month names row separately before removing it
-    // Month names row is where Column8 = "DEC"
-    // We will use this later for unpivoting
-    // For now just remove it too
-    RemoveMonthRow = Table.SelectRows(
-        RemoveHeaderRows,
-        each [Column8] <> "DEC"
+    // Add Parameter column
+    // When Column5 = "SHIP CLASS" → this is a header row → take Column4 as parameter name
+    // Otherwise null — we will fill down next
+    AddParameter = Table.AddColumn(
+        RemoveMonthRow,
+        "Parameter",
+        each if [Column5] = "SHIP CLASS"
+             then [Column4]
+             else null
+    ),
+
+    // Fill Parameter downward so every vessel row gets tagged
+    FillParameter = Table.FillDown(
+        AddParameter,
+        {"Parameter"}
+    ),
+
+    // Now remove the block header rows
+    // They are identified by Column5 = "SHIP CLASS"
+    RemoveHeaderRows = Table.SelectRows(
+        FillParameter,
+        each [Column5] <> "SHIP CLASS"
     )
 
 in
-    RemoveMonthRow
+    RemoveHeaderRows
 ```
