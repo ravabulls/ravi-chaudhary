@@ -151,8 +151,10 @@ in
 
 ```
 let
-    // Get the specific file Content from our file list
-    Source = SP_Source,
+    Source = SharePoint.Files(
+        "https://yourcompany.sharepoint.com/sites/CMGDecarbonisationUnit",
+        [ApiVersion = 15]
+    ),
 
     FilteredToIncoming = Table.SelectRows(
         Source,
