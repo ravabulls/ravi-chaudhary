@@ -293,12 +293,12 @@ let
     ),
 
     // Extract metadata values
-    FileName     = SampleFile{0}[Name],
-    FilePath     = SampleFile{0}[FolderPath],
-    DateMod      = SampleFile{0}[DateModified],
-    DateCre      = SampleFile{0}[DateCreated],
-    DateAcc      = SampleFile{0}[DateAccessed],
-    FileContent  = SampleFile{0}[Content],
+    FileName    = SampleFile{0}[Name],
+    FilePath    = SampleFile{0}[FolderPath],
+    DateMod     = SampleFile{0}[DateModified],
+    DateCre     = SampleFile{0}[DateCreated],
+    DateAcc     = SampleFile{0}[DateAccessed],
+    FileContent = SampleFile{0}[Content],
 
     // =========================================================
     // OPEN WORKBOOK
@@ -309,7 +309,6 @@ let
 
     // =========================================================
     // EXTRACT MONTH NAMES FROM ROW 4
-    // Row where Column8 = "DEC"
     // =========================================================
     MonthRow = Table.SelectRows(
         FirstSheet,
@@ -344,10 +343,6 @@ let
 
     // =========================================================
     // REMOVE UNWANTED ROWS
-    // Remove month names row (Column8 = "DEC")
-    // Remove days rows (Column3 = "# DAYS")
-    // Remove Check rows (Column1 = "Check")
-    // Remove empty rows (Column3 = null AND Column4 = null)
     // =========================================================
     RemoveMonthRow = Table.SelectRows(
         KeepColumns,
@@ -391,12 +386,11 @@ let
     // =========================================================
     // EXTRACT SHIP CLASS AND ALB
     // Only from ALBDs FULL MONTH block
-    // Fill down so every vessel row in that block gets values
     // =========================================================
     AddShipClass = Table.AddColumn(
         FillParameter,
         "Ship_Class",
-        each if [Parameter] = "ALBDs FULL MONTH" 
+        each if [Parameter] = "ALBDs FULL MONTH"
                 and [Column5] <> "SHIP CLASS"
                 and [Column5] <> null
                 and Text.From([Column5]) <> "0"
@@ -414,20 +408,13 @@ let
              else null
     ),
 
-    // Fill Ship_Class and ALB by vessel across all parameter blocks
-    // We need to fill these down globally after we have vessel names
-    // First fill within the ALBDs Full Month block
     FillShipALB = Table.FillDown(
         AddALB,
         {"Ship_Class", "ALB"}
     ),
 
     // =========================================================
-    // REMOVE NON VESSEL ROWS
-    // Keep only rows where Column4 is a proper vessel name
-    // Exclude: block header rows (Column5 = "SHIP CLASS")
-    // Exclude: fleet total rows (Column3 is long numeric)
-    // Exclude: zero rows (Column4 = 0 or 0.00 or null)
+    // KEEP ONLY VALID VESSEL ROWS
     // =========================================================
     KeepVesselRows = Table.SelectRows(
         FillShipALB,
@@ -442,13 +429,18 @@ let
             // Must not be a fleet total row
             // Fleet total rows have purely numeric Column3
             // Vessel rows have alphanumeric like LO346
-            and try (Number.From([Column3]) < 1) 
-                otherwise true
+            and not (
+                Text.Length(
+                    Text.Remove(
+                        Text.From([Column3]),
+                        {"0".."9"}
+                    )
+                ) = 0
+            )
     ),
 
     // =========================================================
-    // RENAME COLUMNS BEFORE UNPIVOT
-    // Use actual month names from MonthMapping
+    // RENAME COLUMNS
     // =========================================================
     RenameMonthCols = Table.RenameColumns(
         KeepVesselRows,
@@ -470,7 +462,7 @@ let
         }
     ),
 
-    // Drop Column1, Column5, Column6 (no longer needed)
+    // Drop columns no longer needed
     DropExtraCols = Table.RemoveColumns(
         RenameMonthCols,
         {"Column1", "Column5", "Column6", "Vessel_Code"}
@@ -478,7 +470,6 @@ let
 
     // =========================================================
     // UNPIVOT MONTH COLUMNS
-    // Turn 12 month columns into Month + Value rows
     // =========================================================
     UnpivotMonths = Table.UnpivotOtherColumns(
         DropExtraCols,
@@ -489,7 +480,6 @@ let
 
     // =========================================================
     // PIVOT PARAMETERS INTO COLUMNS
-    // Each parameter becomes its own column
     // =========================================================
     PivotParameters = Table.Pivot(
         UnpivotMonths,
@@ -500,13 +490,10 @@ let
     ),
 
     // =========================================================
-    // ADD FISCAL YEAR CALENDAR DATE COLUMNS
+    // ADD CALENDAR YEAR AND MONTH NUMBER
     // FY runs DEC(year-1) to NOV(year)
-    // Year_Folder = FY year e.g. 2023
-    // DEC belongs to year-1 = 2022
-    // JAN-NOV belong to year = 2023
     // =========================================================
-    FYYear = 2023, // hardcoded for sample, will be dynamic later
+    FYYear = 2023,
 
     AddCalendarYear = Table.AddColumn(
         PivotParameters,
@@ -537,16 +524,16 @@ let
     // =========================================================
     // ADD ALL METADATA COLUMNS
     // =========================================================
-    AddMeta1 = Table.AddColumn(AddMonthNumber, "Source_File",    each FileName),
-    AddMeta2 = Table.AddColumn(AddMeta1,       "Source_Path",    each FilePath),
-    AddMeta3 = Table.AddColumn(AddMeta2,       "Sheet_Name",     each SheetName),
-    AddMeta4 = Table.AddColumn(AddMeta3,       "Date_Modified",  each DateMod),
-    AddMeta5 = Table.AddColumn(AddMeta4,       "Date_Created",   each DateCre),
-    AddMeta6 = Table.AddColumn(AddMeta5,       "Date_Accessed",  each DateAcc),
-    AddMeta7 = Table.AddColumn(AddMeta6,       "Fleet",          each "Costa"),
-    AddMeta8 = Table.AddColumn(AddMeta7,       "Year_Folder",    each 2023),
-    AddMeta9 = Table.AddColumn(AddMeta8,       "Data_Type",      each "ACT"),
-    AddMeta10= Table.AddColumn(AddMeta9,       "FY_Year",        each FYYear),
+    AddMeta1  = Table.AddColumn(AddMonthNumber, "Source_File",   each FileName),
+    AddMeta2  = Table.AddColumn(AddMeta1,       "Source_Path",   each FilePath),
+    AddMeta3  = Table.AddColumn(AddMeta2,       "Sheet_Name",    each SheetName),
+    AddMeta4  = Table.AddColumn(AddMeta3,       "Date_Modified", each DateMod),
+    AddMeta5  = Table.AddColumn(AddMeta4,       "Date_Created",  each DateCre),
+    AddMeta6  = Table.AddColumn(AddMeta5,       "Date_Accessed", each DateAcc),
+    AddMeta7  = Table.AddColumn(AddMeta6,       "Fleet",         each "Costa"),
+    AddMeta8  = Table.AddColumn(AddMeta7,       "Year_Folder",   each 2023),
+    AddMeta9  = Table.AddColumn(AddMeta8,       "Data_Type",     each "ACT"),
+    AddMeta10 = Table.AddColumn(AddMeta9,       "FY_Year",       each FYYear),
 
     // =========================================================
     // FINAL COLUMN ORDERING
@@ -559,7 +546,7 @@ let
             "Fleet", "Year_Folder", "Data_Type", "FY_Year",
             "Vessel_Name", "Ship_Class", "ALB",
             "Calendar_Year", "Month", "Month_Number"
-        } 
+        }
         & List.Difference(
             Table.ColumnNames(AddMeta10),
             {
