@@ -1,6 +1,6 @@
 ---
-title: "Power Query — CMG GHG KPI File Loader"
-description: "Temporary workspace: Power Query M code for combining horizontal SharePoint sheets into Power BI-friendly format."
+title: "GHG Emissions — Power Query Code"
+description: "Personal workspace: Power Query M code for loading and tagging GHG emissions data files into a Power BI-friendly structure."
 ---
 
 > **Temporary page** — delete after project completion.
@@ -9,7 +9,7 @@ description: "Temporary workspace: Power Query M code for combining horizontal S
 
 ## Query 1 — File Discovery & Metadata Tagging
 
-Connects to the SharePoint site, filters down to `CMG_GHG_KPIs/Incoming` Excel files, and tags each file with `Fleet`, `Year_Folder`, `Data_Type`, `Forecast_Number`, and `FY_Year`. ACT files are always included; Forecast files are included only if `FY_Year` matches the current calendar year.
+Connects to a SharePoint document library, filters down to Excel files inside an `Incoming` folder hierarchy, and tags each file with `Fleet`, `Year_Folder`, `Data_Type`, `Forecast_Number`, and `FY_Year`. ACT files are always included; Forecast files are included only if `FY_Year` matches the current calendar year.
 
 ```
 let
