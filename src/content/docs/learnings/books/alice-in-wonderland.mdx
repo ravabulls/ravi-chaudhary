@@ -1762,3 +1762,32 @@ in
          "Include_File", "Extension", "Attributes"}
     )
 ```
+
+## Query 12 — Table.Buffer Entire File\_List (Final Block of Query 8)
+
+```
+    RemoveHelpers = Table.RemoveColumns(
+        AddBufferedContent,
+        {"Path_Parts", "Incoming_Index", "Current_Year",
+         "Include_File", "Extension", "Attributes"}
+    ),
+
+    // Buffer entire file list including all content binaries
+    // This ensures SharePoint is called exactly once
+    // All subsequent processing reads from memory only
+    BufferedFileList = Table.Buffer(RemoveHelpers)
+
+in
+    BufferedFileList
+```
+
+## Query 13 — Updated FileList Reference in Query 9
+
+```
+let
+    // =========================================================
+    // GET FILE LIST - BUFFER IMMEDIATELY
+    // Ensures file list and all content read once from SharePoint
+    // =========================================================
+    FileList = Table.Buffer(File_List),
+```
