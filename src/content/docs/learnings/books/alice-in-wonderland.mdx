@@ -716,7 +716,47 @@ let
                     Buf, ParamList,
                     "Parameter", "Value", List.Sum),
 
-                WithYear = Table.AddColumn(Pivoted,
+                // =============================================
+                // CORRECTION 1 — Replace null with 0
+                // for all parameter/numeric columns
+                // =============================================
+                ReplaceNulls = Table.TransformColumns(
+                    Pivoted,
+                    List.Transform(
+                        ParamList,
+                        each {
+                            _,
+                            each if _ = null then 0 else _,
+                            type number
+                        }
+                    )
+                ),
+
+                // =============================================
+                // CORRECTION 2 — Rename Nautical Miles column
+                // Removes [NM] from column name for clean DAX
+                // Handles both upper and mixed case versions
+                // =============================================
+                RenameNM =
+                    let
+                        Cols = Table.ColumnNames(ReplaceNulls)
+                    in
+                        if List.Contains(Cols, "Nautical Miles [NM]")
+                        then Table.RenameColumns(ReplaceNulls,
+                            {{"Nautical Miles [NM]",
+                              "Nautical Miles"}})
+                        else if List.Contains(Cols,
+                            "NAUTICAL MILES [NM]")
+                        then Table.RenameColumns(ReplaceNulls,
+                            {{"NAUTICAL MILES [NM]",
+                              "Nautical Miles"}})
+                        else ReplaceNulls,
+
+                // =============================================
+                // All steps below now reference RenameNM
+                // instead of Pivoted
+                // =============================================
+                WithYear = Table.AddColumn(RenameNM,
                     "Calendar_Year",
                     each if [Month] = "DEC"
                          then FYYear_v - 1
@@ -803,9 +843,9 @@ in
 
 ### Pre-Step — Column Rename in Power Query
 
-Open Power Query Editor → `cmg_ghg_master_query` → find column `Nautical Miles [NM]` → right-click → Rename → type `Nautical Miles` → Close & Apply.
+Query 4 (`master_query`) now handles the `Nautical Miles [NM]` → `Nautical Miles` rename automatically via the `RenameNM` step (handles both upper and mixed case). No manual rename needed if you use Query 4.
 
-Square brackets inside a column name cause DAX conflicts.
+If you use an older query version: open Power Query Editor → `cmg_ghg_master_query` → find column `Nautical Miles [NM]` → right-click → Rename → type `Nautical Miles` → Close & Apply. Square brackets inside a column name cause DAX conflicts.
 
 ---
 
