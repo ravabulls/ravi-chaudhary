@@ -841,14 +841,6 @@ in
 
 ---
 
-### Pre-Step — Column Rename in Power Query
-
-Query 4 (`master_query`) now handles the `Nautical Miles [NM]` → `Nautical Miles` rename automatically via the `RenameNM` step (handles both upper and mixed case). No manual rename needed if you use Query 4.
-
-If you use an older query version: open Power Query Editor → `cmg_ghg_master_query` → find column `Nautical Miles [NM]` → right-click → Rename → type `Nautical Miles` → Close & Apply. Square brackets inside a column name cause DAX conflicts.
-
----
-
 ### Step 1 — Calculated Columns
 
 In Power BI Desktop → Data view → click `cmg_ghg_master_query` table → **Table tools** → **New column**.
@@ -1320,13 +1312,17 @@ DIVIDE(
 Target kgCO2e ALBD 2026 = 
 VAR SelectedFleet = SELECTEDVALUE('cmg_ghg_master_query'[Fleet])
 RETURN
-CALCULATE(
-    MAX(Targets[Target_Value]),
-    Targets[KPI_Name] = "kgCO2e/ALBD",
-    Targets[Target_Year] = 2026,
-    IF(
-        ISBLANK(SelectedFleet),
-        TRUE(),
+IF(
+    ISBLANK(SelectedFleet),
+    CALCULATE(
+        MAX(Targets[Target_Value]),
+        Targets[KPI_Name] = "kgCO2e/ALBD",
+        Targets[Target_Year] = 2026
+    ),
+    CALCULATE(
+        MAX(Targets[Target_Value]),
+        Targets[KPI_Name] = "kgCO2e/ALBD",
+        Targets[Target_Year] = 2026,
         Targets[Fleet] = SelectedFleet
     )
 )
@@ -1336,13 +1332,17 @@ CALCULATE(
 Target kgCO2e ALBD 2030 = 
 VAR SelectedFleet = SELECTEDVALUE('cmg_ghg_master_query'[Fleet])
 RETURN
-CALCULATE(
-    MAX(Targets[Target_Value]),
-    Targets[KPI_Name] = "kgCO2e/ALBD",
-    Targets[Target_Year] = 2030,
-    IF(
-        ISBLANK(SelectedFleet),
-        TRUE(),
+IF(
+    ISBLANK(SelectedFleet),
+    CALCULATE(
+        MAX(Targets[Target_Value]),
+        Targets[KPI_Name] = "kgCO2e/ALBD",
+        Targets[Target_Year] = 2030
+    ),
+    CALCULATE(
+        MAX(Targets[Target_Value]),
+        Targets[KPI_Name] = "kgCO2e/ALBD",
+        Targets[Target_Year] = 2030,
         Targets[Fleet] = SelectedFleet
     )
 )
