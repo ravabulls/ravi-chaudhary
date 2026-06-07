@@ -794,3 +794,886 @@ let
 in
     SortedTable
 ```
+
+---
+
+## Power BI Setup — DAX Measures & Calculated Columns
+
+---
+
+### Pre-Step — Column Rename in Power Query
+
+Open Power Query Editor → `cmg_ghg_master_query` → find column `Nautical Miles [NM]` → right-click → Rename → type `Nautical Miles` → Close & Apply.
+
+Square brackets inside a column name cause DAX conflicts.
+
+---
+
+### Step 1 — Calculated Columns
+
+In Power BI Desktop → Data view → click `cmg_ghg_master_query` table → **Table tools** → **New column**.
+
+#### Calculated Column 1 — Year Version Label
+
+```
+Year_Version = 
+IF(
+    'cmg_ghg_master_query'[Data_Type] = "ACT",
+    TEXT('cmg_ghg_master_query'[FY_Year], "0"),
+    TEXT('cmg_ghg_master_query'[FY_Year], "0") 
+        & " F" & 'cmg_ghg_master_query'[Forecast_Number]
+)
+```
+
+#### Calculated Column 2 — Year Version Sort
+
+```
+Year_Version_Sort = 
+'cmg_ghg_master_query'[FY_Year] * 100 +
+IF(
+    'cmg_ghg_master_query'[Data_Type] = "ACT",
+    0,
+    VALUE('cmg_ghg_master_query'[Forecast_Number])
+)
+```
+
+After creating: click `Year_Version` → **Column tools** → **Sort by column** → select `Year_Version_Sort`.
+
+#### Calculated Column 3 — Month Name Full
+
+```
+Month_Name_Full = 
+SWITCH(
+    'cmg_ghg_master_query'[Month],
+    "JAN", "January",   "FEB", "February",
+    "MAR", "March",     "APR", "April",
+    "MAY", "May",       "JUN", "June",
+    "JUL", "July",      "AUG", "August",
+    "SEP", "September", "OCT", "October",
+    "NOV", "November",  "DEC", "December",
+    "Unknown"
+)
+```
+
+---
+
+### Step 2 — Create Measures Table
+
+**Home** → **Enter Data** → name it `_Measures` → **Load**. Then right-click each new measure → move to `_Measures` table.
+
+---
+
+### Section A — Base Fuel Measures
+
+```
+Total HFO MT = 
+SUM('cmg_ghg_master_query'[HFO - MT])
+```
+
+```
+Total LNG MT = 
+SUM('cmg_ghg_master_query'[LNG - MT])
+```
+
+```
+Total LSFO MT = 
+SUM('cmg_ghg_master_query'[LSFO - MT])
+```
+
+```
+Total MGO MT = 
+SUM('cmg_ghg_master_query'[MGO - MT])
+```
+
+```
+Total VLSFO MT = 
+SUM('cmg_ghg_master_query'[VLSFO-MT])
+```
+
+```
+Total Biofuel MT = 
+SUM('cmg_ghg_master_query'[BIOFUEL - MT])
+```
+
+```
+Total Fossil Fuel MT = 
+[Total HFO MT] + [Total LNG MT] + [Total LSFO MT] +
+[Total MGO MT] + [Total VLSFO MT]
+```
+
+```
+Total Fuel MT = 
+[Total Fossil Fuel MT] + [Total Biofuel MT]
+```
+
+---
+
+### Section B — Operational Base Measures
+
+```
+Total ALBDs Commercial = 
+SUM('cmg_ghg_master_query'[ALBDs Commercial])
+```
+
+```
+Total ALBDs Full Month = 
+SUM('cmg_ghg_master_query'[ALBDs Full Month])
+```
+
+```
+Total Nautical Miles = 
+SUM('cmg_ghg_master_query'[Nautical Miles])
+```
+
+```
+Total ALB Fleet = 
+SUMX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    MAX('cmg_ghg_master_query'[ALB])
+)
+```
+
+```
+Commercial Utilization Pct = 
+DIVIDE(
+    [Total ALBDs Commercial],
+    [Total ALBDs Full Month],
+    0
+) * 100
+```
+
+```
+NM per ALBD Commercial = 
+DIVIDE(
+    [Total Nautical Miles],
+    [Total ALBDs Commercial],
+    0
+)
+```
+
+---
+
+### Section C — CO2e Emission Measures
+
+```
+tCO2e HFO = 
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "HFO"
+)
+RETURN [Total HFO MT] * EF
+```
+
+```
+tCO2e LNG = 
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "LNG"
+)
+RETURN [Total LNG MT] * EF
+```
+
+```
+tCO2e LSFO = 
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "LSFO"
+)
+RETURN [Total LSFO MT] * EF
+```
+
+```
+tCO2e MGO = 
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "MGO"
+)
+RETURN [Total MGO MT] * EF
+```
+
+```
+tCO2e VLSFO = 
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "VLSFO"
+)
+RETURN [Total VLSFO MT] * EF
+```
+
+```
+tCO2e Biofuel = 
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "Biofuel"
+)
+RETURN [Total Biofuel MT] * EF
+```
+
+```
+Total tCO2e = 
+[tCO2e HFO] + [tCO2e LNG] + [tCO2e LSFO] +
+[tCO2e MGO] + [tCO2e VLSFO] + [tCO2e Biofuel]
+```
+
+```
+Total tCO2e Fossil = 
+[tCO2e HFO] + [tCO2e LNG] + [tCO2e LSFO] +
+[tCO2e MGO] + [tCO2e VLSFO]
+```
+
+---
+
+### Section D — Core KPI Measures
+
+```
+kgCO2e per ALBD = 
+DIVIDE(
+    [Total tCO2e] * 1000,
+    [Total ALBDs Commercial],
+    0
+)
+```
+
+```
+gCO2e per ALB km = 
+DIVIDE(
+    [Total tCO2e] * 1000000,
+    [Total ALB Fleet] * [Total Nautical Miles] * 1.832,
+    0
+)
+```
+
+```
+Fuel Cons kg per ALBD = 
+DIVIDE(
+    [Total Fuel MT] * 1000,
+    [Total ALBDs Commercial],
+    0
+)
+```
+
+```
+Weighted Avg Emission Factor = 
+DIVIDE(
+    [Total tCO2e],
+    [Total Fuel MT],
+    0
+)
+```
+
+```
+tCO2e per Nautical Mile = 
+DIVIDE(
+    [Total tCO2e],
+    [Total Nautical Miles],
+    0
+)
+```
+
+```
+Fuel MT per Nautical Mile = 
+DIVIDE(
+    [Total Fuel MT],
+    [Total Nautical Miles],
+    0
+)
+```
+
+---
+
+### Section E — Fuel Share Measures
+
+```
+HFO Share Pct = 
+DIVIDE([Total HFO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+LNG Share Pct = 
+DIVIDE([Total LNG MT], [Total Fuel MT], 0) * 100
+```
+
+```
+LSFO Share Pct = 
+DIVIDE([Total LSFO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+MGO Share Pct = 
+DIVIDE([Total MGO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+VLSFO Share Pct = 
+DIVIDE([Total VLSFO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+Biofuel Share Pct = 
+DIVIDE([Total Biofuel MT], [Total Fuel MT], 0) * 100
+```
+
+```
+Fossil Fuel Share Pct = 
+DIVIDE([Total Fossil Fuel MT], [Total Fuel MT], 0) * 100
+```
+
+```
+Biofuel Penetration Pct = 
+DIVIDE([Total Biofuel MT], [Total Fuel MT], 0) * 100
+```
+
+---
+
+### Section F — Year Over Year Measures
+
+```
+kgCO2e ALBD Previous Year = 
+VAR CY = MAX('cmg_ghg_master_query'[FY_Year])
+RETURN
+CALCULATE(
+    [kgCO2e per ALBD],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        'cmg_ghg_master_query'[FY_Year] = CY - 1
+    )
+)
+```
+
+```
+kgCO2e ALBD YoY Change = 
+[kgCO2e per ALBD] - [kgCO2e ALBD Previous Year]
+```
+
+```
+kgCO2e ALBD YoY Change Pct = 
+DIVIDE(
+    [kgCO2e ALBD YoY Change],
+    [kgCO2e ALBD Previous Year],
+    0
+) * 100
+```
+
+```
+Total tCO2e Previous Year = 
+VAR CY = MAX('cmg_ghg_master_query'[FY_Year])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        'cmg_ghg_master_query'[FY_Year] = CY - 1
+    )
+)
+```
+
+```
+Total tCO2e YoY Change = 
+[Total tCO2e] - [Total tCO2e Previous Year]
+```
+
+```
+Total tCO2e YoY Change Pct = 
+DIVIDE(
+    [Total tCO2e YoY Change],
+    [Total tCO2e Previous Year],
+    0
+) * 100
+```
+
+```
+Total Fuel YoY Change Pct = 
+VAR CY = MAX('cmg_ghg_master_query'[FY_Year])
+VAR PrevFuel = CALCULATE(
+    [Total Fuel MT],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        'cmg_ghg_master_query'[FY_Year] = CY - 1
+    )
+)
+RETURN
+DIVIDE([Total Fuel MT] - PrevFuel, PrevFuel, 0) * 100
+```
+
+---
+
+### Section G — 2019 Baseline Comparison
+
+```
+kgCO2e ALBD Baseline 2019 = 
+CALCULATE(
+    [kgCO2e per ALBD],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        'cmg_ghg_master_query'[FY_Year] = 2019 &&
+        'cmg_ghg_master_query'[Data_Type] = "ACT"
+    )
+)
+```
+
+```
+Total tCO2e Baseline 2019 = 
+CALCULATE(
+    [Total tCO2e],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        'cmg_ghg_master_query'[FY_Year] = 2019 &&
+        'cmg_ghg_master_query'[Data_Type] = "ACT"
+    )
+)
+```
+
+```
+Total Fuel Baseline 2019 = 
+CALCULATE(
+    [Total Fuel MT],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        'cmg_ghg_master_query'[FY_Year] = 2019 &&
+        'cmg_ghg_master_query'[Data_Type] = "ACT"
+    )
+)
+```
+
+```
+Reduction vs 2019 kgCO2e ALBD = 
+[kgCO2e ALBD Baseline 2019] - [kgCO2e per ALBD]
+```
+
+```
+Reduction vs 2019 kgCO2e ALBD Pct = 
+DIVIDE(
+    [Reduction vs 2019 kgCO2e ALBD],
+    [kgCO2e ALBD Baseline 2019],
+    0
+) * 100
+```
+
+```
+Total tCO2e Reduction vs 2019 = 
+[Total tCO2e Baseline 2019] - [Total tCO2e]
+```
+
+```
+Total tCO2e Reduction vs 2019 Pct = 
+DIVIDE(
+    [Total tCO2e Reduction vs 2019],
+    [Total tCO2e Baseline 2019],
+    0
+) * 100
+```
+
+```
+Total Fuel Reduction vs 2019 Pct = 
+DIVIDE(
+    [Total Fuel Baseline 2019] - [Total Fuel MT],
+    [Total Fuel Baseline 2019],
+    0
+) * 100
+```
+
+---
+
+### Section H — Target Gap Measures
+
+```
+Target kgCO2e ALBD 2026 = 
+VAR SelectedFleet = SELECTEDVALUE('cmg_ghg_master_query'[Fleet])
+RETURN
+CALCULATE(
+    MAX(Targets[Target_Value]),
+    Targets[KPI_Name] = "kgCO2e/ALBD",
+    Targets[Target_Year] = 2026,
+    IF(
+        ISBLANK(SelectedFleet),
+        TRUE(),
+        Targets[Fleet] = SelectedFleet
+    )
+)
+```
+
+```
+Target kgCO2e ALBD 2030 = 
+VAR SelectedFleet = SELECTEDVALUE('cmg_ghg_master_query'[Fleet])
+RETURN
+CALCULATE(
+    MAX(Targets[Target_Value]),
+    Targets[KPI_Name] = "kgCO2e/ALBD",
+    Targets[Target_Year] = 2030,
+    IF(
+        ISBLANK(SelectedFleet),
+        TRUE(),
+        Targets[Fleet] = SelectedFleet
+    )
+)
+```
+
+```
+Gap to 2026 Target = 
+[kgCO2e per ALBD] - [Target kgCO2e ALBD 2026]
+```
+
+```
+Gap to 2026 Target Pct = 
+DIVIDE(
+    [Gap to 2026 Target],
+    [Target kgCO2e ALBD 2026],
+    0
+) * 100
+```
+
+```
+Gap to 2030 Target = 
+[kgCO2e per ALBD] - [Target kgCO2e ALBD 2030]
+```
+
+```
+Gap to 2030 Target Pct = 
+DIVIDE(
+    [Gap to 2030 Target],
+    [Target kgCO2e ALBD 2030],
+    0
+) * 100
+```
+
+```
+On Track 2026 = 
+IF(
+    [kgCO2e per ALBD] <= [Target kgCO2e ALBD 2026],
+    "On Track",
+    "Off Track"
+)
+```
+
+```
+On Track 2030 = 
+IF(
+    [kgCO2e per ALBD] <= [Target kgCO2e ALBD 2030],
+    "On Track",
+    "Off Track"
+)
+```
+
+---
+
+### Section I — Actual vs Forecast Comparison
+
+```
+kgCO2e ALBD ACT = 
+CALCULATE(
+    [kgCO2e per ALBD],
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+kgCO2e ALBD Forecast = 
+CALCULATE(
+    [kgCO2e per ALBD],
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+kgCO2e ALBD ACT vs Forecast Variance = 
+[kgCO2e ALBD ACT] - [kgCO2e ALBD Forecast]
+```
+
+```
+kgCO2e ALBD ACT vs Forecast Variance Pct = 
+DIVIDE(
+    [kgCO2e ALBD ACT vs Forecast Variance],
+    [kgCO2e ALBD Forecast],
+    0
+) * 100
+```
+
+```
+Total tCO2e ACT = 
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+Total tCO2e Forecast = 
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+Total tCO2e ACT vs Forecast Variance = 
+[Total tCO2e ACT] - [Total tCO2e Forecast]
+```
+
+```
+Total Fuel MT ACT = 
+CALCULATE(
+    [Total Fuel MT],
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+Total Fuel MT Forecast = 
+CALCULATE(
+    [Total Fuel MT],
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+Total Fuel MT ACT vs Forecast Variance = 
+[Total Fuel MT ACT] - [Total Fuel MT Forecast]
+```
+
+---
+
+### Section J — Vessel Level KPIs
+
+```
+kgCO2e ALBD Best Vessel = 
+MINX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+kgCO2e ALBD Worst Vessel = 
+MAXX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+kgCO2e ALBD Fleet Average = 
+AVERAGEX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+Vessel tCO2e Share Pct = 
+DIVIDE(
+    [Total tCO2e],
+    CALCULATE(
+        [Total tCO2e],
+        ALL('cmg_ghg_master_query'[Vessel_Name])
+    ),
+    0
+) * 100
+```
+
+```
+Vessel Fuel Share Pct = 
+DIVIDE(
+    [Total Fuel MT],
+    CALCULATE(
+        [Total Fuel MT],
+        ALL('cmg_ghg_master_query'[Vessel_Name])
+    ),
+    0
+) * 100
+```
+
+```
+Vessel Rank kgCO2e ALBD = 
+RANKX(
+    ALL('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD],
+    ,
+    ASC,
+    Dense
+)
+```
+
+```
+Vessel Rank Total tCO2e = 
+RANKX(
+    ALL('cmg_ghg_master_query'[Vessel_Name]),
+    [Total tCO2e],
+    ,
+    DESC,
+    Dense
+)
+```
+
+---
+
+### Section K — YTD and Cumulative Measures
+
+```
+Cumulative tCO2e in FY = 
+VAR CurrentMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Month_Number] <= CurrentMonth
+)
+```
+
+```
+YTD tCO2e ACT = 
+VAR MaxMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Month_Number] <= MaxMonth,
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+YTD tCO2e Forecast = 
+VAR MaxMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Month_Number] <= MaxMonth,
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+YTD ACT vs Forecast tCO2e Variance = 
+[YTD tCO2e ACT] - [YTD tCO2e Forecast]
+```
+
+```
+Annualized tCO2e from YTD = 
+VAR MonthsElapsed = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+DIVIDE(
+    [YTD tCO2e ACT] * 12,
+    MonthsElapsed,
+    0
+)
+```
+
+```
+Full Year Forecast tCO2e = 
+CALCULATE(
+    [Total tCO2e],
+    ALL('cmg_ghg_master_query'[Month_Number]),
+    ALL('cmg_ghg_master_query'[Month]),
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+YTD Fuel MT ACT = 
+VAR MaxMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total Fuel MT],
+    'cmg_ghg_master_query'[Month_Number] <= MaxMonth,
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+---
+
+### Section L — Ship Class Level Measures
+
+```
+Class tCO2e Share Pct = 
+DIVIDE(
+    [Total tCO2e],
+    CALCULATE(
+        [Total tCO2e],
+        ALL('cmg_ghg_master_query'[Ship_Class])
+    ),
+    0
+) * 100
+```
+
+```
+Class kgCO2e ALBD = 
+AVERAGEX(
+    VALUES('cmg_ghg_master_query'[Ship_Class]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+Class Rank kgCO2e ALBD = 
+RANKX(
+    ALL('cmg_ghg_master_query'[Ship_Class]),
+    [kgCO2e per ALBD],
+    ,
+    ASC,
+    Dense
+)
+```
+
+---
+
+### Section M — Trajectory and Progress Measures
+
+```
+Required Annual Reduction Rate to 2030 = 
+VAR CurrentYear = MAX('cmg_ghg_master_query'[FY_Year])
+VAR YearsRemaining = 2030 - CurrentYear
+VAR CurrentKPI = [kgCO2e per ALBD]
+VAR Target2030 = [Target kgCO2e ALBD 2030]
+RETURN
+IF(
+    YearsRemaining > 0,
+    DIVIDE(CurrentKPI - Target2030, YearsRemaining, 0),
+    0
+)
+```
+
+```
+Required Annual Reduction Pct to 2030 = 
+DIVIDE(
+    [Required Annual Reduction Rate to 2030],
+    [kgCO2e per ALBD],
+    0
+) * 100
+```
+
+```
+Projected 2030 kgCO2e ALBD = 
+VAR CurrentYear = MAX('cmg_ghg_master_query'[FY_Year])
+VAR YearsRemaining = 2030 - CurrentYear
+VAR AnnualReduction = [kgCO2e ALBD YoY Change] * -1
+RETURN
+[kgCO2e per ALBD] - (AnnualReduction * YearsRemaining)
+```
+
+```
+tCO2e Avoided vs 2019 = 
+VAR Baseline = [kgCO2e ALBD Baseline 2019]
+VAR Current = [kgCO2e per ALBD]
+VAR CurrentALBDs = [Total ALBDs Commercial]
+RETURN
+DIVIDE((Baseline - Current) * CurrentALBDs, 1000, 0)
+```
+
+---
+
+### Measures Summary
+
+| Section | Count | Purpose |
+|---|---|---|
+| A — Base Fuel | 8 | Fuel totals by type |
+| B — Operational | 6 | ALBDs, NM, utilisation |
+| C — CO2e | 8 | Emissions by fuel type |
+| D — Core KPIs | 6 | kgCO2e/ALBD, intensity |
+| E — Fuel Share | 8 | % split by fuel type |
+| F — Year on Year | 7 | YoY change vs prior year |
+| G — 2019 Baseline | 8 | Reduction since baseline |
+| H — Target Gap | 8 | vs 2026 and 2030 targets |
+| I — ACT vs Forecast | 10 | Variance tracking |
+| J — Vessel Level | 7 | Ranking, share, best/worst |
+| K — YTD Cumulative | 7 | In-year progress |
+| L — Ship Class | 3 | Class-level aggregation |
+| M — Trajectory | 4 | Path to 2030 |
+| **Total** | **90** | |
