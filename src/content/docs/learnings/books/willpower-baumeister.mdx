@@ -1,0 +1,1898 @@
+---
+title: Willpower — Roy F. Baumeister & John Tierney
+description: Reading notes on Willpower by Roy F. Baumeister and John Tierney.
+sidebar:
+  label: Willpower — Baumeister
+  order: 10
+---
+
+## Power BI Fleet GHG KPI Dashboard — Complete Build Guide
+
+### Dashboard Purpose
+
+- Monitor fleet GHG emissions across multiple vessel fleets and years
+- Track fuel consumption by type and mix shift over time
+- Compare actual versus forecast performance
+- Track progress toward 2026 and 2030 decarbonisation targets
+- Enable vessel-level and ship-class-level drill-down analysis
+
+### Data Sources
+
+Raw Excel files stored in SharePoint under the following folder structure:
+
+```
+CMG_GHG_KPIs/
++-- Analysis/
+|   +-- CMG_GHG_Master.pbix        (Power BI output file)
++-- Incoming/
+    +-- AIDA/
+    |   +-- 2019/
+    |   |   +-- AIDA_FY19_ACT.xlsx
+    |   +-- 2023/
+    |   |   +-- AIDA_FY23_ACT.xlsx
+    |   +-- 2026/
+    |       +-- F01_FY2026.xlsx
+    |       +-- F02_FY2026.xlsx
+    |       +-- ...
+    +-- Costa/
+        +-- 2019/
+        |   +-- COSTAFY19ACT.xlsx
+        +-- 2026/
+            +-- COSTAFY26ACT.xlsx
+            +-- F01_FY2026.xlsx
+```
+
+### File Naming Rules
+
+| Fleet | ACT file pattern | Example |
+|---|---|---|
+| AIDA | `AIDA_FY##_ACT.xlsx` | AIDA_FY23_ACT.xlsx |
+| Costa | `COSTAFY##ACT.xlsx` | COSTAFY23ACT.xlsx |
+| Any fleet forecast | `F##_FY####.xlsx` | F05_FY2026.xlsx |
+
+### File Inclusion Rules
+
+| Year folder | Data type | Include? |
+|---|---|---|
+| Current year | Forecast files | YES — all forecast versions |
+| Current year | ACT files | NO |
+| Older years | ACT files | YES |
+| Older years | Forecast files | NO |
+
+### Fiscal Year Calendar
+
+Fiscal year runs December (year-1) to November (year).
+
+| Folder year | FY months |
+|---|---|
+| 2019 | Dec 2018 — Nov 2019 |
+| 2026 | Dec 2025 — Nov 2026 |
+
+---
+
+## Raw Excel File Structure
+
+Each workbook has exactly one sheet. Structure is identical across all files and fleets.
+
+| Row / Column | Content |
+|---|---|
+| Row 4, H–S | Month names: DEC, JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV |
+| Row 6, Column C | `# DAYS` — days row, skip |
+| Row 8, Column D | Parameter block header name (e.g. ALBDs FULL MONTH) |
+| Row 8, Column E | Label: `SHIP CLASS` |
+| Row 8, Column F | Label: `ALB` |
+| Row 8, H–S | Fleet totals — exclude |
+| Row 9+, Column C | Vessel code (alphanumeric like LO346) |
+| Row 9+, Column D | Vessel name |
+| Row 9+, Column E | Ship class value |
+| Row 9+, Column F | ALB value (Available Lower Berths) |
+| Row 9+, H–S | Monthly parameter values |
+
+**Important notes:**
+- Column A contains Show/Hide/Check labels — ignore
+- Columns T onwards contain yearly/quarterly totals — ignore
+- Zero-value vessel rows may be hidden in Excel but are present — include only if Column D has a valid vessel name
+- ALBDs FULL MONTH is always the first parameter block — Ship Class and ALB extracted from this block only
+- Parameter block header row identified by Column E = `SHIP CLASS`
+- Fleet total row identified by Column C being purely numeric (e.g. 993020)
+
+---
+
+## Power Query Setup
+
+### Privacy Settings (Critical)
+
+Before building queries, set privacy to prevent excessive re-downloads:
+
+`File → Options and Settings → Query Options → Privacy → Ignore the Privacy Levels and potentially improve performance`
+
+### Query 1 — File_List
+
+Handles SharePoint connection, file filtering, and metadata extraction. Binary content buffered **after** inclusion filter so only required files are downloaded.
+
+**Enable Load:** Unchecked (connection only)
+
+```
+let
+    Source = SharePoint.Files(
+        "https://yourcompany.sharepoint.com/sites/YourSiteName",
+        [ApiVersion = 15]
+    ),
+
+    FilteredToIncoming = Table.SelectRows(
+        Source,
+        each Text.Contains([Folder Path], "CMG_GHG_KPIs/Incoming")
+    ),
+
+    FilteredToExcel = Table.SelectRows(
+        FilteredToIncoming,
+        each [Extension] = ".xlsx" or [Extension] = ".xls"
+    ),
+
+    RenameMetaCols = Table.RenameColumns(
+        FilteredToExcel,
+        {
+            {"Folder Path", "FolderPath"},
+            {"Date modified", "DateModified"},
+            {"Date created", "DateCreated"}
+        }
+    ),
+
+    FixDates = Table.TransformColumns(
+        RenameMetaCols,
+        {
+            {"DateModified",
+                each if _ = null then null
+                     else DateTime.From(
+                         DateTimeZone.RemoveZone(
+                             DateTimeZone.From(_))),
+                type datetime},
+            {"DateCreated",
+                each if _ = null then null
+                     else DateTime.From(
+                         DateTimeZone.RemoveZone(
+                             DateTimeZone.From(_))),
+                type datetime}
+        }
+    ),
+
+    AddPathParts = Table.AddColumn(
+        FixDates, "Path_Parts",
+        each Text.Split([FolderPath], "/")
+    ),
+
+    AddIncomingIndex = Table.AddColumn(
+        AddPathParts, "Incoming_Index",
+        each List.PositionOf([Path_Parts], "Incoming")
+    ),
+
+    AddFleet = Table.AddColumn(
+        AddIncomingIndex, "Fleet",
+        each if [Incoming_Index] >= 0
+             then [Path_Parts]{[Incoming_Index] + 1}
+             else "Unknown"
+    ),
+
+    AddYearFolder = Table.AddColumn(
+        AddFleet, "Year_Folder",
+        each
+            let YearText = [Path_Parts]{[Incoming_Index] + 2}
+            in  if Value.Is(Value.FromText(YearText), type number)
+                then Number.FromText(YearText)
+                else null
+    ),
+
+    AddDataType = Table.AddColumn(
+        AddYearFolder, "Data_Type",
+        each if Text.Contains(Text.Upper([Name]), "ACT") then "ACT"
+             else if Text.Start([Name], 1) = "F"
+                  and Text.Contains([Name], "_FY") then "Forecast"
+             else "Unknown"
+    ),
+
+    AddForecastNumber = Table.AddColumn(
+        AddDataType, "Forecast_Number",
+        each if [Data_Type] = "Forecast"
+             then Text.Middle([Name], 1, 2)
+             else null
+    ),
+
+    AddFYYear = Table.AddColumn(
+        AddForecastNumber, "FY_Year",
+        each if [Data_Type] = "Forecast"
+             then
+                let
+                    FYPos    = Text.PositionOf([Name], "_FY"),
+                    YearText = Text.Middle([Name], FYPos + 3, 4)
+                in
+                    if Value.Is(Value.FromText(YearText), type number)
+                    then Number.FromText(YearText)
+                    else null
+             else [Year_Folder]
+    ),
+
+    CurrentYear = Date.Year(DateTime.LocalNow()),
+
+    AddIncludeFlag = Table.AddColumn(
+        AddFYYear, "Include_File",
+        each
+            if [Year_Folder] = CurrentYear
+               and [Data_Type] = "Forecast" then true
+            else if [Year_Folder] < CurrentYear
+               and [Data_Type] = "ACT" then true
+            else false
+    ),
+
+    FilterIncluded = Table.SelectRows(
+        AddIncludeFlag,
+        each [Include_File] = true
+    ),
+
+    RemoveHelpers = Table.RemoveColumns(
+        FilterIncluded,
+        {
+            "Path_Parts", "Incoming_Index",
+            "Include_File", "Extension",
+            "Attributes", "Date accessed",
+            "FolderPath"
+        }
+    ),
+
+    BufferContent = Table.TransformColumns(
+        RemoveHelpers,
+        {"Content", each Binary.Buffer(_)}
+    ),
+
+    FinalBuffer = Table.Buffer(BufferContent)
+
+in
+    FinalBuffer
+```
+
+---
+
+### Query 2 — cmg_ghg_master_query
+
+Main transformation query. All file processing happens inline.
+
+**Key corrections applied:**
+- `ALB` column explicitly converted to `Int64.Type` after vessel row filtering
+- `Nautical Miles [NM]` renamed to `Nautical Miles` to avoid DAX bracket conflicts
+- Null values replaced with 0 for all parameter columns after pivot
+- `ALB` column type fixed at outer level
+
+**Enable Load:** Checked (loads into Power BI model)
+
+```
+let
+    FileList = Table.Buffer(File_List),
+    RefreshTime = DateTime.LocalNow(),
+
+    AddProcessed = Table.AddColumn(
+        FileList,
+        "ProcessedData",
+        each
+            let
+                FYYear_v   = [FY_Year],
+                Fleet_v    = [Fleet],
+                Year_v     = [Year_Folder],
+                DataType_v = [Data_Type],
+                FcstNum_v  = [Forecast_Number],
+                FileName_v = [Name],
+                DateMod_v  = [DateModified],
+                DateCre_v  = [DateCreated],
+
+                Wb          = Excel.Workbook([Content], null, true),
+                SheetName_v = Wb{0}[Name],
+                SheetData   = Wb{0}[Data],
+
+                CleanData = Table.ReplaceErrorValues(
+                    SheetData,
+                    List.Transform(
+                        Table.ColumnNames(SheetData),
+                        each {_, null}
+                    )
+                ),
+
+                FirstSheet = Table.Buffer(CleanData),
+
+                MonthRow = Table.SelectRows(
+                    FirstSheet,
+                    each [Column8] = "DEC"
+                ),
+
+                M1  = Record.Field(MonthRow{0}, "Column8"),
+                M2  = Record.Field(MonthRow{0}, "Column9"),
+                M3  = Record.Field(MonthRow{0}, "Column10"),
+                M4  = Record.Field(MonthRow{0}, "Column11"),
+                M5  = Record.Field(MonthRow{0}, "Column12"),
+                M6  = Record.Field(MonthRow{0}, "Column13"),
+                M7  = Record.Field(MonthRow{0}, "Column14"),
+                M8  = Record.Field(MonthRow{0}, "Column15"),
+                M9  = Record.Field(MonthRow{0}, "Column16"),
+                M10 = Record.Field(MonthRow{0}, "Column17"),
+                M11 = Record.Field(MonthRow{0}, "Column18"),
+                M12 = Record.Field(MonthRow{0}, "Column19"),
+
+                KeepCols = Table.SelectColumns(FirstSheet, {
+                    "Column1", "Column3", "Column4",
+                    "Column5", "Column6",
+                    "Column8",  "Column9",  "Column10",
+                    "Column11", "Column12", "Column13",
+                    "Column14", "Column15", "Column16",
+                    "Column17", "Column18", "Column19"
+                }),
+
+                R1 = Table.SelectRows(KeepCols,
+                    each [Column8] <> "DEC"),
+                R2 = Table.SelectRows(R1,
+                    each [Column3] <> "# DAYS"),
+                R3 = Table.SelectRows(R2,
+                    each [Column1] <> "Check"),
+                R4 = Table.SelectRows(R3,
+                    each not (
+                        [Column3] = null and [Column4] = null
+                    )),
+
+                AddPar = Table.AddColumn(R4, "Parameter",
+                    each if [Column5] = "SHIP CLASS"
+                         then Text.From([Column4])
+                         else null),
+                FillPar = Table.FillDown(AddPar, {"Parameter"}),
+
+                AddSC = Table.AddColumn(FillPar, "Ship_Class",
+                    each if [Parameter] = "ALBDs FULL MONTH"
+                            and [Column5] <> "SHIP CLASS"
+                            and [Column5] <> null
+                            and Text.From([Column5]) <> "0"
+                         then Text.From([Column5])
+                         else null),
+
+                AddALB_col = Table.AddColumn(AddSC, "ALB",
+                    each if [Parameter] = "ALBDs FULL MONTH"
+                            and [Column6] <> null
+                            and [Column6] <> 0
+                         then [Column6]
+                         else null),
+
+                FillSALB = Table.FillDown(
+                    AddALB_col, {"Ship_Class", "ALB"}),
+
+                VesselRows = Table.SelectRows(FillSALB,
+                    each
+                        [Column4] <> null
+                        and [Column4] <> 0
+                        and Text.From([Column4]) <> "0"
+                        and Text.From([Column4]) <> "0.00"
+                        and [Column5] <> "SHIP CLASS"
+                        and not (
+                            Text.Length(
+                                Text.Remove(
+                                    Text.From([Column3]),
+                                    {"0".."9"}
+                                )
+                            ) = 0
+                        )
+                ),
+
+                ConvertALB = Table.TransformColumns(
+                    VesselRows,
+                    {
+                        "ALB",
+                        each if _ = null then null
+                             else try Int64.From(_) otherwise null,
+                        Int64.Type
+                    }
+                ),
+
+                Renamed = Table.RenameColumns(ConvertALB, {
+                    {"Column3", "Vessel_Code"},
+                    {"Column4", "Vessel_Name"},
+                    {"Column5", "SC_Raw"},
+                    {"Column6", "ALB_Raw"},
+                    {"Column8",  M1},  {"Column9",  M2},
+                    {"Column10", M3},  {"Column11", M4},
+                    {"Column12", M5},  {"Column13", M6},
+                    {"Column14", M7},  {"Column15", M8},
+                    {"Column16", M9},  {"Column17", M10},
+                    {"Column18", M11}, {"Column19", M12}
+                }),
+
+                Dropped = Table.RemoveColumns(Renamed,
+                    {"Column1", "Vessel_Code",
+                     "SC_Raw", "ALB_Raw"}),
+
+                Unpivoted = Table.UnpivotOtherColumns(
+                    Dropped,
+                    {"Vessel_Name", "Ship_Class",
+                     "ALB", "Parameter"},
+                    "Month", "Value"),
+
+                Buf       = Table.Buffer(Unpivoted),
+                ParamList = List.Buffer(
+                    List.Distinct(Buf[Parameter])),
+
+                Pivoted = Table.Pivot(
+                    Buf, ParamList,
+                    "Parameter", "Value", List.Sum),
+
+                ReplaceNulls = Table.TransformColumns(
+                    Pivoted,
+                    List.Transform(
+                        ParamList,
+                        each {
+                            _,
+                            each if _ = null then 0 else _,
+                            type number
+                        }
+                    )
+                ),
+
+                RenameNM =
+                    let
+                        Cols = Table.ColumnNames(ReplaceNulls)
+                    in
+                        if List.Contains(Cols, "Nautical Miles [NM]")
+                        then Table.RenameColumns(ReplaceNulls,
+                            {{"Nautical Miles [NM]", "Nautical Miles"}})
+                        else if List.Contains(Cols, "NAUTICAL MILES [NM]")
+                        then Table.RenameColumns(ReplaceNulls,
+                            {{"NAUTICAL MILES [NM]", "Nautical Miles"}})
+                        else ReplaceNulls,
+
+                WithYear = Table.AddColumn(RenameNM,
+                    "Calendar_Year",
+                    each if [Month] = "DEC"
+                         then FYYear_v - 1
+                         else FYYear_v),
+
+                WithMNum = Table.AddColumn(WithYear,
+                    "Month_Number",
+                    each if [Month] = "JAN" then 1
+                         else if [Month] = "FEB" then 2
+                         else if [Month] = "MAR" then 3
+                         else if [Month] = "APR" then 4
+                         else if [Month] = "MAY" then 5
+                         else if [Month] = "JUN" then 6
+                         else if [Month] = "JUL" then 7
+                         else if [Month] = "AUG" then 8
+                         else if [Month] = "SEP" then 9
+                         else if [Month] = "OCT" then 10
+                         else if [Month] = "NOV" then 11
+                         else if [Month] = "DEC" then 12
+                         else null),
+
+                A1  = Table.AddColumn(WithMNum,
+                          "Source_File",      each FileName_v),
+                A2  = Table.AddColumn(A1,
+                          "Sheet_Name",       each SheetName_v),
+                A3  = Table.AddColumn(A2,
+                          "Date_Modified",    each DateMod_v),
+                A4  = Table.AddColumn(A3,
+                          "Date_Created",     each DateCre_v),
+                A5  = Table.AddColumn(A4,
+                          "Refresh_DateTime", each RefreshTime),
+                A6  = Table.AddColumn(A5,
+                          "Fleet",            each Fleet_v),
+                A7  = Table.AddColumn(A6,
+                          "Year_Folder",      each Year_v),
+                A8  = Table.AddColumn(A7,
+                          "Data_Type",        each DataType_v),
+                A9  = Table.AddColumn(A8,
+                          "Forecast_Number",  each FcstNum_v),
+                A10 = Table.AddColumn(A9,
+                          "FY_Year",          each FYYear_v),
+
+                FixedCols = {
+                    "Source_File", "Sheet_Name",
+                    "Date_Modified", "Date_Created",
+                    "Refresh_DateTime", "Fleet",
+                    "Year_Folder", "Data_Type",
+                    "Forecast_Number", "FY_Year",
+                    "Vessel_Name", "Ship_Class", "ALB",
+                    "Calendar_Year", "Month", "Month_Number"
+                },
+
+                Reordered = Table.ReorderColumns(A10,
+                    FixedCols &
+                    List.Difference(
+                        Table.ColumnNames(A10), FixedCols))
+
+            in
+                Reordered
+    ),
+
+    CombinedTable = Table.Combine(
+        AddProcessed[ProcessedData]),
+
+    FixColumnTypes = Table.TransformColumnTypes(
+        CombinedTable,
+        {{"ALB", Int64.Type}}
+    ),
+
+    SortedTable = Table.Sort(
+        FixColumnTypes,
+        {
+            {"Fleet",        Order.Ascending},
+            {"FY_Year",      Order.Ascending},
+            {"Vessel_Name",  Order.Ascending},
+            {"Month_Number", Order.Ascending}
+        }
+    )
+
+in
+    SortedTable
+```
+
+---
+
+## Reference Tables (Enter Data)
+
+### Emission_Factors Table
+
+| Fuel_Type | Column_Name | EF_tCO2e_per_MT | Approved_By |
+|---|---|---|---|
+| HFO | HFO - MT | 3.1631 | 2026 HESS MIP |
+| LSFO | LSFO - MT | 3.1631 | 2026 HESS MIP |
+| VLSFO | VLSFO-MT | 3.1631 | 2026 HESS MIP |
+| MGO | MGO - MT | 3.2551 | 2026 HESS MIP |
+| LNG | LNG - MT | 3.66187975 | 2026 HESS MIP |
+| Biofuel | BIOFUEL - MT | 3.2551 | 2026 HESS MIP |
+
+### Targets Table
+
+| Fleet | KPI_Name | Target_Year | Target_Value | Target_Label |
+|---|---|---|---|---|
+| AIDA | kgCO2e/ALBD | 2026 | [value] | 2026 Target |
+| AIDA | kgCO2e/ALBD | 2030 | [value] | 2030 Propel Target |
+| Costa | kgCO2e/ALBD | 2026 | [value] | 2026 Target |
+| Costa | kgCO2e/ALBD | 2030 | [value] | 2030 Propel Target |
+| AIDA | gCO2e/ALB-km | 2026 | [value] | 2026 Target |
+| AIDA | gCO2e/ALB-km | 2030 | [value] | 2030 Propel Target |
+| Costa | gCO2e/ALB-km | 2026 | [value] | 2026 Target |
+| Costa | gCO2e/ALB-km | 2030 | [value] | 2030 Propel Target |
+
+---
+
+## Calculated Columns
+
+Add to `cmg_ghg_master_query` table: Data view → click table → **Table tools** → **New column**.
+
+### Year_Version
+
+```
+Year_Version =
+VAR YearText = TEXT([FY_Year], "0")
+RETURN
+IF(
+    [Data_Type] = "ACT",
+    YearText,
+    YearText & " F" & [Forecast_Number]
+)
+```
+
+### Year_Version_Sort
+
+```
+Year_Version_Sort =
+[FY_Year] * 100
++
+IF(
+    [Data_Type] = "ACT",
+    0,
+    VALUE([Forecast_Number])
+)
+```
+
+After creating: click `Year_Version` → **Column tools** → **Sort by column** → select `Year_Version_Sort`.
+
+### Month_Name_Full
+
+```
+Month_Name_Full =
+SWITCH(
+    [Month],
+    "JAN", "January",   "FEB", "February",
+    "MAR", "March",     "APR", "April",
+    "MAY", "May",       "JUN", "June",
+    "JUL", "July",      "AUG", "August",
+    "SEP", "September", "OCT", "October",
+    "NOV", "November",  "DEC", "December",
+    "Unknown"
+)
+```
+
+---
+
+## DAX Measures
+
+All measures stored in `_Measures` table: **Home** → **Enter Data** → name `_Measures` → **Load**. Right-click each new measure → move to `_Measures`.
+
+### Known Type Issues
+
+Two columns come through as text type from Power Query. Use `VALUE()` wrapper in DAX wherever used in comparisons or arithmetic.
+
+| Column | Issue | DAX Fix |
+|---|---|---|
+| `ALB` | Text type | `VALUE(MAX([ALB]))` |
+| `FY_Year` | Text type | `VALUE(MAX([FY_Year]))` or `VALUE([FY_Year])` in FILTER |
+
+---
+
+### Section A — Base Fuel Measures
+
+```
+Total HFO MT = SUM('cmg_ghg_master_query'[HFO - MT])
+```
+
+```
+Total LNG MT = SUM('cmg_ghg_master_query'[LNG - MT])
+```
+
+```
+Total LSFO MT = SUM('cmg_ghg_master_query'[LSFO - MT])
+```
+
+```
+Total MGO MT = SUM('cmg_ghg_master_query'[MGO - MT])
+```
+
+```
+Total VLSFO MT = SUM('cmg_ghg_master_query'[VLSFO-MT])
+```
+
+```
+Total Biofuel MT = SUM('cmg_ghg_master_query'[BIOFUEL - MT])
+```
+
+```
+Total Fossil Fuel MT =
+[Total HFO MT] + [Total LNG MT] + [Total LSFO MT] +
+[Total MGO MT] + [Total VLSFO MT]
+```
+
+```
+Total Fuel MT =
+[Total Fossil Fuel MT] + [Total Biofuel MT]
+```
+
+---
+
+### Section B — Operational Base Measures
+
+```
+Total ALBDs Commercial =
+SUM('cmg_ghg_master_query'[ALBDs Commercial])
+```
+
+```
+Total ALBDs Full Month =
+SUM('cmg_ghg_master_query'[ALBDs Full Month])
+```
+
+```
+Total Nautical Miles =
+SUM('cmg_ghg_master_query'[Nautical Miles])
+```
+
+```
+Total ALB Fleet =
+SUMX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    CALCULATE(
+        VALUE(MAX('cmg_ghg_master_query'[ALB]))
+    )
+)
+```
+
+```
+Commercial Utilization Pct =
+DIVIDE(
+    [Total ALBDs Commercial],
+    [Total ALBDs Full Month],
+    0
+) * 100
+```
+
+```
+NM per ALBD Commercial =
+DIVIDE(
+    [Total Nautical Miles],
+    [Total ALBDs Commercial],
+    0
+)
+```
+
+---
+
+### Section C — CO2e Emission Measures
+
+```
+tCO2e HFO =
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "HFO"
+)
+RETURN [Total HFO MT] * EF
+```
+
+```
+tCO2e LNG =
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "LNG"
+)
+RETURN [Total LNG MT] * EF
+```
+
+```
+tCO2e LSFO =
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "LSFO"
+)
+RETURN [Total LSFO MT] * EF
+```
+
+```
+tCO2e MGO =
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "MGO"
+)
+RETURN [Total MGO MT] * EF
+```
+
+```
+tCO2e VLSFO =
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "VLSFO"
+)
+RETURN [Total VLSFO MT] * EF
+```
+
+```
+tCO2e Biofuel =
+VAR EF = CALCULATE(
+    MAX(Emission_Factors[EF_tCO2e_per_MT]),
+    Emission_Factors[Fuel_Type] = "Biofuel"
+)
+RETURN [Total Biofuel MT] * EF
+```
+
+```
+Total tCO2e =
+[tCO2e HFO] + [tCO2e LNG] + [tCO2e LSFO] +
+[tCO2e MGO] + [tCO2e VLSFO] + [tCO2e Biofuel]
+```
+
+```
+Total tCO2e Fossil =
+[tCO2e HFO] + [tCO2e LNG] + [tCO2e LSFO] +
+[tCO2e MGO] + [tCO2e VLSFO]
+```
+
+---
+
+### Section D — Core KPI Measures
+
+```
+kgCO2e per ALBD =
+DIVIDE(
+    [Total tCO2e] * 1000,
+    [Total ALBDs Commercial],
+    0
+)
+```
+
+```
+gCO2e per ALB km =
+DIVIDE(
+    [Total tCO2e] * 1000000,
+    [Total ALB Fleet] * [Total Nautical Miles] * 1.832,
+    0
+)
+```
+
+```
+Fuel Cons kg per ALBD =
+DIVIDE(
+    [Total Fuel MT] * 1000,
+    [Total ALBDs Commercial],
+    0
+)
+```
+
+```
+Weighted Avg Emission Factor =
+DIVIDE(
+    [Total tCO2e],
+    [Total Fuel MT],
+    0
+)
+```
+
+```
+tCO2e per Nautical Mile =
+DIVIDE(
+    [Total tCO2e],
+    [Total Nautical Miles],
+    0
+)
+```
+
+```
+Fuel MT per Nautical Mile =
+DIVIDE(
+    [Total Fuel MT],
+    [Total Nautical Miles],
+    0
+)
+```
+
+---
+
+### Section E — Fuel Share Measures
+
+```
+HFO Share Pct =
+DIVIDE([Total HFO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+LNG Share Pct =
+DIVIDE([Total LNG MT], [Total Fuel MT], 0) * 100
+```
+
+```
+LSFO Share Pct =
+DIVIDE([Total LSFO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+MGO Share Pct =
+DIVIDE([Total MGO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+VLSFO Share Pct =
+DIVIDE([Total VLSFO MT], [Total Fuel MT], 0) * 100
+```
+
+```
+Biofuel Share Pct =
+DIVIDE([Total Biofuel MT], [Total Fuel MT], 0) * 100
+```
+
+```
+Fossil Fuel Share Pct =
+DIVIDE([Total Fossil Fuel MT], [Total Fuel MT], 0) * 100
+```
+
+```
+Biofuel Penetration Pct =
+DIVIDE([Total Biofuel MT], [Total Fuel MT], 0) * 100
+```
+
+---
+
+### Section F — Year Over Year Measures
+
+```
+kgCO2e ALBD Previous Year =
+VAR CY = VALUE(MAX('cmg_ghg_master_query'[FY_Year]))
+RETURN
+CALCULATE(
+    [kgCO2e per ALBD],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        VALUE('cmg_ghg_master_query'[FY_Year]) = CY - 1
+    )
+)
+```
+
+```
+kgCO2e ALBD YoY Change =
+[kgCO2e per ALBD] - [kgCO2e ALBD Previous Year]
+```
+
+```
+kgCO2e ALBD YoY Change Pct =
+DIVIDE(
+    [kgCO2e ALBD YoY Change],
+    [kgCO2e ALBD Previous Year],
+    0
+) * 100
+```
+
+```
+Total tCO2e Previous Year =
+VAR CY = VALUE(MAX('cmg_ghg_master_query'[FY_Year]))
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        VALUE('cmg_ghg_master_query'[FY_Year]) = CY - 1
+    )
+)
+```
+
+```
+Total tCO2e YoY Change =
+[Total tCO2e] - [Total tCO2e Previous Year]
+```
+
+```
+Total tCO2e YoY Change Pct =
+DIVIDE(
+    [Total tCO2e YoY Change],
+    [Total tCO2e Previous Year],
+    0
+) * 100
+```
+
+```
+Total Fuel YoY Change Pct =
+VAR CY = VALUE(MAX('cmg_ghg_master_query'[FY_Year]))
+VAR PrevFuel =
+    CALCULATE(
+        [Total Fuel MT],
+        FILTER(
+            ALL('cmg_ghg_master_query'),
+            VALUE('cmg_ghg_master_query'[FY_Year]) = CY - 1
+        )
+    )
+RETURN
+DIVIDE([Total Fuel MT] - PrevFuel, PrevFuel, 0) * 100
+```
+
+---
+
+### Section G — 2019 Baseline Measures
+
+All baseline measures use `VALUE()` on `FY_Year` because the column comes through as text type from Power Query.
+
+```
+kgCO2e ALBD Baseline 2019 =
+CALCULATE(
+    [kgCO2e per ALBD],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        VALUE('cmg_ghg_master_query'[FY_Year]) = 2019 &&
+        'cmg_ghg_master_query'[Data_Type] = "ACT"
+    )
+)
+```
+
+```
+Total tCO2e Baseline 2019 =
+CALCULATE(
+    [Total tCO2e],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        VALUE('cmg_ghg_master_query'[FY_Year]) = 2019 &&
+        'cmg_ghg_master_query'[Data_Type] = "ACT"
+    )
+)
+```
+
+```
+Total Fuel Baseline 2019 =
+CALCULATE(
+    [Total Fuel MT],
+    FILTER(
+        ALL('cmg_ghg_master_query'),
+        VALUE('cmg_ghg_master_query'[FY_Year]) = 2019 &&
+        'cmg_ghg_master_query'[Data_Type] = "ACT"
+    )
+)
+```
+
+```
+Reduction vs 2019 kgCO2e ALBD =
+[kgCO2e ALBD Baseline 2019] - [kgCO2e per ALBD]
+```
+
+```
+Reduction vs 2019 kgCO2e ALBD Pct =
+DIVIDE(
+    [Reduction vs 2019 kgCO2e ALBD],
+    [kgCO2e ALBD Baseline 2019],
+    0
+) * 100
+```
+
+```
+Total tCO2e Reduction vs 2019 =
+[Total tCO2e Baseline 2019] - [Total tCO2e]
+```
+
+```
+Total tCO2e Reduction vs 2019 Pct =
+DIVIDE(
+    [Total tCO2e Reduction vs 2019],
+    [Total tCO2e Baseline 2019],
+    0
+) * 100
+```
+
+```
+Total Fuel Reduction vs 2019 Pct =
+DIVIDE(
+    [Total Fuel Baseline 2019] - [Total Fuel MT],
+    [Total Fuel Baseline 2019],
+    0
+) * 100
+```
+
+```
+tCO2e Avoided vs 2019 =
+VAR Baseline = [kgCO2e ALBD Baseline 2019]
+VAR CurrentKPI = [kgCO2e per ALBD]
+VAR CurrentALBDs = [Total ALBDs Commercial]
+RETURN
+DIVIDE(
+    (Baseline - CurrentKPI) * CurrentALBDs,
+    1000,
+    0
+)
+```
+
+---
+
+### Section H — Target Measures
+
+Page is single-fleet selection only. `SELECTEDVALUE` always returns one fleet name. Use `FILTER` inside `CALCULATE` — not boolean filter arguments — to avoid DAX argument errors.
+
+```
+Target kgCO2e ALBD 2026 =
+VAR SelectedFleet =
+    SELECTEDVALUE('cmg_ghg_master_query'[Fleet])
+RETURN
+CALCULATE(
+    MAX(Targets[Target_Value]),
+    FILTER(
+        Targets,
+        Targets[Fleet] = SelectedFleet &&
+        Targets[KPI_Name] = "kgCO2e/ALBD" &&
+        Targets[Target_Year] = 2026
+    )
+)
+```
+
+```
+Target kgCO2e ALBD 2030 =
+VAR SelectedFleet =
+    SELECTEDVALUE('cmg_ghg_master_query'[Fleet])
+RETURN
+CALCULATE(
+    MAX(Targets[Target_Value]),
+    FILTER(
+        Targets,
+        Targets[Fleet] = SelectedFleet &&
+        Targets[KPI_Name] = "kgCO2e/ALBD" &&
+        Targets[Target_Year] = 2030
+    )
+)
+```
+
+```
+Gap to 2026 Target =
+[kgCO2e per ALBD] - [Target kgCO2e ALBD 2026]
+```
+
+```
+Gap to 2026 Target Pct =
+DIVIDE(
+    [Gap to 2026 Target],
+    [Target kgCO2e ALBD 2026],
+    0
+) * 100
+```
+
+```
+Gap to 2030 Target =
+[kgCO2e per ALBD] - [Target kgCO2e ALBD 2030]
+```
+
+```
+Gap to 2030 Target Pct =
+DIVIDE(
+    [Gap to 2030 Target],
+    [Target kgCO2e ALBD 2030],
+    0
+) * 100
+```
+
+```
+On Track 2026 =
+IF(
+    [kgCO2e per ALBD] <= [Target kgCO2e ALBD 2026],
+    "On Track",
+    "Off Track"
+)
+```
+
+```
+On Track 2030 =
+IF(
+    [kgCO2e per ALBD] <= [Target kgCO2e ALBD 2030],
+    "On Track",
+    "Off Track"
+)
+```
+
+---
+
+### Section I — Actual vs Forecast Measures
+
+```
+kgCO2e ALBD ACT =
+CALCULATE(
+    [kgCO2e per ALBD],
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+kgCO2e ALBD Forecast =
+CALCULATE(
+    [kgCO2e per ALBD],
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+kgCO2e ALBD ACT vs Forecast Variance =
+[kgCO2e ALBD ACT] - [kgCO2e ALBD Forecast]
+```
+
+```
+kgCO2e ALBD ACT vs Forecast Variance Pct =
+DIVIDE(
+    [kgCO2e ALBD ACT vs Forecast Variance],
+    [kgCO2e ALBD Forecast],
+    0
+) * 100
+```
+
+```
+Total tCO2e ACT =
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+Total tCO2e Forecast =
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+Total tCO2e ACT vs Forecast Variance =
+[Total tCO2e ACT] - [Total tCO2e Forecast]
+```
+
+```
+Total Fuel MT ACT =
+CALCULATE(
+    [Total Fuel MT],
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+Total Fuel MT Forecast =
+CALCULATE(
+    [Total Fuel MT],
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+Total Fuel MT ACT vs Forecast Variance =
+[Total Fuel MT ACT] - [Total Fuel MT Forecast]
+```
+
+---
+
+### Section J — Vessel Level KPIs
+
+```
+kgCO2e ALBD Best Vessel =
+MINX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+kgCO2e ALBD Worst Vessel =
+MAXX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+kgCO2e ALBD Fleet Average =
+AVERAGEX(
+    VALUES('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+Vessel tCO2e Share Pct =
+DIVIDE(
+    [Total tCO2e],
+    CALCULATE(
+        [Total tCO2e],
+        ALL('cmg_ghg_master_query'[Vessel_Name])
+    ),
+    0
+) * 100
+```
+
+```
+Vessel Fuel Share Pct =
+DIVIDE(
+    [Total Fuel MT],
+    CALCULATE(
+        [Total Fuel MT],
+        ALL('cmg_ghg_master_query'[Vessel_Name])
+    ),
+    0
+) * 100
+```
+
+```
+Vessel Rank kgCO2e ALBD =
+RANKX(
+    ALL('cmg_ghg_master_query'[Vessel_Name]),
+    [kgCO2e per ALBD],
+    ,
+    ASC,
+    Dense
+)
+```
+
+```
+Vessel Rank Total tCO2e =
+RANKX(
+    ALL('cmg_ghg_master_query'[Vessel_Name]),
+    [Total tCO2e],
+    ,
+    DESC,
+    Dense
+)
+```
+
+---
+
+### Section K — YTD and Cumulative Measures
+
+```
+Cumulative tCO2e in FY =
+VAR CurrentMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Month_Number] <= CurrentMonth
+)
+```
+
+```
+YTD tCO2e ACT =
+VAR MaxMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Month_Number] <= MaxMonth,
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+```
+YTD tCO2e Forecast =
+VAR MaxMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total tCO2e],
+    'cmg_ghg_master_query'[Month_Number] <= MaxMonth,
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+YTD ACT vs Forecast tCO2e Variance =
+[YTD tCO2e ACT] - [YTD tCO2e Forecast]
+```
+
+```
+Annualized tCO2e from YTD =
+VAR MonthsElapsed = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+DIVIDE(
+    [YTD tCO2e ACT] * 12,
+    MonthsElapsed,
+    0
+)
+```
+
+```
+Full Year Forecast tCO2e =
+CALCULATE(
+    [Total tCO2e],
+    ALL('cmg_ghg_master_query'[Month_Number]),
+    ALL('cmg_ghg_master_query'[Month]),
+    'cmg_ghg_master_query'[Data_Type] = "Forecast"
+)
+```
+
+```
+YTD Fuel MT ACT =
+VAR MaxMonth = MAX('cmg_ghg_master_query'[Month_Number])
+RETURN
+CALCULATE(
+    [Total Fuel MT],
+    'cmg_ghg_master_query'[Month_Number] <= MaxMonth,
+    'cmg_ghg_master_query'[Data_Type] = "ACT"
+)
+```
+
+---
+
+### Section L — Ship Class Measures
+
+```
+Class tCO2e Share Pct =
+DIVIDE(
+    [Total tCO2e],
+    CALCULATE(
+        [Total tCO2e],
+        ALL('cmg_ghg_master_query'[Ship_Class])
+    ),
+    0
+) * 100
+```
+
+```
+Class kgCO2e ALBD =
+AVERAGEX(
+    VALUES('cmg_ghg_master_query'[Ship_Class]),
+    [kgCO2e per ALBD]
+)
+```
+
+```
+Class Rank kgCO2e ALBD =
+RANKX(
+    ALL('cmg_ghg_master_query'[Ship_Class]),
+    [kgCO2e per ALBD],
+    ,
+    ASC,
+    Dense
+)
+```
+
+---
+
+### Section M — Trajectory Measures
+
+```
+Required Annual Reduction Rate to 2030 =
+VAR CurrentYear = VALUE(MAX('cmg_ghg_master_query'[FY_Year]))
+VAR YearsRemaining = 2030 - CurrentYear
+VAR CurrentKPI = [kgCO2e per ALBD]
+VAR Target2030 = [Target kgCO2e ALBD 2030]
+RETURN
+IF(
+    YearsRemaining > 0,
+    DIVIDE(CurrentKPI - Target2030, YearsRemaining, 0),
+    0
+)
+```
+
+```
+Required Annual Reduction Pct to 2030 =
+DIVIDE(
+    [Required Annual Reduction Rate to 2030],
+    [kgCO2e per ALBD],
+    0
+) * 100
+```
+
+```
+Projected 2030 kgCO2e ALBD =
+VAR CurrentYear = VALUE(MAX('cmg_ghg_master_query'[FY_Year]))
+VAR YearsRemaining = 2030 - CurrentYear
+VAR AnnualReduction = [kgCO2e ALBD YoY Change] * -1
+RETURN
+[kgCO2e per ALBD] - (AnnualReduction * YearsRemaining)
+```
+
+---
+
+## Color Theme
+
+### Brand Color Palette
+
+| Role | Name | Hex | Used For |
+|---|---|---|---|
+| Primary Brand | Navy | `#005A9C` | Headers, titles, borders |
+| Deep Brand | Dark Navy | `#1F3864` | Page headers, table headers, body text |
+| Alert | Red | `#E03A3E` | Off track, negative, worst vessel |
+| Positive | Green | `#70AD47` | On track, improvement |
+| Warning | Amber | `#FFC000` | Near target, caution |
+| Forecast | Teal | `#00B0A3` | Forecast data |
+| Light Brand | Sky Blue | `#BDD7EE` | Card backgrounds, light fills |
+| Page Background | Mist | `#F2F6FA` | All page backgrounds |
+| Visual Background | White | `#FFFFFF` | Chart and table backgrounds |
+| Reference | Medium Gray | `#7F7F7F` | Baseline lines, secondary text |
+
+### Fuel Type Colors
+
+| Fuel | Hex |
+|---|---|
+| HFO | `#1F3864` |
+| VLSFO | `#005A9C` |
+| LSFO | `#4472C4` |
+| MGO | `#9DC3E6` |
+| LNG | `#70AD47` |
+| Biofuel | `#A9D18E` |
+
+### Font Specification
+
+| Element | Font | Size | Color |
+|---|---|---|---|
+| Page title | Segoe UI Bold | 20pt | White on `#1F3864` |
+| Section header | Segoe UI Bold | 14pt | `#005A9C` |
+| Visual title | Segoe UI Bold | 12pt | `#1F3864` |
+| Table header | Segoe UI Bold | 10pt | White on `#1F3864` |
+| Body / data | Segoe UI | 10pt | `#1F3864` |
+| KPI card value | Segoe UI Bold | 28pt | `#005A9C` |
+| KPI card label | Segoe UI | 10pt | `#1F3864` |
+| Axis labels | Segoe UI | 9pt | `#7F7F7F` |
+
+### Theme JSON
+
+Open Notepad → paste → **File → Save As** → filename `Theme.json` → file type **All Files** → Save.
+Apply: **View → Themes → Browse for themes** → select `Theme.json`.
+
+```json
+{
+    "name": "GHG Dashboard",
+    "dataColors": [
+        "#005A9C", "#E03A3E", "#70AD47", "#FFC000",
+        "#4472C4", "#00B0A3", "#1F3864", "#C55A11",
+        "#A9D18E", "#9DC3E6"
+    ],
+    "good": "#70AD47",
+    "neutral": "#FFC000",
+    "bad": "#E03A3E",
+    "background": "#F2F6FA",
+    "foreground": "#1F3864",
+    "tableAccent": "#005A9C",
+    "maximum": "#70AD47",
+    "center": "#FFC000",
+    "minimum": "#E03A3E",
+    "visualStyles": {
+        "*": {
+            "*": {
+                "fontFamily": [{"value": "Segoe UI"}],
+                "fontSize": [{"value": 10}],
+                "fontColor": [{"value": "#1F3864"}],
+                "background": [{"color": {"solid": {"color": "#FFFFFF"}}}]
+            },
+            "title": {
+                "fontFamily": [{"value": "Segoe UI"}],
+                "fontSize": [{"value": 13}],
+                "fontColor": [{"value": "#1F3864"}],
+                "bold": [{"value": true}],
+                "background": [{"color": {"solid": {"color": "#FFFFFF"}}}],
+                "show": [{"value": true}]
+            }
+        },
+        "card": {
+            "*": {
+                "calloutValue": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 24}],
+                    "fontColor": [{"value": "#005A9C"}],
+                    "bold": [{"value": true}]
+                },
+                "label": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#1F3864"}]
+                },
+                "background": [{"color": {"solid": {"color": "#F2F6FA"}}}]
+            }
+        },
+        "slicer": {
+            "*": {
+                "general": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#1F3864"}]
+                },
+                "header": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 11}],
+                    "fontColor": [{"value": "#FFFFFF"}],
+                    "bold": [{"value": true}],
+                    "background": [{"color": {"solid": {"color": "#005A9C"}}}]
+                }
+            }
+        },
+        "tableEx": {
+            "*": {
+                "header": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#FFFFFF"}],
+                    "bold": [{"value": true}],
+                    "background": [{"color": {"solid": {"color": "#1F3864"}}}]
+                },
+                "values": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#1F3864"}],
+                    "background": [{"color": {"solid": {"color": "#FFFFFF"}}}]
+                },
+                "total": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#FFFFFF"}],
+                    "bold": [{"value": true}],
+                    "background": [{"color": {"solid": {"color": "#005A9C"}}}]
+                }
+            }
+        },
+        "pivotTable": {
+            "*": {
+                "rowHeaders": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#1F3864"}],
+                    "bold": [{"value": false}],
+                    "background": [{"color": {"solid": {"color": "#F2F6FA"}}}]
+                },
+                "columnHeaders": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#FFFFFF"}],
+                    "bold": [{"value": true}],
+                    "background": [{"color": {"solid": {"color": "#1F3864"}}}]
+                },
+                "values": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#1F3864"}],
+                    "background": [{"color": {"solid": {"color": "#FFFFFF"}}}]
+                },
+                "total": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#FFFFFF"}],
+                    "bold": [{"value": true}],
+                    "background": [{"color": {"solid": {"color": "#005A9C"}}}]
+                },
+                "subTotals": {
+                    "fontFamily": [{"value": "Segoe UI"}],
+                    "fontSize": [{"value": 10}],
+                    "fontColor": [{"value": "#1F3864"}],
+                    "bold": [{"value": true}],
+                    "background": [{"color": {"solid": {"color": "#BDD7EE"}}}]
+                }
+            }
+        },
+        "barChart": {
+            "*": {
+                "background": [{"color": {"solid": {"color": "#FFFFFF"}}}],
+                "labels": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#1F3864"}]},
+                "categoryAxis": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#7F7F7F"}]},
+                "valueAxis": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#7F7F7F"}]}
+            }
+        },
+        "columnChart": {
+            "*": {
+                "background": [{"color": {"solid": {"color": "#FFFFFF"}}}],
+                "labels": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#1F3864"}]},
+                "categoryAxis": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#7F7F7F"}]},
+                "valueAxis": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#7F7F7F"}]}
+            }
+        },
+        "lineChart": {
+            "*": {
+                "background": [{"color": {"solid": {"color": "#FFFFFF"}}}],
+                "labels": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#1F3864"}]},
+                "categoryAxis": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#7F7F7F"}]},
+                "valueAxis": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 9}], "fontColor": [{"value": "#7F7F7F"}]}
+            }
+        },
+        "donutChart": {
+            "*": {
+                "background": [{"color": {"solid": {"color": "#FFFFFF"}}}],
+                "legend": {"fontFamily": [{"value": "Segoe UI"}], "fontSize": [{"value": 10}], "fontColor": [{"value": "#1F3864"}]}
+            }
+        },
+        "textbox": {
+            "*": {
+                "background": [{"color": {"solid": {"color": "#1F3864"}}}]
+            }
+        }
+    }
+}
+```
+
+---
+
+## Canvas Settings (All Pages)
+
+- Type: Custom
+- Width: 1440px | Height: 960px
+- Background: `#F2F6FA`, Transparency 0%
+
+---
+
+## Slicer Sync
+
+**View → Sync slicers.** Both Sync AND Visible must be checked for each target page.
+
+| Slicer | Type | Synced to |
+|---|---|---|
+| Fleet | Button | All 7 pages |
+| Year / Forecast Version | Dropdown | All 7 pages |
+| Ship Class | Dropdown | Pages 2, 5 |
+| Vessel | Dropdown | Pages 2, 5 |
+
+---
+
+## Bookmark Setup
+
+1. Set slicers to default state (latest forecast month, all fleets)
+2. **View → Bookmarks → Add** → rename to `Default View`
+3. Right-click bookmark → ensure Data is checked, Display is unchecked
+4. Add Reset button on each page: **Insert → Button → Action → Bookmark → Default View**
+
+---
+
+## Page 1 — Fleet KPI Summary
+
+**Purpose:** Raw data overview — what are the actual numbers?
+
+**Slicers:** Fleet (Button) | Year/Version (Dropdown) | Data Type (Dropdown)
+
+**Visuals:**
+
+**1. Emission Factors Reference Table**
+- Fields: `Emission_Factors[Fuel_Type]`, `EF_tCO2e_per_MT`, `Approved_By`
+- Title: `Emission Factors — HESS MIP Approved`
+- Totals: OFF
+
+**2. Fuel Consumption Matrix**
+- Rows: `Year_Version`
+- Values: `Total HFO MT`, `Total VLSFO MT`, `Total LSFO MT`, `Total MGO MT`, `Total LNG MT`, `Total Biofuel MT`, `Total Fuel MT`
+- Title: `Raw Data: Fuel Consumption (MT) — Fleet Full Year Totals`
+- Number format: Whole number, thousands separator ON | Subtotals OFF | Grand totals OFF
+
+**3. CO2e Emissions Matrix**
+- Rows: `Year_Version`
+- Values: `tCO2e HFO`, `tCO2e VLSFO`, `tCO2e LSFO`, `tCO2e MGO`, `tCO2e LNG`, `tCO2e Biofuel`, `Total tCO2e`
+- Title: `CO2e Emissions (tCO2e) — Using 2026 HESS MIP Emission Factors`
+
+---
+
+## Page 2 — Fleet KPI Analysis
+
+**Purpose:** KPI metrics and trends — how are we performing?
+
+**Slicers:** Fleet (Button, **single select**) | Year/Forecast (Dropdown) | Ship Class (Dropdown) | Vessel (Dropdown)
+
+Fleet slicer must be set to single selection only — all target measures depend on `SELECTEDVALUE`.
+
+**Visuals:**
+
+**1. Five KPI Cards**
+
+| Card | Measure | Format |
+|---|---|---|
+| kgCO2e / ALBD | `kgCO2e per ALBD` | Decimal 2 |
+| gCO2e / ALB-km | `gCO2e per ALB km` | Decimal 2 |
+| Fuel Cons. kg / ALBD | `Fuel Cons kg per ALBD` | Decimal 2 |
+| Total tCO2e | `Total tCO2e` | Whole number |
+| Reduction vs 2019 | `Reduction vs 2019 kgCO2e ALBD Pct` | Percentage 1dp |
+
+Card 5 conditional color: value > 0 → `#70AD47` | value < 0 → `#E03A3E`
+
+**2. KPI Matrix**
+- Rows: `Year_Version`
+- Values: `kgCO2e per ALBD`, `gCO2e per ALB km`, `Fuel Cons kg per ALBD`, `Total tCO2e`, `Reduction vs 2019 kgCO2e ALBD Pct`
+- Conditional formatting on kgCO2e column: green below target, amber near, red above
+- Place: left 55% of canvas
+
+**3. kgCO2e/ALBD Trend Chart (mandatory)**
+- Visual: Line and Stacked Column Chart
+- X axis: `Year_Version`
+- Column: `kgCO2e per ALBD` — color `#005A9C`
+- Line: `Target kgCO2e ALBD 2026` — color `#E03A3E`, dashed, 2.5pt
+- Line: `Target kgCO2e ALBD 2030` — color `#FFC000`, dashed, 2.5pt
+- Title: `kgCO2e / ALBD — Trend vs Targets`
+- Place: right 45% of canvas
+
+**Secondary Y-axis fix:** When both target lines are added, the secondary Y-axis auto-scales independently. Fix: Format panel → Y axis (secondary) → turn off Auto → set Start = 0, End = same as primary axis maximum.
+
+**4. Reset Button**
+- Insert → Button → Blank | Text: `Reset to Default` | Fill: `#005A9C` | Font: White
+- Action: Bookmark → Default View
+
+---
+
+## Page 3 — Emissions and Fuel Mix
+
+**Purpose:** Where do emissions come from and how is the fuel mix changing?
+
+**Slicers:** Fleet (Button) | Year (Dropdown) | Data Type (Dropdown)
+
+**Visuals:**
+
+**1. Four KPI Cards:** `Total tCO2e` | `Reduction vs 2019 kgCO2e ALBD Pct` | `tCO2e Avoided vs 2019` | `Biofuel Penetration Pct`
+
+**2. Stacked Bar — tCO2e by Fuel Type**
+- Y axis: `Year_Version` | Values: `tCO2e HFO`, `tCO2e VLSFO`, `tCO2e LSFO`, `tCO2e MGO`, `tCO2e LNG`, `tCO2e Biofuel`
+- Title: `CO2e Emissions by Fuel Type (tCO2e)` | Full width, large
+
+**3. Line Chart — Total tCO2e Trend**
+- X: `Year_Version` | Values: `Total tCO2e` | Add constant line for `Total tCO2e Baseline 2019`
+- Title: `Total tCO2e Trend` | Left half, bottom row
+
+**4. Donut — Current Period CO2e Mix**
+- Values: all tCO2e by fuel | Colors: fuel palette
+- Title: `Current Period CO2e by Fuel Type` | Right half, bottom row
+
+**5. 100% Stacked Column — Fuel Share %**
+- X: `Year_Version` | Values: fuel MT by type | Data labels: ON (show %)
+- Title: `Fuel Mix Share by Year (%)`
+
+---
+
+## Page 4 — Target Tracking
+
+**Purpose:** Are we on track to meet 2026 and 2030 targets?
+
+**Slicers:** Fleet (Button, **single select** — required for target measures)
+
+**Visuals:**
+
+**1. Top KPI Cards — 2026 Status**
+
+| Card | Measure |
+|---|---|
+| kgCO2e/ALBD | `kgCO2e per ALBD` |
+| 2026 Target | `Target kgCO2e ALBD 2026` |
+| Gap to 2026 | `Gap to 2026 Target` — Red if positive, Green if negative |
+| On Track 2026 | `On Track 2026` — color coded |
+
+**2. Combo Chart — Trend vs Targets**
+- Same as Page 2 mandatory chart, with data labels on bars
+
+**3. KPI Cards — 2030 Status**
+
+| Card | Measure |
+|---|---|
+| 2030 Target | `Target kgCO2e ALBD 2030` |
+| Gap to 2030 | `Gap to 2030 Target` |
+| On Track 2030 | `On Track 2030` |
+| Required Annual Reduction | `Required Annual Reduction Rate to 2030` |
+| Projected 2030 KPI | `Projected 2030 kgCO2e ALBD` |
+
+**4. Column Chart — Reduction vs 2019**
+- X: `Year_Version` | Values: `Reduction vs 2019 kgCO2e ALBD Pct`
+- Green if positive, Red if negative | Reference line at 0
+- Title: `% Reduction in kgCO2e/ALBD vs 2019 Baseline`
+
+---
+
+## Page 5 — Vessel Performance Analysis
+
+**Purpose:** Which vessels are performing and which need attention?
+
+**Slicers:** Fleet (Button) | Year/Version (Dropdown) | Ship Class (Dropdown)
+
+**Visuals:**
+
+**1. Four KPI Cards:** `kgCO2e ALBD Best Vessel` | `kgCO2e ALBD Worst Vessel` | `kgCO2e ALBD Fleet Average` | `DISTINCTCOUNT('cmg_ghg_master_query'[Vessel_Name])`
+
+**2. Horizontal Bar — Vessel Ranking**
+- Y: `Vessel_Name` | X: `kgCO2e per ALBD` | Sort: Ascending
+- Conditional formatting: Green (low) → Red (high)
+- Title: `kgCO2e / ALBD by Vessel (Best to Worst)`
+
+**3. Vessel Scorecard Table**
+- Columns: `Vessel_Name`, `Ship_Class`, `Vessel Rank kgCO2e ALBD`, `kgCO2e per ALBD`, `Total tCO2e`, `Total Fuel MT`, `Vessel tCO2e Share Pct`
+- Enable sort on all columns | Conditional formatting on kgCO2e column
+
+**4. Column Chart — tCO2e by Vessel**
+- X: `Vessel_Name` | Values: `Total tCO2e` | Color: `#005A9C` | Sort: Descending
+- Title: `tCO2e Contribution by Vessel`
+
+---
+
+## Page 6 — Actual vs Forecast
+
+**Purpose:** How accurate are our plans versus reality?
+
+**Slicers:** Fleet (Button) | Year (Dropdown) | Forecast Version (Dropdown)
+
+**Visuals:**
+
+**1. Four KPI Cards:** `kgCO2e ALBD ACT` | `kgCO2e ALBD Forecast` | `kgCO2e ALBD ACT vs Forecast Variance` | `kgCO2e ALBD ACT vs Forecast Variance Pct`
+
+**2. Clustered Bar — tCO2e ACT vs Forecast**
+- Y: `Year_Version` | Values: `Total tCO2e ACT` (`#005A9C`), `Total tCO2e Forecast` (`#00B0A3`)
+- Title: `Total tCO2e — Actual vs Forecast`
+
+**3. Clustered Bar — Fuel MT ACT vs Forecast**
+- Same structure | Values: `Total Fuel MT ACT`, `Total Fuel MT Forecast`
+- Title: `Total Fuel MT — Actual vs Forecast`
+
+**4. Line Chart — Monthly kgCO2e/ALBD**
+- X: `Month_Number` | ACT line: `#005A9C` solid | Forecast line: `#00B0A3` dashed
+- Title: `Monthly kgCO2e/ALBD — Actual vs Forecast`
+
+---
+
+## Page 7 — Monthly YTD Tracking
+
+**Purpose:** How is the current year progressing month by month?
+
+**Slicers:** Fleet (Button) | FY Year (Dropdown, select current year)
+
+**Visuals:**
+
+**1. Four KPI Cards:** `YTD tCO2e ACT` | `YTD tCO2e Forecast` | `YTD ACT vs Forecast tCO2e Variance` | `Annualized tCO2e from YTD`
+
+**2. Line Chart — Cumulative tCO2e**
+- X: `Month_Number` | Values: `Cumulative tCO2e in FY`, `Full Year Forecast tCO2e`
+- Title: `Cumulative tCO2e in Current Fiscal Year`
+
+**3. Stacked Bar — Monthly Fuel MT**
+- Y: `Month_Name_Full` | Values: fuel MT by type | Colors: fuel palette
+- Title: `Monthly Fuel Consumption by Type (MT)`
+
+**4. Line Chart — Monthly kgCO2e/ALBD**
+- X: `Month_Number` | Values: `kgCO2e per ALBD` | Add constant line for 2026 annual target
+- Title: `Monthly kgCO2e/ALBD vs Annual Target`
+
+---
+
+## Scheduled Refresh
+
+1. Publish to Power BI Service → find semantic model → three dots → **Settings**
+2. Gateway and cloud connections → Personal cloud connection → sign in with company credentials
+3. Scheduled refresh → toggle ON → Daily → 02:00 AM
+4. Add refresh failure notification email
+
+Notes:
+- SharePoint Online is cloud-to-cloud — no gateway required
+- Personal OAuth token may occasionally expire — re-authenticate in dataset settings when refresh failure email is received
+
+---
+
+## Maintenance Notes
+
+**Adding a new fleet:** `File_List` dynamically detects fleet names from folder structure. Create new fleet folder inside `CMG_GHG_KPIs/Incoming/` on SharePoint — picked up automatically on next refresh. No code changes needed.
+
+**Adding new target values:** Home → Transform Data → select `Targets` table → add rows directly.
+
+**Updating emission factors:** Home → Transform Data → select `Emission_Factors` table → update `EF_tCO2e_per_MT` values. All CO2e measures recalculate automatically.
+
+**Adding new parameters from source files:** Power Query pivot step automatically creates new columns for new parameters. Add corresponding measure in `_Measures` following existing fuel measure pattern. Update `Emission_Factors` table with new fuel type and factor.
