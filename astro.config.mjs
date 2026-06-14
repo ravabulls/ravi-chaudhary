@@ -62,6 +62,13 @@ export default defineConfig({
 						},
 						{ label: 'Non-Fiction Books', collapsed: true, autogenerate: { directory: 'learnings/books' } },
 						{
+							label: 'Workshops & Programmes',
+							collapsed: true,
+							items: [
+								{ label: 'ReDI School — Creative Communication', link: 'learnings/workshops/redi-school-creative-communication' },
+							],
+						},
+						{
 						label: 'Online Courses',
 						collapsed: true,
 						items: [
