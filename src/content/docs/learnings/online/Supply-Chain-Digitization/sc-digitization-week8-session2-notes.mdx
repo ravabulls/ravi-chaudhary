@@ -61,7 +61,22 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 3. Centre of Gravity Method — Concept
 
-![Centre of Gravity Method Concept](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image1.png)
+*Worked-example data — supply sources and markets for steel appliances (coordinates, quantity, transport cost, and distance to a trial facility location):*
+
+| Source / Market | Transport cost (₹/ton·km) | Quantity (tons) | X | Y | Distance (d) |
+|---|---|---|---|---|---|
+| **Supply — Chennai** | 72 | 450 | 670 | 1100 | 1287.98 |
+| **Supply — Kolkata** | 76 | 320 | 120 | 560 | 572.71 |
+| **Supply — Hyderabad** | 68 | 950 | 230 | 450 | 505.37 |
+| **Market — Delhi** | 120 | 225 | 500 | 600 | 781.02 |
+| **Market — Mumbai** | 120 | 150 | 1200 | 1100 | 1627.88 |
+| **Market — Bangalore** | 120 | 250 | 700 | 200 | 728.01 |
+| **Market — Pune** | 120 | 175 | 820 | 1025 | 1312.64 |
+| **Market — Chennai** | 120 | 300 | 1300 | 1100 | 1702.94 |
+
+<Aside type="note">
+The facility location (X, Y) is the decision variable; total cost = Σ (transport cost × quantity × distance). Solver minimises this cost by moving the (X, Y) point — the centre of gravity.
+</Aside>
 
 Analytical approach based on coordinate locations of supply sources & markets. Considers demand, supply quantities, and distances to find the location that minimizes total weighted transportation cost.
 
@@ -103,7 +118,18 @@ Cost = sum of (shipping cost × quantity × distance) over ALL nodes.
 5. **Optimize using Solver:** Data tab → Solver. Objective = minimize Total Cost. Variables = X, Y cells. Method = **GRG Nonlinear**.
 </Steps>
 
-![Excel Solver Configuration](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image2.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — Centre of Gravity setup</div>
+    <ul>
+      <li><b>Set Objective:</b> the total-cost cell → <b>Min</b></li>
+      <li><b>By Changing Variable Cells:</b> the facility X and Y coordinate cells</li>
+      <li><b>Solving Method:</b> <b>GRG Nonlinear</b> (the distance formula is non-linear)</li>
+      <li><b>Make Unconstrained Variables Non-Negative:</b> ✓</li>
+    </ul>
+  </div>
+  <figcaption>The Solver is set to minimise total transportation cost by adjusting the facility's X/Y coordinates, using the GRG Nonlinear engine because Euclidean distance makes the objective non-linear.</figcaption>
+</figure>
 
 ---
 

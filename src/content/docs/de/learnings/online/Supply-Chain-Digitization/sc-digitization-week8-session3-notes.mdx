@@ -27,7 +27,16 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 1. Rückblick — Woche 8 bisher
 
-![Überblick zur Nachfrageallokation](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image1.png)
+*Produktions- + Transportkosten je tausend Einheiten (₹ tausend), plus Kapazität und monatliche Fixkosten je Werk:*
+
+| Werk ↓ / Markt → | New Delhi | Kolkata | Lucknow | Chennai | Hyderabad | Mumbai | Kapazität (K) | Fixkosten (K₹) |
+|---|---|---|---|---|---|---|---|---|
+| **Delhi** | 1.500 | 500 | 670 | 1.600 | 1.200 | 2.900 | 20 | 8.000 |
+| **Chennai** | 1.540 | 2.390 | 960 | 90 | 500 | 1.300 | 23 | 4.000 |
+| **Mumbai** | 2.000 | 2.500 | 1.300 | 450 | 950 | 900 | 25 | 5.600 |
+| **Gurugram** | 400 | 1.400 | 600 | 1.200 | 560 | 2.400 | 24 | 4.200 |
+| **Kolkata** | 1.080 | 1.700 | 650 | 540 | 321 | 1.800 | 32 | 2.400 |
+| **Monatliche Nachfrage (K)** | 12 | 7 | 15 | 8 | 12 | 10 | — | — |
 
 | Session | Thema | Methode / Tool |
 |---|---|---|
@@ -46,7 +55,17 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 **Die Unternehmen:** Maxxio (Nord- & Ostindien) und Wavie Communications (Süd- & Westindien).
 Beide Unternehmen haben genug Kapazität, um die gesamte Marktnachfrage zu decken. Die Entscheidung ist, WIE zugeteilt wird, nicht ob.
 
-![Fallstudiendaten](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image2.png)
+<Aside type="note">
+**Excel-Modellaufbau:** die Entscheidungsvariablen (Allokation X<sub>ij</sub> von jedem Werk zu jedem Markt) starten bei 0; zwei Nebenbedingungsblöcke verfolgen die **Überkapazität** je Werk und die **unerfüllte Nachfrage** je Markt; die Zielzelle summiert die Kosten per SUMMENPRODUKT.
+</Aside>
+
+*Wichtige Solver-Formeln:*
+
+| Zelle | Formel | Zweck | Kopiert nach |
+|---|---|---|---|
+| B23 | `= H5*H15 − SUMME(B15:G15)` | Überkapazität (je Werk) | B24:B27 |
+| B29 | `= B10 − SUMME(B15:B19)` | Unerfüllte Nachfrage (je Markt) | C29:G29 |
+| B32 | `= SUMMENPRODUKT(B5:G9; B15:G19) + SUMMENPRODUKT(I5:I9; H15:H19)` | Zielfunktion (Gesamtkosten) | — |
 
 ---
 
@@ -66,7 +85,16 @@ Beide Unternehmen haben genug Kapazität, um die gesamte Marktnachfrage zu decke
 - **Nachfragebeschränkung:** `Σi Xij = Dj` für alle j (Nachfrage vollständig gedeckt)
 - **Nicht-Negativität:** `Xij ≥ 0` für alle i, j
 
-![Solver Lösung](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image3.png)
+*Optimale Nachfrageallokation (tausend Einheiten, von jedem Werk zu jedem Markt geliefert):*
+
+| Werk ↓ / Markt → | New Delhi | Kolkata | Lucknow | Chennai | Hyderabad | Mumbai | Kapazität genutzt |
+|---|---|---|---|---|---|---|---|
+| **Delhi** (Maxxio) | 0 | 7 | 0 | 0 | 0 | 0 | 7 |
+| **Gurugram** (Maxxio) | 12 | 0 | 12 | 0 | 0 | 0 | 24 |
+| **Kolkata** (Maxxio) | 0 | 0 | 3 | 0 | 0 | 0 | 3 |
+| **Chennai** (Wavie) | 0 | 0 | 0 | 8 | 12 | 0 | 20 |
+| **Mumbai** (Wavie) | 0 | 0 | 0 | 0 | 0 | 10 | 10 |
+| **Nachfrage erfüllt** | 12 | 7 | 15 | 8 | 12 | 10 | **Ziel = 33.170** |
 
 ### Wichtige Erkenntnis aus der Lösung (Maxxio)
 Die Einrichtung in Kolkata wird trotz anfallender Fixkosten kaum genutzt, da die Produktions- und Versandkosten hoch sind. Aber die Fixkosten werden trotzdem bezahlt → Ineffizienz. Dies signalisiert den Bedarf an einem intelligenteren Modell, das auch entscheidet, *welche Werke geöffnet werden sollen*.
@@ -104,7 +132,18 @@ Dies ist ein **Kapazitiertes Standortproblem (CPLP)**.
 ### Lösung in Excel — Solver-Einstellungen
 - **Lösungsmethode:** **Simplex LP** (Modell ist linear — yi wird über einen Integer-Constraint behandelt).
 
-![CPLP Ergebnisse](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image4.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — CPLP-Einrichtung</div>
+    <ul>
+      <li><b>Ziel festlegen:</b> Gesamtkosten-Zelle (B32) → <b>Min</b></li>
+      <li><b>Durch Ändern der Zellen:</b> Allokationen X<sub>ij</sub> <i>und</i> Werk-Auf/Zu-Flags y<sub>i</sub></li>
+      <li><b>Nebenbedingungen:</b> Überkapazität ≥ 0 · unerfüllte Nachfrage = 0 · y<sub>i</sub> = binär</li>
+      <li><b>Lösungsmethode:</b> <b>Simplex LP</b> (linear; y<sub>i</sub> als binär erzwungen)</li>
+    </ul>
+  </div>
+  <figcaption>Das CPLP fügt je Werk eine binäre Auf/Zu-Variable und die Fixkosten des Werks zur Zielfunktion hinzu — Solver entscheidet dann sowohl, welche Werke geöffnet werden, als auch, wie viel geliefert wird.</figcaption>
+</figure>
 
 ---
 

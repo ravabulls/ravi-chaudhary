@@ -61,7 +61,22 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 3. Center-of-Gravity-Methode — Konzept
 
-![Konzept der Center-of-Gravity-Methode](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image1.png)
+*Beispieldaten — Versorgungsquellen und Märkte für Stahlgeräte (Koordinaten, Menge, Transportkosten und Entfernung zu einem Probestandort):*
+
+| Quelle / Markt | Transportkosten (₹/t·km) | Menge (Tonnen) | X | Y | Entfernung (d) |
+|---|---|---|---|---|---|
+| **Quelle — Chennai** | 72 | 450 | 670 | 1100 | 1287,98 |
+| **Quelle — Kolkata** | 76 | 320 | 120 | 560 | 572,71 |
+| **Quelle — Hyderabad** | 68 | 950 | 230 | 450 | 505,37 |
+| **Markt — Delhi** | 120 | 225 | 500 | 600 | 781,02 |
+| **Markt — Mumbai** | 120 | 150 | 1200 | 1100 | 1627,88 |
+| **Markt — Bangalore** | 120 | 250 | 700 | 200 | 728,01 |
+| **Markt — Pune** | 120 | 175 | 820 | 1025 | 1312,64 |
+| **Markt — Chennai** | 120 | 300 | 1300 | 1100 | 1702,94 |
+
+<Aside type="note">
+Der Anlagenstandort (X, Y) ist die Entscheidungsvariable; Gesamtkosten = Σ (Transportkosten × Menge × Entfernung). Solver minimiert diese Kosten, indem er den (X, Y)-Punkt verschiebt — den Schwerpunkt (Center of Gravity).
+</Aside>
 
 Ein analytischer Ansatz basierend auf den Koordinaten von Lieferquellen & Märkten. Berücksichtigt Nachfrage, Liefermengen und Entfernungen, um den Standort zu finden, der die gewichteten Gesamttransportkosten minimiert.
 
@@ -103,7 +118,18 @@ Kosten = Summe aus (Versandkosten × Menge × Distanz) über ALLE Knoten.
 5. **Mit Solver optimieren:** Daten → Solver. Ziel = Gesamtkosten minimieren. Variablen = X, Y Zellen. Methode = **GRG-Nichtlinear**.
 </Steps>
 
-![Excel Solver Konfiguration](/learnings/online/Supply-Chain-Digitization/sc_w8s2_image2.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — Center-of-Gravity-Einrichtung</div>
+    <ul>
+      <li><b>Ziel festlegen:</b> die Gesamtkosten-Zelle → <b>Min</b></li>
+      <li><b>Durch Ändern der Zellen:</b> die X- und Y-Koordinatenzellen der Anlage</li>
+      <li><b>Lösungsmethode:</b> <b>GRG Nichtlinear</b> (die Entfernungsformel ist nichtlinear)</li>
+      <li><b>Nicht eingeschränkte Variablen nicht-negativ:</b> ✓</li>
+    </ul>
+  </div>
+  <figcaption>Der Solver minimiert die gesamten Transportkosten durch Anpassung der X/Y-Koordinaten der Anlage — mit der GRG-Nichtlinear-Engine, weil die euklidische Entfernung das Ziel nichtlinear macht.</figcaption>
+</figure>
 
 ---
 

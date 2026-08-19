@@ -27,8 +27,6 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 1. Recap — Same Problem, Better Method
 
-![LP Optimization Concept](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image1.png)
-
 **Same SC network as Session 4:** 2 Manufacturers, 3 Warehouses, 4 Retailers, 1 product.
 - **Objectives:** Find optimal distribution strategy to satisfy retailer demand and minimize total distribution costs.
 - **Session 4:** Solved using Heuristic 1 (₹9,61,000) and Heuristic 2 (₹7,57,000).
@@ -48,7 +46,19 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 All initialized to 0 in Excel — Solver finds the optimal values.
 
-![Decision Variables](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image2.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Flow-balance constraint (per warehouse)</div>
+      <code>Q<sub>m1w1</sub> + Q<sub>m2w1</sub> = X<sub>w1r1</sub> + X<sub>w1r2</sub> + X<sub>w1r3</sub> + X<sub>w1r4</sub></code>
+    </div>
+    <div>
+      <div class="name">Demand constraint (per retailer)</div>
+      <code>X<sub>w1r1</sub> + X<sub>w2r1</sub> + X<sub>w3r1</sub> = 45,000 &nbsp;(and 35,000 / 68,000 / 70,000 for r2–r4)</code>
+    </div>
+  </div>
+  <figcaption>The 18 decision variables (6 manufacturer→warehouse, 12 warehouse→retailer) all start at 0. Flow-balance keeps each warehouse a pass-through node; demand constraints force every retailer's requirement to be met exactly.</figcaption>
+</figure>
 
 ---
 
@@ -93,9 +103,19 @@ Ensures warehouses are pass-through nodes — they do not hold inventory.
 6. **Solve:** Click Solve → Keep Solver Solution.
 </Steps>
 
-![Excel Solver Setup](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image3.png)
-![Excel Solver Setup 2](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image4.png)
-![Excel Solver Setup 3](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image5.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — LP network setup</div>
+    <ul>
+      <li><b>Set Objective:</b> total-cost cell → <b>Min</b> &nbsp;(cell = <code>SUMPRODUCT(costs, quantities)</code>)</li>
+      <li><b>By Changing Cells:</b> all 18 decision-variable cells</li>
+      <li><b>Constraints:</b> supply ≤ capacity · units-in = units-out (flow balance) · demand = requirement</li>
+      <li><b>Make Unconstrained Variables Non-Negative:</b> ✓</li>
+      <li><b>Solving Method:</b> <b>Simplex LP</b> (model is fully linear)</li>
+    </ul>
+  </div>
+  <figcaption>The Solver minimises the SUMPRODUCT total-cost cell by adjusting all 18 flows, subject to supply, flow-balance and demand constraints, using the Simplex LP engine.</figcaption>
+</figure>
 
 ---
 
@@ -105,8 +125,24 @@ Ensures warehouses are pass-through nodes — they do not hold inventory.
 Solver confirms: all constraints and optimality conditions satisfied.
 **Total Distribution Cost = ₹6,89,000** ← global optimum.
 
-![Final Results](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image6.png)
-![Final LP Flow](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image7.png)
+*Optimal decision variables (units shipped) — total cost ₹6,89,000:*
+
+| Warehouse | ← m1 | ← m2 | → r1 | → r2 | → r3 | → r4 |
+|---|---|---|---|---|---|---|
+| **w1** | 1,50,000 | 0 | 45,000 | 35,000 | 0 | 70,000 |
+| **w2** | 0 | 0 | 0 | 0 | 0 | 0 |
+| **w3** | 0 | 68,000 | 0 | 0 | 68,000 | 0 |
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-tier"><div class="sc-tier-head">Manufacturers</div><div class="sc-node amber">M1 → W1<span class="sub">1,50,000</span></div><div class="sc-node amber">M2 → W3<span class="sub">68,000</span></div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Warehouses</div><div class="sc-node">W1</div><div class="sc-node">W3</div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Retailers</div><div class="sc-node violet">R1 · 45,000 <span class="sub">via W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">via W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">via W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">via W3</span></div></div>
+  </div>
+  <figcaption>LP optimum — W1 serves R1, R2, R4 (fed by M1) and W3 serves R3 (fed by M2). Routing R4 through W1 and R3 through W3 undercuts both heuristics.</figcaption>
+</figure>
 
 ### Approach Comparison
 
@@ -116,8 +152,9 @@ Solver confirms: all constraints and optimality conditions satisfied.
 | **Heuristic 2** | Cheapest path per retailer | ₹7,57,000 | No | ₹2,04,000 |
 | **LP Optimization** | Simplex LP via Excel Solver | **₹6,89,000** | **Yes — guaranteed** | **₹2,72,000** |
 
-![Savings Comparison](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image8.png)
-![Conclusion](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image9.png)
+<Aside type="tip">
+LP (₹6,89,000) beats Heuristic 2 (₹7,57,000) by **₹68,000** and Heuristic 1 (₹9,61,000) by **₹2,72,000** — and, unlike the heuristics, it is *guaranteed* optimal: no feasible distribution can cost less.
+</Aside>
 
 <Aside type="note">
 **★** The LP solution is guaranteed optimal — no other feasible distribution can cost less. This is the power of optimization.

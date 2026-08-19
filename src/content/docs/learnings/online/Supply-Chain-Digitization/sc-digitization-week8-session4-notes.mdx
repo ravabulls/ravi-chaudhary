@@ -30,19 +30,48 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 - **Warehouses:** W1, W2, W3
 - **Retailers:** R1, R2, R3, R4
 
-![Network Structure](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image2.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Manufacturers</div>
+      <div class="sc-node amber">M1<span class="sub">cap 1,50,000</span></div>
+      <div class="sc-node amber">M2<span class="sub">cap 1,20,000</span></div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Warehouses</div>
+      <div class="sc-node">W1</div>
+      <div class="sc-node">W2</div>
+      <div class="sc-node">W3</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Retailers (demand)</div>
+      <div class="sc-node violet">R1 · 45,000</div>
+      <div class="sc-node violet">R2 · 35,000</div>
+      <div class="sc-node violet">R3 · 68,000</div>
+      <div class="sc-node violet">R4 · 70,000</div>
+    </div>
+  </div>
+  <figcaption>A two-tier network — two manufacturers feed three warehouses, which serve four retailers. The task is to choose which manufacturer supplies which warehouse, and which warehouse serves which retailer, at minimum cost.</figcaption>
+</figure>
 
 **Assumptions:** Production and handling costs are the same across facilities (simplified). Only transportation costs vary.
 
 **Objective:** Find the optimal distribution strategy — which manufacturer supplies which warehouse, and which warehouse serves which retailer — to minimize total distribution cost.
 
-![Cost Matrix](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image3.png)
+*Per-unit shipment cost — manufacturer→warehouse (m1, m2) and warehouse→retailer (r1–r4):*
+
+| Warehouse | m1 | m2 | r1 | r2 | r3 | r4 |
+|---|---|---|---|---|---|---|
+| **w1** | 1 | 6 | 2 | 1 | 1 | 3 |
+| **w2** | 4 | 2 | 5 | 4 | 3 | 4 |
+| **w3** | 3 | 1 | 4 | 3 | 2 | 6 |
+| **Capacity / Demand** | 1,50,000 | 1,20,000 | 45,000 | 35,000 | 68,000 | 70,000 |
 
 ---
 
 ## 2. What is a Heuristic?
-
-![Heuristic Approaches Overview](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image1.png)
 
 A rule-based, practical approach to find a *good* (not necessarily optimal) solution.
 - Faster and simpler than full LP optimization.
@@ -70,8 +99,30 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
 - **M1** is cheaper to W1 and supplies first (capacity 1,50,000). Supplies R1, R2, R3 fully, and 2,000 units to R4.
 - **M2** supplies the balance for R4 (68,000 units).
 
-![Heuristic 1 Solution](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image4.png)
-![Heuristic 1 Flow](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image5.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Warehouse → retailers (all via W1)</div>
+      <code>45,000×2 + 35,000×1 + 68,000×1 + 70,000×3 = <b>4,03,000</b></code>
+    </div>
+    <div>
+      <div class="name">Manufacturers → W1</div>
+      <code>M1: 1,50,000×1 + M2: 68,000×6 = <b>5,58,000</b></code>
+    </div>
+  </div>
+  <figcaption>Heuristic 1 cost = 4,03,000 + 5,58,000 = <b>₹9,61,000</b>.</figcaption>
+</figure>
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-tier"><div class="sc-tier-head">Manufacturers</div><div class="sc-node amber">M1 → W1<span class="sub">1,50,000</span></div><div class="sc-node amber">M2 → W1<span class="sub">68,000</span></div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Warehouse</div><div class="sc-node">W1 <span class="sub">(only W1 used)</span></div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Retailers</div><div class="sc-node violet">R1 · 45,000</div><div class="sc-node violet">R2 · 35,000</div><div class="sc-node violet">R3 · 68,000</div><div class="sc-node violet">R4 · 70,000</div></div>
+  </div>
+  <figcaption>Heuristic 1 — route <b>all</b> retailer demand through the single cheapest warehouse (W1), supplied first by the cheapest manufacturer (M1), then M2 for the balance.</figcaption>
+</figure>
 
 **Result:** Total Cost = **₹9,61,000**
 
@@ -84,14 +135,29 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
 - Select the path (M → W → Retailer) with the minimum total cost.
 - Apply capacity constraints *after* selecting paths.
 
-![Heuristic 2 Paths](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image6.png)
-![Heuristic 2 Details](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image7.png)
+*For each retailer, the cheapest full manufacturer→warehouse→retailer path is chosen; capacity is then applied:*
+
+| Retailer | Cheapest end-to-end path | Units |
+|---|---|---|
+| **R1** | M1 → W1 → R1 | 45,000 |
+| **R2** | M1 → W1 → R2 | 35,000 |
+| **R3** | M1 → W1 → R3 | 68,000 |
+| **R4** | M2 → W2 → R4 <span class="sc-best">(M1 capacity nearly full)</span> | 68,000 + 2,000 |
 
 ### Applying to the Case
 - R1, R2, R3: Best path is M1 → W1.
 - R4: Tie between M1→W1 and M2→W2. Since M1's capacity is almost full, the balance of 68,000 goes via **M2 → W2**.
 
-![Heuristic 2 Flow](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image8.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-tier"><div class="sc-tier-head">Manufacturers</div><div class="sc-node amber">M1 → W1<span class="sub">1,50,000</span></div><div class="sc-node amber">M2 → W2<span class="sub">68,000</span></div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Warehouses</div><div class="sc-node">W1</div><div class="sc-node">W2</div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Retailers</div><div class="sc-node violet">R1 · 45,000 <span class="sub">via W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">via W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">via W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">via W2</span></div></div>
+  </div>
+  <figcaption>Heuristic 2 — R1–R3 flow through W1 as before, but R4 is routed through <b>W2</b> (M2 → W2 → R4), which is cheaper end-to-end once M1's capacity is nearly exhausted.</figcaption>
+</figure>
 
 **Result:** Total Cost = **₹7,57,000** ← better than H1. (H2 routes R4 via W2 instead of W1).
 
@@ -104,7 +170,9 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
 | **Logic** | Pick cheapest WH globally, then cheapest Mfr | Find cheapest end-to-end path per retailer | LP / solver |
 | **Total Cost** | ₹9,61,000 | ₹7,57,000 | ? (≤ ₹7,57,000) |
 
-![Heuristic Comparison](/learnings/online/Supply-Chain-Digitization/sc_w8s4_image9.png)
+<Aside type="note">
+Cost to serve all four retailers, routed through each single warehouse: **W1 → 4,03,000** (cheapest) · W2 → 8,49,000 · W3 → 8,41,000. This is why Heuristic 1 picks W1 — but Heuristic 2's per-path view still beats it.
+</Aside>
 
 H2 improved cost by ~21% over H1 simply by evaluating full paths.
 **But:** Is H2 the best possible? We don't know yet. The next session will solve this using LP/Solver to find the true optimal.

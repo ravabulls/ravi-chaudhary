@@ -27,8 +27,6 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 1. Rückblick — Gleiches Problem, bessere Methode
 
-![Konzept der LP-Optimierung](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image1.png)
-
 **Gleiches SC-Netzwerk wie in Session 4:** 2 Hersteller, 3 Lager, 4 Einzelhändler, 1 Produkt.
 - **Ziele:** Finden der optimalen Distributionsstrategie zur Erfüllung der Einzelhändlernachfrage und zur Minimierung der Gesamtdistributionskosten.
 - **Session 4:** Gelöst mit Heuristik 1 (₹9.61.000) und Heuristik 2 (₹7.57.000).
@@ -48,7 +46,19 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 Alle werden in Excel mit 0 initialisiert — der Solver findet die optimalen Werte.
 
-![Entscheidungsvariablen](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image2.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Flussbilanz-Nebenbedingung (je Lager)</div>
+      <code>Q<sub>m1w1</sub> + Q<sub>m2w1</sub> = X<sub>w1r1</sub> + X<sub>w1r2</sub> + X<sub>w1r3</sub> + X<sub>w1r4</sub></code>
+    </div>
+    <div>
+      <div class="name">Nachfrage-Nebenbedingung (je Einzelhändler)</div>
+      <code>X<sub>w1r1</sub> + X<sub>w2r1</sub> + X<sub>w3r1</sub> = 45.000 &nbsp;(sowie 35.000 / 68.000 / 70.000 für r2–r4)</code>
+    </div>
+  </div>
+  <figcaption>Die 18 Entscheidungsvariablen (6 Hersteller→Lager, 12 Lager→Einzelhändler) starten alle bei 0. Die Flussbilanz hält jedes Lager als Durchlaufknoten; die Nachfrage-Nebenbedingungen erzwingen die exakte Erfüllung jedes Einzelhändlerbedarfs.</figcaption>
+</figure>
 
 ---
 
@@ -93,9 +103,19 @@ Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Best
 6. **Lösen:** Klicken Sie auf Lösen → Solver-Lösung beibehalten.
 </Steps>
 
-![Excel Solver Setup](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image3.png)
-![Excel Solver Setup 2](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image4.png)
-![Excel Solver Setup 3](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image5.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — LP-Netzwerk-Einrichtung</div>
+    <ul>
+      <li><b>Ziel festlegen:</b> Gesamtkosten-Zelle → <b>Min</b> &nbsp;(Zelle = <code>SUMMENPRODUKT(Kosten; Mengen)</code>)</li>
+      <li><b>Durch Ändern der Zellen:</b> alle 18 Entscheidungsvariablen-Zellen</li>
+      <li><b>Nebenbedingungen:</b> Angebot ≤ Kapazität · Eingang = Ausgang (Flussbilanz) · Nachfrage = Bedarf</li>
+      <li><b>Nicht eingeschränkte Variablen nicht-negativ:</b> ✓</li>
+      <li><b>Lösungsmethode:</b> <b>Simplex LP</b> (Modell vollständig linear)</li>
+    </ul>
+  </div>
+  <figcaption>Der Solver minimiert die SUMMENPRODUKT-Gesamtkostenzelle durch Anpassung aller 18 Flüsse unter den Angebots-, Flussbilanz- und Nachfrage-Nebenbedingungen mit der Simplex-LP-Engine.</figcaption>
+</figure>
 
 ---
 
@@ -105,8 +125,24 @@ Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Best
 Der Solver bestätigt: Alle Nebenbedingungen und Optimalitätsbedingungen sind erfüllt.
 **Gesamtdistributionskosten = ₹6.89.000** ← globales Optimum.
 
-![Finale Ergebnisse](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image6.png)
-![Finaler LP-Fluss](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image7.png)
+*Optimale Entscheidungsvariablen (gelieferte Einheiten) — Gesamtkosten ₹6,89,000:*
+
+| Lager | ← m1 | ← m2 | → r1 | → r2 | → r3 | → r4 |
+|---|---|---|---|---|---|---|
+| **w1** | 1,50,000 | 0 | 45,000 | 35,000 | 0 | 70,000 |
+| **w2** | 0 | 0 | 0 | 0 | 0 | 0 |
+| **w3** | 0 | 68,000 | 0 | 0 | 68,000 | 0 |
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-tier"><div class="sc-tier-head">Hersteller</div><div class="sc-node amber">M1 → W1<span class="sub">1,50,000</span></div><div class="sc-node amber">M2 → W3<span class="sub">68,000</span></div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Lager</div><div class="sc-node">W1</div><div class="sc-node">W3</div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Einzelhändler</div><div class="sc-node violet">R1 · 45,000 <span class="sub">über W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">über W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">über W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">über W3</span></div></div>
+  </div>
+  <figcaption>LP-Optimum — W1 bedient R1, R2, R4 (von M1 gespeist) und W3 bedient R3 (von M2 gespeist). Das Leiten von R4 über W1 und R3 über W3 unterbietet beide Heuristiken.</figcaption>
+</figure>
 
 ### Ansatz-Vergleich
 
@@ -116,8 +152,9 @@ Der Solver bestätigt: Alle Nebenbedingungen und Optimalitätsbedingungen sind e
 | **Heuristik 2** | Günstigster Pfad pro Einzelhändler | ₹7.57.000 | Nein | ₹2.04.000 |
 | **LP-Optimierung** | Simplex LP über Excel Solver | **₹6.89.000** | **Ja — garantiert** | **₹2.72.000** |
 
-![Ersparnisvergleich](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image8.png)
-![Fazit](/learnings/online/Supply-Chain-Digitization/sc_w8s5_image9.png)
+<Aside type="tip">
+LP (₹6,89,000) schlägt Heuristik 2 (₹7,57,000) um **₹68,000** und Heuristik 1 (₹9,61,000) um **₹2,72,000** — und ist, anders als die Heuristiken, *garantiert* optimal: keine zulässige Distribution kann günstiger sein.
+</Aside>
 
 <Aside type="note">
 **★** Die LP-Lösung ist garantiert optimal — keine andere machbare Verteilung kann weniger kosten. Das ist die Macht der Optimierung.

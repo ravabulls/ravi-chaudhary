@@ -27,7 +27,16 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 1. Recap — Week 8 So Far
 
-![Demand Allocation Overview](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image1.png)
+*Production + transportation cost per thousand units (₹ thousand), plus each plant's capacity and monthly fixed cost:*
+
+| Supply City ↓ / Market → | New Delhi | Kolkata | Lucknow | Chennai | Hyderabad | Mumbai | Capacity (K) | Fixed cost (K₹) |
+|---|---|---|---|---|---|---|---|---|
+| **Delhi** | 1,500 | 500 | 670 | 1,600 | 1,200 | 2,900 | 20 | 8,000 |
+| **Chennai** | 1,540 | 2,390 | 960 | 90 | 500 | 1,300 | 23 | 4,000 |
+| **Mumbai** | 2,000 | 2,500 | 1,300 | 450 | 950 | 900 | 25 | 5,600 |
+| **Gurugram** | 400 | 1,400 | 600 | 1,200 | 560 | 2,400 | 24 | 4,200 |
+| **Kolkata** | 1,080 | 1,700 | 650 | 540 | 321 | 1,800 | 32 | 2,400 |
+| **Monthly demand (K)** | 12 | 7 | 15 | 8 | 12 | 10 | — | — |
 
 | Session | Topic | Method / Tool |
 |---|---|---|
@@ -46,7 +55,17 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 **The Companies:** Maxxio (North+East India) and Wavie Communications (South+West India).
 Both companies have enough capacity to fulfill all market demand. The decision is HOW to allocate, not whether.
 
-![Case Study Data](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image2.png)
+<Aside type="note">
+**Excel model layout:** the decision variables (allocation X<sub>ij</sub> from each plant to each market) start at 0; two constraint blocks track **excess capacity** per plant and **unmet demand** per market; the objective cell sums cost via SUMPRODUCT.
+</Aside>
+
+*Key Solver formulas:*
+
+| Cell | Formula | Purpose | Copied to |
+|---|---|---|---|
+| B23 | `= H5*H15 − SUM(B15:G15)` | Excess capacity (per plant) | B24:B27 |
+| B29 | `= B10 − SUM(B15:B19)` | Unmet demand (per market) | C29:G29 |
+| B32 | `= SUMPRODUCT(B5:G9, B15:G19) + SUMPRODUCT(I5:I9, H15:H19)` | Objective (total cost) | — |
 
 ---
 
@@ -66,7 +85,16 @@ Both companies have enough capacity to fulfill all market demand. The decision i
 - **Demand constraint:** `Σi Xij = Dj` for all j (demand fully met)
 - **Non-negativity:** `Xij ≥ 0` for all i, j
 
-![Solver Solution](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image3.png)
+*Optimal demand allocation (thousand units shipped from each plant to each market):*
+
+| Plant ↓ / Market → | New Delhi | Kolkata | Lucknow | Chennai | Hyderabad | Mumbai | Capacity used |
+|---|---|---|---|---|---|---|---|
+| **Delhi** (Maxxio) | 0 | 7 | 0 | 0 | 0 | 0 | 7 |
+| **Gurugram** (Maxxio) | 12 | 0 | 12 | 0 | 0 | 0 | 24 |
+| **Kolkata** (Maxxio) | 0 | 0 | 3 | 0 | 0 | 0 | 3 |
+| **Chennai** (Wavie) | 0 | 0 | 0 | 8 | 12 | 0 | 20 |
+| **Mumbai** (Wavie) | 0 | 0 | 0 | 0 | 0 | 10 | 10 |
+| **Demand satisfied** | 12 | 7 | 15 | 8 | 12 | 10 | **obj = 33,170** |
 
 ### Key Insight from Solution (Maxxio)
 The Kolkata facility is barely utilized despite fixed cost being incurred because of high production + shipping costs. But the fixed cost is still paid → inefficiency. This signals a need for a smarter model that also decides *which plants to open*.
@@ -104,7 +132,18 @@ This is a **Capacitated Plant Location Problem (CPLP)**.
 ### Solving in Excel — Solver Settings
 - **Solving Method:** **Simplex LP** (model is linear — yi is handled via integer constraint).
 
-![CPLP Results](/learnings/online/Supply-Chain-Digitization/sc_w8s3_image4.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — CPLP setup</div>
+    <ul>
+      <li><b>Set Objective:</b> total-cost cell (B32) → <b>Min</b></li>
+      <li><b>By Changing Cells:</b> allocations X<sub>ij</sub> <i>and</i> plant open/close flags y<sub>i</sub></li>
+      <li><b>Constraints:</b> excess capacity ≥ 0 · unmet demand = 0 · y<sub>i</sub> = binary</li>
+      <li><b>Solving Method:</b> <b>Simplex LP</b> (linear; y<sub>i</sub> enforced as binary)</li>
+    </ul>
+  </div>
+  <figcaption>The CPLP adds a binary open/close variable per plant and each plant's fixed cost to the objective — Solver then decides both which plants to open and how much to ship.</figcaption>
+</figure>
 
 ---
 
