@@ -102,37 +102,145 @@ CoV allows fair **comparison across SKUs with very different demand levels** —
 
 ### Raw Weekly Sales Data Table
 
-![Weekly Sales Data Table — 20 SKUs × 8 Weeks for City A and City B](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image1.png)
+*Structure of the raw dataset (sample rows shown):*
+
+| Week | SKU | City | Units Sold |
+|---|---|---|---|
+| 1 | SKU13 | City A | 105 |
+| 2 | SKU7 | City A | 144 |
+| 3 | SKU15 | City A | 93 |
+| 4 | SKU12 | City B | 136 |
+| 5 | SKU1 | City B | 133 |
+| 6 | SKU15 | City A | 65 |
+| 7 | SKU4 | City A | 198 |
+| 8 | SKU13 | City B | 194 |
+| … | … | … | … |
+
+<Aside type="note">
+Full dataset = **20 SKUs × 8 weeks × 2 cities**. The SKU-level averages, standard deviations, and CoV computed from this raw table are summarised below.
+</Aside>
 
 ---
 
 ### CoV Calculations — City A
 
-![CoV Calculation Table — City A: Mean, Standard Deviation, and CoV per SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image2.png)
+| Product | Average Demand | Std. Deviation | CoV |
+|---|---|---|---|
+| SKU1 | 117.2 | 38.5 | 0.3 |
+| SKU2 | 117.7 | 40.2 | 0.3 |
+| SKU3 | 129.7 | 36.3 | 0.3 |
+| SKU4 | 129.6 | 41.8 | 0.3 |
+| SKU5 | 85.3 | 43.9 | 0.5 |
+| SKU6 | 166.8 | 24.7 | 0.1 |
+| SKU7 | 139.6 | 39.8 | 0.3 |
+| SKU8 | 117.4 | 47.9 | 0.4 |
+| SKU9 | 108.0 | 40.6 | 0.4 |
+| SKU10 | 134.6 | 44.4 | 0.3 |
+| SKU11 | 142.8 | 50.7 | 0.4 |
+| SKU12 | 130.2 | 56.8 | 0.4 |
+| SKU13 | 99.0 | 25.6 | 0.3 |
+| SKU14 | 139.3 | 41.4 | 0.3 |
+| SKU15 | 92.8 | 47.0 | 0.5 |
+| SKU16 | 129.1 | 47.9 | 0.4 |
+| SKU17 | 100.3 | 46.4 | 0.5 |
+| SKU18 | 118.6 | 45.6 | 0.4 |
+| SKU19 | 127.7 | 29.3 | 0.2 |
+| SKU20 | 117.9 | 49.8 | 0.4 |
 
 ---
 
 ### CoV Calculations — City B
 
-![CoV Calculation Table — City B: Mean, Standard Deviation, and CoV per SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image3.png)
+| Product | Average Demand | Std. Deviation | CoV |
+|---|---|---|---|
+| SKU1 | 130.9 | 49.9 | 0.4 |
+| SKU2 | 148.0 | 36.4 | 0.2 |
+| SKU3 | 127.2 | 37.4 | 0.3 |
+| SKU4 | 128.4 | 40.7 | 0.3 |
+| SKU5 | 122.3 | 62.1 | 0.5 |
+| SKU6 | 126.8 | 48.9 | 0.4 |
+| SKU7 | 133.5 | 45.3 | 0.3 |
+| SKU8 | 104.9 | 38.1 | 0.4 |
+| SKU9 | 102.0 | 33.6 | 0.3 |
+| SKU10 | 127.6 | 52.0 | 0.4 |
+| SKU11 | 104.9 | 43.2 | 0.4 |
+| SKU12 | 117.4 | 31.2 | 0.3 |
+| SKU13 | 124.6 | 60.2 | 0.5 |
+| SKU14 | 154.7 | 25.6 | 0.2 |
+| SKU15 | 106.5 | 49.9 | 0.5 |
+| SKU16 | 110.7 | 47.0 | 0.4 |
+| SKU17 | 113.1 | 38.2 | 0.3 |
+| SKU18 | 142.7 | 31.0 | 0.2 |
+| SKU19 | 126.7 | 42.7 | 0.3 |
+| SKU20 | 113.5 | 31.2 | 0.3 |
 
 ---
 
 ### Joint (Combined) CoV — Distribution Centre View
 
-![Joint CoV Summary Table — Combined City A + City B for Distribution Centre](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image4.png)
+| Product | Average Demand | Std. Deviation | CoV |
+|---|---|---|---|
+| SKU1 | 125.8 | 45.1 | 0.4 |
+| SKU2 | 136.8 | 39.7 | 0.3 |
+| SKU3 | 128.4 | 35.2 | 0.3 |
+| SKU4 | 129.1 | 39.8 | 0.3 |
+| SKU5 | 107.5 | 56.1 | 0.5 |
+| SKU6 | 140.1 | 45.7 | 0.3 |
+| SKU7 | 137.5 | 40.5 | 0.3 |
+| SKU8 | 110.7 | 41.9 | 0.4 |
+| SKU9 | 105.0 | 35.9 | 0.3 |
+| SKU10 | 131.9 | 46.5 | 0.4 |
+| SKU11 | 115.7 | 46.9 | 0.4 |
+| SKU12 | 120.9 | 38.7 | 0.3 |
+| SKU13 | 109.7 | 43.0 | 0.4 |
+| SKU14 | 147.8 | 33.6 | 0.2 |
+| SKU15 | 99.7 | 46.7 | 0.5 |
+| SKU16 | 120.4 | 47.1 | 0.4 |
+| SKU17 | 105.4 | 42.7 | 0.4 |
+| SKU18 | 129.1 | 40.6 | 0.3 |
+| SKU19 | 127.2 | 34.9 | 0.3 |
+| SKU20 | 115.8 | 40.9 | 0.4 |
 
 ---
 
 ### Scatter Plot — City A & City B Combined
 
-![Scatter Plot — CoV vs. Average Weekly Sales for City A (Blue) and City B (Orange) SKUs](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image5.png)
+<Aside type="note">
+Plotting each SKU as **CoV (x-axis)** against **average weekly sales (y-axis)** — separately for City A and City B — shows the same broad pattern in both cities: higher demand variability tends to accompany lower average sales. The two cities are then combined into the joint **distribution-centre view** below, which is the operationally relevant scatter for SC design.
+</Aside>
 
 ---
 
 ### Scatter Plot — Distribution Centre (Joint) View
 
-![Scatter Plot — Joint CoV vs. Average Weekly Sales: Distribution Centre Perspective](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image6.png)
+<figure class="sc-fig">
+  <svg viewBox="0 0 600 390" role="img" aria-label="Scatter plot of average weekly sales versus demand variability (CoV) for 20 SKUs, distribution-centre view" style="width:100%;max-width:620px;font-family:inherit">
+    <g stroke="var(--sl-color-gray-5)" stroke-width="1">
+      <line x1="121" y1="30" x2="121" y2="335"/><line x1="254" y1="30" x2="254" y2="335"/>
+      <line x1="386" y1="30" x2="386" y2="335"/><line x1="519" y1="30" x2="519" y2="335"/>
+      <line x1="55" y1="267" x2="585" y2="267"/><line x1="55" y1="199" x2="585" y2="199"/>
+      <line x1="55" y1="132" x2="585" y2="132"/><line x1="55" y1="64" x2="585" y2="64"/>
+    </g>
+    <g stroke="var(--sl-color-gray-3)" stroke-width="1.5">
+      <line x1="55" y1="30" x2="55" y2="335"/><line x1="55" y1="335" x2="585" y2="335"/>
+    </g>
+    <g fill="var(--sl-color-gray-2)" font-size="11" text-anchor="middle">
+      <text x="121" y="352">0.2</text><text x="254" y="352">0.3</text><text x="386" y="352">0.4</text><text x="519" y="352">0.5</text>
+    </g>
+    <g fill="var(--sl-color-gray-2)" font-size="11" text-anchor="end">
+      <text x="49" y="271">100</text><text x="49" y="203">120</text><text x="49" y="136">140</text><text x="49" y="68">160</text>
+    </g>
+    <text x="320" y="378" fill="var(--sl-color-text-accent)" font-size="12" text-anchor="middle" font-weight="600">Demand variability (CoV)</text>
+    <text x="16" y="182" fill="var(--sl-color-text-accent)" font-size="12" text-anchor="middle" font-weight="600" transform="rotate(-90 16 182)">Avg weekly sales</text>
+    <g fill="var(--sc-blue)" fill-opacity="0.8">
+      <circle cx="331" cy="180" r="4.5"/><circle cx="241" cy="142" r="4.5"/><circle cx="219" cy="171" r="4.5"/><circle cx="264" cy="168" r="4.5"/><circle cx="548" cy="242" r="4.5"/>
+      <circle cx="288" cy="131" r="4.5"/><circle cx="247" cy="140" r="4.5"/><circle cx="357" cy="231" r="4.5"/><circle cx="309" cy="250" r="4.5"/><circle cx="323" cy="159" r="4.5"/>
+      <circle cx="393" cy="214" r="4.5"/><circle cx="280" cy="196" r="4.5"/><circle cx="376" cy="234" r="4.5"/><circle cx="157" cy="105" r="4.5"/><circle cx="476" cy="268" r="4.5"/>
+      <circle cx="374" cy="198" r="4.5"/><circle cx="393" cy="249" r="4.5"/><circle cx="274" cy="168" r="4.5"/><circle cx="219" cy="175" r="4.5"/><circle cx="324" cy="214" r="4.5"/>
+    </g>
+  </svg>
+  <figcaption>Distribution-centre view — each point is one of the 20 SKUs, positioned by its joint demand variability (CoV) and average weekly sales. The downward drift confirms that the most variable SKUs are generally the lower-selling ones.</figcaption>
+</figure>
 
 ---
 
@@ -140,7 +248,29 @@ CoV allows fair **comparison across SKUs with very different demand levels** —
 
 The scatter plots are divided into four quadrants based on threshold values for CoV and average weekly sales. Each quadrant maps to a distinct SC strategy.
 
-![4-Quadrant Product Segmentation Matrix — CoV vs. Average Weekly Sales with SC Strategy per Quadrant](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image7.png)
+<figure class="sc-fig">
+  <div class="sc-axis">↑ High average weekly sales</div>
+  <div class="sc-quad">
+    <div class="q blue">
+      <div class="qh">Q1 · Push <small>(low CoV, high sales)</small></div>
+      <ul><li>Essential / high-volume products</li><li>Stable, predictable → Efficient SC</li></ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Q3 · Hybrid push-pull <small>(high CoV, high sales)</small></div>
+      <ul><li>Consumer electronics / high-tech</li><li>High volume <b>and</b> high variability — most complex</li></ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Q4 · Hybrid push-pull <small>(low CoV, low sales)</small></div>
+      <ul><li>Basic / slow-moving products</li><li>Combination set by product requirements</li></ul>
+    </div>
+    <div class="q violet">
+      <div class="qh">Q2 · Pull <small>(high CoV, low sales)</small></div>
+      <ul><li>Customised / niche products</li><li>Low volume + unpredictable → Responsive SC</li></ul>
+    </div>
+  </div>
+  <div class="sc-axis">Low demand variability (CoV) ← → High demand variability (CoV) &nbsp;·&nbsp; ↓ Low average weekly sales</div>
+  <figcaption>The scatter is split into four quadrants by thresholds on CoV and average weekly sales; each quadrant maps to a distinct supply-chain strategy.</figcaption>
+</figure>
 
 #### Quadrant 1 — Low CoV + High Sales (Top-Left)
 
@@ -219,7 +349,29 @@ The scatter plots are divided into four quadrants based on threshold values for 
 
 ### 4 Quadrants of the Kraljic Matrix
 
-![Kraljic Matrix — Supply Risk vs. Profit Impact with 4 Procurement Strategy Quadrants](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image8.png)
+<figure class="sc-fig">
+  <div class="sc-axis">↑ High profit impact</div>
+  <div class="sc-quad">
+    <div class="q green">
+      <div class="qh">Leverage <small>(low risk, high impact)</small></div>
+      <ul><li>Abundant supply, strong buyer power</li><li>Exploit purchasing power: competitive bidding, hard negotiation</li></ul>
+    </div>
+    <div class="q violet">
+      <div class="qh">Strategic <small>(high risk, high impact)</small></div>
+      <ul><li>Critical, hard to switch suppliers</li><li>Long-term partnerships, collaboration, secure continuity</li></ul>
+    </div>
+    <div class="q blue">
+      <div class="qh">Non-critical <small>(low risk, low impact)</small></div>
+      <ul><li>Standardised, many suppliers</li><li>Streamline &amp; automate procurement</li></ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Bottleneck <small>(high risk, low impact)</small></div>
+      <ul><li>Low control, but can disrupt operations</li><li>Secure supply: safety stock, alternate sourcing, monitor</li></ul>
+    </div>
+  </div>
+  <div class="sc-axis">Low supply risk ← → High supply risk &nbsp;·&nbsp; ↓ Low profit impact</div>
+  <figcaption>The Kraljic matrix classifies purchased components by supply risk and profit impact, assigning each of the four quadrants a distinct procurement strategy.</figcaption>
+</figure>
 
 #### 1. Non-Critical Items — Low Supply Risk + Low Profit Impact
 

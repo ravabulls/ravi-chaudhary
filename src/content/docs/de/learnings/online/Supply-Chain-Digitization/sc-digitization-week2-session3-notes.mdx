@@ -125,7 +125,18 @@ Zusammen bestimmen diese, ob die SC **Effizient oder Reaktionsfähig** sein soll
 **★ Kern-Zuordnung:** Funktional → Effiziente SC → Push | Innovativ → Reaktionsfähige SC → Pull
 </Aside>
 
-![Produkttyp-zu-SC-Strategie-Zuordnungsmatrix](/learnings/online/Supply-Chain-Digitization/sc_w2s3_image1.png)
+<figure class="sc-fig">
+  <table class="sc-matrix">
+    <thead>
+      <tr><th>SC-Typ ↓ / Produkt →</th><th>Funktionale Produkte</th><th>Innovative Produkte</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Effiziente SC (Push)</th><td class="hl">Passt</td><td>Passt nicht</td></tr>
+      <tr><th>Reaktionsfähige SC (Pull)</th><td>Passt nicht</td><td class="hl">Passt</td></tr>
+    </tbody>
+  </table>
+  <figcaption>Produkt und Lieferkette zusammenbringen: funktionale Produkte passen zu einer effizienten/Push-Kette, innovative Produkte zu einer reaktionsfähigen/Pull-Kette. Die Kombinationen abseits der Diagonale sind strukturelle Fehlpaarungen.</figcaption>
+</figure>
 
 ---
 
@@ -197,7 +208,18 @@ Zusammen bestimmen diese, ob die SC **Effizient oder Reaktionsfähig** sein soll
 - **Zone 2 — Nachgelagert (Pull):** Der Teil der SC mit hoher Unsicherheit oder Anpassungsbedarf — durch tatsächliche Kundennachfrage ausgelöst
 </Aside>
 
-![Push-Pull-Grenze Konzeptdiagramm — SC in Push-Zone und Pull-Zone unterteilt](/learnings/online/Supply-Chain-Digitization/sc_w2s3_image2.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Lieferanten</div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Push-Zone<span class="sub">prognosegesteuert · geringe Unsicherheit</span></div>
+    <span class="sc-bnd">Push-Pull-<br/>Grenze</span>
+    <div class="sc-node violet">Pull-Zone<span class="sub">nachfragegesteuert · hohe Unsicherheit</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node soft">Kunden</div>
+  </div>
+  <figcaption>Die meisten realen Lieferketten sind Hybride: eine vorgelagerte Push-Zone (nach Prognose gefertigt) und eine nachgelagerte Pull-Zone (durch echte Nachfrage ausgelöst), getrennt durch die Push-Pull-Grenze.</figcaption>
+</figure>
 
 ### Die Push-Pull-Grenze — Definition
 
@@ -237,7 +259,22 @@ Der Kunde kommuniziert seine Präferenzen — Farbe, Sitztyp, Zubehör — an de
 - Lieferung erfolgt nach abgeschlossener Anpassung
 - Keine Anpassung vorgelagert — nur auf Händlerebene
 
-![Fahrzeugfarbanpassung Push-Pull-Diagramm — Grenze beim Händler](/learnings/online/Supply-Chain-Digitization/sc_w2s3_image3.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Lieferanten</div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Fertigung<span class="sub">Fließbänder</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Händler</div>
+    <span class="sc-bnd">Push-Pull-<br/>Grenze</span>
+    <div class="sc-node violet">Kunden</div>
+  </div>
+  <div class="sc-legend">
+    <span><i style="background:var(--sc-blue)"></i>Push — Standardfahrzeug, prognosegesteuert (Lieferanten → Händler)</span>
+    <span><i style="background:var(--sc-violet)"></i>Pull — Farb- &amp; Zubehöranpassung (Händler → Kunde)</span>
+  </div>
+  <figcaption>Beispiel 1 — vorgelagert mit Push standardisieren, dann nachgelagert mit Pull anpassen. Die Grenze liegt beim Händler: dem letzten Akteur, bevor die konkreten Kundenwünsche in die Kette eintreten.</figcaption>
+</figure>
 
 <Aside type="note">
 **★ Erkenntnis:** Vorgelagert mit Push standardisieren → nachgelagert mit Pull anpassen. Grenze liegt beim Händler — dem letzten Akteur vor den spezifischen Kundenanforderungen.
@@ -267,7 +304,22 @@ Die Grenze liegt weiter vorgelagert, weil die Variabilität auf Komponentenebene
 - Händler erhält das fertige Fahrzeug → Standard-Lieferplan → schiebt zum Kunden
 - Keine besonderen Anforderungen auf Händler- oder Lieferstufe
 
-![Komponenten-Anpassung Push-Pull-Diagramm — Grenze zwischen Lieferant und Hersteller](/learnings/online/Supply-Chain-Digitization/sc_w2s3_image4.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">Lieferanten</div>
+    <span class="sc-bnd">Push-Pull-<br/>Grenze</span>
+    <div class="sc-node">Fertigung<span class="sub">Fließbänder</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Händler</div>
+    <span class="arrow">→</span>
+    <div class="sc-node soft">Kunden</div>
+  </div>
+  <div class="sc-legend">
+    <span><i style="background:var(--sc-violet)"></i>Pull — Lieferanten liefern Komponenten je Bestellung (Lieferanten)</span>
+    <span><i style="background:var(--sc-blue)"></i>Push — Standardmontage &amp; -lieferung (Fertigung → Kunde)</span>
+  </div>
+  <figcaption>Beispiel 2 — findet die Anpassung auf Komponentenebene statt, reicht die Pull-Zone bis zu den Lieferanten zurück; sobald die Montage standardisiert ist, kehrt die Kette zu Push zurück. Die Grenze liegt zwischen Lieferant und Fertigung.</figcaption>
+</figure>
 
 <Aside type="note">
 **★ Erkenntnis:** Wenn Anpassung auf Komponentenebene existiert, erstreckt sich die Pull-Zone bis zu den Lieferanten zurück. Nach der Fertigung, sobald die Montage standard ist, kehrt die Kette zu Push zurück. Grenze = zwischen Lieferant und Fertigung.

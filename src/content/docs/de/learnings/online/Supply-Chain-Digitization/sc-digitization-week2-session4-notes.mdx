@@ -98,37 +98,145 @@ VK ermöglicht fairen **Vergleich über SKUs mit sehr unterschiedlichen Nachfrag
 
 ### Rohe Wochenumsatzdatentabelle
 
-![Wochenumsatzdatentabelle — 20 SKUs × 8 Wochen für Stadt A und Stadt B](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image1.png)
+*Struktur des Rohdatensatzes (Beispielzeilen):*
+
+| Woche | SKU | Stadt | Verkaufte Einheiten |
+|---|---|---|---|
+| 1 | SKU13 | Stadt A | 105 |
+| 2 | SKU7 | Stadt A | 144 |
+| 3 | SKU15 | Stadt A | 93 |
+| 4 | SKU12 | Stadt B | 136 |
+| 5 | SKU1 | Stadt B | 133 |
+| 6 | SKU15 | Stadt A | 65 |
+| 7 | SKU4 | Stadt A | 198 |
+| 8 | SKU13 | Stadt B | 194 |
+| … | … | … | … |
+
+<Aside type="note">
+Gesamter Datensatz = **20 SKUs × 8 Wochen × 2 Städte**. Die daraus berechneten SKU-Mittelwerte, Standardabweichungen und VK sind unten zusammengefasst.
+</Aside>
 
 ---
 
 ### VK-Berechnungen — Stadt A
 
-![VK-Berechnungstabelle — Stadt A: Mittelwert, Standardabweichung und VK je SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image2.png)
+| Produkt | Durchschn. Nachfrage | Std.-Abweichung | VK |
+|---|---|---|---|
+| SKU1 | 117,2 | 38,5 | 0,3 |
+| SKU2 | 117,7 | 40,2 | 0,3 |
+| SKU3 | 129,7 | 36,3 | 0,3 |
+| SKU4 | 129,6 | 41,8 | 0,3 |
+| SKU5 | 85,3 | 43,9 | 0,5 |
+| SKU6 | 166,8 | 24,7 | 0,1 |
+| SKU7 | 139,6 | 39,8 | 0,3 |
+| SKU8 | 117,4 | 47,9 | 0,4 |
+| SKU9 | 108,0 | 40,6 | 0,4 |
+| SKU10 | 134,6 | 44,4 | 0,3 |
+| SKU11 | 142,8 | 50,7 | 0,4 |
+| SKU12 | 130,2 | 56,8 | 0,4 |
+| SKU13 | 99,0 | 25,6 | 0,3 |
+| SKU14 | 139,3 | 41,4 | 0,3 |
+| SKU15 | 92,8 | 47,0 | 0,5 |
+| SKU16 | 129,1 | 47,9 | 0,4 |
+| SKU17 | 100,3 | 46,4 | 0,5 |
+| SKU18 | 118,6 | 45,6 | 0,4 |
+| SKU19 | 127,7 | 29,3 | 0,2 |
+| SKU20 | 117,9 | 49,8 | 0,4 |
 
 ---
 
 ### VK-Berechnungen — Stadt B
 
-![VK-Berechnungstabelle — Stadt B: Mittelwert, Standardabweichung und VK je SKU](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image3.png)
+| Produkt | Durchschn. Nachfrage | Std.-Abweichung | VK |
+|---|---|---|---|
+| SKU1 | 130,9 | 49,9 | 0,4 |
+| SKU2 | 148,0 | 36,4 | 0,2 |
+| SKU3 | 127,2 | 37,4 | 0,3 |
+| SKU4 | 128,4 | 40,7 | 0,3 |
+| SKU5 | 122,3 | 62,1 | 0,5 |
+| SKU6 | 126,8 | 48,9 | 0,4 |
+| SKU7 | 133,5 | 45,3 | 0,3 |
+| SKU8 | 104,9 | 38,1 | 0,4 |
+| SKU9 | 102,0 | 33,6 | 0,3 |
+| SKU10 | 127,6 | 52,0 | 0,4 |
+| SKU11 | 104,9 | 43,2 | 0,4 |
+| SKU12 | 117,4 | 31,2 | 0,3 |
+| SKU13 | 124,6 | 60,2 | 0,5 |
+| SKU14 | 154,7 | 25,6 | 0,2 |
+| SKU15 | 106,5 | 49,9 | 0,5 |
+| SKU16 | 110,7 | 47,0 | 0,4 |
+| SKU17 | 113,1 | 38,2 | 0,3 |
+| SKU18 | 142,7 | 31,0 | 0,2 |
+| SKU19 | 126,7 | 42,7 | 0,3 |
+| SKU20 | 113,5 | 31,2 | 0,3 |
 
 ---
 
 ### Gemeinsamer (Kombinierter) VK — Verteilzentrumsperspektive
 
-![Gemeinsame VK-Zusammenfassungstabelle — Kombiniert Stadt A + Stadt B für Verteilzentrum](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image4.png)
+| Produkt | Durchschn. Nachfrage | Std.-Abweichung | VK |
+|---|---|---|---|
+| SKU1 | 125,8 | 45,1 | 0,4 |
+| SKU2 | 136,8 | 39,7 | 0,3 |
+| SKU3 | 128,4 | 35,2 | 0,3 |
+| SKU4 | 129,1 | 39,8 | 0,3 |
+| SKU5 | 107,5 | 56,1 | 0,5 |
+| SKU6 | 140,1 | 45,7 | 0,3 |
+| SKU7 | 137,5 | 40,5 | 0,3 |
+| SKU8 | 110,7 | 41,9 | 0,4 |
+| SKU9 | 105,0 | 35,9 | 0,3 |
+| SKU10 | 131,9 | 46,5 | 0,4 |
+| SKU11 | 115,7 | 46,9 | 0,4 |
+| SKU12 | 120,9 | 38,7 | 0,3 |
+| SKU13 | 109,7 | 43,0 | 0,4 |
+| SKU14 | 147,8 | 33,6 | 0,2 |
+| SKU15 | 99,7 | 46,7 | 0,5 |
+| SKU16 | 120,4 | 47,1 | 0,4 |
+| SKU17 | 105,4 | 42,7 | 0,4 |
+| SKU18 | 129,1 | 40,6 | 0,3 |
+| SKU19 | 127,2 | 34,9 | 0,3 |
+| SKU20 | 115,8 | 40,9 | 0,4 |
 
 ---
 
 ### Streudiagramm — Stadt A und Stadt B kombiniert
 
-![Streudiagramm — VK vs. Durchschnittlicher Wochenumsatz für Stadt A (Blau) und Stadt B (Orange) SKUs](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image5.png)
+<Aside type="note">
+Trägt man jede SKU als **VK (x-Achse)** gegen den **durchschnittlichen Wochenumsatz (y-Achse)** auf — getrennt für Stadt A und Stadt B — zeigt sich in beiden Städten dasselbe Grundmuster: höhere Nachfragevariabilität geht tendenziell mit niedrigerem Durchschnittsumsatz einher. Beide Städte werden dann zur gemeinsamen **Verteilzentrumssicht** unten zusammengeführt — dem operativ relevanten Streudiagramm für das SC-Design.
+</Aside>
 
 ---
 
 ### Streudiagramm — Verteilzentrum (Gemeinsam)
 
-![Streudiagramm — Gemeinsamer VK vs. Durchschnittlicher Wochenumsatz: Verteilzentrumsperspektive](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image6.png)
+<figure class="sc-fig">
+  <svg viewBox="0 0 600 390" role="img" aria-label="Streudiagramm: durchschnittlicher Wochenumsatz gegen Nachfragevariabilität (VK) für 20 SKUs, Verteilzentrumssicht" style="width:100%;max-width:620px;font-family:inherit">
+    <g stroke="var(--sl-color-gray-5)" stroke-width="1">
+      <line x1="121" y1="30" x2="121" y2="335"/><line x1="254" y1="30" x2="254" y2="335"/>
+      <line x1="386" y1="30" x2="386" y2="335"/><line x1="519" y1="30" x2="519" y2="335"/>
+      <line x1="55" y1="267" x2="585" y2="267"/><line x1="55" y1="199" x2="585" y2="199"/>
+      <line x1="55" y1="132" x2="585" y2="132"/><line x1="55" y1="64" x2="585" y2="64"/>
+    </g>
+    <g stroke="var(--sl-color-gray-3)" stroke-width="1.5">
+      <line x1="55" y1="30" x2="55" y2="335"/><line x1="55" y1="335" x2="585" y2="335"/>
+    </g>
+    <g fill="var(--sl-color-gray-2)" font-size="11" text-anchor="middle">
+      <text x="121" y="352">0,2</text><text x="254" y="352">0,3</text><text x="386" y="352">0,4</text><text x="519" y="352">0,5</text>
+    </g>
+    <g fill="var(--sl-color-gray-2)" font-size="11" text-anchor="end">
+      <text x="49" y="271">100</text><text x="49" y="203">120</text><text x="49" y="136">140</text><text x="49" y="68">160</text>
+    </g>
+    <text x="320" y="378" fill="var(--sl-color-text-accent)" font-size="12" text-anchor="middle" font-weight="600">Nachfragevariabilität (VK)</text>
+    <text x="16" y="182" fill="var(--sl-color-text-accent)" font-size="12" text-anchor="middle" font-weight="600" transform="rotate(-90 16 182)">Durchschn. Wochenumsatz</text>
+    <g fill="var(--sc-blue)" fill-opacity="0.8">
+      <circle cx="331" cy="180" r="4.5"/><circle cx="241" cy="142" r="4.5"/><circle cx="219" cy="171" r="4.5"/><circle cx="264" cy="168" r="4.5"/><circle cx="548" cy="242" r="4.5"/>
+      <circle cx="288" cy="131" r="4.5"/><circle cx="247" cy="140" r="4.5"/><circle cx="357" cy="231" r="4.5"/><circle cx="309" cy="250" r="4.5"/><circle cx="323" cy="159" r="4.5"/>
+      <circle cx="393" cy="214" r="4.5"/><circle cx="280" cy="196" r="4.5"/><circle cx="376" cy="234" r="4.5"/><circle cx="157" cy="105" r="4.5"/><circle cx="476" cy="268" r="4.5"/>
+      <circle cx="374" cy="198" r="4.5"/><circle cx="393" cy="249" r="4.5"/><circle cx="274" cy="168" r="4.5"/><circle cx="219" cy="175" r="4.5"/><circle cx="324" cy="214" r="4.5"/>
+    </g>
+  </svg>
+  <figcaption>Verteilzentrumssicht — jeder Punkt ist eine der 20 SKUs, positioniert nach gemeinsamer Nachfragevariabilität (VK) und durchschnittlichem Wochenumsatz. Die fallende Tendenz bestätigt: die variabelsten SKUs sind meist die umsatzschwächeren.</figcaption>
+</figure>
 
 ---
 
@@ -136,7 +244,29 @@ VK ermöglicht fairen **Vergleich über SKUs mit sehr unterschiedlichen Nachfrag
 
 Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnittlichen Wochenumsatz in vier Quadranten unterteilt. Jeder Quadrant ordnet einer bestimmten SC-Strategie zu.
 
-![4-Quadranten-Produktsegmentierungsmatrix — VK vs. Durchschnittlicher Wochenumsatz mit SC-Strategie je Quadrant](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image7.png)
+<figure class="sc-fig">
+  <div class="sc-axis">↑ Hoher durchschnittlicher Wochenumsatz</div>
+  <div class="sc-quad">
+    <div class="q blue">
+      <div class="qh">Q1 · Push <small>(niedriger VK, hoher Umsatz)</small></div>
+      <ul><li>Essenzielle / volumenstarke Produkte</li><li>Stabil, vorhersehbar → Effiziente SC</li></ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Q3 · Hybrid Push-Pull <small>(hoher VK, hoher Umsatz)</small></div>
+      <ul><li>Unterhaltungselektronik / High-Tech</li><li>Hohes Volumen <b>und</b> hohe Variabilität — am komplexesten</li></ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Q4 · Hybrid Push-Pull <small>(niedriger VK, niedriger Umsatz)</small></div>
+      <ul><li>Basis- / langsamdrehende Produkte</li><li>Kombination je nach Produktanforderung</li></ul>
+    </div>
+    <div class="q violet">
+      <div class="qh">Q2 · Pull <small>(hoher VK, niedriger Umsatz)</small></div>
+      <ul><li>Individualisierte / Nischenprodukte</li><li>Geringes Volumen + unvorhersehbar → Reaktionsfähige SC</li></ul>
+    </div>
+  </div>
+  <div class="sc-axis">Niedrige Nachfragevariabilität (VK) ← → Hohe Nachfragevariabilität (VK) &nbsp;·&nbsp; ↓ Niedriger durchschnittlicher Wochenumsatz</div>
+  <figcaption>Das Streudiagramm wird durch Schwellenwerte für VK und durchschnittlichen Wochenumsatz in vier Quadranten geteilt; jeder Quadrant entspricht einer eigenen Lieferkettenstrategie.</figcaption>
+</figure>
 
 #### Quadrant 1 — Niedriger VK + Hoher Umsatz (Oben-Links)
 
@@ -215,7 +345,29 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 
 ### 4 Quadranten der Kraljic-Matrix
 
-![Kraljic-Matrix — Versorgungsrisiko vs. Gewinnauswirkung mit 4 Beschaffungsstrategien](/learnings/online/Supply-Chain-Digitization/sc_w2s4_image8.png)
+<figure class="sc-fig">
+  <div class="sc-axis">↑ Hohe Gewinnauswirkung</div>
+  <div class="sc-quad">
+    <div class="q green">
+      <div class="qh">Hebelprodukte <small>(geringes Risiko, hohe Auswirkung)</small></div>
+      <ul><li>Reichliches Angebot, starke Einkaufsmacht</li><li>Einkaufsmacht nutzen: Ausschreibung, harte Verhandlung</li></ul>
+    </div>
+    <div class="q violet">
+      <div class="qh">Strategische Produkte <small>(hohes Risiko, hohe Auswirkung)</small></div>
+      <ul><li>Kritisch, Lieferant schwer wechselbar</li><li>Langfristige Partnerschaften, Zusammenarbeit, Versorgungssicherheit</li></ul>
+    </div>
+    <div class="q blue">
+      <div class="qh">Unkritische Produkte <small>(geringes Risiko, geringe Auswirkung)</small></div>
+      <ul><li>Standardisiert, viele Lieferanten</li><li>Beschaffung verschlanken &amp; automatisieren</li></ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Engpassprodukte <small>(hohes Risiko, geringe Auswirkung)</small></div>
+      <ul><li>Geringe Kontrolle, kann aber Betrieb stören</li><li>Versorgung sichern: Sicherheitsbestand, alternative Beschaffung, überwachen</li></ul>
+    </div>
+  </div>
+  <div class="sc-axis">Geringes Versorgungsrisiko ← → Hohes Versorgungsrisiko &nbsp;·&nbsp; ↓ Geringe Gewinnauswirkung</div>
+  <figcaption>Die Kraljic-Matrix klassifiziert eingekaufte Komponenten nach Versorgungsrisiko und Gewinnauswirkung und weist jedem der vier Quadranten eine eigene Beschaffungsstrategie zu.</figcaption>
+</figure>
 
 #### 1. Unkritische Artikel — Geringes Versorgungsrisiko + Geringe Gewinnauswirkung
 

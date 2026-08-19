@@ -97,6 +97,20 @@ img {
   max-width: 6.5rem;
 }
 
+/* Boundary marker — a labelled dashed divider inside a flow */
+.sc-flow .sc-bnd {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-left: 3px dashed var(--sc-violet);
+  padding: 0 0.5rem;
+  color: var(--sc-violet);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
 /* --- A node / block --- */
 .sc-node {
   display: flex;
@@ -215,6 +229,28 @@ img {
 .sc-pillar > .head { font-weight: 700; text-align: center; margin-bottom: 0.35rem; }
 .sc-pillar ul { margin: 0; padding-left: 1.1rem; }
 .sc-pillar li { font-size: 0.82rem; margin: 0.2rem 0; }
+
+/* --- Quadrant (2x2 strategy grids like Kraljic) --- */
+.sc-quad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.sc-quad .q {
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--sl-color-gray-5);
+  background: var(--sl-color-gray-6);
+}
+.sc-quad .q .qh { font-weight: 700; margin-bottom: 0.2rem; }
+.sc-quad .q .qh small { font-weight: 400; color: var(--sl-color-gray-3); }
+.sc-quad .q ul { margin: 0.2rem 0 0; padding-left: 1.05rem; }
+.sc-quad .q li { font-size: 0.8rem; margin: 0.15rem 0; }
+.sc-quad .q.blue   { background: color-mix(in srgb, var(--sc-blue) 13%, transparent);   border-color: color-mix(in srgb, var(--sc-blue) 40%, transparent); }
+.sc-quad .q.violet { background: color-mix(in srgb, var(--sc-violet) 13%, transparent); border-color: color-mix(in srgb, var(--sc-violet) 40%, transparent); }
+.sc-quad .q.amber  { background: color-mix(in srgb, var(--sc-amber) 13%, transparent);  border-color: color-mix(in srgb, var(--sc-amber) 40%, transparent); }
+.sc-quad .q.green  { background: color-mix(in srgb, var(--sc-green) 13%, transparent);  border-color: color-mix(in srgb, var(--sc-green) 40%, transparent); }
+.sc-axis { text-align: center; font-size: 0.75rem; font-weight: 600; color: var(--sl-color-gray-2); margin: 0.35rem 0; }
 
 /* --- Matrix (positioning grids like the product-process matrix) --- */
 table.sc-matrix { display: table; width: 100%; }

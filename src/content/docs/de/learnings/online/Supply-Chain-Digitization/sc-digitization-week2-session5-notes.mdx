@@ -199,7 +199,25 @@ AHP organisiert eine komplexe, multifaktorielle Entscheidung in eine **hierarchi
 
 ### AHP-Hierarchiestruktur
 
-![AHP-Hierarchische Strukturdiagramm — Ziel → Kriterien → Alternativen](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image1.png)
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node">Problem definieren &amp; Ziel bestimmen</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node">Hierarchischen Rahmen entwickeln</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Paarweise Vergleichsmatrix je Ebene aufstellen</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node">Vektorprioritäten &amp; Gewichte berechnen</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node">Konsistenzverhältnis (CR) berechnen</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Ist CR &lt; 0,1?</div>
+    <span class="arrow">↓ &nbsp;ja</span>
+    <div class="sc-node green">Erhaltene Kriteriengewichte verwenden</div>
+  </div>
+  <p class="sc-cap">Ist CR ≥ 0,1 (Nein) → zurück zur paarweisen Vergleichsmatrix und die Urteile wiederholen.</p>
+  <figcaption>Die AHP-Methode organisiert ein komplexes Problem hierarchisch, vergleicht Elemente paarweise und iteriert, bis die Urteile konsistent sind (CR &lt; 0,1), bevor die abgeleiteten Gewichte verwendet werden.</figcaption>
+</figure>
 
 ### Saaty-Skala (1–9)
 
@@ -259,13 +277,39 @@ AHP organisiert eine komplexe, multifaktorielle Entscheidung in eine **hierarchi
 
 ### SKU-Daten — 25 SKUs über 6 Kriterien
 
-![XYZ E-tailer SKU-Datentabelle — 25 SKUs mit Werten über alle 6 Kriterien](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image2.png)
+*Tabelle 2 — SKU-Daten über die sechs Kriterien:*
+
+| SKU | Monatliche Nachfrage | Kategoriepriorität (1–10) | Lieferantenzuverlässigkeit (%) | Gewinnmarge (%) | Vorlaufzeit (Std.) | Rückgabe­wahrsch. (%) |
+|---|---|---|---|---|---|---|
+| 1 | 1.366.987 | 10 | 97 | 10 | 72 | 4 |
+| 2 | 321 | 3 | 93 | 16 | 60 | 2 |
+| 3 | 1.488.630 | 10 | 97 | 14 | 48 | 2 |
+| 4 | 629 | 4 | 89 | 15 | 107 | 7 |
+| 5 | 1.428.018 | 9 | 98 | 9 | 90 | 2 |
+| 6 | 88.232 | 7 | 94 | 7 | 78 | 3 |
+| 7 | 8.778 | 4 | 90 | 5 | 99 | 1 |
+| 8 | 1.384.335 | 10 | 95 | 13 | 48 | 1 |
+| 9 | 7.202 | 3 | 95 | 7 | 49 | 2 |
+| 10 | 38 | 3 | 96 | 7 | 66 | 1 |
+| 11 | 53 | 1 | 98 | 5 | 105 | 1 |
+| 12 | 5.990 | 3 | 95 | 9 | 78 | 2 |
+| 13 | 1.277 | 3 | 89 | 4 | 107 | 3 |
+| 14 | 872.270 | 7 | 95 | 7 | 107 | 2 |
+| 15 | 783.381 | 7 | 85 | 8 | 112 | 3 |
+| 16 | 78 | 1 | 89 | 12 | 62 | 8 |
+| 17 | 301 | 2 | 85 | 12 | 100 | 7 |
+| 18 | 105 | 2 | 86 | 16 | 86 | 5 |
+| 19 | 12 | 1 | 93 | 7 | 119 | 7 |
+| 20 | 29 | 1 | 91 | 5 | 85 | 6 |
+| 21 | 74 | 2 | 88 | 7 | 78 | 4 |
+| 22 | 55 | 3 | 96 | 7 | 91 | 6 |
+| 23 | 109 | 1 | 88 | 11 | 105 | 6 |
+| 24 | 578.358 | 6 | 96 | 14 | 107 | 3 |
+| 25 | 200 | 2 | 85 | 5 | 93 | 6 |
 
 ---
 
 ### 6 Bewertungskriterien
-
-![Kriterien-Zusammenfassungstabelle — Richtung und Beschreibung aller 6 AHP-Kriterien](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image3.png)
 
 Die sechs verwendeten Kriterien mit ihrer Präferenzrichtung:
 
@@ -286,7 +330,16 @@ Die sechs verwendeten Kriterien mit ihrer Präferenzrichtung:
 
 ### Schritt 1 — Paarweise Vergleichsmatrix
 
-![Paarweise Vergleichsmatrix — 6×6 Saaty-Skala-Bewertungen für alle Kriterienpaare](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image4.png)
+*Tabelle 1 — relative Prioritäten der Faktoren (1 = gleich wichtig; 9 = extrem wichtiger):*
+
+| | Monatl. Nachfrage | Kategoriepriorität | Lieferantenzuverl. | Gewinnmarge | Vorlaufzeit | Rückgabewahrsch. |
+|---|---|---|---|---|---|---|
+| **Monatl. Nachfrage** | 1 | 3 | 5 | 2 | 6 | 5 |
+| **Kategoriepriorität** | 1/3 | 1 | 2 | 3 | 3 | 5 |
+| **Lieferantenzuverl.** | 1/5 | 1/2 | 1 | 2 | 4 | 5 |
+| **Gewinnmarge** | 1/2 | 1/3 | 1/2 | 1 | 3 | 3 |
+| **Vorlaufzeit** | 1/6 | 1/3 | 1/4 | 1/3 | 1 | 3 |
+| **Rückgabewahrsch.** | 1/5 | 1/5 | 1/5 | 1/3 | 1/3 | 1 |
 
 *Beispiellesart:* Monatliche Nachfrage vs. Priorität der Produktkategorie → Monatliche Nachfrage bewertet **3× wichtiger** (Saaty-Skala = 3).
 
@@ -294,7 +347,16 @@ Die sechs verwendeten Kriterien mit ihrer Präferenzrichtung:
 
 ### Schritt 2 — Normalisierte Matrix und Kriteriengewichte
 
-![Normalisierte Paarvergleichsmatrix und Kriteriengewicht (Prioritätsvektor) Tabelle](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image5.png)
+*Jede Spalte von Tabelle 1 wird durch ihre Spaltensumme geteilt; die Zeilenmittelwerte ergeben die Kriteriengewichte (Prioritätsvektor):*
+
+| Kriterium | MN | KP | LZ | GM | VZ | RW | **Gewicht** |
+|---|---|---|---|---|---|---|---|
+| **Monatl. Nachfrage** | 0,42 | 0,56 | 0,56 | 0,23 | 0,35 | 0,23 | **0,39** |
+| **Kategoriepriorität** | 0,14 | 0,19 | 0,22 | 0,35 | 0,17 | 0,23 | **0,22** |
+| **Lieferantenzuverl.** | 0,08 | 0,09 | 0,11 | 0,23 | 0,23 | 0,23 | **0,16** |
+| **Gewinnmarge** | 0,21 | 0,06 | 0,06 | 0,12 | 0,17 | 0,14 | **0,13** |
+| **Vorlaufzeit** | 0,07 | 0,06 | 0,03 | 0,04 | 0,06 | 0,14 | **0,07** |
+| **Rückgabewahrsch.** | 0,08 | 0,04 | 0,02 | 0,04 | 0,02 | 0,05 | **0,04** |
 
 ### Schritt 3 — Konsistenzprüfung
 
@@ -308,7 +370,29 @@ Die paarweisen Vergleiche des Experten bestehen die AHP-Konsistenzschwelle. Die 
 
 ### Kriteriengewichte-Ergebnis
 
-![Kriteriengewichte-Zusammenfassung — AHP-Prioritätsvektor für alle 6 Faktoren](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image6.png)
+<div class="sc-split">
+  <div class="sc-panel">
+    <div class="head">Kriteriengewichte (Prioritätsvektor)</div>
+    <ul>
+      <li>Monatliche Nachfrage — <b>0,39</b></li>
+      <li>Kategoriepriorität — <b>0,22</b></li>
+      <li>Lieferantenzuverlässigkeit — <b>0,16</b></li>
+      <li>Gewinnmarge — <b>0,13</b></li>
+      <li>Vorlaufzeit — <b>0,07</b></li>
+      <li>Rückgabewahrscheinlichkeit — <b>0,04</b></li>
+    </ul>
+  </div>
+  <div class="sc-panel eff">
+    <div class="head">Konsistenzprüfung</div>
+    <ul>
+      <li>λ<sub>max</sub> = 6,51 · n = 6</li>
+      <li>Konsistenzindex (CI) = 0,101</li>
+      <li>Random Index (RI) = 1,24</li>
+      <li><b>CR = CI / RI = 0,082</b></li>
+      <li>CR &lt; 0,1 → die Matrix ist hinreichend konsistent ✓</li>
+    </ul>
+  </div>
+</div>
 
 ---
 
@@ -330,7 +414,9 @@ Die paarweisen Vergleiche des Experten bestehen die AHP-Konsistenzschwelle. Die 
 Diese Invertierung wandelt "niedriger ist besser" in eine konsistente "höher ist besser"-Skala um — damit alle sechs Kriterien in dieselbe Richtung zeigen, bevor sie mit ihren AHP-Gewichten multipliziert werden.
 </Aside>
 
-![Normalisierte SKU-Datentabelle — Alle 25 SKUs mit normalisierten Scores über alle 6 Kriterien](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image7.png)
+<Aside type="note">
+Die sechs Rohwerte jeder der 25 SKUs werden mit den obigen Formeln auf eine 0–1-Skala normalisiert (Vorlaufzeit und Rückgabewahrscheinlichkeit invertiert, da niedriger besser ist). Jeder normalisierte Wert wird dann mit seinem Kriteriumsgewicht multipliziert und summiert — das ergibt einen **kombinierten SKU-Score** je SKU, die Scores der Klassifikationstabelle unten.
+</Aside>
 
 ---
 
@@ -365,9 +451,48 @@ Ein höherer kombinierter Score zeigt eine strategisch wichtigere SKU an.
 
 ### Endgültige Klassifikationsergebnisse
 
-![Endgültige SKU-Scores-Tabelle — Sortiert nach Score mit kumulativem % und A/B/C-Klassenzuweisung](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image8.png)
+*SKUs nach kombiniertem Score sortiert; Grenzwerte bei ~60 % / 85 % des kumulierten Scores weisen die Klassen A / B / C zu:*
 
-![Klassifikationszusammenfassung — Anzahl der SKUs je Klasse und zugewiesenes Serviceniveau](/learnings/online/Supply-Chain-Digitization/sc_w2s5_image9.png)
+| SKU | Score | Kumuliert | % Kumuliert | Klasse |
+|---|---|---|---|---|
+| 3 | 0,96 | 0,96 | 10,7 % | <span class="sc-best">A</span> |
+| 8 | 0,90 | 1,86 | 20,7 % | <span class="sc-best">A</span> |
+| 1 | 0,85 | 2,72 | 30,2 % | <span class="sc-best">A</span> |
+| 5 | 0,84 | 3,56 | 39,6 % | <span class="sc-best">A</span> |
+| 14 | 0,58 | 4,14 | 45,9 % | <span class="sc-best">A</span> |
+| 24 | 0,55 | 4,69 | 52,1 % | <span class="sc-best">A</span> |
+| 15 | 0,43 | 5,12 | 56,8 % | <span class="sc-best">A</span> |
+| 6 | 0,38 | 5,49 | 61,0 % | B |
+| 2 | 0,36 | 5,86 | 65,1 % | B |
+| 10 | 0,31 | 6,16 | 68,5 % | B |
+| 9 | 0,31 | 6,47 | 71,9 % | B |
+| 12 | 0,30 | 6,77 | 75,2 % | B |
+| 22 | 0,25 | 7,02 | 78,0 % | B |
+| 4 | 0,25 | 7,28 | 80,8 % | B |
+| 11 | 0,23 | 7,51 | 83,4 % | B |
+| 18 | 0,21 | 7,71 | 85,7 % | C |
+| 7 | 0,21 | 7,92 | 88,0 % | C |
+| 16 | 0,19 | 8,11 | 90,1 % | C |
+| 21 | 0,15 | 8,26 | 91,8 % | C |
+| 13 | 0,14 | 8,40 | 93,3 % | C |
+| 19 | 0,14 | 8,54 | 94,8 % | C |
+| 23 | 0,14 | 8,67 | 96,3 % | C |
+| 17 | 0,13 | 8,80 | 97,8 % | C |
+| 20 | 0,13 | 8,93 | 99,2 % | C |
+| 25 | 0,07 | 9,00 | 100,0 % | C |
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node">ABC-Klassifikation mit AHP</div>
+    <span class="arrow">↓</span>
+    <div class="sc-flow">
+      <div class="sc-node green">Klasse A<span class="sub">28 % der SKUs · 95 % Serviceniveau</span></div>
+      <div class="sc-node">Klasse B<span class="sub">32 % der SKUs · 90 % Serviceniveau</span></div>
+      <div class="sc-node amber">Klasse C<span class="sub">40 % der SKUs · 85 % Serviceniveau</span></div>
+    </div>
+  </div>
+  <figcaption>Endergebnis — der AHP-Score steuert eine differenzierte Serviceniveau-Politik: Klasse A (60 % des Gesamtscores) bei 95 %, Klasse B (25 %) bei 90 %, Klasse C (15 %) bei 85 %.</figcaption>
+</figure>
 
 ---
 
