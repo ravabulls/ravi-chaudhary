@@ -34,3 +34,217 @@ img {
   display: flex;
   flex-direction: column;
 }
+
+/* ============================================================
+   Supply-Chain diagram toolkit (.sc-*)
+   Reusable, theme-aware figures that replace video-snapshot
+   images across the Supply Chain Digitization course.
+   Colours use Starlight vars so they adapt to light/dark.
+   ============================================================ */
+
+/* Role palette — solid nodes carry their own background, so white
+   text stays legible on both light and dark page backgrounds. */
+:root {
+  --sc-amber: #d97706;  /* raw materials / suppliers      */
+  --sc-blue:  #2563eb;  /* manufacturing / core process   */
+  --sc-green: #059669;  /* assembly / positive endpoint   */
+  --sc-slate: #475569;  /* storage / logistics / neutral  */
+  --sc-violet:#7c3aed;  /* customer / consumer / endpoint */
+}
+:root[data-theme='dark'] {
+  --sc-slate: #64748b;  /* lift slate a touch on dark bg  */
+}
+
+.sc-fig {
+  margin: 1.5rem 0;
+  overflow-x: auto;          /* wide flows scroll, never break the page */
+}
+.sc-fig figcaption,
+.sc-cap {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--sl-color-gray-3);
+  text-align: center;
+}
+
+/* --- Flow of nodes with arrow connectors --- */
+.sc-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: min-content;
+}
+.sc-flow.col { flex-direction: column; align-items: center; }
+.sc-flow .arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--sc-blue);
+  font-weight: 700;
+}
+.sc-flow .arrow small {
+  font-size: 0.62rem;
+  font-weight: 400;
+  color: var(--sl-color-gray-3);
+  text-align: center;
+  margin-top: 0.15rem;
+  max-width: 6.5rem;
+}
+
+/* --- A node / block --- */
+.sc-node {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  background: var(--sc-blue);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
+  border: 0;
+}
+.sc-node .sub {
+  font-weight: 400;
+  font-size: 0.72rem;
+  opacity: 0.9;
+}
+.sc-node.amber  { background: var(--sc-amber);  }
+.sc-node.green  { background: var(--sc-green);  }
+.sc-node.slate  { background: var(--sc-slate);  }
+.sc-node.violet { background: var(--sc-violet); }
+.sc-node.soft {
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-text);
+  border: 1px solid var(--sl-color-gray-5);
+  box-shadow: none;
+}
+
+/* --- Tiered columns (multi-stage supply chains) --- */
+.sc-tiers {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+  min-width: min-content;
+}
+.sc-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  flex: 1 0 auto;
+}
+.sc-tier-head {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--sl-color-text);
+  text-align: center;
+  border-bottom: 2px solid var(--sc-blue);
+  padding-bottom: 0.2rem;
+  width: 100%;
+}
+.sc-tier-head .n { display: block; font-weight: 400; color: var(--sl-color-gray-3); font-size: 0.72rem; }
+
+/* --- Two-panel split (e.g. Responsive vs Efficient) --- */
+.sc-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+@media (max-width: 40rem) { .sc-split { grid-template-columns: 1fr; } }
+.sc-panel {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  background: var(--sl-color-gray-6);
+}
+.sc-panel > .head {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--sl-color-gray-5);
+}
+.sc-panel.rsp > .head { color: var(--sc-violet); border-color: var(--sc-violet); }
+.sc-panel.eff > .head { color: var(--sc-blue);   border-color: var(--sc-blue);   }
+.sc-panel ul { margin: 0; padding-left: 1.1rem; }
+.sc-panel li { font-size: 0.85rem; margin: 0.2rem 0; }
+
+/* --- Chips (components / tags feeding a concept) --- */
+.sc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.sc-chip {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--sc-blue) 15%, transparent);
+  color: var(--sl-color-text);
+  border: 1px solid color-mix(in srgb, var(--sc-blue) 45%, transparent);
+}
+.sc-chip.amber  { background: color-mix(in srgb, var(--sc-amber) 16%, transparent);  border-color: color-mix(in srgb, var(--sc-amber) 50%, transparent); }
+.sc-chip.green  { background: color-mix(in srgb, var(--sc-green) 16%, transparent);  border-color: color-mix(in srgb, var(--sc-green) 50%, transparent); }
+.sc-chip.violet { background: color-mix(in srgb, var(--sc-violet) 16%, transparent); border-color: color-mix(in srgb, var(--sc-violet) 50%, transparent); }
+
+/* --- Pillars (a concept split into labelled columns of points) --- */
+.sc-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+}
+.sc-pillar {
+  border: 1px solid var(--sl-color-gray-5);
+  border-top: 3px solid var(--sc-blue);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  background: var(--sl-color-gray-6);
+}
+.sc-pillar > .head { font-weight: 700; text-align: center; margin-bottom: 0.35rem; }
+.sc-pillar ul { margin: 0; padding-left: 1.1rem; }
+.sc-pillar li { font-size: 0.82rem; margin: 0.2rem 0; }
+
+/* --- Matrix (positioning grids like the product-process matrix) --- */
+table.sc-matrix { display: table; width: 100%; }
+table.sc-matrix td, table.sc-matrix th { text-align: center; vertical-align: middle; }
+table.sc-matrix td.hl {
+  background: var(--sc-blue);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* --- Highlight a winning / key cell inside a normal table --- */
+.sc-best {
+  background: color-mix(in srgb, var(--sc-green) 22%, transparent);
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 0 0.25rem;
+}
+
+/* --- Small legend row --- */
+.sc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--sl-color-gray-2);
+  margin-top: 0.5rem;
+}
+.sc-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.sc-legend i { width: 0.85rem; height: 0.85rem; border-radius: 3px; display: inline-block; }
+
+/* Diagram figures should never carry the image drop-shadow/border */
+.sc-fig svg { box-shadow: none; border-radius: 0; max-width: 100%; height: auto; }

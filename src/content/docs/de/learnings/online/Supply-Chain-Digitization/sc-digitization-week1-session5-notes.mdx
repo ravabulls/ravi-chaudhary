@@ -173,7 +173,20 @@ Andere Produktions-KPIs aus Sitzung 4 — OEE, Zykluszeit, Durchsatz und Kapazit
 
 **Eingabedatentabelle:**
 
-![3PL-Auswahleinabedatentabelle — Avitruck vs. Logitruck für 3 Produkttypen](/learnings/online/Supply-Chain-Digitization/sc_w1s5_image1.png)
+| Produkttyp | Stückkosten |
+|---|---|
+| Modern | ₹18.000 |
+| Halb-Modern | ₹14.000 |
+| Klassisch | ₹9.500 |
+
+| 3PL-Unternehmen | Mindest-Sendungsgröße | Vorlaufzeit | Transportkosten je Einheit |
+|---|---|---|---|
+| **Avitruck** | 150 | 1 Woche | ₹300 / Einheit |
+| **Logitruck** | 350 | 3 Wochen | ₹100 / Einheit |
+
+<Aside type="note">
+Nachfrage je Produkt = **150 Einheiten/Woche** · Jährliche Bestandshaltekosten = **25 % der Stückkosten** jedes Produkts.
+</Aside>
 
 **Gesamtkostenformel:**
 
@@ -201,7 +214,16 @@ Schlüsselbegriffe:
 
 **Ergebnisse — Alle Kombinationen analysiert:**
 
-![3PL-Auswahlergebnistabelle — Gesamtkosten nach Anbieter und Produkttyp](/learnings/online/Supply-Chain-Digitization/sc_w1s5_image2.png)
+| Produkt | 3PL | Zyklusbestand (Einh.) | Pipeline-Bestand (Einh.) | Durchschn. Bestand | Bestandshaltekosten | Transportkosten | **Gesamtkosten / Jahr** |
+|---|---|---|---|---|---|---|---|
+| **Modern** | Logitruck | 175 | 450 | 625 | ₹28.12.500 | ₹7.80.000 | ₹35.92.500 |
+| **Modern** | Avitruck | 75 | 150 | 225 | ₹10.12.500 | ₹23.40.000 | <span class="sc-best">₹33.52.500 ✓</span> |
+| **Halb-Modern** | Logitruck | 175 | 450 | 625 | ₹21.87.500 | ₹7.80.000 | <span class="sc-best">₹29.67.500 ✓</span> |
+| **Halb-Modern** | Avitruck | 75 | 150 | 225 | ₹7.87.500 | ₹23.40.000 | ₹31.27.500 |
+| **Klassisch** | Logitruck | 175 | 450 | 625 | ₹14.84.375 | ₹7.80.000 | <span class="sc-best">₹22.64.375 ✓</span> |
+| **Klassisch** | Avitruck | 75 | 150 | 225 | ₹5.34.375 | ₹23.40.000 | ₹28.74.375 |
+
+<p style="text-align:center;font-size:.85rem;font-style:italic;color:var(--sl-color-gray-3)">✓ = niedrigste Gesamtkosten je Produkt → der empfohlene Anbieter.</p>
 
 **Entscheidungsergebnisse:**
 
@@ -252,7 +274,30 @@ Schlüsselbegriffe:
 
 **Eingabedaten:**
 
-![Seifenhersteller KPI-Datentabelle](/learnings/online/Supply-Chain-Digitization/sc_w1s5_image3.png)
+Ein Seifenhersteller produziert und versendet Seifenstücke an Nachbarschaftsläden. Daten für einen Monat liegen vor:
+
+| Gegeben | Wert |
+|---|---|
+| Insgesamt bestellte Seifenstücke (CO) | 800 Seifenstücke |
+| Pünktlich gelieferte Seifenstücke (OTD) | 720 Seifenstücke |
+| Seifenstücke mit perfekter Erfüllung (Perfect Order Rate) | 680 Seifenstücke |
+| Gesamte monatliche Betriebskosten | ₹3.000 |
+| Gesamte Lieferkosten | ₹400 |
+| Lieferantenlieferungen | 80 Lieferungen |
+| Pünktliche Lieferantenlieferungen | 75 Lieferungen |
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node">Berechnen</div>
+    <span class="arrow">↓</span>
+    <div class="sc-flow">
+      <div class="sc-node soft">Pünktliche Lieferung (OTD)</div>
+      <div class="sc-node soft">Lieferkosten je Seifenstück</div>
+      <div class="sc-node soft">Lieferantenpünktlichkeitsrate</div>
+    </div>
+  </div>
+  <figcaption>Drei KPIs, die aus den obigen Daten zu berechnen sind.</figcaption>
+</figure>
 
 **KPI-Berechnungen:**
 

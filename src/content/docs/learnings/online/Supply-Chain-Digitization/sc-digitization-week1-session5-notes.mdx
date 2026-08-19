@@ -173,7 +173,20 @@ Other production KPIs from Session 4 — OEE, Cycle Time, Throughput, and Capaci
 
 **Input Data Table:**
 
-![3PL Selection Input Data Table — Avitruck vs. Logitruck across 3 product types](/learnings/online/Supply-Chain-Digitization/sc_w1s5_image1.png)
+| Type of Product | Unit Cost |
+|---|---|
+| Modern | ₹18,000 |
+| Semi-Modern | ₹14,000 |
+| Classical | ₹9,500 |
+
+| 3PL Company | Min. Shipment Size | Lead Time | Unit Transport Cost |
+|---|---|---|---|
+| **Avitruck** | 150 | 1 week | ₹300 / unit |
+| **Logitruck** | 350 | 3 weeks | ₹100 / unit |
+
+<Aside type="note">
+Demand for each product = **150 units/week** · Annual inventory carrying cost = **25% of unit cost** of each product.
+</Aside>
 
 **Total Cost Formula:**
 
@@ -201,7 +214,16 @@ Key terms:
 
 **Results — All Combinations Analysed:**
 
-![3PL Selection Results Table — Total Cost by Provider and Product Type](/learnings/online/Supply-Chain-Digitization/sc_w1s5_image2.png)
+| Product | 3PL | Cycle-Stock (units) | Pipeline Inv. (units) | Avg Inventory | Inventory Carrying Cost | Transport Cost | **Total Cost / annum** |
+|---|---|---|---|---|---|---|---|
+| **Modern** | Logitruck | 175 | 450 | 625 | ₹28,12,500 | ₹7,80,000 | ₹35,92,500 |
+| **Modern** | Avitruck | 75 | 150 | 225 | ₹10,12,500 | ₹23,40,000 | <span class="sc-best">₹33,52,500 ✓</span> |
+| **Semi-Modern** | Logitruck | 175 | 450 | 625 | ₹21,87,500 | ₹7,80,000 | <span class="sc-best">₹29,67,500 ✓</span> |
+| **Semi-Modern** | Avitruck | 75 | 150 | 225 | ₹7,87,500 | ₹23,40,000 | ₹31,27,500 |
+| **Classical** | Logitruck | 175 | 450 | 625 | ₹14,84,375 | ₹7,80,000 | <span class="sc-best">₹22,64,375 ✓</span> |
+| **Classical** | Avitruck | 75 | 150 | 225 | ₹5,34,375 | ₹23,40,000 | ₹28,74,375 |
+
+<p style="text-align:center;font-size:.85rem;font-style:italic;color:var(--sl-color-gray-3)">✓ = lowest total cost per product → the recommended provider.</p>
 
 **Decision Outcomes:**
 
@@ -252,7 +274,30 @@ Key terms:
 
 **Input data:**
 
-![Soap Bar Manufacturer KPI Data Table](/learnings/online/Supply-Chain-Digitization/sc_w1s5_image3.png)
+A soap producer creates and sends soap bars to neighbourhood shops. Data is available for one month:
+
+| Given | Value |
+|---|---|
+| Total Soap Bars Ordered (CO) | 800 soap bars |
+| Soap Bars Delivered On-Time (OTD) | 720 soap bars |
+| Soap Bars with Perfect Fulfilment (Perfect Order Rate) | 680 soap bars |
+| Total Monthly Operating Costs | ₹3,000 |
+| Total Delivery Cost | ₹400 |
+| Supplier Deliveries | 80 deliveries |
+| Supplier On-Time Deliveries | 75 deliveries |
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node">Calculate</div>
+    <span class="arrow">↓</span>
+    <div class="sc-flow">
+      <div class="sc-node soft">On-Time Delivery (OTD)</div>
+      <div class="sc-node soft">Delivery Cost per Soap Bar</div>
+      <div class="sc-node soft">Supplier On-Time Delivery Rate</div>
+    </div>
+  </div>
+  <figcaption>Three KPIs to compute from the data above.</figcaption>
+</figure>
 
 **KPI Calculations:**
 
