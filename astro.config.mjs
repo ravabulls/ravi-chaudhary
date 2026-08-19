@@ -65,7 +65,7 @@ export default defineConfig({
 							label: 'Workshops & Programmes',
 							collapsed: true,
 							items: [
-								{ label: 'ReDI School — Creative Communication', link: 'learnings/workshops/redi-school-creative-communication' },
+								{ label: 'ReDI School â€” Creative Communication', link: 'learnings/workshops/redi-school-creative-communication' },
 							],
 						},
 						{
@@ -78,7 +78,7 @@ export default defineConfig({
 								collapsed: true,
 								translations: { de: 'Supply Chain Digitalisierung' },
 								items: [
-									{ label: 'Overview', link: 'learnings/online/supply-chain-digitization', translations: { de: 'Übersicht' } },
+									{ label: 'Overview', link: 'learnings/online/supply-chain-digitization', translations: { de: 'Ãœbersicht' } },
 									{
 										label: 'Week 1', collapsed: true, translations: { de: 'Woche 1' },
 										items: [
@@ -197,6 +197,32 @@ export default defineConfig({
 											{ label: 'Session 3', link: 'learnings/online/supply-chain-digitization/sc-digitization-week12-session3-notes' },
 											{ label: 'Session 4', link: 'learnings/online/supply-chain-digitization/sc-digitization-week12-session4-notes' },
 											{ label: 'Session 5', link: 'learnings/online/supply-chain-digitization/sc-digitization-week12-session5-notes' },
+										],
+									},
+								],
+							},
+							{
+								label: 'Google Project Management',
+								collapsed: true,
+								items: [
+									{ label: 'Overview', link: 'learnings/online/project-management' },
+									{
+										label: 'Course 1 — Foundations',
+										collapsed: true,
+										items: [
+											{ label: 'M1 · Embarking', link: 'learnings/online/project-management/foundations-1-embarking' },
+											{ label: 'M2 · Effective PM', link: 'learnings/online/project-management/foundations-2-effective-pm' },
+											{ label: 'M3 · Life Cycle & Methods', link: 'learnings/online/project-management/foundations-3-life-cycle' },
+											{ label: 'M4 · Structure & Culture', link: 'learnings/online/project-management/foundations-4-org-structure' },
+										],
+									},
+									{
+										label: 'Course 2 — Project Initiation',
+										collapsed: true,
+										items: [
+											{ label: '1 · Initiation Components', link: 'learnings/online/project-management/initiation-1-components' },
+											{ label: '2 · Goals, Scope & Success', link: 'learnings/online/project-management/initiation-2-goals-scope' },
+											{ label: '3 · Stakeholders & RACI', link: 'learnings/online/project-management/initiation-3-stakeholders' },
 										],
 									},
 								],
