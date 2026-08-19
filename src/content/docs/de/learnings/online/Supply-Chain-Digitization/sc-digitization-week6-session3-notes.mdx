@@ -78,7 +78,24 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Output des Entscheidungsbaums — 4 Blattknoten (Geschäftsregeln)
 
-![Klassifikationsbaum der Entscheidungsfindung](/learnings/online/Supply-Chain-Digitization/sc_w6s3_image1.png)
+<figure class="sc-fig">
+  <div class="sc-tree">
+    <div class="node"><b>Knoten 0 · Wurzel</b> — 700 Beob. · Ausfall 447 (64%) / OK 253 (36%) · <i>Aufteilung nach Ölverunreinigung @ 5,5</i></div>
+    <div class="branch">
+      <div class="node"><b>Öl ≤ 5,5</b> → <b>Knoten 1</b> (141 Beob. · 33% / 67%) · <i>Aufteilung nach Auslastung @ 92,05</i></div>
+      <div class="branch">
+        <div class="node"><b>Auslastung ≤ 92,05</b> → <b>Knoten 3</b> (109) → sagt <b>kein Ausfall</b> · 83%</div>
+        <div class="node"><b>Auslastung &gt; 92,05</b> → <b>Knoten 4</b> (32) → sagt <b>AUSFALL</b> · 88%</div>
+      </div>
+      <div class="node"><b>Öl &gt; 5,5</b> → <b>Knoten 2</b> (559 Beob. · 72% / 28%) · <i>Aufteilung nach MTBF @ 23,95</i></div>
+      <div class="branch">
+        <div class="node"><b>MTBF ≤ 23,95</b> → <b>Knoten 5</b> (493) → sagt <b>AUSFALL</b> · 77%</div>
+        <div class="node"><b>MTBF &gt; 23,95</b> → <b>Knoten 6</b> (66) → sagt <b>kein Ausfall</b> · 71%</div>
+      </div>
+    </div>
+  </div>
+  <figcaption>Der Klassifikationsbaum nutzt nur 3 von 7 Merkmalen — Ölverunreinigung, dann MTBF oder Auslastung — und gelangt zu vier Blattknoten-Regeln, jede mit eigener Vorhersage, Genauigkeit und Unterstützung.</figcaption>
+</figure>
 
 - **Kernerkenntnis:** Von 7 Eingabemerkmalen verwendet das Modell nur 3 zur Vorhersage: Ölkontamination | MTBF | Auslastung
 - **Wurzelaufteilung (Knoten 0):** Erste Aufteilung erfolgt bei Ölkontamination am Schwellenwert 5,5

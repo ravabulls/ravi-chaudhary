@@ -52,7 +52,19 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Unreinheitsmaße — Gini-Index & Entropie
 
-![Konzepte der Unreinheit](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image1.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Gini-Index (t)</div>
+      <code>= 1 − Σ<sub>i=1..k</sub> [ P(Klasse<sub>i</sub> | t) ]²</code>
+    </div>
+    <div>
+      <div class="name">Entropie (t)</div>
+      <code>= − Σ<sub>i=1..k</sub> P(Klasse<sub>i</sub> | t) × log₂ P(Klasse<sub>i</sub> | t)</code>
+    </div>
+  </div>
+  <figcaption>Die beiden Unreinheitsmaße an einem Knoten <i>t</i> mit <i>k</i> Klassen. Beide sind 0 für einen vollkommen reinen Knoten.</figcaption>
+</figure>
 
 **Warum Unreinheit?**
 Unreinheit = Zufälligkeit in einem Knoten. Ein reiner Knoten = alle Beobachtungen gehören zu einer Klasse → perfekte Vorhersage.
@@ -77,7 +89,20 @@ Ziel bei jeder Aufteilung: Wähle Variable + Cutoff, die die Unreinheit am stär
 
 ### Wichtige Erkenntnis aus dem Unreinheitsgraphen
 
-![Gini-Index vs Entropie Diagramm](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image3.png)
+<figure class="sc-fig">
+  <svg viewBox="0 0 520 350" role="img" aria-label="Gini-Index und Entropie gegen Klassenwahrscheinlichkeit, beide mit Maximum bei p = 0,5" style="width:100%;max-width:560px;font-family:inherit">
+    <g stroke="var(--sl-color-gray-3)" stroke-width="1.5"><line x1="50" y1="20" x2="50" y2="300"/><line x1="50" y1="300" x2="500" y2="300"/></g>
+    <g stroke="var(--sl-color-gray-5)" stroke-width="1" stroke-dasharray="3 3"><line x1="275" y1="20" x2="275" y2="300"/></g>
+    <polyline fill="none" stroke="var(--sc-blue)" stroke-width="2.5" points="50,300 95,173 140,106 185,62 230,38 275,30 320,38 365,62 410,106 455,173 500,300"/>
+    <polyline fill="none" stroke="var(--sc-amber)" stroke-width="2.5" points="50,300 95,251 140,214 185,187 230,170 275,165 320,170 365,187 410,214 455,251 500,300"/>
+    <g fill="var(--sl-color-gray-2)" font-size="10" text-anchor="middle"><text x="50" y="315">0</text><text x="275" y="315">0,5</text><text x="500" y="315">1,0</text></g>
+    <g fill="var(--sl-color-gray-2)" font-size="10" text-anchor="end"><text x="44" y="304">0</text><text x="44" y="169">0,5</text><text x="44" y="34">1,0</text></g>
+    <text x="275" y="335" fill="var(--sl-color-text-accent)" font-size="12" text-anchor="middle" font-weight="600">Klassenwahrscheinlichkeit (p)</text>
+    <text x="130" y="46" fill="var(--sc-blue)" font-size="12" font-weight="700">Entropie (max 1,0)</text>
+    <text x="150" y="240" fill="var(--sc-amber)" font-size="12" font-weight="700">Gini (max 0,5)</text>
+  </svg>
+  <figcaption>Beide Unreinheitsmaße bilden ein umgekehrtes U — null bei reinem Knoten (p = 0 oder 1) und maximal beim 50-50-Split (p = 0,5). Das Aufteilen zielt darauf, Knoten von 0,5 weg zu den Enden zu bewegen.</figcaption>
+</figure>
 
 - **Form:** Umgekehrtes U — symmetrisch um 0,5
 - Sowohl Gini als auch Entropie starten bei 0 (alle in einer Klasse) → steigen auf das Maximum bei 0,5 (50-50 Aufteilung) → fallen zurück auf 0
@@ -91,7 +116,20 @@ Ziel bei jeder Aufteilung: Wähle Variable + Cutoff, die die Unreinheit am stär
 
 ## Aufteilungslogik — Wie man Variable und Cutoff auswählt
 
-![Aufteilung des Klassifikationsbaums](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image2.png)
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node">Elternknoten<span class="sub">Gini(Eltern)</span></div>
+    <span class="arrow">↓ &nbsp;jede (Variable, Grenzwert) testen</span>
+    <div class="sc-flow">
+      <div class="sc-node soft">Linker Kindknoten<span class="sub">w<sub>L</sub> · Gini(links)</span></div>
+      <div class="sc-node soft">Rechter Kindknoten<span class="sub">w<sub>R</sub> · Gini(rechts)</span></div>
+    </div>
+  </div>
+  <div class="sc-formula" style="margin-top:.6rem">
+    <div><code>ΔUnreinheit = Gini(Eltern) − [ w<sub>L</sub> × Gini(links) + w<sub>R</sub> × Gini(rechts) ]</code></div>
+  </div>
+  <figcaption>An jedem Knoten testet der Algorithmus jede Variable und jeden Grenzwert und behält die Aufteilung mit der größten gewichteten Unreinheitsreduktion (ΔUnreinheit).</figcaption>
+</figure>
 
 Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit ALLEN möglichen Cutoff-Werten ausprobiert. Für jedes (Variable, Cutoff) Paar wird die gewichtete Reduktion der Unreinheit berechnet.
 
@@ -108,7 +146,17 @@ Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit A
 
 ## Verfolgung der Aufteilung Knoten für Knoten — Der vollständige Baum
 
-![Knoten 0 Wurzel-Aufteilung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image4.png)
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node">Knoten 0 · Wurzel<span class="sub">700 Beob. · Ausfall 447 (64%) / OK 253 (36%) · Gini 0,46</span></div>
+    <span class="arrow">↓ &nbsp;beste Aufteilung: Ölverunreinigung @ 5,5</span>
+    <div class="sc-flow">
+      <div class="sc-node amber">Knoten 1 · Öl ≤ 5,5<span class="sub">141 Beob. · 33% / 67% · Gini 0,44</span></div>
+      <div class="sc-node">Knoten 2 · Öl &gt; 5,5<span class="sub">559 Beob. · 72% / 28% · Gini 0,40</span></div>
+    </div>
+  </div>
+  <figcaption>Schritt 1–2: mit allen Trainingsdaten in der Wurzel beginnen, dann nach dem Prädiktor (Ölverunreinigung) aufteilen, der die maximale Unreinheitsreduktion liefert.</figcaption>
+</figure>
 
 ### Alle Knoten — Beobachtungen, Gini, Aufteilungsvariable, Cutoff, Reduktion
 
@@ -124,7 +172,18 @@ Bei jedem Knoten werden ALLE Variablen (Alter, Auslastung, MTBF, Öl etc.) mit A
 
 ### Genauigkeitsentwicklung — Wie jede Aufteilung die Vorhersage verbessert
 
-![Visualisierung der Genauigkeitsverbesserung](/learnings/online/Supply-Chain-Digitization/sc_w6s4_image5.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Knoten 0 · keine Info<span class="sub">64% Basislinie</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">+ Öl &gt; 5,5<span class="sub">72% (+8)</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">+ MTBF ≤ 23,95<span class="sub">77% (+5)</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Knoten 4 · bester Blattknoten<span class="sub">88% — Öl ≤ 5,5 &amp; Ausl. &gt; 92,05</span></div>
+  </div>
+  <figcaption>Jede Aufteilung fügt Information hinzu und hebt die Genauigkeit über die 64%-Basislinie — doch jede weitere Aufteilung bringt weniger als die vorige (abnehmender Grenznutzen), weshalb der Baum schließlich stoppt.</figcaption>
+</figure>
 
 | Stufe | Verfügbare Informationen | Beste Vorhersagegenauigkeit | Interpretation |
 |---|---|---|---|

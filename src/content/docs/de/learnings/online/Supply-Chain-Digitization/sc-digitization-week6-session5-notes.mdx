@@ -48,7 +48,24 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Komplette Code-Referenz — Alle Schritte zusammen
 
-![Python Code Implementierung](/learnings/online/Supply-Chain-Digitization/sc_w6s5_image1.png)
+<figure class="sc-fig">
+  <div class="sc-tree">
+    <div class="node"><b>Ölverunreinigung ≤ 5,5</b> — gini 0,462 · Stichproben 700 · Wert [253, 447] · Klasse = <b>Maschine ausgefallen</b></div>
+    <div class="branch">
+      <div class="node"><b>Auslastung ≤ 92,05</b> — gini 0,444 · Stichproben 141 · Wert [94, 47] · Klasse = Maschine nicht ausgefallen</div>
+      <div class="branch">
+        <div class="node">gini 0,288 · Stichproben 109 · Wert [90, 19] · Klasse = <b>Maschine nicht ausgefallen</b></div>
+        <div class="node">gini 0,219 · Stichproben 32 · Wert [4, 28] · Klasse = <b>Maschine ausgefallen</b></div>
+      </div>
+      <div class="node"><b>MTBF ≤ 23,95</b> — gini 0,407 · Stichproben 559 · Wert [159, 400] · Klasse = Maschine ausgefallen</div>
+      <div class="branch">
+        <div class="node">gini 0,351 · Stichproben 493 · Wert [112, 381] · Klasse = <b>Maschine ausgefallen</b></div>
+        <div class="node">gini 0,41 · Stichproben 66 · Wert [47, 19] · Klasse = <b>Maschine nicht ausgefallen</b></div>
+      </div>
+    </div>
+  </div>
+  <figcaption>Python-Ausgabe — der <code>scikit-learn</code>-Entscheidungsbaum reproduziert dieselbe Struktur wie die Handrechnung: jeder Knoten zeigt Gini-Unreinheit, Stichprobenzahl, Klassenaufteilung und vorhergesagte Klasse.</figcaption>
+</figure>
 
 ```python
 # ── SCHRITT 1: Bibliotheken & Daten importieren ─────────────────

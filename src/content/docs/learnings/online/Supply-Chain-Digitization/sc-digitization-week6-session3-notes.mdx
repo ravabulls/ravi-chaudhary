@@ -78,7 +78,24 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Decision Tree Output — 4 Leaf Nodes (Business Rules)
 
-![Decision tree classification output](/learnings/online/Supply-Chain-Digitization/sc_w6s3_image1.png)
+<figure class="sc-fig">
+  <div class="sc-tree">
+    <div class="node"><b>Node 0 · root</b> — 700 obs · Fail 447 (64%) / OK 253 (36%) · <i>split on Oil Contamination @ 5.5</i></div>
+    <div class="branch">
+      <div class="node"><b>Oil ≤ 5.5</b> → <b>Node 1</b> (141 obs · 33% / 67%) · <i>split on Utilisation @ 92.05</i></div>
+      <div class="branch">
+        <div class="node"><b>Utilisation ≤ 92.05</b> → <b>Node 3</b> (109) → predict <b>NOT fail</b> · 83%</div>
+        <div class="node"><b>Utilisation &gt; 92.05</b> → <b>Node 4</b> (32) → predict <b>FAIL</b> · 88%</div>
+      </div>
+      <div class="node"><b>Oil &gt; 5.5</b> → <b>Node 2</b> (559 obs · 72% / 28%) · <i>split on MTBF @ 23.95</i></div>
+      <div class="branch">
+        <div class="node"><b>MTBF ≤ 23.95</b> → <b>Node 5</b> (493) → predict <b>FAIL</b> · 77%</div>
+        <div class="node"><b>MTBF &gt; 23.95</b> → <b>Node 6</b> (66) → predict <b>NOT fail</b> · 71%</div>
+      </div>
+    </div>
+  </div>
+  <figcaption>The classification tree uses only 3 of 7 features — Oil Contamination, then MTBF or Utilisation — to reach four leaf-node rules, each with its own prediction, accuracy and support.</figcaption>
+</figure>
 
 - **Key insight:** Out of 7 input features, the model uses only 3 for prediction: Oil Contamination | MTBF | Utilisation
 - **Root split (Node 0):** First split is on Oil Contamination at threshold 5.5
