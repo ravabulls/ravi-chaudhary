@@ -41,7 +41,9 @@ Diese Session baut einen kleinen SC-Digital-Twin zur Durchführung von GFA:
 
 ## 2. Fallstudie — Pharmaunternehmen: DC-Standort für Westindien
 
-![GFA Fallstudie — Westindische Märkte](/learnings/online/Supply-Chain-Digitization/sc_w11s2_image1.png)
+<Aside type="note">
+Die vier Nachfragemärkte — **Ahmedabad, Surat, Mumbai und Pune** — auf einer Karte Westindiens. Die Greenfield-Analyse (GFA) durchsucht diese offene Geografie nach dem einen DC-Standort, der die gesamte entfernungsgewichtete Nachfrage minimiert — ein „grüner" Standort, ungebunden an jede bestehende Anlage.
+</Aside>
 
 Ein Pharmaunternehmen möchte **1 Distributionszentrum** für die westliche Region Indiens einrichten.
 
@@ -74,7 +76,19 @@ Kostennahnahme: **1 $ pro km pro Einheit** transportierter Nachfrage.
 
 ## 4. Optimierungsmodell — Formulierung
 
-![GFA Optimierungsmodell Setup](/learnings/online/Supply-Chain-Digitization/sc_w11s2_image2.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Haversine-Distanz (Großkreis)</div>
+      <code>a = sin²(Δlat/2) + cos(lat₁)·cos(lat₂)·sin²(Δlon/2)<br/>c = 2·atan2(√a, √(1−a))<br/>distance = R·c &nbsp;(R = Erdradius = 6371 km)</code>
+    </div>
+    <div>
+      <div class="name">In unserem Kontext</div>
+      <code>Δlat = x_DC − xᵢ &nbsp;·&nbsp; Δlon = y_DC − yᵢ<br/>distance((xᵢ, yᵢ), (x_DC, y_DC)) = R·c</code>
+    </div>
+  </div>
+  <figcaption>Die Haversine-Formel liefert die tatsächliche Entfernung über die Erdoberfläche zwischen zwei Breiten-/Längengrad-Punkten — hier zur Messung der Entfernung jedes Marktes von einem möglichen DC-Standort.</figcaption>
+</figure>
 
 **Entscheidungsvariablen:**
 - `xDC` = Breitengrad des neuen DCs *(unbekannt)*
@@ -120,7 +134,15 @@ Z = Σ(i=1 bis 4) [ Nachfrage_i × d(xᵢ,yᵢ → xDC,yDC) × Kosten pro km pro
 
 ### Optimale Lösung vom Solver
 
-![AnyLogistix GFA Ergebnis — Kartenvisualisierung](/learnings/online/Supply-Chain-Digitization/sc_w11s2_image3.png)
+*Excel-Aufbau — mit einem Probe-DC bei (20,00, 72,00) die Haversine-Distanz zu jedem Markt und die entfernungsgewichteten Gesamtkosten:*
+
+| Markt | Kosten/km·Einheit | Nachfrage (Einheiten) | Breitengrad | Längengrad | Distanz (km) |
+|---|---|---|---|---|---|
+| Pune | 1 | 157.680 | 18,52 | 73,85 | 254,54 |
+| Mumbai | 1 | 179.580 | 19,09 | 72,87 | 136,20 |
+| Ahmedabad | 1 | 155.490 | 23,02 | 72,57 | 340,95 |
+| Surat | 1 | 43.800 | 21,18 | 72,83 | 157,10 |
+| **Probe-DC (20,00, 72,00)** | | | | | **Kosten = 124.489.119** |
 
 | Parameter | Wert |
 |---|---|

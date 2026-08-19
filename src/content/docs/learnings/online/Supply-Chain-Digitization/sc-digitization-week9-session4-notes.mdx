@@ -26,7 +26,27 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 1. Case Study — Automotive Company: 9 Manufacturing Facilities
 
-![Data Envelopment Analysis Concept](/learnings/online/Supply-Chain-Digitization/sc_w9s4_image1.png)
+*Five decision-making units, each with one input and one output:*
+
+| Unit | Input (I) | Output (O) |
+|---|---|---|
+| A | 2 | 1 |
+| B | 3 | 4 |
+| C | 5 | 5 |
+| D | 4 | 3 |
+| E | 6 | 8 |
+
+<figure class="sc-fig">
+  <svg viewBox="0 0 360 300" role="img" aria-label="Input versus output for units A to E" style="width:100%;max-width:420px;font-family:inherit">
+    <g stroke="var(--sl-color-gray-3)" stroke-width="1.5"><line x1="45" y1="20" x2="45" y2="260"/><line x1="45" y1="260" x2="345" y2="260"/></g>
+    <g fill="var(--sc-blue)"><circle cx="129" cy="234" r="5"/><circle cx="171" cy="158" r="5"/><circle cx="256" cy="132" r="5"/><circle cx="213" cy="183" r="5"/><circle cx="298" cy="55" r="5"/></g>
+    <g fill="var(--sl-color-text)" font-size="12" font-weight="700"><text x="138" y="238">A</text><text x="180" y="162">B</text><text x="265" y="136">C</text><text x="222" y="187">D</text><text x="307" y="59">E</text></g>
+    <g fill="var(--sl-color-gray-2)" font-size="10" text-anchor="middle"><text x="129" y="275">2</text><text x="213" y="275">4</text><text x="298" y="275">6</text></g>
+    <text x="195" y="294" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle">Input</text>
+    <text x="16" y="140" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90 16 140)">Output</text>
+  </svg>
+  <figcaption>Plotting each unit by input and output — the units that produce the most output per unit of input define the efficiency frontier.</figcaption>
+</figure>
 
 **Problem Statement:** Senior management wants to measure the efficiency of 9 manufacturing facilities to identify which are efficient, which are not, and where to improve.
 *Improvement options:* increase outputs OR reduce inputs.
@@ -41,7 +61,17 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 **★** Higher outputs = better. Lower inputs = better. Efficiency = getting more output per unit of input.
 </Aside>
 
-![Automotive Company Data](/learnings/online/Supply-Chain-Digitization/sc_w9s4_image2.png)
+<figure class="sc-fig">
+  <svg viewBox="0 0 360 300" role="img" aria-label="Efficiency frontier under constant returns to scale — a line from the origin through the best unit E" style="width:100%;max-width:420px;font-family:inherit">
+    <g stroke="var(--sl-color-gray-3)" stroke-width="1.5"><line x1="45" y1="20" x2="45" y2="260"/><line x1="45" y1="260" x2="345" y2="260"/></g>
+    <line x1="45" y1="260" x2="340" y2="21" stroke="var(--sc-blue)" stroke-width="2.5"/>
+    <g fill="var(--sc-blue)"><circle cx="129" cy="234" r="5"/><circle cx="171" cy="158" r="5"/><circle cx="256" cy="132" r="5"/><circle cx="213" cy="183" r="5"/><circle cx="298" cy="55" r="5"/></g>
+    <g fill="var(--sl-color-text)" font-size="12" font-weight="700"><text x="138" y="238">A</text><text x="180" y="162">B</text><text x="265" y="136">C</text><text x="222" y="187">D</text><text x="307" y="59">E</text></g>
+    <text x="195" y="294" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle">Input</text>
+    <text x="16" y="140" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90 16 140)">Output</text>
+  </svg>
+  <figcaption>Under constant returns to scale, the efficiency frontier is the ray from the origin through the best output-per-input unit (E). E is efficient; A–D sit below the frontier and are relatively inefficient — their distance from the line measures the improvement possible.</figcaption>
+</figure>
 
 ---
 

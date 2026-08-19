@@ -41,7 +41,9 @@ This session builds a small SC digital twin to perform GFA — finding the optim
 
 ## 2. Case Study — Pharma Company: DC Location for Western India
 
-![GFA Case Study — Western India Markets](/learnings/online/Supply-Chain-Digitization/sc_w11s2_image1.png)
+<Aside type="note">
+The four demand markets — **Ahmedabad, Surat, Mumbai and Pune** — shown on a map of western India. Greenfield Analysis (GFA) searches this open geography for the single DC location that minimises total distance-weighted demand — a "greenfield" site unconstrained by any existing facility.
+</Aside>
 
 A pharmaceutical company wants to set up **1 Distribution Center** to serve the western region of India.
 
@@ -74,7 +76,19 @@ Cost assumption: **$1 per km per unit** of demand transported.
 
 ## 4. Optimization Model — Formulation
 
-![GFA Optimization Model Setup](/learnings/online/Supply-Chain-Digitization/sc_w11s2_image2.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Haversine (great-circle) distance</div>
+      <code>a = sin²(Δlat/2) + cos(lat₁)·cos(lat₂)·sin²(Δlon/2)<br/>c = 2·atan2(√a, √(1−a))<br/>distance = R·c &nbsp;(R = earth's radius = 6371 km)</code>
+    </div>
+    <div>
+      <div class="name">In our context</div>
+      <code>Δlat = x_DC − xᵢ &nbsp;·&nbsp; Δlon = y_DC − yᵢ<br/>distance((xᵢ, yᵢ), (x_DC, y_DC)) = R·c</code>
+    </div>
+  </div>
+  <figcaption>The Haversine formula gives the true over-the-earth distance between two latitude/longitude points — used to measure each market's distance from a candidate DC location.</figcaption>
+</figure>
 
 **Decision Variables:**
 - `xDC` = latitude of the new DC *(unknown)*
@@ -131,7 +145,15 @@ Earth's surface is not flat — lat/long are coordinates on a curved surface. Th
 
 ### Optimal Solution from Solver
 
-![AnyLogistix GFA Result — Map Visualization](/learnings/online/Supply-Chain-Digitization/sc_w11s2_image3.png)
+*Excel setup — with a trial DC at (20.00, 72.00), the Haversine distance to each market and the total distance-weighted cost:*
+
+| Market | Cost/km·unit | Demand (units) | Latitude | Longitude | Distance (km) |
+|---|---|---|---|---|---|
+| Pune | 1 | 157,680 | 18.52 | 73.85 | 254.54 |
+| Mumbai | 1 | 179,580 | 19.09 | 72.87 | 136.20 |
+| Ahmedabad | 1 | 155,490 | 23.02 | 72.57 | 340.95 |
+| Surat | 1 | 43,800 | 21.18 | 72.83 | 157.10 |
+| **Trial DC (20.00, 72.00)** | | | | | **Cost = 124,489,119** |
 
 | Parameter | Value |
 |---|---|

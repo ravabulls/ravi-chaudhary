@@ -53,7 +53,14 @@ GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimi
 
 ## 2. Case Study — Pharma Company Network Redesign
 
-![Network Optimization — Case Setup](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image1.png)
+*Demand data — four markets (yearly demand doubled for the 3-year horizon):*
+
+| Market | Yearly Demand | Latitude | Longitude |
+|---|---|---|---|
+| Pune | 3,15,360 | 18.52 | 73.85 |
+| Mumbai | 3,59,160 | 19.09 | 72.87 |
+| Ahmedabad | 3,10,980 | 23.02 | 72.57 |
+| Surat | 87,600 | 21.18 | 72.83 |
 
 **Background:**
 - Demand in western region will **double** in next 3 years — current capacity insufficient.
@@ -86,7 +93,19 @@ GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimi
 
 ## 3. Decision Variables
 
-![Network Optimization Model — Decision Variables](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image2.png)
+*Candidate factory data:*
+
+| Factory | Lat | Long | Fixed cost/yr ($) | Prod. cost/unit ($) | → Vapi (km) | → Bhiwandi (km) |
+|---|---|---|---|---|---|---|
+| **Nashik** | 19.99 | 73.79 | 2,737,500 | 7 | 144 | 129 |
+| **Aurangabad** | 19.88 | 75.34 | 1,825,000 | 5 | 322 | 297 |
+
+*Candidate DC data:*
+
+| DC | Lat | Long | Fixed cost/yr ($) | Inbound/unit | Outbound/unit | Mumbai | Pune | Surat | Ahmedabad |
+|---|---|---|---|---|---|---|---|---|---|
+| **Vapi** | 20.42 | 72.91 | 1,825,000 | 0.25 | 0.25 | 169 | 298 | 102 | 346 |
+| **Bhiwandi** | 19.29 | 73.05 | 2,737,500 | 0.50 | 0.50 | 35 | 151 | 244 | 487 |
 
 | Variable | Type | Meaning |
 |---|---|---|
@@ -139,7 +158,19 @@ Maximize Z = Revenue − Factory Fixed Cost − DC Fixed Cost
 
 ## 6. Excel Solver — Setup & Results
 
-![Excel Solver Setup — Network Optimization](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image3.png)
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Objective — maximise profit</div>
+      <code>max &nbsp;Σ Rev·Q<sub>jk</sub> − [ Σ FixedFac<sub>i</sub>·Y<sub>i</sub> + Σ FixedDC<sub>j</sub>·Z<sub>j</sub> + Σ ProdFac<sub>i</sub>·X<sub>ij</sub> + Σ InbDC<sub>j</sub>·X<sub>ij</sub> + Σ OutbDC<sub>j</sub>·Q<sub>jk</sub> + Σ Trans<sub>ij</sub>·X<sub>ij</sub> + Σ Trans<sub>jk</sub>·Q<sub>jk</sub> ]</code>
+    </div>
+    <div>
+      <div class="name">Constraints</div>
+      <code>Σ<sub>j</sub> Q<sub>jk</sub> = demand<sub>k</sub> &nbsp;·&nbsp; Σ<sub>j</sub> X<sub>ij</sub> ≤ M·Y<sub>i</sub> &nbsp;·&nbsp; Σ<sub>i</sub> X<sub>ij</sub> ≤ M·Z<sub>j</sub><br/>Σ<sub>i</sub> X<sub>ij</sub> = Σ<sub>k</sub> Q<sub>jk</sub> (flow balance) &nbsp;·&nbsp; Y<sub>i</sub>, Z<sub>j</sub> ∈ {0,1} &nbsp;·&nbsp; X<sub>ij</sub>, Q<sub>jk</sub> ≥ 0</code>
+    </div>
+  </div>
+  <figcaption>The full network-optimisation model — binary variables Y<sub>i</sub> / Z<sub>j</sub> decide which factories and DCs to open, while X<sub>ij</sub> / Q<sub>jk</sub> set the flows, all chosen to maximise revenue minus fixed, production, handling and transport costs.</figcaption>
+</figure>
 
 | Solver Setting | Value / Detail |
 |---|---|
@@ -182,7 +213,16 @@ Distances are given as fixed inputs (km values) — not calculated via spherical
 
 ## 8. AnyLogistix — Network Optimization Module
 
-![AnyLogistix Network Optimization Result](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image4.png)
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-tier"><div class="sc-tier-head">Factories</div><div class="sc-node amber">Aurangabad</div><div class="sc-node amber">Nashik</div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Distribution centres</div><div class="sc-node">Bhiwandi</div><div class="sc-node">Vapi</div></div>
+    <span class="arrow">→</span>
+    <div class="sc-tier"><div class="sc-tier-head">Customers</div><div class="sc-node violet">Mumbai</div><div class="sc-node violet">Pune</div><div class="sc-node violet">Surat</div><div class="sc-node violet">Ahmedabad</div></div>
+  </div>
+  <figcaption>The optimised network — the model selects which factories and DCs to open and routes each market's demand through the least-cost factory→DC→customer path, the result a tool like anyLogistix also plots on a map.</figcaption>
+</figure>
 
 When 4 SKUs are added + daily demand → number of decision variables multiplies. Excel cannot handle large Mixed Integer Programs (MIP) efficiently. AnyLogistix has built-in MIP solver + map visualization + route details + flow breakdown.
 
@@ -196,7 +236,9 @@ When 4 SKUs are added + daily demand → number of decision variables multiplies
 
 ### Additional Outputs from AnyLogistix
 
-![Flow Details — Aurangabad to VAPI](/learnings/online/Supply-Chain-Digitization/sc_w11s4_image5.png)
+<Aside type="note">
+Drilling into a single flow (e.g. **Aurangabad → Vapi**) shows the per-link quantity and cost the optimiser assigned — the granular routing detail behind the network-level result above.
+</Aside>
 
 - **Map visualization:** actual road routes from Aurangabad → VAPI → customers.
 - **Flow details:** Aurangabad → VAPI: SKU1 = 3,13,900 units, distance shown, transport cost shown.

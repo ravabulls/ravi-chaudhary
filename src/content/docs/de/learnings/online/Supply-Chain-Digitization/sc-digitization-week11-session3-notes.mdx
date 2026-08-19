@@ -42,7 +42,20 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 2. Excel — Formelaufbau (Sphärische Distanz)
 
-![Excel Formel-Setup — GFA Sphärische Distanz](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image1.png)
+| Symbol | Bedeutung |
+|---|---|
+| xᵢ, yᵢ | X-/Y-Koordinate von Markt i |
+| demandᵢ | Nachfrage von Markt i |
+| x_DC, y_DC | X-/Y-Koordinate des optimalen DC — **Entscheidungsvariablen** |
+| TC | Transportkosten je km je Einheit |
+| Z | gesamte Transportkosten |
+
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div><div class="name">Zielfunktion</div><code>Minimiere Z = TC × Σ<sub>i=1..4</sub> distance((xᵢ, yᵢ), (x_DC, y_DC)) × demandᵢ</code></div>
+  </div>
+  <figcaption>Das GFA-Ziel — den DC an den Koordinaten platzieren, die die gesamte nachfragegewichtete Fahrstrecke über alle Märkte minimieren.</figcaption>
+</figure>
 
 Die Distanzformel erfordert **5 Zwischenberechnungen** bevor die km-Distanz erreicht wird.
 
@@ -76,7 +89,17 @@ Schritt 6 — Gesamtkosten = SUMPRODUKT(Distanzen, Nachfragen, Kosten)
 
 ## 3. Excel Solver — Einstellungen & Ausgabe
 
-![Excel Solver Konfiguration](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image2.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — GFA-Einrichtung</div>
+    <ul>
+      <li><b>Ziel festlegen:</b> Gesamtkosten-Zelle (<code>SUMMENPRODUKT</code> aus Distanz × Nachfrage) → <b>Min</b></li>
+      <li><b>Durch Ändern der Zellen:</b> Breiten- &amp; Längengrad des DC</li>
+      <li><b>Lösungsmethode:</b> <b>GRG Nichtlinear</b> (die Haversine-Distanz ist nichtlinear)</li>
+    </ul>
+  </div>
+  <figcaption>Solver verschiebt Breiten-/Längengrad des DC, um die gesamte nachfragegewichtete Distanz zu minimieren, mit der GRG-Nichtlinear-Engine — die Excel-Distanzzelle nutzt <code>SIN</code>, <code>COS</code> und <code>BOGENMASS</code>.</figcaption>
+</figure>
 
 | Solver-Feld | Wert / Einstellung |
 |---|---|
@@ -104,7 +127,14 @@ Excel-Beschränkung: kann LP/NLP-Modelle mit mehr als ca. 200 Entscheidungsvaria
 
 ## 5. AnyLogistix — GFA Schritt für Schritt (Hands-On)
 
-![AnyLogistix Multi-SKU Eingabe](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image3.png)
+*Überarbeiteter Fall — vier SKUs je Markt, mit täglicher (nicht jährlicher) Nachfrage:*
+
+| Markt | SKU1 | SKU2 | SKU3 | SKU4 |
+|---|---|---|---|---|
+| **Pune** | 130 | 90 | 95 | 117 |
+| **Mumbai** | 140 | 100 | 115 | 137 |
+| **Surat** | 40 | 35 | 25 | 20 |
+| **Ahmedabad** | 120 | 95 | 100 | 111 |
 
 <Steps>
 1. **Herunterladen & Installieren:** anylogic.com → Academic-Tab → ALX Educational Toolkit → AnyLogistix Personal Learning Edition (PLE) herunterladen — kostenlos für Studenten.
@@ -121,7 +151,9 @@ Excel-Beschränkung: kann LP/NLP-Modelle mit mehr als ca. 200 Entscheidungsvaria
 
 ## 6. Excel vs. AnyLogistix — Ausgabevergleich
 
-![AnyLogistix GFA Kartenergebnis](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image4.png)
+<Aside type="note">
+Führt man dieselbe Greenfield-Analyse in einem Spezialtool (anyLogistix) aus, liefert es die optimalen DC-Koordinaten und plottet sie auf einer Karte — die Software verarbeitet die Multi-SKU-Nachfrage und die sphärischen Distanzen automatisch und bestätigt das Excel-Solver-Ergebnis geografisch.
+</Aside>
 
 | Ausgabe / Funktion | Excel Solver | AnyLogistix |
 |---|---|---|

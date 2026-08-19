@@ -35,7 +35,33 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 2. Umwandlung von nicht-linearer DEA in lineare Programmierung
 
-![Linearisierung des DEA-Modells](/learnings/online/Supply-Chain-Digitization/sc_w9s5_image1.png)
+*Neun Anlagen — zwei Outputs (höher = besser) und zwei Inputs (niedriger = besser):*
+
+| Anlage | Produktionsausbeute (%) | OEE (%) | Taktzeit (Min.) | Ressourcennutzung (%) |
+|---|---|---|---|---|
+| 1 | 92 | 80 | 32 | 88 |
+| 2 | 88 | 78 | 35 | 94 |
+| 3 | 92 | 81 | 31 | 95 |
+| 4 | 90 | 78 | 30 | 82 |
+| 5 | 90 | 82 | 34 | 90 |
+| 6 | 82 | 76 | 36 | 89 |
+| 7 | 96 | 85 | 31 | 91 |
+| 8 | 74 | 68 | 35 | 94 |
+| 9 | 78 | 76 | 30 | 89 |
+
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Zielfunktion (für Anlage 1, nach Linearisierung)</div>
+      <code>max &nbsp;92·v<sub>1</sub> + 80·v<sub>2</sub></code>
+    </div>
+    <div>
+      <div class="name">Nebenbedingungen</div>
+      <code>32·u<sub>1</sub> + 88·u<sub>2</sub> = 1 &nbsp;(Input-Gewichte normiert)<br/>∀ Anlage: (Ausbeute·v<sub>1</sub> + OEE·v<sub>2</sub>) − (Taktzeit·u<sub>1</sub> + Nutzung·u<sub>2</sub>) ≤ 0</code>
+    </div>
+  </div>
+  <figcaption>DEA wird linearisiert, indem die gewichtete Input-Summe auf 1 fixiert und der gewichtete Output der bewerteten Anlage maximiert wird. v<sub>k</sub> gewichten die Outputs, u<sub>j</sub> die Inputs; die ≤-0-Bedingung hält keine Anlage über der Effizienzgrenze.</figcaption>
+</figure>
 
 Warum nicht-linear? Sowohl Zähler `(V1·Y1 + V2·Y2)` als auch Nenner `(U1·X1 + U2·X2)` enthalten Entscheidungsvariablen → `Y/X` Typ = nicht-linear.
 Strategie: Zwei separate Transformationen anwenden.

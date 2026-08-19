@@ -35,7 +35,33 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 2. Converting Non-linear DEA to Linear Programming
 
-![Linearization of DEA Model](/learnings/online/Supply-Chain-Digitization/sc_w9s5_image1.png)
+*Nine facilities — two outputs (higher = better) and two inputs (lower = better):*
+
+| Facility | Production Yield (%) | OEE (%) | Cycle Time (min) | Resource Utilisation (%) |
+|---|---|---|---|---|
+| 1 | 92 | 80 | 32 | 88 |
+| 2 | 88 | 78 | 35 | 94 |
+| 3 | 92 | 81 | 31 | 95 |
+| 4 | 90 | 78 | 30 | 82 |
+| 5 | 90 | 82 | 34 | 90 |
+| 6 | 82 | 76 | 36 | 89 |
+| 7 | 96 | 85 | 31 | 91 |
+| 8 | 74 | 68 | 35 | 94 |
+| 9 | 78 | 76 | 30 | 89 |
+
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <div class="name">Objective (for facility 1, after linearisation)</div>
+      <code>max &nbsp;92·v<sub>1</sub> + 80·v<sub>2</sub></code>
+    </div>
+    <div>
+      <div class="name">Constraints</div>
+      <code>32·u<sub>1</sub> + 88·u<sub>2</sub> = 1 &nbsp;(input weights normalised)<br/>∀ facility: (yield·v<sub>1</sub> + OEE·v<sub>2</sub>) − (cycle·u<sub>1</sub> + util·u<sub>2</sub>) ≤ 0</code>
+    </div>
+  </div>
+  <figcaption>DEA is made linear by fixing the weighted input sum to 1 and maximising the weighted output for the evaluated facility. v<sub>k</sub> weight each output, u<sub>j</sub> each input; the ≤ 0 constraint keeps no facility above the efficiency frontier.</figcaption>
+</figure>
 
 Why non-linear? Both numerator `(V1·Y1 + V2·Y2)` and denominator `(U1·X1 + U2·X2)` contain decision variables → `Y/X` type = non-linear.
 Strategy: Apply two separate transformations.

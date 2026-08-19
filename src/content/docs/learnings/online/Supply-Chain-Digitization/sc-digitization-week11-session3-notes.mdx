@@ -43,7 +43,20 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 2. Excel — Formula Build-Up (Spherical Distance)
 
-![Excel Formula Setup — GFA Spherical Distance](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image1.png)
+| Symbol | Meaning |
+|---|---|
+| xᵢ, yᵢ | X / Y coordinate of market i |
+| demandᵢ | demand of market i |
+| x_DC, y_DC | X / Y coordinate of the optimal DC — **decision variables** |
+| TC | transportation cost per km per unit |
+| Z | total transportation cost |
+
+<figure class="sc-fig">
+  <div class="sc-formula">
+    <div><div class="name">Objective</div><code>Minimise Z = TC × Σ<sub>i=1..4</sub> distance((xᵢ, yᵢ), (x_DC, y_DC)) × demandᵢ</code></div>
+  </div>
+  <figcaption>The GFA objective — place the DC at the coordinates that minimise total demand-weighted travel distance across all markets.</figcaption>
+</figure>
 
 The distance formula requires **5 intermediate calculations** before arriving at km distance.
 
@@ -79,7 +92,17 @@ Apply the same formula for all 4 markets (rows 2–5) by changing `D2→D3`, `E2
 
 ## 3. Excel Solver — Settings & Output
 
-![Excel Solver Configuration](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image2.png)
+<figure class="sc-fig">
+  <div class="sc-panel" style="max-width:34rem;margin:0 auto">
+    <div class="head">Excel Solver — GFA setup</div>
+    <ul>
+      <li><b>Set Objective:</b> the total-cost cell (<code>SUMPRODUCT</code> of distance × demand) → <b>Min</b></li>
+      <li><b>By Changing Cells:</b> the DC latitude &amp; longitude</li>
+      <li><b>Solving Method:</b> <b>GRG Nonlinear</b> (the Haversine distance is non-linear)</li>
+    </ul>
+  </div>
+  <figcaption>Solver moves the DC's latitude/longitude to minimise total demand-weighted distance, using the GRG Nonlinear engine — the Excel distance cell is built with <code>SIN</code>, <code>COS</code> and <code>RADIANS</code>.</figcaption>
+</figure>
 
 | Solver Field | Value / Setting |
 |---|---|
@@ -124,7 +147,14 @@ Excel limitation: cannot solve LP/NLP models with more than ~200 decision variab
 
 ## 5. AnyLogistix — GFA Step-by-Step (Hands-On)
 
-![AnyLogistix Multi-SKU Input](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image3.png)
+*Revised case — four SKUs per market, with daily (not yearly) demand:*
+
+| Market | SKU1 | SKU2 | SKU3 | SKU4 |
+|---|---|---|---|---|
+| **Pune** | 130 | 90 | 95 | 117 |
+| **Mumbai** | 140 | 100 | 115 | 137 |
+| **Surat** | 40 | 35 | 25 | 20 |
+| **Ahmedabad** | 120 | 95 | 100 | 111 |
 
 <Steps>
 1. **Download & Install:** Go to anylogic.com → Academic tab → ALX Educational Toolkit → download **AnyLogistix Personal Learning Edition (PLE)** — free for students.
@@ -144,7 +174,9 @@ If city name is entered correctly → AnyLogistix auto-fills coordinates from it
 
 ## 6. Excel vs AnyLogistix — Output Comparison
 
-![AnyLogistix GFA Map Output](/learnings/online/Supply-Chain-Digitization/sc_w11s3_image4.png)
+<Aside type="note">
+Running the same greenfield analysis in a specialised tool (anyLogistix) returns the optimal DC coordinates and plots them on a map — the software handles the multi-SKU demand and spherical distances automatically, confirming the Excel-Solver result geographically.
+</Aside>
 
 | Output / Feature | Excel Solver | AnyLogistix |
 |---|---|---|
