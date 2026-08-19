@@ -12,6 +12,27 @@ img {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
+/* Wide data tables (e.g. matrices converted from course images) must scroll
+   horizontally on their own, never get clipped on the right edge. Scoped to
+   leave the .sc-matrix / .sc-quad figure tables untouched (they scroll via
+   their .sc-fig wrapper). */
+.sl-markdown-content table:not(.sc-matrix) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+.sl-markdown-content table:not(.sc-matrix) th,
+.sl-markdown-content table:not(.sc-matrix) td {
+  padding: 0.35rem 0.55rem;
+}
+/* Numeric matrices read best on one line each — keep their cells from wrapping
+   (they scroll as a unit instead). Opt-in via class on the figure/table. */
+.sl-markdown-content table.sc-nowrap td,
+.sl-markdown-content table.sc-nowrap th {
+  white-space: nowrap;
+}
+
 /* Profile photo in the resume header — override the default box-shadow
    since it's circular; the inline style sets border-radius: 50% already */
 .profile-photo-circle {
