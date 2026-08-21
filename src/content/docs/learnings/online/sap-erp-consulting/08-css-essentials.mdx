@@ -1,0 +1,423 @@
+---
+title: "CSS Essentials"
+description: "The style layer of the web — how CSS rulesets and selectors work, color and typography, sizing units, the box model and box-sizing, the display property, and building layouts with flexbox."
+sidebar:
+  label: "8 · CSS Essentials"
+  order: 8
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+
+---
+
+## What CSS actually is
+
+HTML builds the structure of a page — what each thing *is*. On its own it looks plain and unstyled, and that is HTML doing its one job correctly, not a sign something broke. **CSS** — **Cascading Style Sheets** — is the second language: it describes how that structure *looks*. Colours, fonts, sizes, spacing, layout — all of it lives in CSS.
+
+Break the name in two:
+
+- **Style Sheets** — files full of styling rules, kept separate from the content they style.
+- **Cascading** — the way CSS settles arguments. Several rules can target the same element at once, and a fixed order decides which one wins.
+
+One thing to fix early: **CSS is not a programming language.** There are no loops, no decisions, no logic — just declarations that say "this should look like that," which the browser then applies. That is exactly why it is approachable from day one.
+
+<Aside type="note" title="Separation of concerns — the whole point">
+The web splits responsibilities on purpose: the **HTML file owns what things are**, the **CSS file owns how they look**. The payoff is practical — I can restyle an entire site by editing one file without touching a word of content, let many pages share one look so they can't drift apart, and always know which file to open for which kind of question. The famous demo is *CSS Zen Garden*: one identical HTML file, restyled by hundreds of designers into wildly different pages, with not a single element changed.
+</Aside>
+
+---
+
+## Three ways to add CSS
+
+CSS can reach a page by three routes. I use one of them for real work, but I need to recognise all three because I'll meet them in the wild.
+
+| Route | How it attaches | Scope | Use it for |
+|---|---|---|---|
+| **Inline** | `style` attribute on one element | That one element | HTML emails, quick tests, tool-generated markup |
+| **Internal** | `<style>` block inside `<head>` | That one page | Genuine single-file pages, small demos |
+| **External** | separate `.css` file linked from `<head>` | Every page that links it | **Everything real — the default** |
+
+The external route connects like this, with a `link` element in the head — `rel` names the relationship (a stylesheet), `href` holds the address:
+
+```html
+<link rel="stylesheet" href="styles.css">
+```
+
+**Why external wins**, in three concrete reasons:
+
+- **One file styles every page.** Change a colour once and it changes everywhere. With internal styles, three pages means three copies quietly drifting apart.
+- **Content files stay content.** The HTML stays readable for what it is.
+- **Browsers cache it.** A returning visitor already has the stylesheet and doesn't download it again, so pages load faster.
+
+<Aside type="caution" title="Don't mix all three">
+Rules scattered across inline, internal, and external is not "flexible" — it's archaeology. When an element looks wrong, I want *one* place to look. Habits set on page one carry to page ten, so I start with the route that scales: one external file.
+</Aside>
+
+---
+
+## The anatomy of a ruleset
+
+Everything in a stylesheet is built from one repeating shape. Its four parts have exact names, because documentation, DevTools, and every bug hunt use these words.
+
+```css
+body {              /* selector — which elements this targets            */
+  background-color: #faf5ee;   /* declaration: property + value, ends in ; */
+  color: #2f2a25;              /* property = what aspect · value = the setting */
+}                   /* the braces { } hold the declaration block          */
+```
+
+- The **selector** (`body`) says *which elements* the rule applies to.
+- The **declaration block** is everything between the braces.
+- Each **declaration** is one `property: value;` pair, ended by a semicolon.
+- The **property** names *what aspect* to style; the **value** sets it.
+
+A selector plus its declaration block is a **ruleset**. A stylesheet is just rulesets stacked top to bottom.
+
+<Aside type="tip" title="Read every ruleset as one sentence">
+"For every `body` element, set the background colour to cream and the text colour to dark brown." The selector fills the *for every* slot; each declaration fills a *set X to Y* slot. If a ruleset can't be read this way, something in it is malformed.
+</Aside>
+
+**The two silent breakages.** CSS never reports errors to the page — it skips what it can't parse and moves on. Silence is not correctness.
+
+- **Missing semicolon** — the parser runs the broken line into the next declaration and **discards both**. Symptom: one styling works, the next one mysteriously doesn't. First thing to check: the semicolon on the line above.
+- **Missing closing brace** — breaks *every* ruleset after it in the file. Symptom: everything below a certain point dies at once. The editor's bracket colouring flags it instantly, if I look.
+
+---
+
+## Selectors — the reference table
+
+The selector is where a ruleset takes aim. These five cover nearly everything, and one of them becomes the workhorse.
+
+| Selector | Written as | Matches | Example |
+|---|---|---|---|
+| **Element** | bare name | every element of that kind | `h1 { color: #8a5a2e; }` |
+| **Class** | leading dot | every element carrying that class | `.tagline { color: #6b6257; }` |
+| **Id** | leading hash | the one element with that id (unique per page) | `#site-logo { ... }` |
+| **Descendant** | two selectors, a space between | elements *inside* another element | `nav a { ... }` (links inside the nav) |
+| **Pseudo-class** | colon + state | an element in a given state | `a:hover { color: #8a5a2e; }` |
+
+**Class is the workhorse.** Any number of elements can share a class, and one element can carry several. I decide exactly which elements belong to a styling group, whatever kind they are. An `id` targets exactly one element forever — the rare, specific tool, wrong for anything that might ever have a sibling.
+
+Two combining tricks earn their keep:
+
+- **Grouping** with commas applies one block to several selectors — `h1, h2 { color: #8a5a2e; }` reads "for every h1 *and* every h2."
+- **Descendant** (a space) reaches inside — `nav a` styles only links inside the nav, leaving a link in a paragraph untouched.
+
+<Aside type="tip" title="Name classes by role, not by looks">
+`.price`, `.brand`, `.tagline` — name what the thing *is*. A class called `.orange-text` becomes a lie the day the design turns green; `.price` stays true through every redesign. I'm writing for the person who maintains this file later, which is me.
+</Aside>
+
+<Aside type="note" title="When two rules disagree — specificity">
+The cascade breaks ties by **specificity**: an id beats a class, a class beats an element, and between equals, the one written *later* in the file wins. That single rule explains most "why is my style not applying?" mysteries — and DevTools shows the losing rules struck through so I can see it happen.
+</Aside>
+
+---
+
+## Colour
+
+CSS accepts a colour in several notations. Three matter now, one gets a mention:
+
+| Notation | Looks like | Note |
+|---|---|---|
+| **Named** | `green`, `white` | ~140 names; handy in experiments, too coarse for real palettes |
+| **Hex** | `#faf5ee` | **The workhorse.** `#RRGGBB` — two hex digits each for red, green, blue, `00`–`FF`. Every brand palette arrives this way |
+| **rgb()** | `rgb(6, 48, 42)` | same three channels in decimal |
+| **hsl()** | `hsl(174, 78%, 11%)` | hue, saturation, lightness; designers like it for reasoning about colour — recognise it |
+
+Two properties do the colouring: **`color`** sets the text colour, **`background-color`** sets the fill behind an element. Set both on `body` and the text colour *inherits* down to every paragraph, list, and heading until a more specific rule overrides it.
+
+```css
+body {
+  background-color: #faf5ee;   /* warm cream */
+  color: #2f2a25;              /* dark warm brown, inherited everywhere */
+}
+```
+
+<Aside type="caution" title="Contrast is a number, not a feeling">
+Text is readable when it stands out *enough* from its background — and "enough" is measurable. The **contrast ratio** runs from 1:1 (identical) to 21:1 (black on white). The accessibility standard **WCAG** sets the passing marks: **at least 4.5:1 for normal text**, 3:1 for large text — the same thresholds the European Accessibility Act points to. "I can read it fine" doesn't count; that's me, on my screen, today. Check every pairing with the WebAIM contrast checker or right inside DevTools, and ship nothing below 4.5:1.
+</Aside>
+
+---
+
+## DevTools — the microscope
+
+<Badge text="Inspect & experiment" variant="tip" /> Because CSS fails silently, the browser's inspector is a beginner's best friend, not an expert-only tool. Right-click any element on any page and choose **Inspect**. Chrome opens **DevTools** with the **Elements panel** (the live element tree) and the **Styles pane** beside it — showing every ruleset that applies, which file it came from, and its line number.
+
+What it gives me:
+
+- **Reading the cascade** — rules are listed most-specific first; **struck-through declarations lost the cascade**, so "why isn't my style applying?" becomes a reading exercise instead of a mystery.
+- **Live editing** — click any value and type a new one; the page updates instantly. Click a colour swatch and the picker even shows the contrast ratio against the background, with the 4.5:1 line marked.
+- **Three diagnoses in one pane** — a completely unstyled page means the stylesheet isn't linked (usually a typo in the `href`); a ruleset that never appears means the selector matches nothing (a class typo); a warning icon marks a declaration a missing semicolon ate.
+
+<Aside type="note" title="Edits vanish on refresh — by design">
+DevTools edits the browser's *copy* of the page, never my files, so a refresh wipes them. That's the intended loop: experiment in DevTools until a value looks right, then copy the winner into `styles.css`, save, and let the live preview show the real thing. DevTools is the sketchpad; the stylesheet is the painting.
+</Aside>
+
+---
+
+## Typography
+
+Most of the web is text, which makes typography the highest-leverage design skill here. It starts with two words people blur and professionals don't:
+
+- A **typeface** is the *design* — the whole family of letterforms with a name (Playfair Display, Lato).
+- A **font** is *one concrete style* of that typeface — one weight, one posture (Playfair Display Bold; Lato Regular Italic).
+
+The typeface is the family; each font is one member. CSS agrees — the property is `font-family`: I name the family, the browser picks the member each situation needs.
+
+**Two rules carry me far:** legibility first for body text (it must disappear into effortless reading), character for the headings and brand (read in single lines, they can afford a distinctive voice); and **two typefaces maximum** — one with character for display, one calm workhorse for everything else. More than two reads as chaos.
+
+<Aside type="note" title="Serif vs sans-serif">
+**Serifs** are the little strokes finishing the ends of letters. A **serif** typeface has them (tends to read as classic); a **sans-serif** ("sans" = without) doesn't (tends to read as modern). Neither is better — either can do either job.
+</Aside>
+
+### Loading a web font
+
+Visitors don't have my chosen typeface installed, and they don't need to — the page can bring its own **web fonts** along. This course loads them from **Google Fonts** (free, open-license, copy-paste integration; alternatives worth knowing exist — Adobe Fonts, or self-hosting the files). Pick the typeface, select the weights needed (e.g. 400 regular and 700 bold), and paste the `link` elements into **every page's** head, above my own stylesheet's link:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+```
+
+Then name the family in CSS, always ending in a **generic family** as a safety net:
+
+```css
+body {
+  font-family: "Lato", sans-serif;   /* quote multi-word names; end with serif / sans-serif / monospace */
+}
+```
+
+<Aside type="caution" title="Why the fallback list exists">
+Web fonts travel over the network, and networks fail — a slow line, a blocked domain, an outage. When the first candidate can't be used, the browser walks the list and uses the first one it *can*. With `"Lato", sans-serif` the worst case is the visitor's own system sans-serif: different, but readable and honest. **Every `font-family` ends in a generic family, no exceptions.** A typo in a font name looks exactly like a font that failed to load — the text silently falls back, and DevTools tells me which font actually won.
+</Aside>
+
+### A type hierarchy
+
+Readable pages aren't luck — they're a **hierarchy**: sizes, weights, and spacing chosen so a glance already says what's a title, a section, and plain text. Five properties build one:
+
+| Property | Sets | Good practice |
+|---|---|---|
+| `font-size` | how large text renders | pick from a small **scale** (e.g. body 1.6rem, h2 2.4rem, h1 3.6rem), not ad-hoc values |
+| `font-weight` | stroke heaviness | `400` (normal) and `700` (bold) — match the weights loaded from Google Fonts |
+| `font-style` | upright or `italic` | the "costume" side of emphasis — looks only, no meaning |
+| `line-height` | space between lines | write it **unitless** (`1.6`) so it scales with any font size; 1.5–1.6 for body |
+| `text-align` | `left` · `center` · `right` | **long text stays left**; `center` is only for short display lines |
+
+<Aside type="tip" title="Left-aligned paragraphs, always">
+Reading depends on the eye returning to a stable left edge. Centred paragraphs make every line start somewhere new, and the reader pays for it on every return. Friendliness comes from the typefaces and the writing — the paragraphs stay left. Centre belongs to a heading, a brand line, a one-sentence footer, and nowhere else.
+</Aside>
+
+---
+
+## Sizing units
+
+The unit I choose for text is quietly an accessibility decision.
+
+| Unit | Type | Relative to | Reach for it when |
+|---|---|---|---|
+| `px` | absolute | nothing — fixed | borders, tiny fixed details; **avoid for text size** |
+| `rem` | relative | the **root** (`html`) font size | **the default for text & spacing** — no compounding, scales with the visitor's setting |
+| `em` | relative | the *current* element's font size | rarely — it **compounds** and gets hard to control |
+| `%` | relative | the parent's value | fluid widths, and the 62.5% root trick |
+| `vw` / `vh` | relative | 1% of viewport width / height | full-screen heroes, viewport-sized blocks |
+
+**Why `rem` is the accessible choice:** every browser lets the user set a preferred default font size — a low-vision visitor might set 20px. Sizes in `rem` scale with that root, so the whole site respects the choice. Sizes in `px` ignore it flatly.
+
+<Aside type="tip" title="The 62.5% trick — nice round maths">
+Browsers default the root to **16px**, so `1rem` = 16px, and conversions get ugly. One line fixes it: `html { font-size: 62.5%; }` makes `1rem` = **10px**, so every value converts by shifting the decimal — 16px is `1.6rem`, 24px is `2.4rem`, 36px is `3.6rem`. It comes with one obligation: set `body { font-size: 1.6rem; }` immediately, or text renders tiny. And because it's a *percentage*, it still tracks the visitor's own setting.
+</Aside>
+
+---
+
+## The box model
+
+Every element the browser renders is a rectangle of **four layers**, from the inside out. This is the single most important mental model for spacing anything.
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node green">content<span class="sub">the text or image itself</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">padding<span class="sub">space inside, before the border</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node slate">border<span class="sub">the drawn edge</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">margin<span class="sub">space outside, to the next box</span></div>
+</div>
+<figcaption>Content → padding → border → margin, from the inside out. Every element wears all four.</figcaption>
+</figure>
+
+```css
+.card {
+  padding: 1.6rem;              /* space inside the box */
+  border: 1px solid #e3d9c9;   /* the drawn edge */
+  margin: 2rem;                /* space outside, between neighbours */
+}
+```
+
+One value sets all four sides; two values set vertical then horizontal (`padding: 1.2rem 2rem;` = top/bottom then left/right).
+
+<Aside type="note" title="The one fact that separates padding from margin">
+Both make space, but: **the background paints the content and the padding, then stops at the border — the margin is always transparent.** So when I can't decide which I need, I ask *where should the background end?* Padding where the background lives (headers, footers, cards); margin between separate boxes.
+</Aside>
+
+### box-sizing: the sane default
+
+Before writing a single `width`, one question needs a fixed answer: when I say `width: 300px`, what exactly is 300px wide?
+
+- **`content-box`** (the browser default) — width measures the **content only**. Padding and border are *added on top*, so a 300px card with 20px padding and a 2px border actually renders **344px** wide. Every padding change resizes the element, and layouts need arithmetic forever.
+- **`border-box`** — width measures the **visible box** (content + padding + border together). The same card renders exactly 300px; the content shrinks to make room inside. What I say is what I get.
+
+The professional fix, one rule at the very top of the stylesheet using `*` (the **universal selector**, matching every element):
+
+```css
+* {
+  box-sizing: border-box;   /* width now means the visible box, everywhere — no arithmetic */
+}
+```
+
+<Aside type="tip" title="One line to remember">
+`content-box` asks "how wide is the *inside*?"; `border-box` asks "how wide is the *box*?" I always mean the box — so the rule goes at the top and stays there. (content-box is only the default for historical reasons: the web rarely changes defaults, it adds opt-ins like this one.)
+</Aside>
+
+**Sizing companions:** `width` sets it, `max-width` caps it (the box stays fluid but never grows past the cap — the workhorse), and `height` mostly stays *unset* on text, because content should decide its own height. The classic centred container:
+
+```css
+.container {
+  max-width: 96rem;     /* cap the line length at a readable measure */
+  margin: 0 auto;       /* auto left+right splits leftover space equally = centred */
+  padding: 0 2rem;      /* keep content off the screen edges on narrow windows */
+}
+```
+
+---
+
+## The display property
+
+**`display`** sets which layout behaviour a box uses. The defaults I already know are its values:
+
+| Value | Behaviour |
+|---|---|
+| `block` | own line, full available width — headings, paragraphs, lists, `div` |
+| `inline` | flows within text, takes only its own space, **ignores width/height and vertical padding** — a `span` can't be sized like a box |
+| `inline-block` | the middle ground — flows in a line *and* accepts width, height, padding |
+| `none` | removed from the page entirely — takes no space at all |
+| `flex` | turns the element into a **flex container** — the door to layout |
+
+<Aside type="note" title="The mental shift for flex">
+`block` and `inline` are about **the element itself**. `flex` is about **the element's children.** When I write `display: flex`, I'm not styling the box I put it on — I'm taking command of what's inside it. That one idea makes flexbox click.
+</Aside>
+
+---
+
+## Flexbox — building a layout
+
+Flexbox arranges boxes along a line. Set `display: flex` on a container and its direct children become **flex items** that obey. Items line up along the **main axis**; the direction crossing it is the **cross axis**. Almost everything is set on the *container* — the items just follow.
+
+<Steps>
+
+1. **Make the container.** `display: flex` on the parent. Its direct children are now flex items.
+
+2. **Set the main axis** with `flex-direction` — `row` (default, horizontal) or `column` (vertical). Every other property follows this choice.
+
+3. **Place along the main axis** with `justify-content` — `flex-start` (default), `center`, or `space-between` (first item at one end, last at the other).
+
+4. **Align on the cross axis** with `align-items` — `center` (the constant reach-for), `flex-start`, or `stretch` (default, equal heights).
+
+5. **Space and wrap** with `gap` (fixed space *between* items — no margin tricks) and `flex-wrap: wrap` (let a crowded row break onto a second line).
+
+</Steps>
+
+<Aside type="caution" title="The axes rule beats memorising directions">
+`justify-content` isn't "horizontal" and `align-items` isn't "vertical" — they're *main axis* and *cross axis*. In `flex-direction: column`, `justify-content` works **vertically**. Learn the axes, not the directions, and the column case never confuses me. And remember: these properties live on the **container**, not the items — putting `justify-content` on a child does nothing.
+</Aside>
+
+Here's a full, copy-pasteable example — a header bar (brand pushed left, links pushed right) plus a wrapping row of cards:
+
+```html
+<header class="header-bar">
+  <span class="brand">Café Aroma</span>
+  <nav>
+    <a href="#">Menu</a>
+    <a href="#">About</a>
+    <a href="#">Visit</a>
+  </nav>
+</header>
+
+<section class="card-row">
+  <article class="card">
+    <h3>Morning Bun</h3>
+    <p class="price">3.50</p>
+  </article>
+  <article class="card">
+    <h3>Rye Loaf</h3>
+    <p class="price">4.20</p>
+  </article>
+  <article class="card">
+    <h3>Almond Tart</h3>
+    <p class="price">3.90</p>
+  </article>
+</section>
+```
+
+```css
+* { box-sizing: border-box; }
+
+/* header: two ends pushed apart, everything on one centreline */
+.header-bar {
+  display: flex;
+  justify-content: space-between;   /* brand left, nav right */
+  align-items: center;              /* same visual centreline */
+  padding: 1.2rem 2rem;
+  background-color: #2f2a25;
+  color: #faf5ee;
+}
+
+/* the nav is its own flex container for evenly spaced links */
+nav {
+  display: flex;
+  gap: 2.4rem;
+}
+nav a { color: #faf5ee; text-decoration: none; }
+
+/* card row: wraps to a new line when space runs out */
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e3d9c9;
+  padding: 1.6rem;
+  max-width: 28rem;
+}
+```
+
+<Aside type="note" title="Named, and deliberately deferred">
+Three things I'll meet later but don't need yet: **`flex-grow`** / the `flex` shorthand (lets an item claim leftover space — `flex: 1`); **media queries** (`@media (max-width: 600px) { ... }` — the mechanism behind responsive design); and **CSS Grid** (a second layout system for two-dimensional row-and-column layouts, where flexbox thinks one line at a time). All real, all beyond this chapter.
+</Aside>
+
+---
+
+## Revision summary
+
+| Must-know | One-line recall |
+|---|---|
+| CSS | Cascading Style Sheets — describes how HTML *looks*; not a programming language |
+| Three ways to add it | inline, internal, **external** — external wins (one file, clean content, cached) |
+| Ruleset | `selector { property: value; }` — a missing `;` or `}` fails silently |
+| Selectors | element / **class** (workhorse) / id / descendant (space) / pseudo-class; name classes by role |
+| Colour | hex `#RRGGBB` is the workhorse; `color` + `background-color`; every pairing ≥ 4.5:1 contrast |
+| Typeface vs font | typeface = the family; font = one weight/style of it → `font-family`, ending in a generic family |
+| Web fonts | load from Google Fonts into every page's head; fallback list is the safety net |
+| Type hierarchy | pick sizes from a scale; unitless `line-height` ~1.6; long text stays left-aligned |
+| Units | `rem` for text/spacing (accessible, scales); `px` fixed; the 62.5% root trick makes 1rem = 10px |
+| Box model | content → padding → border → margin; background stops at the border, margin is transparent |
+| box-sizing | `* { box-sizing: border-box; }` at the top so width = the visible box |
+| display | block / inline / inline-block / none / **flex** (governs the children) |
+| Flexbox | `display:flex` on the container; `flex-direction` · `justify-content` · `align-items` · `gap` · `flex-wrap` |
+| DevTools | right-click → Inspect; read the cascade, experiment live, then copy winners into the stylesheet |

@@ -1,0 +1,282 @@
+---
+title: "How Computers & the Internet Work"
+description: "The physical and logical machine — hardware, bits and bytes, the operating system, files and folders, local vs server vs cloud, virtualization, and how the internet and web actually move data."
+sidebar:
+  label: "3 · Computers & Internet"
+  order: 3
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+
+---
+
+## Hardware vs software
+
+Every computer is two halves working together. **Hardware** is the physical body — the parts I can touch. **Software** is the instructions that tell the hardware what to do. Hardware with no software is a dead box; software with no hardware is an idea with nowhere to run. Neither is useful alone.
+
+## The parts that matter, and what each does
+
+I don't need every component by name — I need a few parts by *what they do*, and what breaks when there isn't enough of each.
+
+| Part | Full name | Job | Symptom when short |
+|---|---|---|---|
+| **CPU** | Central Processing Unit | Does the actual work — thinking, calculating | "Slow computer" is usually a CPU story |
+| **RAM** | Random Access Memory | Short-term working space for whatever is open *right now* | Too little → crawls; a "memory leak" quietly eats it up |
+| **Storage** | SSD / hard drive | Keeps files, photos, programs when the power is off | "Storage full" → can't save until you clear space |
+| **GPU** | Graphics Processing Unit | Drawing graphics, video, games — and now training/running AI | Weak GPU → stuttering video, can't run heavy games |
+| **I/O** | Peripherals + ports | Screen, keyboard, mouse plug in via ports (USB the common one) | — |
+
+<Aside type="tip" title="The desk analogy — and the one insight">
+RAM is the **desk surface** (what I spread out to work on now), storage is the **filing cabinet** (kept for later), the CPU is **me, the worker**. So: **more RAM ≠ more storage.** More RAM = do more *at once* without slowing. More storage = *keep* more things. Confusing the two is the classic beginner mistake — a slow machine usually wants RAM, not a bigger drive.
+</Aside>
+
+Same core idea scales across **desktop, laptop, tablet, phone** — each has a processor, memory, storage doing the same jobs. A phone genuinely is a small computer.
+
+---
+
+## How information is measured
+
+Deep down everything — text, images, sound — is stored as numbers built from the **bit**: a single on/off value, like one light switch. Line up 8 bits and you get 256 patterns — enough for a letter or a shade of colour. That group of 8 bits is a **byte**, the basic unit.
+
+| Unit | Roughly | Note |
+|---|---|---|
+| bit | on/off | the smallest thing there is |
+| byte | 8 bits | one letter's worth |
+| **KB** (kilobyte) | ~1,000 bytes | |
+| **MB** (megabyte) | ~1,000 KB | a photo is a few MB |
+| **GB** (gigabyte) | ~1,000 MB | phone storage, RAM |
+| **TB** (terabyte) | ~1,000 GB | big drives |
+
+Each step is about **×1000**. But drives often count 1 GB as **1024 MB**, not 1000 — because computers count in twos (powers of two), and 1024 is the power of two nearest a thousand. That's why a drive shows slightly less than the number on the box. Nothing is faulty.
+
+<Aside type="caution" title="The everyday trap — MB vs Mbit">
+A **megabyte (MB)** and a **megabit (Mbit)** are not the same. A byte is 8 bits, so **1 MB = 8 Mbit**. **File sizes are sold in bytes** (a photo is "4 MB"); **internet speed is sold in bits** ("50 Mbit/s") — partly because the number looks bigger. So a "50 megabit" line will **not** move a "50 megabyte" file in one second. Different-sized units.
+</Aside>
+
+---
+
+## The operating system
+
+Hardware alone does nothing usable — something has to organise it and let a human drive it. That's the **operating system (OS)**: the master program that manages the whole machine and sits between me and the hardware. Open a program, save a file, get online — it all goes through the OS. Windows, macOS, Linux are OSes; Android and iOS are the phone ones.
+
+Everyday controls: the **desktop** (background with **icons**), a **taskbar** (Windows) or **dock** (Mac) to launch and switch, and four mouse actions that cover almost everything:
+
+- **Click** — select / press a button
+- **Double-click** — open a file or program
+- **Right-click** — "what can I do with this?" → menu of options
+- **Drag** — hold and move something
+
+Programs open in **windows** I can open, close, minimise, resize, and switch between. Moving between windows is basically what "using a computer" feels like all day. (Right-click is the single habit that gets beginners unstuck fastest.)
+
+---
+
+## Files, folders, paths
+
+A **file** is one named item of stored info (a document, photo, song, program). A **folder** (a.k.a. **directory**) is a container that groups files and other folders. Folders nest inside folders → a branching **folder tree**.
+
+Read a file name as **name + type**. The bit after the dot is the **extension**, which tells the computer what kind of file it is and which program opens it:
+
+```text
+report.pdf   →  "report"  = my chosen name
+                ".pdf"     = the type (PDF document)
+
+holiday.jpg  = image      budget.xlsx = spreadsheet
+```
+
+A **path** is just *where a file lives* in the tree — which folder, inside which folder. (Same concept returns in a terminal later, typed by hand; only the usage changes.)
+
+Managing files = **create, rename, move, copy, delete**. Deleted things don't vanish instantly — they wait in the **Recycle Bin** (Windows) / **Trash** (Mac) until it's emptied, so a single accidental delete is recoverable. A few clearly named folders beats one giant pile every time.
+
+---
+
+## Everyday office software
+
+| Tool | Examples | For |
+|---|---|---|
+| **Word processor** | Word, Google Docs | Writing — letters, reports, notes (mostly text) |
+| **Spreadsheet** | Excel, Google Sheets | Numbers, lists, tables — anything in rows & columns |
+| **Presentation** | PowerPoint, Google Slides | Slides to show an audience |
+
+<Aside type="note" title="Save vs Save As — the one that bites people">
+- **Save** — update *this* file with the latest changes (same name, same place).
+- **Save As** — make a *new, separate copy* (different name or location); the original is left untouched. Use it to keep "draft 1" while starting "draft 2."
+- **Export as PDF** — a fixed, finished form that looks identical everywhere and isn't easily edited. Right for a CV, invoice, or official form.
+</Aside>
+
+A spreadsheet is a grid of **cells** in **rows** (across) and **columns** (down), each cell holding one value. That plain grid handles a budget or schedule — and grows into a real data tool later.
+
+---
+
+## Installing software, and getting unstuck
+
+**Installing** = adding a new program: download an installer and run it, or get it from an official **store** (Microsoft Store, Mac App Store, phone app store). The habit that matters most is **where** it comes from — stick to the maker's own site or a trusted store. Unofficial download sites are a top way machines pick up harmful software. If I hesitate, that hesitation is worth listening to.
+
+When something goes wrong, work the method **restart → read → search → ask**:
+
+<Steps>
+
+1. **Restart** the program (or the computer) and reopen — fixes a large share of freezes.
+
+2. **Read** any message on screen for a plain-language clue.
+
+3. **Search** with specific words: program name + what happened ("[program] freezes when opening a file").
+
+4. **Ask**, describing what I did, what I expected, and what actually happened.
+
+</Steps>
+
+<Aside type="tip" title="Broken vs stuck">
+**Stuck** = the thing works, I just don't know the step yet → fix by learning, searching, asking. **Broken** = the thing itself has failed → fix by repair or reinstall. Beginners assume "broken" when they're only "stuck." Run the method first; it tells me which one it is.
+</Aside>
+
+---
+
+## Your machine vs server vs cloud
+
+The simplest split in computing: something runs on **my machine** (in front of me) or on **someone else's machine** (reached over the internet). Everything else is a variation of that.
+
+A **server** is a computer built to *serve others* — store things and answer requests from many computers at once, running around the clock in cooled, secured buildings. Visiting a website = my machine asking a server to send the page. And **"the cloud" is just someone else's computer** — my files/services live on a company's servers instead of only on my device.
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node green">My machine<span class="sub">local — I own it</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Server<span class="sub">someone else's, over a network</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">The cloud<span class="sub">servers in a real building = rent</span></div>
+</div>
+<figcaption>Three tiers — but really one idea: my computer, or someone else's, reached over the internet.</figcaption>
+</figure>
+
+<Aside type="caution" title="The cloud is physical">
+When a big cloud provider has an outage, a startling range of unrelated apps go dark at once — banking, streaming, even smart doorbells — because they quietly rent from the *same few providers*. Proof the cloud isn't fluffy: it's specific buildings full of computers. And cloud storage (with **syncing** across devices) is safer than a single device but **not invincible** — keep more than one copy of anything important.
+</Aside>
+
+---
+
+## Virtualization: one computer acting as many
+
+**Virtualization** makes one physical computer behave as if it were several separate ones. Each pretend computer is a **virtual machine (VM)** — it runs with its own operating system, walled off from the others, believing it's a whole machine, even though it's software on one physical host underneath.
+
+This is why **Windows running on a Mac**, or **Linux inside Windows**, is normal, not broken: the physical machine runs its usual OS, and a VM runs a *different* OS inside a window. People do it to use a program that only exists elsewhere, or to test safely.
+
+<Tabs>
+<TabItem label="Virtual machine">
+Emulates a **whole computer including its own full OS**. Heavier, strongly isolated. This is what runs Windows-on-a-Mac, and much of the cloud.
+</TabItem>
+<TabItem label="Container">
+A **lighter, more efficient cousin** — shares the host's OS and packages just the app and what it needs. Used heavily in professional software work; faster and smaller than a full VM.
+</TabItem>
+</Tabs>
+
+<Aside type="note" title="Two phrases that tie it together">
+**On-premise vs cloud = owning vs renting.** Run things on machines I own and keep = on-premise; use someone else's machines over the internet = cloud. And **cloud gaming** proves the point: a demanding game runs on a strong-GPU machine in a **data centre**, and only the *video* is streamed to my cheap laptop while my button presses go back — "someone else's computer, on demand."
+</Aside>
+
+---
+
+## Internet vs web
+
+Not the same thing. The **internet** is the global network of connected computers — the infrastructure that lets machines exchange information. The **web** (World Wide Web) is *one service running on it*: websites and pages I visit in a browser. Email, video calls, and online games also ride the internet but are **not** the web. Internet = the road system; web = one kind of traffic on it.
+
+Every web address is a **URL**, and it reads in parts:
+
+```text
+https://  www.example.com  /products/shoes
+  │             │                 │
+secure     domain name          path
+connection (WHO I'm         (which page
+(the "s")   talking to)      on that site)
+```
+
+The **domain** is the part always worth a glance — it tells me who I'm really connected to (a big safety payoff later).
+
+Every visit is a **request → response** between a **client** (my device, the asker) and a **server** (built to answer):
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node green">Client<span class="sub">my browser</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node slate">DNS lookup<span class="sub">"where does this domain live?"</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Request<span class="sub">"send me this page"</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">Server responds<span class="sub">page sent back in small packets</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Browser reassembles<span class="sub">draws the page — under a second</span></div>
+</div>
+<figcaption>Press enter: find the address (DNS), ask (HTTP request), get the page back in packets, reassemble and draw. One computer asked, another answered.</figcaption>
+</figure>
+
+<Aside type="note" title="The jargon, once">
+**IP** = the numeric address a device is found at. **DNS** = the lookup that turns a readable domain into that IP address. **HTTP(S)** = the request/response method the web speaks (the **S** = secure, encrypted). **Packets** = the small pieces a page is broken into for delivery, then reassembled.
+</Aside>
+
+---
+
+## Networks you actually use
+
+A **network** is just computers connected so they can exchange information. The names describe the size or job:
+
+| Type | Stands for | What it is |
+|---|---|---|
+| **LAN** | Local Area Network | Small & local — home or one office |
+| **WAN** | Wide Area Network | Spans distances; the internet is the biggest WAN |
+| **Wi-Fi** | — | Wireless way onto a LAN (no cable) |
+| **Mobile** | 4G / 5G | Cellular data from a carrier, on the move |
+| **VPN** | Virtual Private Network | Encrypted tunnel to another network across the public internet |
+| **Router** | — | The box that joins my LAN to the internet and directs traffic |
+
+<Aside type="tip" title="Why work asks for a VPN">
+Companies keep internal systems reachable only from *inside* the company network. Working from home, I connect through a **VPN** first — my laptop opens a secure tunnel into the company network, then I reach internal systems as if sitting in the office, traffic protected along the way. So the day-one "connect to the VPN" ask = the company extending its safe internal network out to me. (An **IP address** identifies a *device* for delivery, not a person's identity card.)
+</Aside>
+
+---
+
+## Using a browser, and searching well
+
+A **browser** (Chrome, Firefox, Edge, Safari) requests and displays web pages. Its everyday parts: **tabs** (several pages open at once), the **address bar** (shows the URL, and where I type where to go), **back / forward**, and **refresh** (asks the server for a fresh copy — good when a page looks stuck). A **bookmark** saves a page's address for one-click return; **history** is the automatic record of where I've been. Downloads land in the **Downloads** folder — a download is just a new file in a known place.
+
+<Steps>
+
+1. **Be specific.** "Laptop problem" returns an ocean; "laptop battery drains fast when closed" returns answers. Include distinctive words — product names, exact error text.
+
+2. **Skim past the ads.** The first few results are often paid/sponsored (labelled). The top real result is just the best word-match, not a guarantee of truth.
+
+3. **Change the words, don't repeat them.** If a search misses, rephrase or add a distinctive detail. Two or three reworded tries beat one repeated harder.
+
+</Steps>
+
+---
+
+## Revision summary
+
+| Must-know | One-line recall |
+|---|---|
+| CPU / RAM / storage | CPU does the work, RAM = working space (do more at once), storage = keep things when off |
+| RAM vs storage upgrade | More RAM = faster multitasking; more storage = hold more — not the same fix |
+| GPU | Graphics and video — and now the engine behind AI training/running |
+| Bit vs byte | 8 bits = 1 byte; everything is stored as on/off bits |
+| Size ladder | KB→MB→GB→TB, each ~×1000; 1 GB often 1024 MB (computers count in twos) |
+| MB vs Mbit | 1 MB = 8 Mbit; files sold in bytes, internet speed in bits |
+| Operating system | Master program between me and the hardware (Windows, macOS, Linux, Android, iOS) |
+| Right-click | "What can I do with this?" — the fastest unstuck habit |
+| File / folder / path | File = named item, folder = container, path = where it lives in the tree |
+| Extension | The bit after the dot = the file's type and which program opens it |
+| Save vs Save As | Save = update this file; Save As = new separate copy; PDF = fixed, final form |
+| Install safely | Only from the maker's site or a trusted store |
+| Stuck vs broken | Stuck = don't know the step yet; broken = it failed — run restart/read/search/ask first |
+| Server | A computer built to answer requests from many others, around the clock |
+| The cloud | Just someone else's computer — real servers in real buildings |
+| On-prem vs cloud | Owning vs renting |
+| Virtualization | One physical machine acting as many VMs, each with its own OS |
+| VM vs container | VM = whole OS, heavy; container = shares host OS, light |
+| Internet vs web | Internet = the network; web = one service (sites) running on it |
+| URL parts | https (secure) · domain (who) · path (which page) |
+| Client → server | Every visit: DNS lookup → HTTP request → page back in packets → reassembled |
+| LAN vs WAN | LAN = local; WAN = wide; internet is the biggest WAN |
+| VPN | Encrypted tunnel into another network — how home workers reach internal systems |
+| Router | The doorway between my LAN and the internet |
+| Searching well | Specific words, skim past ads, change the words when a search misses |

@@ -228,6 +228,32 @@ export default defineConfig({
 								],
 							},
 							{
+								label: 'SAP Implementation & ERP', translations: { de: 'SAP-Implementierung & ERP' },
+								collapsed: true,
+								items: [
+									{ label: 'Overview', link: 'learnings/online/sap-erp-consulting', translations: { de: 'Übersicht' } },
+									{
+										label: 'Block I — Foundations', translations: { de: 'Block I — Grundlagen' },
+										collapsed: true,
+										items: [
+											{ label: '1 · SAP & ERP Foundations', link: 'learnings/online/sap-erp-consulting/01-sap-erp-foundations' },
+											{ label: '2 · Industry & Roles', link: 'learnings/online/sap-erp-consulting/02-software-industry-and-roles' },
+											{ label: '3 · Computers & Internet', link: 'learnings/online/sap-erp-consulting/03-computers-and-internet' },
+											{ label: '4 · Digital Safety & Citizenship', link: 'learnings/online/sap-erp-consulting/04-digital-safety-and-citizenship' },
+											{ label: '5 · Developer Environment', link: 'learnings/online/sap-erp-consulting/05-developer-environment' },
+											{ label: '6 · Git & GitHub', link: 'learnings/online/sap-erp-consulting/06-git-and-github' },
+											{ label: '7 · HTML Essentials', link: 'learnings/online/sap-erp-consulting/07-html-essentials' },
+											{ label: '8 · CSS Essentials', link: 'learnings/online/sap-erp-consulting/08-css-essentials' },
+											{ label: '9 · JavaScript Core', link: 'learnings/online/sap-erp-consulting/09-javascript-core' },
+											{ label: '10 · JS Data & DOM', link: 'learnings/online/sap-erp-consulting/10-javascript-data-and-dom' },
+											{ label: '11 · System Design', link: 'learnings/online/sap-erp-consulting/11-system-design' },
+											{ label: '12 · Agile, Scrum & AI', link: 'learnings/online/sap-erp-consulting/12-agile-scrum-ai' },
+											{ label: '13 · Enterprise Environment', link: 'learnings/online/sap-erp-consulting/13-enterprise-environment' },
+										],
+									},
+								],
+							},
+							{
 								label: 'Shipping',
 								collapsed: true,
 								items: [

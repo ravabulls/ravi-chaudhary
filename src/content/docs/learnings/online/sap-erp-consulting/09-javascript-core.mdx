@@ -1,0 +1,622 @@
+---
+title: "JavaScript — Language Core"
+description: "The core of JavaScript — variables and data types, strings and numbers, type conversion and truthy/falsy, operators and control flow (if/else, switch), functions, scope, and error handling with try/catch."
+sidebar:
+  label: "9 · JavaScript Core"
+  order: 9
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+
+---
+
+## The problem programming solves
+
+When I built a small site with three pages, I wrote the nav bar once and pasted it into all three files. It worked, but the moment I add a fourth page I have to edit every file by hand, and if I miss one the site silently disagrees with itself. That copy-paste ache is the exact thing programming removes.
+
+The cure is to split any problem into two halves:
+
+- **Data** — the content itself, stored in one place (the list of links, the list of products).
+- **Instructions** — a repeatable rule that turns the data into a result ("for each entry, build one link").
+
+**Programming** is writing those instructions for a computer, which then runs them exactly as written, top to bottom, no guessing. That sounds strict, but it is the good news: because the machine is completely literal, every result — including every error — has a findable cause.
+
+<Aside type="note" title="The three web languages">
+HTML is the **skeleton** (structure), CSS is the **clothing** (presentation), and **JavaScript is the muscles** (behavior) — the language that makes a page react, decide, repeat, and change. The concepts below (variables, conditions, loops, functions) are shared by nearly every language, including **ABAP** later in this program. Learn them once, recognise them everywhere.
+</Aside>
+
+## What JavaScript is, and where it runs
+
+**JavaScript (JS)** was created in 1995 to make web pages interactive. Despite the name it has nothing to do with Java — that was a marketing decision. A few names worth keeping straight:
+
+- **ECMAScript** — the official written standard (the spec). **JavaScript** is the everyday name for the language that follows it. Two names, one language.
+- **ES6 / ES2015** — the big 2015 update that defined *modern* JavaScript: `let`, `const`, template literals, arrow functions, classes. Everything in these notes is modern JS.
+
+For its first years JS ran only in the browser. Then **Node.js** (2009) arrived — a program that runs JavaScript directly on my computer, no browser needed. So today JS has two homes:
+
+| Where | Use it for |
+|---|---|
+| **Node.js** (terminal) | Pure JavaScript — logic and data with no page involved. Almost all practice. |
+| **Browser** (DevTools console) | JavaScript that touches a web page. |
+
+The quickest way to run a line is the **REPL** (Read-Evaluate-Print-Loop): type `node` with no file name, and it reads what I type, evaluates it, prints the answer, and waits for more. `.exit` leaves it. Real programs live in `.js` files and run with `node filename.js`.
+
+```js
+console.log("Hello from JavaScript");
+```
+
+```text
+$ node hello.js
+Hello from JavaScript
+```
+
+**`console.log()`** prints whatever is inside the parentheses — it is how a program talks to me, and it appears on nearly every line below. The core rhythm never changes: **edit → save deliberately (Ctrl+S / Cmd+S) → run → read the output**. Node runs what is on disk, so an unsaved change does not exist yet.
+
+<Aside type="tip" title="Two tools already set up">
+**Prettier** formats `.js` on save (nothing to configure). A **linter** — the standard one is **ESLint**, a VS Code extension — reads code and warns about likely mistakes *before* I run it (an unused variable, a suspicious comparison). Prettier cares how code *looks*; a linter cares whether it is likely *correct*.
+</Aside>
+
+---
+
+## Variables
+
+A **variable** is a named container for a value: I give the container a name, put a value in, and from then on the name stands for the value. **Declaring** means creating one. Modern JavaScript has two keywords I should write, and one I should only recognise.
+
+```js
+const bakeryName = "Maison Sarah";  // never reassigned
+let orderCount = 3;                 // may change later
+
+orderCount = 4;
+console.log(bakeryName, orderCount);
+```
+
+```text
+Maison Sarah 4
+```
+
+| Keyword | Reassign? | Block-scoped? | When to use |
+|---|---|---|---|
+| **`const`** | No | Yes | **Default choice** — every `const` promises the value stays put |
+| **`let`** | Yes | Yes | Only when I *know* the value must change |
+| **`var`** | Yes | No (function-scoped) | Old, pre-ES6 style — **recognise it, never write it** |
+
+The working rule: **reach for `const` first, use `let` only when the value must change, never write `var`.** Reassigning a `const` throws `TypeError: Assignment to constant variable` — that error is the promise being enforced, not a bug.
+
+Names use **camelCase**: first word lowercase, every later word capitalised, no spaces — `orderCount`, `pricePerLoaf`. And a name should say what the value *is*: `orderCount` beats `oc` every time I read the code back.
+
+---
+
+## Data types
+
+Every value has a **data type** — a category that decides what the value is and what can be done with it. **`typeof`** asks any value what type it is.
+
+```js
+console.log(typeof "Maison Sarah");  // string
+console.log(typeof 3);               // number
+console.log(typeof true);            // boolean
+```
+
+| Type | Class | Holds | Example |
+|---|---|---|---|
+| **string** | primitive | text | `"Maison Sarah"` |
+| **number** | primitive | whole or decimal | `3`, `4.5` |
+| **boolean** | primitive | exactly `true` / `false` | `true` |
+| **undefined** | primitive | "no value provided yet" | `undefined` |
+| **null** | primitive | "intentionally empty" | `null` |
+| **object** | reference | a collection (incl. arrays) | `{ name: "..." }` |
+| **symbol** | primitive | a unique identifier (advanced) | `Symbol("id")` |
+| **bigint** | primitive | integers beyond number's safe range | `9007199254740993n` |
+
+**Primitive** types hold one simple value (the atoms of the language). **Reference** types (object, and arrays which are a kind of object) hold collections built from other values. In daily beginner work the first five plus `object` do almost everything; `symbol` and `bigint` are worth knowing by name only.
+
+<Aside type="caution" title="The famous typeof bug">
+`typeof null` returns `"object"` — which is wrong; `null` is a primitive. It has been wrong since 1995 and fixing it would break millions of pages, so the standard keeps the bug forever. Treat it as a historical quirk, not something to reason from.
+</Aside>
+
+### null vs undefined
+
+Both mean "no value here". The difference is *who put the nothing there*.
+
+- **`undefined`** — a value was never provided. It is the nothing *JavaScript* hands me: a variable declared with no value holds `undefined`.
+- **`null`** — intentionally empty. It is the nothing *I* assign on purpose, to say "no value, by design".
+
+```js
+let nextDelivery;              // never assigned
+console.log(nextDelivery);     // undefined
+
+let currentSpecial = null;     // deliberately empty
+console.log(currentSpecial);   // null
+```
+
+Rule of thumb: finding `undefined` often signals a bug (the program never got around to setting it); finding `null` signals a decision.
+
+---
+
+## Type conversion and coercion
+
+Sometimes a value arrives as the wrong type — most often text that should be a number. **Type conversion** is changing a type *on purpose* with a function that says so.
+
+```js
+console.log(String(42));       // "42"   → text
+console.log(Number("42"));     // 42     → number
+console.log(Number("hello"));  // NaN    → no sensible number in the text
+console.log(Boolean(""));      // false  → the empty string is falsy
+```
+
+`String()`, `Number()`, and `Boolean()` are the conversion trio. `Number()` returns **`NaN`** ("Not a Number") when the text has no sensible number in it.
+
+**Coercion** is the *automatic, silent* version — JavaScript converting a type on its own so an operation can proceed. It is consistent and well-intentioned, but because it is silent it breeds bugs.
+
+```js
+console.log("5" - 1);    // 4     minus coerces the string to a number
+console.log("5" + 1);    // "51"  plus joins when a string is present
+console.log(1 + true);   // 2     true coerces to the number 1
+console.log(3 == "3");   // true  loose equality coerces before comparing
+console.log(3 === "3");  // false strict equality refuses to coerce
+```
+
+### Truthy and falsy
+
+When JavaScript needs a yes/no answer from a value that is not a boolean, it coerces the value to one. Values that become `false` are **falsy** — and there are exactly six. Everything else is **truthy**.
+
+<div class="sc-chips">
+<span class="sc-chip">false</span>
+<span class="sc-chip">0</span>
+<span class="sc-chip">"" (empty string)</span>
+<span class="sc-chip">null</span>
+<span class="sc-chip">undefined</span>
+<span class="sc-chip">NaN</span>
+</div>
+
+Memorise those six — they are the complete list of everything that answers "no". Note the traps: `"0"` and `" "` (a single space) are **truthy**, because any *non-empty* string is truthy.
+
+<Aside type="tip" title="One habit erases a whole class of bugs">
+Anything from a form arrives as **text**, so wrap it in `Number()` before doing maths. And always compare with **strict** `===` / `!==` (below) so a type change I did not ask for can never fool a comparison.
+</Aside>
+
+<Aside type="note" title="Strict mode">
+Putting **`'use strict';`** as the very first line of a file turns silent mistakes into loud, immediate errors. The classic one: assigning to a name I never declared. In sloppy (default) mode that quietly invents a global variable; in strict mode it throws `ReferenceError: message is not defined` at the right line. A loud error beats a silent bug I hunt for an hour — so my practice files start with this line.
+</Aside>
+
+---
+
+## Strings
+
+A **string** is the data type for text. It is wrapped in single quotes, double quotes (interchangeable — pick one and stay consistent), or backticks.
+
+**Escaping** solves the problem of a quote *inside* the text: a backslash before a character makes JS treat it as plain text. `\n` is a special escape meaning "new line".
+
+```js
+const review = 'It\'s the best bakery in town';
+const sign = "Sarah said \"welcome\"";
+const twoLines = "First line\nSecond line";
+```
+
+A **template literal** (backticks) is the modern favourite: it can span real line breaks and can embed values directly. **Interpolation** — the `${...}` slot — evaluates the expression inside and drops its value into the text.
+
+```js
+const bakeryName = "Maison Sarah";
+console.log(`Welcome to ${bakeryName}, open daily`);
+```
+
+```text
+Welcome to Maison Sarah, open daily
+```
+
+**Concatenation** (joining with `+`) does the same job the clumsy way — `"Welcome to " + bakeryName + ", open daily"`. I use `+` only to glue two things; the moment a sentence has values inside it, I reach for a template literal.
+
+### Methods vs properties
+
+A **method** is an action a value can perform, called with a *dot* and *parentheses*. A **property** is a fact I read *without* parentheses. The test: **action → parentheses, fact → none.**
+
+```js
+console.log("maison sarah".toUpperCase());  // MAISON SARAH  → method (action)
+console.log("Maison Sarah".length);         // 12            → property (fact)
+```
+
+`console.log()` has been this exact pattern all along — the `console` value performing its `log` action.
+
+### Core string methods
+
+Every string method **returns a new string** — strings can't be changed in place, so the original always survives. (If the original "seems unchanged", it is — my result is in the return value I forgot to store.)
+
+| Method | Does | Example → result |
+|---|---|---|
+| `toUpperCase()` / `toLowerCase()` | change case | `"Rye".toUpperCase()` → `"RYE"` |
+| `trim()` | remove spaces from both ends | `"  hi  ".trim()` → `"hi"` |
+| `includes(x)` | contains `x`? (boolean) | `"Maison".includes("son")` → `true` |
+| `indexOf(x)` | first position of `x`, or `-1` | `"Maison".indexOf("s")` → `2` |
+| `startsWith` / `endsWith` | begins/ends with `x`? | `"a.html".endsWith(".html")` → `true` |
+| `slice(a, b)` | piece from `a` up to *not incl.* `b` | `"Maison".slice(0, 3)` → `"Mai"` |
+
+Two more that pull their weight: **`split(sep)`** cuts a string into a list (array) at each separator, and **`replaceAll(a, b)`** swaps every occurrence (`replace` swaps only the first).
+
+```js
+console.log("rye,spelt,wheat".split(","));               // [ 'rye', 'spelt', 'wheat' ]
+console.log("good bread, good coffee".replaceAll("good", "great"));
+// great bread, great coffee
+```
+
+<Aside type="note" title="JavaScript counts from zero">
+The first character sits at position **0**, the second at 1, and so on. That is why `slice(0, 6)` returns characters 0–5 (six of them) — the end position is *not* included. Zero-based counting runs through the whole language and gets me ready for arrays.
+</Aside>
+
+---
+
+## Numbers
+
+One **number** type covers both whole numbers (**integers**) and decimals (**floats**) — `3` and `3.5` are the same kind of value.
+
+**Arithmetic:** `+` add, `-` subtract, `*` multiply, `/` divide, plus two worth meeting properly:
+
+- **`%`** — remainder after whole-number division. `x % 2 === 0` is the classic even-number test.
+- **`**`** — exponentiation (raise to a power).
+
+Each has an assignment form (`+=`, `-=`, `*=`, `/=`, `%=`), and **`++`** / **`--`** move a variable by exactly one (the engine loops run on).
+
+```js
+console.log(7 % 2);    // 1
+console.log(2 ** 10);  // 1024
+
+let total = 10;
+total += 5;
+console.log(total);    // 15
+```
+
+**Watch the `+` trap:** `+` is the one operator with a second job (joining strings), and joining wins when either side is text.
+
+```js
+console.log("5" + 1);          // "51"  ← joined, not added
+console.log(Number("5") + 1);  // 6     ← convert first, then add
+```
+
+Two special numbers show up when maths goes somewhere strange: **`Infinity`** (e.g. `1 / 0`) and **`NaN`** (e.g. `Number("bread")`). `NaN` is odd — it is not equal to anything, *not even itself* — so it needs its own test (below).
+
+### Number methods and the Math object
+
+| Method | Does | Example → result |
+|---|---|---|
+| `Number.isInteger(x)` | whole number? | `Number.isInteger(4.5)` → `false` |
+| `Number.isNaN(x)` | is it `NaN`? (the only honest test) | `Number.isNaN(Number("x"))` → `true` |
+| `Number.parseInt(s)` | read an int off the front of text | `Number.parseInt("42px")` → `42` |
+| `Number.parseFloat(s)` | read a decimal off the front | `Number.parseFloat("3.5kg")` → `3.5` |
+| `toFixed(n)` | format to `n` decimals — **returns a string** | `(4.5).toFixed(2)` → `"4.50"` |
+
+The parse pair happily reads a number off the *front* of messy text; `Number()` demands the *whole* string be numeric or answers `NaN`. And `toFixed` is for *display*, so it returns a string — do all maths first, format last.
+
+**`Math`** is a built-in object of maths tools; I never create it, I just call things with the `Math.` prefix. Like string methods, they return results and change nothing.
+
+| Method | Does | Example → result |
+|---|---|---|
+| `Math.round(x)` | nearest whole number | `Math.round(4.5)` → `5` |
+| `Math.floor(x)` | always down | `Math.floor(4.9)` → `4` |
+| `Math.ceil(x)` | always up | `Math.ceil(4.1)` → `5` |
+| `Math.max(...)` / `Math.min(...)` | largest / smallest | `Math.max(3, 9, 5)` → `9` |
+| `Math.abs(x)` | distance from zero | `Math.abs(-7)` → `7` |
+| `Math.random()` | decimal from 0 up to (not incl.) 1 | `0.42...` |
+
+The recipe every programmer memorises — a random whole number in a range:
+
+```js
+const roll = Math.floor(Math.random() * 6) + 1;  // 1 to 6
+console.log(roll);
+```
+
+Walked slowly: `random()` gives a decimal below 1 → `* 6` stretches it to below 6 → `floor` chops to a whole 0–5 → `+ 1` shifts the range to 1–6. A die in one line.
+
+---
+
+## Operators and comparison
+
+Comparison operators take two values and answer with a **boolean** — the yes/no fuel every decision runs on.
+
+<Aside type="caution" title="= is not a comparison">
+**`=`** *assigns* (stores the right side into the left) — it never compares. Writing it in a question (`if (x = 5)`) overwrites `x` and then coerces the result, so the block runs *every time*. If a comparison seems to always answer yes, count the equals signs first. (And `=>` is the arrow function, not a comparison at all.)
+</Aside>
+
+| Operator | Asks | Note |
+|---|---|---|
+| **`===`** | same value **and** same type? | **Strict equality — always use this** |
+| **`!==`** | strictly not equal? | the flip of `===` |
+| `==` / `!=` | equal *after coercion*? | **loose — recognise, never write** |
+| `>` `<` | greater / less than | |
+| `>=` `<=` | greater/less than *or equal* | thresholds, limits, pricing |
+
+```js
+console.log(3 === 3);    // true
+console.log(3 === "3");  // false  ← different types, no coercion
+console.log(3 == "3");   // true   ← loose equality coerces (avoid)
+console.log(10 <= 10);   // true
+```
+
+**Logical operators** combine boolean answers into bigger ones:
+
+- **`&&`** (AND) — `true` only when **both** sides are true.
+- **`||`** (OR) — `true` when **at least one** side is true.
+- **`!`** (NOT) — flips a boolean to its opposite.
+
+```js
+const orderSize = 14;
+const day = "Monday";
+console.log(orderSize > 10 && day === "Monday");  // true  (both hold)
+console.log(orderSize > 20 || day === "Monday");  // true  (one holds)
+console.log(!(3 > 10));                            // true  (flip false)
+```
+
+Read a combined question aloud and it stays honest: *"the order is over ten AND the day is Monday"* is only true when both halves hold.
+
+---
+
+## Control flow: if / else
+
+By default a program runs **sequentially** — line by line, top to bottom. **Control flow** changes that order. The first tool is **selection**: choosing between paths with `if`.
+
+```js
+'use strict';
+
+const orderSize = 14;
+
+if (orderSize > 12) {
+  console.log("Large order, call the bakery ahead");
+} else if (orderSize > 6) {
+  console.log("Medium order, ready in an hour");
+} else {
+  console.log("Small order, walk right in");
+}
+```
+
+```text
+Large order, call the bakery ahead
+```
+
+- **`if (condition)`** runs its block only when the condition is truthy. The condition is any expression that answers yes/no — a comparison, a combined logical question, or a plain value judged by the truthy/falsy rules.
+- **`else`** is the fallback for everything the condition rejected.
+- **`else if`** chains more questions, checked top to bottom — **the first yes wins**.
+
+**Order matters.** Asking `> 6` before `> 12` would swallow large orders, because 14 is also greater than 6 and the chain stops at the first yes. Ask the most specific question first.
+
+<Aside type="caution" title="Two quiet traps">
+- Writing `=` instead of `===` in the condition assigns and then coerces — so `if (x = 5)` runs *every* time.
+- Leaving out the braces makes only the *next single line* belong to the `if`. It is legal and it is a trap — I write braces **always**.
+</Aside>
+
+## Control flow: switch
+
+When one value is checked against many *exact* possibilities, an `if` chain stutters (`day === "Monday"`, else if `day === "Tuesday"`...). **`switch`** is built for that shape.
+
+```js
+'use strict';
+
+const day = "Sunday";
+
+switch (day) {
+  case "Saturday":
+    console.log("Open 7:00 to 14:00");
+    break;
+  case "Sunday":
+    console.log("Open 8:00 to 12:00");
+    break;
+  case "Monday":
+    console.log("Closed today");
+    break;
+  default:
+    console.log("Open 7:00 to 18:00");
+}
+```
+
+```text
+Open 8:00 to 12:00
+```
+
+- Each **`case`** is compared with **strict equality** (no coercion, exactly like `===`) — so the number `3` does **not** match `case "3"`.
+- **`default`** is the fallback (the switch's `else`), catching every value no case claimed.
+- **`break`** ends the matched case. Without it, execution *falls through* into the next case's lines whether they match or not — a silent bug that prints two answers. Every case here ends with `break`.
+
+**Which to use?** `switch` for one value against many *exact* matches (the days above). `if` for *ranges, combinations, or different variables* (`orderSize > 12` is a range, so it needs `if`). Different tools for different question shapes.
+
+---
+
+## Functions
+
+A **function** is a named, reusable routine — a block of lines packaged under a name and run on demand. Where data + loops de-duplicate *content*, functions de-duplicate *logic*.
+
+```js
+'use strict';
+
+function priceMessage(orderSize) {
+  if (orderSize > 12) {
+    return "Large order, call the bakery ahead";
+  }
+  return "Ready soon, walk right in";
+}
+
+console.log(priceMessage(14));  // Large order, call the bakery ahead
+console.log(priceMessage(3));   // Ready soon, walk right in
+```
+
+One decision, written once, used twice with different inputs. Two words to keep apart:
+
+- **Parameter** — the named slot in the declaration (`orderSize`). The labelled mailbox.
+- **Argument** — the actual value passed in when calling (`14`). The letter.
+
+**`return`** hands a value back to whoever called the function and ends it on the spot. Notice the example did *not* print inside the function — it returned the message and let the caller decide what to do. That is the habit to build: **return results, print at the edges.** A function that returns is a reusable part; one that only prints has already decided its result's fate. (A function with no `return` hands back `undefined`.)
+
+### Three ways to write one
+
+Modern JS uses all three daily. I need to *write* two of them and *read* all three without flinching.
+
+<Tabs>
+<TabItem label="Declaration">
+
+```js
+function double(n) {
+  return n * 2;
+}
+```
+
+The classic form. Best for standalone, named routines.
+</TabItem>
+<TabItem label="Function expression">
+
+```js
+const double = function (n) {
+  return n * 2;
+};
+```
+
+Stores a function *in a variable* — proof that functions are values, so they can be stored and passed around.
+</TabItem>
+<TabItem label="Arrow function">
+
+```js
+const double = (n) => n * 2;
+```
+
+The ES6 short form. When the body is a single expression, braces and `return` drop away and the value is returned **implicitly**. Best for functions passed into other functions.
+</TabItem>
+</Tabs>
+
+All three above do the same thing: `double(8)` → `16`. Rule of thumb: **declarations for standalone routines, arrows for functions passed to functions.**
+
+<Aside type="caution" title="Arrow gotchas">
+`=>` is the arrow; `>=` is greater-or-equal — swapping them causes "unexpected token" errors. And adding braces to the one-line arrow switches implicit return **off**: `(n) => { n * 2 }` returns `undefined`, because a braced body needs its `return` written out.
+</Aside>
+
+### Scope
+
+**Scope** is the part of a program where a name can be seen and used. JavaScript draws three boundaries:
+
+- **Global scope** — the outermost level of a file; names there are visible everywhere below.
+- **Function scope** — a function's body; its parameters and inner variables exist only inside it.
+- **Block scope** — every pair of braces (an `if` block, a loop body). `let` and `const` respect block boundaries — one more reason they replaced `var`, which did not.
+
+```js
+'use strict';
+
+const shopName = "Maison Sarah";  // global
+
+function greet(customer) {
+  const line = `Welcome to ${shopName}, ${customer}`;  // lives inside greet
+  return line;
+}
+
+console.log(greet("Anna"));  // Welcome to Maison Sarah, Anna
+console.log(typeof line);    // undefined  ← outside can't see in
+```
+
+The whole mental model in one sentence: **inner scopes see outward, the outside never sees in.** The function reads the global `shopName` freely, but `line` lives and dies inside the function. (Declaring an inner name that matches an outer one is **shadowing** — legal, but usually better renamed.)
+
+### Default parameters and callbacks
+
+A parameter can carry a **default value**, used whenever the caller omits that argument.
+
+```js
+function greet(customer = "friend") {
+  return `Welcome, ${customer}`;
+}
+
+console.log(greet("Anna"));  // Welcome, Anna
+console.log(greet());        // Welcome, friend
+```
+
+Now the payoff of functions being values. A **callback** is a function passed *into* another function as an argument, to be called inside it.
+
+```js
+'use strict';
+
+function twice(action) {
+  action();
+  action();
+}
+
+const ring = () => console.log("The bakery bell rings");
+
+twice(ring);
+```
+
+```text
+The bakery bell rings
+The bakery bell rings
+```
+
+Traced slowly: `ring` holds a function. `twice(ring)` passes it in **unrun** (name only, *no* parentheses). Inside, the parameter `action` now holds it, and `action()` runs it — twice. The caller supplied the *what*; the function supplied the *when and how often*. This exact shape returns everywhere: array methods like `map` run a callback once per item, and in the browser `addEventListener` runs a callback when the visitor clicks.
+
+<Aside type="tip" title="Callbacks are handed over unrun">
+Passing `ring()` *with* parentheses passes the **result** of running it, not the function itself. A callback is handed over by name only. (A callback isn't a special kind of function — it's an ordinary function in a particular role, like a passenger is an ordinary person in a particular seat.)
+</Aside>
+
+A last vocabulary pair: a **pure function** only computes (same input → same output, touching nothing else); a **side effect** is anything else it does (printing, changing an outer variable, editing the page). Both are needed, but pure functions are easier to trust — so keep the computing pure and push side effects to the edges.
+
+---
+
+## Error handling: try / catch / finally
+
+Errors in JavaScript are **objects** carrying a **name** and a **message** (the two parts of every red error I read). Normally an error ends the program on the spot. **`try...catch`** lets me attempt risky lines and *answer* the error instead of crashing.
+
+```js
+'use strict';
+
+const value = 42;
+
+try {
+  const shout = value.toUpperCase();   // numbers have no toUpperCase → throws
+  console.log(shout);
+} catch (error) {
+  console.log(`That did not work: ${error.message}`);
+} finally {
+  console.log("This always runs, error or not");
+}
+
+console.log("The program is still running");
+```
+
+```text
+That did not work: value.toUpperCase is not a function
+This always runs, error or not
+The program is still running
+```
+
+- **`try`** runs until something throws.
+- **`catch (error)`** takes over the moment it does, with the error object in hand.
+- **`finally`** (optional) runs either way — used for cleanup that must happen whether or not there was an error.
+
+Crucially, the last line still runs. Without the `try...catch`, the same mistake ends the file at the throw. In one line: **try attempts, catch answers, the program continues.**
+
+<Aside type="caution" title="What try/catch is not">
+It is **not** a way to make broken code work — the error still happened; I chose the response. And wrapping *everything* in it hides bugs I should be fixing. Reserve it for failures I genuinely expect and can answer — malformed data, or a network request that might fail.
+</Aside>
+
+---
+
+## Revision summary
+
+| Must-know | One-line recall |
+|---|---|
+| Data + instructions | Store content once, write one repeatable rule — that's programming |
+| Where JS runs | Node.js for pure logic in the terminal; browser for JS that touches a page |
+| console.log() | Prints a value — my window into every program |
+| const / let / var | `const` by default, `let` when it must change, never write `var` |
+| camelCase | `orderCount` — first word lowercase, later words capitalised |
+| typeof | Asks any value its type (`typeof null` is buggily `"object"`) |
+| null vs undefined | `undefined` = never set (often a bug); `null` = empty on purpose |
+| Conversion trio | `String()`, `Number()`, `Boolean()` convert on purpose; `Number("x")` → `NaN` |
+| Coercion | Automatic, silent type change — why I use `===`, never `==` |
+| Six falsy values | `false`, `0`, `""`, `null`, `undefined`, `NaN` — all else truthy |
+| Strict mode | `'use strict';` turns silent mistakes into loud errors |
+| Strings | Template literals with `${...}` beat `+` for sentences with values |
+| Method vs property | Action → parentheses; fact (like `.length`) → none |
+| String methods | Return a *new* string; count positions from **0** |
+| Numbers | One type for int + float; `%` remainder, `**` power; `Number()` before maths |
+| toFixed / Math | `toFixed` returns a string (display last); `floor(random()*n)+1` for a range |
+| = vs === | `=` assigns; `===` compares value **and** type (always use it) |
+| && || ! | AND (both), OR (either), NOT (flip) |
+| if / else if / else | First truthy wins — ask the most specific question first; always use braces |
+| switch | One value vs many exact cases; `break` each case; `default` is the fallback |
+| Function | Named reusable routine; `return` results, print at the edges |
+| Parameter vs argument | Parameter = the named slot; argument = the value passed in |
+| Three forms | Declaration (standalone), expression (value), arrow (passed to functions) |
+| Scope | Inner sees outward; the outside never sees in |
+| Callback | A function passed in unrun, then called inside — powers map & event listeners |
+| try / catch / finally | Try attempts, catch answers, finally always runs, program continues |

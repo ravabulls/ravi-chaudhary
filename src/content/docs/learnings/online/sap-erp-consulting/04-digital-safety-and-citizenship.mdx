@@ -1,0 +1,308 @@
+---
+title: "Staying Safe, Legal & Sharp Online"
+description: "Account and device security, spotting phishing and scams, privacy and backups, judging sources and misinformation, digital citizenship, your rights under GDPR/EU law, healthy tech habits, using AI tools well, and accessibility as a professional standard."
+sidebar:
+  label: "4 · Digital Safety & Citizenship"
+  order: 4
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+
+---
+
+The mindset shift that makes this whole block click: attackers don't target *me* personally — they target *everyone*, automatically, at scale. "I have nothing worth stealing" is wrong. My email alone is the master key: every other account's password reset lands there. So none of this is paranoia; it's a handful of boring habits that make me a harder target than most.
+
+## 1 · Security
+
+### Passwords — length beats complexity
+
+Counter-intuitive but true: a long password is harder to crack than a short complicated one. `P@s5w0rt!` looks tough but is short, so it's weak. Strength grows with every character added.
+
+- **Passphrase** = the cheap way to get length: four random unrelated words strung together. Long (strong) *and* memorable (so I never write it on a sticky note).
+- **Reuse is the real danger** — bigger than any single weak password. Sites get breached, stored passwords leak, then attackers auto-try them on my email, bank, everything. That's **credential stuffing**: one reused password unlocks my whole life. (Have I Been Pwned lets me check if my email is in known leaks.)
+- **Password manager** — a program that generates and remembers a unique strong password per account, all locked behind one master passphrase. I remember one thing; it remembers the rest.
+
+<Aside type="tip" title="2FA — a second lock on the door">
+**Two-factor authentication** requires a second proof beyond the password — usually a code or approval on my phone. Even a stolen password can't log in without the second factor. It's the cash-machine logic: card (**something I have**) + PIN (**something I know**), either alone useless. The bank asking me to approve a transfer a second time *is* this second factor at work.
+</Aside>
+
+### The threats, without the movie drama
+
+**Malware** is the umbrella word for harmful software. It's just software doing what its author told it — and it always needs a *way in*.
+
+| Threat | What it does |
+|---|---|
+| Virus | Malware that spreads by attaching to other files |
+| Ransomware | Locks my files, demands payment to unlock |
+| Malware (general) | Programs written to damage, spy, or extort |
+
+Most infections start with an **ordinary human action**, not brilliant hacking: opening an unexpected attachment, clicking a convincing link, downloading from an unofficial site, plugging in a found USB. The attacker's real skill is *persuasion*. That's why the two defences that do most of the work are dull:
+
+<Steps>
+1. **Install updates promptly.** They patch the exact holes attackers use — "remind me later" is a security decision. (WannaCry 2017 spread only to machines that had skipped an available update; up-to-date computers were fine.)
+2. **Be deliberate about what I open, click, install.** Official sources only. Antivirus is one tool, not a force field — it can't stop me typing my password into a fake site.
+</Steps>
+
+### Phishing — the one skill to actually learn
+
+**Phishing** = fake messages dressed as something I trust, to trick me into handing over passwords, money, or info. It's the most common attack I'll face, and the defence is fully learnable. In Germany the usual costumes: a "DHL/Deutsche Post" parcel text wanting a small customs fee, a "Sparkasse" or "PayPal" warning that my account closes unless I log in *now*, an urgent request from a "boss".
+
+<figure class="sc-fig">
+<div class="sc-flow"><div class="sc-node amber">Urgency<span class="sub">act before you think</span></div><span class="arrow">→</span><div class="sc-node amber">Link<span class="sub">look-alike page</span></div><span class="arrow">→</span><div class="sc-node amber">Ask<span class="sub">password / card / payment</span></div></div>
+<figcaption>Nearly every phishing message is built from the same three parts — manufactured urgency is the loudest tell.</figcaption>
+</figure>
+
+**Phishing red-flag checklist** — run this on anything that feels off:
+
+| # | Check | Red flag |
+|---|---|---|
+| 1 | Who really sent it? | Read the *actual* address, not the display name |
+| 2 | Urgency? | Threats and deadlines are the scammer's signature |
+| 3 | Where does the link go? | Hover to preview; is the domain real? |
+| 4 | Asking for something it shouldn't? | Real orgs don't ask for passwords by email |
+| 5 | In doubt → go direct | Type the address myself / use the official app — **never verify through the message's own link** |
+
+<Aside type="caution" title="Two phishing myths">
+- *"Bad spelling gives it away."* Many fakes are polished and identical to the real thing. Judge the **pattern**, not the spelling.
+- *"If it knows my name, it's genuine."* Details leak and get bought. Personalisation makes a fake more convincing, not more real — run the checklist regardless.
+</Aside>
+
+### Safe browsing & HTTPS
+
+<Aside type="note" title="The padlock means private, not honest">
+`https` + the padlock mean the **connection is encrypted** so nobody can eavesdrop. It does **not** mean the site deserves my data — scam sites have padlocks too. Its *absence* on a login/payment page is a red flag; its *presence* is not a seal of approval. I still read the domain.
+</Aside>
+
+**Encryption** = scrambling data so only the key-holder can read it. Two flavours worth naming:
+
+| | Where | Protected by |
+|---|---|---|
+| **In transit** | Data travelling between device and site | HTTPS, VPN ("secure tunnel") |
+| **At rest** | Data sitting in storage on a device/server | Device/disk encryption — stolen hardware stays unreadable |
+
+Shady pages use visual tricks: pop-ups screaming "you're infected!" (the "fix" *is* the infection), fake green download buttons bigger than the real link, "you've won" banners. The habit that beats all of them: **slow down and read before clicking; close anything that shouts.** Reach banking/shops/portals by typing the address or the official app — never through a message's link.
+
+---
+
+## 2 · Privacy & Data
+
+### The trail I leave
+
+Just using the internet leaves crumbs: sites visited, searches, likes, location, which apps and when. Individually harmless; combined, they form a detailed, commercially valuable picture of me — which is why so much of the web is built to collect it.
+
+- **Cookies** = small data a site stores in my browser. *Essential* ones keep me logged in / hold a basket; *tracking* ones follow me across sites. The consent banner (German: **Datenschutz**) is the site asking permission — "reject" / "necessary only" is a legitimate, near-free choice.
+- **Digital footprint** = everything I post publicly (and much others post about me). It's **searchable** (employers, landlords look) and **persistent** (deletion doesn't erase screenshots and archives). Pre-post test: *would I be fine if a future employer read this out of context?*
+
+<Aside type="caution" title="Privacy myths">
+- *"Incognito makes me anonymous."* It only stops my *own* browser keeping local history. My provider, the network, and the site still see everything. Privacy from housemates, not from the internet.
+- *"Deleted = gone."* Copies persist. Treat public posting as permanent.
+</Aside>
+
+### Backups — the net under everything
+
+Every other defence can fail. A **backup** (a copy of important files kept elsewhere) makes failure survivable and covers *every* disaster at once — theft, spilled coffee, dead drive, ransomware. With a backup the attacker's file-lock loses all power.
+
+<figure class="sc-fig">
+<div class="sc-flow"><div class="sc-node green">3 copies<span class="sub">of anything important</span></div><span class="arrow">→</span><div class="sc-node green">2 media<span class="sub">two kinds of storage</span></div><span class="arrow">→</span><div class="sc-node green">1 offsite<span class="sub">e.g. the cloud</span></div></div>
+<figcaption>The 3-2-1 rule. For most people: original on device + copy in the cloud + copy on an external drive.</figcaption>
+</figure>
+
+<Aside type="tip" title="Security is also about others">
+At work my habits stop being personal. Most company breaches start with **one** employee's single click; from that foothold attackers move inward. My passphrase, 2FA, and checklist-pause become part of the team's defence — nobody wants to be the unlocked door. Handling other people's data with care is a professional duty (and, in the enterprise/SAP world, taken very seriously).
+</Aside>
+
+---
+
+## 3 · Information Literacy
+
+The internet made *everyone* a publisher — no editor, no fact-checker, no name required. Falsehood now travels dressed exactly like truth, so the checking that gatekeepers once did is my job.
+
+<Aside type="note" title="Data → Information → Knowledge">
+**Data** = raw facts (a list of numbers). **Information** = data organised into meaning ("temperatures were above average"). **Knowledge** = information I've understood, connected, and can use. The net floods me with the first two; knowledge I still have to *build* — from sources I can trust.
+</Aside>
+
+### Judging a source — who / when / why
+
+| Question | What I'm checking |
+|---|---|
+| **Who** published it? | A real name/org with a reputation to lose, or anonymous? |
+| **When**? | Still current, or an old story recirculated as new? |
+| **Why**? | Motive: to inform, sell, persuade, or *enrage* me (rage = clicks)? |
+
+Headlines are written to be clicked, not to be accurate — and most sharing is done by people who read only the headline. The embarrassingly simple edge: **open it and read it before believing or sharing.** (Same study, two headlines: "COFFEE LINKED TO LONGER LIFE" vs "SCIENTISTS WARN OVER COFFEE HABITS" — the gap between headline and content is where bias lives.)
+
+### False vs misleading
+
+| | Intent | My response |
+|---|---|---|
+| **Misinformation** | Honest error — a friend sharing a wrong tip they believe | A gentle correction |
+| **Disinformation** | Deliberate deception — a coordinated campaign | Nothing, not even the angry quote-post that amplifies it |
+
+Content spreads because it's *engineered* to: **clickbait** promises more than it delivers; outrage spreads fastest. The rule that follows: **a strong emotional reaction is a signal to slow down, not to share.** And "I saw a photo/video" is no longer proof — AI can fabricate convincing images, cloned voices, and deepfake video. Striking content gets *verified* before believed.
+
+### Cross-checking & honest use
+
+<Steps>
+1. **Lateral reading** — don't study a suspicious page harder; *leave it*. Open a new tab and search *about the source*: who runs it, what others say, has it been flagged? A polished page can't control what the rest of the web says about it. Most effective verification habit there is.
+2. **Trace to origin** — striking claims arrive second- or third-hand; follow the chain back to the actual study/document and check it really says that.
+3. **Find independent confirmation** — ten posts all citing one origin are *one* source in ten costumes. Independence multiplies credibility; repetition doesn't.
+</Steps>
+
+<Aside type="tip" title="Using information honestly">
+**Give credit** — naming where an idea came from; passing off others' work is plagiarism, and it matters in this programme and every workplace. **Reword honestly** — rewording proves I understood it but does *not* remove the need for credit; short direct quotes go in quotation marks with a named source. (Top search result ≠ most reliable — ranking is relevance and popularity, not truth.)
+</Aside>
+
+---
+
+## 4 · Digital Citizenship & Rights
+
+**Online is not a separate moral world.** The screen creates distance, and distance tempts people to drop standards they'd keep face-to-face — but the person on the other side is exactly as real. I don't need a new ethics for the internet; I need the nerve to keep my existing one. And my conduct joins the searchable, persistent footprint too.
+
+**Respecting others** comes down to three habits:
+
+| Habit | The line |
+|---|---|
+| Disagree, don't harass | Engage with *what was said* (fine); attacking *the person* — especially repeatedly — is harassment. **Trolling** = provocation for sport, on the wrong side. Test: am I engaging the claim, or trying to hurt who made it? |
+| Consent before sharing | Posts *about others* spend *their* privacy — ask before sharing photos, stories, or screenshots involving them (double so if sensitive) |
+| Disagree well | Answer their strongest point, criticise the claim not the person, write table-across tone, and know when to walk away (that's judgement, not losing) |
+
+### Datenschutz, GDPR & my EU rights
+
+<Aside type="note" title="The whole idea in one line">
+**My personal data belongs to me.** Information about me isn't free raw material — organisations need a *lawful reason* (often my consent) to use it, with duties attached. Everything else follows from that line.
+</Aside>
+
+The law carrying this across the EU is the **GDPR** (German: **DSGVO**). At my level it means organisations must:
+
+- **Tell me** what they collect and why (privacy policies, Datenschutz declarations)
+- **Collect only** what they need, and **protect** it properly
+- **Respect my rights**: to *know* what they hold, to *correct* mistakes, and in many cases to have data *deleted*
+
+It has teeth — big fines for mishandling data are why European orgs treat this seriously, not as decoration. Cookie banners, consent requests, and privacy policies are just those rights made visible; rejecting non-essential tracking is a choice the law deliberately gives me.
+
+<Aside type="caution" title="Ownership & ethics of tech">
+- **Copyright** is automatic — "it's on the internet" ≠ "free to use". Reuse needs permission or a permitting licence, always with credit. German/EU law has **no broad US-style "fair use"** — only narrower exceptions like short, credited quotation for study/commentary. When in doubt, don't.
+- **Bias in, bias out** — software feels neutral but learns from data, and data carries the world's unfairness (documented in hiring and facial-recognition tools). **"The computer decided" ≠ "fair."** Builders — soon including me — carry the duty to check, and "the algorithm did it" is never an answer for accountability.
+</Aside>
+
+---
+
+## 5 · Wellbeing
+
+Many hours at a screen now, and a whole career after. My body and attention are the equipment I'll use longest.
+
+**Ergonomics** = fitting the workspace to my body, not the reverse:
+
+- Back supported, both feet on the floor.
+- Top of screen ≈ eye height (neck neutral, not bent for hours).
+- Keyboard/mouse close so shoulders stay relaxed.
+- Cheapest upgrade if a laptop's my main machine: raise it (books work) + add a separate keyboard.
+- **Eyes**: look away at something distant for a short moment, often (the ~20-min / ~20-sec rhythm) — reduced blinking + fixed focus is what tires them. Keep the room lit.
+- **Movement**: short regular breaks reset body *and* attention. The pause is part of the work.
+
+<Aside type="tip" title="Defending my attention — structure beats willpower">
+Infinite scroll and autoplay are **engineered** by teams to be hard to put down (even their designers limit their own use). I don't blame my willpower — I use **structure**: notifications off during study, phone in another room, planned blocks. Each interruption costs far more than its seconds because the mind takes a long time to fully return, so a ping-sprinkled hour is worth much less than an uninterrupted one. **Deep work** (focused, uninterrupted — where learning happens) and **shallow work** (messages, quick tasks) don't mix.
+</Aside>
+
+**Healthy relationship** = alignment, not abstinence. Notice where time actually goes (without guilt), then ask *does this match what I want?* Boundaries hold when they're structural (phone elsewhere, notifications off by default, a screen-free point before sleep) rather than heroic. The cohort-comparison trap is rigged — I see everyone's highlights and my own insides; the honest benchmark is me vs last month. If tech costs sleep, mood, or relationships: tighten structure, tell someone, and ask a professional if it feels bigger.
+
+---
+
+## 6 · AI Literacy
+
+<Aside type="note" title="LLM at a glance — predicts, doesn't know">
+**Machine learning** = patterns absorbed from many *examples*, not rules written by hand (teach "cat" by showing a million labelled photos, not a rulebook). A **large language model** produces the most *plausible continuation*, one piece at a time. The one sentence to keep for life: **these systems predict, they do not know** — fluency is pattern, not understanding, so they sound exactly as confident when wrong.
+</Aside>
+
+**Strong at** pattern work: drafting, rewording, summarising, translating, suggesting code, recognising image content. **Weak at** exactly where prediction isn't enough: guaranteed facts, precise arithmetic, events after training cut-off, and judgement about what matters.
+
+### Using AI tools well
+
+<Steps>
+1. **Prompt with purpose, context, constraints.** Vague in, generic out. Not "write about email" but "explain reply vs reply-all to a new office worker, five plain sentences, one example."
+2. **Treat it as a conversation, not a vending machine.** First answer = a draft. Refine: "shorter", "more formal", "you assumed X, actually Y". Iteration *is* the method — good results come from better conversations, not magic first prompts.
+3. **Check anything factual.** Because it predicts, it **hallucinates**: fluent, specific, plausible, *false* content — invented sources and stats that look perfect. (Real lawyers have been sanctioned for filing AI-invented case citations.) I'm the editor; verify with my lateral-reading habits before relying on it.
+</Steps>
+
+<Aside type="caution" title="AI limits & the workplace">
+- **Bias in, bias out** — output about people/groups gets the same critical eye as any source.
+- **Privacy bright line** — the chat window *feels* private but what I type is sent to (and maybe stored by) the company. **Personal data, passwords, and confidential/company material never go in.** That "just summarise this document" paste can transmit customer details to an outside party.
+- **Employer AI rules** exist because real leaks happened — approved tools, what data is allowed, what must be checked. It's the privacy line made binding; work inside it.
+- **Over-reliance** — use AI to *accelerate what I understand*, never to replace understanding I never built. In learning, the struggle **is** the learning. Own everything it does in my name.
+</Aside>
+
+**AI at work**: it automates *tasks* (routine pattern-work) faster than whole jobs; work shifts toward judgement, responsibility, messy human context, and supervising the machines — and new roles grow *around* the tech, exactly in the enterprise/SAP world. "Working with AI" is itself a skill I now hold the parts of: clear prompting, verifying, knowing what never gets shared, owning the result. Treat the tool as a capable junior assistant: fast, tireless, needs supervision on anything that matters. For whatever hype arrives next — ask *what does it actually do, what's it good/bad at, who profits from the hype* — the evaluation skill outlasts any single technology.
+
+---
+
+## 7 · Accessibility
+
+<Aside type="note" title="Barrierefreiheit — freedom from barriers">
+**Accessibility** = designing so everyone can take part, including people with disabilities. The obstacle is usually the **design, not the person**: a staircase blocks a wheelchair (a ramp removes it); an uncaptioned video blocks a deaf user (captions remove it); an undescribed image blocks a blind user (one line of alt text removes it). Most removals are surprisingly small.
+</Aside>
+
+**Ability varies across every life** — not a fixed niche group:
+
+| Case | Sight | Hearing | Motor |
+|---|---|---|---|
+| **Permanent** | Blind | Deaf | Missing/limited arm |
+| **Temporary** | Eye infection | Ear infection | Arm in a cast |
+| **Situational** | Bright sunlight on screen | Loud train | Carrying a baby, one arm free |
+
+Design that handles the permanent case handles all the others free. That's the **curb-cut effect**: the pavement ramp built for wheelchairs, immediately loved by prams, suitcases, cyclists, deliveries. Built for some, better for all — captions are the software version (commuters, muted screens, second-language viewers).
+
+**How needs differ** (each has a dependency where my future work enters):
+
+| Need | Method | Dependency |
+|---|---|---|
+| Vision | Screen reader / magnification | Speaks only what the page provides — no alt text = **silence**; needs strong contrast |
+| Motor | Keyboard-only / switch access | *Everything* must be reachable without a mouse (Tab + Enter) |
+| Hearing | Captions / transcripts | Captioned, reviewed media |
+| Cognitive | Plain language | Simple words, clear structure, one idea at a time |
+
+### Making my own work accessible
+
+I don't need to be a developer — four habits inside tools I already use:
+
+<Steps>
+1. **Alt text** — one sentence saying what an image shows and why ("Bar chart: sales rising Jan–Jun, sharp jump in April"). Mark purely decorative images as decorative so readers skip them.
+2. **Real headings + plain language** — use the actual heading *styles* (not just big bold text — screen readers navigate by real headings). Short sentences, common words, terms defined on first use.
+3. **Colour: contrast, and never colour alone** — strong text/background contrast; never let colour be the *only* carrier of meaning (a red-only error is invisible to red-green colour-blindness — add a symbol/message: "Error: use DD.MM.YYYY").
+4. **Captions & transcripts for media** — auto-captions are a draft, weakest on names and technical terms, so review and correct: *machine output, human check* (same rule as AI).
+</Steps>
+
+<Aside type="tip" title="Accessibility is a professional standard, not extra credit">
+The **European Accessibility Act** makes a wide range of digital products/services (banking, e-commerce, transport, e-books) legally required to be accessible across the EU including Germany — **applicable since 2025**. Laws point at **WCAG** (Web Content Accessibility Guidelines), summed up as **POUR**: **P**erceivable (alt text, captions, contrast), **O**perable (keyboard access), **U**nderstandable (clear language/structure), **R**obust (works with screen readers). My four habits already cover its heart — a professional advantage in *every* role on the IT map, from my first piece of work.
+</Aside>
+
+---
+
+## Revision summary
+
+| Must-know | One-line recall |
+|---|---|
+| Threat model | Attackers hit everyone at scale; my email is the master key |
+| Strong password | Length beats complexity — a passphrase; never reuse |
+| 2FA | Second proof (phone) — stops a thief even with the password |
+| Malware defence | Update promptly + be deliberate about what I open/click/install |
+| Phishing pattern | Urgency → Link → Ask; verify by going direct, never via the message's link |
+| Padlock | Connection is private, not that the site is honest — read the domain |
+| Encryption | In transit (HTTPS/VPN) vs at rest (stored data) |
+| Backups | 3-2-1: 3 copies, 2 media, 1 offsite — survives any disaster |
+| Footprint | Searchable + persistent; deletion doesn't erase |
+| Judge a source | Who / When / Why; read past the headline |
+| Mis vs disinformation | Honest error vs deliberate deception — judge intent |
+| Verify | Lateral reading + trace to origin + independent sources |
+| Honest use | Credit ideas, quote with marks; rewording ≠ ownership |
+| Citizenship | Online isn't a separate moral world; engage the claim, not the person |
+| Datenschutz / GDPR | My data is mine; rights to know, correct, delete — real fines |
+| Copyright | No broad "fair use" in EU; permission or licence + credit |
+| Wellbeing | Ergonomics + structure beats willpower; deep ≠ shallow work |
+| AI in one line | Predicts, doesn't know — confidently wrong is the default risk |
+| Prompting | Purpose + context + constraints; it's a conversation |
+| AI bright line | No personal/confidential data into AI tools |
+| Accessibility | Barrierefreiheit — barrier is the design; permanent/temporary/situational |
+| My 4 habits | Alt text · real headings + plain language · contrast (never colour alone) · captions |
+| The law | European Accessibility Act (since 2025) + WCAG's POUR principles |

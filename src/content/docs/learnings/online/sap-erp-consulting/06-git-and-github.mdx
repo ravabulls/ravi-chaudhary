@@ -1,0 +1,623 @@
+---
+title: "Git & GitHub — Complete Reference"
+description: "Version control from zero: what Git and GitHub are, the three areas, the everyday commit workflow, branching and merging, pull requests, SSH setup and publishing, resolving merge conflicts, GitHub Pages — with every command in one ordered reference and fixes for the common errors."
+sidebar:
+  label: "6 · Git & GitHub"
+  order: 6
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+
+---
+
+## Why version control exists
+
+Everyone has done the homemade version of this: `report-final.docx`, `report-final2.docx`, `report-FINAL-really.docx`. It half-works until I can't remember which copy is newest, can't see what actually changed between two of them, and delete the wrong one with no undo. On a team it gets worse — two people edit the same file and the second save silently wipes out the first.
+
+**Version control** is that same instinct done properly. It watches a folder and, whenever I say so, records a **snapshot** of everything, in order, each with a note and a timestamp. In return I get four things:
+
+- **History** — every save point kept, so the project reads like a diary of what changed and why.
+- **Undo** — any file, or the whole project, can go back to an earlier save point. Nothing I recorded is lost by a later edit.
+- **Parallel work** — several people (or just me, trying two ideas) work at once without trampling each other.
+- **Accountability** — every change is signed, so "who touched this, and why?" always has an answer.
+
+It is not a big-team-only tool. Solo, the undo and the history alone earn their keep — future me next month has forgotten everything, and the history is how I remember.
+
+<Aside type="note" title="Backup vs version control — not the same thing">
+A backup keeps *a copy* of my files somewhere safe. Version control keeps the *story* of my files — every step, in order, with reasons. They answer different questions, and I can have both.
+</Aside>
+
+---
+
+## Git vs GitHub — the one distinction to keep straight
+
+The two names are said together so often that beginners treat them as one thing. They are two things, made by different people, and the first works completely without the second.
+
+| | **Git** | **GitHub** |
+|---|---|---|
+| What it is | A program installed on my computer | A website and cloud service |
+| Where it runs | Locally, on my machine | On the internet |
+| Its job | Records history, restores versions, manages branches | *Hosts* Git projects so others can see and contribute |
+| Needs internet? | No — works fully offline | Yes |
+| Needs an account? | No | Yes |
+| Born | 2005 | 2008 |
+
+One question keeps it straight: **"where does it happen?"** Recording history happens on my machine, with Git, offline. Sharing that history and discussing changes happens in the cloud, on GitHub. If the internet vanished tomorrow, Git would keep working and GitHub would not.
+
+GitHub is not the only host — **GitLab**, **Bitbucket**, and **Azure DevOps** do the same job. Every command below works identically against all of them, because the commands belong to *Git*, not to the website. Learning Git is the transferable skill; GitHub is just the meeting point these notes use.
+
+---
+
+## The mental model — the three areas
+
+This is the one piece of theory the whole tool rests on. Every command I learn moves work between three (really four) places, always in the same direction.
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node amber">Working directory<span class="sub">the files I edit</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Staging area<span class="sub">what goes in the next save</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">Repository<span class="sub">permanent history (.git)</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node slate">Remote<span class="sub">the cloud twin (GitHub)</span></div>
+</div>
+<figcaption>Work flows one way: edit → stage what belongs together → commit it into history → push it to the cloud.</figcaption>
+</figure>
+
+- **Working directory** — the folder I see; my actual files in their current state. Where I edit.
+- **Staging area** — a waiting room between my edits and the history. Here I gather *exactly* the changes that belong in the next save point. Nothing here is permanent yet.
+- **Repository** — the recorded history, kept inside a hidden `.git` folder. Once a change is **committed** here, it is a permanent save point. (A **repository**, or **repo**, is just a folder plus its full recorded history.)
+- **Remote** — a copy of the repository hosted elsewhere (GitHub). Covered further down.
+
+**Why two steps to save, not one?** The staging area is Git's best feature in disguise: it lets me *choose* what goes into each save point. If I fixed a typo in one file and half-rewrote another, I can commit the finished typo fix now and leave the unfinished rewrite out of history until it is ready. Save points stay clean and honestly labelled.
+
+<Aside type="tip" title="Packing a parcel">
+My desk is the working directory — things lie around however I left them. The open box is the staging area — I deliberately place in exactly what belongs in this delivery, and can still take things out. Sealing and labelling the box is the commit — contents now fixed, on the record. Unlike a real parcel, a commit never leaves; it stays in my history, retrievable forever.
+</Aside>
+
+Every file sits in exactly one of four states, and cycles through them as I work: **untracked** (brand new, Git has never been told to care), **unmodified** (tracked, identical to the last save point), **modified** (tracked, changed since the last save point, not yet staged), **staged** (in the box, ready for the next commit).
+
+---
+
+## First-time setup — one handshake per machine
+
+Every save point is signed with an author name and email, forever. Git refuses to guess these, so I tell it once and it remembers for every project on this machine. `--global` means "for every project on this computer."
+
+```bash
+# Sign my commits (use the SAME email as my GitHub account)
+git config --global user.name "My Name"
+git config --global user.email "me@example.com"
+
+# Make every new repo start on a branch called "main" (matches GitHub)
+git config --global init.defaultBranch main
+
+# Verify a setting by asking for it by name
+git config user.name
+```
+
+No output means it worked. The email is not secret — it becomes visible in the project's history once I publish, which is exactly how work gets credited to my profile. Typed something wrong? Run the same line again with the right value; the new answer replaces the old.
+
+<Aside type="note" title="Why set the default branch?">
+`main` is the modern standard name for a project's main line of history, and GitHub uses it. Older Git installs default to `master` instead — this one line prevents a classic beginner mismatch before it happens.
+</Aside>
+
+---
+
+## The everyday loop
+
+This is the rhythm of every working day: **edit → status → add → commit**, with `log`, `diff`, and `restore` as the read-and-rescue tools around it.
+
+<Steps>
+
+1. **Create the repository — once per project.** `init` is short for *initialize* ("set up for the first time"). Run it once, in the project's top folder.
+
+   ```bash
+   cd my-project
+   git init
+   ```
+   ```text
+   Initialized empty Git repository in /home/me/my-project/.git/
+   ```
+
+   That hidden `.git` folder *is* the repository — every save point lives in there, and it travels with the folder if I copy or move it. Never edit or delete it by hand.
+
+2. **Check the state — before and after everything.** `git status` reports what is untracked, modified, or staged, and which branch I am on. It changes nothing, costs a second, and makes Git's invisible bookkeeping visible.
+
+   ```bash
+   echo "The Corner Bakery" > notes.txt
+   git status
+   ```
+   ```text
+   On branch main
+
+   No commits yet
+
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+           notes.txt
+   ```
+
+3. **Stage what belongs together.** `git add` copies a file's *current* content into the staging area. Silence means success — confirm with `status` (the file turns from red/untracked to green/staged).
+
+   ```bash
+   git add notes.txt          # one file — the deliberate default
+   git add notes.txt menu.txt # several files
+   git add .                  # everything below here — convenient, but check status first
+   ```
+
+   Staging snapshots the file *as it is right now*. If I edit it again afterwards, that newer edit is **not** in the box yet — `status` will list the same file as both staged and modified. Fix: `git add` it again.
+
+4. **Record the snapshot.** `git commit -m "message"` seals everything staged into one permanent save point. `-m` is the *message*, in quotes right after it.
+
+   ```bash
+   git commit -m "Add bakery notes file"
+   ```
+   ```text
+   [main (root-commit) f4a2c1e] Add bakery notes file
+    1 file changed, 1 insertion(+)
+    create mode 100644 notes.txt
+   ```
+
+   That `f4a2c1e` is the commit's short **identifier** (its address). A **commit** is a permanent, addressable snapshot, signed with my name and email, stamped with the time, labelled with my message. It is never silently lost or overwritten — the stack only grows.
+
+5. **Read the history.** `git log` walks the commits newest-first; `--oneline` is the compact story view.
+
+   ```bash
+   git log --oneline
+   ```
+   ```text
+   7b9e0d2 (HEAD -> main) Add Saturday opening hours
+   f4a2c1e Add bakery notes file
+   ```
+
+   `HEAD` is Git's word for "where I am standing right now" — normally the tip of the current branch. If the log fills more than a screen it opens in a pager: **press `q` to quit** (the classic "my terminal is stuck" moment, pre-solved).
+
+6. **See the exact changes.** `git diff` shows line-by-line what changed in the working directory since the last commit and is not yet staged. `+` lines were added, `-` lines removed, plain lines are unchanged context. This **diff** format is the universal language of code review.
+
+   ```bash
+   git diff
+   ```
+   ```text
+   diff --git a/notes.txt b/notes.txt
+   @@ -1,2 +1,3 @@
+    The Corner Bakery
+    Open Saturdays from 8:00
+   +Closed on public holidays
+   ```
+
+7. **Rescue a file — the payoff of committing.** Damaged a file (emptied it, deleted a paragraph, an hour of edits I want gone)? `git restore` throws away the *uncommitted* changes and returns the file to its last save point.
+
+   ```bash
+   git status                 # confirms the file is "modified" — work is safe in the last commit
+   git restore notes.txt      # discard the damage, back to the last save point
+   git restore --staged menu.txt   # take a file back OUT of the box (content untouched)
+   ```
+
+   The honest warning: `restore` *discards* current uncommitted changes — that is its whole job. Glance at `git diff` first if unsure. It never touches committed history; commits are what it rescues *from*. The more often I commit, the closer my nearest save point always is.
+
+</Steps>
+
+### Writing a good commit message
+
+The message is for humans reading later — most often future me, three weeks on, having forgotten everything. The industry conventions:
+
+- **Imperative mood** — "Add weekend specials", "Fix Saturday opening time", not "added" or "adding". Read it as finishing the sentence *"this commit will…"*.
+- **Say what, and why when useful** — "Increase espresso price to match supplier costs" beats "change price" beats "stuff".
+- **Short first line** — under ~50 characters; it is the line every history view shows.
+
+And commit **small and often**: one logical change per commit (one bug fixed, one section written), not "everything I did today". A history of small labelled steps is a readable story, gives surgical undo, and is genuinely reviewable; one thousand-line "did stuff" commit gets skimmed and rubber-stamped.
+
+---
+
+## .gitignore — files that stay out of history
+
+Not everything in a project folder belongs in its history. A **`.gitignore`** is a plain text file at the repo's top folder listing patterns Git should never track — one pattern per line. Ignored files just stop appearing as untracked; Git treats them as invisible (they stay on disk, untouched).
+
+```bash title=".gitignore"
+# Generated files — regenerable, so recording them is noise
+*.log
+dist/
+temp/
+
+# Dependencies — reinstallable from the project's recipe file
+node_modules/
+
+# Secrets — history is permanent and, once published, public
+.env
+```
+
+The `.gitignore` file itself *is* tracked and committed, so the whole team shares the same rules:
+
+```bash
+git add .gitignore
+git commit -m "Add gitignore for logs, build output and secrets"
+```
+
+<Aside type="caution" title="Two things it does NOT do">
+Adding a file to `.gitignore` does **not** delete it, and it does **not** un-track a file that is already committed (that takes an extra step). And if a secret was already committed, it must be considered leaked and rotated — history is permanent.
+</Aside>
+
+---
+
+## Going remote — connecting to GitHub
+
+Everything so far was local. A **remote repository** is a copy of my repo hosted elsewhere — for us, on GitHub. The two are twins I keep in sync *deliberately*: **push** sends my local commits up, **pull** brings remote commits down. Nothing syncs by itself, ever.
+
+A repo refers to its remotes by nickname, and the near-universal nickname for a project's main remote is **`origin`** — nothing more than a saved address with a short name, like a contact in my phone. `git push origin main` reads as "push branch `main` to the remote nicknamed `origin`".
+
+<Steps>
+
+1. **Create an empty repo on GitHub.** On github.com: the **+** menu → **New repository**. Give it a short, lowercase, hyphenated name (`bakery-notes`, not `test123`). Choose **Public**. **Leave every initialization checkbox unchecked** — no README, no .gitignore, no license.
+
+   <Aside type="caution" title="Why start it empty?">
+   My local repo already has history. If GitHub adds a README, the remote gets a commit of its own and the two histories immediately disagree. Starting truly empty lets my local history *become* the remote's history. (Starting a project *on* GitHub first is different — then a README is fine.)
+   </Aside>
+
+2. **Save the remote's address under the nickname `origin`.** Copy the **SSH** address from the repo's setup page (it starts `git@github.com:`, not `https://`). This only writes a line into local settings — no network, no upload, no validation yet.
+
+   ```bash
+   git remote add origin git@github.com:my-username/bakery-notes.git
+   git remote -v          # verify — lists the saved remotes (-v = verbose)
+   ```
+   ```text
+   origin  git@github.com:my-username/bakery-notes.git (fetch)
+   origin  git@github.com:my-username/bakery-notes.git (push)
+   ```
+
+3. **Try to push — and watch it fail (on purpose).** The first push hits a locked door:
+
+   ```bash
+   git push -u origin main
+   ```
+   ```text
+   git@github.com: Permission denied (publickey).
+   fatal: Could not read from remote repository.
+   ```
+
+   This is **not** broken — it is *denied*. GitHub is saying "I don't know who you are, and I expect you to prove it with a public key, which you haven't shown me." **GitHub stopped accepting account passwords from Git in 2021** — a password typed on every push is a password constantly exposed. Pushing needs a machine-grade credential: an **SSH key**.
+
+4. **Set up an SSH key — once per machine.** An **SSH key pair** is two matched files: a **private key** that *never* leaves my machine, and a **public key** I hand to GitHub once. From then on GitHub can verify requests come from the machine holding the private twin, with no secret crossing the wire.
+
+   ```bash
+   # 1. Generate the pair (press Enter through all prompts:
+   #    accept the default file location, leave the passphrase empty)
+   ssh-keygen -t ed25519 -C "me@example.com"
+
+   # 2. Print the PUBLIC key (the .pub file — the ONLY one that ever leaves the machine)
+   cat ~/.ssh/id_ed25519.pub
+   ```
+
+   Copy that whole line (starts `ssh-ed25519 …`). On github.com: profile picture → **Settings** → **SSH and GPG keys** → **New SSH key**, title it after the machine, paste, **Add SSH key**. Then test:
+
+   ```bash
+   ssh -T git@github.com
+   ```
+   ```text
+   Hi my-username! You've successfully authenticated, but GitHub does not provide shell access.
+   ```
+
+   The "successfully authenticated" line is the goal. (Say `yes` to the one-time authenticity question on first contact. Keeping the default filename in step 1 is what lets Git find the key by itself, with zero extra config.)
+
+5. **Push for real.** The same command now works. `-u` (for *upstream*) is needed **once per branch**, on its first push — it remembers the pairing so later pushes shrink to one word.
+
+   ```bash
+   git push -u origin main
+   ```
+   ```text
+   To github.com:my-username/bakery-notes.git
+    * [new branch]      main -> main
+   branch 'main' set up to track 'origin/main'.
+   ```
+
+   From the second push onward, just:
+
+   ```bash
+   git push        # sends committed work up; uncommitted edits stay home
+   ```
+
+6. **Pull to stay current.** `git pull` fetches new commits from the remote's paired branch and merges them into my local one. `Fast-forward` means the easy case: the remote was simply ahead and my branch caught up, nothing to weave.
+
+   ```bash
+   git pull
+   ```
+
+   The professional bracket around every work session: **pull before I start** (build on the newest state), **push when I stop** (share, back up, make visible).
+
+</Steps>
+
+### Cloning — the reverse trip
+
+`git clone` downloads a *complete* copy of a remote repo — all files, the entire history, with `origin` already wired up (no `git remote add` needed). It is the standard first command on a new machine, a new team, a new job.
+
+```bash
+git clone git@github.com:my-username/bakery-notes.git
+cd bakery-notes
+```
+
+<Aside type="note" title="Clone vs fork">
+**Clone** copies a repo to my *machine*. **Fork** copies *someone else's* repo into my *GitHub account* — the route for contributing to a project I don't have write access to (fork it, clone my fork, change, propose back). Everything here happens in repos I own, where plain clone is the whole story.
+</Aside>
+
+---
+
+## Branching & collaboration
+
+A **branch** is an independent line of development inside one repository. Commits on one branch touch no other branch; each line grows its own history until I deliberately **merge** them. Every repo starts with one branch, `main`.
+
+The universal convention: **`main` is the stable line** — what's on it works, it's the version I'd show anyone at any moment. **Changes are made on short-lived branches** — new work, experiments, fixes each get their own branch, a safe workspace where nothing I do can disturb `main`. Done and reviewed → merge in. Dead end → delete the branch, and `main` never knew.
+
+<Aside type="tip" title="A photocopy I scribble on">
+A branch is like photocopying the master document to rework a chapter on the copy. The original stays clean on the shelf. Unlike a photocopy, Git can weave my reworked chapter back into the original automatically once it's approved. In Git a branch is nearly free to create and delete — short-lived, single-purpose branches are the healthy pattern.
+</Aside>
+
+### Creating, switching, and pushing a branch
+
+```bash
+git branch                       # list branches; the * marks where I am
+git switch -c weekend-specials   # create a new branch AND move onto it (-c = create)
+git switch main                  # move to an existing branch
+```
+
+Switching transforms the working directory *in place* — the files in my folder change to match the branch I land on. One folder, many parallel states. **Commits always land on the branch I'm standing on**, so the single most useful habit is reading the first line of `git status` (`On branch …`) before I work and before I commit.
+
+The everyday branch loop is the same edit → add → commit → push I already know; `-u` on the branch's first push:
+
+```bash
+git switch -c add-contact-info
+# ...edit files...
+git add bakery-notes.txt
+git commit -m "Add phone number to notes"
+git push -u origin add-contact-info   # first push of THIS branch
+```
+
+<Aside type="note" title="switch vs checkout">
+Older tutorials and colleagues say `git checkout` where these notes say `switch`. `checkout -b name` = `switch -c name` (create and move); `checkout name` = `switch name` (move to existing). `switch` is the newer, clearer command (2019); `checkout` still works everywhere. Read `checkout` fluently, write `switch`.
+</Aside>
+
+### The pull request — how work gets reviewed
+
+A **pull request** (**PR**) is a request, made on GitHub, to merge one branch into another — almost always *my branch into `main`*. But the merge is only the ending; the middle is the point. A PR opens a space where the change sits on display as a readable diff, and people can **read** exactly what would change, **discuss** it (comments anchored to exact lines), and **approve** it — or send it back for another round first. That is **code review** as the industry practises it.
+
+Decode the name once: I am *requesting* that the project *pull* my branch's changes in. (GitLab calls it a *merge request* — same machinery.)
+
+<Steps>
+
+1. **Push the branch**, then open the PR — via the link Git prints in the push output, the **Compare & pull request** banner, or the **Pull requests** tab → **New pull request** (base `main`, compare `my-branch`).
+
+2. **Write a title and description** — commit-message discipline, one level up. Title: what it does, imperative, one line. Description: what and why, honestly, plus anything the reviewer should know.
+
+3. **Review** in the **Files changed** tab — the whole change as one diff. Hover any line for a blue **+** to leave a comment anchored right there. Useful comments are specific and kind: point at the line, say what and why, suggest rather than command.
+
+4. **Merge** with the green **Merge pull request** → **Confirm merge**. My branch's commits join `main` on the remote; the PR closes as merged, its conversation kept forever as documentation. Take the **Delete branch** button — the branch was scaffolding, its commits now live in `main`.
+
+5. **Close the loop locally** — the merge happened on the remote, so my local `main` learns of it by pulling:
+
+   ```bash
+   git switch main
+   git pull
+   ```
+
+</Steps>
+
+### git merge — what the button runs underneath
+
+The Merge button isn't magic; it runs `git merge`. The grammar trips everyone once: **I stand on the receiving branch and name the branch being brought in.**
+
+```bash
+git switch main               # stand on the receiver
+git merge weekend-specials    # bring this branch's commits in
+```
+
+```text
+Updating 9c2d7e1..5d3a9f2
+Fast-forward
+ bakery-notes.txt | 1 +
+```
+
+`Fast-forward` again: `main` hadn't moved since the branch was created, so Git just slid `main`'s label forward — no weaving. When *both* branches have moved, Git weaves them into a **merge commit** (a save point with two parents). In practice I use the **button** — it keeps the review step attached — and knowing the command means the button is a convenience I understand, not a dependency I can't explain.
+
+### Resolving a merge conflict
+
+A **merge conflict** happens in exactly one situation: **both branches changed the same lines, differently.** Git refuses to guess which version is wanted, so it stops and asks. That's the whole event — not breakage, not loss; a machine declining a judgment call that is mine to make. (Different files, or different parts of the same file, merge silently and correctly.)
+
+<Steps>
+
+1. **The merge pauses.** Git marks the disputed spot inside the file.
+
+   ```bash
+   git switch main
+   git merge price-update
+   ```
+   ```text
+   Auto-merging bakery-notes.txt
+   CONFLICT (content): Merge conflict in bakery-notes.txt
+   Automatic merge failed; fix conflicts and then commit the result.
+   ```
+
+2. **Open the file and read the conflict markers.** Between `<<<<<<< HEAD` and `=======` is the version of the branch I'm *on* (`HEAD` — here `main`). Between `=======` and `>>>>>>>` is the *incoming* branch's version. Git is showing me both answers and asking: which?
+
+   ```text
+   The Corner Bakery
+   <<<<<<< HEAD
+   Espresso: 2.60
+   =======
+   Espresso: 2.80
+   >>>>>>> price-update
+   ```
+
+3. **Decide — deciding *is* the fix.** Edit the file to contain exactly what should be true, deleting all three marker lines.
+
+   ```text
+   The Corner Bakery
+   Espresso: 2.80
+   ```
+
+4. **Tell Git the question is answered** — the same add + commit loop I already own. The merge completes; history records both lines and the human decision that joined them.
+
+   ```bash
+   git add bakery-notes.txt
+   git commit -m "Merge price-update, keeping new espresso price"
+   ```
+
+</Steps>
+
+Conflicts are rare when I keep the anti-conflict habits: **short-lived branches**, **small focused changes**, and **pull before I start**. VS Code also recognises the markers and shows accept-this-version buttons above them.
+
+---
+
+## GitHub Pages — putting a site live
+
+**GitHub Pages** is free website hosting built into every GitHub repo: tell GitHub to serve the repo's files as a website, and it does, at an address like `https://my-username.github.io/repo-name/`. When someone visits, GitHub looks for a file called **`index.html`** — the web's convention for "the front door of a site."
+
+The workflow is exactly the branch loop from above, plus one settings step:
+
+<Steps>
+
+1. **On a branch, add an `index.html`** at the repo's top folder — even a placeholder is enough to go live:
+
+   ```html
+   <!DOCTYPE html>
+   <html>
+     <body>
+       <h1>The Corner Bakery</h1>
+       <p>Fresh bread, honest coffee.</p>
+     </body>
+   </html>
+   ```
+
+2. **Commit, push, PR, merge, and pull `main`** back down — the loop that is now reflex.
+
+   ```bash
+   git switch -c add-homepage
+   git add index.html
+   git commit -m "Add homepage placeholder"
+   git push -u origin add-homepage
+   ```
+
+3. **Enable Pages.** On the repo page: **Settings** → **Pages** → under *Build and deployment* set Source to **Deploy from a branch**, choose branch **main** and folder **/ (root)**, **Save**.
+
+4. **Wait a minute or two, refresh**, and a banner shows **Your site is live at** `https://my-username.github.io/bakery-notes/`. It opens from any phone on earth.
+
+</Steps>
+
+From here it's **edit → commit → push → live**: change `index.html`, push through the loop, wait a minute, refresh — the change is there. That hand-built pipeline is the same shape as any real deployment; the professional version just adds automation to the parts I now do by hand.
+
+<Aside type="note" title="The personal-portfolio trick">
+Create a repo named exactly `my-username.github.io` and Pages serves it at that address directly, with no repo name in the URL — the conventional home of a personal portfolio site.
+</Aside>
+
+---
+
+## The master command table
+
+Every command from these notes, in one place, grouped by the stage of work it belongs to.
+
+**Setup — once per machine**
+
+| Command | What it does | Typical usage |
+|---|---|---|
+| `git --version` | Confirm Git is installed | `git --version` |
+| `git config --global user.name "…"` | Set the name that signs commits | Once, first-time setup |
+| `git config --global user.email "…"` | Set the email that signs commits (match GitHub) | Once, first-time setup |
+| `git config --global init.defaultBranch main` | Make new repos start on `main` | Once, first-time setup |
+| `git config user.name` | Read a setting back to verify | Any time |
+| `ssh-keygen -t ed25519 -C "email"` | Generate an SSH key pair | Once per machine |
+| `ssh -T git@github.com` | Test that GitHub recognises this machine | After adding the public key |
+
+**Snapshotting — the everyday save loop**
+
+| Command | What it does | Typical usage |
+|---|---|---|
+| `git init` | Turn the current folder into a repository | Once, in a project's top folder |
+| `git add <file>` | Stage a file for the next commit | After editing, before committing |
+| `git add .` | Stage everything below the current folder | After checking `git status` first |
+| `git commit -m "message"` | Seal staged changes into a permanent save point | Once per logical change |
+| `.gitignore` | List file patterns Git should never track | Committed once, updated as needed |
+
+**Inspecting — looking without changing**
+
+| Command | What it does | Typical usage |
+|---|---|---|
+| `git status` | Show what's untracked, modified, staged, and the branch | Before and after everything |
+| `git log` | List commits, newest first, with full detail | Reviewing history (`q` to quit pager) |
+| `git log --oneline` | Compact one-line-per-commit history | Quick overview |
+| `git diff` | Show unstaged line-by-line changes since last commit | Before staging / before restoring |
+| `git remote -v` | List the saved remotes and their addresses | Checking the `origin` connection |
+| `git branch` | List branches (`*` marks the current one) | Checking where I am |
+
+**Undoing — safe recovery**
+
+| Command | What it does | Typical usage |
+|---|---|---|
+| `git restore <file>` | Discard uncommitted changes, back to last commit | Rescuing a damaged file |
+| `git restore --staged <file>` | Unstage a file without changing its content | Staged the wrong thing |
+| `git branch -m master main` | Rename the current branch | Fixing a repo stuck on `master` |
+
+**Remotes — sharing with the cloud**
+
+| Command | What it does | Typical usage |
+|---|---|---|
+| `git remote add origin <ssh-url>` | Save a remote's address under nickname `origin` | Connecting a local repo to GitHub |
+| `git remote set-url origin <ssh-url>` | Overwrite the address of an existing remote | Fixing a typo'd remote |
+| `git push -u origin <branch>` | Publish a branch and remember the pairing | First push of a branch |
+| `git push` | Send committed work up to the remote | Every push after the first |
+| `git pull` | Fetch remote commits and merge into local | Start of every work session |
+| `git clone <ssh-url>` | Download a full copy of a remote repo | New machine / new project |
+
+**Branching & merging — parallel work**
+
+| Command | What it does | Typical usage |
+|---|---|---|
+| `git switch -c <name>` | Create a branch and move onto it | Starting a new piece of work |
+| `git switch <name>` | Move to an existing branch | Changing what's on my desk |
+| `git merge <branch>` | Bring another branch's commits into the current one | Merging locally (PR button does this remotely) |
+
+---
+
+## Common errors & fixes
+
+| Symptom / message | What it means | The fix |
+|---|---|---|
+| `nothing to commit` / `no changes added to commit` | I edited but never staged — the box was empty | `git add <file>`, then commit again |
+| Stuck in a strange text editor after `git commit` | Forgot `-m`, so Git opened vim for the message | Press `Esc`, type `:q!`, Enter — then recommit *with* `-m "message"` |
+| Commits signed with the wrong name/email | `git config` was wrong or skipped | Rerun the two `git config --global` lines; new commits carry the fix |
+| `On branch master` (everyone else says `main`) | Repo was made before `init.defaultBranch` was set | `git branch -m master main` |
+| `Permission denied (publickey)` | GitHub doesn't recognise the machine (key handshake failed) | Run `ssh -T git@github.com`; if it doesn't greet me, re-walk the SSH key steps |
+| `remote origin already exists` | An `origin` is already saved; nicknames are unique | `git remote -v` to inspect, then `git remote set-url origin <url>` |
+| `Updates were rejected` / `fetch first` (non-fast-forward) | The remote has commits I haven't pulled | `git pull`, then `git push` — the pull-first habit prevents it entirely |
+| Committed on the wrong branch | `status` was skipped; commit landed on the wrong line | If noticed *before* committing: `git switch -c the-branch-I-meant` (uncommitted work travels with me). If already committed: move it with help — nothing is lost |
+| `There isn't anything to compare` on GitHub | The branch was committed locally but never pushed | `git push -u origin <branch>`, then refresh the compare page |
+| Merge conflict (`CONFLICT (content)`) | Both branches changed the same lines differently | Edit the file to the wanted truth, delete the `<<<<<<<` `=======` `>>>>>>>` markers, then `git add` + `git commit` |
+
+<Aside type="tip" title="The one habit behind every fix">
+**Read what Git printed.** Its messages almost always name the problem and often quote the exact command to fix it. "Nothing added to commit" told me the box was empty; the `hint:` lines on a rejected push literally prescribe the cure. In Git, ordinary errors are the tool asking for a missing step — not damage — and the fix is always smaller than redoing the work.
+</Aside>
+
+---
+
+## Revision summary
+
+| Must-know | One-line recall |
+|---|---|
+| Git vs GitHub | Git = local tool that records history; GitHub = cloud service that hosts it |
+| Three areas | Working directory → staging area → repository (→ remote) |
+| Why staging exists | To *choose* exactly what goes into each save point |
+| First-time setup | `git config --global` name, email, and `init.defaultBranch main` — once per machine |
+| Everyday loop | edit → `status` → `add` → `commit` → `push` |
+| Good commit message | Imperative, short first line, says what and why |
+| Commit habit | One logical change per commit; small and often |
+| `.gitignore` | Lists patterns Git never tracks; the file itself is committed |
+| origin | The conventional nickname for a project's main remote |
+| Push vs pull | Push sends commits up; pull brings them down; nothing syncs by itself |
+| SSH key | Private key stays home, public key given to GitHub once — no passwords over Git |
+| `-u` flag | Needed once per branch's first push; sets the remote pairing |
+| Branch | Independent line of history; `main` stays stable, work happens on short-lived branches |
+| HEAD | "Where I am standing now" — the tip of the current branch |
+| Pull request | Proposes merging a branch into `main` and opens a review conversation |
+| `git merge` grammar | Stand on the receiver, name the branch being brought in |
+| Merge conflict | Both sides changed the same lines; edit to the truth, remove markers, add + commit |
+| GitHub Pages | Serves a repo as a website; needs `index.html`; edit → commit → push → live |
+| Every error | Read Git's message — it names the problem and usually the fix |
