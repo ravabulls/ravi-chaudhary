@@ -214,24 +214,9 @@ The product appears once, used matter-of-factly. The rest of the content is the 
 
 ---
 
-## Technical & Production Learnings
+## Presentation & Slide-Design Craft
 
-<Aside type="caution">
-**PowerPoint generation via pptxgenjs:** Always use `async IIFE` pattern with `await pres.writeFile()`. `.then()` chaining on a non-async wrapper causes silent failures.
-</Aside>
-
-**PPTX-to-image QA workflow:**
-```bash
-soffice --headless --convert-to pdf [file.pptx]
-pdftoppm -jpeg -r 150 [file.pdf] slidePrefix
-# PDF generates in the same directory as the input PPTX
-```
-
-**Image generation:** Gemini (primary). Never name real public figures in prompts — replace with consistent physical type descriptions to avoid platform policy rejections.
-
-**Video generation:** Veo / Google AI Studio — 9:16 vertical TikTok format, 9-second clips. Avoid children in scenes (replace with adult alternatives to avoid policy flags).
-
-**Design system (all decks):**
+A consistent design system carried across the whole pitch deck:
 
 | Element | Value |
 |---|---|
@@ -243,10 +228,6 @@ pdftoppm -jpeg -r 150 [file.pdf] slidePrefix
 **Slide copy rule:** Images carry the story. Text is the caption. One number per slide minimum for the Beiersdorf audience.
 
 **Language discipline:** German words always followed by English in brackets on slides. Slide copy in English for the client audience. Campaign proper nouns (e.g., "Haltindex") kept untranslated.
-
-<Aside type="note">
-**Content before code:** Always confirm all content and structure in full before writing any code. Prevents costly rebuilds.
-</Aside>
 
 ---
 
