@@ -1,0 +1,530 @@
+---
+title: "Die Entwicklungsumgebung"
+description: "Einen funktionierenden Entwicklerrechner einrichten — das Terminal und die wichtigsten Shell-Befehle, die vier Kernwerkzeuge (Git, Node.js, VS Code, der Browser), Editor vs. IDE, eine Checkliste zum Prüfen und Installieren und wie man Einrichtungsprobleme behebt."
+sidebar:
+  label: "5 · Entwicklungsumgebung"
+  order: 5
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Bevor ich eine einzige Zeile echten Code schreibe, braucht mein Rechner eine Werkbank: einen Ort, an dem ich Befehle eintippe, und vier Werkzeuge, die die eigentliche Arbeit erledigen. Dieses Kapitel ist genau diese Einrichtung, von null. Nichts hier setzt voraus, dass ich je zuvor ein Terminal geöffnet habe.
+
+## Zwei Wege, mit einem Computer zu sprechen
+
+Es gibt genau zwei Wege, einem Computer Anweisungen zu geben:
+
+- **GUI — Graphical User Interface (grafische Benutzeroberfläche).** Auf Symbole klicken, Fenster verschieben, aus Menüs auswählen. So nutzen fast alle Menschen einen Computer.
+- **CLI — Command-Line Interface (Befehlszeile).** Eine geschriebene Anweisung eintippen, Enter drücken und eine geschriebene Antwort lesen. Älter — und in der Entwicklerwelt noch immer überall.
+
+Das **Terminal** ist das Fenster, in dem die CLI stattfindet.
+
+<Aside type="note" title="Das Terminal, in einem Bild">
+Es ist ein Chat-Fenster mit meinem Computer. Ich tippe eine kurze Nachricht (einen **Befehl**), drücke Enter zum Absenden, und der Computer antwortet in Textform. Solange ich noch tippe, passiert nichts — erst Enter sendet. Der Haken: Dieser Chat-Partner ist *extrem* wörtlich. Er tut genau das, was ich getippt habe, nicht das, was ich gemeint habe — deshalb macht schon ein kleiner Tippfehler einen Unterschied.
+</Aside>
+
+### Die Begriffe, die locker verwendet werden
+
+Vier Wörter schwirren umher, verwandt, aber nicht identisch. Es lohnt sich, sie einmal festzunageln:
+
+| Wort | Was es tatsächlich bedeutet |
+|---|---|
+| **Terminal** | Das *Fenster* — die App, die ich öffne (Windows Terminal, macOS Terminal, GNOME Terminal, Hyper) |
+| **Shell** | Das *Programm darin*, das meine Befehle liest und ausführt (PowerShell, Bash, Zsh) |
+| **Command Line** | Die Zeile, in die ich tippe — und lose auch diese ganze Arbeitsweise |
+| **Console** | Ein älteres Sammelwort für all das Genannte |
+
+Im Alltag mischen Entwickler diese Begriffe frei. „Open a console", „open a shell", „open a terminal" meinen alle dasselbe: dorthin gelangen, wo ich Befehle eintippen kann.
+
+### Warum Entwickler sich das Tippen antun
+
+Wenn Klicken funktioniert, warum tippen?
+
+- **Die Werkzeuge wohnen dort.** Git, Node.js und npm sind in erster Linie Command-Line-Werkzeuge. Ihr natürliches Zuhause ist das Terminal, und jedes Tutorial im Netz setzt es voraus.
+- **Es ist präzise und wiederholbar.** Ein Befehl ist eine exakte Sache — kopierbar, teilbar, identisch erneut ausführbar. „Klick auf das dritte Symbol, dann auf den zweiten Reiter" ist nichts davon.
+- **Es skaliert.** Eine Datei umbenennen geht mit der Maus leichter. Fünfhundert umbenennen ist ein einziger Befehl.
+- **Server haben keinen Desktop.** Die Maschinen, auf denen echte Software läuft, haben meist gar keine GUI. Die Command Line ist der Weg, über den Profis sie erreichen.
+
+<Aside type="tip" title="Eine Aufgabe, beide Wege">
+Lege im Ordner Dokumente einen Ordner namens `projects` an. **GUI:** den Datei-Explorer öffnen, zu Dokumente gehen, Rechtsklick, Neu → Ordner, den Namen eintippen, Enter — sechs Schritte. **CLI:** `mkdir projects` — eine Zeile. Keiner der Wege ist falsch; jetzt sehe ich, warum jemand, der den ganzen Tag Ordner anlegt, die kurze Variante bevorzugt.
+</Aside>
+
+## Ein Terminal öffnen
+
+Auf jedem System dieselbe Idee: ein weitgehend leeres Fenster mit einer kurzen Textzeile, die auf mich wartet. Wie ich es öffne, ist unterschiedlich.
+
+<Tabs>
+  <TabItem label="Windows">
+Die eingebaute App heißt **Terminal** (auch *Windows Terminal*) und führt die **PowerShell**-Shell aus.
+
+1. Drücke die **Windows-Taste** (oder klicke auf Start).
+2. Tippe `terminal`.
+3. Drücke Enter (oder klicke auf **Terminal**).
+
+Ein Fenster öffnet sich mit einer Zeile wie `PS C:\Users\ravi>`. Auf älteren Windows-10-Rechnern fehlt Terminal möglicherweise — suche stattdessen nach `powershell` und öffne **Windows PowerShell**; dasselbe Ergebnis.
+
+Ignoriere die **Eingabeaufforderung** (*cmd*): eine ältere Shell, die dieses Programm nicht verwendet. Zeigt ein Fenster `C:\Users\ravi>` *ohne* das `PS`, schließe es und öffne Terminal/PowerShell.
+  </TabItem>
+  <TabItem label="macOS">
+Dieses Programm richtet **Hyper** ([hyper.is](https://hyper.is/)) als Terminal ein, mit der **Zsh**-Shell.
+
+1. Drücke **Cmd + Leertaste**, um Spotlight zu öffnen.
+2. Tippe `hyper`.
+3. Drücke Enter.
+
+Hypers Prompt ist thematisch gestaltet (farbige Blöcke und Pfeile statt reinem Text), aber die Shell darunter ist ganz normales Zsh — jeder Befehl funktioniert genauso. Der stets vorhandene Rückfall ist die eingebaute **Terminal**-App (Cmd + Leertaste → `terminal`).
+  </TabItem>
+  <TabItem label="Linux">
+Dieses Programm richtet **Hyper** ([hyper.is](https://hyper.is/)) als Terminal ein, mit **Bash**.
+
+Suche in meinen Anwendungen nach `hyper` und öffne es. Thematisch gestalteter Prompt, ganz normale Shell darunter.
+
+Der stets vorhandene Rückfall ist das eigene Terminal meiner Distribution — **GNOME Terminal** unter Ubuntu, **Konsole** unter KDE — meist nur ein **Strg + Alt + T** entfernt. Ein schlichter Prompt sieht aus wie `ravi@laptop:~$`.
+  </TabItem>
+</Tabs>
+
+<Aside type="note" title="Den Prompt lesen">
+Diese wartende Zeile ist der **Prompt** — die Shell sagt „bereit, du bist dran". Er zeigt meist, *wo ich bin* (`~` ist die Kurzform für meinen Home-Ordner) und *in welcher Shell* ich bin, erkennbar am abschließenden Zeichen: PowerShell endet mit `>`, Zsh (macOS) endet mit `%`, Bash (Linux) endet mit `$`.
+
+Wenn ein Tutorial einen Befehl nach einem `$` oder `>` zeigt, **ist dieses Zeichen der Prompt — den tippe ich nie**, nur das, was danach kommt.
+</Aside>
+
+<Aside type="caution" title="Ein Terminal zu öffnen ändert von allein nichts">
+Ein schwarzes, mit Text gefülltes Fenster ist, wie *bereit* aussieht, kein Fehler. Ich kann es öffnen, tippen, löschen, wieder schließen — und mein Computer ist genau wie zuvor. Nichts läuft, bis Enter kommt. Es gibt also nichts, wovor man Angst haben müsste — ich öffne es, so oft ich will.
+</Aside>
+
+## Grundlegende Befehle — die Referenztabelle
+
+Alles ist dieselbe Schleife: **tippen, Enter, Antwort lesen.** Hier das Arbeitsvokabular. Die meisten dieser Aliase funktionieren auch in PowerShell; wo Windows abweicht, habe ich seinen nativen Befehl notiert.
+
+| Befehl | Was er tut | macOS / Linux | Windows PowerShell |
+|---|---|---|---|
+| **pwd** | Print working directory — „wo bin ich?" | `pwd` | `pwd` |
+| **ls** / **dir** | Auflisten, was in diesem Ordner ist | `ls` | `ls` oder `dir` |
+| **cd** | Change directory — *in* einen Ordner wechseln | `cd Documents` | `cd Documents` |
+| **cd ..** | Eine Ebene *hoch* (`..` = der Ordner darüber) | `cd ..` | `cd ..` |
+| **mkdir** | Einen neuen Ordner hier anlegen | `mkdir projects` | `mkdir projects` |
+| **touch** / New-Item | Eine leere Datei erstellen | `touch notes.txt` | `New-Item notes.txt` |
+| **cat** | Den Inhalt einer Datei im Terminal anzeigen | `cat notes.txt` | `cat notes.txt` |
+| **echo** | Text zurückgeben (oder in eine Datei schreiben) | `echo "hi"` | `echo "hi"` |
+| **clear** / cls | Den Bildschirm leeren (der Verlauf bleibt) | `clear` | `clear` oder `cls` |
+| **mv** | Eine Datei/einen Ordner verschieben *oder* umbenennen | `mv a.txt b.txt` | `mv a.txt b.txt` |
+| **cp** | Eine Datei kopieren | `cp a.txt copy.txt` | `cp a.txt copy.txt` |
+| **rm** | Eine Datei löschen (`-r` für einen Ordner) | `rm old.txt` | `rm old.txt` |
+
+<Aside type="caution" title="Zwei Dinge, über die Anfänger stolpern">
+- **`touch` gibt es in PowerShell nicht** — dort `New-Item filename` verwenden. Für alles andere in der Tabelle gibt es einen funktionierenden PowerShell-Alias.
+- **`rm` löscht endgültig** — es gibt keinen Papierkorb, der das abfängt. Den Namen zweimal prüfen, bevor ich Enter drücke, und nie `rm -r` auf einen Ordner anwenden, wenn ich mir nicht sicher bin.
+</Aside>
+
+So fühlt sich die Schleife tatsächlich an — ein kurzer Rundgang, der die ersten fünf Befehle nutzt. Das `$` ist der Prompt, ich tippe also nur, was danach folgt; Zeilen ohne `$` sind die Antwort des Computers:
+
+```bash
+$ pwd
+/Users/ravi
+$ ls
+Desktop    Documents    Downloads
+$ cd Documents
+$ pwd
+/Users/ravi/Documents
+$ mkdir startupistan
+$ ls
+startupistan
+$ cd ..
+$ pwd
+/Users/ravi
+```
+
+Lies es wie eine Geschichte: *prüfen, wo ich bin, umsehen, hineingehen, bestätigen, einen Ordner anlegen, wieder herausgehen, bestätigen.* Dieser **prüfen-bewegen-bestätigen**-Rhythmus ist genau die Art, wie sich auch erfahrene Entwickler bewegen.
+
+<Aside type="tip" title="Drei Gewohnheiten, die den meisten Frust verhindern">
+- **„Einen Befehl ausführen" = ihn tippen, dann Enter drücken.** Nichts läuft mitten im Tippen.
+- **Schreibweise und Groß-/Kleinschreibung zählen.** Unter macOS/Linux können `Documents` und `documents` verschiedene Ordner sein. Namen genau so tippen, wie `ls` sie anzeigt.
+- **Erfolg ist meist stumm.** `cd` und `mkdir` sagen nichts, wenn sie funktionieren — Schweigen bedeutet Erfolg. Ich bestätige mit `pwd` und `ls`, nicht indem ich den Befehl fünfmal erneut ausführe.
+</Aside>
+
+<Aside type="note" title="Absolute vs. relative Pfade">
+Jeder Ort ist ein **Pfad**. Ein **absoluter Pfad** beginnt ganz oben (`/Users/ravi/Documents` oder `C:\Users\ravi\Documents`) und meint überall dasselbe, egal wo ich stehe. Ein **relativer Pfad** (`Documents`, `..`, `notes/drafts`) wird von meinem aktuellen Ordner aus gemessen, seine Bedeutung verschiebt sich also, wenn ich mich bewege. `cd` akzeptiert beide — und den Unterschied zu kennen erklärt die meisten „Warum hat das nicht funktioniert?"-Momente, bevor sie passieren.
+</Aside>
+
+## Befehlszeilen-Fehler lesen und beheben
+
+Früher oder später antwortet das Terminal mit einer Beschwerde statt mit dem, was ich wollte. Das ist *gut* — der Fehler ist die Shell, die hilfreich ist, und sie hält immer **an, bevor sie etwas tut**. Ein Fehler bedeutet nie, dass ich den Computer kaputt gemacht habe. Die drei, denen ich zuerst begegne:
+
+| Fehlermeldung | Was sie wirklich bedeutet | Die Lösung |
+|---|---|---|
+| `command not found` / `not recognized` | Das erste Wort ist kein bekannter Befehl — ein **Tippfehler** oder das Programm ist **nicht installiert** | Zuerst die Schreibweise prüfen; wenn richtig geschrieben, ist es ein Installations-/PATH-Problem (siehe Fehlerbehebung) |
+| `no such file or directory` | Der Befehl ist bekannt, aber der Ordner/die Datei ist *von dort, wo ich stehe*, nicht sichtbar | `pwd`, um zu sehen, wo ich bin, `ls`, um zu sehen, was hier ist, dann `cd` zu dem, was tatsächlich angezeigt wird |
+| `too many arguments` | Ein **Leerzeichen** in einem Namen hat ihn in zwei Teile zerlegt | Den Namen in Anführungszeichen setzen: `cd "My Projects"` — oder Leerzeichen ganz vermeiden |
+
+<Aside type="tip" title="Lies die erste Zeile, langsam">
+Die Antwort steht fast immer direkt dort in klaren Worten — „not found", „does not exist", „too many arguments". Anfänger, die die Meldung in Ruhe lesen, beheben Dinge schneller als Profis, die das nicht tun.
+
+Und benenne Ordner `my-projects` oder `my_projects` — keine Leerzeichen bedeutet keine Anführungszeichen und keine Überraschungen. Das mache ich mit allem, was ich anlege.
+</Aside>
+
+<Aside type="caution" title="Kein Fehler heißt nicht immer, dass ich bekam, was ich wollte">
+`mkdir client work` schlägt nicht fehl — es legt still *zwei* Ordner an (`client` und `work`), weil das Leerzeichen es aufgeteilt hat. Also bestätige ich mit `ls`, selbst wenn es keinen Fehler gibt.
+</Aside>
+
+<Aside type="note" title="Drei Abkürzungen, die Fehler verhindern, bevor sie entstehen">
+- **Tab-Vervollständigung** — die ersten Buchstaben eines Namens tippen, **Tab** drücken, und die Shell vervollständigt ihn mit der exakten Schreibweise (Anführungszeichen inklusive). Entwickler drücken ständig Tab.
+- **Pfeil nach oben** — holt einen früheren Befehl zurück, sodass eine lange Zeile mit einem Tippfehler zurückgeholt und korrigiert wird, statt neu getippt.
+- **Eingebaute Hilfe** — `mkdir --help` unter macOS/Linux oder `Get-Help mkdir` in PowerShell erklärt jeden Befehl.
+</Aside>
+
+## Die vier Kernwerkzeuge
+
+Mein Rechner läuft auf vier Werkzeugen, eines pro Aufgabe. Zusammen bilden sie eine Schleife, die ich tausende Male wiederhole: **schreiben → ausführen → prüfen → speichern → wiederholen.**
+
+| Werkzeug | Was es ist | Seine eine Aufgabe |
+|---|---|---|
+| **VS Code** | Ein Code-Editor | *Schreiben* und Code organisieren |
+| **Git** | Ein Versionskontrollsystem | *Merken* — die Historie meiner Arbeit festhalten, damit nie etwas verloren geht |
+| **Node.js** | Eine JavaScript-Runtime (bringt **npm** mit) | *Ausführen* von JavaScript außerhalb des Browsers und Bausteine installieren |
+| **Der Browser** (Chrome) | Ein Browser + Untersuchungslabor | *Zeigen und untersuchen* — wo Web-Code läuft, in der Vorschau erscheint und debuggt wird |
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Schreiben<span class="sub">VS Code</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Ausführen<span class="sub">Browser · Node.js</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Prüfen<span class="sub">Browser DevTools</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Speichern<span class="sub">Git</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node soft">…wiederholen</div>
+  </div>
+  <figcaption>Die tägliche Schleife, die die vier Werkzeuge gemeinsam bilden.</figcaption>
+</figure>
+
+<Aside type="note" title="Das sind keine Anfängerwerkzeuge, die ich entwachse">
+Das *ist* die professionelle Werkzeugkette. Dieselben vier (oder ihre direkten Entsprechungen) stehen auf den Rechnern von Entwicklern mit zwanzig Jahren Erfahrung. Ich nutze von jedem einen kleinen Ausschnitt und wachse in den Rest hinein — niemand kennt ganz VS Code oder ganz Git, auch nicht die Leute, die sie gebaut haben.
+</Aside>
+
+### Git = Versionskontrolle
+
+Das Problem, das Git löst, ist der Ordner voller `website-final.html`, `website-final2.html`, `website-FINAL-REALLY.html`. Welche habe ich verschickt? Was hat sich zwischen zweien geändert? Was hat es heute kaputt gemacht? Ein **Versionskontrollsystem (VCS)** beantwortet all das sauber:
+
+- **Speicherpunkte** — in jedem von mir gewählten Moment macht es einen Schnappschuss des ganzen Projekts, mit Zeitstempel, meinem Namen und einer Nachricht.
+- **Eine lesbare Historie** — die vollständige Liste dieser Speicherpunkte, sodass „was hat sich wann und warum geändert" immer beantwortbar ist.
+- **Zeitreise** — jeder frühere Speicherpunkt lässt sich wiederherstellen. Heute etwas kaputt gemacht? In Sekunden zurück zum funktionierenden Stand von gestern.
+- **Sichere Teamarbeit** — mehrere Personen arbeiten am selben Projekt; das VCS führt ihre Arbeit zusammen und zeigt genau, wo sie kollidiert.
+
+**Git** ist *das* Standard-VCS — so dominant, dass „Versionskontrolle" und „Git" nahezu Synonyme sind.
+
+<Aside type="tip" title="Git vs. GitHub — die Verwechslung, die man einmal ausräumt">
+**Git ist das Werkzeug auf meinem Rechner; GitHub ist ein Online-Dienst, auf dem Git-Projekte leben.** Git funktioniert vollständig offline und zeichnet die Historie auf meinem eigenen Computer auf. GitHub (eine Website, die Microsoft gehört) hostet eine Kopie dieser Historie online, sodass ich sie sichern, teilen und gemeinsam bearbeiten kann. Verwandt, ständig gemeinsam genutzt — aber nicht dasselbe.
+</Aside>
+
+### Node.js = JavaScript außerhalb des Browsers ausführen
+
+**JavaScript** ist die Sprache des Webs, und jahrelang konnte es nur *innerhalb* eines Browsers laufen. **Node.js** ist eine **Runtime** — ein Programm, dessen Aufgabe es ist, Programme auszuführen —, das diesen Käfig entfernt hat. Installiere es, und JavaScript läuft direkt auf meinem Rechner, ohne Browser. Das machte JavaScript zu einer Sprache, die auch Server, Command-Line-Werkzeuge und fast das gesamte moderne Web-Entwicklungs-Werkzeug antreibt.
+
+<Aside type="note" title="npm — der Teil, der im Stillen am meisten zählt">
+Beim Installieren von Node.js wird auch **npm** installiert (der **Node Package Manager**). Seine Aufgabe ist es, **Packages** zu holen und zu installieren — fertige Code-Bausteine, die andere Entwickler veröffentlicht haben — aus der größten Code-Registry der Welt. Moderne Web-Entwicklung ist ebenso *Zusammensetzen* wie Schreiben: echte Projekte stehen auf Dutzenden von Packages, und npm ist der Weg, wie sie ankommen und aktuell bleiben. Wenn ein Tutorial sagt „npm install something", weiß ich jetzt genau, welches Werkzeug was tut.
+</Aside>
+
+### Der Browser = untersuchen und debuggen
+
+Für die meisten Menschen zeigt ein Browser einfach Websites an. Für einen Entwickler ist er die Maschine, auf der seine Arbeit läuft — HTML, CSS und JavaScript laufen *innerhalb des Browsers* desjenigen, der die Seite öffnet. Das macht ihn zu meinem Prüfstand, plus ein vollständiges Untersuchungslabor, nur einen Rechtsklick entfernt.
+
+<Steps>
+
+1. Rechtsklick auf irgendetwas auf einer Seite (eine Überschrift eignet sich gut) und **Untersuchen** wählen.
+
+2. Ein Panel öffnet sich — die **DevTools** (Developer Tools). Der Reiter **Elements** zeigt das tatsächliche HTML der Seite; wenn ich über eine Zeile fahre, wird der passende Teil der Seite hervorgehoben.
+
+3. Doppelklick auf den Text einer Überschrift, etwas anderes tippen, Enter drücken — die Seite ändert sich. Jetzt neu laden: sie ist zurück.
+
+</Steps>
+
+<Aside type="tip" title="Warum dieses Verschwinden wichtig ist">
+**Die DevTools bearbeiten die lokale Kopie der Seite in meinem Browser, nie die echte Website.** Genau das macht sie zu einem sicheren Labor — ich kann an jeder Seite im Internet herumprobieren, auch an meiner eigenen, und ein Neuladen macht alles rückgängig. Es ist eine Sandbox, kein Schaltpult.
+</Aside>
+
+## Editor vs. IDE
+
+Irgendwann fragt jemand, welche **IDE** ich benutze. Die ehrliche Antwort braucht zuerst eine Definition, denn die Unterscheidung kehrt wieder, wenn dieses Programm bei SAP ankommt.
+
+| | Code-Editor | IDE (Integrated Development Environment) |
+|---|---|---|
+| **Startet als** | Leicht und allgemein — bearbeitet jede Sprache von Haus aus | Eine komplette Werkstatt für *ein* Ökosystem, alles vorinstalliert |
+| **Wächst durch** | Extensions, die ich wähle, pro Projekt | Bereits fest verdrahtet: Build-System, Debugger, Vorlagen, Refactoring |
+| **Beispiele** | VS Code, Sublime Text, Vim | IntelliJ (Java), PyCharm (Python), Visual Studio (.NET), Eclipse |
+| **Am besten, wenn** | Ein Werkzeug viele Sprachen abdecken muss | Tiefe Arbeit in einem einzelnen Ökosystem |
+
+<Aside type="note" title="Die eine Frage, die es entscheidet">
+**Für alles gebaut oder für eine Sache gebaut?** Extensions, die ich selbst hinzufüge = Editor-Denken. Eine komplette vorinstallierte Werkstatt für ein Ökosystem = IDE-Denken.
+
+Die Grenze ist unscharf — VS Code mit den richtigen Extensions verhält sich wie eine leichtgewichtige IDE. Die klassische Antwort zum Merken: **VS Code ist ein Editor**, den Extensions in Richtung IDE-Terrain schieben können. Dieser Block passt zu einem Editor (ein leichtes Werkzeug für HTML, CSS, JavaScript). Die **SAP-/ABAP**-Welt kommt später mit ihrer eigenen tief integrierten IDE — und jetzt weiß ich, warum sie sich so anders anfühlt: Ich trete aus dem allgemeinen Werkzeugkasten heraus in die Werkstatt eines Spezialisten.
+</Aside>
+
+## Die goldene Regel der Einrichtung
+
+Vor allen Installationsschritten die eine Gewohnheit, die die Hälfte aller „es hat nicht funktioniert"-Momente verhindert:
+
+<Aside type="caution" title="Nach jeder einzelnen Installation: das Terminal schließen, ein neues öffnen">
+Ein Terminal liest seine Einrichtung — welche Programme es gibt und wo sie liegen — **einmal, im Moment des Öffnens.** Ein Terminal, das schon *vor* einer Installation offen war, hat das neue Programm nie gesehen und wird darauf bestehen, dass es nicht existiert. Also nach jeder Installation: das Terminal vollständig schließen, ein neues öffnen und *dann* prüfen.
+</Aside>
+
+Zwei weitere Fakten, bevor irgendetwas installiert wird:
+
+- **Kenne meinen Rechner.** Jede Download-Seite fragt, was ich benutze. Windows: `about` tippen → **Info zu Ihrem PC** (oder `winver` ausführen). macOS: **Apple-Menü → Über diesen Mac**. Linux: `cat /etc/os-release`.
+- **Administratorrechte.** Installieren verändert den Rechner für jeden Nutzer, also fragt das Betriebssystem um Erlaubnis — das „Zulassen, dass diese App Änderungen vornimmt?"-Fenster unter Windows, eine Passwortabfrage unter macOS/Linux (wo das Terminal-Wort **sudo** lautet). Auf meinem eigenen Laptop klicke ich Ja / gebe mein Passwort ein. Auf einem Firmen- oder Familiengerät können Installationen an das Konto von jemand anderem gebunden sein — das ist Richtlinie, kein Fehler; die Lösung ist, den Besitzer oder die IT zu fragen, nicht gegen den Dialog anzukämpfen.
+
+## Prüfen, dann installieren
+
+Alles wurde zu Programmbeginn eingerichtet, der erste Schritt für jedes Werkzeug ist also **prüfen** — testen, ob es schon funktioniert. Die Installationsschritte sind die Referenz für einen neuen Rechner oder eine Neuinstallation.
+
+### Das Terminal (nur macOS & Linux)
+
+Windows nutzt Windows Terminal — nichts zu tun. macOS/Linux führen Hyper aus, und es wird zuerst geprüft, weil alles andere *innerhalb* eines Terminals überprüft wird.
+
+<Steps>
+
+1. Hyper öffnen (Cmd + Leertaste → `hyper` unter macOS; App-Suche unter Linux).
+
+2. Einen Befehl ausführen, um die Shell hinter dem Design zu belegen:
+
+   ```bash
+   $ pwd
+   /Users/ravi
+   ```
+
+3. Öffnet sich und antwortet — geprüft. **Installations-Referenz:** von [hyper.is](https://hyper.is/) herunterladen; unter macOS in Programme ziehen, unter Linux die `.deb` installieren (`sudo apt install ./hyper_*.deb`). Eingebaute Terminals (macOS Terminal, GNOME Terminal) sind der dauerhafte Rückfall.
+
+</Steps>
+
+### Git
+
+<Steps>
+
+1. In einem Terminal die Prüfung ausführen:
+
+   ```bash
+   $ git --version
+   git version 2.45.1
+   ```
+
+2. **Jede Versionsnummer = fertig.** Meine Nummer wird abweichen — das ist in Ordnung. Nur `command not found` muss behoben werden: zuerst ein frisches Terminal versuchen, dann installieren.
+
+3. **Installations-Referenz:**
+
+</Steps>
+
+<Tabs>
+  <TabItem label="Windows">
+Den Installer von [git-scm.com/downloads](https://git-scm.com/downloads) herunterladen, ausführen und **auf jedem Bildschirm die Standardeinstellungen akzeptieren** — die Wand aus Optionsseiten schüchtert jeden einmal ein, aber keine davon muss hier geändert werden. Es installiert außerdem **Git Bash**, ein Bonus-Terminal, das die macOS-/Linux-Befehlssprache spricht. Ein *neues* Terminal öffnen und `git --version` ausführen.
+  </TabItem>
+  <TabItem label="macOS">
+Wird über **Homebrew** ([brew.sh](https://brew.sh/)) installiert, den beliebten Package Manager des Macs. Zuerst eine einmalige Vorbereitung:
+
+```bash
+$ touch ~/.zshrc
+```
+
+`touch` legt die Datei an, falls sie fehlt (harmlos, falls sie existiert). `~/.zshrc` ist meine Zsh-Konfiguration, die bei jedem Öffnen eines Terminals gelesen wird — dort schreiben Homebrew und nvm ihre Setup-Zeilen hinein. Auf einem frischen Mac existiert sie noch nicht, und ohne sie haben diese Zeilen keinen Ort, was später mysteriöse `command not found`-Fehler verursacht. Dann:
+
+```bash
+$ brew --version     # bestätigen, dass Homebrew vorhanden ist
+$ brew install git   # Git installieren
+```
+
+Mit `git --version` in einem frischen Terminal prüfen.
+  </TabItem>
+  <TabItem label="Linux">
+Mein Package Manager hat es bereits:
+
+```bash
+$ sudo apt install git
+```
+
+(Fedora und andere nutzen `dnf`; das Package heißt überall `git`.) Danach in einem frischen Terminal prüfen.
+  </TabItem>
+</Tabs>
+
+### Node.js (und npm)
+
+Node bringt npm mit, das sind also zwei Prüfungen in einer:
+
+```bash
+$ node --version
+v22.14.0
+$ npm --version
+10.9.0
+```
+
+Zwei Versionsnummern = fertig. Abweichende Nummern sind zu erwarten.
+
+<Aside type="tip" title="LTS — die eine Entscheidung, die zählt">
+Node erscheint in zwei Linien. **LTS (Long Term Support)** ist die stabile Version, jahrelang gepflegt — *immer diese wählen.* **Current** bringt die neuesten Features, ändert sich schnell, für Leute an der vordersten Front. Professionelle Teams fahren fast durchweg LTS. Merke dir das Kürzel und die Wahl: LTS, Stabilität vor Neuheit.
+</Aside>
+
+<Tabs>
+  <TabItem label="Windows">
+Den **LTS**-Installer von [nodejs.org](https://nodejs.org/) herunterladen, mit Standardeinstellungen ausführen. npm kommt automatisch mit — keine separate Installation. Ein *neues* Terminal öffnen und beide Prüfbefehle ausführen.
+  </TabItem>
+  <TabItem label="macOS">
+Wird über **nvm** (Node Version Manager) installiert. `~/.zshrc` muss zuerst existieren (das `touch ~/.zshrc` aus dem Git-Schritt deckt das ab). Dann:
+
+```bash
+$ nvm --version        # bestätigen, dass nvm vorhanden ist
+$ nvm install --lts    # die stabile Linie namentlich installieren
+```
+
+Das `--lts`-Flag verlangt ausdrücklich die stabile Linie. Mit `node --version` und `npm --version` in einem frischen Terminal prüfen.
+  </TabItem>
+  <TabItem label="Linux">
+Wird über **nvm** (Node Version Manager) installiert:
+
+```bash
+$ nvm --version        # bestätigen, dass nvm vorhanden ist
+$ nvm install --lts    # die stabile Linie namentlich installieren
+```
+
+Sagt nvm `command not found`, installiere es von [github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm) und öffne dann ein frisches Terminal. Mit `node --version` und `npm --version` prüfen.
+  </TabItem>
+</Tabs>
+
+<Aside type="note" title="Warum nvm statt eines einfachen Installers (macOS/Linux)">
+Verschiedene Projekte brauchen tatsächlich verschiedene Node-Versionen, und nvm wechselt mit einem Befehl zwischen ihnen. Updates werden trivial (`nvm install --lts` wieder, wann immer). Und es installiert alles innerhalb meines Home-Ordners — kein `sudo`, kein Admin-Passwort, keiner der Berechtigungsknoten einer systemweiten Installation. Ein seltenes Werkzeug, das sowohl der anfängerfreundliche *als auch* der professionelle Weg ist.
+</Aside>
+
+### VS Code
+
+Kein Befehl — drei Handgriffe, die ich schon kenne:
+
+<Steps>
+
+1. **VS Code öffnen** (Startmenü unter Windows; Spotlight `code` oder Programme unter macOS).
+
+2. **Datei → Ordner öffnen**, und einen Ordner wählen, den ich früher angelegt habe (z. B. `startupistan-practice`).
+
+3. **Strg + Backtick** drücken (die `` ` ``-Taste, oben links), um das integrierte Terminal zu öffnen, und `pwd` ausführen — es sollte mit dem Pfad des Ordners antworten.
+
+</Steps>
+
+Funktionieren alle drei → Editor bereit. **Installations-Referenz:** von [code.visualstudio.com](https://code.visualstudio.com/) herunterladen, durchgehend Standardeinstellungen (Windows-Installer; unter macOS in Programme ziehen; `.deb` unter Linux).
+
+<Aside type="note" title="Die Vertrauensabfrage, einmal erklärt">
+Beim ersten Öffnen eines Ordners fragt VS Code: *„Vertrauen Sie den Autoren der Dateien in diesem Ordner?"* — ein echtes Sicherheitsfeature, denn manche Extensions führen Code automatisch aus. Faustregel: Ordner, die ich selbst angelegt habe, und Kursprojekte → **Ja, ich vertraue den Autoren.** Zufälliger Code aus unbekannten Ecken des Internets → der eingeschränkte Modus ist genau dafür da. Und es ist kostenlos ohne Anmeldung — das optionale Konto synchronisiert nur die Einstellungen zwischen Rechnern.
+</Aside>
+
+### VS-Code-Extensions — die kuratierten zwölf
+
+Extensions sind der Ort, an dem ein schlichter Editor seine Fähigkeiten gewinnt. Alle zwölf zu installieren dauert ~10 Minuten. Das Vorgehen, zwölfmal wiederholt:
+
+<Steps>
+
+1. Die Extensions-Ansicht öffnen — das Vier-Quadrate-Symbol oder **Strg + Shift + X**.
+
+2. Den Namen der Extension ins Suchfeld tippen.
+
+3. **Prüfen, dass der Publisher übereinstimmt** mit dem unten angegebenen — es gibt Nachahmungen beliebter Extensions, und die Publisher-Zeile ist meine Garantie.
+
+4. Auf **Install** klicken. In Sekunden aktiv, kein Neustart.
+
+</Steps>
+
+| Gruppe | Extensions | Warum |
+|---|---|---|
+| **Formatierung & Qualität** | Prettier, ESLint, HTMLHint, Code Spell Checker | Code sauber halten; Probleme melden, bevor ich etwas ausführe |
+| **Web-Workflow** | Live Server, Auto Rename Tag, JS (ES6) snippets | Das Bauen von Seiten beschleunigen — Live Server aktualisiert den Browser beim Speichern automatisch |
+| **Git-Unterstützung** | GitLens, Git History | Wer welche Zeile geändert hat, und eine durchstöberbare Projekthistorie |
+| **Komfort & Lesbarkeit** | Andromeda (Theme), Material Icon Theme, Better Comments | Der gemeinsame Look, aussagekräftige Datei-Icons, hervorgehobene TODO-/Warn-Kommentare |
+
+<Aside type="caution" title="Still heißt nicht kaputt">
+Manche Extensions funktionieren sofort; andere erwachen erst in späteren Kursen. Live Server erwacht in Web Foundations, ESLint ab JavaScript, und **GitLens zeigt nichts an, bis ein Ordner ein Git-Projekt ist** — sein Schweigen jetzt ist also zu erwarten, kein Fehler. Außerdem: mehr Extensions sind *nicht* besser — jede kostet ein wenig Geschwindigkeit und Aufmerksamkeit. Zwölf kuratierte schlagen fünfzig angesammelte.
+</Aside>
+
+### VS-Code-Einstellungen — die fünf für diesen Kurs
+
+Extensions geben Fähigkeiten; **Einstellungen** bestimmen das Verhalten. Die Einstellungen mit **Strg + ,** (Komma) öffnen, das Suchfeld nutzen und fünf Dinge setzen:
+
+| Suchen nach | Setzen auf | Was es tut |
+|---|---|---|
+| `format on save` | **Haken** bei Format On Save | Code räumt sich bei jedem Speichern selbst auf |
+| `format on paste` | **Haken** bei Format On Paste | Eingefügter Code übernimmt sofort meine Formatierung |
+| `default formatter` | **Prettier - Code formatter** | Sagt den beiden oben, *welches Werkzeug* aufräumt |
+| `minimap` | **Haken entfernen** bei Minimap: Enabled | Entfernt den winzigen Code-Übersichtsstreifen — mehr Platz, weniger Ablenkung |
+| `telemetry` | Telemetry Level → **off** | Keine Nutzungsdaten verlassen meinen Rechner (Datenschutz-Hygiene) |
+
+<Aside type="tip" title="Die ganze Kette in zehn Sekunden beweisen">
+In meinem Übungsordner eine Datei `test.js` anlegen, `const x=1;` tippen (Abstandschaos inklusive) und mit **Strg + S** speichern. Es schnappt zu `const x = 1;`. Dieses eine Zuschnappen beweist drei Dinge auf einmal: Format On Save ist an, Prettier ist der Standard-Formatter, und die Extension lebt.
+</Aside>
+
+### Der Browser (Chrome als Standard)
+
+Zwei Prüfungen: **installiert und aktuell** (Drei-Punkte-Menü → Hilfe → Über Google Chrome — es aktualisiert sich genau dort selbst) und **als Standard gesetzt** (der ehrliche Test: einen Link von außerhalb eines Browsers anklicken — eine E-Mail, ein PDF — und sehen, ob er sich in Chrome öffnet).
+
+Den Standard setzen: **Windows** — Einstellungen → Apps → Standard-Apps → Google Chrome → Als Standard festlegen. **macOS** — Systemeinstellungen → Schreibtisch & Dock → Standard-Webbrowser. **Linux** — Einstellungen → Standardanwendungen. Es ändert nur, *welche App Links öffnet*; jeder andere Browser bleibt installiert.
+
+### Das GitHub-Konto
+
+Keine Software — eine Identität im Web, und in Kurs 05 wird es zum Online-Zuhause von allem, was ich baue. **Prüfen:** bei [github.com](https://github.com/) anmelden; mein Dashboard zu sehen ist die ganze Prüfung. Passwort vergessen? „Forgot password?" *jetzt* nutzen, nicht mitten im Kurs.
+
+<Aside type="note" title="Falls ich ein neues Konto anlege">
+- **Benutzername: wählen, als wäre er dauerhaft und öffentlich — denn er ist beides.** Mein GitHub-Profil wird Teil meiner beruflichen Identität; Arbeitgeber schauen darauf, und es steht in meinem Lebenslauf. Etwas, das auf meinem Namen aufbaut, altert gut; Witze und Gamer-Tags nicht. Späteres Umbenennen bricht jeden bestehenden Link.
+- **E-Mail:** eine, die ich langfristig behalte, nicht an einen aktuellen Job oder eine Schule gebunden.
+- **Passwort + 2FA:** ein starkes, einzigartiges Passwort, und die **Zwei-Faktor-Authentifizierung** einschalten — GitHub verlangt sie zunehmend, und ein Konto, das monatelange Arbeit enthält, verdient das zweite Schloss.
+
+Was ich noch *nicht* tue: Git auf meinem Rechner mit diesem Konto verbinden. Dieser Handschlag eröffnet Kurs 05. Es ist kostenlos, und es ist das einzige Konto, das dieses Modul braucht.
+</Aside>
+
+## Die Checkliste zur Umgebungs-Bereitschaft
+
+In einem Rutsch, ausgeführt aus dem integrierten Terminal von VS Code. Ein Rechner, der alle acht besteht, ist bereit für den ganzen Block.
+
+| # | Prüfung | So sieht Bestehen aus |
+|---|---|---|
+| 1 | `git --version` | Beliebige Versionsnummer |
+| 2 | `node --version` | Beliebige Versionsnummer |
+| 3 | `npm --version` | Beliebige Versionsnummer |
+| 4 | Extensions (Strg + Shift + X) | Die zwölf sind unter Installed gelistet |
+| 5 | Einstellungskette | `const x=1;` schnappt beim Speichern zu `const x = 1;` |
+| 6 | Chrome | Ein außerhalb eines Browsers geklickter Link öffnet sich in Chrome |
+| 7 | Hyper (macOS & Linux) | Öffnet sich und antwortet auf `pwd` |
+| 8 | GitHub | Ich kann mich bei github.com anmelden |
+
+<Aside type="tip" title="Eine jetzt fehlschlagende Zeile ist eine Erfolgsgeschichte">
+Versionsnummern, die von jedem Beispiel abweichen, sind ein *Bestehen*, kein Durchfallen — sie unterscheiden sich auf jedem Rechner. Und falls eine Zeile wirklich fehlschlägt, ist genau das der Zweck dieser Checkliste: Es kostet nichts, das jetzt zu beheben, im Gegensatz zu mitten im Kurs.
+</Aside>
+
+## Fehlerbehebung — die drei Muster
+
+| Muster | Was wirklich passiert | Die Lösung |
+|---|---|---|
+| **`command not found` direkt nach der Installation** | Mein Terminal las seine Liste der Programmordner *beim Öffnen*, bevor die Installation den neuen hinzufügte | **Zuerst ein frisches Terminal** — vollständig schließen, neu öffnen, erneut versuchen. Nur neu installieren, wenn ein wirklich frisches Terminal weiterhin fehlschlägt |
+| **Der Installer läuft nicht / die Admin-Abfrage weist mich ab** | Ich bin auf einem Rechner, auf dem die Installationsrechte jemand anderem gehören (Firmen-/Familiengerät) | Menschlich, nicht technisch: der Besitzer oder die IT gibt Zugangsdaten ein oder installiert es. Nichts sollte das umgehen |
+| **Eine alte Version war schon da** | Eine Installation von vor Jahren | Spielt hier fast nie eine Rolle. Wenn ein Werkzeug sich falsch verhält und meine Version weit zurückliegt, ersetzt eine frische Installation der aktuellen Version einfach die alte — das ist das ganze Upgrade |
+
+<Aside type="note" title="Der PATH, eine Ebene tiefer">
+Diese „Liste von Ordnern" hat einen Namen: der **PATH** — eine Umgebungsvariable, die die Verzeichnisse enthält, die die Shell der Reihe nach für jeden Befehl durchsucht, den ich tippe. Installer hängen ihren Ordner daran an; ein laufendes Terminal behält die Kopie des PATH, mit der es gestartet ist. Das ist das gesamte Rätsel von Muster #1 — und der gesamte Grund für die goldene Regel. Meinen sehe ich mit `echo $PATH` (macOS/Linux) oder `$env:Path` (PowerShell).
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| GUI vs. CLI | Klicken vs. Tippen; das **Terminal** ist das Fenster, in dem die CLI lebt |
+| Terminal vs. Shell | Terminal = das Fenster; Shell (PowerShell / Zsh / Bash) = das Programm darin, das Befehle ausführt |
+| Nie den Prompt tippen | Das `$`, `%` oder `>` ist der Prompt — ich tippe nur, was *danach* kommt |
+| Der Fünf-Befehle-Rhythmus | `pwd` (wo) · `ls` (was ist hier) · `cd` (bewegen, `..` = hoch) · `mkdir` (anlegen) — **prüfen-bewegen-bestätigen** |
+| Windows- vs. Unix-Befehle | `touch` → `New-Item` in PowerShell; die meisten anderen (`ls`, `cat`, `cp`, `rm`) haben passende Aliase |
+| Schweigen = Erfolg | `cd` / `mkdir` sagen nichts, wenn sie funktionieren; mit `pwd` / `ls` bestätigen |
+| Fehler lesen | `not found` = Tippfehler/fehlendes Programm · `no such file` = falscher Ordner · `too many arguments` = das Leerzeichen quoten |
+| Die vier Werkzeuge | VS Code schreibt · Git merkt sich · Node.js führt JS aus (+ npm) · Browser zeigt & untersucht |
+| Git vs. GitHub | Git = das Werkzeug auf meinem Rechner (offline); GitHub = das Online-Zuhause für Git-Projekte |
+| Node.js = Runtime | Führt JavaScript überall aus, nicht nur im Browser; bringt **npm** mit (Package-Installer) |
+| DevTools ist eine Sandbox | Untersuchen bearbeitet nur meine *lokale Kopie*; ein Neuladen macht es rückgängig — sicher, an allem herumzuprobieren |
+| Editor vs. IDE | Editor = leicht + allgemein, nach Bedarf erweitern (VS Code); IDE = komplette Werkstatt für ein Ökosystem (ABAP später) |
+| Die goldene Regel | Nach jeder Installation: **das Terminal schließen, ein frisches öffnen, dann prüfen** |
+| Prüfen = beliebige Version | `--version`, das mit *irgendeiner* Nummer antwortet, ist das Bestehen — Nummern unterscheiden sich auf jedem Rechner |
+| Node: LTS wählen | Long Term Support = Stabilität vor Neuheit; das, was professionelle Teams fahren |
+| `command not found` nach der Installation | Fast immer ein veraltetes Terminal — zuerst ein frisches Terminal (der **PATH** wurde beim Öffnen gelesen) |

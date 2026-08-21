@@ -1,0 +1,220 @@
+---
+title: "SAP- & ERP-Grundlagen"
+description: "Was SAP und ERP wirklich sind, die SAP-Produktlandschaft (S/4HANA, Cloud vs. On-Premise, die Modulübersicht), wo ABAP hineinpasst, die Laufbahnen als Implementation Consultant vs. ABAP-Entwickler und wie diese Fähigkeiten auf Karrieren und Zertifizierungen abbilden."
+sidebar:
+  label: "1 · SAP- & ERP-Grundlagen"
+  order: 1
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+## Das Problem, das ERP löst
+
+Stell dir ein Unternehmen vor, in dem jedes Team seine eigenen Aufzeichnungen führt. Die Finanzabteilung hat eine Tabelle, das Lager eine andere, die Personalabteilung eine dritte — und keine spricht mit der anderen. Ein einzelnes Ereignis (ein Verkauf, eine Lieferung, ein Austritt) muss von Hand in jedes System neu eingetippt werden. Die Zahlen driften auseinander, Fehler schleichen sich ein, und niemand hat das vollständige Bild auf einen Blick.
+
+Genau dieses Chaos der voneinander getrennten Abteilungen soll **ERP** beseitigen.
+
+<Aside type="note" title="Definition — ERP">
+**Enterprise Resource Planning** ist Software, die die einzelnen Funktionen eines Unternehmens — Finanzen, Personal, Fertigung, Lieferkette, Vertrieb — in **einem verbundenen System** mit **einer einzigen Quelle der Wahrheit** zusammenführt. Erfasse ein Ereignis einmal, und jeder betroffene Bereich wird automatisch mit aktualisiert.
+</Aside>
+
+Die Kernidee ist *Koordination*, nicht Gleichförmigkeit. Jede Abteilung leistet sehr unterschiedliche Arbeit; ERP hält diese unterschiedliche Arbeit synchron. Ein einziger erfasster Auftrag zieht von selbst Kreise: Die Verkaufszahlen bewegen sich, das Lager erhält den Versandauftrag, der Bestand sinkt, die Finanzabteilung sieht die eingehende Zahlung, und ein niedriger Lagerbestand kann eine Nachbestellung auslösen — alles, ohne dass jemand den Auftrag fünfmal neu eintippt.
+
+<Aside type="caution" title="Zwei Fallen, die es zu vermeiden gilt">
+- **„ERP ist nur eine große Datenbank."** Nein — es sind die Regeln und Abläufe, die die Geschäftsfunktionen koordiniert halten, und nicht bloß ein Ort zum Speichern von Datensätzen.
+- **„SAP hat ERP erfunden."** Nein — ERP ist eine ganze Kategorie mit mehreren Anbietern. SAP ist einer der größten, aber nicht der einzige.
+</Aside>
+
+---
+
+## Was SAP ist
+
+**SAP** = die Software, mit der große Organisationen ihr Geschäft betreiben — Finanzen, Personal, Lieferketten, Kunden — alles in einem verbundenen System. Es ist zugleich der Name des deutschen Unternehmens, das sie herstellt. Das Akronym steht für **Systeme, Anwendungen und Produkte in der Datenverarbeitung**.
+
+Die Gründungsgeschichte brauche ich für die Wiederholung nicht. Die eine Tatsache, auf die es ankommt: SAP ist seit Jahrzehnten die Rückgrat-Software für einen riesigen Teil der Geschäftswelt — und genau deshalb lohnt es sich, diese Fähigkeiten aufzubauen.
+
+---
+
+## Warum die Nachfrage hoch und dauerhaft ist
+
+Ein sehr großer Teil der Großunternehmen läuft auf SAP — in der Fertigung, der Automobilbranche, im Einzelhandel, in der Energiewirtschaft, im Gesundheitswesen, in der Pharmabranche und im öffentlichen Sektor. Diese Reichweite wird über eine einfache Kette zu stetiger Nachfrage:
+
+<div class="sc-flow"><div class="sc-node amber">Viele große Organisationen sind auf SAP angewiesen</div><span class="arrow">→</span><div class="sc-node slate">Es muss eingerichtet, gewartet und erweitert werden</div><span class="arrow">→</span><div class="sc-node green">Fortlaufender Bedarf an SAP-Fachleuten</div></div>
+
+Was die Nachfrage *dauerhaft* macht und nicht zu einem vorübergehenden Trend: SAP ist tief in der Arbeitsweise dieser Organisationen verankert, und es herauszureißen wäre enorm kostspielig und riskant. Also bleiben die Systeme — und mit ihnen der Bedarf an Menschen, die sie verstehen.
+
+<div class="sc-chips"><span class="sc-chip">Fertigung</span><span class="sc-chip">Automobilbranche</span><span class="sc-chip">Einzelhandel</span><span class="sc-chip">Energie &amp; Versorgung</span><span class="sc-chip">Gesundheitswesen &amp; Pharma</span><span class="sc-chip">Öffentlicher Sektor</span></div>
+
+---
+
+## Die SAP-Produktlandschaft
+
+SAP ist nicht ein einzelnes Programm — es ist eine ganze Produktfamilie. Vorerst muss ich die Namen nur *wiedererkennen*, nicht anwenden. Die drei Kernnamen plus die Idee der funktionalen Module:
+
+| Name | Was es ist | Status / Richtung |
+| --- | --- | --- |
+| **ECC** | Das seit Langem etablierte ERP-Kernsystem, das viele Organisationen jahrelang betrieben haben | Legacy / vorherige Generation |
+| **S/4HANA** | Das ERP der neueren Generation — schneller, moderner, auf der In-Memory-Datenbank HANA aufgebaut | Wohin SAP und seine Kunden sich bewegen |
+| **BTP** (Business Technology Platform) | Plattform zum Erstellen, Erweitern und Verbinden von Apps *rund um* das Kernsystem | Die Erweiterungs- / Integrationsschicht |
+
+### Cloud vs. On-Premise
+
+Dasselbe ERP kann auf zwei Wegen bereitgestellt werden, und die Wahl bestimmt, wer es betreibt und wie es angepasst wird.
+
+| | On-Premise | Cloud |
+| --- | --- | --- |
+| **Wo es läuft** | Eigene Server / eigenes Rechenzentrum des Unternehmens | Von SAP (oder einem Anbieter) gehostet und betrieben |
+| **Kontrolle & Anpassung** | Maximale Kontrolle, tiefgreifende individuelle Änderungen | Stärker standardisiert, mit Leitplanken |
+| **Upgrades** | Verantwortung des Unternehmens, seltener | Verwaltet, regelmäßige Updates |
+| **Richtung** | Etablierte Basis | Wohin neue Einführungen gedrängt werden |
+
+### Die funktionale Modulübersicht
+
+ERP ist in funktionale Bereiche gegliedert — oft **Module** oder **Lines of Business** genannt —, die jeweils einen Teil des Unternehmens abdecken. Dies ist eine übersichtliche Darstellung, keine vollständige oder exakte Liste von Codes.
+
+| Bereich | Gängiger Name / Bezeichnung | Deckt grob ab |
+| --- | --- | --- |
+| Finanzen | **FI** (Financial Accounting), **CO** (Controlling) | Konten, Berichtswesen, Kostenkontrolle |
+| Vertrieb | **SD** (Sales & Distribution) | Aufträge, Preisfindung, Lieferung, Fakturierung |
+| Material / Beschaffung | **MM** (Materials Management) | Einkauf, Bestand, Lieferanten |
+| Produktion | Fertigung / Planung | Produktionspläne, Werksbetrieb |
+| Logistik / Lieferkette | Lieferketten-Funktionen | Waren bewegen und verfolgen |
+| Personalwesen | **HR / HCM**, **SuccessFactors** (Cloud-HR) | Personal, Gehaltsabrechnung, Talent |
+
+<Aside type="tip">
+Merkanker für die Wiederholung: **FI/CO = Geld, SD = Verkaufen, MM = Einkaufen/Bestand, SuccessFactors = Personal (Cloud-HR)**. Die Modulcodes variieren je nach Version, deshalb behalte ich das *Konzept* (welcher Geschäftsbereich) im Kopf, statt mir die genauen Buchstaben einzuprägen.
+</Aside>
+
+---
+
+## Wo ABAP hineinpasst
+
+<Aside type="note" title="Definition — ABAP">
+**Advanced Business Application Programming** — SAPs eigene Programmiersprache, mit der man das Verhalten von SAP-Systemen von innen heraus aufbaut und anpasst.
+</Aside>
+
+Die Unterscheidung, die alles Weitere prägt, ist **Konfigurieren vs. Programmieren**:
+
+- **Konfigurieren** = die eingebauten Funktionen von SAP so einrichten und anpassen, dass sie zur Arbeitsweise eines bestimmten Unternehmens passen — weitgehend *ohne Code zu schreiben*. Das ist die **Consultant**-Seite.
+- **Programmieren (ABAP)** = Code schreiben, um neues Verhalten aufzubauen oder tiefer anzupassen, als es die Konfiguration erlaubt. Das ist die **Entwickler**-Seite.
+
+Stell es dir vor wie in einem Haus wohnen gegenüber hinter die Wände gehen: Die meisten Nutzer verwenden einfach die fertigen Räume (Konfiguration/Funktionen); ABAP ist dafür da, die Leitungen und Rohre dahinter zu verändern.
+
+---
+
+## Die zwei Karrierewege
+
+Die beiden Rollen, auf die dies vorbereitet, sind keine Weggabelung, bei der ich mich für eine entscheide und die andere verliere — sie sind eine **Abfolge**. Alle streben zuerst den Implementation Consultant an; ABAP baut für diejenigen darauf auf, die weitermachen.
+
+<div class="sc-flow"><div class="sc-node soft">Grundlagen</div><span class="arrow">→</span><div class="sc-node green">Implementation Consultant<span class="sub">gemeinsames Ziel</span></div><span class="arrow">→</span><div class="sc-node violet">ABAP Developer Associate<span class="sub">weiterführender Weg</span></div></div>
+
+| | **Implementation Consultant** | **ABAP Developer Associate** |
+| --- | --- | --- |
+| Kernarbeit | SAP so konfigurieren, dass es zu einem Geschäft passt | SAP mit ABAP programmieren |
+| Hauptkompetenz | Geschäftsprozesse + Konfigurationsdenken | Programmieren + tieferes Problemlösen |
+| Programmieren? | Weitgehend keines | Ja — es ist der Job |
+| Position im Weg | Erstes / gemeinsames Ziel | Fortsetzung, baut auf der Consultant-Basis auf |
+| Wer geht hierhin | Die meisten Lernenden, zuerst | Diejenigen, die dranbleiben und tiefer einsteigen wollen |
+
+Die Königskombination ist **techno-funktional**: jemand, der die Geschäftsseite versteht *und* den Code schreiben kann. Diese Mischung ist wirklich gefragt.
+
+---
+
+## Häufige Missverständnisse
+
+| Mythos | Realität |
+| --- | --- |
+| „SAP ist ein einzelnes Programm." | Eine große Familie verbundener Produkte und Module (deshalb existieren ECC, S/4HANA und BTP alle). |
+| „Man muss Programmierer sein, um mit SAP zu arbeiten." | Ein Großteil der SAP-Arbeit ist Konfiguration und das Verständnis von Geschäftsprozessen — ohne Coding. ABAP ist ein Weg, nicht das ganze Feld. |
+| „SAP ist nur für riesige Unternehmen." | Große Organisationen sind sein Kernland, aber es wird breiter eingesetzt, als man annimmt. |
+| „SAP lernen = für immer ein Werkzeug lernen." | Die Fähigkeiten (Geschäftsprozesse, Konfiguration, irgendwann Programmieren) übertragen sich und wachsen über Rollen und eine ganze Karriere hinweg. |
+
+---
+
+## Der Zertifizierungsweg
+
+Grob gesehen laufen die SAP-Zertifizierungen in derselben Reihenfolge wie die Laufbahnen:
+
+<Steps>
+
+1. **Grundlagen** — grundlegendes Fundament in Digitalem, Web und Programmierung. Zertifiziert für sich allein nichts; es macht die späteren Schritte realistisch.
+
+2. **SAP Certified Implementation Consultant** — das gemeinsame Ziel, das die meisten Lernenden erreichen. Qualifiziert für echte Consultant-Rollen.
+
+3. **SAP ABAP Developer (Associate)** — für diejenigen, die weitermachen, der technische Weg, der darauf aufbaut.
+
+</Steps>
+
+Grob gliedern sich die SAP-Zertifizierungen in **Associate → Specialist → Professional** (Einstiegswissen, dann fokussierte Tiefe, dann erfahrener Praktiker). Schon das Erreichen der ersten Zertifizierung öffnet Türen — die Beschäftigungsfähigkeit wächst mit *jeder* Stufe, nicht erst ganz am Ende.
+
+---
+
+## Karrieren, auf die dies abbildet
+
+<Tabs>
+<TabItem label="Nach der Consultant-Zertifizierung">
+
+- Junior SAP Consultant
+- SAP Implementation Consultant
+- SAP Functional Consultant (oft an ein Modul gebunden: FI/CO, SD, MM…)
+- SAP Business Process Analyst
+- SAP Application Consultant
+
+</TabItem>
+<TabItem label="Nach der ABAP-Zertifizierung">
+
+- SAP ABAP Developer
+- SAP ABAP Cloud Developer
+- Junior SAP Technical Consultant
+- SAP S/4HANA Extension Developer
+
+</TabItem>
+<TabItem label="Beides (techno-funktional)">
+
+- SAP Techno-Functional Consultant
+- SAP ABAP Developer / Consultant
+- SAP Data Migration Consultant / Developer
+- SAP Integration / Interface Developer
+
+</TabItem>
+</Tabs>
+
+<Aside type="caution">
+Realitätscheck: Eine Zertifizierung ist die **sich öffnende Tür**, kein garantierter Spaziergang hinein. Viele „Junior"-Rollen verlangen trotzdem etwas Projekterfahrung — ich betrachte die Zertifizierung als das, was mich qualifiziert, mich zu bewerben und in die Rolle hineinzuwachsen, wobei das erste echte Projekt der Schritt durch die Tür ist. Für alle, die anfangen, ganz normal.
+</Aside>
+
+---
+
+## Wie ich es im Lebenslauf formuliere
+
+Die goldene Regel: **beschreiben, was ich wirklich getan habe — akkurat und selbstbewusst, weder übertrieben noch unter Wert verkauft.**
+
+- Übertreiben („SAP-zertifizierter Consultant" nach nur den Grundlagen) fliegt in Vorstellungsgesprächen schnell auf und verbrennt Glaubwürdigkeit.
+- Untertreiben verkauft mich unter Wert.
+- **Der Test:** Könnte ich diese Aussage bequem untermauern, wenn ich sie erklären oder demonstrieren sollte? Wenn ja, ist sie fair. Wenn es mich winden ließe, formuliere ich sie zu dem um, wozu ich stehen kann.
+- Benennen, was ich kann, und *wo es in einem anerkannten Weg steht* — ohne noch nicht erworbene Zertifizierungen zu behaupten. Akkurate Aussagen wachsen, je mehr ich vom Programm abschließe.
+- Die Betonung auf das Ziel zuschneiden: Consultant-lastige Bewerbungen stellen Geschäftsprozess- und Konfigurationsdenken in den Vordergrund; entwicklerlastige stellen Programmiergrundlagen und Problemlösung in den Vordergrund. Dieselben ehrlichen Fakten, auf das Publikum ausgerichtet.
+
+**Erfolg = Kompetenz, nicht Perfektion** — die Dinge zuverlässig tun zu können (Fehler und Erholung eingeschlossen), nicht makellos oder am schnellsten zu sein.
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+| --- | --- |
+| ERP | Ein verbundenes System / eine einzige Quelle der Wahrheit, die unterschiedliche Abteilungen koordiniert hält. |
+| SAP | Führender deutscher ERP-Anbieter (und dessen Software); „Systeme, Anwendungen und Produkte in der Datenverarbeitung". |
+| Warum die Nachfrage dauerhaft ist | SAP ist tief verankert und teuer zu ersetzen, also bleiben die Systeme und die Menschen. |
+| Drei Produktnamen | ECC (Legacy-Kern), S/4HANA (ERP der neuen Generation auf HANA), BTP (Erweiterungs-/Integrationsschicht). |
+| Cloud vs. On-Premise | On-Premise = Kontrolle + tiefe Anpassung; Cloud = standardisiert, verwaltet, wohin neue Einführungen gehen. |
+| Modulübersicht | FI/CO = Geld, SD = Verkaufen, MM = Einkaufen/Bestand, SuccessFactors = Personal (Cloud-HR). |
+| ABAP | SAPs eigene Sprache; Programmieren (Entwickler) vs. Konfigurieren (Consultant). |
+| Zwei Wege | Abfolge, keine Gabelung: erst Implementation Consultant, danach ABAP Developer Associate. |
+| Techno-funktional | Geschäftsverständnis + Coding = das stark gefragte kombinierte Profil. |
+| Zertifizierungsstufen | Associate → Specialist → Professional; Grundlagen → Consultant → ABAP. |
+| Lebenslauf-Regel | Nur behaupten, was ich auf Nachfrage demonstrieren könnte; akkurat und selbstbewusst. |

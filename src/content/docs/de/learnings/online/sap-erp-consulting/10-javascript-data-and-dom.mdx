@@ -1,0 +1,502 @@
+---
+title: "JavaScript — Daten & das DOM"
+description: "Mit Daten und der Seite in JavaScript arbeiten — Arrays und Schleifen, die wichtigsten Array-Methoden, Objekte und this, Klassen und Vererbung, Referenzen vs. Kopien und Destructuring sowie das Manipulieren des DOM: Elemente auswählen, ändern und erzeugen, Events und Formulare behandeln."
+sidebar:
+  label: "10 · JS: Daten & DOM"
+  order: 10
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Bisher hielten meine Variablen immer nur *eine* Sache auf einmal — einen Namen, einen Preis, ein Ja/Nein. In diesem Kapitel geht es darum, *viele* Dinge und *strukturierte* Dinge zu halten: Listen (**Arrays**), beschriebene Dinge (**Objekte**) und Baupläne zum Erzeugen von Objekten (**Klassen**). Danach bringt es sie über das **DOM** auf eine echte Webseite. Der rote Faden der ganzen Woche: **Inhalt als Daten + eine wiederholbare Regel** schlägt jedes Von-Hand-Kopieren.
+
+## Arrays — eine geordnete Liste in einer Variable
+
+Ein **Array** ist eine geordnete Liste von Werten, die unter einem Namen gespeichert ist. Ich schreibe es mit eckigen Klammern (ein *Array-Literal*) und lese die Einträge über ihren **Index** zurück — eine Positionsnummer, die bei **0** beginnt, nicht bei 1.
+
+```js
+'use strict';
+
+const flavors = ["rye", "spelt", "wheat"];
+
+console.log(flavors[0]);      // rye   — erster Eintrag
+console.log(flavors[2]);      // wheat — letzter von dreien
+console.log(flavors.length);  // 3     — wie viele Einträge
+flavors[1] = "sourdough";     // den zweiten Eintrag überschreiben
+```
+
+```text
+rye
+wheat
+3
+```
+
+<Aside type="caution" title="Der klassische Off-by-one-Bug">
+Der letzte Index ist `length - 1`, **nicht** `length`. Ein Array mit 3 Einträgen hat die Indizes 0, 1, 2. Über das Ende hinaus zu lesen (`flavors[99]`) stürzt nicht ab — es gibt still `undefined` zurück, und der eigentliche Fehler zeigt sich erst einen Schritt später, wenn ich dieses Nichts *verwenden* will.
+</Aside>
+
+### Array-Methoden — mutierend vs. nicht-mutierend
+
+Der wichtigste Unterschied überhaupt: Manche Methoden **verändern das Array direkt** (mutieren es), andere **lassen es unangetastet und geben einen neuen Wert zurück**. Diese zu verwechseln ist die Quelle böser Überraschungen.
+
+| Methode | Tut was | Mutiert? |
+|---|---|---|
+| `push()` / `pop()` | Am **Ende** hinzufügen / entfernen | Ja |
+| `unshift()` / `shift()` | Am **Anfang** hinzufügen / entfernen | Ja |
+| `includes()` / `indexOf()` | Ist es vorhanden? / an welchem Index? | Nein |
+| `slice(start, end)` | Ein Stück in ein neues Array kopieren (end ausgeschlossen) | Nein |
+| `concat()` / `join(sep)` | Arrays verbinden / Einträge zu einem String zusammenkleben | Nein |
+
+```js
+const flavors = ["rye", "spelt", "wheat"];
+
+flavors.push("olive");                 // jetzt 4 Einträge, direkt verändert
+console.log(flavors.pop());            // olive  — entfernt & zurückgegeben
+console.log(flavors.includes("rye"));  // true
+console.log(flavors.indexOf("wheat")); // 2
+console.log(flavors.slice(0, 2));      // [ 'rye', 'spelt' ] — ein NEUES Array
+console.log(flavors.join(" and "));    // rye and spelt and wheat
+```
+
+<Aside type="note" title="Faustregel">
+`push`/`pop`/`shift`/`unshift`/`splice`/`reverse`/`sort` **verändern** das Original. `slice`/`concat`/`join`/`map`/`filter` **geben etwas Neues zurück** und lassen das Original unangetastet — zu diesen greife ich, wenn das Original überleben muss.
+</Aside>
+
+## Schleifen — denselben Block viele Male ausführen
+
+Eine **Schleife** führt einen Codeblock wiederholt aus. So ehre ich **DRY** ("Don't Repeat Yourself") über Daten, statt fast identische Zeilen von Hand zu schreiben.
+
+<Tabs>
+<TabItem label="for...of (Standard für den Alltag)">
+
+Besucht jeden Eintrag direkt — kein Index-Buchhalten. Lies es als *"für jedes flavor der flavors"*.
+
+```js
+const flavors = ["rye", "spelt", "wheat"];
+
+for (const flavor of flavors) {
+  console.log(flavor);
+}
+// rye
+// spelt
+// wheat
+```
+</TabItem>
+<TabItem label="for (volle Kontrolle)">
+
+Packt drei Teile in einen Kopf: **Start**, **Bedingung** (vor jedem Durchlauf geprüft), **Nachgedanke** (läuft nach jedem Durchlauf). Dazu greife ich, wenn ich den Index `i` selbst brauche.
+
+```js
+const flavors = ["rye", "spelt", "wheat"];
+
+for (let i = 0; i < flavors.length; i++) {
+  console.log(`${i}: ${flavors[i]}`);
+}
+// 0: rye
+// 1: spelt
+// 2: wheat
+```
+</TabItem>
+<TabItem label="while (bedingungsgesteuert)">
+
+Wiederholt, *solange* seine Bedingung wahr bleibt. **Etwas im Inneren muss die Bedingung Richtung falsch bewegen**, sonst läuft es endlos.
+
+```js
+let countdown = 3;
+
+while (countdown > 0) {
+  console.log(countdown);
+  countdown--;               // bewegt sich Richtung Stopp
+}
+// 3
+// 2
+// 1
+```
+</TabItem>
+</Tabs>
+
+<Aside type="caution" title="Zwei Schleifen-Fallen">
+- **Endlosschleife:** Wenn die Bedingung nie falsch werden kann, friert das Programm ein. `Ctrl + C` stoppt es, dann prüfe, was die Bedingung bewegen sollte.
+- **Einen Schritt zu weit gehen:** `i <= flavors.length` liest einen über das Ende hinaus und gibt `undefined` aus. Die Bedingung ist `< length`, weil die Indizes bei `length - 1` aufhören.
+</Aside>
+
+### Ausgabe aus Daten mit einer Schleife aufbauen
+
+Hier ist der Lohn — dieselbe Regel auf jeden Eintrag angewandt, kein Copy-Paste:
+
+```js
+const artists = ["Pinkfong", "Asake", "Johnny Cash"];
+
+for (const artist of artists) {
+  console.log(`=== ${artist} ===`);
+  console.log(`Listen to ${artist} now on every platform`);
+}
+```
+
+```text
+=== Pinkfong ===
+Listen to Pinkfong now on every platform
+=== Asake ===
+Listen to Asake now on every platform
+=== Johnny Cash ===
+Listen to Johnny Cash now on every platform
+```
+
+Füge dem Array einen vierten Künstler hinzu und eine vierte Karte erscheint gratis. Korrigiere den Satz einmal und jede Karte ist korrigiert. Das ist DRY in Aktion.
+
+## Callback-Array-Methoden
+
+Diese Methoden nehmen einen **Callback** — eine Funktion, die ich übergebe und die die Methode einmal pro Eintrag ausführt. Die Arrow-Form (`(x) => ...`) hält jede davon auf einen lesbaren Einzeiler. Diese Tabelle über den Schreibtisch pinnen:
+
+| Methode | Rückgabe | Verwendung |
+|---|---|---|
+| `forEach` | `undefined` | mit jedem Eintrag *etwas tun* (Seiteneffekt, z. B. ausgeben) |
+| `map` | ein **neues Array**, gleiche Länge | jeden Eintrag in etwas Neues umwandeln |
+| `filter` | ein **neues Array**, meist kürzer | nur die Einträge behalten, die einen Test bestehen |
+| `reduce` | ein einziger Wert | das ganze Array auf ein Ergebnis eindampfen |
+| `find` | ein Eintrag (oder `undefined`) | den **ersten** Eintrag holen, der einen Test besteht |
+| `some` / `every` | ein Boolean | besteht **irgendein** / bestehen **alle** Einträge einen Test? |
+
+```js
+const prices = [4.5, 12, 3.2, 8];
+
+prices.forEach((p) => console.log(p));               // gibt jeden aus; gibt nichts zurück
+const withTax  = prices.map((p) => (p * 1.07).toFixed(2)); // ['4.82','12.84','3.42','8.56']
+const cheap    = prices.filter((p) => p < 5);        // [ 4.5, 3.2 ]
+const total    = prices.reduce((sum, p) => sum + p, 0); // 27.7  (0 = Startwert)
+const firstBig = prices.find((p) => p > 10);         // 12
+const anyBig   = prices.some((p) => p > 10);         // true
+const allBig   = prices.every((p) => p > 10);        // false
+```
+
+<Aside type="caution" title="Die berühmte forEach-Falle">
+`forEach` gibt **immer** `undefined` zurück. Sein Ergebnis zu speichern und sich zu fragen, wo das Array geblieben ist, ist ein Ritus der Initiation — wenn ich Ergebnisse zurückwill, war die gesuchte Methode `map`. Außerdem: `map` und `filter` verändern das Original **nicht**; das Ergebnis steckt im Rückgabewert.
+</Aside>
+
+## Kopien vs. geteilte Referenzen
+
+Arrays und Objekte sind **Referenztypen**. Eine Variable hält nicht die Liste selbst — sie hält einen *Pfeil* (eine Referenz), der auf die eine Liste im Speicher zeigt. Eine schlichte Zuweisung kopiert also den *Pfeil*, nicht die Liste:
+
+```js
+const original = ["rye", "spelt"];
+const copy = original;   // gleicher Pfeil → gleiche Liste!
+
+copy.push("wheat");
+console.log(original);   // [ 'rye', 'spelt', 'wheat' ]  ← das "Original" hat sich auch geändert
+```
+
+Zwei Namen, eine geteilte Liste — schreibe über den einen und beide sehen es. Der bewusste Weg, ein *wirklich neues* Array zu erzeugen, ist **Spread-Syntax** — drei Punkte innerhalb eines neuen Literals:
+
+```js
+const original = ["rye", "spelt"];
+const realCopy = [...original]; // brandneues Array mit denselben Einträgen
+
+realCopy.push("olive");
+console.log(realCopy.length);   // 3
+console.log(original.length);   // 2  ← unangetastet
+```
+
+<Aside type="note" title="Flache Kopie — das ehrliche Etikett">
+Spread erzeugt ein neues Array nur auf der **obersten Ebene**. Sind Einträge selbst Arrays/Objekte, bleiben deren innere Referenzen weiterhin geteilt. Für flache Listen ist das schlicht "eine Kopie"; für verschachtelte Daten macht `structuredClone(value)` eine vollständig unabhängige tiefe Kopie.
+</Aside>
+
+## Objekte — ein beschriebenes Ding
+
+Ein Array beantwortet *"welche Einträge, in welcher Reihenfolge?"*. Ein **Objekt** beantwortet *"was weiß ich über dieses eine Ding?"*. Es ist eine Sammlung benannter Werte, geschrieben mit geschweiften Klammern (ein *Objekt-Literal*). Jedes Paar ist eine **Eigenschaft**: der **Key** links, der **Wert** rechts (jeder Typ — String, Zahl, Boolean, sogar ein weiteres Array oder Objekt).
+
+```js
+const croissant = {
+  name: "Butter Croissant",
+  price: 2.8,
+  vegetarian: true,
+};
+
+console.log(croissant.name);        // Butter Croissant  — Punktnotation
+const field = "price";
+console.log(croissant[field]);      // 2.8  — Klammernotation, Key aus einer Variable
+croissant.price = 3.0;              // eine Eigenschaft ändern
+```
+
+Arbeitsregel: **Punkte wenn ich kann, Klammern wenn der Key in einer Variable liegt** (oder Zeichen enthält, die ein einfacher Name nicht haben kann). Einen nicht existierenden Key zu lesen gibt still `undefined` zurück — ein vertippter Key ist der übliche Übeltäter.
+
+### Methoden und `this`
+
+Eine **Methode** ist einfach eine Eigenschaft, deren Wert eine Funktion ist. Innerhalb einer Methode verweist das Schlüsselwort **`this`** auf das Objekt, auf dem die Methode aufgerufen wurde — so liest eine Methode ihre eigenen Geschwister-Eigenschaften.
+
+```js
+const croissant = {
+  name: "Butter Croissant",
+  price: 2.8,
+  describe: function () {
+    return `${this.name} costs ${this.price} euros`;
+  },
+};
+
+console.log(croissant.describe()); // Butter Croissant costs 2.8 euros
+```
+
+<Aside type="tip" title="Warum hier keine Arrow-Funktion?">
+Methoden, die `this` verwenden, schreibt man mit der `function`-Form (oder der später gezeigten Klassen-Kurzschreibweise), **nicht** als Arrow-Funktionen — Arrows behandeln `this` anders und zeigen nicht auf das Objekt. Jeder eingebaute Aufruf wie `"maison".toUpperCase()` war die ganze Zeit genau dieses Muster.
+</Aside>
+
+### Arrays von Objekten
+
+Setze beide zusammen und du erhältst die Form der meisten echten Daten: **eine Liste von Dingen, jedes mit benannten Details**. Jedes Array-Werkzeug funktioniert unverändert; innerhalb der Schleife antwortet jeder Eintrag auf Punktnotation.
+
+```js
+const artists = [
+  { name: "Pinkfong", genre: "Children's music", total: "11:31" },
+  { name: "Adriano Celentano", genre: "Italian pop", total: "20:52" },
+  { name: "Asake", genre: "Afrobeats", total: "14:08" },
+];
+
+for (const artist of artists) {
+  console.log(`${artist.name}, ${artist.genre}, ${artist.total} of music`);
+}
+
+const popActs = artists.filter((a) => a.genre.includes("pop"));
+console.log(popActs.length); // 1
+```
+
+### Über die Eigenschaften eines Objekts iterieren
+
+Ein Objekt hat keine Einträge, über die man loopen könnte — es hat Eigenschaften. Drei eingebaute Funktionen verwandeln seinen Inhalt in Arrays, und dann greift jedes Array-Werkzeug:
+
+| Helfer | Rückgabe |
+|---|---|
+| `Object.keys(obj)` | Array der Keys (Strings) |
+| `Object.values(obj)` | Array der Werte |
+| `Object.entries(obj)` | Array von `[key, value]`-Paaren |
+
+```js
+const hours = { saturday: "7-14", sunday: "8-12", monday: "closed" };
+
+for (const [day, time] of Object.entries(hours)) {
+  console.log(`${day}: ${time}`);
+}
+// saturday: 7-14
+// sunday: 8-12
+// monday: closed
+```
+
+Es gibt auch `for...in`, das die Keys eines Objekts direkt besucht (`for (const day in hours)`). Es funktioniert und taucht im Code anderer Leute auf, aber ich bevorzuge den Weg über `Object.keys` / `entries`, damit ich im Array-Land mit einem einzigen mentalen Modell bleibe.
+
+### Destructuring
+
+**Destructuring** zieht Eigenschaften (oder Array-Einträge) in einer Zeile in ihre eigenen Variablen. Objekte matchen über den **Key-Namen**; Arrays matchen über die **Position**.
+
+```js
+const croissant = { name: "Butter Croissant", price: 2.8, vegetarian: true };
+const { name, price } = croissant;          // über den Key-Namen
+console.log(`${name}, ${price} euros`);     // Butter Croissant, 2.8 euros
+
+const flavors = ["rye", "spelt", "wheat"];
+const [first, second] = flavors;            // über die Position
+console.log(first, second);                 // rye spelt
+```
+
+Dieses `[day, time]` in der entries-Schleife oben war Array-Destructuring auf jedem Paar. Destructuring ist in modernen Frameworks überall — es lohnt sich, es jetzt flüssig lesen zu können. (Achte auf die Groß-/Kleinschreibung: `const { Name }` findet nichts und gibt `undefined` zurück.)
+
+## OOP — Klassen als Baupläne
+
+Wenn jedes Künstler-Objekt dieselben Keys und dieselbe `describe`-Methode trägt, wird das Kopieren dieser Struktur von Hand albern. **Objektorientierte Programmierung (OOP)** löst das: Beschreibe die *Form* einmal als **Klasse** (den Bauplan), fertige dann so viele **Instanzen** (konkrete Objekte), wie die Daten brauchen.
+
+<Aside type="tip" title="Warum das für den SAP-Weg zählt">
+ABAP — SAPs eigene Sprache — ist objektorientiert. ABAP Objects baut auf Klassen, Methoden, Instanzen und Vererbung auf, sodass genau dieses Vokabular (`class`, `constructor`, `instance`, `extends`) direkt in den Zertifizierungsweg übergeht.
+</Aside>
+
+Das kompakte Beispiel zeigt das ganze Werkzeug — `class`, `constructor`, `new`, eine Methode, plus `extends` und `super` für Vererbung:
+
+```js
+'use strict';
+
+class Artist {
+  constructor(name, genre, total) {   // läuft einmal pro neuer Instanz
+    this.name = name;                 // Daten auf DIESE Instanz setzen
+    this.genre = genre;
+    this.total = total;
+  }
+  describe() {                        // Klassenmethode — Kurzform, kein `function`
+    return `${this.name}, ${this.genre}, ${this.total} of music`;
+  }
+}
+
+class FeaturedArtist extends Artist {  // Subklasse erbt alles von Artist
+  constructor(name, genre, total, blurb) {
+    super(name, genre, total);         // ZUERST den Eltern-Konstruktor ausführen
+    this.blurb = blurb;                // dann meine eigene Eigenschaft hinzufügen
+  }
+  describe() {                         // Override — auf der Elternversion aufbauen
+    return `${super.describe()}. Featured: ${this.blurb}`;
+  }
+}
+
+const cash = new Artist("Johnny Cash", "Country", "15:40");
+const asake = new FeaturedArtist("Asake", "Afrobeats", "14:08", "Loudest new voice out of Lagos");
+
+console.log(cash.describe());
+console.log(asake.describe());
+```
+
+```text
+Johnny Cash, Country, 15:40 of music
+Asake, Afrobeats, 14:08 of music. Featured: Loudest new voice out of Lagos
+```
+
+<div class="sc-chips">
+<span class="sc-chip">class = Bauplan</span>
+<span class="sc-chip">new = eine Instanz bauen</span>
+<span class="sc-chip">constructor = Daten via this einrichten</span>
+<span class="sc-chip">extends = erben</span>
+<span class="sc-chip">super() = Eltern aufrufen</span>
+</div>
+
+<Aside type="note" title="Alten Code lesen: Konstruktorfunktionen & Prototypes">
+Vor 2015 wurde dieselbe Aufgabe mit einer schlichten `function Artist(...)` erledigt, die mit `new` verwendet wurde, und Methoden wurden an `Artist.prototype` gehängt. Die `class`-Syntax ist nur eine klarere Notation über **derselben Maschinerie** (weshalb `typeof Artist` immer noch `"function"` sagt). Ich **lese und übersetze** die alte Form; ich **schreibe** Klassen. `new` vor einer Klasse zu vergessen wirft einen klaren `TypeError`; `super()` in einem Subklassen-Konstruktor zu vergessen wirft, bevor `this` bereit ist.
+</Aside>
+
+## Das DOM — Daten auf die Seite bringen
+
+Wenn der Browser eine HTML-Datei liest, behält er nicht den Text — er baut das **DOM (Document Object Model)**: einen lebendigen **Baum aus Knoten-Objekten** im Speicher, einen pro Element, exakt so verschachtelt, wie das HTML verschachtelt. Die gerenderte Seite wird aus diesem Baum gezeichnet, deshalb der eine Satz, auf dem alles ruht: **ändere den Baum, und die Seite ändert sich sofort auf dem Bildschirm.**
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node slate">HTML-Datei<span class="sub">die Zeichnung</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">DOM-Baum<span class="sub">lebendige Objekte im Speicher</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Gerenderte Seite<span class="sub">was der Besucher sieht</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">JS bearbeitet den Baum<span class="sub">Seite aktualisiert sich sofort</span></div>
+</div>
+<figcaption>Das HTML ist die Zeichnung des Architekten; das DOM ist das stehende Gebäude; JavaScript ist die Renovierungscrew mit den Schlüsseln.</figcaption>
+</figure>
+
+Zuerst das Script mit der Seite verbinden. Diese Zeile kommt in den `<head>`; **`defer`** sagt dem Browser, die Datei erst *nachdem* das ganze Dokument geparst ist auszuführen, damit mein Code nicht nach Elementen greift, die noch nicht existieren:
+
+```html
+<script src="app.js" defer></script>
+```
+
+<Aside type="caution" title="Wenn eine Auswahl null ist, prüfe zuerst defer">
+Ein Script ohne `defer`, das nach Elementen greift, läuft *bevor* sie existieren und findet `null` — der Absturz kommt eine Zeile später. `defer` ist die standardmäßige, langweilige, korrekte Lösung. (Außerdem: Der Browser hat kein Node — `require`, `process` und Konsorten existieren hier nicht.)
+</Aside>
+
+### Elemente auswählen und ändern
+
+`document` ist der Einstiegspunkt des Baums. **`querySelector(cssSelector)`** gibt das **erste** Element zurück, das auf einen CSS-Selektor passt (dieselben Selektoren wie in CSS — `.class`, `#id`, `tag`); **`querySelectorAll`** gibt **alle** Treffer als Liste zurück, über die ich loopen kann.
+
+| Aufgabe | Wie |
+|---|---|
+| Ersten Treffer auswählen | `document.querySelector(".tagline")` |
+| Alle Treffer auswählen | `document.querySelectorAll(".card")` |
+| Text lesen / ändern | `el.textContent = "New text"` |
+| Klasse hinzufügen / entfernen | `el.classList.add("highlight")` / `.remove("highlight")` |
+| Inline-Style ändern | `el.style.color = "crimson"` |
+
+```js
+'use strict';
+
+const heading = document.querySelector("h1");
+heading.textContent = "Startupistan Records";  // Baum ändert sich → Bildschirm ändert sich
+heading.classList.add("highlight");            // CSS legt das Aussehen fest; JS entscheidet wann
+```
+
+Die Arbeitsteilung: **CSS besitzt das Aussehen**, **JavaScript entscheidet wann** ein Element eine Klasse trägt. Ein Selektor, der auf nichts passt, gibt still `null` zurück — denk an den Punkt für Klassen und die Raute für IDs.
+
+### Elemente aus Daten erzeugen
+
+Die Seite zu lesen ist die halbe Kraft; die andere Hälfte ist das **Herstellen** von Inhalt, der nie im HTML stand. Zwei Werkzeuge: **`createElement(tag)`** baut ein neues *losgelöstes* Element (es existiert nur im Speicher), und **`append()`** hängt es in ein Eltern-Element ein.
+
+```js
+const artists = [
+  { name: "Pinkfong", genre: "Children's music", total: "11:31" },
+  { name: "Asake", genre: "Afrobeats", total: "14:08" },
+];
+
+const cardArea = document.querySelector(".cards");
+
+for (const artist of artists) {
+  const card  = document.createElement("article");   // die Karte bauen
+  const title = document.createElement("h3");
+  title.textContent = artist.name;                   // aus den Daten füllen
+  const line  = document.createElement("p");
+  line.textContent = `${artist.genre}, ${artist.total} of music`;
+  card.append(title, line);                           // die Teile zusammensetzen
+  cardArea.append(card);                              // in den Baum einhängen
+}
+```
+
+Lies den Schleifenkörper als Fließband: **bauen → aus Daten füllen → zusammensetzen → einhängen**. Füge dem Array einen dritten Künstler hinzu, lade neu, und eine dritte Karte erscheint. Dieses Daten-zu-Elementen-Muster ist das schlagende Herz jedes Frameworks, dem ich später begegnen werde.
+
+<Aside type="caution" title="Der klassische stille Fehlgriff">
+Ein erzeugtes Element ist losgelöst, bis ein `append` es platziert. Vergiss das abschließende `append` und es gibt **keinen Fehler und kein Element** — einfach nichts auf dem Bildschirm.
+</Aside>
+
+### Events und Formulare — ein durchgearbeitetes Beispiel
+
+Alles bisher läuft einmal beim Laden. **`addEventListener(eventName, callback)`** registriert eine Funktion, die **jedes Mal** läuft, wenn ein benanntes Event passiert. Übergib den Callback **ungelaufen** (keine Klammern) — `()` zu schreiben führt ihn einmal beim Laden aus und nie wieder.
+
+Für Formulare zwei weitere Teile: Die **`value`**-Eigenschaft eines Inputs hält, was der Besucher getippt hat, und das **`submit`**-Event feuert, wenn er das Formular absendet. Ein absendendes Formular navigiert standardmäßig weg, also rufe ich **`event.preventDefault()`** auf dem Event-Objekt auf, um das zu stoppen und es an Ort und Stelle zu behandeln.
+
+<Steps>
+
+1. **Die Elemente greifen** — einmal, ganz oben.
+
+2. **Auf `submit` hören** und die Standard-Navigation mit `preventDefault()` stoppen.
+
+3. **`input.value` lesen**, gegen leere Eingabe absichern (ein leerer String ist falsy), dann darauf reagieren.
+
+</Steps>
+
+```js
+'use strict';
+
+const form      = document.querySelector(".signup");
+const nameInput = document.querySelector("#artist-name");
+const list      = document.querySelector(".cards");
+
+form.addEventListener("submit", (event) => {  // Callback UNGELAUFEN übergeben
+  event.preventDefault();                     // die Seite bleibt stehen
+  const name = nameInput.value.trim();        // lesen, was getippt wurde
+  if (name) {                                 // eine leere Absendung ablehnen
+    const card = document.createElement("article");
+    card.textContent = name;
+    list.append(card);                        // die neue Karte live hinzufügen
+    nameInput.value = "";                     // das Feld für das nächste leeren
+  }
+});
+```
+
+<Aside type="note" title="Wo dieser Kurs endet — und der nächste beginnt">
+Alle Daten hier lebten innerhalb meiner eigenen Datei. Echte Apps laden Daten von *anderswo* — Dateien, Servern, anderen Diensten — was `fetch`, JSON, HTTP und asynchronen Code ins Spiel bringt. Genau da setzt der Kurs System Design Fundamentals an, aufbauend auf allem in diesem Kapitel.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| Array | Geordnete Liste in einer Variable; Index beginnt bei 0, letzter ist `length - 1` |
+| Mutierend vs. nicht | `push`/`pop`/`shift`/`unshift` verändern direkt; `slice`/`map`/`filter`/Spread geben neu zurück |
+| Schleifen | `for...of` = jeder Eintrag (Standard); `for` = Index gebraucht; `while` = bedingungsgesteuert |
+| DRY | Inhalt als Daten + eine Schleife ersetzt jede von Hand kopierte Zeile |
+| forEach vs. map | `forEach` gibt `undefined` zurück (handelt); `map` gibt ein neues Array zurück (transformiert) |
+| filter / find / reduce | viele behalten / ersten Treffer holen / auf einen Wert eindampfen |
+| Referenztypen | Ein Array/Objekt zuzuweisen kopiert den *Pfeil*, nicht das Ding — nutze Spread `[...x]` / `{...x}` zum Kopieren |
+| Flache Kopie | Spread kopiert nur die oberste Ebene; verschachtelte Referenzen bleiben geteilt (`structuredClone` für tief) |
+| Objekt | Benannte Werte (key: value); `.` wenn der Key literal ist, `[var]` wenn der Key in einer Variable steckt |
+| Methode & this | Methode = Eigenschaft, die eine Funktion hält; `this` = das Objekt vor dem Punkt (keine Arrow) |
+| keys/values/entries | Verwandeln ein Objekt in Arrays; loope `entries` mit einem `[key, value]`-Destructure |
+| Destructuring | `{ name } = obj` über den Key-Namen; `[a, b] = arr` über die Position |
+| Class / new | Bauplan + `new` baut eine Instanz; `constructor` setzt Daten via `this` ein |
+| extends / super | `extends` erbt; `super(...)` ruft den Eltern-Konstruktor auf; `super.m()` ruft die Elternmethode auf |
+| DOM | Lebendiger Baum aus Knoten-Objekten; ändere den Baum → Seite aktualisiert sich sofort |
+| defer | Führt das Script aus, nachdem das Dokument geparst ist, damit Auswahlen nicht `null` sind |
+| Auswählen / ändern | `querySelector` (erster) / `querySelectorAll` (alle); `textContent`, `classList`, `style` |
+| Erzeugen / append | `createElement` baut losgelöst; `append` hängt es ein — append vergessen = stilles Nichts |
+| Events | `addEventListener("click", cb)` führt `cb` jedes Mal aus; übergib den Callback ungelaufen |
+| Formulare | Lies `input.value`; `event.preventDefault()` stoppt das Wegnavigieren beim Absenden |

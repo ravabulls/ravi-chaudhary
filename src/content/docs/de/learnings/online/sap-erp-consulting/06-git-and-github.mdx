@@ -1,0 +1,623 @@
+---
+title: "Git & GitHub — Komplette Referenz"
+description: "Versionskontrolle von null: was Git und GitHub sind, die drei Bereiche, der alltägliche Commit-Workflow, Branching und Merging, Pull Requests, SSH-Einrichtung und Veröffentlichen, Merge Conflicts auflösen, GitHub Pages — mit jedem Befehl in einer geordneten Referenz und Lösungen für die häufigsten Fehler."
+sidebar:
+  label: "6 · Git & GitHub"
+  order: 6
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+## Warum es Versionskontrolle gibt
+
+Die selbstgebastelte Variante davon hat jeder schon gemacht: `report-final.docx`, `report-final2.docx`, `report-FINAL-really.docx`. Es funktioniert so halb, bis ich mich nicht mehr erinnere, welche Kopie die neueste ist, nicht mehr sehe, was sich zwischen zwei davon eigentlich geändert hat, und die falsche lösche — ohne Rückgängig. Im Team wird es schlimmer: Zwei Leute bearbeiten dieselbe Datei, und das zweite Speichern überschreibt klammheimlich das erste.
+
+**Versionskontrolle** ist genau dieser Instinkt, nur richtig gemacht. Sie beobachtet einen Ordner und hält, sobald ich es sage, einen **Snapshot** von allem fest, der Reihe nach, jeweils mit einer Notiz und einem Zeitstempel. Im Gegenzug bekomme ich vier Dinge:
+
+- **Verlauf** — jeder Speicherpunkt bleibt erhalten, sodass sich das Projekt wie ein Tagebuch dessen liest, was sich wann und warum geändert hat.
+- **Rückgängig** — jede Datei, oder das ganze Projekt, kann auf einen früheren Speicherpunkt zurückgehen. Nichts, was ich festgehalten habe, geht durch eine spätere Änderung verloren.
+- **Paralleles Arbeiten** — mehrere Leute (oder auch nur ich, der zwei Ideen ausprobiert) arbeiten gleichzeitig, ohne sich gegenseitig in die Quere zu kommen.
+- **Nachvollziehbarkeit** — jede Änderung ist signiert, sodass „wer hat das angefasst, und warum?" immer eine Antwort hat.
+
+Es ist kein reines Werkzeug für große Teams. Allein arbeitend verdienen sich schon das Rückgängig und der Verlauf ihren Platz — das Ich von nächstem Monat hat alles vergessen, und der Verlauf ist die Art, wie ich mich erinnere.
+
+<Aside type="note" title="Backup vs. Versionskontrolle — nicht dasselbe">
+Ein Backup bewahrt *eine Kopie* meiner Dateien an einem sicheren Ort auf. Versionskontrolle bewahrt die *Geschichte* meiner Dateien auf — jeden Schritt, der Reihe nach, mit Begründungen. Sie beantworten unterschiedliche Fragen, und ich kann beides haben.
+</Aside>
+
+---
+
+## Git vs. GitHub — die eine Unterscheidung, die man im Kopf behalten muss
+
+Die beiden Namen werden so oft in einem Atemzug genannt, dass Einsteiger sie für eine Sache halten. Es sind zwei Dinge, von verschiedenen Leuten gemacht, und das erste funktioniert vollständig ohne das zweite.
+
+| | **Git** | **GitHub** |
+|---|---|---|
+| Was es ist | Ein Programm, das auf meinem Rechner installiert ist | Eine Website und ein Cloud-Dienst |
+| Wo es läuft | Lokal, auf meinem Rechner | Im Internet |
+| Seine Aufgabe | Zeichnet Verlauf auf, stellt Versionen wieder her, verwaltet Branches | *Hostet* Git-Projekte, damit andere sie sehen und mitwirken können |
+| Braucht Internet? | Nein — funktioniert komplett offline | Ja |
+| Braucht einen Account? | Nein | Ja |
+| Entstanden | 2005 | 2008 |
+
+Eine Frage hält es auseinander: **„Wo passiert es?"** Verlauf aufzeichnen passiert auf meinem Rechner, mit Git, offline. Diesen Verlauf teilen und Änderungen besprechen passiert in der Cloud, auf GitHub. Würde das Internet morgen verschwinden, liefe Git weiter und GitHub nicht.
+
+GitHub ist nicht der einzige Anbieter — **GitLab**, **Bitbucket** und **Azure DevOps** machen dieselbe Arbeit. Jeder Befehl weiter unten funktioniert bei allen identisch, weil die Befehle zu *Git* gehören, nicht zur Website. Git zu lernen ist die übertragbare Fähigkeit; GitHub ist nur der Treffpunkt, den diese Notizen verwenden.
+
+---
+
+## Das Denkmodell — die drei Bereiche
+
+Das ist das eine Stück Theorie, auf dem das ganze Werkzeug ruht. Jeder Befehl, den ich lerne, bewegt Arbeit zwischen drei (eigentlich vier) Orten, immer in dieselbe Richtung.
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node amber">Working Directory<span class="sub">die Dateien, die ich bearbeite</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Staging Area<span class="sub">was in den nächsten Speicherpunkt kommt</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">Repository<span class="sub">dauerhafter Verlauf (.git)</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node slate">Remote<span class="sub">der Zwilling in der Cloud (GitHub)</span></div>
+</div>
+<figcaption>Arbeit fließt in eine Richtung: bearbeiten → stagen, was zusammengehört → in den Verlauf committen → in die Cloud pushen.</figcaption>
+</figure>
+
+- **Working Directory** (Arbeitsverzeichnis) — der Ordner, den ich sehe; meine tatsächlichen Dateien in ihrem aktuellen Zustand. Hier bearbeite ich. Ab hier verwende ich den englischen Begriff Working Directory.
+- **Staging Area** — ein Warteraum zwischen meinen Änderungen und dem Verlauf. Hier sammle ich *genau* die Änderungen, die in den nächsten Speicherpunkt gehören. Nichts hier ist bisher dauerhaft.
+- **Repository** — der aufgezeichnete Verlauf, aufbewahrt in einem versteckten `.git`-Ordner. Sobald eine Änderung hier **committet** ist, ist sie ein dauerhafter Speicherpunkt. (Ein **Repository**, oder **Repo**, ist einfach ein Ordner plus sein vollständiger aufgezeichneter Verlauf.)
+- **Remote** — eine Kopie des Repositorys, die anderswo gehostet wird (GitHub). Weiter unten behandelt.
+
+**Warum zwei Schritte zum Speichern, nicht einer?** Die Staging Area ist Gits bestes Feature in Verkleidung: Sie lässt mich *auswählen*, was in jeden Speicherpunkt kommt. Wenn ich in einer Datei einen Tippfehler behoben und eine andere halb neu geschrieben habe, kann ich die fertige Tippfehler-Korrektur jetzt committen und die unfertige Umschreibung aus dem Verlauf heraushalten, bis sie bereit ist. Speicherpunkte bleiben sauber und ehrlich beschriftet.
+
+<Aside type="tip" title="Ein Paket packen">
+Mein Schreibtisch ist das Working Directory — die Dinge liegen so herum, wie ich sie hinterlassen habe. Der offene Karton ist die Staging Area — ich lege bewusst genau das hinein, was in diese Lieferung gehört, und kann auch wieder etwas herausnehmen. Den Karton zuzukleben und zu beschriften ist der Commit — Inhalt jetzt festgelegt, aktenkundig. Anders als ein echtes Paket verlässt ein Commit nie das Haus; er bleibt in meinem Verlauf, für immer abrufbar.
+</Aside>
+
+Jede Datei befindet sich in genau einem von vier Zuständen und durchläuft sie im Lauf der Arbeit: **untracked** (brandneu, Git wurde nie gesagt, dass es sich darum kümmern soll), **unmodified** (getrackt, identisch mit dem letzten Speicherpunkt), **modified** (getrackt, seit dem letzten Speicherpunkt geändert, noch nicht gestaget), **staged** (im Karton, bereit für den nächsten Commit).
+
+---
+
+## Erstmalige Einrichtung — ein Handschlag pro Rechner
+
+Jeder Speicherpunkt wird für immer mit einem Autorennamen und einer E-Mail signiert. Git weigert sich, diese zu erraten, also sage ich es ihm einmal, und es merkt es sich für jedes Projekt auf diesem Rechner. `--global` bedeutet „für jedes Projekt auf diesem Computer".
+
+```bash
+# Meine Commits signieren (dieselbe E-Mail wie mein GitHub-Account verwenden)
+git config --global user.name "My Name"
+git config --global user.email "me@example.com"
+
+# Jedes neue Repo auf einem Branch namens "main" starten lassen (passt zu GitHub)
+git config --global init.defaultBranch main
+
+# Eine Einstellung überprüfen, indem ich sie beim Namen abfrage
+git config user.name
+```
+
+Keine Ausgabe bedeutet, es hat funktioniert. Die E-Mail ist nicht geheim — sie wird im Verlauf des Projekts sichtbar, sobald ich veröffentliche, und genau so wird Arbeit meinem Profil zugerechnet. Etwas falsch getippt? Dieselbe Zeile noch einmal mit dem richtigen Wert ausführen; die neue Antwort ersetzt die alte.
+
+<Aside type="note" title="Warum den Default-Branch setzen?">
+`main` ist der moderne Standardname für die Hauptlinie des Verlaufs eines Projekts, und GitHub verwendet ihn. Ältere Git-Installationen nutzen stattdessen standardmäßig `master` — diese eine Zeile verhindert einen klassischen Anfänger-Konflikt, bevor er entsteht.
+</Aside>
+
+---
+
+## Die alltägliche Schleife
+
+Das ist der Rhythmus jedes Arbeitstags: **bearbeiten → status → add → commit**, mit `log`, `diff` und `restore` als Lese- und Rettungswerkzeugen drum herum.
+
+<Steps>
+
+1. **Das Repository erstellen — einmal pro Projekt.** `init` ist die Kurzform von *initialize* („zum ersten Mal einrichten"). Einmal ausführen, im obersten Ordner des Projekts.
+
+   ```bash
+   cd my-project
+   git init
+   ```
+   ```text
+   Initialized empty Git repository in /home/me/my-project/.git/
+   ```
+
+   Dieser versteckte `.git`-Ordner *ist* das Repository — jeder Speicherpunkt liegt darin, und er reist mit dem Ordner mit, wenn ich ihn kopiere oder verschiebe. Niemals von Hand bearbeiten oder löschen.
+
+2. **Den Zustand prüfen — vor und nach allem.** `git status` meldet, was untracked, modified oder staged ist und auf welchem Branch ich bin. Es ändert nichts, kostet eine Sekunde und macht Gits unsichtbare Buchführung sichtbar.
+
+   ```bash
+   echo "The Corner Bakery" > notes.txt
+   git status
+   ```
+   ```text
+   On branch main
+
+   No commits yet
+
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+           notes.txt
+   ```
+
+3. **Stagen, was zusammengehört.** `git add` kopiert den *aktuellen* Inhalt einer Datei in die Staging Area. Schweigen bedeutet Erfolg — mit `status` bestätigen (die Datei wechselt von rot/untracked zu grün/staged).
+
+   ```bash
+   git add notes.txt          # eine Datei — der bewusste Standardfall
+   git add notes.txt menu.txt # mehrere Dateien
+   git add .                  # alles unterhalb hiervon — bequem, aber vorher status prüfen
+   ```
+
+   Stagen macht einen Snapshot der Datei *so, wie sie genau jetzt ist*. Wenn ich sie danach erneut bearbeite, ist diese neuere Änderung **nicht** im Karton — `status` listet dieselbe Datei dann als staged *und* modified auf. Lösung: erneut `git add`.
+
+4. **Den Snapshot festhalten.** `git commit -m "message"` versiegelt alles Gestagete zu einem dauerhaften Speicherpunkt. `-m` ist die *message* (Commit-Message), in Anführungszeichen direkt dahinter.
+
+   ```bash
+   git commit -m "Add bakery notes file"
+   ```
+   ```text
+   [main (root-commit) f4a2c1e] Add bakery notes file
+    1 file changed, 1 insertion(+)
+    create mode 100644 notes.txt
+   ```
+
+   Dieses `f4a2c1e` ist der kurze **Bezeichner** des Commits (seine Adresse). Ein **Commit** ist ein dauerhafter, adressierbarer Snapshot, signiert mit meinem Namen und meiner E-Mail, mit der Zeit gestempelt, mit meiner Commit-Message beschriftet. Er geht nie klammheimlich verloren oder wird überschrieben — der Stapel wächst nur.
+
+5. **Den Verlauf lesen.** `git log` läuft die Commits neueste zuerst ab; `--oneline` ist die kompakte Story-Ansicht.
+
+   ```bash
+   git log --oneline
+   ```
+   ```text
+   7b9e0d2 (HEAD -> main) Add Saturday opening hours
+   f4a2c1e Add bakery notes file
+   ```
+
+   `HEAD` ist Gits Wort für „wo ich gerade stehe" — normalerweise die Spitze des aktuellen Branches. Wenn der Log mehr als einen Bildschirm füllt, öffnet er sich in einem Pager: **`q` drücken zum Beenden** (der klassische „mein Terminal hängt fest"-Moment, vorab gelöst).
+
+6. **Die genauen Änderungen sehen.** `git diff` zeigt Zeile für Zeile, was sich seit dem letzten Commit im Working Directory geändert hat und noch nicht gestaget ist. `+`-Zeilen wurden hinzugefügt, `-`-Zeilen entfernt, schlichte Zeilen sind unveränderter Kontext. Dieses **Diff**-Format ist die universelle Sprache des Code Reviews.
+
+   ```bash
+   git diff
+   ```
+   ```text
+   diff --git a/notes.txt b/notes.txt
+   @@ -1,2 +1,3 @@
+    The Corner Bakery
+    Open Saturdays from 8:00
+   +Closed on public holidays
+   ```
+
+7. **Eine Datei retten — der Lohn des Committens.** Eine Datei beschädigt (geleert, einen Absatz gelöscht, eine Stunde Änderungen, die ich weghaben will)? `git restore` wirft die *nicht committeten* Änderungen weg und bringt die Datei auf ihren letzten Speicherpunkt zurück.
+
+   ```bash
+   git status                 # bestätigt, dass die Datei "modified" ist — die Arbeit ist im letzten Commit sicher
+   git restore notes.txt      # den Schaden verwerfen, zurück zum letzten Speicherpunkt
+   git restore --staged menu.txt   # eine Datei wieder AUS dem Karton nehmen (Inhalt unangetastet)
+   ```
+
+   Die ehrliche Warnung: `restore` *verwirft* aktuelle, nicht committete Änderungen — das ist seine ganze Aufgabe. Im Zweifel vorher kurz einen Blick auf `git diff` werfen. Es rührt niemals committeten Verlauf an; Commits sind das, *woraus* es rettet. Je öfter ich committe, desto näher ist mein nächster Speicherpunkt immer.
+
+</Steps>
+
+### Eine gute Commit-Message schreiben
+
+Die Message ist für Menschen, die später mitlesen — meistens das zukünftige Ich, drei Wochen später, das alles vergessen hat. Die Konventionen der Branche:
+
+- **Imperativ** — „Add weekend specials", „Fix Saturday opening time", nicht „added" oder „adding". Lies sie, als vollende sie den Satz *„dieser Commit wird…"*.
+- **Sag was, und warum, wenn nützlich** — „Increase espresso price to match supplier costs" schlägt „change price" schlägt „stuff".
+- **Kurze erste Zeile** — unter ~50 Zeichen; es ist die Zeile, die jede Verlaufsansicht zeigt.
+
+Und committe **klein und oft**: eine logische Änderung pro Commit (ein Bug behoben, ein Abschnitt geschrieben), nicht „alles, was ich heute gemacht habe". Ein Verlauf aus kleinen, beschrifteten Schritten ist eine lesbare Geschichte, ermöglicht chirurgisch genaues Rückgängigmachen und ist wirklich überprüfbar; ein tausend Zeilen langer „did stuff"-Commit wird überflogen und durchgewunken.
+
+---
+
+## .gitignore — Dateien, die aus dem Verlauf herausbleiben
+
+Nicht alles in einem Projektordner gehört in seinen Verlauf. Eine **`.gitignore`** ist eine reine Textdatei im obersten Ordner des Repos, die Muster auflistet, die Git niemals tracken soll — ein Muster pro Zeile. Ignorierte Dateien tauchen einfach nicht mehr als untracked auf; Git behandelt sie als unsichtbar (sie bleiben unangetastet auf der Festplatte).
+
+```bash title=".gitignore"
+# Generierte Dateien — regenerierbar, also ist ihr Aufzeichnen nur Rauschen
+*.log
+dist/
+temp/
+
+# Abhängigkeiten — aus der Rezeptdatei des Projekts neu installierbar
+node_modules/
+
+# Geheimnisse — der Verlauf ist dauerhaft und, einmal veröffentlicht, öffentlich
+.env
+```
+
+Die `.gitignore`-Datei selbst *wird* getrackt und committet, sodass das ganze Team dieselben Regeln teilt:
+
+```bash
+git add .gitignore
+git commit -m "Add gitignore for logs, build output and secrets"
+```
+
+<Aside type="caution" title="Zwei Dinge, die sie NICHT tut">
+Eine Datei zur `.gitignore` hinzuzufügen löscht sie **nicht**, und es entfernt eine bereits committete Datei **nicht** aus dem Tracking (das braucht einen zusätzlichen Schritt). Und wenn ein Geheimnis bereits committet wurde, muss es als geleakt gelten und rotiert werden — der Verlauf ist dauerhaft.
+</Aside>
+
+---
+
+## Ab in die Cloud — die Verbindung zu GitHub
+
+Alles bisher war lokal. Ein **Remote Repository** ist eine Kopie meines Repos, die anderswo gehostet wird — für uns auf GitHub. Die beiden sind Zwillinge, die ich *bewusst* synchron halte: **Push** schickt meine lokalen Commits hoch, **Pull** holt Remote-Commits herunter. Nichts synchronisiert sich von selbst, niemals.
+
+Ein Repo bezieht sich auf seine Remotes über einen Spitznamen, und der nahezu universelle Spitzname für das Haupt-Remote eines Projekts ist **`origin`** — nichts weiter als eine gespeicherte Adresse mit einem kurzen Namen, wie ein Kontakt in meinem Telefon. `git push origin main` liest sich als „pushe Branch `main` zum Remote mit dem Spitznamen `origin`".
+
+<Steps>
+
+1. **Ein leeres Repo auf GitHub erstellen.** Auf github.com: das **+**-Menü → **New repository**. Gib ihm einen kurzen, kleingeschriebenen, mit Bindestrichen getrennten Namen (`bakery-notes`, nicht `test123`). Wähle **Public**. **Lass jede Initialisierungs-Checkbox leer** — kein README, keine .gitignore, keine Lizenz.
+
+   <Aside type="caution" title="Warum leer starten?">
+   Mein lokales Repo hat bereits Verlauf. Wenn GitHub ein README hinzufügt, bekommt das Remote einen eigenen Commit, und die beiden Verläufe widersprechen sich sofort. Wirklich leer zu starten lässt meinen lokalen Verlauf *zum* Verlauf des Remotes *werden*. (Ein Projekt zuerst *auf* GitHub zu starten ist etwas anderes — dann ist ein README in Ordnung.)
+   </Aside>
+
+2. **Die Adresse des Remotes unter dem Spitznamen `origin` speichern.** Kopiere die **SSH**-Adresse von der Einrichtungsseite des Repos (sie beginnt mit `git@github.com:`, nicht `https://`). Das schreibt nur eine Zeile in die lokalen Einstellungen — kein Netzwerk, kein Upload, noch keine Prüfung.
+
+   ```bash
+   git remote add origin git@github.com:my-username/bakery-notes.git
+   git remote -v          # überprüfen — listet die gespeicherten Remotes (-v = verbose)
+   ```
+   ```text
+   origin  git@github.com:my-username/bakery-notes.git (fetch)
+   origin  git@github.com:my-username/bakery-notes.git (push)
+   ```
+
+3. **Einen Push versuchen — und ihm beim Scheitern zusehen (mit Absicht).** Der erste Push stößt auf eine verschlossene Tür:
+
+   ```bash
+   git push -u origin main
+   ```
+   ```text
+   git@github.com: Permission denied (publickey).
+   fatal: Could not read from remote repository.
+   ```
+
+   Das ist **nicht** kaputt — es ist *verweigert*. GitHub sagt: „Ich weiß nicht, wer du bist, und ich erwarte, dass du es mit einem Public Key beweist, den du mir nicht gezeigt hast." **GitHub akzeptiert seit 2021 keine Account-Passwörter mehr von Git** — ein Passwort, das bei jedem Push getippt wird, ist ein Passwort, das ständig exponiert ist. Pushen braucht eine maschinentaugliche Zugangsberechtigung: einen **SSH-Key**.
+
+4. **Einen SSH-Key einrichten — einmal pro Rechner.** Ein **SSH-Schlüsselpaar** sind zwei zusammengehörige Dateien: ein **Private Key**, der meinen Rechner *nie* verlässt, und ein **Public Key**, den ich GitHub einmal übergebe. Von da an kann GitHub überprüfen, dass Anfragen von dem Rechner kommen, der den privaten Zwilling hält, ohne dass ein Geheimnis über die Leitung geht.
+
+   ```bash
+   # 1. Das Paar erzeugen (bei allen Abfragen Enter drücken:
+   #    den Standard-Speicherort akzeptieren, die Passphrase leer lassen)
+   ssh-keygen -t ed25519 -C "me@example.com"
+
+   # 2. Den PUBLIC Key ausgeben (die .pub-Datei — die EINZIGE, die den Rechner je verlässt)
+   cat ~/.ssh/id_ed25519.pub
+   ```
+
+   Kopiere diese ganze Zeile (beginnt mit `ssh-ed25519 …`). Auf github.com: Profilbild → **Settings** → **SSH and GPG keys** → **New SSH key**, benenne ihn nach dem Rechner, einfügen, **Add SSH key**. Dann testen:
+
+   ```bash
+   ssh -T git@github.com
+   ```
+   ```text
+   Hi my-username! You've successfully authenticated, but GitHub does not provide shell access.
+   ```
+
+   Die Zeile „successfully authenticated" ist das Ziel. (Beim ersten Kontakt die einmalige Echtheitsfrage mit `yes` beantworten. Den Standard-Dateinamen in Schritt 1 beizubehalten ist das, was Git den Schlüssel von selbst finden lässt, ganz ohne zusätzliche Konfiguration.)
+
+5. **Jetzt wirklich pushen.** Derselbe Befehl funktioniert nun. `-u` (für *upstream*) wird **einmal pro Branch** benötigt, bei dessen erstem Push — es merkt sich die Paarung, sodass spätere Pushes auf ein Wort schrumpfen.
+
+   ```bash
+   git push -u origin main
+   ```
+   ```text
+   To github.com:my-username/bakery-notes.git
+    * [new branch]      main -> main
+   branch 'main' set up to track 'origin/main'.
+   ```
+
+   Ab dem zweiten Push einfach nur:
+
+   ```bash
+   git push        # schickt committete Arbeit hoch; nicht committete Änderungen bleiben zu Hause
+   ```
+
+6. **Pullen, um aktuell zu bleiben.** `git pull` holt neue Commits vom gepaarten Branch des Remotes und merged sie in meinen lokalen. `Fast-forward` bedeutet den einfachen Fall: Das Remote war einfach voraus und mein Branch hat aufgeholt, nichts zu verweben.
+
+   ```bash
+   git pull
+   ```
+
+   Die professionelle Klammer um jede Arbeitssitzung: **pullen, bevor ich anfange** (auf dem neuesten Stand aufbauen), **pushen, wenn ich aufhöre** (teilen, sichern, sichtbar machen).
+
+</Steps>
+
+### Clonen — die Reise in umgekehrter Richtung
+
+`git clone` lädt eine *vollständige* Kopie eines Remote-Repos herunter — alle Dateien, den gesamten Verlauf, mit bereits verdrahtetem `origin` (kein `git remote add` nötig). Es ist der Standard-Erstbefehl auf einem neuen Rechner, in einem neuen Team, in einem neuen Job.
+
+```bash
+git clone git@github.com:my-username/bakery-notes.git
+cd bakery-notes
+```
+
+<Aside type="note" title="Clone vs. Fork">
+**Clone** kopiert ein Repo auf meinen *Rechner*. **Fork** kopiert das Repo *von jemand anderem* in meinen *GitHub-Account* — der Weg, um zu einem Projekt beizutragen, bei dem ich keinen Schreibzugriff habe (forken, meinen Fork clonen, ändern, zurück vorschlagen). Alles hier passiert in Repos, die mir gehören, wo ein einfacher Clone die ganze Geschichte ist.
+</Aside>
+
+---
+
+## Branching & Zusammenarbeit
+
+Ein **Branch** ist eine eigenständige Entwicklungslinie innerhalb eines Repositorys. Commits auf einem Branch berühren keinen anderen Branch; jede Linie lässt ihren eigenen Verlauf wachsen, bis ich sie bewusst **merge**. Jedes Repo startet mit einem Branch, `main`.
+
+Die universelle Konvention: **`main` ist die stabile Linie** — was darauf ist, funktioniert, es ist die Version, die ich jedem jederzeit zeigen würde. **Änderungen werden auf kurzlebigen Branches gemacht** — neue Arbeit, Experimente, Fixes bekommen jeweils ihren eigenen Branch, einen sicheren Arbeitsraum, in dem nichts, was ich tue, `main` stören kann. Fertig und geprüft → hineinmergen. Sackgasse → den Branch löschen, und `main` hat nie davon erfahren.
+
+<Aside type="tip" title="Eine Fotokopie, auf der ich herumkritzle">
+Ein Branch ist, als kopierte ich das Master-Dokument, um ein Kapitel auf der Kopie zu überarbeiten. Das Original bleibt sauber im Regal. Anders als bei einer Fotokopie kann Git mein überarbeitetes Kapitel automatisch wieder ins Original einweben, sobald es freigegeben ist. In Git ist ein Branch nahezu kostenlos zu erstellen und zu löschen — kurzlebige Branches mit einem einzigen Zweck sind das gesunde Muster.
+</Aside>
+
+### Einen Branch erstellen, wechseln und pushen
+
+```bash
+git branch                       # Branches auflisten; der * markiert, wo ich bin
+git switch -c weekend-specials   # einen neuen Branch erstellen UND darauf wechseln (-c = create)
+git switch main                  # zu einem bestehenden Branch wechseln
+```
+
+Das Wechseln verwandelt das Working Directory *an Ort und Stelle* — die Dateien in meinem Ordner ändern sich passend zu dem Branch, auf dem ich lande. Ein Ordner, viele parallele Zustände. **Commits landen immer auf dem Branch, auf dem ich stehe**, also ist die mit Abstand nützlichste Angewohnheit, die erste Zeile von `git status` (`On branch …`) zu lesen, bevor ich arbeite und bevor ich committe.
+
+Die alltägliche Branch-Schleife ist dasselbe bearbeiten → add → commit → push, das ich schon kenne; `-u` beim ersten Push des Branches:
+
+```bash
+git switch -c add-contact-info
+# ...Dateien bearbeiten...
+git add bakery-notes.txt
+git commit -m "Add phone number to notes"
+git push -u origin add-contact-info   # erster Push DIESES Branches
+```
+
+<Aside type="note" title="switch vs. checkout">
+Ältere Tutorials und Kollegen sagen `git checkout`, wo diese Notizen `switch` sagen. `checkout -b name` = `switch -c name` (erstellen und wechseln); `checkout name` = `switch name` (zu bestehendem wechseln). `switch` ist der neuere, klarere Befehl (2019); `checkout` funktioniert weiterhin überall. `checkout` fließend lesen, `switch` schreiben.
+</Aside>
+
+### Der Pull Request — wie Arbeit geprüft wird
+
+Ein **Pull Request** (**PR**) ist eine auf GitHub gestellte Anfrage, einen Branch in einen anderen zu mergen — fast immer *meinen Branch in `main`*. Aber der Merge ist nur das Ende; die Mitte ist der Punkt. Ein PR öffnet einen Raum, in dem die Änderung als lesbares Diff zur Ansicht steht, und Leute können **lesen**, was sich genau ändern würde, es **diskutieren** (Kommentare an genauen Zeilen verankert) und **freigeben** — oder es erst für eine weitere Runde zurückschicken. Das ist **Code Review**, wie die Branche es praktiziert.
+
+Den Namen einmal entschlüsseln: Ich *bitte* (request) darum, dass das Projekt die Änderungen meines Branches hereinzieht (pull). (GitLab nennt es *Merge Request* — dieselbe Mechanik.)
+
+<Steps>
+
+1. **Den Branch pushen**, dann den PR öffnen — über den Link, den Git in der Push-Ausgabe druckt, das **Compare & pull request**-Banner oder den **Pull requests**-Tab → **New pull request** (Basis `main`, Vergleich `my-branch`).
+
+2. **Titel und Beschreibung schreiben** — Commit-Message-Disziplin, eine Ebene höher. Titel: was es tut, im Imperativ, eine Zeile. Beschreibung: was und warum, ehrlich, plus alles, was der Reviewer wissen sollte.
+
+3. **Prüfen** im Tab **Files changed** — die ganze Änderung als ein Diff. Über jede Zeile fahren, um ein blaues **+** für einen genau dort verankerten Kommentar zu erhalten. Nützliche Kommentare sind konkret und freundlich: auf die Zeile zeigen, sagen was und warum, vorschlagen statt befehlen.
+
+4. **Mergen** mit dem grünen **Merge pull request** → **Confirm merge**. Die Commits meines Branches schließen sich `main` auf dem Remote an; der PR wird als gemerged geschlossen, seine Unterhaltung für immer als Dokumentation aufbewahrt. Nimm den **Delete branch**-Button — der Branch war ein Gerüst, seine Commits leben jetzt in `main`.
+
+5. **Die Schleife lokal schließen** — der Merge passierte auf dem Remote, also erfährt mein lokales `main` davon durch Pullen:
+
+   ```bash
+   git switch main
+   git pull
+   ```
+
+</Steps>
+
+### git merge — was der Button darunter ausführt
+
+Der Merge-Button ist keine Magie; er führt `git merge` aus. Die Grammatik bringt jeden einmal ins Straucheln: **Ich stehe auf dem empfangenden Branch und nenne den Branch, der hereingebracht wird.**
+
+```bash
+git switch main               # auf dem Empfänger stehen
+git merge weekend-specials    # die Commits dieses Branches hereinbringen
+```
+
+```text
+Updating 9c2d7e1..5d3a9f2
+Fast-forward
+ bakery-notes.txt | 1 +
+```
+
+Wieder `Fast-forward`: `main` hatte sich seit der Erstellung des Branches nicht bewegt, also hat Git einfach das Label von `main` nach vorne geschoben — kein Verweben. Wenn sich *beide* Branches bewegt haben, verwebt Git sie zu einem **Merge Commit** (ein Speicherpunkt mit zwei Eltern). In der Praxis benutze ich den **Button** — er hält den Review-Schritt angehängt — und den Befehl zu kennen bedeutet, dass der Button eine Bequemlichkeit ist, die ich verstehe, keine Abhängigkeit, die ich nicht erklären kann.
+
+### Einen Merge Conflict auflösen
+
+Ein **Merge Conflict** passiert in genau einer Situation: **beide Branches haben dieselben Zeilen unterschiedlich geändert.** Git weigert sich zu erraten, welche Version gewünscht ist, also hält es an und fragt. Das ist das ganze Ereignis — kein Defekt, kein Verlust; eine Maschine, die eine Ermessensentscheidung ablehnt, die meine zu treffen ist. (Unterschiedliche Dateien, oder unterschiedliche Teile derselben Datei, mergen still und korrekt.)
+
+<Steps>
+
+1. **Der Merge hält an.** Git markiert die strittige Stelle innerhalb der Datei.
+
+   ```bash
+   git switch main
+   git merge price-update
+   ```
+   ```text
+   Auto-merging bakery-notes.txt
+   CONFLICT (content): Merge conflict in bakery-notes.txt
+   Automatic merge failed; fix conflicts and then commit the result.
+   ```
+
+2. **Die Datei öffnen und die Conflict-Marker lesen.** Zwischen `<<<<<<< HEAD` und `=======` steht die Version des Branches, auf dem ich *bin* (`HEAD` — hier `main`). Zwischen `=======` und `>>>>>>>` steht die Version des *hereinkommenden* Branches. Git zeigt mir beide Antworten und fragt: welche?
+
+   ```text
+   The Corner Bakery
+   <<<<<<< HEAD
+   Espresso: 2.60
+   =======
+   Espresso: 2.80
+   >>>>>>> price-update
+   ```
+
+3. **Entscheiden — das Entscheiden *ist* die Lösung.** Die Datei so bearbeiten, dass sie genau das enthält, was wahr sein soll, und alle drei Marker-Zeilen löschen.
+
+   ```text
+   The Corner Bakery
+   Espresso: 2.80
+   ```
+
+4. **Git mitteilen, dass die Frage beantwortet ist** — dieselbe add- + commit-Schleife, die ich schon beherrsche. Der Merge wird abgeschlossen; der Verlauf hält beide Zeilen fest und die menschliche Entscheidung, die sie zusammengeführt hat.
+
+   ```bash
+   git add bakery-notes.txt
+   git commit -m "Merge price-update, keeping new espresso price"
+   ```
+
+</Steps>
+
+Conflicts sind selten, wenn ich die Anti-Conflict-Gewohnheiten einhalte: **kurzlebige Branches**, **kleine, fokussierte Änderungen** und **pullen, bevor ich anfange**. Auch VS Code erkennt die Marker und zeigt über ihnen Buttons zum Übernehmen der jeweiligen Version an.
+
+---
+
+## GitHub Pages — eine Website live schalten
+
+**GitHub Pages** ist kostenloses Website-Hosting, das in jedes GitHub-Repo eingebaut ist: Sag GitHub, es soll die Dateien des Repos als Website ausliefern, und es tut es, unter einer Adresse wie `https://my-username.github.io/repo-name/`. Wenn jemand vorbeischaut, sucht GitHub nach einer Datei namens **`index.html`** — die Web-Konvention für „die Eingangstür einer Website".
+
+Der Workflow ist genau die Branch-Schleife von oben, plus ein Einstellungsschritt:
+
+<Steps>
+
+1. **Auf einem Branch eine `index.html` hinzufügen** im obersten Ordner des Repos — schon ein Platzhalter reicht, um live zu gehen:
+
+   ```html
+   <!DOCTYPE html>
+   <html>
+     <body>
+       <h1>The Corner Bakery</h1>
+       <p>Fresh bread, honest coffee.</p>
+     </body>
+   </html>
+   ```
+
+2. **Committen, pushen, PR, mergen und `main` zurückpullen** — die Schleife, die inzwischen Reflex ist.
+
+   ```bash
+   git switch -c add-homepage
+   git add index.html
+   git commit -m "Add homepage placeholder"
+   git push -u origin add-homepage
+   ```
+
+3. **Pages aktivieren.** Auf der Repo-Seite: **Settings** → **Pages** → unter *Build and deployment* Source auf **Deploy from a branch** setzen, Branch **main** und Ordner **/ (root)** wählen, **Save**.
+
+4. **Ein, zwei Minuten warten, aktualisieren**, und ein Banner zeigt **Your site is live at** `https://my-username.github.io/bakery-notes/`. Sie öffnet sich von jedem Telefon der Welt.
+
+</Steps>
+
+Von hier an ist es **bearbeiten → committen → pushen → live**: `index.html` ändern, durch die Schleife pushen, eine Minute warten, aktualisieren — die Änderung ist da. Diese selbstgebaute Pipeline hat dieselbe Form wie jedes echte Deployment; die professionelle Version fügt nur den Teilen, die ich jetzt von Hand mache, Automatisierung hinzu.
+
+<Aside type="note" title="Der Trick fürs persönliche Portfolio">
+Erstelle ein Repo mit dem exakten Namen `my-username.github.io`, und Pages liefert es direkt unter dieser Adresse aus, ohne Repo-Namen in der URL — die übliche Heimat einer persönlichen Portfolio-Website.
+</Aside>
+
+---
+
+## Die Master-Befehlstabelle
+
+Jeder Befehl aus diesen Notizen, an einem Ort, gruppiert nach der Arbeitsphase, zu der er gehört.
+
+**Setup — einmal pro Rechner**
+
+| Befehl | Was er tut | Typische Nutzung |
+|---|---|---|
+| `git --version` | Bestätigen, dass Git installiert ist | `git --version` |
+| `git config --global user.name "…"` | Den Namen setzen, der Commits signiert | Einmal, bei der Ersteinrichtung |
+| `git config --global user.email "…"` | Die E-Mail setzen, die Commits signiert (an GitHub angleichen) | Einmal, bei der Ersteinrichtung |
+| `git config --global init.defaultBranch main` | Neue Repos auf `main` starten lassen | Einmal, bei der Ersteinrichtung |
+| `git config user.name` | Eine Einstellung zur Kontrolle zurücklesen | Jederzeit |
+| `ssh-keygen -t ed25519 -C "email"` | Ein SSH-Schlüsselpaar erzeugen | Einmal pro Rechner |
+| `ssh -T git@github.com` | Testen, ob GitHub diesen Rechner erkennt | Nach dem Hinzufügen des Public Keys |
+
+**Snapshotting — die alltägliche Speicherschleife**
+
+| Befehl | Was er tut | Typische Nutzung |
+|---|---|---|
+| `git init` | Den aktuellen Ordner zu einem Repository machen | Einmal, im obersten Ordner eines Projekts |
+| `git add <file>` | Eine Datei für den nächsten Commit stagen | Nach dem Bearbeiten, vor dem Committen |
+| `git add .` | Alles unterhalb des aktuellen Ordners stagen | Nachdem man vorher `git status` geprüft hat |
+| `git commit -m "message"` | Gestagete Änderungen zu einem dauerhaften Speicherpunkt versiegeln | Einmal pro logischer Änderung |
+| `.gitignore` | Dateimuster auflisten, die Git niemals tracken soll | Einmal committet, bei Bedarf aktualisiert |
+
+**Inspizieren — schauen ohne zu ändern**
+
+| Befehl | Was er tut | Typische Nutzung |
+|---|---|---|
+| `git status` | Zeigen, was untracked, modified, staged ist und den Branch | Vor und nach allem |
+| `git log` | Commits auflisten, neueste zuerst, mit vollem Detail | Verlauf durchsehen (`q` beendet den Pager) |
+| `git log --oneline` | Kompakter Verlauf, eine Zeile pro Commit | Schneller Überblick |
+| `git diff` | Ungestagete Zeile-für-Zeile-Änderungen seit dem letzten Commit zeigen | Vor dem Stagen / vor dem Restore |
+| `git remote -v` | Die gespeicherten Remotes und ihre Adressen auflisten | Die `origin`-Verbindung prüfen |
+| `git branch` | Branches auflisten (`*` markiert den aktuellen) | Prüfen, wo ich bin |
+
+**Rückgängig machen — sichere Wiederherstellung**
+
+| Befehl | Was er tut | Typische Nutzung |
+|---|---|---|
+| `git restore <file>` | Nicht committete Änderungen verwerfen, zurück zum letzten Commit | Eine beschädigte Datei retten |
+| `git restore --staged <file>` | Eine Datei unstagen, ohne ihren Inhalt zu ändern | Das Falsche gestaget |
+| `git branch -m master main` | Den aktuellen Branch umbenennen | Ein auf `master` festhängendes Repo reparieren |
+
+**Remotes — mit der Cloud teilen**
+
+| Befehl | Was er tut | Typische Nutzung |
+|---|---|---|
+| `git remote add origin <ssh-url>` | Die Adresse eines Remotes unter dem Spitznamen `origin` speichern | Ein lokales Repo mit GitHub verbinden |
+| `git remote set-url origin <ssh-url>` | Die Adresse eines bestehenden Remotes überschreiben | Ein vertipptes Remote reparieren |
+| `git push -u origin <branch>` | Einen Branch veröffentlichen und die Paarung merken | Erster Push eines Branches |
+| `git push` | Committete Arbeit zum Remote hochschicken | Jeder Push nach dem ersten |
+| `git pull` | Remote-Commits holen und in den lokalen mergen | Beginn jeder Arbeitssitzung |
+| `git clone <ssh-url>` | Eine vollständige Kopie eines Remote-Repos herunterladen | Neuer Rechner / neues Projekt |
+
+**Branching & Merging — paralleles Arbeiten**
+
+| Befehl | Was er tut | Typische Nutzung |
+|---|---|---|
+| `git switch -c <name>` | Einen Branch erstellen und darauf wechseln | Ein neues Arbeitsstück beginnen |
+| `git switch <name>` | Zu einem bestehenden Branch wechseln | Ändern, was auf meinem Schreibtisch liegt |
+| `git merge <branch>` | Die Commits eines anderen Branches in den aktuellen bringen | Lokal mergen (der PR-Button macht das remote) |
+
+---
+
+## Häufige Fehler & Lösungen
+
+| Symptom / Meldung | Was es bedeutet | Die Lösung |
+|---|---|---|
+| `nothing to commit` / `no changes added to commit` | Ich habe bearbeitet, aber nie gestaget — der Karton war leer | `git add <file>`, dann erneut committen |
+| Nach `git commit` in einem seltsamen Texteditor festgesteckt | `-m` vergessen, also hat Git vim für die Message geöffnet | `Esc` drücken, `:q!` tippen, Enter — dann *mit* `-m "message"` erneut committen |
+| Commits mit dem falschen Namen/E-Mail signiert | `git config` war falsch oder übersprungen | Die beiden `git config --global`-Zeilen erneut ausführen; neue Commits tragen die Korrektur |
+| `On branch master` (alle anderen sagen `main`) | Das Repo wurde erstellt, bevor `init.defaultBranch` gesetzt war | `git branch -m master main` |
+| `Permission denied (publickey)` | GitHub erkennt den Rechner nicht (Key-Handschlag fehlgeschlagen) | `ssh -T git@github.com` ausführen; wenn es mich nicht begrüßt, die SSH-Key-Schritte erneut durchgehen |
+| `remote origin already exists` | Ein `origin` ist bereits gespeichert; Spitznamen sind eindeutig | `git remote -v` zum Prüfen, dann `git remote set-url origin <url>` |
+| `Updates were rejected` / `fetch first` (non-fast-forward) | Das Remote hat Commits, die ich nicht gepullt habe | `git pull`, dann `git push` — die Pull-zuerst-Gewohnheit verhindert es ganz |
+| Auf dem falschen Branch committet | `status` wurde übersprungen; der Commit landete auf der falschen Linie | Wenn *vor* dem Committen bemerkt: `git switch -c the-branch-I-meant` (nicht committete Arbeit reist mit mir). Wenn schon committet: mit Hilfe verschieben — nichts geht verloren |
+| `There isn't anything to compare` auf GitHub | Der Branch wurde lokal committet, aber nie gepusht | `git push -u origin <branch>`, dann die Vergleichsseite aktualisieren |
+| Merge Conflict (`CONFLICT (content)`) | Beide Branches haben dieselben Zeilen unterschiedlich geändert | Die Datei auf die gewünschte Wahrheit bearbeiten, die Marker `<<<<<<<` `=======` `>>>>>>>` löschen, dann `git add` + `git commit` |
+
+<Aside type="tip" title="Die eine Gewohnheit hinter jeder Lösung">
+**Lies, was Git ausgegeben hat.** Seine Meldungen benennen fast immer das Problem und zitieren oft den genauen Befehl zur Behebung. „Nothing added to commit" hat mir gesagt, dass der Karton leer war; die `hint:`-Zeilen bei einem abgelehnten Push verschreiben buchstäblich die Kur. In Git sind gewöhnliche Fehler das Werkzeug, das nach einem fehlenden Schritt fragt — kein Schaden — und die Lösung ist immer kleiner als die Arbeit neu zu machen.
+</Aside>
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| Git vs. GitHub | Git = lokales Werkzeug, das Verlauf aufzeichnet; GitHub = Cloud-Dienst, der ihn hostet |
+| Drei Bereiche | Working Directory → Staging Area → Repository (→ Remote) |
+| Warum es Staging gibt | Um *auszuwählen*, was genau in jeden Speicherpunkt kommt |
+| Erstmalige Einrichtung | `git config --global` Name, E-Mail und `init.defaultBranch main` — einmal pro Rechner |
+| Alltägliche Schleife | bearbeiten → `status` → `add` → `commit` → `push` |
+| Gute Commit-Message | Imperativ, kurze erste Zeile, sagt was und warum |
+| Commit-Gewohnheit | Eine logische Änderung pro Commit; klein und oft |
+| `.gitignore` | Listet Muster, die Git nie trackt; die Datei selbst wird committet |
+| origin | Der übliche Spitzname für das Haupt-Remote eines Projekts |
+| Push vs. Pull | Push schickt Commits hoch; Pull bringt sie herunter; nichts synchronisiert sich von selbst |
+| SSH-Key | Der Private Key bleibt zu Hause, der Public Key wird GitHub einmal gegeben — keine Passwörter über Git |
+| `-u`-Flag | Einmal pro erstem Push eines Branches nötig; setzt die Remote-Paarung |
+| Branch | Eigenständige Verlaufslinie; `main` bleibt stabil, Arbeit passiert auf kurzlebigen Branches |
+| HEAD | „Wo ich gerade stehe" — die Spitze des aktuellen Branches |
+| Pull Request | Schlägt vor, einen Branch in `main` zu mergen, und öffnet eine Review-Unterhaltung |
+| `git merge`-Grammatik | Auf dem Empfänger stehen, den Branch nennen, der hereingebracht wird |
+| Merge Conflict | Beide Seiten haben dieselben Zeilen geändert; auf die Wahrheit bearbeiten, Marker entfernen, add + commit |
+| GitHub Pages | Liefert ein Repo als Website aus; braucht `index.html`; bearbeiten → committen → pushen → live |
+| Jeder Fehler | Lies Gits Meldung — sie benennt das Problem und meist die Lösung |

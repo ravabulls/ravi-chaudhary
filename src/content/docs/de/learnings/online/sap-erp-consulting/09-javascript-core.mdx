@@ -1,0 +1,622 @@
+---
+title: "JavaScript — Sprachkern"
+description: "Der Kern von JavaScript — Variablen und Datentypen, Strings und Zahlen, Typumwandlung und truthy/falsy, Operatoren und Kontrollfluss (if/else, switch), Funktionen, Scope und Fehlerbehandlung mit try/catch."
+sidebar:
+  label: "9 · JavaScript-Grundlagen"
+  order: 9
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+## Das Problem, das Programmieren löst
+
+Als ich eine kleine Website mit drei Seiten gebaut habe, schrieb ich die Navigationsleiste einmal und kopierte sie in alle drei Dateien. Es funktionierte, aber sobald ich eine vierte Seite hinzufüge, muss ich jede Datei von Hand bearbeiten — und wenn ich eine übersehe, widerspricht sich die Website stillschweigend selbst. Genau diesen Copy-Paste-Schmerz nimmt einem das Programmieren.
+
+Die Lösung besteht darin, jedes Problem in zwei Hälften zu teilen:
+
+- **Daten** — der Inhalt selbst, an einer Stelle gespeichert (die Liste der Links, die Liste der Produkte).
+- **Anweisungen** — eine wiederholbare Regel, die aus den Daten ein Ergebnis macht ("baue für jeden Eintrag einen Link").
+
+**Programmieren** heißt, diese Anweisungen für einen Computer zu schreiben, der sie dann genau wie geschrieben ausführt, von oben nach unten, ohne zu raten. Das klingt streng, aber genau das ist die gute Nachricht: Weil die Maschine völlig wörtlich vorgeht, hat jedes Ergebnis — auch jeder Fehler — eine auffindbare Ursache.
+
+<Aside type="note" title="Die drei Web-Sprachen">
+HTML ist das **Skelett** (Struktur), CSS ist die **Kleidung** (Darstellung) und **JavaScript sind die Muskeln** (Verhalten) — die Sprache, die eine Seite reagieren, entscheiden, wiederholen und sich verändern lässt. Die folgenden Konzepte (Variablen, Bedingungen, Schleifen, Funktionen) teilen sich fast alle Sprachen, auch **ABAP** später in diesem Programm. Einmal lernen, überall wiedererkennen.
+</Aside>
+
+## Was JavaScript ist und wo es läuft
+
+**JavaScript (JS)** wurde 1995 erschaffen, um Webseiten interaktiv zu machen. Trotz des Namens hat es nichts mit Java zu tun — das war eine Marketing-Entscheidung. Ein paar Namen, die man auseinanderhalten sollte:
+
+- **ECMAScript** — der offizielle schriftliche Standard (die Spezifikation). **JavaScript** ist der alltägliche Name für die Sprache, die ihm folgt. Zwei Namen, eine Sprache.
+- **ES6 / ES2015** — das große Update von 2015, das *modernes* JavaScript definierte: `let`, `const`, Template Literals, Arrow Functions, Klassen. Alles in diesen Notizen ist modernes JS.
+
+In seinen ersten Jahren lief JS nur im Browser. Dann kam **Node.js** (2009) — ein Programm, das JavaScript direkt auf meinem Computer ausführt, ohne Browser. Heute hat JS also zwei Zuhause:
+
+| Wo | Wofür |
+|---|---|
+| **Node.js** (Terminal) | Reines JavaScript — Logik und Daten ohne beteiligte Seite. Fast alle Übungen. |
+| **Browser** (DevTools-Konsole) | JavaScript, das eine Webseite berührt. |
+
+Der schnellste Weg, eine Zeile auszuführen, ist die **REPL** (Read-Evaluate-Print-Loop): `node` ohne Dateinamen eingeben, und es liest, was ich tippe, wertet es aus, gibt die Antwort aus und wartet auf mehr. `.exit` beendet sie. Echte Programme leben in `.js`-Dateien und laufen mit `node filename.js`.
+
+```js
+console.log("Hello from JavaScript");
+```
+
+```text
+$ node hello.js
+Hello from JavaScript
+```
+
+**`console.log()`** gibt aus, was in den Klammern steht — so spricht ein Programm mit mir, und es taucht unten in fast jeder Zeile auf. Der Grundrhythmus ändert sich nie: **bearbeiten → bewusst speichern (Strg+S / Cmd+S) → ausführen → die Ausgabe lesen**. Node führt aus, was auf der Festplatte liegt, also existiert eine ungespeicherte Änderung noch nicht.
+
+<Aside type="tip" title="Zwei bereits eingerichtete Werkzeuge">
+**Prettier** formatiert `.js` beim Speichern (nichts zu konfigurieren). Ein **Linter** — der Standard ist **ESLint**, eine VS-Code-Erweiterung — liest den Code und warnt vor wahrscheinlichen Fehlern, *bevor* ich ihn ausführe (eine ungenutzte Variable, ein verdächtiger Vergleich). Prettier kümmert sich darum, wie Code *aussieht*; ein Linter darum, ob er wahrscheinlich *korrekt* ist.
+</Aside>
+
+---
+
+## Variablen
+
+Eine **Variable** ist ein benannter Behälter für einen Wert: Ich gebe dem Behälter einen Namen, lege einen Wert hinein, und von da an steht der Name für den Wert. **Deklarieren** heißt, eine zu erstellen. Modernes JavaScript hat zwei Schlüsselwörter, die ich schreiben sollte, und eines, das ich nur wiedererkennen sollte.
+
+```js
+const bakeryName = "Maison Sarah";  // never reassigned
+let orderCount = 3;                 // may change later
+
+orderCount = 4;
+console.log(bakeryName, orderCount);
+```
+
+```text
+Maison Sarah 4
+```
+
+| Schlüsselwort | Neu zuweisen? | Block-scoped? | Wann verwenden |
+|---|---|---|---|
+| **`const`** | Nein | Ja | **Standardwahl** — jedes `const` verspricht, dass der Wert bleibt |
+| **`let`** | Ja | Ja | Nur wenn ich *weiß*, dass sich der Wert ändern muss |
+| **`var`** | Ja | Nein (function-scoped) | Alter Stil vor ES6 — **erkennen, nie schreiben** |
+
+Die Faustregel: **zuerst zu `const` greifen, `let` nur wenn sich der Wert ändern muss, `var` nie schreiben.** Eine Neuzuweisung an ein `const` wirft `TypeError: Assignment to constant variable` — dieser Fehler ist das durchgesetzte Versprechen, kein Bug.
+
+Namen verwenden **camelCase**: erstes Wort klein, jedes weitere Wort großgeschrieben, keine Leerzeichen — `orderCount`, `pricePerLoaf`. Und ein Name sollte sagen, was der Wert *ist*: `orderCount` schlägt `oc` jedes Mal, wenn ich den Code später wieder lese.
+
+---
+
+## Datentypen
+
+Jeder Wert hat einen **Datentyp** — eine Kategorie, die festlegt, was der Wert ist und was man mit ihm tun kann. **`typeof`** fragt jeden Wert, welcher Typ er ist.
+
+```js
+console.log(typeof "Maison Sarah");  // string
+console.log(typeof 3);               // number
+console.log(typeof true);            // boolean
+```
+
+| Typ | Klasse | Enthält | Beispiel |
+|---|---|---|---|
+| **string** | primitiv | Text | `"Maison Sarah"` |
+| **number** | primitiv | ganze Zahl oder Dezimalzahl | `3`, `4.5` |
+| **boolean** | primitiv | genau `true` / `false` | `true` |
+| **undefined** | primitiv | "noch kein Wert vorhanden" | `undefined` |
+| **null** | primitiv | "absichtlich leer" | `null` |
+| **object** | Referenz | eine Sammlung (inkl. Arrays) | `{ name: "..." }` |
+| **symbol** | primitiv | ein eindeutiger Bezeichner (fortgeschritten) | `Symbol("id")` |
+| **bigint** | primitiv | ganze Zahlen jenseits des sicheren Bereichs von number | `9007199254740993n` |
+
+**Primitive** Typen enthalten einen einzelnen einfachen Wert (die Atome der Sprache). **Referenz**-Typen (object, und Arrays, die eine Art Objekt sind) enthalten Sammlungen aus anderen Werten. In der täglichen Anfängerarbeit erledigen die ersten fünf plus `object` fast alles; `symbol` und `bigint` muss man nur dem Namen nach kennen.
+
+<Aside type="caution" title="Der berühmte typeof-Bug">
+`typeof null` gibt `"object"` zurück — was falsch ist; `null` ist ein primitiver Wert. Es ist seit 1995 falsch, und eine Korrektur würde Millionen von Seiten kaputtmachen, also behält der Standard den Bug für immer. Behandle ihn als historische Kuriosität, nicht als etwas, aus dem man Schlüsse zieht.
+</Aside>
+
+### null vs undefined
+
+Beide bedeuten "hier kein Wert". Der Unterschied ist, *wer das Nichts dort hingesetzt hat*.
+
+- **`undefined`** — ein Wert wurde nie bereitgestellt. Es ist das Nichts, das *JavaScript* mir reicht: eine ohne Wert deklarierte Variable enthält `undefined`.
+- **`null`** — absichtlich leer. Es ist das Nichts, das *ich* bewusst zuweise, um zu sagen "kein Wert, so gewollt".
+
+```js
+let nextDelivery;              // never assigned
+console.log(nextDelivery);     // undefined
+
+let currentSpecial = null;     // deliberately empty
+console.log(currentSpecial);   // null
+```
+
+Faustregel: `undefined` zu finden ist oft ein Zeichen für einen Bug (das Programm kam nie dazu, den Wert zu setzen); `null` zu finden zeigt eine Entscheidung an.
+
+---
+
+## Typumwandlung und Coercion
+
+Manchmal kommt ein Wert im falschen Typ an — meist Text, der eine Zahl sein sollte. **Typumwandlung** ist das *bewusste* Ändern eines Typs mit einer Funktion, die das ausdrücklich tut.
+
+```js
+console.log(String(42));       // "42"   → text
+console.log(Number("42"));     // 42     → number
+console.log(Number("hello"));  // NaN    → no sensible number in the text
+console.log(Boolean(""));      // false  → the empty string is falsy
+```
+
+`String()`, `Number()` und `Boolean()` sind das Umwandlungs-Trio. `Number()` gibt **`NaN`** ("Not a Number") zurück, wenn im Text keine sinnvolle Zahl steckt.
+
+**Coercion** ist die *automatische, stille* Variante — JavaScript wandelt von sich aus einen Typ um, damit eine Operation weiterlaufen kann. Sie ist konsistent und gut gemeint, aber weil sie still passiert, brütet sie Bugs aus.
+
+```js
+console.log("5" - 1);    // 4     minus coerces the string to a number
+console.log("5" + 1);    // "51"  plus joins when a string is present
+console.log(1 + true);   // 2     true coerces to the number 1
+console.log(3 == "3");   // true  loose equality coerces before comparing
+console.log(3 === "3");  // false strict equality refuses to coerce
+```
+
+### Truthy und falsy
+
+Wenn JavaScript aus einem Wert, der kein Boolean ist, eine Ja/Nein-Antwort braucht, wandelt es den Wert in einen um. Werte, die zu `false` werden, sind **falsy** — und es gibt genau sechs. Alles andere ist **truthy**.
+
+<div class="sc-chips">
+<span class="sc-chip">false</span>
+<span class="sc-chip">0</span>
+<span class="sc-chip">"" (leerer String)</span>
+<span class="sc-chip">null</span>
+<span class="sc-chip">undefined</span>
+<span class="sc-chip">NaN</span>
+</div>
+
+Diese sechs auswendig lernen — sie sind die vollständige Liste von allem, das "nein" antwortet. Achtung, Fallen: `"0"` und `" "` (ein einzelnes Leerzeichen) sind **truthy**, denn jeder *nicht-leere* String ist truthy.
+
+<Aside type="tip" title="Eine Gewohnheit löscht eine ganze Bug-Klasse aus">
+Alles aus einem Formular kommt als **Text** an, also wickle es in `Number()`, bevor du rechnest. Und vergleiche immer mit **strict** `===` / `!==` (unten), damit eine Typänderung, die ich nicht angefordert habe, einen Vergleich niemals täuschen kann.
+</Aside>
+
+<Aside type="note" title="Strict mode">
+**`'use strict';`** als allererste Zeile einer Datei verwandelt stille Fehler in laute, sofortige Fehler. Der Klassiker: die Zuweisung an einen Namen, den ich nie deklariert habe. Im nachlässigen (Standard-)Modus erfindet das stillschweigend eine globale Variable; im strict mode wirft es `ReferenceError: message is not defined` an der richtigen Zeile. Ein lauter Fehler ist besser als ein stiller Bug, den ich eine Stunde jage — also beginnen meine Übungsdateien mit dieser Zeile.
+</Aside>
+
+---
+
+## Strings
+
+Ein **String** ist der Datentyp für Text. Er wird in einfache Anführungszeichen, doppelte Anführungszeichen (austauschbar — eins wählen und konsequent bleiben) oder Backticks gesetzt.
+
+**Escaping** löst das Problem eines Anführungszeichens *innerhalb* des Textes: ein Backslash vor einem Zeichen bringt JS dazu, es als reinen Text zu behandeln. `\n` ist ein spezielles Escape und bedeutet "neue Zeile".
+
+```js
+const review = 'It\'s the best bakery in town';
+const sign = "Sarah said \"welcome\"";
+const twoLines = "First line\nSecond line";
+```
+
+Ein **Template Literal** (Backticks) ist der moderne Favorit: es kann echte Zeilenumbrüche überspannen und Werte direkt einbetten. **Interpolation** — der `${...}`-Platzhalter — wertet den Ausdruck darin aus und lässt seinen Wert in den Text fallen.
+
+```js
+const bakeryName = "Maison Sarah";
+console.log(`Welcome to ${bakeryName}, open daily`);
+```
+
+```text
+Welcome to Maison Sarah, open daily
+```
+
+**Konkatenation** (Verbinden mit `+`) erledigt dieselbe Aufgabe auf umständliche Weise — `"Welcome to " + bakeryName + ", open daily"`. Ich nutze `+` nur, um zwei Dinge zusammenzukleben; sobald ein Satz Werte enthält, greife ich zum Template Literal.
+
+### Methoden vs Eigenschaften
+
+Eine **Methode** ist eine Aktion, die ein Wert ausführen kann, aufgerufen mit einem *Punkt* und *Klammern*. Eine **Eigenschaft** ist eine Tatsache, die ich *ohne* Klammern lese. Der Test: **Aktion → Klammern, Tatsache → keine.**
+
+```js
+console.log("maison sarah".toUpperCase());  // MAISON SARAH  → method (action)
+console.log("Maison Sarah".length);         // 12            → property (fact)
+```
+
+`console.log()` war die ganze Zeit genau dieses Muster — der Wert `console` führt seine Aktion `log` aus.
+
+### Zentrale String-Methoden
+
+Jede String-Methode **gibt einen neuen String zurück** — Strings können nicht an Ort und Stelle geändert werden, das Original überlebt also immer. (Wenn das Original "unverändert scheint", stimmt das — mein Ergebnis steckt im Rückgabewert, den ich zu speichern vergaß.)
+
+| Methode | Tut | Beispiel → Ergebnis |
+|---|---|---|
+| `toUpperCase()` / `toLowerCase()` | Groß-/Kleinschreibung ändern | `"Rye".toUpperCase()` → `"RYE"` |
+| `trim()` | Leerzeichen an beiden Enden entfernen | `"  hi  ".trim()` → `"hi"` |
+| `includes(x)` | enthält `x`? (boolean) | `"Maison".includes("son")` → `true` |
+| `indexOf(x)` | erste Position von `x`, sonst `-1` | `"Maison".indexOf("s")` → `2` |
+| `startsWith` / `endsWith` | beginnt/endet mit `x`? | `"a.html".endsWith(".html")` → `true` |
+| `slice(a, b)` | Teil von `a` bis *ausschließlich* `b` | `"Maison".slice(0, 3)` → `"Mai"` |
+
+Zwei weitere, die sich lohnen: **`split(sep)`** zerteilt einen String an jedem Trennzeichen in eine Liste (Array), und **`replaceAll(a, b)`** ersetzt jedes Vorkommen (`replace` ersetzt nur das erste).
+
+```js
+console.log("rye,spelt,wheat".split(","));               // [ 'rye', 'spelt', 'wheat' ]
+console.log("good bread, good coffee".replaceAll("good", "great"));
+// great bread, great coffee
+```
+
+<Aside type="note" title="JavaScript zählt ab null">
+Das erste Zeichen sitzt an Position **0**, das zweite an 1 und so weiter. Deshalb gibt `slice(0, 6)` die Zeichen 0–5 zurück (sechs Stück) — die Endposition ist *nicht* eingeschlossen. Die Null-basierte Zählung zieht sich durch die ganze Sprache und macht mich bereit für Arrays.
+</Aside>
+
+---
+
+## Zahlen
+
+Ein einziger **number**-Typ deckt sowohl ganze Zahlen (**Integer**) als auch Dezimalzahlen (**Floats**) ab — `3` und `3.5` sind dieselbe Art Wert.
+
+**Arithmetik:** `+` addieren, `-` subtrahieren, `*` multiplizieren, `/` dividieren, dazu zwei, die man richtig kennenlernen sollte:
+
+- **`%`** — Rest nach ganzzahliger Division. `x % 2 === 0` ist der klassische Test auf gerade Zahlen.
+- **`**`** — Potenzierung (in eine Potenz erheben).
+
+Jeder hat eine Zuweisungsform (`+=`, `-=`, `*=`, `/=`, `%=`), und **`++`** / **`--`** bewegen eine Variable um genau eins (worauf die Schleifen der Engine laufen).
+
+```js
+console.log(7 % 2);    // 1
+console.log(2 ** 10);  // 1024
+
+let total = 10;
+total += 5;
+console.log(total);    // 15
+```
+
+**Achte auf die `+`-Falle:** `+` ist der eine Operator mit einer zweiten Aufgabe (Strings verbinden), und das Verbinden gewinnt, sobald eine Seite Text ist.
+
+```js
+console.log("5" + 1);          // "51"  ← joined, not added
+console.log(Number("5") + 1);  // 6     ← convert first, then add
+```
+
+Zwei besondere Zahlen tauchen auf, wenn die Rechnung irgendwohin Seltsames läuft: **`Infinity`** (z. B. `1 / 0`) und **`NaN`** (z. B. `Number("bread")`). `NaN` ist eigenartig — es ist mit nichts gleich, *nicht einmal mit sich selbst* — und braucht deshalb seinen eigenen Test (unten).
+
+### Zahlen-Methoden und das Math-Objekt
+
+| Methode | Tut | Beispiel → Ergebnis |
+|---|---|---|
+| `Number.isInteger(x)` | ganze Zahl? | `Number.isInteger(4.5)` → `false` |
+| `Number.isNaN(x)` | ist es `NaN`? (der einzige ehrliche Test) | `Number.isNaN(Number("x"))` → `true` |
+| `Number.parseInt(s)` | liest einen Integer vom Anfang des Textes | `Number.parseInt("42px")` → `42` |
+| `Number.parseFloat(s)` | liest eine Dezimalzahl vom Anfang | `Number.parseFloat("3.5kg")` → `3.5` |
+| `toFixed(n)` | auf `n` Nachkommastellen formatieren — **gibt einen String zurück** | `(4.5).toFixed(2)` → `"4.50"` |
+
+Das parse-Paar liest bereitwillig eine Zahl vom *Anfang* von unordentlichem Text; `Number()` verlangt, dass der *ganze* String numerisch ist, oder antwortet `NaN`. Und `toFixed` ist für die *Anzeige*, deshalb gibt es einen String zurück — erst alle Rechnungen, zuletzt formatieren.
+
+**`Math`** ist ein eingebautes Objekt voller Mathe-Werkzeuge; ich erstelle es nie, ich rufe die Dinge nur mit dem `Math.`-Präfix auf. Wie String-Methoden geben sie Ergebnisse zurück und ändern nichts.
+
+| Methode | Tut | Beispiel → Ergebnis |
+|---|---|---|
+| `Math.round(x)` | nächste ganze Zahl | `Math.round(4.5)` → `5` |
+| `Math.floor(x)` | immer abrunden | `Math.floor(4.9)` → `4` |
+| `Math.ceil(x)` | immer aufrunden | `Math.ceil(4.1)` → `5` |
+| `Math.max(...)` / `Math.min(...)` | größte / kleinste | `Math.max(3, 9, 5)` → `9` |
+| `Math.abs(x)` | Abstand von null | `Math.abs(-7)` → `7` |
+| `Math.random()` | Dezimalzahl von 0 bis (ausschließlich) 1 | `0.42...` |
+
+Das Rezept, das jeder Programmierer auswendig kann — eine zufällige ganze Zahl in einem Bereich:
+
+```js
+const roll = Math.floor(Math.random() * 6) + 1;  // 1 to 6
+console.log(roll);
+```
+
+Langsam durchgegangen: `random()` gibt eine Dezimalzahl unter 1 → `* 6` streckt sie auf unter 6 → `floor` schneidet auf eine ganze Zahl 0–5 → `+ 1` verschiebt den Bereich auf 1–6. Ein Würfel in einer Zeile.
+
+---
+
+## Operatoren und Vergleich
+
+Vergleichsoperatoren nehmen zwei Werte und antworten mit einem **boolean** — dem Ja/Nein-Treibstoff, mit dem jede Entscheidung läuft.
+
+<Aside type="caution" title="= ist kein Vergleich">
+**`=`** *weist zu* (speichert die rechte Seite in die linke) — es vergleicht nie. Schreibt man es in eine Frage (`if (x = 5)`), überschreibt es `x` und wandelt dann das Ergebnis um, sodass der Block *jedes Mal* läuft. Wenn ein Vergleich immer "ja" zu antworten scheint, zähle zuerst die Gleichheitszeichen. (Und `=>` ist die Arrow Function, gar kein Vergleich.)
+</Aside>
+
+| Operator | Fragt | Anmerkung |
+|---|---|---|
+| **`===`** | gleicher Wert **und** gleicher Typ? | **Strict equality — immer diesen verwenden** |
+| **`!==`** | strikt ungleich? | die Umkehrung von `===` |
+| `==` / `!=` | gleich *nach Coercion*? | **loose — erkennen, nie schreiben** |
+| `>` `<` | größer / kleiner als | |
+| `>=` `<=` | größer/kleiner als *oder gleich* | Schwellen, Grenzen, Preise |
+
+```js
+console.log(3 === 3);    // true
+console.log(3 === "3");  // false  ← different types, no coercion
+console.log(3 == "3");   // true   ← loose equality coerces (avoid)
+console.log(10 <= 10);   // true
+```
+
+**Logische Operatoren** kombinieren boolean-Antworten zu größeren:
+
+- **`&&`** (UND) — `true` nur, wenn **beide** Seiten wahr sind.
+- **`||`** (ODER) — `true`, wenn **mindestens eine** Seite wahr ist.
+- **`!`** (NICHT) — kippt einen boolean ins Gegenteil.
+
+```js
+const orderSize = 14;
+const day = "Monday";
+console.log(orderSize > 10 && day === "Monday");  // true  (both hold)
+console.log(orderSize > 20 || day === "Monday");  // true  (one holds)
+console.log(!(3 > 10));                            // true  (flip false)
+```
+
+Liest man eine kombinierte Frage laut vor, bleibt sie ehrlich: *"die Bestellung ist über zehn UND der Tag ist Montag"* ist nur wahr, wenn beide Hälften stimmen.
+
+---
+
+## Kontrollfluss: if / else
+
+Standardmäßig läuft ein Programm **sequenziell** — Zeile für Zeile, von oben nach unten. **Kontrollfluss** ändert diese Reihenfolge. Das erste Werkzeug ist die **Auswahl**: die Wahl zwischen Pfaden mit `if`.
+
+```js
+'use strict';
+
+const orderSize = 14;
+
+if (orderSize > 12) {
+  console.log("Large order, call the bakery ahead");
+} else if (orderSize > 6) {
+  console.log("Medium order, ready in an hour");
+} else {
+  console.log("Small order, walk right in");
+}
+```
+
+```text
+Large order, call the bakery ahead
+```
+
+- **`if (condition)`** führt seinen Block nur aus, wenn die Bedingung truthy ist. Die Bedingung ist jeder Ausdruck, der mit Ja/Nein antwortet — ein Vergleich, eine kombinierte logische Frage oder ein schlichter Wert, beurteilt nach den truthy/falsy-Regeln.
+- **`else`** ist der Rückfall für alles, was die Bedingung abgelehnt hat.
+- **`else if`** verkettet weitere Fragen, von oben nach unten geprüft — **das erste Ja gewinnt**.
+
+**Die Reihenfolge zählt.** `> 6` vor `> 12` zu fragen würde große Bestellungen verschlucken, denn 14 ist auch größer als 6, und die Kette stoppt beim ersten Ja. Stelle die spezifischste Frage zuerst.
+
+<Aside type="caution" title="Zwei stille Fallen">
+- `=` statt `===` in der Bedingung zu schreiben weist zu und wandelt dann um — sodass `if (x = 5)` *jedes* Mal läuft.
+- Lässt man die geschweiften Klammern weg, gehört nur die *nächste einzelne Zeile* zum `if`. Das ist erlaubt und es ist eine Falle — ich schreibe **immer** Klammern.
+</Aside>
+
+## Kontrollfluss: switch
+
+Wenn ein Wert gegen viele *exakte* Möglichkeiten geprüft wird, stottert eine `if`-Kette (`day === "Monday"`, else if `day === "Tuesday"`...). **`switch`** ist genau für diese Form gebaut.
+
+```js
+'use strict';
+
+const day = "Sunday";
+
+switch (day) {
+  case "Saturday":
+    console.log("Open 7:00 to 14:00");
+    break;
+  case "Sunday":
+    console.log("Open 8:00 to 12:00");
+    break;
+  case "Monday":
+    console.log("Closed today");
+    break;
+  default:
+    console.log("Open 7:00 to 18:00");
+}
+```
+
+```text
+Open 8:00 to 12:00
+```
+
+- Jedes **`case`** wird mit **strict equality** verglichen (keine Coercion, genau wie `===`) — die Zahl `3` passt also **nicht** zu `case "3"`.
+- **`default`** ist der Rückfall (das `else` des switch) und fängt jeden Wert, den kein case beansprucht hat.
+- **`break`** beendet das getroffene case. Ohne es *fällt* die Ausführung in die Zeilen des nächsten case *durch*, ob sie passen oder nicht — ein stiller Bug, der zwei Antworten ausgibt. Jedes case hier endet mit `break`.
+
+**Welches verwenden?** `switch` für einen Wert gegen viele *exakte* Treffer (die Tage oben). `if` für *Bereiche, Kombinationen oder verschiedene Variablen* (`orderSize > 12` ist ein Bereich, braucht also `if`). Verschiedene Werkzeuge für verschiedene Fragenformen.
+
+---
+
+## Funktionen
+
+Eine **Funktion** ist eine benannte, wiederverwendbare Routine — ein Block von Zeilen, unter einem Namen verpackt und auf Abruf ausgeführt. Wo Daten + Schleifen *Inhalt* entdoppeln, entdoppeln Funktionen *Logik*.
+
+```js
+'use strict';
+
+function priceMessage(orderSize) {
+  if (orderSize > 12) {
+    return "Large order, call the bakery ahead";
+  }
+  return "Ready soon, walk right in";
+}
+
+console.log(priceMessage(14));  // Large order, call the bakery ahead
+console.log(priceMessage(3));   // Ready soon, walk right in
+```
+
+Eine Entscheidung, einmal geschrieben, zweimal mit verschiedenen Eingaben genutzt. Zwei Wörter, die man auseinanderhalten muss:
+
+- **Parameter** — der benannte Platz in der Deklaration (`orderSize`). Der beschriftete Briefkasten.
+- **Argument** — der tatsächliche Wert, der beim Aufruf übergeben wird (`14`). Der Brief.
+
+**`return`** reicht einen Wert an denjenigen zurück, der die Funktion aufgerufen hat, und beendet sie auf der Stelle. Beachte, dass das Beispiel *nicht* innerhalb der Funktion ausgegeben hat — es gab die Nachricht zurück und ließ den Aufrufer entscheiden, was zu tun ist. Das ist die Gewohnheit, die man sich aufbauen sollte: **Ergebnisse zurückgeben, an den Rändern ausgeben.** Eine Funktion, die zurückgibt, ist ein wiederverwendbares Teil; eine, die nur ausgibt, hat das Schicksal ihres Ergebnisses schon entschieden. (Eine Funktion ohne `return` gibt `undefined` zurück.)
+
+### Drei Arten, sie zu schreiben
+
+Modernes JS nutzt alle drei täglich. Ich muss zwei davon *schreiben* und alle drei *lesen* können, ohne zu zucken.
+
+<Tabs>
+<TabItem label="Deklaration">
+
+```js
+function double(n) {
+  return n * 2;
+}
+```
+
+Die klassische Form. Am besten für eigenständige, benannte Routinen.
+</TabItem>
+<TabItem label="Function Expression">
+
+```js
+const double = function (n) {
+  return n * 2;
+};
+```
+
+Speichert eine Funktion *in einer Variable* — der Beweis, dass Funktionen Werte sind, also gespeichert und weitergereicht werden können.
+</TabItem>
+<TabItem label="Arrow Function">
+
+```js
+const double = (n) => n * 2;
+```
+
+Die Kurzform aus ES6. Wenn der Body ein einzelner Ausdruck ist, fallen Klammern und `return` weg, und der Wert wird **implizit** zurückgegeben. Am besten für Funktionen, die in andere Funktionen übergeben werden.
+</TabItem>
+</Tabs>
+
+Alle drei oben tun dasselbe: `double(8)` → `16`. Faustregel: **Deklarationen für eigenständige Routinen, Arrows für Funktionen, die an Funktionen übergeben werden.**
+
+<Aside type="caution" title="Arrow-Stolperfallen">
+`=>` ist die Arrow; `>=` ist größer-oder-gleich — die beiden zu vertauschen verursacht "unexpected token"-Fehler. Und der einzeiligen Arrow Klammern hinzuzufügen schaltet den impliziten Return **aus**: `(n) => { n * 2 }` gibt `undefined` zurück, weil ein Body mit Klammern sein `return` ausgeschrieben braucht.
+</Aside>
+
+### Scope
+
+**Scope** ist der Teil eines Programms, in dem ein Name gesehen und verwendet werden kann. JavaScript zieht drei Grenzen:
+
+- **Global scope** — die äußerste Ebene einer Datei; Namen dort sind überall darunter sichtbar.
+- **Function scope** — der Body einer Funktion; ihre Parameter und inneren Variablen existieren nur in ihr.
+- **Block scope** — jedes Paar geschweifter Klammern (ein `if`-Block, ein Schleifen-Body). `let` und `const` respektieren Blockgrenzen — ein weiterer Grund, warum sie `var` ersetzt haben, das das nicht tat.
+
+```js
+'use strict';
+
+const shopName = "Maison Sarah";  // global
+
+function greet(customer) {
+  const line = `Welcome to ${shopName}, ${customer}`;  // lives inside greet
+  return line;
+}
+
+console.log(greet("Anna"));  // Welcome to Maison Sarah, Anna
+console.log(typeof line);    // undefined  ← outside can't see in
+```
+
+Das ganze Denkmodell in einem Satz: **innere Scopes sehen nach außen, das Äußere sieht nie hinein.** Die Funktion liest die globale `shopName` ungehindert, aber `line` lebt und stirbt innerhalb der Funktion. (Einen inneren Namen zu deklarieren, der zu einem äußeren passt, ist **Shadowing** — erlaubt, aber meist besser umbenannt.)
+
+### Default-Parameter und Callbacks
+
+Ein Parameter kann einen **Default-Wert** tragen, der immer dann genutzt wird, wenn der Aufrufer dieses Argument weglässt.
+
+```js
+function greet(customer = "friend") {
+  return `Welcome, ${customer}`;
+}
+
+console.log(greet("Anna"));  // Welcome, Anna
+console.log(greet());        // Welcome, friend
+```
+
+Jetzt zahlt sich aus, dass Funktionen Werte sind. Ein **Callback** ist eine Funktion, die *in* eine andere Funktion als Argument übergeben wird, um darin aufgerufen zu werden.
+
+```js
+'use strict';
+
+function twice(action) {
+  action();
+  action();
+}
+
+const ring = () => console.log("The bakery bell rings");
+
+twice(ring);
+```
+
+```text
+The bakery bell rings
+The bakery bell rings
+```
+
+Langsam verfolgt: `ring` hält eine Funktion. `twice(ring)` übergibt sie **ungestartet** (nur den Namen, *keine* Klammern). Drinnen hält nun der Parameter `action` sie, und `action()` führt sie aus — zweimal. Der Aufrufer lieferte das *Was*; die Funktion lieferte das *Wann und Wie oft*. Genau diese Form kehrt überall wieder: Array-Methoden wie `map` führen einen Callback einmal pro Element aus, und im Browser führt `addEventListener` einen Callback aus, wenn der Besucher klickt.
+
+<Aside type="tip" title="Callbacks werden ungestartet übergeben">
+`ring()` *mit* Klammern zu übergeben übergibt das **Ergebnis** seiner Ausführung, nicht die Funktion selbst. Ein Callback wird nur dem Namen nach übergeben. (Ein Callback ist keine besondere Art Funktion — es ist eine gewöhnliche Funktion in einer bestimmten Rolle, so wie ein Passagier eine gewöhnliche Person auf einem bestimmten Sitz ist.)
+</Aside>
+
+Ein letztes Vokabelpaar: eine **pure function** rechnet nur (gleiche Eingabe → gleiche Ausgabe, ohne sonst etwas anzurühren); ein **side effect** (Seiteneffekt) ist alles andere, was sie tut (ausgeben, eine äußere Variable ändern, die Seite bearbeiten). Beides wird gebraucht, aber pure functions sind leichter zu vertrauen — also halte das Rechnen rein und schiebe Seiteneffekte an die Ränder.
+
+---
+
+## Fehlerbehandlung: try / catch / finally
+
+Fehler in JavaScript sind **Objekte**, die einen **name** und eine **message** tragen (die beiden Teile jedes roten Fehlers, den ich lese). Normalerweise beendet ein Fehler das Programm auf der Stelle. **`try...catch`** lässt mich riskante Zeilen versuchen und den Fehler *beantworten*, statt abzustürzen.
+
+```js
+'use strict';
+
+const value = 42;
+
+try {
+  const shout = value.toUpperCase();   // numbers have no toUpperCase → throws
+  console.log(shout);
+} catch (error) {
+  console.log(`That did not work: ${error.message}`);
+} finally {
+  console.log("This always runs, error or not");
+}
+
+console.log("The program is still running");
+```
+
+```text
+That did not work: value.toUpperCase is not a function
+This always runs, error or not
+The program is still running
+```
+
+- **`try`** läuft, bis etwas geworfen wird.
+- **`catch (error)`** übernimmt in dem Moment, mit dem Fehlerobjekt in der Hand.
+- **`finally`** (optional) läuft in jedem Fall — genutzt für Aufräumarbeiten, die stattfinden müssen, ob es einen Fehler gab oder nicht.
+
+Entscheidend ist: Die letzte Zeile läuft trotzdem. Ohne das `try...catch` beendet derselbe Fehler die Datei beim Wurf. In einem Satz: **try versucht, catch beantwortet, das Programm läuft weiter.**
+
+<Aside type="caution" title="Was try/catch nicht ist">
+Es ist **kein** Weg, kaputten Code zum Laufen zu bringen — der Fehler ist trotzdem passiert; ich habe nur die Reaktion gewählt. Und *alles* darin zu verpacken versteckt Bugs, die ich beheben sollte. Reserviere es für Fehler, die ich wirklich erwarte und beantworten kann — fehlerhafte Daten oder eine Netzwerkanfrage, die scheitern könnte.
+</Aside>
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| Daten + Anweisungen | Inhalt einmal speichern, eine wiederholbare Regel schreiben — das ist Programmieren |
+| Wo JS läuft | Node.js für reine Logik im Terminal; Browser für JS, das eine Seite berührt |
+| console.log() | Gibt einen Wert aus — mein Fenster in jedes Programm |
+| const / let / var | `const` als Standard, `let` wenn es sich ändern muss, `var` nie schreiben |
+| camelCase | `orderCount` — erstes Wort klein, spätere Wörter groß |
+| typeof | Fragt jeden Wert seinen Typ (`typeof null` ist bugbedingt `"object"`) |
+| null vs undefined | `undefined` = nie gesetzt (oft ein Bug); `null` = absichtlich leer |
+| Umwandlungs-Trio | `String()`, `Number()`, `Boolean()` wandeln bewusst um; `Number("x")` → `NaN` |
+| Coercion | Automatische, stille Typänderung — warum ich `===` nutze, nie `==` |
+| Sechs falsy-Werte | `false`, `0`, `""`, `null`, `undefined`, `NaN` — alles andere truthy |
+| Strict mode | `'use strict';` verwandelt stille Fehler in laute |
+| Strings | Template Literals mit `${...}` schlagen `+` bei Sätzen mit Werten |
+| Methode vs Eigenschaft | Aktion → Klammern; Tatsache (wie `.length`) → keine |
+| String-Methoden | Geben einen *neuen* String zurück; Positionen ab **0** zählen |
+| Zahlen | Ein Typ für int + float; `%` Rest, `**` Potenz; `Number()` vor dem Rechnen |
+| toFixed / Math | `toFixed` gibt einen String zurück (zuletzt anzeigen); `floor(random()*n)+1` für einen Bereich |
+| = vs === | `=` weist zu; `===` vergleicht Wert **und** Typ (immer verwenden) |
+| && \|\| ! | UND (beide), ODER (eines), NICHT (kippen) |
+| if / else if / else | Erstes truthy gewinnt — spezifischste Frage zuerst; immer Klammern nutzen |
+| switch | Ein Wert gegen viele exakte cases; `break` je case; `default` ist der Rückfall |
+| Funktion | Benannte wiederverwendbare Routine; Ergebnisse `return`en, an den Rändern ausgeben |
+| Parameter vs Argument | Parameter = der benannte Platz; Argument = der übergebene Wert |
+| Drei Formen | Deklaration (eigenständig), Expression (Wert), Arrow (an Funktionen übergeben) |
+| Scope | Innen sieht nach außen; das Äußere sieht nie hinein |
+| Callback | Eine ungestartet übergebene Funktion, dann drinnen aufgerufen — treibt map & Event-Listener an |
+| try / catch / finally | Try versucht, catch beantwortet, finally läuft immer, Programm läuft weiter |

@@ -1,0 +1,345 @@
+---
+title: "Agile, Scrum & Arbeiten mit KI"
+description: "Wie Softwareteams tatsächlich arbeiten — Wasserfall vs. Agile und das Agile Manifest, User Stories und Schätzung, das Scrum-Framework (Rollen, Artefakte, Events), Kanban, alltägliche Entwicklerpraktiken (gute Fragen, Doku lesen, Code Review, Task-Boards) sowie der gute und professionelle Umgang mit KI/LLMs."
+sidebar:
+  label: "12 · Agile, Scrum & KI"
+  order: 12
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Bisher habe ich meistens allein gecodet: mein Branch, mein Tempo, mein Chaos. Echte Software wird von *Teams* gebaut, über *Jahre*, für Kunden, die *ihre Meinung ändern*. Das erzeugt zwei getrennte Probleme, und es hilft, sie auseinanderzuhalten:
+
+- **Das Code-Problem** — zwei Personen bearbeiten dieselben Dateien. Gelöst durch **Versionskontrolle** (Branches, Pull Requests). Das kenne ich bereits.
+- **Das Koordinationsproblem** — entscheiden, *was* gebaut wird, *in welcher Reihenfolge* und *woran wir erkennen, dass es fertig ist*. Gelöst durch eine gemeinsame **Arbeitsmethode**.
+
+Git sagt mir, *wie* Änderungen zusammengeführt werden; es sagt nichts darüber, *was* existieren soll oder *wann* etwas fertig ist. Genau um diese zweite Hälfte geht es in diesem ganzen Kapitel.
+
+<Aside type="note" title="Der SDLC — die Schleife, die jedes Projekt durchläuft">
+Jede Software, ob winziges Skript oder Enterprise-System, durchläuft den **Softwareentwicklungs-Lebenszyklus** (SDLC): **Planen → Bauen → Testen → Ausliefern → Warten** — und dann führt der Pfeil zurück, denn das Ausliefern lehrt einen Dinge, die die Planung nie könnte. Software ist nie wirklich *fertig*. Eine **Projektmanagement-Methode** ist einfach nur eine benannte, gemeinsame Antwort auf die Frage „Wie bewegen wir uns zusammen durch diese Schleife?" — damit niemand jede Woche die Grundlagen neu aushandelt.
+</Aside>
+
+## 1 · Wasserfall vs. Agile
+
+Vor Agile wurde Software wie eine Brücke gebaut: alles planen, dann ausführen. Das ist das **Wasserfall-Modell** — feste Phasen in strikter Reihenfolge, jede vollständig abgeschlossen, bevor die nächste beginnt (Anforderungen → Design → Umsetzung → Test → Auslieferung). Wasser fließt nur in eine Richtung; zurück nach oben zu gehen ist teuer und selten.
+
+Es hat einen strukturellen Fehler *für Software*: **echtes Feedback kommt erst am Ende an, wenn Änderungen am teuersten sind.** Anforderungen verschieben sich über ein langes Projekt, und Software ist unsichtbar, bis sie läuft — ein Kunde kann auf ein halbfertiges System also nicht so reagieren, wie er durch ein halbfertiges Haus gehen kann. Das Missverständnis überlebt bis zur Auslieferung.
+
+**Agile** löst das mit dem naheliegenden Schritt: mach die Schleife *kurz*. Arbeite in kleinen **Iterationen** (typischerweise 1–4 Wochen), jede endet mit einem Stück **lauffähiger Software**, das echten Nutzern gezeigt wird, deren Reaktionen die nächste Iteration formen. Jede kleine Auslieferung ist eigentlich ein *Experiment* — sie prüft, ob das Team den Bedarf verstanden hat, Monate bevor Wasserfall es herausfinden würde.
+
+| Achse | Wasserfall | Agile |
+|---|---|---|
+| Lauffähige Software erscheint | Einmal, am Ende | Am Ende *jeder* Iteration |
+| Den Plan ändern | Ausnahme (eine abgesegnete Spezifikation wieder aufmachen) | Normal, zwischen Iterationen erwartet |
+| Risiko wird entdeckt | Spät (Test-/Auslieferungsphase) | Ein bisschen pro Iteration, solange die Behebung billig ist |
+| Fortschritt bedeutet | Abgeschlossene Dokumente & Phasen | Ausgelieferte lauffähige Software |
+| Die zentrale Wette | Wir treffen es richtig durch *Planung* | Wir treffen es richtig durch *Feedback* |
+
+<Aside type="caution" title="Drei Mythen, die man früh erledigen sollte">
+- *„Agile heißt keine Planung."* Falsch — Agile plant *ständig*, in kleinen Portionen, in jeder Iteration.
+- *„Agile heißt keine Dokumentation."* Falsch — es dokumentiert, was dokumentierenswert ist; es weigert sich nur, Papierkram als *Fortschritt* zählen zu lassen.
+- *„Agile ist schneller, weil die Leute schneller arbeiten."* Falsch — das Tempo kommt daher, dass Feedback früh ankommt, sodass weniger Zeit damit verschwendet wird, das Falsche zu bauen.
+</Aside>
+
+Wasserfall ist nicht tot: wo Anforderungen wirklich fest sind und ein Fehler Menschenleben kostet — Firmware für Medizingeräte, Steuerung in der Luft- und Raumfahrt — passt ein wasserfallartiger Prozess weiterhin. Für *die meiste Business-Software* ist er falsch, und genau dort hören die Anforderungen nie auf, sich zu bewegen.
+
+## 2 · Das Agile Manifest
+
+Agile hat einen offiziellen Geburtsort: siebzehn Praktiker trafen sich 2001 und schrieben auf, was ihre konkurrierenden Methoden gemeinsam hatten — **vier Werte und zwölf Prinzipien**. Seither unverändert, ist es immer noch die Definition von Agile.
+
+Der Kern besteht aus vier „X **über** Y"-Vergleichen. Das am häufigsten falsch verstandene Wort ist **über**: es bedeutet *nicht* *anstatt*. Der eigene Schlusssatz des Manifests klärt es — die rechten Elemente haben Wert; die linken werden **höher geschätzt, wenn die beiden im Konflikt stehen**.
+
+| Höher geschätzt | über | Trotzdem wertvoll |
+|---|---|---|
+| Individuen und Interaktionen | über | Prozesse und Werkzeuge |
+| Funktionierende Software | über | umfassende Dokumentation |
+| Zusammenarbeit mit dem Kunden | über | Vertragsverhandlung |
+| Reagieren auf Veränderung | über | das Befolgen eines Plans |
+
+<Aside type="tip" title="Wie man ein Wertepaar liest">
+Denk an Packregeln für eine Wanderung: *„Wasser über Snacks"* heißt nicht, die Snacks zu Hause zu lassen — es heißt, dass du, wenn der Rucksack schwer wird und etwas weichen muss, schon weißt, was bleibt. Die Werte sind **Entscheidungshilfen für harte Momente**, keine Verbote der rechten Seite. Beispiel: Mitten im Projekt bittet ein Kunde um eine Änderung, die der unterschriebenen Feature-Liste widerspricht. Wert vier sagt, die Standardhaltung ist, sie ernst zu nehmen und neu zu planen, nicht auf den Vertrag zu zeigen.
+</Aside>
+
+Die **zwölf Prinzipien** übersetzen diese Werte in beobachtbares tägliches Verhalten. Zwölf sind viel zum Merken, also gruppiere ich sie in fünf Themen:
+
+| Thema | Was es von einem Team verlangt |
+|---|---|
+| Früh & oft ausliefern | Wertvolle, lauffähige Software häufig ausliefern (Wochen, nicht Monate); *lauffähige Software ist das wichtigste Fortschrittsmaß* |
+| Veränderung willkommen heißen | Sich ändernde Anforderungen *auch spät* annehmen — eine Änderung ist Information, kein Feind |
+| Menschen & Vertrauen | Rund um motivierte Menschen aufbauen, Gespräch von Angesicht zu Angesicht bevorzugen, Fachbereich + Entwickler arbeiten täglich zusammen |
+| Nachhaltiges Tempo & Qualität | Ein Tempo, das du dauerhaft halten kannst, plus technische Exzellenz und *Einfachheit* (die Menge *nicht* getaner Arbeit maximieren) |
+| Reflektieren & anpassen | In regelmäßigen Abständen justiert das Team sein eigenes Verhalten — der Prozess verbessert sich ebenfalls durch Iteration |
+
+Werte sind wie eine Verfassung (kurz, stabil, abstrakt); Prinzipien sind die Gesetze, die zeigen, was das in täglichen Situationen bedeutet. Keines von beiden ist eine Checkliste, die man besteht oder nicht — es sind *Richtungen der Reise*.
+
+## 3 · User Stories
+
+Wasserfall hielt Anforderungen in langen Spezifikationen fest. Agile brauchte etwas, das eine Iteration verschlucken kann, geschrieben aus der Sicht der Person, der die Software dient. Das ist die **User Story** — das häufigste Arbeitselement in echten Teams. Es ist ein Satz mit drei Feldern:
+
+```text
+Als    [Rolle]        →  WER das will (eine echte Art von Nutzer, nicht „das System")
+Möchte ich [Fähigkeit] →  WAS sie können müssen
+damit  [Nutzen]        →  WARUM es wichtig ist (die Begründung)
+```
+
+**Beispiel:** *Als **Lernende** möchte ich **meinen Quiz-Punktestand speichern**, damit **ich meinen Fortschritt über die Zeit sehen kann**.* Ein Satz, und das Team weiß bereits, wer profitiert, was zu bauen ist und wie es Designentscheidungen beurteilen kann.
+
+Das Feld **damit** sieht wie Deko aus, ist aber das mächtigste der drei: wenn sich kein ehrlicher Nutzen formulieren lässt, ist die Story vielleicht nicht bauwürdig; und das *Ziel* zu kennen, lässt das Team eine *bessere* Lösung vorschlagen (vielleicht schlägt ein Fortschrittsdiagramm eine rohe Punkteliste). Eine Story benennt einen **Bedarf** — sie legt bewusst kein Design fest. Sie ist „ein Platzhalter für ein Gespräch", keine Mini-Spezifikation.
+
+Der Satz sagt *warum* und *was*, aber nicht, *wann er fertig ist*. Das ist die Aufgabe der **Akzeptanzkriterien** — einer kurzen Liste konkreter, **binärer** (wahr/falsch) Aussagen, die alle zutreffen müssen, damit die Story akzeptiert wird:
+
+- Der Punktestand wird nach jedem abgeschlossenen Quiz gespeichert.
+- Der neueste Punktestand erscheint auf der Profilseite der Lernenden.
+- Ein fehlgeschlagenes Speichern zeigt der Lernenden eine Fehlermeldung.
+
+Jede Aussage ist etwas, das ein Fremder mit einem schlichten Ja oder Nein überprüfen könnte — genau das macht aus *„Ich glaube, es ist fertig"* eine Checkliste. Akzeptanzkriterien beschreiben **beobachtbares Verhalten**, niemals internes Design.
+
+## 4 · Arbeit schätzen
+
+Eine Iteration ist eine feste Zeitbox, also muss ein Team abschätzen, wie viel hineinpasst. Menschen sind bekanntermaßen schlecht darin, *Stunden* für kreative Arbeit vorherzusagen — aber *sehr* gut darin, Größen zu vergleichen. Also hören agile Teams auf, Zeit zu schätzen, und schätzen stattdessen **relative Größe**. (Ich kann dir das Gewicht eines Tierheimhundes nicht sagen, aber ich kann zehn Hunde zuverlässig vom leichtesten zum schwersten aufreihen.)
+
+- **Story Points** = eine Zahl für die *Gesamtgröße* einer Story — Aufwand, Komplexität und Unsicherheit kombiniert — auf einer gemeinsamen Teamskala. Zwei Regeln: Points sind **relativ** (eine 8 ist etwa 4× eine 2; nichts entspricht Stunden) und **teamintern** (die 3 eines Teams ≠ die eines anderen; ein Vergleich zwischen Teams ist sinnlos).
+- Über ein paar Iterationen lernt ein Team, wie viele Points es pro Iteration *tatsächlich* schafft. Diese beobachtete Zahl — eine Prognose, kein Versprechen — macht den nächsten Plan realistisch.
+- **Planning Poker** = jeder wählt privat eine Schätzkarte, dann *decken alle gleichzeitig auf*. Das gleichzeitige Aufdecken verhindert, dass die erste laute Stimme alle verankert, und die dabei sichtbaren Meinungsverschiedenheiten sind meist versteckte Annahmen — genau das Gespräch, das es zu führen lohnt.
+
+<Aside type="caution" title="Das, was die Schätzung ruiniert">
+Story Points sind **kein** Produktivitätsmaß. Sobald sie benutzt werden, um Menschen zu vergleichen, oder die Velocity zu einem Ziel wird, das erreicht werden muss, blähen sich Schätzungen auf und die Zahlen verlieren jede Bedeutung. Points existieren, um Arbeit in Iterationen zu packen — sonst nichts. Und Schätzungen sind *Prognosen*, keine Zusagen.
+</Aside>
+
+## 5 · Scrum
+
+Scrum ist das am weitesten verbreitete Framework, das *auf* agilen Werten aufbaut — ein **bewusst unvollständiges**. Es sagt dir nicht, wie du designen, coden oder testen sollst; es definiert gerade genug Struktur, um Agile operativ zu machen: **3 Verantwortlichkeiten, 3 Artefakte, 5 Events**, alle um einen Behälter gewickelt, den **Sprint**. Alles andere fügt das Team selbst hinzu.
+
+<Aside type="note" title="Empirie — die Idee unter allem">
+Scrum nimmt an, dass in komplexer Arbeit Wissen aus *Erfahrung* kommt, sodass Entscheidungen dem folgen, was **beobachtet** wurde, nicht dem, was vorhergesagt wurde. Es steht auf drei Beinen: **Transparenz** (der echte Stand der Arbeit ist für alle sichtbar), **Inspektion** (Arbeit und Plan werden oft geprüft), **Adaption** (wenn die Inspektion ein Problem zeigt, ändert sich der Plan). Die **Artefakte schaffen Transparenz; die Events terminieren Inspektion und Adaption.** Wenn eine Scrum-Regel seltsam wirkt, führe sie auf diese drei Wörter zurück, und der Grund erscheint meist.
+</Aside>
+
+### Die drei Verantwortlichkeiten (Rollen)
+
+Ein kleines Team, meist zehn Personen oder weniger, keine Hierarchie unter den dreien. (Der Leitfaden von 2020 benannte „Rollen" in „Verantwortlichkeiten" um — gleicher Inhalt; „Verantwortlichkeit" benennt, wofür du *einstehst*, nicht einen Jobtitel.)
+
+| Verantwortlichkeit | Verantwortet | In einer Zeile |
+|---|---|---|
+| **Product Owner** | Das *Was* & *Warum* | Maximiert den Produktwert, indem er das eine Product Backlog besitzt und **ordnet** — das Schwere ist, zu den meisten Dingen *„noch nicht"* zu sagen |
+| **Scrum Master** | Den *Prozess* | Macht das Team wirksam, coacht gutes Scrum und beseitigt **Hindernisse** — hat *keine* Autorität über Menschen oder Prioritäten |
+| **Developers** | Das *Wie* | Alle, die das Increment bauen (Coden, Testen, Design…); sie **organisieren ihre eigene Arbeit** — niemand weist ihnen Aufgaben zu |
+
+### Die drei Artefakte (+ Definition of Done)
+
+| Artefakt | Was es ist | Verantwortet von |
+|---|---|---|
+| **Product Backlog** | Die einzige, *geordnete*, nie fertige Liste von allem, was das Produkt vielleicht braucht (meist User Stories); die obersten Elemente klein & klar, die unteren dürfen vage bleiben | Product Owner |
+| **Sprint Backlog** | Der Plan der Developers für *diesen* Sprint — die Elemente, die sie ausgewählt haben, plus wie sie sie liefern; ein lebendiges Bild, das täglich aktualisiert wird | Developers |
+| **Increment** | Das aufsummierte, **nutzbare** Ergebnis — Produkt, das *funktioniert*, ob veröffentlicht oder nicht | Developers |
+
+Die **Definition of Done** ist die gemeinsame, schriftliche Qualitäts-Checkliste des Teams (z. B. *Code reviewt, Tests laufen, Doku aktualisiert*). Bis ein Element *jeden* Eintrag erfüllt, ist es nicht fertig und wird nicht Teil des Increments. Wichtige Unterscheidung: **Akzeptanzkriterien** gelten pro Story (*was dieses Feature tun muss*); die **Definition of Done** gilt für *alle* Arbeit (*welche Qualität jedes Feature erfüllen muss*). Eine Story muss beides erfüllen.
+
+### Die fünf Events
+
+Der Sprint ist selbst das erste Event — die feste Zeitbox (ein Monat oder weniger, üblich sind zwei Wochen), die die anderen vier enthält. Sprints laufen nahtlos hintereinander und geben dem Team einen gleichmäßigen Herzschlag.
+
+| Event | Max. Länge (2-Wochen-Sprint) | Zweck |
+|---|---|---|
+| **Sprint** | Der Behälter | Ausgewählte Backlog-Elemente in ein fertiges Increment verwandeln |
+| **Sprint Planning** | ~ein halber Tag | Das **Sprint-Ziel** erarbeiten, Elemente in den Sprint Backlog ziehen, den Plan skizzieren (*warum / was / wie*) |
+| **Daily Scrum** | 15 Min | Developers inspizieren den Fortschritt Richtung Ziel und planen die nächsten 24 h neu — *von ihnen, für sie* |
+| **Sprint Review** | ~2 Stunden | Das lauffähige Increment den Stakeholdern vorführen; die Diskussion ordnet den Backlog um |
+| **Sprint Retrospective** | ~1,5 Stunden | Das Team inspiziert *sich selbst* — was im nächsten Sprint zu verbessern ist |
+
+Das Review inspiziert das **Produkt**; die Retrospective inspiziert **Prozess und Menschen**. Keines davon ist ein Statusbericht an einen Manager — es ist die Crew, die das Schiff steuert.
+
+<figure class="sc-fig">
+<div class="sc-flow"><div class="sc-node green">Product Backlog<span class="sub">geordnete Wunschliste</span></div><span class="arrow">→</span><div class="sc-node slate">Sprint Planning<span class="sub">Ziel + Auswahl</span></div><span class="arrow">→</span><div class="sc-node amber">Sprint<span class="sub">Daily Scrums</span></div><span class="arrow">→</span><div class="sc-node violet">Increment<span class="sub">fertig & nutzbar</span></div><span class="arrow">→</span><div class="sc-node soft">Review + Retro<span class="sub">inspizieren & anpassen</span></div></div>
+<figcaption>Die Scrum-Schleife — Review und Retrospective fließen direkt zurück in das Product Backlog, und der nächste Sprint startet in dem Moment, in dem dieser endet.</figcaption>
+</figure>
+
+<Aside type="caution" title="Scrum-Mythen zum Verlernen">
+- *„Scrum = Agile."* Agile ist das Wertesystem; Scrum ist *ein* Framework, das darauf aufbaut.
+- *„Ein Sprint bedeutet schneller arbeiten."* Nein — es ist ein festes Fenster in **nachhaltigem Tempo**; alle zwei Wochen sportlich zu sprinten ist genau das, was die Prinzipien verbieten.
+- *„Der Scrum Master ist der Chef."* Keine Autorität über Menschen oder Prioritäten, niemals.
+- *„Der Daily Scrum ist ein Bericht an den Manager."* In dem Moment, in dem die Developers *zur Autorität* statt *zueinander* sprechen, ist das Event tot.
+</Aside>
+
+## 6 · Kanban vs. Scrum
+
+Scrum ist nicht die einzige agile Methode. **Kanban** denkt in *kontinuierlichem Fluss* statt in festen Zeitboxen. Ein Board macht Arbeit sichtbar mit **Spalten** (Phasen) und **Karten** (Arbeitselementen) — minimal **To Do → In Progress → Done**, eine Karte zu einem Zeitpunkt an genau einem Ort.
+
+Seine scharfe Kante ist das **Work-in-Progress-(WIP-)Limit**: eine harte Obergrenze, wie viele Karten eine Spalte halten darf. Wenn „In Progress" auf zwei begrenzt ist und beide Plätze voll sind, fängt niemand eine dritte an — die Aufgabe wird **etwas fertigstellen**, nicht etwas anfangen. Warum so streng? Fünf halbfertige Aufgaben liefern *nichts*, und das Wechseln zwischen ihnen verbrennt Zeit; das Limit verwandelt diese unsichtbare Verschwendung in eine sichtbare Einschränkung und erzwingt die Frage *„Warum hängt diese Karte?"* in dem Moment, in dem sie hängt.
+
+| | Scrum | Kanban |
+|---|---|---|
+| Rhythmus | Feste Sprints mit einem Ziel | Kontinuierlicher Fluss, ein Element nach dem anderen |
+| Rollen / Events | Erforderlich (3 + 5) | Keine erforderlich |
+| Änderung mitten im Zyklus | Zwischen Sprints | Jederzeit, wenn Kapazität frei wird |
+| Beste Passung | Zielförmige **Produktentwicklung** | **Unterbrechungsgetriebene** Arbeit: Support, Ops, Wartung |
+
+Nützliche erste Frage in jedem Team: Kommt unsere Arbeit als *Strom* an (schlankes Kanban) oder lässt sie sich in *Ziele* formen (schlankes Scrum)? Viele Teams mischen beides („Scrumban" — Sprints + WIP-Limits). Ohne WIP-Limits ist Kanban nur ein Board mit Klebezetteln; das Limit macht es zur Methode.
+
+## 7 · Das Leben eines Tickets
+
+Ganz nah herangezoomt: die einzelne Arbeitseinheit, die ein Entwickler in der Hand hält, ist ein **Ticket** — eine Arbeitseinheit in einem Tracking-Tool, mit einem **Titel** (eine Zeile), einer **Beschreibung** (das *Warum* und der Kontext) und **Akzeptanzkriterien** (dem prüfbaren *Fertig*). Vor dem Coden prüfe ich: Verstehe ich das *Warum*, und könnte ich jedes Kriterium überprüfen? Wenn nicht, ist der richtige Schritt eine *Frage an den Autor*, kein Raten — geratene Anforderungen sind der Weg, wie falsche Features mit perfektem Code gebaut werden.
+
+Der Weg vom Ticket zum Fertig ist derselbe branchenübliche Ablauf, den ich im JS-Kurs schon pro Übung genutzt habe:
+
+<Steps>
+1. **Ticket aufgenommen** → ein **Branch** wird dafür erstellt, benannt nach dem Ticket (ein Branch pro Aufgabe, egal wie klein).
+2. Die Arbeit geschieht als kleine, beschriebene **Commits** auf diesem Branch — sicher abseits von `main`.
+3. Ein **Pull Request** wird geöffnet: die formale Bitte um das Zusammenführen, die alle Änderungen zur Prüfung vorlegt.
+4. Ein Kollege **reviewt** ihn; Feedback fließt zurück als *neue Commits auf demselben Branch*.
+5. Freigegebene Arbeit wird **gemerged**, und das Ticket wandert auf **Done** — das heißt, die Akzeptanzkriterien treffen zu *und* die Definition of Done ist erfüllt.
+</Steps>
+
+<Aside type="caution" title="Was 'Done' wirklich bedeutet">
+Done ist **nicht** „läuft auf meinem Rechner". Im Team ist Done eine *öffentliche Behauptung mit Definition*: Kriterien treffen zu, Definition of Done erfüllt, Arbeit gemerged. Bis dahin ist es *in Arbeit*, wie es sich auch anfühlen mag.
+</Aside>
+
+## 8 · Alltägliche Entwicklerpraktiken
+
+### Eine gute technische Frage stellen
+
+Jeder bleibt mal stecken; was Menschen unterscheidet, ist, was als Nächstes passiert. Eine Frage, die jemand tatsächlich beantworten kann, trägt drei Dinge:
+
+1. **Das Ziel** — was ich erreichen will, eine Ebene *über* dem Bug (das eigentliche Problem, nicht die Lösung, die ich mir vorstellte).
+2. **Was ich versucht habe** — die Schritte und der Code, damit niemand vorschlägt, was ich schon ausgeschlossen habe.
+3. **Der genaue Fehlertext** — *kopiert und eingefügt*, nie umschrieben. „Da steht irgendwo null pointer" zerstört das einzelne aussagekräftigste Ding, das ich besitze.
+
+Das Ziel zuerst zu benennen, vermeidet die klassische Falle, nach meiner *versuchten Lösung* statt nach meinem *eigentlichen Problem* zu fragen: frag „Wie parse ich diesen Datums-String mit Regex?", und die Leute debuggen meine Regex; sag „Ich brauche das Jahr aus diesem Datumswert", und jemand reicht mir eine einzeilige Datums-Methode, die den ganzen Kampf auslöscht.
+
+Die meisten Fehler tragen vier lesbare Teile — **Typ** (z. B. `TypeError`), **Nachricht** (Wort für Wort lesen — sie meint, was sie sagt), **Ort** (Datei + Zeile) und **Stack Trace** (oberste Zeile = wo es brach, Zeilen darunter = wie es dorthin kam). Der Goldstandard-Anhang ist ein **minimales reproduzierbares Beispiel**: der kleinste vollständige Code, der immer noch fehlschlägt. Eines zu bauen *löst oft das Problem selbst* (der Rubber-Duck-Effekt). Reihenfolge des Fragens: **Doku → den Fehler suchen → ein Teammitglied → ein öffentliches Forum** — und ein Teammitglied nach ~15 Minuten ehrlichen Bemühens zu fragen ist der *richtige* professionelle Schritt, keine Schwäche.
+
+### Dokumentation effektiv lesen
+
+Der Trick ist, den *Typ* des Dokuments zur Frage passend zu wählen:
+
+| Typ | Für | Wie lesen |
+|---|---|---|
+| **Tutorial** | Ich bin neu im ganzen Bereich | Von Anfang bis Ende, lernen durch Tun |
+| **Guide** (Anleitung) | Ich habe eine konkrete Aufgabe, kenne die Grundlagen | Direkt zur Aufgabe springen |
+| **Reference** | Ich brauche das genaue Verhalten einer Funktion/Option | Das Stück nachschlagen — *niemals* von vorn bis hinten lesen |
+
+Der meiste Doku-Frust ist ein *Mismatch* — ein Tutorial ist zum Verrücktwerden, wenn ich ein Detail brauche; eine Reference ist undurchdringlich, wenn ich einen Pfad brauchte. Wenn Fachjargon auftaucht, kläre ihn *sofort* (ein persönliches Glossar hilft), und denk an die Senior-Gewohnheit: **Changelogs / Release Notes** überfliegen, wenn etwas, das gestern lief, nach einem Update kaputtgeht.
+
+### Grundlagen des Code Reviews
+
+Das Review ist das häufigste Kollaborationsritual in der Software. Ein Reviewer liest einen Pull Request mit drei Fragen, in dieser Reihenfolge:
+
+1. **Korrektheit** — tut es, was das Ticket behauptet, erfüllt es die Kriterien, behandelt es Randfälle (leere Eingabe, fehlgeschlagene Anfrage)?
+2. **Klarheit** — versteht es der Nächste in einem Jahr ohne den Autor? Klare Namen, kleine Funktionen.
+3. **Konsistenz** — folgt es den Teamkonventionen und der Definition of Done? (Formatierung wird automatisiert, sodass Reviews ihre Aufmerksamkeit auf das richten, was Maschinen nicht beurteilen können.)
+
+Das ganze Handwerk, Feedback zu *geben*: **kommentiere den Code, nie den Coder.** *Frage*, befiehl nicht („Was passiert hier, wenn die Liste leer ist?" schlägt „Das ist falsch"); erkläre das *Warum*; sag, was gut ist; markiere **muss** vs. **könnte**. Es zu *empfangen*: alles lesen, bevor du antwortest, Fragen als Fragen behandeln, für den Fund danken (ein jetzt gefundener Bug ist am billigsten) und offen und professionell widersprechen, wenn du es tust. Ein Review mit null Kommentaren bedeutet meist einen gehetzten Reviewer, keinen makellosen Code.
+
+### Mein persönliches Task-Board
+
+Alles oben ist für Teams — aber das eine Projekt, das ich garantiert manage, ist *mein eigenes Lernen*. Gleiches Werkzeug, Team von einem: **To Do → In Progress → Done**, ehrliche Karten (eine Karte ist wohlgeformt, wenn ich mit Ja/Nein sagen kann, ob sie fertig ist). To Do nach Wert geordnet ist mein persönliches Backlog; das **WIP-Limit** sollte *brutal sein — höchstens zwei*. Beide Plätze voll und in Versuchung durch etwas Neues? Mach erst etwas fertig. Die Done-Spalte ist an einem harten Tag das Motivationsinstrument. GitHub Projects ist das natürliche Zuhause, da es dort lebt, wo meine Arbeit lebt.
+
+## 9 · Arbeiten mit KI (LLMs)
+
+### Was ein großes Sprachmodell wirklich ist
+
+Ein **großes Sprachmodell (LLM)** — ChatGPT, Claude, Gemini und Verwandte — ist ein Programm, das auf riesigen Textmengen trainiert wurde, um *eine* Sache zu tun: gegebenen Text, **vorhersagen, welcher Text plausibel als Nächstes kommt**. Das ist der ganze Trick, in kolossalem Maßstab. Zwei Konsequenzen treiben alles andere an:
+
+- Es hat **keine Faktendatenbank, die es nachschlägt.** Es erzeugt Text, der angesichts des Trainings *statistisch plausibel* ist. Plausibel und wahr überschneiden sich stark (deshalb ist es nützlich), sind aber nicht dasselbe.
+- Es ist wirklich exzellent bei **sprachförmiger Arbeit**: erklären, zusammenfassen, umformulieren, zwischen Ebenen übersetzen und strukturierten Text einschließlich Code erzeugen.
+
+<Aside type="note" title="Zwei Kanten + die goldene Regel">
+Das **Training** geschah einmal, bevor ich ankam (es las einen riesigen eingefrorenen Korpus und justierte sich selbst); die **Inferenz** ist das, was jetzt passiert (das eingefrorene Modell antwortet mir). Nichts, was ich tippe, trainiert es mitten im Chat neu. Es kennt *häufige* Dinge weit besser als *seltene*, und es erbt die **Verzerrungen (Bias)** seiner Daten. Zwei Kanten: ein **Wissens-Stichtag** (aktuelle Releases/Preise/News können fehlen) und das Verhalten unterscheidet sich zwischen Versionen/Anbietern. Die goldene Regel: **Sprachgewandtheit ist keine Autorität** — ein selbstsicherer, geschliffener Ton ist eine Eigenschaft des *Textgenerators*, kein Beleg für Korrektheit. Es formuliert seine Fehler so schön wie seine Wahrheiten.
+</Aside>
+
+### Halluzinationen
+
+Eine **Halluzination** ist erzeugter Inhalt, der als Fakt präsentiert wird, aber falsch oder erfunden ist — und es ist die *wichtigste* Gewohnheit in diesem ganzen Thema. Im Code die klassischen Exemplare: eine Methode, die nicht existiert, aber *richtig klingt*; Konfigurationsoptionen, die keine Version akzeptiert; eine selbstsichere falsche Erklärung, warum Code scheitert; erfundene Quellen und Versionsnummern. Sie sind kein zufälliges Rauschen — sie sind **maximal plausible Unwahrheiten**, vom genau diesem Mechanismus so gebaut, dass sie an meinen Abwehrmechanismen vorbeisegeln.
+
+Die professionelle Antwort passt in einen Satz: **keiner Behauptung eines Assistenten wird vertraut, bis sie gegen eine autoritative Quelle verifiziert ist** (offizielle Doku, MDN, die eigene Website des Tools).
+
+<Steps>
+1. **Fragen**, und die Antwort lesen.
+2. **Prüfen** der tragenden Behauptungen gegen die offizielle Dokumentation.
+3. Wenn **bestätigt** → sie *mit Verständnis* nutzen, denn ich habe gerade auch die echte Quelle gelesen.
+4. Wenn **falsch** → dem Assistenten sagen, was die Doku tatsächlich sagt, und erneut fragen. Das korrigierte Gespräch landet meist, und jetzt kenne ich diese Ecke besser als wir beide zuvor.
+</Steps>
+
+Die Umdeutung, die das klick machen lässt: **Verifikation *ist* das Lernen.** Der Assistent verengt eine offene Suche auf ein einzelnes Ja/Nein-Nachschlagen; der Doku-Besuch ist der Ort, an dem beständiges Wissen aufgebaut wird. Lernende, die verifizieren, bauen aus jedem Austausch echtes Wissen; Lernende, die unverifizierte Antworten einfügen, bauen einen Haufen Code, den sie nicht erklären können.
+
+### Grundlagen des Promptings
+
+Der Assistent kann nur auf den Text reagieren, den ich ihm gebe — den **Prompt** — und es ist eine erlernbare Struktur, die ich schon von User Stories und guten Fragen kenne. Ein starker Prompt trägt vier Teile:
+
+<Steps>
+1. **Kontext** — wer ich bin, was ich schon weiß, die Situation. Der Assistent kann mich nicht sehen; dieses Feld zeigt ihm mein *Niveau*, und eine auf mein Niveau zugeschnittene Antwort ist der ganze Sinn.
+2. **Ziel** — was ich tatsächlich erzeugt haben will, direkt ausgesprochen.
+3. **Einschränkungen** — die Form einer guten Antwort: Länge, Format, was einzuschließen/zu vermeiden ist, welche Technik erlaubt oder außerhalb des Rahmens ist.
+4. **Beispiel** — wo das Format zählt, ein kleines Muster guter Ausgabe. Nichts vermittelt ein Format besser als eine Instanz.
+</Steps>
+
+Dann **iterieren, nicht neu starten**: wenn eine Antwort danebenliegt, *steuere* („zu fortgeschritten — erkläre es, als hätte ich nie eine Schleife gesehen"; „auf fünf Sätze verdichten"). Jede Korrektur verengt die nächste Antwort; ein Neustart wirft alles weg, was das Gespräch aufgebaut hat. Die einzelne wertvollste Einschränkung kostet einen Satz: **sag, was ich weiß.** *„Ich kenne HTML/CSS, aber noch kein JavaScript"* ändert Vokabular, Tempo und Beispiele komplett. Prompts, die landen, lohnt es sich in einer **persönlichen Prompt-Bibliothek** zu speichern.
+
+### KI als Lernpartner — und die Kopier-Falle
+
+Vier Arbeitsabläufe, die tatsächlich Können aufbauen:
+
+| Arbeitsablauf | Der Zug |
+|---|---|
+| **Erklärer** | „Erkläre diese Zeile für Zeile auf meinem Niveau; ich kenne X, aber nicht Y" — dann nachhaken: *warum so? was bricht, wenn Zeile 3 verschoben wird?* |
+| **Übungsgenerator** | „Generiere fünf Übungen, etwas schwerer als diese" — sie *selbst* lösen, dann zum Review zurückkehren |
+| **Debugging-Partner** | Ziel + Versuch + genauer Fehler — dann *„erkläre den Fehler und wo ich schauen soll; behebe ihn noch nicht"* |
+| **Quizmaster** | „Fragt mich ab, eine Frage nach der anderen, dann sag mir, was meine falschen Antworten über mein Missverständnis verraten" (Abruf ist erstklassiges Lernen) |
+
+<Aside type="caution" title="Die Kopier-Falle — der Fehlermodus, der Anfänger frisst">
+Der Assistent wird bereitwillig *meine Übungen für mich machen*, und die Ausgabe wird sauber und korrekt sein. Sie einzureichen *fühlt sich* wie Fortschritt an — es ist das Gegenteil: die Übung existierte, um etwas in mir aufzubauen, und dieses Etwas wurde nicht aufgebaut. Die Regel, die die Partnerschaft ehrlich hält: **der Assistent erklärt, reviewt und gibt Hinweise; der Versuch gehört mir.** Produktives Ringen ist kein Hindernis fürs Lernen — es *ist* der Mechanismus. Code lesen baut Wiedererkennung auf; nur Code *schreiben* baut die Fähigkeit auf, Code zu schreiben.
+</Aside>
+
+### KI professionell nutzen
+
+In dem Moment, in dem ich für einen Arbeitgeber arbeite, tritt eine vierte Partei in jeden Prompt ein: das Unternehmen, dessen Informationen ich halte. Was ich tippe, wird an die Server des Anbieters gesendet und kann gespeichert oder geprüft werden. In Ordnung für eine Frage über Closures — ein **schweres berufliches Versagen** für drei Kategorien:
+
+| Niemals ohne ausdrückliche Erlaubnis einfügen | Beispiel |
+|---|---|
+| **Geheimnisse & Zugangsdaten** | Passwörter, Access Keys/Tokens, Connection Strings, Konfigurationsdateien mit Schlüsseln darin |
+| **Personenbezogene Daten** | Namen, E-Mails, Adressen, Kunden-/Mitarbeiterdaten — *alles, was eine echte Person identifiziert* |
+| **Firmencode & Dokumente** | Quellcode, interne Doku, Strategie, unveröffentlichte Pläne |
+
+<Aside type="caution" title="Die DSGVO macht daraus Gesetz, nicht Vorliebe">
+In der EU sind personenbezogene Daten nicht bloß Richtlinie — die **DSGVO** regelt jede *Verarbeitung* davon, und die Daten eines Kunden an einen externen KI-Dienst zu senden *ist* Verarbeitung, für die das Unternehmen einsteht. Die klassische Falle: beim Debuggen eines fehlschlagenden Imports spät am Freitag fügt jemand die Log-Datei ein — die die Namen und E-Mails von 40 Kunden enthielt — und am Montag ist es ein DSGVO-Vorfall. Die Fünf-Sekunden-Alternative (erst die Zeilen löschen) hätte dieselbe Hilfe gebracht. Meine zwei Pflichten: in Woche eins **fragen**, ob eine KI-Nutzungsrichtlinie existiert; dann sie **befolgen**, auch wenn sie strenger ist, als vernünftig scheint. Wo keine existiert, sind die drei Kategorien oben das Minimum. Das gilt auch für **KI-Assistenten im Editor** — sie lesen den Code rund um den Cursor, und der *ist* die Kategorie Firmencode.
+</Aside>
+
+Ein Prinzip schließt es ab: **was auch immer ich einreiche, gehört mir.** Wenn eine KI den Code entworfen hat, den ich merge, oder die Analyse, die ich vorlege, habe ich sie *übernommen* — *„die KI hat es geschrieben"* ist keine Verteidigung in einem Review, einem Audit oder einem Rechtsstreit. Die professionelle Version der Kopier-Falle: verstehen und verifizieren, bevor ich übernehme, mit karrieregroßen Einsätzen. Arbeitgeber *erwarten* zunehmend versierte KI-Nutzung — die getestete Fähigkeit ist, sie **innerhalb der Grenzen** zu nutzen.
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| Zwei Probleme | Versionskontrolle führt Code zusammen; eine *Arbeitsmethode* koordiniert, wer was wann baut |
+| SDLC | Planen → Bauen → Testen → Ausliefern → Warten, dann loopen — Software ist nie fertig |
+| Wasserfall-Fehler | Feedback kommt am Ende an, wenn Änderungen am teuersten sind |
+| Agile Kernwette | Es richtig treffen durch kurze Iterationen von *Feedback*, nicht durch einen großen Vorab-*Plan* |
+| Manifest „über" | Höher geschätzt, *wenn sie im Konflikt stehen* — nie *anstatt* |
+| 4 Werte | Individuen · funktionierende Software · Zusammenarbeit mit dem Kunden · Reagieren auf Veränderung |
+| User Story | *Als [Rolle] möchte ich [Fähigkeit], damit [Nutzen]* — das „damit" rechtfertigt sie |
+| Akzeptanzkriterien | Binäre, prüfbare Aussagen, die *fertig* für eine Story definieren |
+| Story Points | Relative, teaminterne Größe — eine Prognose, nie ein Produktivitätsmaß |
+| Planning Poker | Gleichzeitiges Aufdecken → kein Ankern, legt versteckte Annahmen offen |
+| Empirie | Transparenz + Inspektion + Adaption — Artefakte zeigen, Events passen an |
+| Scrum-Rollen | PO = Was/Warum · Scrum Master = Prozess/Hindernisse · Developers = Wie |
+| Scrum-Artefakte | Product Backlog · Sprint Backlog · Increment (+ Definition of Done) |
+| Akzeptanz vs. DoD | Kriterien = Verhalten pro Story; DoD = Qualitätslatte für *alle* Arbeit |
+| Scrum-Events | Sprint · Planning · Daily Scrum · Review (Produkt) · Retro (Team) |
+| Kanban | Karten fließen durch Spalten; das **WIP-Limit** erzwingt Fertigstellen vor Anfangen |
+| Scrum vs. Kanban | Zielförmige Produktarbeit vs. kontinuierlicher, unterbrechungsgetriebener Fluss |
+| Ticket → fertig | Ticket → Branch → Commits → PR → Review → Merge; *fertig* ist öffentlich, definiert |
+| Gute Frage | Ziel + was ich versucht habe + *genauer* eingefügter Fehler; das echte Ziel benennen |
+| Doku lesen | Tutorial (lernen) · Guide (Aufgabe) · Reference (nachschlagen) — Typ zur Frage passend |
+| Code Review | Korrektheit → Klarheit → Konsistenz; auf dem Code, nie am Coder |
+| Persönliches Board | To Do / In Progress / Done, ehrliche Karten, brutales WIP-Limit von zwei |
+| LLM in einer Zeile | Sagt plausiblen nächsten Text vorher — es schlägt *keine* Fakten nach |
+| Sprachgewandtheit ≠ Wahrheit | Selbstsicherer Ton ist eine Stileigenschaft, trägt keine Info über Korrektheit |
+| Halluzination | Plausible erfundene Unwahrheit — jede Behauptung gegen offizielle Doku verifizieren |
+| Verifikation | *Verifikation ist das Lernen* — verengt eine offene Suche auf ein Ja/Nein |
+| Prompt-Teile | Kontext + Ziel + Einschränkungen + Beispiel; mein Niveau nennen; iterieren, nicht neu starten |
+| Kopier-Falle | KI erklärt/reviewt/gibt Hinweise — der *Versuch* gehört mir; Ringen ist der Mechanismus |
+| KI-Grenzlinie | Nie Geheimnisse, personenbezogene Daten oder Firmencode einfügen — die DSGVO macht es zum Gesetz |
+| Die Ausgabe verantworten | Was auch immer ich einreiche, gehört mir; „die KI hat es geschrieben" ist keine Verteidigung |
