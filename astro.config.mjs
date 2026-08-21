@@ -223,6 +223,7 @@ export default defineConfig({
 											{ label: '1 · Initiation Components', translations: { de: '1 · Initiierungskomponenten' }, link: 'learnings/online/project-management/initiation-1-components' },
 											{ label: '2 · Goals, Scope & Success', translations: { de: '2 · Ziele, Umfang & Erfolg' }, link: 'learnings/online/project-management/initiation-2-goals-scope' },
 											{ label: '3 · Stakeholders & RACI', translations: { de: '3 · Stakeholder & RACI' }, link: 'learnings/online/project-management/initiation-3-stakeholders' },
+											{ label: '4 · Resources & Tools', translations: { de: '4 · Ressourcen & Tools' }, link: 'learnings/online/project-management/initiation-4-resources-tools' },
 										],
 									},
 								],
