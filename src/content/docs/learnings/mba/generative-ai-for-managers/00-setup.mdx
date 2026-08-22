@@ -1,0 +1,159 @@
+---
+title: "Setup — Google Colab & the Gemini API"
+description: "A ~15-minute setup for the hands-on labs: Google Colab, a Gemini API key stored safely in Colab Secrets, the google-genai SDK, a first test call, and a troubleshooting table."
+sidebar:
+  label: "Setup — Colab & Gemini"
+  order: 1
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Generative AI for Managers — TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
+
+---
+
+Every lab in this course runs in **Google Colab** (a free, browser-based notebook — no installs on my laptop) and calls the **Gemini API** (Google's LLM service). This page is the one-time setup so the notebooks in Days 1–5 just work. It takes about 15 minutes.
+
+<Aside type="note">
+**What each piece is:**
+- **Google Colab** — a website that runs Python notebooks in the cloud. A *notebook* is a document mixing text and runnable code cells.
+- **Gemini API** — the interface my code uses to send prompts to Google's model and get answers back.
+- **API key** — a secret password that identifies my account to the API. Anyone who has it can spend against my quota, so it must be protected.
+</Aside>
+
+## What I need
+
+<div class="sc-chips">
+  <span class="sc-chip">A laptop + modern browser (Chrome)</span>
+  <span class="sc-chip">A Google account</span>
+</div>
+
+## Step 1 — Open Google Colab
+
+<Steps>
+
+1. Go to [colab.research.google.com](https://colab.research.google.com/) and sign in with my Google account.
+
+2. Click **New Notebook**.
+
+3. In the first cell, type this and run it (Shift+Enter):
+
+   ```python
+   print("Colab is working!")
+   ```
+
+   If it prints the message, Colab is ready.
+
+</Steps>
+
+## Step 2 — Create a Gemini API key
+
+<Steps>
+
+1. Open [Google AI Studio](https://aistudio.google.com/) and sign in.
+
+2. Find **Get API key** (or **API keys**) in the interface and **create a new API key**.
+
+3. Save it somewhere safe — a password manager is ideal. **Treat it exactly like a password.**
+
+</Steps>
+
+<Aside type="danger">
+**Never expose your API key.** Do not paste it into a shared notebook, a screenshot, a chat, or a document — and never commit it to GitHub. If a key ever leaks (even inside a file you shared), assume it's compromised and **delete it in AI Studio and create a new one**. The safe pattern below means the key never appears in the notebook's text at all.
+</Aside>
+
+<Aside type="note">
+Free-tier availability and rate limits depend on your region and account and can change. Keep usage small and follow the in-class guidance.
+</Aside>
+
+## Step 3 — Store the key safely in Colab (Secrets)
+
+The right way to give a notebook the key without writing it into the code:
+
+<Steps>
+
+1. In Colab, click the **key icon** (🔑 **Secrets**) in the left sidebar.
+
+2. Add a new secret — **Name:** `GEMINI_API_KEY`, **Value:** paste your key.
+
+3. Toggle **Notebook access** on for that secret.
+
+4. In a code cell, load it into an environment variable:
+
+   ```python
+   from google.colab import userdata
+   import os
+
+   os.environ["GEMINI_API_KEY"] = userdata.get("GEMINI_API_KEY")
+   print("Key loaded:", bool(os.environ.get("GEMINI_API_KEY")))
+   ```
+
+   If it prints `Key loaded: True`, you're set.
+
+</Steps>
+
+<Aside type="tip">
+**Fallback (only in your own private notebook):** if Secrets aren't available, paste the key once per session without it showing on screen:
+
+```python
+import os, getpass
+os.environ["GEMINI_API_KEY"] = getpass.getpass("Paste your GEMINI_API_KEY: ")
+print("Key loaded:", bool(os.environ.get("GEMINI_API_KEY")))
+```
+
+`getpass` hides the input as you type — still, never save the key into the notebook itself.
+</Aside>
+
+## Step 4 — Install the SDK and make a first call
+
+<Steps>
+
+1. Install the Gemini SDK (the `!` runs a shell command inside Colab):
+
+   ```python
+   !pip -q install -U google-genai
+   ```
+
+2. Make a first call. `genai.Client()` automatically reads `GEMINI_API_KEY` from the environment:
+
+   ```python
+   import os
+   from google import genai
+
+   client = genai.Client()  # reads GEMINI_API_KEY from the environment
+   resp = client.models.generate_content(
+       model="gemini-2.5-flash-lite",
+       contents="Say hello in one short sentence."
+   )
+   print(resp.text)
+   ```
+
+   If you see a greeting, the whole setup works.
+
+</Steps>
+
+<Aside type="note">
+**Model name:** the labs use `gemini-2.5-flash-lite` — a small, fast, cheap model that's plenty for learning. You'll swap in other models later when a task needs more capability.
+</Aside>
+
+## Troubleshooting
+
+| Message | Likely cause | Fix |
+| --- | --- | --- |
+| `Key loaded: False` | Secret name doesn't match | Name it exactly `GEMINI_API_KEY` (case-sensitive) |
+| `SecretNotFoundError` | Notebook access off | Toggle **Notebook access** on for the secret |
+| `PermissionDenied` / `InvalidApiKey` | Key invalid or expired | Generate a new key in AI Studio |
+| `ResourceExhausted` / quota exceeded | Free-tier rate limit hit | Wait 1–2 minutes, then retry |
+| `ModelNotFound` | Wrong model name | Use e.g. `gemini-2.5-flash-lite` |
+| `ModuleNotFoundError: google.genai` | SDK not installed | Re-run `!pip -q install -U google-genai` |
+
+## Revision summary
+
+| Must-know | One-line recall |
+| --- | --- |
+| Environment | Labs run in **Google Colab** (cloud notebooks) and call the **Gemini API** |
+| API key = password | Identifies my account; whoever holds it can spend my quota |
+| Safe storage | Put the key in Colab **Secrets** as `GEMINI_API_KEY`; never hard-code it |
+| Load the key | `userdata.get("GEMINI_API_KEY")` → env var; `genai.Client()` reads it automatically |
+| Install & call | `!pip install -U google-genai`; `client.models.generate_content(model=..., contents=...)` |
+| If a key leaks | Delete it in AI Studio and make a new one — treat it as compromised |

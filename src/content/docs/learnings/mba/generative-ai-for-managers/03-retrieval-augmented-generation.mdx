@@ -1,0 +1,443 @@
+---
+title: "Day 3 — Retrieval-Augmented Generation (RAG)"
+description: "How to ground an LLM in your own documents — embeddings, chunking, and a full RAG pipeline for accurate, source-backed enterprise Q&A."
+sidebar:
+  label: "3 · RAG"
+  order: 3
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Generative AI for Managers — TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
+
+---
+
+Day 1 taught me what a large language model (LLM) actually is, and Day 2 taught me how to *talk* to it well through prompting. But there was always an elephant in the room: **the model only knows what it saw during training.** It has never read my company's handbook, never seen last quarter's sales, and has no idea what changed in the news yesterday. Day 3 is about fixing exactly that — feeding the model the right information *at the moment I ask*, so its answers are grounded in real data instead of guesswork. That technique is called **Retrieval-Augmented Generation**, or **RAG**.
+
+## 1. Why RAG exists — the knowledge gap
+
+An LLM is trained once, on a giant snapshot of text, and then frozen. That creates three problems that *no amount of clever prompting* can solve:
+
+| Problem | What it means | Example question that breaks |
+|---|---|---|
+| **Training cutoff** | The model's knowledge stops at a fixed date | "Who is the current CEO of that company?" (may have changed) |
+| **Private knowledge** | It never saw your internal data | "What were our Q4 2025 sales?" |
+| **Hallucination** | When it doesn't know, it invents a confident, wrong answer | "What does our handbook say about remote work?" |
+
+That last one — **hallucination** (the model producing plausible-sounding but false statements) — is the dangerous one for business. The model doesn't *say* "I don't know"; it fills the gap with something that reads perfectly and is simply made up.
+
+<Aside type="note">
+**The core idea in one line.** Instead of *hoping* the model already knows the answer, we **retrieve** the relevant facts from our own data first, then **paste** them into the prompt as context and let the model answer using them. Retrieve, then generate — that's RAG.
+</Aside>
+
+A simple analogy: a closed-book exam versus an open-book exam. A plain LLM sits a closed-book exam — it answers from memory, and when memory fails it bluffs. RAG turns it into an open-book exam: before answering, it flips to the exact right pages of *your* textbook and reads from them. Same student, far more reliable answers.
+
+## 2. From keyword search to meaning-based search
+
+RAG's first job is *finding* the right pages. To appreciate how it does that, it helps to see the old way first.
+
+### The old way: keyword search
+
+Traditional search (think of a classic search box, or algorithms with names like **TF-IDF** and **BM25**) treats each document as a **bag of words** — literally a tally of which words appear and how often, ignoring word order. Common words like "the" count for little; rare, distinctive words count for a lot. To answer a query it finds documents that share the *exact same words*.
+
+The fatal weakness is the **vocabulary-mismatch problem**: it only matches literal words. Ask about "remote work" and it will miss a document that says "working from home" or "telecommuting", because the letters don't line up — even though the *meaning* is identical.
+
+### The new way: semantic search
+
+**Semantic search** matches by *meaning* instead of by spelling. Here is the difference in practice:
+
+| I search for… | Keyword search finds | Semantic search also finds |
+|---|---|---|
+| "remote work productivity" | only pages with those exact words | pages about telecommuting, WFH, distributed teams |
+| "how to reduce costs" | only "reduce costs" verbatim | efficiency, budget optimisation, lean operations |
+| "customer complaints" | only "customer complaints" | negative reviews, support tickets, angry feedback |
+
+<Aside type="tip">
+**Why this matters for business.** Most company knowledge is buried in documents that keyword search handles badly — people phrase things a hundred different ways. Semantic search unlocks that knowledge by matching what the user *means*, not the words they happened to type.
+</Aside>
+
+## 3. Embeddings — turning meaning into numbers
+
+How can software possibly compare *meaning*? Through **embeddings** — the idea we first met on Day 1.
+
+An **embedding** is a list of numbers (a **vector**) that represents a piece of text as a point in a huge multi-dimensional space. The trick that makes it useful: **texts with similar meaning land close together** in that space, and unrelated texts land far apart. "Car" and "automobile" end up as near-neighbours; "car" and "banana" end up far apart. The model learned this arrangement from reading enormous amounts of text.
+
+On Day 1 we saw this for single *words*. For RAG we need it for whole *passages* — sentences, paragraphs, chunks — collapsed into one vector each:
+
+| Level | What it captures | Typical use |
+|---|---|---|
+| Word embedding | a single word | analogies, word similarity |
+| Sentence embedding | one sentence | semantic search, clustering |
+| **Passage embedding** | **a paragraph / chunk** | **RAG retrieval** |
+| Document embedding | a whole document | document classification |
+
+A modern embedding model (the course uses Google's `gemini-embedding-001`) reads a passage and hands back a single long vector — in this case **3,072 numbers** — that stands for the meaning of that entire passage.
+
+### Measuring "closeness": cosine similarity
+
+Once two texts are vectors, we need one number for *how similar* they are. The standard measure is **cosine similarity** — it looks at the *angle* between two vectors rather than their length. Same direction means same meaning.
+
+| Cosine score | What it means |
+|---|---|
+| `1.0` | identical meaning |
+| `0.7` – `0.9` | very similar |
+| `0.3` – `0.6` | loosely related |
+| below `0.3` | unrelated |
+
+```python
+import numpy as np
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+sim = cosine_similarity(embedding_1, embedding_2)
+print(f"Similarity: {sim:.3f}")
+```
+
+### Creating embeddings with the Gemini API
+
+The current `google-genai` SDK makes this a couple of lines. (Never paste a real key into code — store it in Colab **Secrets**, as the [Setup](/learnings/mba/generative-ai-for-managers/00-setup/) notes show.)
+
+```python
+from google import genai
+from google.genai import types
+
+client = genai.Client()  # reads the key from the environment / Colab Secrets
+
+response = client.models.embed_content(
+    model="gemini-embedding-001",
+    contents="How does remote work affect team productivity?",
+)
+embedding = response.embeddings[0].values
+print(len(embedding))   # 3072
+```
+
+<Aside type="note">
+**One subtlety that quietly boosts accuracy: task types.** The Gemini embeddings API lets you say *what the text is for*. Use `RETRIEVAL_DOCUMENT` when embedding the documents you're storing, and `RETRIEVAL_QUERY` when embedding the user's question. Matching them up makes queries and documents "speak the same dialect", which measurably improves retrieval. (There's also `SEMANTIC_SIMILARITY` for directly comparing two texts.)
+</Aside>
+
+```python
+response = client.models.embed_content(
+    model="gemini-embedding-001",
+    contents=["Remote work increases flexibility but needs clear communication.",
+              "Office environments foster spontaneous collaboration."],
+    config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT"),
+)
+for i, emb in enumerate(response.embeddings):
+    print(f"Document {i}: {len(emb.values)} dimensions")
+```
+
+## 4. Chunking — cutting documents into bite-size pieces
+
+Real documents are long — a 100-page handbook, a financial report, a product manual. We can't just embed the whole thing as one vector, for four reasons:
+
+| Problem | Why it bites |
+|---|---|
+| Input limits | embedding models accept only ~8,000 tokens at a time |
+| Diluted meaning | one vector for 100 pages captures *nothing* sharply |
+| Finite context | we can only fit so much text into the LLM's prompt later |
+| Precision | we want the *one paragraph* that answers the question, not the whole book |
+
+So we **chunk**: split each document into smaller pieces, embed each piece separately, and later retrieve only the handful of chunks that matter. (A **token** is roughly a word-fragment; ~750 words ≈ 1,000 tokens.)
+
+### Chunking strategies
+
+| Strategy | How it splits | Trade-off |
+|---|---|---|
+| Fixed-size | every N characters/tokens | simple, but may cut mid-sentence |
+| Sentence-based | at sentence boundaries | preserves meaning; sentences vary in length |
+| Paragraph-based | at paragraph breaks | natural units; some paragraphs are huge |
+| Recursive | try big chunks, split smaller if too long | well-balanced; a bit more complex |
+| Semantic | wherever the topic shifts | best relevance; most expensive to compute |
+
+### Size and overlap
+
+Chunk size is one of the most consequential design choices in a RAG system. Small chunks (~100 tokens) are laser-precise but can miss surrounding context; large chunks (~500 tokens) carry more context but dilute the meaning and cost more to search.
+
+<Aside type="tip">
+**Rule of thumb.** Start at **200–500 tokens per chunk** with a **50–100 token overlap** between neighbours, then tune based on testing.
+</Aside>
+
+**Why overlap?** Without it, a fact sitting on a chunk boundary gets sliced in half and may never be retrieved. Imagine a sentence — *"Q3 revenue grew 12% driven by the new product line, launched in July"* — cut so that "the new product line" lands in chunk 1 and "launched in July" in chunk 2. Neither chunk now holds the whole fact. Overlapping the chunks by a few sentences means each one still carries the complete thought across the seam.
+
+### Metadata — the label on each chunk
+
+Smart systems attach a little record of **metadata** to every chunk: which document it came from, the page, the section, the date. This is what lets you later *cite* sources, *filter* ("only search HR docs"), and *debug* ("which chunk produced this wrong answer?").
+
+```python
+chunk = {
+    "text": "Remote work policy allows up to 3 days per week...",
+    "source": "employee_handbook_v4.pdf",
+    "page": 23,
+    "section": "HR Policies",
+    "last_updated": "2025-09-01",
+}
+```
+
+## 5. The RAG pipeline end to end
+
+Now the whole thing fits together. A RAG system runs in **two phases**: an **indexing** phase you do *once, offline* to prepare the knowledge, and a **querying** phase that runs *every time* someone asks a question.
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node amber">Documents<span class="sub">PDFs, wikis, DBs</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Chunk<span class="sub">split + overlap</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Embed<span class="sub">chunk → vector</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Vector store<span class="sub">save vectors</span></div>
+</div>
+<figcaption>Phase 1 — Indexing (offline, done once): turn your documents into a searchable library of vectors.</figcaption>
+</figure>
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node violet">Question<span class="sub">from user</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">Embed query</div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">Similarity search<span class="sub">top-k chunks</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node slate">Augment prompt<span class="sub">paste chunks in</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node soft">Grounded answer</div>
+</div>
+<figcaption>Phase 2 — Querying (online, per question): find the most relevant chunks and let the LLM answer from them.</figcaption>
+</figure>
+
+Reading the two phases as one component table:
+
+| Step | Phase | What happens |
+|---|---|---|
+| 1. Ingest | Indexing | load documents (PDFs, web pages, databases, emails) |
+| 2. Chunk | Indexing | split into right-sized pieces with overlap |
+| 3. Embed | Indexing | convert each chunk to a vector |
+| 4. Store | Indexing | save vectors + original text + metadata |
+| 5. Embed query | Querying | turn the user's question into a vector |
+| 6. Retrieve | Querying | find the *k* most similar chunks |
+| 7. Augment | Querying | insert those chunks into the prompt as context |
+| 8. Generate | Querying | the LLM writes an answer grounded in that context |
+
+The step that retrieves the *k* closest chunks is called **nearest-neighbour search** (*k* is just "how many chunks to grab" — often 3 to 5).
+
+### The augmented prompt — where RAG meets Day 2
+
+The heart of RAG is *how* the retrieved chunks get wired into the prompt. And this is pure Day 2 prompting: system/user separation, **delimiters** to fence off the context, and an explicit **grounding instruction** telling the model to answer *only* from what it was given.
+
+```text
+System: You answer questions using ONLY the provided context.
+        If the answer isn't in the context, say
+        "I don't have enough information to answer this."
+
+User: Answer the question based ONLY on the context below.
+
+      <context>
+      [Retrieved chunk 1]
+      [Retrieved chunk 2]
+      [Retrieved chunk 3]
+      </context>
+
+      Question: What is our remote work policy?
+```
+
+<Aside type="note">
+**This is the bridge from Day 2.** The `<context>` delimiters, the "answer ONLY from context" grounding rule, and the built-in refusal ("say I don't have enough information") are all Day 2 prompting techniques. RAG is simply *information retrieval plus disciplined prompting*.
+</Aside>
+
+### Citations — turning a black box into a research assistant
+
+For business use, a correct answer isn't enough — people need to know *where it came from* so they can verify it. You instruct the model to tag each claim with its source:
+
+```text
+Rules:
+- Cite sources as [Source N] after each claim.
+- If the answer isn't in the sources, say so.
+- If sources conflict, surface the conflict and prefer the most recent/authoritative.
+```
+
+The model then answers like: *"The current policy allows up to 3 days per week [Source 1], but a more recent update raises this to 4 days from Q4 2025 [Source 2]."* In regulated fields — legal, healthcare, finance — this traceability is the difference between a toy and a tool. When documents genuinely disagree, a good grounding prompt defines an **authority hierarchy** (official policy > standard procedures > FAQ > informal wiki) and, within a tier, prefers the newest document — and always *surfaces* the conflict rather than silently guessing.
+
+## 6. A minimal RAG system in ~40 lines
+
+The lab builds a complete, working RAG system with nothing more than Python lists and the Gemini API — no database needed. The shape of it:
+
+<Steps>
+
+1. **Prepare documents** — a small "knowledge base" of short text snippets standing in for real company facts (founding story, remote-work policy, Q3 revenue, leave policy, product details).
+
+2. **Embed everything** — one batched call embeds all documents at once with `task_type="RETRIEVAL_DOCUMENT"`, and we keep the vectors as NumPy arrays.
+
+3. **Search by meaning** — embed the incoming question with `RETRIEVAL_QUERY`, compare it to every stored vector via cosine similarity, and return the top-k.
+
+4. **Generate a grounded answer** — paste those top-k chunks into the augmented prompt and call the chat model.
+
+</Steps>
+
+```python
+def ask(question, top_k=3):
+    # A. retrieve the most relevant chunks
+    results = search(question, top_k=top_k)
+    context = "\n\n".join(documents[i] for i, _ in results)
+
+    # B. build the augmented prompt
+    prompt = f"""Answer based ONLY on the context. If it's not there,
+say "I don't have enough information."
+
+<context>
+{context}
+</context>
+
+Question: {question}"""
+
+    # C. generate
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=prompt,
+    )
+    return response.text
+```
+
+<Aside type="tip">
+**The moment it clicks.** Ask this system "What programming language does the product use?" when that fact isn't in the knowledge base, and a well-grounded model replies *"I don't have enough information"* instead of inventing an answer. That refusal is RAG working **correctly** — grounded, not guessing.
+</Aside>
+
+## 7. Vector databases — when lists stop scaling
+
+The Python-list approach is perfect for learning, but it scans *every* vector on *every* query and forgets everything on restart. Real deployments use a **vector database** — storage purpose-built for embeddings.
+
+| Challenge | In-memory lists | Vector database |
+|---|---|---|
+| 100,000+ documents | slow (checks every one) | fast (indexed) |
+| Persistence | lost on restart | saved to disk |
+| Concurrent users | not supported | built-in |
+| Metadata filtering | manual | native queries |
+| Updates | rebuild everything | add/remove one at a time |
+
+The speed comes from **indexed search**: instead of comparing the query against every vector, algorithms (with names like **HNSW** or **IVF**) pre-organise the vectors into clusters or graphs so a query only checks a small, promising subset. It's the vector-space cousin of the old keyword "inverted index". Popular options range from **ChromaDB** (easiest to start), through **FAISS** and **pgvector** (open-source, self-hosted), to **Pinecone**, **Weaviate**, and **Qdrant** (managed / full-featured). A sensible path: prototype with ChromaDB, move to a managed service when you need scale.
+
+## 8. RAG vs fine-tuning — why RAG wins for enterprise Q&A
+
+A natural question: if the model doesn't know my data, why not just **fine-tune** it — retrain it on company documents until it "knows" them? For enterprise question-answering, RAG almost always wins. Here's the honest comparison:
+
+| Dimension | RAG (retrieve at query time) | Fine-tuning (retrain on your data) |
+|---|---|---|
+| Updating knowledge | add/replace a document — instant | retrain the model — slow, costly |
+| Source citations | yes — points to the exact chunk | no — knowledge is baked in, untraceable |
+| Hallucination control | strong — answers are grounded in retrieved text | weaker — still generating from memory |
+| Cost & skill | low — no training pipeline needed | high — GPUs, ML expertise, data prep |
+| Access control | filter chunks by user permissions | hard — everyone gets the same baked-in model |
+| Best at | injecting **facts/knowledge** | teaching **style, format, or tone** |
+
+The key insight: fine-tuning changes *how the model behaves*; RAG changes *what the model knows right now*. Enterprise Q&A is a knowledge problem — the facts change weekly, must be citable, and must respect who's allowed to see what. That's RAG's home turf. (The two aren't rivals, really: fine-tune to fix *tone*, use RAG to supply *facts*.)
+
+<Aside type="caution">
+**"Just use a giant context window instead?"** Modern models accept enormous prompts (Gemini up to ~2 million tokens), so for a *small, static* set of documents you can sometimes skip retrieval and paste everything in. It's simpler — but you pay for all those tokens on *every single query*. RAG stays the better choice once your knowledge base outgrows the context window or you need to control cost at scale.
+</Aside>
+
+## 9. Making RAG better — advanced techniques
+
+Basic RAG (embed → retrieve → generate) works impressively well. Production systems then layer on refinements — worth *recognising* even if the labs stick to the basics:
+
+| Technique | Problem it fixes |
+|---|---|
+| **Reranking** | fast retrieval grabs *roughly* relevant chunks; a slower, sharper second-pass model re-scores the top ~20 down to the best 3 |
+| **Hybrid search** | pure semantic search can miss exact terms (an acronym, "ISO 27001"); combine it with keyword/BM25 to catch both |
+| **Query transformation** | rewrite a vague question before searching — expand terms, or ask a broader "step-back" question first |
+| **Multi-hop RAG** | chain several retrievals for questions that span documents ("which of our top-3 customers has the longest contract?") |
+| **Query routing** | let the LLM decide *which* source to search — knowledge base vs CRM vs calendar |
+| **Agentic RAG** | let the LLM decide *whether*, *what*, *where*, and *when* to retrieve — the doorway to Day 4 |
+
+<Aside type="note">
+**Bridge to Day 4.** *Agentic RAG* is where retrieval meets **agents**. Basic RAG is "look up one thing"; agentic RAG is "research a topic autonomously" — planning multiple steps, using tools beyond search, and judging when it has enough to answer. More on that tomorrow.
+</Aside>
+
+## 10. Evaluation — is my RAG actually any good?
+
+A RAG system can fail in *two different places*: **retrieval** (fetched the wrong chunks) or **generation** (had the right chunks but answered badly). You have to measure both. The course's framework is the **RAG triad** — three complementary scores:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Context Relevance</span>
+  <span class="sc-chip green">Groundedness</span>
+  <span class="sc-chip amber">Answer Relevance</span>
+</div>
+
+| Metric | The question it answers | How to check |
+|---|---|---|
+| **Context relevance** | Did we retrieve the *right* chunks? | score each retrieved chunk against the query |
+| **Groundedness** | Is the answer *supported* by those chunks? | trace every claim back to a chunk |
+| **Answer relevance** | Does the answer actually *address* the question? | score the answer against the original question |
+
+You need all three because each catches a different failure: perfect chunks can still produce a wrong answer (low groundedness), and a beautifully written answer can miss the question entirely (low answer relevance). To score at scale, the labs use **LLM-as-judge** — a second LLM rates each dimension 1–5 and returns JSON. For retrieval specifically, classic metrics help too: **Precision@k** (what fraction of retrieved chunks were relevant) and **Recall@k** (what fraction of the relevant chunks we managed to find) — both need a **golden test set** of real questions with known correct answers.
+
+<Aside type="caution">
+**The single biggest mistake** is not testing with *real user questions*. Build the system, then throw the messy, ambiguous, out-of-scope questions your actual users will ask — not just the easy ones. Even 30 well-chosen questions (easy lookups, multi-step reasoning, out-of-scope, and known conflicts) will expose most of the problems.
+</Aside>
+
+### Common pitfalls to watch for
+
+| Pitfall | Symptom | Fix |
+|---|---|---|
+| Chunks too small | retrieved text lacks context | bigger chunks or more overlap |
+| Chunks too large | retrieved text is padded with noise | smaller chunks, recursive splitting |
+| No grounding rule | model ignores context, hallucinates | add explicit "answer ONLY from context" |
+| Wrong *k* | answer incomplete, or prompt flooded | tune how many chunks you retrieve |
+| Stale data | knowledge base out of date | schedule regular re-indexing |
+| Access-control leakage | user sees restricted answers | filter by permissions *before* retrieval |
+
+## 11. Where RAG creates business value
+
+RAG shines wherever valuable knowledge is trapped in documents that are hard to search:
+
+| Use case | Knowledge source | Business impact |
+|---|---|---|
+| Internal knowledge base | wikis, handbooks, SOPs | answers in seconds, not hours |
+| Customer support | product docs, FAQs, tickets | faster, more consistent replies |
+| Legal & compliance | contracts, regulations | instant clause lookup, less risk |
+| Research & analysis | reports, papers, market data | synthesise across hundreds of docs |
+| Sales enablement | case studies, pricing | reps find the right material instantly |
+
+**When to reach for RAG (and when not to):** use it when knowledge changes often, spans many documents, gets queried unpredictably, and demands accuracy with citations. Skip it when the data is tiny and static (just use the context window), the queries are highly predictable (use templates), or general knowledge already suffices.
+
+## Hands-on: labs & assignment
+
+Day 3's practice takes the theory all the way to a documented, evaluated RAG system.
+
+<Tabs>
+<TabItem label="Guided Lab">
+**Building a RAG pipeline (instructor-led, ~60–75 min).** Step by step: create embeddings with the Gemini API, implement cosine similarity and nearest-neighbour search, chunk a document (fixed-size vs sentence-based, with overlap and metadata), assemble the full *retrieve → augment → generate* pipeline, then evaluate it — the RAG triad, LLM-as-judge scoring, and Precision@k / Recall@k. Includes the telling "with vs without context" hallucination demo and a refusal test on out-of-scope questions.
+</TabItem>
+<TabItem label="Independent Lab">
+**Build your own RAG assistant with hybrid retrieval (~90–120 min).** Pick a domain (HR, product docs, support, or research), build a knowledge base of 4+ documents, design a chunking strategy, and write a grounding system prompt with explicit refusal rules. The new ingredients: **hybrid retrieval** (keyword + semantic, a 60/40 weighted blend), **metadata filtering** to restrict the search scope, and a golden test set of 10+ questions (easy, medium, hard, refusal). Then iterate the prompt from v1 → v2 and *measure* the improvement.
+</TabItem>
+<TabItem label="Assignment">
+**Production-ready RAG system.** The full package: a 4–6 document knowledge base (1,000+ words), a system prompt with all eight components (role, task, grounding rules, scope, format, refusal, an example, and conflict handling), 15+ questions run through the pipeline, and a 15+ item golden set. Report the full RAG triad (targets of 4.0/5 each), write a structured error analysis of retrieval vs generation vs refusal failures, and complete a **RAG playbook** documenting every design decision for team handoff.
+</TabItem>
+</Tabs>
+
+**Download the notebooks** (open in Google Colab):
+
+- [Guided Lab — day3-lab1-guided.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-lab1-guided.ipynb)
+- [Independent Lab — day3-lab2-independent.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-lab2-independent.ipynb)
+- [Assignment — day3-assignment.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-assignment.ipynb)
+
+**My submitted solution:** [Assignment 3 — my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day3-assignment-solution.ipynb) — my own work from the course.
+
+## Revision summary
+
+| Must-know | One-line recall |
+|---|---|
+| Why RAG exists | LLMs are frozen at training — they miss private, current, and niche facts, and hallucinate to fill the gap |
+| What RAG does | retrieve the relevant chunks from *your* data, then let the LLM answer using them (open-book exam) |
+| Embeddings | text turned into vectors where similar *meaning* sits close together |
+| Cosine similarity | one number for how alike two vectors are; ~1.0 identical, below 0.3 unrelated |
+| Task types | `RETRIEVAL_DOCUMENT` for stored docs, `RETRIEVAL_QUERY` for questions — matching them lifts accuracy |
+| Chunking | split long docs into 200–500-token pieces with 50–100-token overlap so no fact is cut in half |
+| Metadata | tag each chunk (source, page, date) to enable citations, filtering, and debugging |
+| The pipeline | **indexing** offline (chunk → embed → store) + **querying** online (embed → retrieve → augment → generate) |
+| Augmented prompt | fence retrieved chunks in delimiters and instruct "answer ONLY from context" — pure Day 2 prompting |
+| Citations | make the model cite `[Source N]` so answers are verifiable; define an authority hierarchy for conflicts |
+| Vector database | needed at scale for speed, persistence, filtering, and easy updates (ChromaDB → Pinecone) |
+| RAG vs fine-tuning | RAG injects *facts* (cheap, instant, citable, permission-aware); fine-tuning teaches *style* |
+| RAG triad | context relevance + groundedness + answer relevance — measure all three to catch every failure |
+| Biggest mistake | not testing with real, messy, out-of-scope user questions |

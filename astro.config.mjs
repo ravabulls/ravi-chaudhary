@@ -52,6 +52,20 @@ export default defineConfig({
 							items: [
 								{ label: 'Overview', link: 'learnings/mba', translations: { de: 'Übersicht' } },
 								{
+									label: 'Generative AI for Managers', translations: { de: 'Generative KI für Manager' },
+									collapsed: true,
+									items: [
+										{ label: 'Overview', link: 'learnings/mba/generative-ai-for-managers', translations: { de: 'Übersicht' } },
+										{ label: 'Setup — Colab & Gemini', link: 'learnings/mba/generative-ai-for-managers/00-setup' },
+										{ label: '1 · LLMs & Transformers', link: 'learnings/mba/generative-ai-for-managers/01-llms-and-transformers' },
+										{ label: '2 · Prompting & Extraction', link: 'learnings/mba/generative-ai-for-managers/02-prompting-and-extraction' },
+										{ label: '3 · RAG', link: 'learnings/mba/generative-ai-for-managers/03-retrieval-augmented-generation' },
+										{ label: '4 · GenAI Agents', link: 'learnings/mba/generative-ai-for-managers/04-genai-agents' },
+										{ label: '5 · GenAI-Assisted ML', link: 'learnings/mba/generative-ai-for-managers/05-genai-assisted-ml' },
+										{ label: '6 · Business Cases', link: 'learnings/mba/generative-ai-for-managers/06-genai-business-cases' },
+									],
+								},
+								{
 									label: 'Application', translations: { de: 'Anwendung' },
 									collapsed: true,
 									items: [
