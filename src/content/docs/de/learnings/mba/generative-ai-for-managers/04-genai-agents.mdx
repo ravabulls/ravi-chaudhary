@@ -1,0 +1,396 @@
+---
+title: "Tag 4 — GenAI-Agenten"
+description: "Wie aus einem LLM ein Agent wird — einer, der plant, Tools aufruft, handelt und beobachtet, und das in einer Schleife — mit Function Calling, der ReAct-Schleife, Memory und den Guardrails, die Autonomie sicher machen."
+sidebar:
+  label: "4 · GenAI-Agenten"
+  order: 4
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Generative AI for Managers — TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Drei Tage lang konnte das Modell immer nur *antworten*. Ich fragte, es antwortete — eine Runde, fertig. Nützlich, aber merkwürdig passiv: Es konnte mir sagen, *wie* ich unsere abgewanderten Kunden finde und Reaktivierungs-E-Mails entwerfe, aber es konnte nicht selbst losgehen und es tun.
+
+Tag 4 schließt diese Lücke. Ein **Agent** ist das, was entsteht, wenn man ein LLM (Large Language Model, das Sprachmodell dahinter) in eine Schleife einbettet und ihm ein paar **Tools** an die Hand gibt — Funktionen, deren Ausführung es anfordern kann. Jetzt kann dasselbe Modell die Kunden *nachschlagen*, ihre Support-Tickets *lesen*, für jeden eine E-Mail *entwerfen* und so lange weitermachen, bis die Aufgabe erledigt ist. Dasselbe Gehirn, aber es kann nun in die Welt hinausgreifen und handeln.
+
+<Aside type="note" title="Die Ein-Satz-Version">
+Ein LLM allein kann nur **denken**. Ein Agent kann **denken und handeln**. Die Formel, zu der der Kurs immer wieder zurückkehrt, ist erfreulich kurz: **Agent = LLM + Tools + Schleife.**
+</Aside>
+
+## 1 · Warum Agenten — die Automatisierungslücke
+
+Schauen wir uns an, was wir bisher gebaut haben, und an welche Wand jede Version stößt:
+
+| Tag | Was es konnte | Wo es aufhörte |
+|---|---|---|
+| Tag 1 | Verstehen, wie ein LLM Text erzeugt | Erzeugt nur Wörter — keine Aktionen |
+| Tag 2 | Gut prompten, strukturierte Daten herausziehen | Ein Schuss: Jeder Aufruf steht für sich |
+| Tag 3 | Antworten in echten Dokumenten verankern (RAG) | Feste Pipeline: immer *abrufen → generieren* |
+
+Jede dieser Varianten ist eine **Single-Turn**-Interaktion: eine Anfrage rein, eine Antwort raus. Aber viel echte Arbeit besteht nicht aus einer Runde. Sie braucht mehrere Schritte, Entscheidungen, die *unterwegs* getroffen werden — je nachdem, was der letzte Schritt ergeben hat — und den Zugriff auf externe Systeme (ein CRM, eine Datenbank, das Web). Genau diese Lücke füllt ein Agent.
+
+Drei Dinge haben Agenten erst seit Kurzem praktikabel gemacht:
+
+- **Zuverlässiges Function Calling** — Modelle können inzwischen zuverlässig eine saubere, strukturierte Anfrage im Stil von „bitte führe diese Funktion mit diesen Argumenten aus" ausgeben, konsistent genug, um ihr in einem echten Produkt zu vertrauen.
+- **Größere Kontextfenster** — der Agent kann Tool-Ergebnisse und seine eigenen Zwischenüberlegungen anhäufen, ohne den Faden zu verlieren.
+- **Stärkeres Reasoning** — Modelle wurden deutlich besser darin, mehrstufige Arbeit zu planen und sich zu erholen, wenn ein Schritt schiefgeht.
+
+<Aside type="tip" title="Ein Chatbot würde raten, ein Agent würde handeln">
+Frage: *„Finde abgewanderte Kunden und entwirf Reaktivierungs-E-Mails."* Ein **Chatbot** reicht dir eine To-do-Liste. Ein **Agent** ruft `get_churned_customers(...)` auf, dann für jeden `get_support_tickets(...)`, erkennt die häufigen Beschwerden, ruft `draft_email(...)` auf und liefert zwölf fertige, personalisierte Entwürfe zurück. Er entscheidet, *welche* Tools er aufruft, liest die Ergebnisse und reasoniert weiter, bis er fertig ist.
+</Aside>
+
+## 2 · Was ein Agent tatsächlich ist
+
+Ein **KI-Agent** ist ein System, in dem ein LLM innerhalb einer Schleife läuft und Folgendes darf:
+
+- **Reasonieren** darüber, was als Nächstes zu tun ist,
+- **Tools aufrufen** (Funktionen, APIs, Datenbanken),
+- **Beobachten**, welche Ergebnisse diese Tools zurückgeben,
+- **Entscheiden**, ob es weitermacht oder mit einer finalen Antwort aufhört.
+
+Das Wort „Tool" meint einfach ein Stück deines Codes, dessen Aufruf das Modell anfordern darf — eine Funktion, die einen Kunden nachschlägt, deine Dokumente durchsucht, eine Berechnung anstellt. Die „Schleife" macht daraus einen Agenten statt eines einmaligen Aufrufs: Er kann noch einmal die Runde drehen und nutzt dabei, was er gerade gelernt hat.
+
+### Das Agenten-Spektrum — nicht alles braucht einen Agenten
+
+„Agent" ist kein Alles-oder-nichts. Es ist eine Leiter der Autonomie, und der meiste geschäftliche Wert liegt in der **Mitte**:
+
+| Stufe | Was es ist | Wer die Schritte entscheidet |
+|---|---|---|
+| 0 · Direkter Aufruf | *„Übersetze diesen Satz"* — ein schlichter Generierungsaufruf | Du, in einem Schuss |
+| 1 · Feste Pipeline | RAG, Extraktionsketten | Dein Code, feste Reihenfolge |
+| 2 · Tool-erweitertes LLM | Modell wählt aus Tools, die du anbietest, ein Aufruf pro Runde | Modell, ein Schritt |
+| 3 · Autonomer Agent | Modell plant, ruft mehrere Tools auf, läuft in einer Schleife bis fertig | Modell, viele Schritte |
+| 4 · Multi-Agenten-System | Mehrere spezialisierte Agenten arbeiten zusammen | Ein Orchestrator |
+
+Die Labs liegen auf **Stufe 2–3** — genug Autonomie, um wirklich nützlich zu sein, wenig genug, um verständlich und sicher zu bleiben.
+
+### Chatbot vs. Pipeline vs. Agent
+
+| | Chatbot | Pipeline (RAG) | Agent |
+|---|---|---|---|
+| Interaktion | Einzelne Runde | Feste Abfolge | Dynamische Schleife |
+| Tools | Keine | Nur Retrieval | Mehrere, Wahl des Modells |
+| Wer die Kontrolle hat | Mensch steuert | Code steuert | **LLM steuert** |
+| Gut für | Einfache Q&A | Wissensabfrage | Mehrstufige Aufgaben, die Urteilsvermögen brauchen |
+
+## 3 · Function Calling — dem Modell beibringen, Tools zu nutzen
+
+Function Calling ist der Mechanismus, der all das möglich macht. Hier ist das mit Abstand Wichtigste, das man behalten sollte, denn es ist die Quelle der meisten Verwirrung:
+
+<Aside type="caution" title="Das Modell führt deinen Code nie aus">
+Das LLM führt Funktionen **nicht** aus und rührt deine Systeme niemals an. Es *fordert* nur einen Aufruf an — „führe `get_customer_info` mit `customer_id='CUST-1234'` aus". **Dein** Anwendungscode führt die echte Funktion aus und reicht das Ergebnis zurück. Du entscheidest vollständig, worum das Modell überhaupt bitten darf. (Produkte wie Coding-Assistenten *handeln* zwar auf deinem Rechner — aber das ist die umgebende *Anwendung*, die die Anfrage gewährt, nicht das Modell, das selbst hineingreift.)
+</Aside>
+
+<Aside type="note" title='„Function Calling" und „Tool Calling" sind dasselbe'>
+Du wirst beide Begriffe sehen, manchmal im selben Absatz. Sie meinen eine Idee: Das Modell bittet deinen Code, eine benannte Funktion mit bestimmten Argumenten auszuführen. Das gemischte Vokabular ist nur historisch bedingt — manche SDKs sagen *Function*, andere *Tool*. Lass dich davon nicht aus dem Konzept bringen; es gibt keinen inhaltlichen Unterschied.
+</Aside>
+
+### Die drei Schichten
+
+Beim Gemini-SDK (`google.genai`) besteht ein Tool aus drei Schichten — und das Modell sieht immer nur die mittlere:
+
+| Schicht | Was es ist | Ihre Aufgabe |
+|---|---|---|
+| Python-Funktion | Dein echter, ausführbarer Code | Erledigt die eigentliche Arbeit |
+| `FunctionDeclaration` | Ein Schema: Name der Funktion, ihre Parameter, wofür sie da ist | Das **Einzige**, was das Modell sieht |
+| `Tool` | Ein Container, der eine oder mehrere Declarations bündelt | Was du der API via `tools=[...]` übergibst |
+
+Das Modell liest die *Beschreibung* und entscheidet, ob es die Funktion aufruft und mit welchen Argumenten. Es sieht nie deinen Quellcode — ein klarer Name, ein guter Docstring und ehrliche Parameterbeschreibungen **sind** also die Anweisungen, anhand derer das Modell gut wählt.
+
+### Der einfache Weg: dem SDK eine schlichte Python-Funktion geben
+
+Der einfachste Ansatz ist, eine ganz normale Funktion zu übergeben. Das SDK liest ihren Namen, Docstring und ihre Type Hints und baut das Schema für dich:
+
+```python
+from google import genai
+from google.genai import types
+
+client = genai.Client()  # liest den API-Schlüssel aus der Umgebung — niemals fest eintragen
+
+def get_customer_info(customer_id: str) -> dict:
+    """Look up a customer's account details.
+
+    Args:
+        customer_id: The unique customer identifier, e.g. 'CUST-1234'
+    """
+    database = {
+        "CUST-1234": {"name": "Acme Corp", "plan": "Enterprise", "mrr": 12000},
+        "CUST-5678": {"name": "TechStart", "plan": "Growth", "mrr": 3500},
+    }
+    return database.get(customer_id, {"error": "Customer not found"})
+
+response = client.models.generate_content(
+    model="gemini-2.5-flash-lite",
+    contents="What plan is customer CUST-1234 on?",
+    config=types.GenerateContentConfig(
+        tools=[get_customer_info],  # SDK wraps this into a Tool for you
+    ),
+)
+print(response.text)
+```
+
+Es gibt auch einen manuellen Weg, bei dem du die `FunctionDeclaration` selbst schreibst — nützlich, wenn die Funktion auf einem entfernten Server liegt oder wenn du feine Kontrolle über die Beschreibungen willst. Die meisten Projekte starten mit dem einfachen Weg und greifen erst dann zum manuellen, wenn sie ihn wirklich brauchen. Der vollständige Code für beide steht in den Notebooks.
+
+<Aside type="tip" title="Eine Tool-Beschreibung ist ein Prompt (Echo von Tag 2)">
+An Tag 2 sagte ein Schema dem Modell, *was es extrahieren* soll. Hier sagt eine Tool-Beschreibung ihm, *wann und wie es ein Tool nutzen* soll. Dieselbe Disziplin: **„Kontodetails eines Kunden (Name, Plan, MRR) anhand seiner Kunden-ID nachschlagen"** schlägt **„Daten holen"** jedes Mal. Vage Beschreibungen → falsches Tool gewählt.
+</Aside>
+
+### Tool-Calling-Modi — wie viel Freiheit das Modell bekommt
+
+Wenn du Tools anbietest, *reasoniert* das Modell trotzdem darüber, ob es überhaupt eines braucht. Die Einstellung **Modus** steuert diese Freiheit:
+
+| Modus | Verhalten | Einsetzen, wenn |
+|---|---|---|
+| `AUTO` *(Standard)* | Modell entscheidet: ein Tool aufrufen oder einfach in Text antworten | Allgemeiner Einsatz — lass es urteilen |
+| `ANY` | Modell **muss** mindestens ein Tool aufrufen (es wählt weiterhin, welches) | Du willst Tool-Nutzung erzwingen |
+| `NONE` | Modell darf **kein** Tool aufrufen (Beschreibungen bleiben sichtbar) | Du willst eine reine Textantwort |
+
+`AUTO` ist der Modus, den man verstehen sollte — er macht aus dem Modell einen *aktiven Reasoner* über Tools statt eines blinden Ausführers. Es wägt deine Anfrage gegen die Tool-Beschreibungen ab und entscheidet selbst, ob ein Aufruf tatsächlich helfen würde.
+
+## 4 · Die Agenten-Schleife
+
+Das ist das Herzstück des Tages. Streift man Frameworks und Anbieter ab, läuft jeder Agent denselben Zyklus. Das Modell tut darin genau **eine** Sache — den *Reason*-Schritt — und dein Code erledigt alles andere.
+
+<figure class="sc-fig">
+<div class="sc-flow"><div class="sc-node slate">History<span class="sub">den bisherigen Kontext aufbauen</span></div><span class="arrow">→</span><div class="sc-node amber">Reason<span class="sub">Modell: Tool-Aufruf oder finale Antwort?</span></div><span class="arrow">→</span><div class="sc-node green">Act<span class="sub">dein Code führt die Funktion aus</span></div><span class="arrow">→</span><div class="sc-node violet">Observe<span class="sub">Ergebnis zurück in die History</span></div></div>
+<figcaption>Die Schleife: das Gespräch zusammensetzen, das Modell reasonieren lassen, jedes angeforderte Tool ausführen, das Ergebnis zurückspeisen — dann noch eine Runde. Gibt das Modell Text statt einer Tool-Anfrage zurück, stoppt die Schleife und dieser Text ist die Antwort.</figcaption>
+</figure>
+
+Die fünf Schritte einmal durchgegangen:
+
+<Steps>
+1. **History** *(dein Code)* — das gesamte bisherige Gespräch zusammensetzen: die Nachricht des Nutzers, die früheren Antworten des Modells und alle Tool-Ergebnisse. Das ist das *Einzige*, was das Modell zu sehen bekommt.
+2. **Reason** *(das Modell)* — es liest die History und entscheidet: einen Tool-Aufruf anfordern oder eine finale Textantwort erzeugen. **Das ist der einzige Zug des Modells.**
+3. **Act** *(dein Code)* — hat es ein Tool angefordert, suchst du die passende Funktion heraus und führst sie tatsächlich aus.
+4. **Observe** *(dein Code)* — du verpackst das Ergebnis in eine `FunctionResponse` und hängst es an die History an, damit das Modell es in der nächsten Runde sehen kann.
+5. **Wiederholen oder stoppen** — fehlen noch Informationen? Zurück zu Schritt 2. Genug zum Antworten? Es gibt Text zurück und die Schleife endet. Begrenze die Runden immer mit einem `max_steps`-Limit, damit sie sich nicht endlos dreht.
+</Steps>
+
+### Automatische vs. manuelle Ausführung
+
+Es gibt zwei Wege, diese Schleife tatsächlich laufen zu lassen, und das ist eine *separate* Entscheidung von den `AUTO`/`ANY`/`NONE`-Modi oben (dort ging es darum, *ob* das Modell fragen darf; hier geht es darum, *wer ausführt*, sobald es fragt):
+
+- **Automatisches Function Calling** — das SDK durchläuft die gesamte Schleife innerhalb eines einzigen `generate_content()`-Aufrufs: Es führt deine Funktion aus, speist das Ergebnis zurück, wiederholt. Prima für einen schnellen Prototyp, aber du kannst nicht *sehen*, was passiert ist. Du würdest trotzdem eine Sicherheitsobergrenze wie `maximum_remote_calls=5` setzen.
+- **Manuelle Schleife** — du schreibst die `for`-Schleife selbst, führst jeden Tool-Aufruf aus und gibst jeden Schritt aus. Mehr Code, aber volle Sichtbarkeit. Die Labs nutzen diese, damit du jede Entscheidung *beobachten* kannst.
+
+Hier die manuelle Schleife, auf das Wesentliche reduziert:
+
+```python
+def run_agent(user_message, tools, max_steps=10):
+    tool_map = {fn.__name__: fn for fn in tools}
+    history = [types.Content(role="user", parts=[types.Part(text=user_message)])]
+
+    for step in range(max_steps):
+        # REASON — send full history; model may ask for a tool
+        response = client.models.generate_content(
+            model="gemini-2.5-flash-lite",
+            contents=history,
+            config=types.GenerateContentConfig(
+                tools=tools,
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(
+                    disable=True  # we execute tools ourselves, in Step ACT below
+                ),
+            ),
+        )
+        history.append(types.Content(role="model", parts=response.parts))
+
+        # ACT + OBSERVE — run any requested tool, append its result
+        function_results = []
+        for part in response.parts:
+            if part.function_call:
+                name = part.function_call.name
+                args = dict(part.function_call.args)
+                result = tool_map[name](**args)          # run the real function
+                function_results.append(types.Part(
+                    function_response=types.FunctionResponse(
+                        name=name, response={"result": result})))
+
+        # REPEAT or STOP
+        if function_results:
+            history.append(types.Content(role="user", parts=function_results))
+        else:
+            return response.text  # no tool call → this is the final answer
+
+    return "Agent reached maximum steps without completing."
+```
+
+<Aside type="caution" title="Eine subtile Falle: disable ≠ keine Tools">
+`automatic_function_calling(disable=True)` hindert das Modell **nicht** daran, Tools zu *wählen* — es reasoniert über sie genau gleich. Es ändert nur, *wer* die Funktion *ausführt*: Mit aktiviertem disable reicht das SDK die Anfrage an deinen Code zurück und du führst sie aus. Genau das macht die manuelle Schleife transparent.
+</Aside>
+
+<Aside type="tip" title="Alles aus Tag 1–3 ist jetzt ein Tool">
+Die schönste Erkenntnis des Tages: Deine **RAG-Pipeline von Tag 3** wird zu einer einzigen Funktion — `search_knowledge_base(query)` —, die der Agent immer dann aufruft, wenn *er* entscheidet, dass eine Suche helfen würde. Ein Rechner, eine CRM-Abfrage, eine Websuche: Jedes ist einfach ein weiteres Tool. Der Agent wählt, wann er zu welchem greift, und kombiniert die Ergebnisse.
+</Aside>
+
+## 5 · Wie Agenten denken — ReAct und Plan-first
+
+### ReAct — Reason + Act
+
+Das häufigste Muster ist **ReAct**: Das Modell wechselt offen zwischen einem **Thought** (Denken — was sollte ich als Nächstes tun?) und einer **Action** (Handeln — ein Tool aufrufen), liest dann die **Observation** (Beobachten) und denkt erneut.
+
+<figure class="sc-fig">
+<div class="sc-flow"><div class="sc-node amber">Thought<span class="sub">was brauche ich?</span></div><span class="arrow">→</span><div class="sc-node green">Action<span class="sub">ein Tool aufrufen</span></div><span class="arrow">→</span><div class="sc-node violet">Observation<span class="sub">das Ergebnis lesen</span></div><span class="arrow">→</span><div class="sc-node soft">…bis genug<span class="sub">dann antworten</span></div></div>
+<figcaption>Ein ReAct-Ablauf, schlicht gesagt: über den nächsten Zug nachdenken, ihn ausführen, ansehen, was zurückkam, wiederholen — der sichtbare „Thought"-Schritt hält das Modell überlegt statt bloß reagierend.</figcaption>
+</figure>
+
+Ein echter Ablauf liest sich fast wie jemand, der laut nachdenkt:
+
+```text
+Thought: I need the customer's current plan first.
+Action: get_customer_info(customer_id="CUST-1234")
+Observation: {"name": "Acme Corp", "plan": "Enterprise", "mrr": 12000}
+
+Thought: Now check our discount policy.
+Action: search_knowledge_base(query="enterprise discount policy")
+Observation: Enterprise customers may receive up to 20% discount...
+
+Thought: They qualify. Compute the discounted annual price.
+Action: calculate(expression="12000 * 12 * 0.85")
+Observation: 122400.0
+
+Answer: Acme Corp is on Enterprise at $12k/month. A 15% annual discount
+        gives $122,400/year — within our 20% policy limit.
+```
+
+Du förderst das schlicht, indem du im System-Prompt danach fragst („erkläre dein Reasoning in einem Thought-Schritt vor jeder Aktion; reflektiere über jedes Ergebnis").
+
+### Plan-and-Execute — erst planen, dann tun
+
+Für gut definierte Aufgaben ist es oft besser, das Modell vorab einen **Plan** schreiben zu lassen und ihn dann Schritt für Schritt auszuführen. Der Gewinn ist *Transparenz*: Du kannst einem Menschen den Plan zeigen, bevor irgendetwas läuft, und ihn überarbeiten, falls ein Schritt scheitert.
+
+| Muster | Am besten für | Kompromiss |
+|---|---|---|
+| ReAct | Explorative Aufgaben, unbekannte Zahl an Schritten | Flexibel, aber schwerer vorhersehbar |
+| Plan-and-Execute | Gut definierte mehrstufige Aufgaben | Vorhersehbar, aber weniger anpassungsfähig |
+| Einzelner Tool-Aufruf | Einstufige Nachschlagevorgänge | Kein Planungs-Overhead, begrenzt |
+
+Viele produktive Agenten tun beides: **erst planen, dann innerhalb jedes Schritts ReAct-artig reasonieren.** Die Labs nutzen ReAct, denn hat man es einmal verstanden, ist Plan-first nur eine kleine Erweiterung.
+
+<Aside type="caution" title="Gültiges JSON ≠ guter Plan">
+Du kannst einen Plan in eine saubere JSON-Struktur zwingen (der Trick strukturierter Ausgaben von Tag 2). Aber das garantiert nur das *Format*, nie den *Inhalt* — ein perfekt geformter Plan kann trotzdem eine schreckliche Idee sein. Du brauchst weiterhin Tool-Allow-Lists, Eingabeprüfungen und die menschliche Freigabe riskanter Schritte.
+</Aside>
+
+## 6 · Memory — das Kontextfenster als Notizblock
+
+Das **Arbeitsgedächtnis** eines Agenten ist einfach seine Gesprächs-History. Jeder Tool-Aufruf und jedes Ergebnis wird angehängt, sodass das Modell bis zur vierten Runde über alles reasonieren kann, was es in den Runden eins bis drei gesammelt hat. Mächtig — aber das Kontextfenster ist *endlich*, sodass lang laufende Agenten irgendwann ältere Schritte **zusammenfassen** müssen, um im Limit zu bleiben.
+
+| Typ | Umfang | Wie es umgesetzt wird |
+|---|---|---|
+| Kurzfristig (Arbeitsgedächtnis) | Aktuelle Aufgabe | Die Gesprächs-History selbst |
+| Session | Aktuelle Session | Eine laufende Zusammenfassung vorheriger Schritte |
+| Langfristig | Über Sessions hinweg | Eine Vektordatenbank vergangener Interaktionen |
+
+Die letzte Zeile verwertet Tag 3 direkt: dieselbe Idee aus Embeddings und Vektorsuche, aber sie speichert *Zusammenfassungen vergangener Agentenarbeit*, damit der Agent sich erinnern und auf dem aufbauen kann, was er zuvor getan hat.
+
+<Aside type="caution" title="Was nie im Agenten-Gedächtnis landen darf">
+Geheimnisse (API-Schlüssel, Passwörter, Tokens) — niemals dauerhaft speichern. Personenbezogene Daten ohne Einwilligung — respektiere das Datenschutzrecht. Rohe sensible Logs — zusammenfassen und schwärzen, statt sie wörtlich zu behalten.
+</Aside>
+
+## 7 · Gute Tools entwerfen
+
+Weil Tool-Beschreibungen Prompts *sind*, wird beim Tool-Design ein Großteil der Agentenqualität gewonnen oder verloren. Die Prinzipien sind, einmal ausgesprochen, gesunder Menschenverstand:
+
+| Prinzip | Warum es zählt |
+|---|---|
+| **Einzelverantwortung** | Ein Tool tut eine Sache gut — trenne `search_docs` von `search_tickets` |
+| **Klare Grenzen** | Das Modell erkennt, welches Tool passt („Kundendaten" vs. „Produktinfo") |
+| **Aussagekräftige Parameter** | Es sendet die richtigen Argumente — beschreibe das Format, z. B. `customer_id: 'CUST-1234'` |
+| **Elegante Fehler** | Gib `{"error": "Not found"}` zurück, statt abzustürzen, damit der Agent sich erholen kann |
+| **Minimaler Umfang** | Gib enge, spezifische Tools — niemals ein „führe beliebiges SQL aus"-Tool |
+
+Und zu dem, was ein Tool *zurückgibt*: gib strukturierte Daten zurück (ein Dict) mit stabilen Schlüsseln wie `status`, `data`, `error`; halte es kurz, damit es den Kontext nicht verstopft; und füge immer Fehlerinformationen bei, damit der Agent auf einen Fehlschlag reagieren kann, statt blind darüber hinwegzuraten.
+
+## 8 · Sicherheit und Guardrails
+
+Das ist der Teil, der für eine Führungskraft am meisten zählt, denn ein Agent mit Tools hat echte *Macht* — und damit echte Wege, Schaden anzurichten. Ein Chatbot kann nur etwas Falsches sagen; ein Agent kann etwas Falsches *tun*.
+
+| Risiko | Wie es aussieht | Guardrail |
+|---|---|---|
+| Unbeabsichtigte Aktionen | Sendet eine E-Mail, die er nicht senden sollte | Menschliche Freigabe für unumkehrbare Aktionen |
+| Außer Kontrolle geratene Schleifen | Ruft ständig Tools auf, konvergiert nie | Eine harte `max_steps`-Obergrenze |
+| Datenabfluss | Legt vertrauliche Infos über ein Tool offen | Tool-Zugriff nur auf autorisierte Daten beschränken |
+| Prompt Injection | Bösartige Eingabe kapert den Agenten | Eingaben validieren; Daten von Anweisungen trennen |
+| Halluzinierte Aufrufe | Ruft ein Tool mit erfundenen Argumenten auf | Argumente vor der Ausführung validieren |
+
+### Berechtigung an das Risiko anpassen
+
+Ein sauberes, praktisches Muster ist, Tools danach zu sortieren, wie viel Schaden sie anrichten können, und sie entsprechend abzusichern:
+
+| Tool-Typ | Beispiele | Berechtigung |
+|---|---|---|
+| Nur lesend | Dokumente durchsuchen, einen Kunden nachschlagen, Status abrufen | Frei erlauben |
+| Schreibend | Ein Ticket anlegen, das CRM aktualisieren, einen Entwurf speichern | Menschliche Freigabe verlangen |
+| Unumkehrbar | Eine E-Mail senden, Datensätze löschen, eine Bestellung aufgeben | Ausdrückliche Bestätigung verlangen |
+
+Das **Human-in-the-loop**-Muster setzt das um: Bevor ein sensibles Tool läuft, hält der Agent inne und bittet einen Menschen um Freigabe (`user_confirmed=True`). Und das Ziel ist nicht, jeden Fehlschlag zu verhindern — Agenten *werden* scheitern —, sondern das Scheitern **billig und erholbar** zu machen: Timeouts, Wiederholungen mit Backoff, Fallbacks („wenn die Suche scheitert, frage den Nutzer nach dem Dokument") und immer eine Schritt-Obergrenze.
+
+<Aside type="danger" title="Die goldene Regel der Agentensicherheit">
+**Gib einem Agenten nie ein Tool, das du einem Praktikanten nicht unbeaufsichtigt anvertrauen würdest.** Beginne mit nur lesenden Tools, füge schreibende Tools nur mit menschlicher Freigabe hinzu und entferne die Freigabeschwelle erst nach echtem Testen. Jedes Tool, das du gewährst, ist eine *Fähigkeit* — ein Tool, das E-Mails senden kann, bedeutet, dass der Agent E-Mails senden kann.
+</Aside>
+
+## 9 · Wann man einen Agenten einsetzt (und wann nicht)
+
+Die ehrliche Antwort lautet: oft *solltest* du es nicht. Greif nur dann zu einem Agenten, wenn eine Aufgabe die Schleife wirklich braucht.
+
+| Nutze einen Agenten, wenn… | Nutze etwas Einfacheres, wenn… |
+|---|---|
+| Die Aufgabe mehrere Schritte und Entscheidungen braucht | Ein einzelner Modellaufruf genügt |
+| Je nach Anfrage verschiedene Tools nötig sind | Der Workflow immer identisch ist → **nutze eine Pipeline** |
+| Die Nutzerabsicht vielfältig und unvorhersehbar ist | Anfragen vorhersehbar sind → **nutze Templates** |
+| Aktionen ausgeführt werden müssen (anlegen, aktualisieren, senden) | Du nur nachschlagen musst → **nutze RAG** |
+| Transparenz und ein Audit-Trail zählen | Geschwindigkeit die einzige Priorität ist |
+
+<Aside type="tip" title="Die Frage, die man zuerst stellt">
+*„Kann ich das mit einem Modellaufruf und ohne Tools lösen?"* Wenn ja, fang dort an. Füge eine Agenten-Schleife erst hinzu, wenn du echten Schmerz spürst, *weil* du keine hast. Ein zuverlässiger Zwei-Tool-Agent schlägt einen schillernden Zehn-Tool-Agenten, der unvorhersehbar versagt.
+</Aside>
+
+### Wo es sich im Geschäft auszahlt
+
+Kundensupport-Triage (Wissensdatenbank + CRM + Ticketing), Vertriebsrecherche (CRM + Marktdaten), Finanzanalyse (Datenbank + Rechner + Report-Vorlagen), IT-Helpdesk, Content-Pipelines — alle haben dieselbe Form: **von Natur aus iterative Arbeit**, bei der der Agent mehrfach suchen, verfeinern und kombinieren darf, bevor er antwortet. Genau dort bricht eine feste Pipeline, weil man jeden Schritt im Voraus vorwegnehmen müsste.
+
+Für größere Workflows setzen sich Agenten sogar zu **Multi-Agenten-Systemen** zusammen — ein Orchestrator, der an Spezialisten weiterleitet, eine Recherche→Analyse→Schreiben-Pipeline oder ein *Entwurf-dann-Kritik*-Paar, bei dem ein Agent schreibt und ein anderer prüft. Nützlich, aber eine Warnung: Wenn jeder Agent dieselbe falsche Annahme teilt, verstärken mehr Agenten den Fehler nur. Verankere die wichtigen Fakten immer in vertrauenswürdigen Tools oder menschlicher Eingabe.
+
+## Praxis: Labs & Aufgabe
+
+Die Theorie oben ist die Landkarte; die Notebooks sind der Ort, an dem ich tatsächlich einen funktionierenden Agenten von Grund auf gebaut und jeden Schritt seiner Schleife beobachtet habe.
+
+- **Angeleitetes Lab — Dein erster KI-Agent.** Definiere eine Python-Funktion als Tool, sieh, wie das Modell einen Aufruf anfordert, vergleiche die Modi `AUTO`/`ANY`/`NONE` und baue dann die manuelle Agenten-Schleife von Hand. Füge ein zweites und drittes Tool hinzu (Kundennachschlag, Rechner), sodass das Modell *wählen* muss, und schließe ab, indem du Testfälle mit erwarteten Schlüsselwörtern schreibst, um zu messen, wie gut es abgeschnitten hat.
+- **Eigenständiges Lab — Baue dein eigenes agentisches System.** Wähle einen Business-Track (Support, Recherche, Finanzen oder HR), entwirf drei Domänen-Tools mit Docstrings und eleganter Fehlerbehandlung, schreibe einen System-Prompt (Rolle, Tools, Regeln, Ablehnungsverhalten), evaluiere dann eine **v1**, mach eine Fehleranalyse und verbessere sie zu einer messbar besseren **v2**. Der hier gewählte Track wird in die Aufgabe übernommen.
+- **Aufgabe — Ein produktionsreifer Agent.** Das volle Paket: verfeinerte Tools, ein finaler System-Prompt mit allen sechs Komponenten, mehr als 12 durch die Schleife geschickte Anfragen, ein Golden-Test-Set, **LLM-as-Judge**-Bewertung von Tool-Auswahl / Reasoning / Vollständigkeit, eine ordentliche Fehleranalyse und ein „Playbook" für die Bereitstellung, um den Agenten an ein Team zu übergeben.
+
+**Notebooks herunterladen** (in Google Colab öffnen):
+
+- [Angeleitetes-Lab-Notebook](/learnings/mba/generative-ai-for-managers/notebooks/day4-lab1-guided.ipynb)
+- [Eigenständiges-Lab-Notebook](/learnings/mba/generative-ai-for-managers/notebooks/day4-lab2-independent.ipynb)
+- [Aufgaben-Notebook](/learnings/mba/generative-ai-for-managers/notebooks/day4-assignment.ipynb)
+
+<Aside type="caution" title="API-Schlüssel, nochmal">
+Die Notebooks brauchen einen Gemini-API-Schlüssel. Speichere ihn in den Colab-**Secrets** und lies ihn von dort — füge niemals einen Schlüssel in eine Zelle oder eine geteilte Datei ein.
+</Aside>
+
+**Meine eingereichte Lösung:** [Aufgabe 4 — mein gelöstes Notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day4-assignment-solution.ipynb) — meine eigene Arbeit aus dem Kurs.
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| Was ein Agent ist | **Agent = LLM + Tools + Schleife** — er reasoniert, ruft Tools auf, beobachtet, wiederholt bis fertig. |
+| Agent vs. reines LLM | Ein LLM *denkt* nur; ein Agent *denkt und handelt* über mehrere Schritte. |
+| Function Calling | Das Modell *fordert* eine benannte Funktion mit Argumenten an — ein Tool. |
+| Das Modell führt nie Code aus | Es fragt nur; **dein** Code führt die Funktion aus und gibt das Ergebnis zurück. |
+| Die drei Schichten | Python-Funktion → `FunctionDeclaration` (alles, was das Modell sieht) → `Tool`. |
+| Tool-Calling-Modi | `AUTO` = entscheiden, `ANY` = eins muss aufgerufen werden, `NONE` = keine Aufrufe. |
+| Die Agenten-Schleife | History → Reason → Act → Observe → wiederholen oder stoppen. |
+| Nur Reason ist das Modell | Jeder andere Schritt ist dein Code, inklusive dem Ausführen des Tools. |
+| ReAct | Wechsle Thought → Action → Observation; der sichtbare Thought hält es überlegt. |
+| Plan-and-Execute | Erst planen, dann Schritte ausführen — vorhersehbar und überprüfbar. |
+| Tool-Beschreibungen sind Prompts | Klare, spezifische Docstrings → bessere Tool-Auswahl. |
+| Memory | History ist das Arbeitsgedächtnis; zusammenfassen oder eine Vektor-DB nutzen, wenn es wächst. |
+| Sicherheit skaliert mit Macht | Nur lesend frei, schreibend braucht Freigabe, unumkehrbar braucht Bestätigung. |
+| Die goldene Regel | Gib einem Agenten nie ein Tool, das du einem Praktikanten nicht unbeaufsichtigt anvertrauen würdest. |
+| Immer Schritte begrenzen | `max_steps` verhindert außer Kontrolle geratene Schleifen. |
+| Wann *nicht* | Wenn ein Aufruf ohne Tools reicht, tu das — füge Agenten erst bei echtem Schmerz hinzu. |
+| RAG wird zum Tool | Alles aus Tag 1–3 ist jetzt eine Fähigkeit, die der Agent aufrufen kann. |

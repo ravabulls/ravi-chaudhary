@@ -1,0 +1,469 @@
+---
+title: "Tag 1 — LLMs & Transformer: Der Motor hinter GenAI"
+description: "Eine allgemein verständliche Tour durch die tatsächliche Funktionsweise großer Sprachmodelle — Vorhersage des nächsten Tokens, Tokens und Embeddings, der Transformer und Attention, die drei Trainingsphasen und die praktischen Stellschrauben, die Managerinnen und Manager kennen sollten."
+sidebar:
+  label: "1 · LLMs & Transformer"
+  order: 1
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Generative AI for Managers — TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Tag 1 war die Session nach dem Motto „Motorhaube öffnen und den Motor anschauen". Keine Mathematik, kein Programmieren — nur der Aufbau eines ehrlichen mentalen Modells davon, was ein großes Sprachmodell (LLM) wirklich ist, damit alles, was wir später machen (Prompting, Retrieval, Agenten, Business Cases), auf festem Boden steht. Das hier sind meine Wiederholungsnotizen, so geschrieben, wie ich es einer Kollegin oder einem Kollegen bei einem Kaffee erklären würde.
+
+Der eine nützlichste Gedanke, den man sich vorher merken sollte: **Ein LLM ist keine Datenbank voller Fakten und auch kein denkender Mensch. Es ist ein sehr, sehr guter Rater des nächsten Wortes.** Fast jede Stärke und jede Schwäche, die wir sehen werden, folgt direkt aus diesem einen Satz.
+
+<Aside type="tip">
+**LLM** = Large Language Model (großes Sprachmodell). „Large" (groß), weil es mit einer riesigen Menge Text trainiert wurde und über eine riesige Zahl interner Einstellungen verfügt; „Language Model" (Sprachmodell), weil seine Aufgabe darin besteht, Sprache zu modellieren (vorherzusagen).
+</Aside>
+
+## 1 · Wie wir hierher kamen: der Weg zu den LLMs
+
+KI ist nicht über Nacht entstanden. Sie hat sich durch einige klar unterscheidbare Epochen bewegt, und jede davon veränderte, *wer* die harte Arbeit übernahm, die Regeln herauszufinden.
+
+| Epoche | Ansatz | Was das in der Praxis bedeutete |
+|---|---|---|
+| 1950er–1990er | Handgeschriebene Regeln | Ein Mensch schrieb jedes „wenn dies, dann das" von Hand — z. B. *wenn die Nachricht „Rückerstattung" enthält, schicke sie ans Retouren-Team.* |
+| 1990er–2010er | Machine Learning | Menschen wählten nützliche Merkmale aus; der Computer lernte die Gewichte aus gelabelten Beispielen (klassische Spam-Filter). |
+| 2010er | Deep Learning | Neuronale Netze lernten die Muster selbst aus gelabelten Daten (Bilderkennung, Sprache). |
+| 2017–heute | Large Language Models | Netze lernen Sprache direkt aus riesigen Mengen Rohtext — keine handgeschriebenen Regeln, keine manuellen Merkmale. |
+
+Die entscheidende Verschiebung betrifft den Aufwand. Ältere Systeme brauchten einen Menschen, der die Regeln *definierte* oder die wichtigen Signale von Hand auswählte. LLMs überspringen das: Sie lesen Rohtext in einem Umfang, den kein Mensch je bewältigen könnte, und ermitteln die Muster von selbst. Das ist der Sprung, der die heutigen Chatbots möglich gemacht hat.
+
+## 2 · Die Kernidee: das nächste Token vorhersagen
+
+Wenn man den ganzen Hype wegkratzt, tut ein LLM genau eine Sache: Es schaut sich einen Text an und sagt vorher, was als Nächstes kommt.
+
+Gib ihm *„Die Hauptstadt von Frankreich ist"* und es sagt mit hoher Sicherheit *„Paris"* vorher. Das ist alles. Aber jetzt kommt der clevere Teil — um in diesem einen Spiel gut zu werden, ist das Modell gezwungen, Grammatik, Fakten, Denkmuster, Schreibstile und sogar die Struktur von Programmcode aufzusaugen. Man kann über Milliarden von Sätzen hinweg nicht zuverlässig das nächste Wort erraten, ohne all das unterwegs mitzunehmen.
+
+<Aside type="note">
+**Autovervollständigung auf Steroiden.** Die Tastatur deines Handys errät dein nächstes Wort aus dem letzten ein oder zwei Wörtern. Ein LLM macht *im Prinzip* dasselbe, aber mit einem tiefen Gespür für Kontext, Bedeutung und Weltwissen hinter jeder einzelnen Vermutung. Dasselbe Spiel, nur mit einem gewaltig größeren Gehirn.
+</Aside>
+
+### 2.1 Von einer Vermutung zum ganzen Aufsatz
+
+Wie wird aus „ein Wort raten" also ein ganzer Absatz? Durch eine Schleife namens **autoregressive Generierung** — ein hochtrabender Begriff für eine simple Gewohnheit: *ein Token vorhersagen, es hinten anhängen, dann anhand des längeren Textes erneut vorhersagen.* Das Modell frisst laufend seine eigene Ausgabe.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Prompt<span class="sub">„Die Hauptstadt von Frankreich ist"</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">1 Token vorhersagen<span class="sub">„Paris"</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Anhängen &amp; wiederholen<span class="sub">„...Paris. Sie ist..."</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Stopp<span class="sub">End-Token oder Längenlimit</span></div>
+  </div>
+  <figcaption>Text wird Token für Token erzeugt; jedes neue Token wird zurückgespeist, bevor das nächste gewählt wird. Die Schleife stoppt an einem natürlichen Endpunkt oder bei einer Maximallänge.</figcaption>
+</figure>
+
+<Steps>
+
+1. **Beginne** mit deiner Eingabe: *„Die Hauptstadt von Frankreich ist"*.
+2. **Sage** das nächste Token vorher und füge es hinzu → *„Die Hauptstadt von Frankreich ist Paris"*.
+3. **Speise das Ganze zurück** und sage erneut vorher → *„…Paris."*
+4. **Schleife weiter** → *„…Paris. Sie ist"* → *„…Paris. Sie ist die größte…"*
+5. **Stopp**, wenn das Modell ein „Ende"-Signal ausgibt oder das von dir gesetzte Längenlimit erreicht.
+
+</Steps>
+
+Das lohnt sich zu verinnerlichen, weil es viel vom alltäglichen Verhalten erklärt: Das Modell hat keinen Plan für die gesamte Antwort im Voraus, es legt sich Token für Token fest. Deshalb kann eine kleine falsche Abzweigung am Anfang eine Lawine auslösen, und deshalb kann derselbe Prompt bei verschiedenen Durchläufen unterschiedliche Antworten liefern.
+
+## 3 · Tokens: die Bausteine, die das Modell tatsächlich liest
+
+Wir sagen bewusst immer „Token" statt „Wort", denn LLMs lesen keine ganzen Wörter. Sie lesen **Tokens** — Textstücke, die oft, aber nicht immer, ein ganzes Wort sind.
+
+| Text | Wie er in Tokens zerfällt |
+|---|---|
+| `Hello` | `["Hello"]` — ein gängiges Wort, ein Token |
+| `ChatGPT` | `["Chat", "G", "PT"]` — eine ungewöhnliche Zeichenkette, in Stücke geteilt |
+| `unhappiness` | `["un", "happiness"]` — ein Präfix plus ein bekannter Baustein |
+
+Warum die Wörter so zerhacken? Weil gängige Stücke weitaus häufiger vorkommen als seltene ganze Wörter. Das Arbeiten mit wiederverwendbaren Bausteinen hält das Vokabular des Modells überschaubar und erlaubt ihm, nie zuvor gesehene Wörter zu verarbeiten, indem es sie aus vertrauten Teilen zusammensetzt.
+
+### 3.1 Wie Tokenisierung funktioniert — BPE in einer Zeile
+
+Die meisten modernen Modelle verwenden **Byte Pair Encoding (BPE)**. Die Idee ist erfrischend einfach: Man beginnt mit einzelnen Zeichen und klebt dann wiederholt das Paar zusammen, das am häufigsten auftritt — immer und immer wieder. Häufige Kombinationen (wie `th`, `ing` oder ganze gängige Wörter) landen als einzelne Tokens; seltenes Zeug bleibt in kleinere Stücke zerlegt.
+
+<Aside type="tip">
+**Die Faustregel, die man sich merken sollte:** *1 Token ≈ 4 Zeichen ≈ ¾ Wort* im Englischen. Ein Dokument mit 1.000 Wörtern hat also grob 1.300 Tokens. Das brauchst du ständig, um Kosten abzuschätzen und Längenlimits zu prüfen.
+</Aside>
+
+Tokens sind kein akademisches Detail — sie sind die Einheit, die abgerechnet, begrenzt und zeitlich getaktet wird, und genau deshalb tauchen sie später als „Stellschraube für Praktiker" wieder auf.
+
+## 4 · Warum Wörter zu Zahlen werden: Embeddings
+
+Hier ist ein Problem, das offensichtlich klingt, sobald man es ausspricht: **Computer können mit den Buchstaben „k-a-t-z-e" nichts anfangen.** Sie arbeiten nur mit Zahlen. Jedes Token muss also zu einer Zahl werden — genauer gesagt zu einer Liste von Zahlen —, bevor das Modell es verarbeiten kann. Der Kniff besteht darin, das *bedeutungsvoll* zu tun.
+
+### 4.1 Der naive Weg (und warum er scheitert)
+
+Die einfachste Idee ist, jedem Wort einen eigenen Platz zu geben — das nennt man **One-Hot-Encoding**:
+
+- `Katze` = `[1, 0, 0, 0, …]`
+- `Hund`  = `[0, 1, 0, 0, …]`
+- `Bank`  = `[0, 0, 1, 0, …]`
+
+Es funktioniert, aber es ist auf eine ganz bestimmte Weise dumm: Es behandelt *jedes* Wort als gleich unverwandt mit jedem anderen. Nach diesem Schema ist „Katze" nicht näher an „Hund" als an „Bank" — was Unsinn ist. In diesen Zahlen steckt nirgends ein Begriff von Bedeutung.
+
+### 4.2 Der gute Weg: Word-Embeddings
+
+Statt willkürlicher Plätze *lernen* wir für jedes Token eine reichhaltige Liste von Zahlen (einen **Vektor**), so angeordnet, dass **Wörter mit ähnlicher Bedeutung nahe beieinander liegen** und **verwandte Paare in ähnliche Richtungen zeigen**. Diese gelernte Repräsentation nennt man ein **Embedding**.
+
+Die berühmte Demonstration dafür, wie viel Bedeutung erfasst wird:
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">König</div>
+    <span class="arrow">−</span>
+    <div class="sc-node slate">Mann</div>
+    <span class="arrow">+</span>
+    <div class="sc-node slate">Frau</div>
+    <span class="arrow">≈</span>
+    <div class="sc-node green">Königin</div>
+  </div>
+  <figcaption>Der Schritt von „Mann" zu „Frau" erfasst die Idee des Geschlechts; addiert man denselben Schritt zu „König", landet man neben „Königin". Bedeutung wird zur Rechenaufgabe.</figcaption>
+</figure>
+
+Das funktioniert nur, weil die Richtung von *Mann* zu *Frau* „Geschlecht" kodiert, und wenn man sie zu *König* addiert, gelangt man zum weiblichen Pendant. Dasselbe Muster gilt für die Verbzeit (gehen → ging) und für Land → Hauptstadt (Deutschland → Berlin). Bedeutung ist buchstäblich zu Geometrie geworden.
+
+### 4.3 Warum das für das Business wichtig ist
+
+Embeddings sind kein Partytrick — sie treiben im Stillen viele praktische Werkzeuge an, denn „nahe beieinander im Zahlenraum" ist ein maschinenfreundlicher Ersatz für „ähnlich in der Bedeutung".
+
+| Anwendung | Wie Embeddings helfen |
+|---|---|
+| Suche | Dokumente finden, die dasselbe *bedeuten*, nicht nur solche mit denselben Stichwörtern |
+| Empfehlungen | „Kundinnen und Kunden, die X mochten, mochten auch Y" — X und Y liegen nahe beieinander |
+| Clustering | Ähnliches Kundenfeedback oder Tickets automatisch gruppieren |
+| RAG (Tag 3) | Den relevantesten Kontext holen, um ihn dem Modell vor der Antwort zu geben |
+
+<Aside type="note">
+**Die Kernaussage in einer Zeile:** Embeddings sind die Brücke zwischen menschlicher Sprache und maschineller Mathematik. Sie sind der Grund, warum ein Modell „glücklich" und „fröhlich" als Beinahe-Synonyme behandelt, obwohl die beiden Wörter keinen Buchstaben gemeinsam haben. Im Modell gehen statische Token-Embeddings *hinein*, und reichhaltigere, kontextbewusste Embeddings kommen *heraus*.
+</Aside>
+
+## 5 · Der Transformer und Self-Attention
+
+Wir haben nun Tokens, die in bedeutungsvolle Zahlen verwandelt wurden. Der **Transformer** ist die Architektur, die sie verarbeitet — und er ist das „T" in GPT. Er kam mit einem Paper von 2017 namens *„Attention Is All You Need"* auf und ist tatsächlich der Grund, warum moderne GenAI funktioniert.
+
+### 5.1 Was er ersetzt hat
+
+Vor 2017 lasen Modelle Text strikt von links nach rechts, ein Wort nach dem anderen. Das hatte drei hartnäckige Probleme:
+
+- **Langsam** — jedes Wort musste auf das vorherige warten; man konnte sie nicht gemeinsam verarbeiten.
+- **Vergesslich** — Details vom Anfang einer langen Passage verblassten, bis das Modell das Ende erreichte.
+- **Kurzsichtig** — lange Dokumente waren ein echtes Problem.
+
+Der Transformer behob alle drei mit zwei Kniffen: Er betrachtet **alle Wörter auf einmal** (dadurch ist er parallel und schnell) und nutzt **Self-Attention**, damit jedes Wort selbst entscheiden kann, welche anderen Wörter für es relevant sind.
+
+<Aside type="tip">
+**Analogie.** Alte Art: ein Buch Wort für Wort lesen und sich mühsam an den Anfang erinnern, während man die letzte Seite erreicht. Transformer-Art: die ganze Seite auf einmal sehen und jedes Wort sofort mit jedem anderen Wort darauf verknüpfen können.
+</Aside>
+
+### 5.2 Attention, in einfachen Worten
+
+Attention beantwortet für jedes Wort eine Frage: *„auf welche anderen Wörter sollte ich achten, um mich selbst zu verstehen?"*
+
+Das klassische Beispiel: *„Die Katze saß auf der Matte, weil **sie** müde war."* Worauf bezieht sich „sie"? Du wusstest es sofort — die Katze, nicht die Matte. Attention ist der Mechanismus, mit dem das Modell genau diese Art von Verbindung lernen und anwenden kann.
+
+Jedes Wort erzeugt drei Dinge, und am leichtesten merkt man sie sich mit der **Bibliotheks-Analogie**:
+
+| Rolle | Bibliotheks-Analogie | In der Attention |
+|---|---|---|
+| **Query (Q)** | Deine Frage: *„Ich brauche Bücher über Klimawandel"* | Wonach dieses Wort sucht |
+| **Key (K)** | Das Etikett auf dem Buchrücken | Was jedes Wort über sich selbst kundtut |
+| **Value (V)** | Der eigentliche Inhalt des Buches | Die Information, die jedes Wort weitergeben kann |
+
+Du kommst mit einer **Query** herein, überfliegst den **Key** (das Etikett) jedes Buches, um zu sehen, was relevant ist, und nimmst dann den **Value** (Inhalt) aus den Büchern in dem Maße, wie gut sie passten. Die Wortverarbeitung funktioniert genauso: vergleichen, gewichten, dann vermischen.
+
+### 5.3 Durchgerechnetes Beispiel: „sie" → „Katze" auflösen
+
+Verfolgen wir es für das Wort „sie" in *„Die Katze saß, weil sie müde war"*:
+
+<Steps>
+
+1. **„sie" bildet eine Query** — fragt im Grunde *„worauf beziehe ich mich?"*
+2. **Jedes Wort bietet einen Key an** — „Katze" tut kund *„ich bin ein Tier, ein Substantiv"*, „saß" tut kund *„ich bin eine Handlung"*, und so weiter.
+3. **Vergleiche die Query mit jedem Key**, um die Relevanz zu bewerten:
+   - sie vs. „Die" → 0,05 (niedrig)
+   - sie vs. **„Katze" → 0,72 (hoch — beste Übereinstimmung!)**
+   - sie vs. „saß" → 0,15 (mittel)
+   - sie vs. „weil" → 0,08 (niedrig)
+4. **Normalisiere die Werte** (ein Schritt namens *Softmax*), sodass sie sich zu 1,0 summieren — jetzt sind es saubere Gewichte.
+5. **Vermische die Values** mit diesen Gewichten. Da „Katze" 0,72 des Gewichts trägt, ist das Ergebnis *überwiegend* Information aus „Katze".
+
+</Steps>
+
+Ergebnis: Die interne Repräsentation von „sie" im Modell *enthält* nun faktisch „Katze". Das ist ein kontextuelles Embedding, das in Echtzeit aufgebaut wird — dasselbe Wort würde sich in einem anderen Satz anders vermischen.
+
+<Aside type="note">
+**Einzeiler zum Merken des Ganzen:** *Query fragt, Keys antworten, Values liefern.* Oder: „alle Wörter ansehen, entscheiden, welche wichtig sind, und ihre Information entsprechend mischen."
+</Aside>
+
+### 5.4 Warum drei getrennte Versionen jedes Wortes?
+
+Eine berechtigte Frage: Warum nicht einfach das Embedding des Wortes direkt für alle drei Rollen verwenden? Weil ein Wort je nach Kontext *unterschiedliche* Rollen spielt. Nimm „Bank":
+
+- Als **Query** muss es fragen: *„bin ich Geld-Bank oder Fluss-Ufer-Bank?"*
+- Als **Key** tut es kund: *„ich könnte finanziell oder geografisch sein."*
+- Als **Value** liefert es: *„hier ist meine tatsächliche Bedeutung."*
+
+Fragen, Kundtun und Liefern sind wirklich verschiedene Aufgaben, deshalb lernt das Modell drei getrennte Transformationen — eine für jede.
+
+### 5.5 Multi-Head-Attention und das Stapeln von Blöcken
+
+Echte Transformer führen Attention nicht nur einmal aus. Sie betreiben mehrere **Attention-Heads** parallel, jeder eine andere „Perspektive" auf denselben Satz — ein Head verfolgt vielleicht die Grammatik, ein anderer die Bedeutung, ein weiterer schlicht die Wortposition. Viele Heads gleichzeitig laufen zu lassen, erlaubt dem Modell, viele Arten von Beziehungen auf einmal zu erkennen (ein großes Modell nutzt vielleicht Dutzende Heads).
+
+Und Attention ist nur ein Teil eines einzelnen **Transformer-Blocks**. Ein Block bündelt zusammen:
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Self-Attention<span class="sub">wer bezieht sich auf wen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Feed-Forward<span class="sub">das Ergebnis verarbeiten</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Residual + Norm<span class="sub">Information stabil halten</span></div>
+  </div>
+  <figcaption>Ein Transformer-Block: Attention findet die Beziehungen, ein Feed-Forward-Netz verdaut sie, und Residual-Verbindungen plus Normalisierung halten frühere Informationen intakt und das Training stabil.</figcaption>
+</figure>
+
+Dann werden diese Blöcke **gestapelt** — moderne Modelle türmen Dutzende davon auf. Jede Schicht fügt eine Abstraktionsebene hinzu: Frühe Schichten kümmern sich um Grammatik und Wortbeziehungen, mittlere Schichten bauen Bedeutung und Fakten auf, und spätere Schichten übernehmen das schwerere Denken. Aus der Tiefe kommt die Raffinesse.
+
+## 6 · Wie LLMs trainiert werden: drei Phasen
+
+Ein fertiger, hilfreicher Assistent wird in drei klar getrennten Phasen aufgebaut. Lässt man eine davon aus, bekommt man ein ganz anderes (und schlechteres) Produkt.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">1 · Pre-training<span class="sub">Sprache lernen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">2 · Instruction Tuning<span class="sub">hilfreich werden lernen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">3 · RLHF<span class="sub">menschliche Vorlieben lernen</span></div>
+  </div>
+  <figcaption>Zuerst kommt die reine Sprachfähigkeit, dann die Gewohnheit, Anweisungen zu befolgen, dann der Feinschliff bei Tonfall, Sicherheit und Hilfsbereitschaft.</figcaption>
+</figure>
+
+<Tabs>
+<TabItem label="1 · Pre-training">
+
+Das Modell liest einen enormen Stapel Text — Bücher, Wikipedia, Websites, Foren, wissenschaftliche Arbeiten, Code, Nachrichten — und spielt immer wieder das Spiel mit dem nächsten Token. Allein durch dieses Spiel greift es Grammatik, Fakten, Denkmuster, Stil und Code-Struktur auf.
+
+**Größenordnung zum Würdigen:** Billionen von Wörtern, Tausende spezialisierter Chips, die monatelang laufen, und geschätzte Kosten von grob **10 Mio.–100 Mio. $+** für ein Spitzenmodell. Deshalb trainiert nur eine Handvoll Organisationen Modelle von Grund auf.
+
+*Analogie:* Es ist, als würde man Schreiben lernen, indem man jedes Buch in jeder Bibliothek millionenfach liest — man würde Grammatik und Fakten aufsaugen, ohne dass einem jemand eine einzige Regel beibringt.
+
+</TabItem>
+<TabItem label="2 · Instruction Tuning">
+
+Ein rein vortrainiertes Modell kann Text *vervollständigen*, ist aber nicht wirklich **hilfreich**. Frag es *„Was ist die Hauptstadt von Frankreich?"* und es könnte antworten *„Was ist die Hauptstadt von Deutschland? Was ist die Hauptstadt von Spanien?"* — es setzt fröhlich das Muster der Fragen fort, statt zu antworten.
+
+Die Lösung: Es mit vielen Beispielen von *Anweisung → gute Antwort* feintunen. Das bringt dem Modell bei, deine Eingabe als eine zu erfüllende Anfrage zu behandeln und nicht als ein fortzusetzendes Muster. Das ist auch die Phase, in der ein Unternehmen ein Modell auf seinen eigenen Support-Gesprächen, internen Dokumenten oder seinem Hausstil feintunen könnte.
+
+</TabItem>
+<TabItem label="3 · RLHF">
+
+Selbst nach dem Instruction Tuning ist „hilfreich" subjektiv — ist eine lange, gründliche Antwort besser oder eine kurze, prägnante? **RLHF (Reinforcement Learning from Human Feedback)** klärt das mithilfe menschlichen Geschmacks:
+
+1. Erzeuge mehrere Antwort-Kandidaten.
+2. Lass Menschen sie ranken (A besser als B besser als C).
+3. Trainiere ein „Reward-Modell", das diese menschlichen Vorlieben nachahmt.
+4. Stupse das LLM an, Antworten zu produzieren, die das Reward-Modell hoch bewertet.
+
+Das ist es, was Hilfsbereitschaft, Sicherheit (Vermeiden schädlicher Inhalte), Ehrlichkeit (Unsicherheit eingestehen) und angemessenen Tonfall vermittelt. Es ist auch *der Grund, warum verschiedene Modelle verschiedene Persönlichkeiten haben* — jedes spiegelt die Vorlieben wider, auf die es getunt wurde.
+
+</TabItem>
+</Tabs>
+
+## 7 · Die Stellschrauben für Praktiker
+
+Das ist die Handvoll Begriffe, an denen du beim Arbeiten mit einem Modell tatsächlich drehst. Verstehe diese vier und du kannst in jedem GenAI-Gespräch mithalten.
+
+### 7.1 Tokens = Kosten, Limits und Geschwindigkeit
+
+Weil alles in Tokens gemessen wird, sind Tokens die Währung der Arbeit mit LLMs:
+
+- **Preisgestaltung** — APIs rechnen pro Token ab und zählen *sowohl* deine Eingabe *als auch* die Ausgabe des Modells.
+- **Limits** — jedes Modell hat ein Maximum, das es auf einmal verarbeiten kann (siehe Context Window unten).
+- **Geschwindigkeit** — mehr Tokens bedeuten mehr Verarbeitungszeit.
+
+Der Geldaspekt ist real: Ein wortreicher Prompt mit 1.000 Tokens kostet für dieselbe Aufgabe das 5-Fache eines knappen mit 200 Tokens. Knappe Prompts, das Cachen wiederholter Anfragen und der Einsatz eines kleineren Modells für einfache Aufgaben sind die leichten Gewinne.
+
+### 7.2 Context Window = die Größe des Schreibtischs des Modells
+
+Das **Context Window** ist die maximale Textmenge, die das Modell in einem Moment „sehen" kann — und entscheidend ist, dass es deine Eingabe *und* die erzeugte Ausgabe zusammen umfasst.
+
+| Modell | Context Window | Ungefähr |
+|---|---|---|
+| GPT-3.5 | 16K Tokens | ~12.000 Wörter |
+| GPT-4 | 128K Tokens | ~96.000 Wörter |
+| Claude 3 | 200K Tokens | ~150.000 Wörter |
+| Gemini 1.5 | 1M+ Tokens | ~750.000 Wörter |
+
+<Aside type="tip">
+**Analogie:** Das Context Window ist die Größe deines Schreibtisches. Ein kleiner Schreibtisch fasst nur ein paar Dokumente auf einmal; ein großer Schreibtisch lässt dich ein ganzes Projekt ausbreiten. Zu klein, und das Modell „vergisst" den Anfang eines langen Gesprächs oder kann keinen ganzen Bericht lesen.
+</Aside>
+
+### 7.3 Temperature = der Kreativitätsregler
+
+**Temperature** steuert, wie zufällig die Ausgabe ist. Eine niedrige Temperature lässt das Modell auf Nummer sicher gehen und jedes Mal das wahrscheinlichste nächste Token wählen; eine hohe Temperature lässt es Risiken eingehen.
+
+| Anwendungsfall | Empfohlene Temperature |
+|---|---|
+| Datenextraktion | 0,0 – 0,2 <Badge text="am präzisesten" variant="success" /> |
+| Zusammenfassung | 0,2 – 0,4 |
+| Allgemeine Fragen & Antworten | 0,5 – 0,7 |
+| Kreatives Schreiben | 0,7 – 0,9 |
+| Brainstorming | 0,9 – 1,0 <Badge text="am variantenreichsten" variant="note" /> |
+
+Bei **0,0** ist das Modell deterministisch — gleiche Eingabe, gleiche Ausgabe. Um **0,7–0,9** bekommst du nützliche kreative Vielfalt. Über **1,0** hinaus wird es oft zusammenhanglos.
+
+<Aside type="note">
+**Analogie:** Temperature ist wie der Unterschied zwischen dem Spielen von Noten genau so, wie sie geschrieben stehen (0,0), und einer Jazz-Improvisation, die vom Thema inspiriert, aber unvorhersehbar ist (1,0). Für alles Faktische halte sie niedrig.
+</Aside>
+
+### 7.4 Parameter = Modellgröße
+
+**Parameter** sind die intern gelernten Werte — stell sie dir als Millionen oder Milliarden winziger Regler vor, die das Training justiert hat. Grobe Einordnung:
+
+| Größe | Parameter | Typischer Einsatz |
+|---|---|---|
+| Klein | 7–13 Milliarden | Schnell und günstig; gut für einfache Aufgaben |
+| Mittel | 30–70 Milliarden | Ein Ausgleich aus Fähigkeit und Kosten |
+| Groß | 100B+ | Spitzenfähigkeit, höchste Kosten und Latenz |
+
+Mehr Parameter bedeuten in der Regel mehr Wissen, mehr Nuancen und besseres Denken — aber auch mehr Geld, langsamere Antworten und schwerere Hardware.
+
+<Aside type="caution">
+**Größer ist nicht automatisch besser.** Ein gut gewähltes, gut geprompttes 7B-Modell kann ein schlecht geprompttes 70B-Modell schlagen. Trainingsdaten, Fine-Tuning und die Art, wie du promptest, zählen ebenso viel wie die reine Größe. (Erwähnenswert: Das Context Window und die Zahl der Attention-Heads ändern *nicht* die Parameterzahl — sie beeinflussen den Speicher und die Vielfalt der Muster zur Laufzeit, nicht die gespeicherte Größe des Modells.)
+</Aside>
+
+## 8 · Was LLMs gut können — und wo sie stolpern
+
+Hier klarsichtig zu sein, ist der ganze Sinn des Tages. LLMs sind bei manchen Dingen erstaunlich und bei anderen still unzuverlässig, und eine Managerin oder ein Manager muss wissen, was was ist.
+
+| Gut in | Tut sich schwer mit |
+|---|---|
+| Flüssigen Text erzeugen (E-Mails, Berichte, Werbetexte) | Präziser faktischer Genauigkeit |
+| Einfachen Anweisungen folgen | Komplexen Aufgaben mit vielen Randbedingungen |
+| Kontext verstehen | Echtzeit- / aktuellen Informationen |
+| Zusammenfassen und extrahieren | Exaktem Zählen und Rechnen |
+| Kreativen Varianten | Sehr langer, perfekt konsistenter Ausgabe |
+
+Das Muster: **LLMs glänzen bei Aufgaben, die Menschen mit Sprache erledigen.** Wenn sich eine Aufgabe als *„lies dies, dann schreibe das"* formulieren lässt, kann ein LLM wahrscheinlich helfen. Nun die vier Ausfallmodi, die es zu benennen lohnt — jeder mit seiner Lösung:
+
+<Tabs>
+<TabItem label="Halluzination">
+
+**Was:** Das Modell nennt selbstbewusst, aber falsche Informationen — z. B. erfindet es plausibel klingende Titel von Forschungsarbeiten, die es nicht gibt.
+
+**Warum:** Es sagt wahrscheinlich klingenden Text vorher; es schlägt *nichts* in einer Faktendatenbank nach. Flüssig und korrekt sind nicht dasselbe.
+
+**Gegenmaßnahme:** **Retrieval-Augmented Generation (RAG)** — gib dem Modell die echten Quelldokumente, aus denen es antworten soll. Das ist der gesamte Tag 3.
+
+</TabItem>
+<TabItem label="Mathe & Zählen">
+
+**Was:** Es patzt bei präzisen Berechnungen und Aufgaben auf Zeichenebene. Der Klassiker: *„Wie viele r sind in strawberry?"* → *„2"* (es sind 3).
+
+**Warum:** Die Tokenisierung zerhackt Wörter in Stücke, sodass das Modell einzelne Buchstaben nicht sauber „sieht", und es ist kein Taschenrechner.
+
+**Gegenmaßnahme:** Übergib die Mathematik an echte Code-Ausführung, statt der Arithmetik des Modells zu vertrauen; neuere Modelle werden besser, aber verlass dich nicht darauf.
+
+</TabItem>
+<TabItem label="Echtzeit-Infos">
+
+**Was:** Das Modell hat einen **Knowledge Cutoff** (Wissensstichtag) — es kennt keine Ereignisse nach dem Ende seines Trainings. Frag nach den Nachrichten der letzten Woche und es kann aus dem Gedächtnis nicht helfen.
+
+**Warum:** Sein Wissen ist auf den Moment eingefroren, in dem das Training endete.
+
+**Gegenmaßnahme:** Verbinde es mit einer Websuche oder speise ihm aktuelle Daten per RAG ein.
+
+</TabItem>
+<TabItem label="Komplexe Randbedingungen">
+
+**Was:** Bei einer Anfrage mit mehreren Regeln auf einmal (*„genau 14 Zeilen, ABAB-Reim, erwähne einen Fluss, verwende nicht das Wort ‚grün'"*) trifft es oft drei und verfehlt eine still und leise.
+
+**Warum:** Viele harte Randbedingungen gleichzeitig zu jonglieren, ist für es wirklich schwierig.
+
+**Gegenmaßnahme:** Zerlege die Aufgabe in Schritte, prüfe jede Randbedingung und verfeinere iterativ — Kernfähigkeiten, auf denen wir an Tag 2 aufbauen.
+
+</TabItem>
+</Tabs>
+
+<Aside type="danger">
+**Die goldene Regel für Managerinnen und Manager:** LLMs **ergänzen, sie ersetzen nicht.** Sie sind mächtige Werkzeuge, die dennoch menschliche Aufsicht brauchen — besonders bei allem mit hohem Einsatz. Überprüfe wichtige Ausgaben immer stichprobenartig.
+</Aside>
+
+## 9 · Die Modelllandschaft
+
+Das Feld bewegt sich schnell, aber die wichtigsten Akteure und die drei Architektur-Familien lohnt es sich zu kennen.
+
+| Unternehmen | Modellfamilie | Bekannt für |
+|---|---|---|
+| OpenAI | GPT-4, GPT-4o | Pionier moderner LLMs; starkes Reasoning |
+| Google | Gemini | Multimodal (Text + Bilder); in Google integriert |
+| Anthropic | Claude | Betonung von Sicherheit und Hilfsbereitschaft |
+| Meta | Llama | Offene Gewichte — man kann es selbst betreiben |
+| Mistral | Mistral, Mixtral | Europäisch; effiziente offene Modelle |
+
+Unter der Haube kommen transformerbasierte Modelle je nach Aufgabe in drei Formen:
+
+| Architektur | Beispiele | Am besten für |
+|---|---|---|
+| Decoder-only | GPT, Claude, Llama | Text *erzeugen* — Chat, Schreiben |
+| Encoder-only | BERT, RoBERTa | Text *verstehen* — Klassifikation, Suche |
+| Encoder-Decoder | T5, BART | Übersetzung, Zusammenfassung |
+
+Fast jeder Chatbot, den du benutzt hast (GPT-4, Claude, Gemini), ist **Decoder-only** — gebaut, um zu erzeugen, Token für Token, genau wie wir es in Abschnitt 2 nachverfolgt haben.
+
+## Praxis: Labs & Aufgabe
+
+Tag 1 kombiniert die obige Theorie mit Zeit in **Google Colab**, in der die **Gemini API** wirklich aufgerufen wird. Der vollständige, lauffähige Code liegt in den Notebooks — lade sie herunter und öffne sie in Colab, um mitzumachen.
+
+**Das angeleitete Lab — *Your First LLM Interactions*** — wird vom Dozenten geführt und geht durch: das sichere Einrichten der Umgebung und des API-Keys, die ersten Aufrufe und das Lesen der Antwort, das Experimentieren mit **Temperature** (Vergleich von Ausgaben bei 0,0 vs. 1,0) und **max Tokens**, den Aufbau eines **mehrstufigen Gesprächs** (Multi-Turn), das den Kontext merkt, sowie das Zusammenstellen zweier kleiner Business-Tools — eines Generators für E-Mail-Antworten und eines Generators für Meeting-Zusammenfassungen. Es endet mit dem Export eines **Prompt-Logs**, damit jedes Experiment nachvollziehbar bleibt.
+
+Das **eigenständige Lab** und die **Aufgabe** lassen dich dann auf eigene Faust üben: Wähle einen Business-Anwendungsfall, wende dieselben Parameter und Multi-Turn-Muster selbst an und protokolliere und überprüfe, was du baust — was die vier Grundregeln aus dem Lab festigt (*wenn du unsicher bist, sag es; gib das Ausgabeformat an; erfinde keine Fakten; überprüfe wichtige Ausgaben*).
+
+**Notebooks herunterladen** (in Google Colab öffnen):
+
+- [Angeleitetes Lab — Your First LLM Interactions](/learnings/mba/generative-ai-for-managers/notebooks/day1-lab1-guided.ipynb)
+- [Eigenständiges Lab](/learnings/mba/generative-ai-for-managers/notebooks/day1-lab2-independent.ipynb)
+- [Aufgabe](/learnings/mba/generative-ai-for-managers/notebooks/day1-assignment.ipynb)
+
+<Aside type="caution">
+**Codiere niemals einen API-Key fest** in ein Notebook oder eine geteilte Datei ein. Speichere ihn in den Colab **Secrets** und lies ihn von dort. Ein typischer erster Aufruf sieht so aus:
+
+```python
+from google import genai
+
+client = genai.Client()  # Key wird aus der Umgebung / den Colab Secrets gelesen
+response = client.models.generate_content(
+    model="gemini-2.5-flash-lite",
+    contents="Write a one-line product description for a reusable coffee cup.",
+)
+print(response.text)
+```
+</Aside>
+
+**Meine eingereichte Lösung:** [Aufgabe 1 — mein gelöstes Notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day1-assignment-solution.ipynb) — meine eigene Arbeit aus dem Kurs.
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|---|---|
+| Was ein LLM ist | Ein sehr guter Vorhersager des nächsten Tokens — keine Faktendatenbank, keine Person. |
+| Autoregressive Generierung | Ein Token vorhersagen, anhängen, wiederholen — kein Plan für die ganze Antwort im Voraus. |
+| Tokens | Die Bausteine, die Modelle lesen; **1 Token ≈ 4 Zeichen ≈ ¾ Wort**; sie treiben Kosten, Limits, Geschwindigkeit. |
+| BPE | Ein Vokabular aufbauen, indem man wiederholt die häufigsten Zeichenpaare zusammenführt. |
+| Embeddings | Wörter als bedeutungsvolle Vektoren — *König − Mann + Frau ≈ Königin*; treiben Suche, Empfehlungen, Clustering, RAG an. |
+| Attention (Q/K/V) | *Query fragt, Keys antworten, Values liefern* — wie „sie" lernt, dass es „Katze" bedeutet. |
+| Multi-Head + Stapeln | Viele Perspektiven pro Schicht; gestapelte Blöcke bauen Grammatik → Bedeutung → Reasoning auf. |
+| Drei Trainingsphasen | Pre-training → Instruction Tuning → RLHF (Sprache → Hilfsbereitschaft → menschlicher Geschmack). |
+| Die vier Stellschrauben | Tokens (Kosten), Context Window (Kapazität), Temperature (Kreativität), Parameter (Größe). |
+| Temperature | Niedrig (0–0,2) für Fakten; hoch (0,7–1,0) für Kreativität; 0,0 = deterministisch. |
+| Grenzen | Halluzination, Mathe/Zählen, Echtzeit-Infos, komplexe Randbedingungen — behebbar mit RAG, Code, Suche, Schritt für Schritt. |
+| Architekturen | Decoder-only (erzeugen) · Encoder-only (verstehen) · Encoder-Decoder (übersetzen). |
+| Die goldene Regel | LLMs **ergänzen, ersetzen nicht** — überprüfe Ausgaben mit hohem Einsatz immer. |

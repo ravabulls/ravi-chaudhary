@@ -1,0 +1,331 @@
+---
+title: Tag 6 — GenAI Business Cases
+description: Wie Manager GenAI-Ideen erkennen, priorisieren und pitchen, die wirklich Wert schaffen — von Eignungsfiltern und Wert-Sizing über MVP-Design, Governance und Rollout-KPIs bis zum Capstone-Business-Case.
+sidebar:
+  label: 6 · Business Cases
+  order: 6
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Generative AI for Managers — TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Die Tage 1 bis 5 drehten sich darum, *wie* die Technik funktioniert — Prompting, Retrieval, Extraktion, Agenten und ein bisschen Machine Learning. Tag 6 dreht die ganze Fragestellung um. In den ersten fünf Tagen habe ich immer wieder gefragt: "**Können** wir das bauen?" Heute zählt nur noch die Managerfrage: "**Sollten** wir das bauen — und wenn ja, warum, und wie würde ich es belegen?"
+
+Das ist also der Tag, an dem aus dem technischen Stoff ein **Business Case** wird: ein kurzes, ehrliches Dokument, das eine Entscheiderin oder einen Entscheider überzeugt, ein kleines Pilotprojekt zu finanzieren. Unten stehen meine Wiederholungsnotizen, wie man so einen aufbaut — in der Reihenfolge, in der der Kurs ihn durchgeht.
+
+<Aside type="tip" title="Der eine Satz zum Merken">
+Ein GenAI-Projekt lohnt sich, wenn die Aufgabe **abgegrenzt** (klein und klar definiert), **messbar** (man kann prüfen, ob das Ergebnis gut ist) und **als MVP machbar** ist (eine nützliche erste Version lässt sich in etwa vier Wochen bauen). Fehlt eines der drei, ist sie noch nicht pilotreif.
+</Aside>
+
+*Fachbegriffe kurz erklärt.* **GenAI** = generative KI, also Werkzeuge wie Large Language Models (LLMs), die Text, Code oder Bilder erzeugen. **MVP** = Minimum Viable Product, die kleinste Version, die trotzdem echten Nutzen stiftet. **Pilot** = ein kleiner, zeitlich befristeter Test mit einer Handvoll echter Nutzer, bevor irgendetwas breit ausgerollt wird.
+
+## Das Ergebnis: ein Capstone Proposal Pack
+
+Der ganze Tag läuft auf ein einziges Paket zu, das ein echtes Team einem Steering Committee (der Gruppe erfahrener Führungskräfte, die Budgets freigeben) vorlegen würde. Es entsteht in vier Blöcken, von denen jeder in den nächsten mündet:
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node amber">A · Auswählen<span class="sub">die richtige Idee</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node slate">B · Belegen<span class="sub">den Wert</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node violet">C · Gestalten<span class="sub">das Produkt</span></div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">D · Deployment<span class="sub">& messen</span></div>
+</div>
+<figcaption>Die vier Blöcke von Tag 6 — jeder übergibt sein Ergebnis an den nächsten.</figcaption>
+</figure>
+
+Am Ende hast du **sechs zusammenhängende Bausteine**:
+
+| # | Baustein | Was er beantwortet |
+|---|-------|-----------------|
+| 1 | Use-Case-Onepager | *Welches* Problem, in Business-Begriffen formuliert |
+| 2 | Prozesslandkarte + Wert-Sizing | *Wie* GenAI die Arbeit verändert und was es spart |
+| 3 | MVP-Anforderungen (PRD) | *Was* gebaut wird, für wen, in welcher Reihenfolge |
+| 4 | Build/Buy + Architekturskizze | *Wie* es funktioniert, und Make-vs-Buy |
+| 5 | Rollout-Plan + KPIs | *Wie* du es einführst und den Erfolg belegst |
+| 6 | Governance-lite-Checkliste | *Wie* du es sicher und verantwortungsvoll hältst |
+
+Der Rest dieses Kapitels ist eigentlich nur das Denken hinter jedem dieser Punkte.
+
+## Schritt 1 — Finde heraus, wo GenAI wirklich passt
+
+Nicht jede Aufgabe ist ein guter GenAI-Kandidat. Der schnellste Weg, Geld zu verbrennen, ist, die Technik auf die falsche Aufgabe anzusetzen. Zwei schnelle Perspektiven helfen.
+
+**Gute Passung vs. schlechte Passung.** GenAI glänzt bei repetitiven *Sprach*-Aufgaben und darin, unstrukturierten, unübersichtlichen Text in etwas Strukturiertes oder Brauchbares zu verwandeln.
+
+| Gute Passung für GenAI | Schlechte Passung — nochmal überdenken |
+|--------------------|-----------------------|
+| Repetitives Verfassen (E-Mails, Antworten, Zusammenfassungen) | Einmalentscheidungen, die nur ein paar Mal im Jahr anfallen |
+| Unübersichtlichen Text strukturieren (Rechnungen → Daten) | Aufgaben, bei denen niemand beurteilen kann, ob das Ergebnis gut ist |
+| Fragen über die eigenen Dokumente beantworten | "Eine ganze Abteilung ersetzen" |
+| Anfragen mit hohem Volumen klassifizieren oder weiterleiten | Alles, wofür Daten nötig sind, auf die du rechtlich nicht zugreifen darfst |
+
+**Der MVP-taugliche Filter.** Ein starker Kandidat besteht alle fünf Prüfungen:
+
+| Filter | Die Frage dazu | Bestanden, wenn… |
+|--------|--------------------|------------|
+| Hohes Volumen | Passiert das hunderte/tausende Male pro Jahr? | z. B. 500 Tickets/Woche |
+| Klarer Input/Output | Kann ich definieren, was reingeht und wie "gut" aussieht? | Feste Antwortkategorien; ein Datenschema |
+| Bewertbare Qualität | Kann ich *messen*, ob das Ergebnis etwas taugt? | 50 Stichproben per Hand prüfen; ≥85 % Genauigkeit |
+| Geringe MVP-Komplexität | Kann eine nützliche v1 ohne komplexe Integrationen existieren? | Ein eigenständiges Tool, bevor man es in Altsysteme verdrahtet |
+| Machbarer Datenzugriff | Bekomme ich die Daten unter Richtlinien und Gesetz? | Interne Dokumente — *nicht* personenbezogene Kundendaten ohne Kontrollen |
+
+<Aside type="caution" title="Die Regel, zu der ich immer wieder zurückkomme">
+Wenn du nicht beschreiben kannst, **wie du messen willst, ob das Ergebnis gut ist**, ist es kein capstone-reifer Use Case. "Mach es schlauer" ist keine Kennzahl.
+</Aside>
+
+Und die Anti-Muster, die man sofort erkennen sollte — vage, nicht messbare oder unmöglich breite Ideen:
+
+<div class="sc-chips">
+  <span class="sc-chip">"Ein Chatbot für alles"</span>
+  <span class="sc-chip">"Ein ganzes Team ersetzen"</span>
+  <span class="sc-chip">Kein Weg zu den Daten</span>
+  <span class="sc-chip">Erfolg nicht messbar</span>
+</div>
+
+## Schritt 2 — Priorisieren wie eine Managerin
+
+Sobald du eine Liste von Ideenkandidaten hast, sortierst du sie nach **Wirkung zuerst, mit einem realistischen Weg zum Piloten**. Zwei Werkzeuge erledigen das.
+
+**Die Value-×-Time-to-value-2×2-Matrix.** Trage jede Idee danach ab, wie viel Wert sie schafft, gegen die Geschwindigkeit, mit der dieser Wert eintrifft ("Time-to-value" = wie lange, bis du Ergebnisse siehst).
+
+| | Schnell zum Wert | Langsam zum Wert |
+|---|---------------|---------------|
+| **Hoher Wert** | **Quick Wins** — zuerst starten, Schwung aufbauen | **Strategische Wetten** — sorgfältig planen, brauchen Rückhalt der Geschäftsleitung |
+| **Geringer Wert** | **Lückenfüller** — nur wenn Ressourcen brachliegen | **Vermeiden** — keine Mühe verschwenden |
+
+**Das 1–5-Bewertungsraster.** Bewerte jede Idee der engeren Auswahl nach fünf Kriterien, insgesamt maximal 25 Punkte. Beachte, dass zwei Kriterien *umgekehrt* sind — bei Time-to-value und Risiko bedeutet ein hoher Wert "schnell" bzw. "geringes Risiko", höher ist also immer besser.
+
+| Kriterium | Punkt 1 (niedrig) | Punkt 3 (mittel) | Punkt 5 (hoch) |
+|-----------|---------------|------------------|----------------|
+| Wertpotenzial | Kleine Erleichterung (unter 5 % gespart) | Spürbar (15–25 % weniger Handarbeit) | Groß (>500 Tsd. €/Jahr oder starke Risikosenkung) |
+| Time-to-value <Badge text="umgekehrt" variant="note" /> | 6+ Monate bis ROI | 2–3 Monate bis Pilotergebnisse | unter 4 Wochen bis zu ersten Ergebnissen |
+| Machbarkeit | Große Integration, wackelige Daten | 1–2 Systeme, strukturierte Daten | Plug-and-play, Standardformate |
+| Risiko/Randbedingungen <Badge text="umgekehrt" variant="note" /> | Reguliert, sensible personenbezogene Daten | Einige sensible Daten, Richtlinien vorhanden | Nur interne Daten, geringes Risiko |
+| Bewertbarkeit | Keine Kennzahl, subjektiv | Proxy-Kennzahlen vorhanden | Klare Ground Truth, leicht prüfbar |
+
+Lies die Gesamtsumme so: **18+** ist meist MVP-reif; **12–17** braucht mehr Validierung; **unter 12** nochmal überdenken. Eine menschliche Anmerkung aus dem Kurs, die ich mag — frag nach der Rechnerei auch: *Liegt dem Team dieser Bereich überhaupt am Herzen?* Die beste Wahl ist oft der Prozess, über den sich jemand seit Jahren persönlich ärgert.
+
+*Fachbegriffe kurz erklärt.* **ROI** = Return on Investment (der Wert, den du zurückbekommst, gegenüber dem, was du ausgibst). **Ground Truth** = eine bekannt-korrekte Antwort, mit der du die Ausgabe der KI vergleichen kannst.
+
+Das Ergebnis dieses Schritts ist der **Use-Case-Onepager** — dein Business Case auf einer einzigen Seite verdichtet:
+
+<Steps>
+
+1. **Use-Case-Name** — klar, nicht niedlich (z. B. "Automatische Extraktion von Rechnungspositionen").
+2. **Hauptnutzer** — wer, in welcher Abteilung, und wie oft sie die Aufgabe erledigen.
+3. **Problemstellung** — 2–3 Sätze: welche Handarbeit anfällt, der Schmerz, warum es wichtig ist.
+4. **Warum GenAI** (statt einfacher Regeln oder klassischem Machine Learning) — drei Stichpunkte.
+5. **Randbedingungen & Abhängigkeiten** — Datensensibilität, Systeme, Zeitplan, nötige Freigaben.
+6. **Erwarteter Wert** — wo möglich quantifiziert, angegeben als *Spanne*.
+7. **Score & nächste Schritte** — die Rastersumme, und was vor dem MVP-Design zu validieren ist.
+
+</Steps>
+
+## Schritt 3 — Den Wert belegen
+
+Ein Onepager erzeugt Aufmerksamkeit; eine **Prozesslandkarte plus Wert-Sizing** macht daraus einen Business Case. Das ist Block B.
+
+**Bilde einen Workflow ab, vorher und nachher.** Wähle einen einzelnen Workflow (6–10 Schritte — nicht das ganze Unternehmen). Zeichne zuerst die **Ist**-Landkarte: jeden Schritt, wer ihn macht, wie lange er dauert und wo sich Fehler oder Nacharbeit einschleichen. Zeichne dann die **Soll**-Landkarte mit GenAI, das *nur* dort eingesetzt wird, wo es wirklich hilft, und behalte für jede echte Entscheidung einen Menschen in der Schleife.
+
+<figure class="sc-fig">
+<div class="sc-flow">
+  <div class="sc-node amber">Ticket lesen</div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Wissensdatenbank durchsuchen</div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Antwort entwerfen</div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Prüfung durch Vorgesetzte</div>
+  <span class="arrow">→</span>
+  <div class="sc-node amber">Senden · <strong>~37 Min</strong></div>
+</div>
+<div class="sc-flow">
+  <div class="sc-node green">KI entwirft Antwort</div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Agent prüft</div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Bearbeiten &amp; senden</div>
+  <span class="arrow">→</span>
+  <div class="sc-node green">Automatisch protokolliert · <strong>~6 Min</strong></div>
+</div>
+<figcaption>Ein Support-Ticket-Beispiel: Die KI entwirft, aber der Mensch prüft und sendet weiterhin. Das Urteil bleibt menschlich; die Fleißarbeit schrumpft.</figcaption>
+</figure>
+
+Beachte, was menschlich blieb — die Schritte **Prüfen** und **Senden**. GenAI assistiert; es ersetzt nicht das Urteilsvermögen bei irgendetwas, das mit Kunden zu tun hat.
+
+**Beziffere den Wert mit transparenter Rechnung.** Du baust kein ausgeklügeltes Finanzmodell (kein DCF — *Discounted Cash Flow*, eine detaillierte Bewertung über mehrere Jahre). Du brauchst nur "gut genug"-Zahlen, die nachvollziehbar sind, um einen Piloten zu rechtfertigen:
+
+> **Jährlich gesparte Stunden** = (Volumen pro Jahr × gesparte Minuten pro Fall) ÷ 60
+> **Jährlicher Wert** = jährlich gesparte Stunden × Vollkosten-Stundensatz
+
+"Vollkosten-Stundensatz" bedeutet der voll durchgerechnete Stundensatz der Person (Gehalt plus Overhead). Gib immer eine Spanne **niedrig / wahrscheinlich / hoch** an und schreibe deine Annahmen auf — die Ehrlichkeit zählt mehr als falsche Präzision. Beziehe deine Volumina aus echten Daten ("wir protokollieren ~500 Tickets pro Woche"), nie aus "ganz vielen".
+
+| Annahme | Niedrig | Wahrscheinlich | Hoch |
+|------------|-----|--------|------|
+| Tickets pro Jahr | 26.000 | 26.000 | 26.000 |
+| Gesparte Minuten pro Ticket | 15 | 25 | 31 |
+| Jährlich gesparte Stunden | 6.500 | 10.833 | 13.433 |
+| Vollkosten-Stundensatz | 45 € | 45 € | 45 € |
+| Jährliche Zeitersparnis | 292.500 € | 487.500 € | 604.500 € |
+| + Qualitätsersparnis (weniger Nacharbeit) | 39.000 € | 78.000 € | 117.000 € |
+| **Jährlicher Gesamtwert** | **331.500 €** | **565.500 €** | **721.500 €** |
+
+Dann verknüpft ein **6-zeiliges Business-Case-Narrativ** alles miteinander: woher der Wert kommt, warum er messbar ist, deine größte Annahme plus wie du sie testen wirst, die Hauptrisiken, wie Erfolg nach 30 Tagen aussieht und was dich zum Abbruch bewegen würde.
+
+## Schritt 4 — Das Produkt gestalten
+
+Block C macht aus der Idee etwas Baubares: ein PRD, eine Architekturskizze und eine Build-vs-Buy-Entscheidung.
+
+**Das MVP-PRD** (Product Requirements Document — die Spezifikation dessen, was du baust). Bei GenAI ist die eigentliche Aufgabe des PRD die **Scope-Disziplin**: Das größte Risiko in jedem KI-Projekt ist Scope Creep (endloses Hinzufügen von Features). Es muss enthalten:
+
+<Steps>
+
+1. **Zielnutzer + Job-to-be-done** (JTBD) — das Ergebnis, das der Nutzer tatsächlich will.
+2. **3–5 User Stories** — "Als [Rolle] möchte ich [etwas], damit [Nutzen]."
+3. **Ausgabeformat + Randbedingungen** — wie "gut" aussieht (Tonfall, Latenz, Genauigkeit).
+4. **Nicht-Features** — eine explizite Liste dessen, was du *nicht* baust. Das ist der wertvollste Teil; Nein sagen ist das, was ein 12-Wochen-MVP von einem 18-Monats-Marathon unterscheidet.
+5. **Abnahmekriterien** — testbare Bestanden/Durchgefallen-Schwellen (z. B. "80 %+ der Vorschläge werden über einen 2-wöchigen Piloten angenommen").
+
+</Steps>
+
+**Wähle ein Architekturmuster** und skizziere es. Jede Skizze muss vier Dinge zeigen: Datenquellen (was du liest), Ausgaben (was du schreibst), Freigabepunkte durch Menschen (wo Risiko gesteuert wird) und Logging (was du misst). Die vier Muster auf Managementebene lassen sich sauber auf die Tage 1–5 abbilden:
+
+<Tabs>
+<TabItem label="Copilot">
+**Vorschläge innerhalb eines bestehenden Tools.** Die KI entwirft, der Mensch gibt frei.
+<div class="sc-chips"><span class="sc-chip">Nutzer arbeitet im Tool</span><span class="sc-chip">KI schlägt vor</span><span class="sc-chip">Mensch bearbeitet/lehnt ab</span><span class="sc-chip">Aktion ausgeführt</span></div>
+*Am besten für:* Effizienz innerhalb aktueller Workflows. *Baut auf:* Prompting (Tag 1).
+</TabItem>
+<TabItem label="RAG-Assistent">
+**Antworten, die in deinen eigenen Dokumenten verankert sind, mit angezeigten Quellen.**
+<div class="sc-chips"><span class="sc-chip">Nutzer fragt</span><span class="sc-chip">Dokumente abrufen</span><span class="sc-chip">Antwort + Quellenangaben</span><span class="sc-chip">Nutzer verifiziert</span></div>
+*Am besten für:* Wissenszugang; Vertrauen durch sichtbare Quellen. *Baut auf:* RAG (Tag 2). RAG = Retrieval-Augmented Generation.
+</TabItem>
+<TabItem label="Extractor">
+**Verwandelt unstrukturierte Dokumente in strukturierte Datensätze.**
+<div class="sc-chips"><span class="sc-chip">Dokument trifft ein</span><span class="sc-chip">KI extrahiert Felder</span><span class="sc-chip">Mensch validiert</span><span class="sc-chip">Fließt weiter</span></div>
+*Am besten für:* weniger manuelle Dateneingabe und Übertragungsfehler. *Baut auf:* Informationsextraktion (Tag 3).
+</TabItem>
+<TabItem label="Agentic">
+**Mehrstufige Aufgaben, bei denen die KI plant, Tools aufruft und bei großen Entscheidungen zur Freigabe innehält.**
+<div class="sc-chips"><span class="sc-chip">Ziel setzen</span><span class="sc-chip">Schritt planen</span><span class="sc-chip">Tool aufrufen</span><span class="sc-chip">Freigeben, wenn folgenreich</span></div>
+*Am besten für:* komplexe Aufgaben, die Autonomie *mit* Nachvollziehbarkeit brauchen. *Baut auf:* KI-Agenten (Tag 4).
+</TabItem>
+</Tabs>
+
+<Aside type="note" title="Fang mit Evals an">
+Egal welches Muster — definiere, **wie du Erfolg messen wirst, bevor du baust**: Entwirf deine Bewertungsmenge (eine Sammlung von Testfällen mit bekannt-korrekten Antworten) während der PRD-Phase, nicht erst nach dem Launch.
+</Aside>
+
+**Build vs. Buy.** Baust du selbst, kaufst du eine Plattform, oder gehst du hybrid? Kürze den Vergleich auf das, was für einen Piloten zählt:
+
+| Kriterium | Selbst bauen | Plattform kaufen |
+|-----------|--------------|--------------|
+| Geschwindigkeit bis MVP | Langsam (8–16 Wochen) | Schnell (2–4 Wochen) |
+| Daten & Sicherheit | Volle Kontrolle | Vom Anbieter abhängig |
+| Kosten Jahr 1 | Hoch (Entwickler) | Mittel (Lizenz) |
+| Differenzierung | Hoch (eigene Logik) | Gering (wie bei der Konkurrenz) |
+| Vendor-Lock-in | Keiner | Hoch |
+
+<Aside type="tip" title="Build-vs-Buy-Faustregel">
+Wenn die GenAI-Fähigkeit dein Wettbewerbsvorteil *ist* (Kern-Know-how), tendiere zu **Build**. Wenn es gewöhnliche operative Effizienz ist (ein Commodity-Bedarf), tendiere zu **Buy**. Ein einzigartiges Risikomodell → build. Ein Copilot für Routine-Support → buy.
+</Aside>
+
+## Responsible AI in der Praxis: Governance-lite
+
+Der Kurs ist hier erfrischend direkt: Das ist keine Ethikvorlesung, sondern **operative Pragmatik**. Lässt du sie aus, lädst du Datenschutzverletzungen, Widerstand der Nutzer und Verlust von Glaubwürdigkeit ein. "Governance-lite" ist das Minimum, das du klären musst, *bevor* ein Pilot live geht.
+
+| Bereich | Kernfrage | Pilot-Minimum |
+|------|--------------|---------------|
+| Datenklassifizierung | Welche Daten sieht das Modell? | Jeden Input als öffentlich / intern / vertraulich kennzeichnen |
+| Zugriffskontrolle | Wer darf das Tool nutzen? | Rollen und Berechtigungen definieren; protokollieren, wer zugreift |
+| Logging & Audit | Was muss festgehalten werden? | Inputs, Outputs, Nutzeraktionen, Zeitstempel protokollieren |
+| Bewertungsplan | Woher wissen wir, dass es funktioniert? | 50–100 gelabelte Testfälle; ein Rhythmus für menschliche Prüfung |
+| Human-in-the-loop (HITL) | Wer gibt folgenreiche Aktionen frei? | Prüfumfang und Eskalationspfad definieren |
+
+Benenne daneben deine **Fehlermodi** ehrlich — Halluzination (das Modell erfindet falsche Fakten), Bias, Datenlecks, Ablehnung durch Nutzer — und lege im Voraus fest, **wann ein Mensch eingreift und wer den Piloten stoppen darf**.
+
+## Schritt 5 — Den Rollout planen und messen
+
+Block D ist das Deployment. Du legst nicht für alle auf einmal den Schalter um; du rollst in drei Phasen aus, jede mit einem "Erfolgs-Gate", das erreicht sein muss, bevor du erweiterst.
+
+<Steps>
+
+1. **Tage 1–30 — Pilot.** Wähle eine kleine Pilotgruppe (sagen wir 5–10 Nutzer) und begründe, *warum* gerade sie. Schule sie, gib eine Prompt-Bibliothek und einen Nutzungsleitfaden mit, fahre eine wöchentliche Feedback-Schleife. *Gate:* Ist das "gut genug, um weiterzumachen"?
+2. **Tage 31–60 — Erweitern.** Vergrößere die Gruppe anhand der Pilot-Erkenntnisse, behebe die drei größten Probleme, verfeinere Prompts und Freigabe-Gates. *Gate:* Ist das "bereit zum Skalieren"?
+3. **Tage 61–90 — Skalieren.** Voller Rollout im Team/in der Abteilung, Integration mit bestehenden Systemen, ein laufender Monitoring-Rhythmus, und die erste formale **ROI-Auswertung**.
+
+</Steps>
+
+**KPIs: vorlaufend *und* nachlaufend.** Ein KPI (Key Performance Indicator) ist eine Zahl, die du verfolgst, um den Erfolg zu beurteilen. Du brauchst zwei Arten — vorlaufende Indikatoren (leading) sagen dir *früh*, ob die Leute es annehmen; nachlaufende Indikatoren (lagging) sagen dir *später*, ob echter Wert entstanden ist.
+
+| Typ | Was er misst | Wann du ihn siehst |
+|------|------------------|-----------------|
+| Vorlaufend (leading) | Annahme & Nutzung | Sofort (z. B. wöchentlich aktive Nutzer) |
+| Nachlaufend (lagging) | Geschäftsergebnisse | Nach Wochen/Monaten (z. B. Kosten pro Fall) |
+
+Verteile deine KPIs auf vier Kategorien und gib jedem eine Definition, eine Datenquelle und ein Ziel:
+
+| Kategorie | Was sie verfolgt | Beispiel-KPIs |
+|----------|----------------|--------------|
+| Annahme | Nutzen die Leute es? | Wöchentlich aktive Nutzer; Aufgaben pro Nutzer |
+| Effizienz | Geht die Arbeit schneller? | Bearbeitungszeit (vorher vs. nachher); Durchsatz |
+| Qualität | Ist das Ergebnis gut? | Nacharbeitsquote; Übersteuerungsquote durch Menschen |
+| Geschäftsergebnisse | Hat es etwas bewegt? | Kosten pro Fall; CSAT oder Durchlaufzeit |
+
+*"Übersteuerungsquote durch Menschen"* — wie oft Nutzer den Vorschlag der KI ablehnen — ist meine liebste stille Kennzahl: eine hohe ist ein Frühwarnsignal, dass die Qualität noch nicht da ist.
+
+## Wie Tag 6 an die Tage 1–5 anknüpft
+
+Das Schöne an diesem Tag ist, dass nichts aus den früheren Tagen verschwendet ist — die technische Souveränität wird zur *Glaubwürdigkeit* hinter dem Business Case.
+
+| Aus einem früheren Tag | Was es mir gab | Wie Tag 6 es nutzt |
+|---------------------|-----------------|-------------------|
+| Prompting (Tag 1) | Zuverlässige Ausgabe aus einem LLM bekommen | Das Copilot-Muster; Prompt-Bibliotheken für den Rollout schreiben |
+| RAG (Tag 2) | Antworten in echten Dokumenten verankern | Das Architekturmuster des RAG-Assistenten |
+| Extraktion (Tag 3) | Unübersichtlicher Text → strukturierte Daten | Das Extractor→Workflow-Muster; Rechnungs-artige Use Cases |
+| Agenten (Tag 4) | Mehrstufige, Tool-nutzende KI | Das Agentic-Muster, mit menschlichen Freigabe-Gates |
+| Machine Learning (Tag 5) | Wann klassisches ML GenAI schlägt (und umgekehrt) | Begründen, "warum GenAI, *nicht* Regeln oder klassisches ML" |
+
+Die technischen Fähigkeiten geben dir das Recht, geglaubt zu werden; das Business-Denken gibt dir die Wirkung.
+
+## Praxis: die Business-Case-Aufgabe
+
+Tag 6 hat **keine Notebooks zum Herunterladen** — das Ergebnis ist ein Team-**Capstone**, keine Programmierübung. In Teams erstellt ihr das komplette **Capstone Proposal Pack** und pitcht es, als ginge es an eine CEO, die entscheidet, ob der Pilot finanziert wird.
+
+Es gibt zwei Dinge einzureichen:
+
+<Steps>
+
+1. **Das Capstone Proposal Pack** — ein PDF (~9–10 Seiten) mit allen sechs Komponenten: dem Use-Case-Onepager, Prozesslandkarte + Wert-Sizing, MVP-PRD, Build/Buy + Architekturskizze, Rollout-Plan + KPIs und der Governance-lite-Checkliste.
+2. **Der Pitch** — ein Foliensatz (8–12 Folien) plus ein **aufgezeichnetes 10-Minuten-Video** (Link auf der ersten oder letzten Folie). Der Pitch läuft: Problem → Warum jetzt → MVP → Wert → Plan → Ask, und sollte *mit dem Geschäftsproblem beginnen, nicht mit der Technik*.
+
+</Steps>
+
+Die Bewertung belohnt **Konkretheit über Ehrgeiz** — ein detaillierter Plan für einen einfachen Use Case schlägt einen vagen Plan für einen grandiosen. Der goldene Test durchgehend: Wenn ein Leser nicht erkennen kann, *wer was wann macht und wie Erfolg gemessen wird*, ist es nicht fertig. (Das Pack ist außerdem so angelegt, dass es sich natürlich zu einer Masterarbeit erweitern lässt, wenn du es weiterführen möchtest.)
+
+**Meine Capstone-Abgabe:** [Business-Case-Vorschlag (PDF)](/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf) · [Pitch-Deck (PDF)](/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf) — die finalen Abgaben meines Teams für den Kurs.
+
+## Wiederholungs-Zusammenfassung
+
+| Kernpunkt | Kurz gemerkt |
+|-----------|-----------------|
+| Der Kernwechsel | Weg von "*können* wir es bauen?" hin zu "*sollten* wir — und kann ich es belegen?" |
+| Guter Use Case | Abgegrenzt + messbar + als ~4-Wochen-MVP machbar. |
+| GenAI-Sweetspot | Repetitive Sprachaufgaben und Unübersichtlicher-Text-zu-Struktur, bei hohem Volumen. |
+| MVP-Filter | Hohes Volumen · klarer I/O · bewertbar · geringe Komplexität · Daten, auf die du zugreifen kannst. |
+| Priorisierung | Value × Time-to-value als 2×2, dann 1–5 über fünf Kriterien bewerten (18+ = bereit). |
+| Wert-Sizing | (Volumen × gesparte Minuten ÷ 60) × Vollkosten, immer als niedrig/wahrscheinlich/hoch. |
+| Mensch bleibt drin | GenAI entwirft; der Mensch prüft und gibt alles frei, was zählt. |
+| Eigentliche Aufgabe des PRD | Scope-Disziplin — die Liste der Nicht-Features ist der wertvollste Teil. |
+| Architekturmuster | Copilot · RAG · Extractor · Agentic — jedes bildet eine Fähigkeit aus Tag 1–5 ab. |
+| Build vs. Buy | Kernvorteil → build; Commodity-Effizienz → buy. |
+| Governance-lite | Daten klassifizieren, Zugriff kontrollieren, alles loggen, Evals planen, HITL behalten. |
+| Rollout & KPIs | 30/60/90-Phasen mit Gates; vorlaufende *und* nachlaufende KPIs verfolgen. |
+| Das Capstone | Ein 6-teiliges Proposal Pack + ein 10-Minuten-Pitch, der mit dem Problem beginnt. |
