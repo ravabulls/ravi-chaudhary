@@ -14,6 +14,7 @@ Modules include: Generative AI for Managers, Digital Transformation, Coding, Inn
 
 - [Generative AI for Managers](/learnings/mba/generative-ai-for-managers/) — a hands-on, no/low-code course: LLMs, prompting, RAG, agents, GenAI-assisted ML, and building GenAI business cases (with downloadable lab notebooks). Includes my applied [Venture Clienting & AI](/learnings/mba/generative-ai-for-managers/venture-clienting-ai/) project.
 - [Applied Market & Business Strategy](/learnings/mba/applied-market-and-business-strategy/) — the "Strategy & Management Game": strategic analysis, segmentation and positioning, market selection, routes to market and pricing, then pitching and running the delivery project (classic & agile) — all built on one running case, with my team's submitted work to download.
+- [Global Innovation Management](/learnings/mba/global-innovation-management/) — innovation management fundamentals (types, strategy, Stage-Gate), globalization and megatrends, managing R&D across borders, lead markets and the transnational model, and frugal innovation ("affordable green excellence").
 
 :::note
 Notes for individual modules are being added progressively as the programme continues. Check back as content is published.
