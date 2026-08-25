@@ -1,0 +1,405 @@
+---
+title: "Agile Project Management"
+description: "Why classic planning struggles with change, the Agile Manifesto, Scrum end to end (roles, artefacts, events), user stories and epics, story points and planning poker, the burndown chart, and hybrid agile-plus-classic setups."
+sidebar:
+  label: "9 · Agile PM"
+  order: 9
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Applied Market & Business Strategy (the "Strategy & Management Game") — NIT / TUHH, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The last chapters were about *deciding* a strategy and *pitching* it. This final one is about **delivering** it — turning a plan into a working product. And here the classic, plan-it-all-upfront way of running projects starts to creak. This chapter is my revision of **agile project management**: why classic planning struggles when the world keeps moving, what agile optimises for instead, and then **Scrum** — the most common agile method — walked through end to end.
+
+Quick vocabulary note before we start: **agile** just means "able to change direction quickly and cheaply". That's the whole idea. Everything below is machinery for making change cheap.
+
+## 1 · Why classic project management struggles
+
+Classic PM plans the full scope up front, then executes the plan. That works beautifully when the target holds still. The problem is that targets increasingly don't.
+
+**Product life cycles keep shrinking.** The teaching example is the VW Golf: across its generations the model life cycle roughly **halved** — from around eight or nine years down to four or five. If your product must be reinvented twice as often, a project method that assumes a long, stable plan is fighting the market.
+
+**And a lot of the up-front effort is wasted.** A well-known study of software built the classic way found that a large share of features were **barely touched**:
+
+<div class="sc-fig">
+  <table class="sc-matrix">
+    <thead>
+      <tr><th>How often a built feature was actually used</th><th>Share</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Never</th><td class="hl">about 45%</td></tr>
+      <tr><th>Rarely</th><td>about 19%</td></tr>
+      <tr><th>Sometimes</th><td>about 16%</td></tr>
+      <tr><th>Frequently</th><td>about 13%</td></tr>
+      <tr><th>Always</th><td>about 7%</td></tr>
+    </tbody>
+  </table>
+  <figcaption>Roughly 45% of features were <em>never</em> used, and only about 20% were used frequently or always. Building everything the plan asked for meant building a lot of things nobody wanted.</figcaption>
+</div>
+
+Put those together and you get the core complaint against classic PM: it commits early, and **late change is expensive**. A customer change request that arrives near the end forces rework of everything downstream — cost and delay balloon. Agile is a direct answer to exactly this pain.
+
+## 2 · What agile optimises for
+
+Agile chases two things at once: **high stakeholder impact** and a **low cost of change**. The trick is *when* you spend your influence. In classic PM your ability to shape the product is highest at the start — but that's exactly when you understand the problem least. Agile keeps the cost of changing your mind flat all the way through, so you can steer using what you learn.
+
+The cleanest way to see the difference is the **triple constraint** — the three levers of any project: **scope** (what gets built), **time** (the schedule), and **budget** (the cost). You can fix some and must let the others flex.
+
+<div class="sc-fig">
+  <table class="sc-matrix">
+    <thead>
+      <tr><th></th><th>Fixed (the promise)</th><th>Flexes (the tuning parameter)</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Classic PM</th><td class="hl">Scope</td><td>Time &amp; budget</td></tr>
+      <tr><th>Agile PM</th><td>Scope</td><td class="hl">Time &amp; budget</td></tr>
+    </tbody>
+  </table>
+  <figcaption>Classic PM fixes <em>what</em> gets built and lets time and money stretch to deliver it. Agile flips it: fix the <strong>time-box and budget</strong>, and let <strong>scope</strong> flex — you always ship something on time, and the least-valuable items are the ones that drop off.</figcaption>
+</div>
+
+That flip is the heart of agile. A **time-box** is a fixed slice of calendar time that will *not* move. Because time and budget are locked, the only thing that can give is scope — and since the backlog is priority-ordered, whatever falls out is the stuff that mattered least anyway.
+
+## 3 · The Agile Manifesto
+
+Agile isn't one method; it's a **mindset** written down in 2001 as the *Agile Manifesto*. It has four **values**, each phrased as "we value the left over the right" — not "the right is worthless", just "when they pull against each other, lean left".
+
+<div class="sc-fig">
+  <div class="sc-quad">
+    <div class="q green"><div class="qh">Individuals &amp; interactions <small>over processes &amp; tools</small></div><ul><li>People talking beats rigid procedure</li></ul></div>
+    <div class="q blue"><div class="qh">Working software <small>over comprehensive documentation</small></div><ul><li>A thing that runs beats a thick spec</li></ul></div>
+    <div class="q amber"><div class="qh">Customer collaboration <small>over contract negotiation</small></div><ul><li>Work <em>with</em> the customer, don't fence them off</li></ul></div>
+    <div class="q violet"><div class="qh">Responding to change <small>over following a plan</small></div><ul><li>Adapt when reality shifts</li></ul></div>
+  </div>
+  <figcaption>The four values of the Agile Manifesto. "Software" is the original wording; read it as "the working product" for any field.</figcaption>
+</div>
+
+Underneath the values sit **twelve principles**. Rather than dump them verbatim, here's how I group them into a few themes that actually stick:
+
+| Theme | What the principles are really saying |
+|---|---|
+| **Deliver value early &amp; often** | Ship something useful fast, then keep shipping in short cycles (weeks, not months). Working product is the *only* real measure of progress. |
+| **Welcome change** | Treat late requirement changes as a gift, not a threat — they're how you win the customer a competitive edge. |
+| **Collaborate closely** | Business people and developers work together *daily*; face-to-face conversation carries information best. |
+| **Trust motivated people** | Build teams around motivated individuals, give them what they need, and trust them to deliver. The best designs emerge from **self-organising** teams. |
+| **Keep a sustainable pace** | Everyone — sponsors, developers, users — should be able to hold the same pace indefinitely. No heroics, no burnout. |
+| **Keep it simple &amp; excellent** | Maximise the work *not* done; pair simplicity with continuous attention to technical quality. |
+| **Reflect &amp; adjust** | At regular intervals the team stops, asks how to get better, and tunes its own behaviour. |
+
+<Aside type="note">
+Notice how the themes reinforce each other. "Deliver often" only works if you "welcome change" (each delivery invites feedback), which only works if you "collaborate closely" (someone has to give the feedback), which only survives if you keep a "sustainable pace" and "reflect and adjust". It's a system, not a checklist.
+</Aside>
+
+### 3.1 Key features that make agile *work*
+
+The manifesto is the philosophy; in practice a handful of concrete features carry it:
+
+| Feature | What it means | Why it matters |
+|---|---|---|
+| **Autonomous cross-functional team** | One team holds all the skills to build the thing, and decides for itself how | Balanced decisions, fast reaction to change |
+| **Continuous improvement** | The team keeps learning and adjusting as it goes | The team gets better *during* the project, not after |
+| **Time-boxes** | Work happens in fixed, unmovable slices of time | Forces tough, timely prioritisation |
+| **Return on investment (ROI)** | Value-for-money is the number-one thing to prioritise by | Build the high-value items first |
+| **Product quality** | Quality is baked in, not inspected in at the end | Enables shipping in increments safely |
+| **Pull principle** | The team *pulls* the next item when it has capacity, rather than being *pushed* work | Optimal use of the team's real capacity |
+
+## 4 · Scrum — the loop
+
+**Scrum** is the best-known agile method. It's not a big process — it's a short, repeating loop plus a few roles and rules. The whole thing runs on a fixed rhythm called a **sprint** (a time-box, usually one to four weeks). Here's the cycle:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Product Backlog<span class="sub">everything we might build, prioritised</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Sprint Planning<span class="sub">pick &amp; break down top items</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Sprint Backlog<span class="sub">this sprint's task list</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node soft">The Sprint<span class="sub">build it · Daily Scrum each day</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Increment<span class="sub">a shippable product slice</span></div>
+  </div>
+  <div class="sc-flow">
+    <div class="sc-node green">Sprint Review<span class="sub">demo · honest customer feedback</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Retrospective<span class="sub">how do we improve as a team?</span></div>
+    <span class="arrow">↻</span>
+    <div class="sc-node amber">…back to the Backlog<span class="sub">refine, re-prioritise, next sprint</span></div>
+  </div>
+  <figcaption>One turn of the Scrum loop. Plan a small batch, build it in a fixed time-box, show it, reflect — then loop straight back and do it again. The backlog is a living list that keeps getting re-prioritised as you learn.</figcaption>
+</div>
+
+The rest of the chapter just unpacks each piece: the **roles** who run it, the **artefacts** they work on, and the **events** where they meet.
+
+## 5 · The three Scrum roles
+
+Scrum has exactly three roles, and the boundaries between them matter.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Product Owner<span class="sub">the voice of the customer</span></div>
+    <div class="sc-node violet">Scrum Master<span class="sub">the guardian of the process</span></div>
+    <div class="sc-node green">Development Team<span class="sub">the people who build it</span></div>
+  </div>
+  <figcaption>Three roles, one team. Notice nobody here is a traditional "boss" telling the team what to do day to day.</figcaption>
+</div>
+
+| Role | What they own | The mindset |
+|---|---|---|
+| **Product Owner** | The Product Backlog — its *content*, its *wording* and above all its **priority order**. One per team. | **Customer advocate.** Constantly asks "what's the most valuable thing to build next?" and defends the customer's interest. |
+| **Scrum Master** | The *process*. Removes "road blocks" for the team and coaches them toward self-organisation. One per team. | **Servant leader**, not a manager. Serves the team, protects the rules, has no authority to hand out tasks. |
+| **Development Team** | The *increment* — they build the product, fully self-organised, guided only by the backlog specification. | **Self-managing.** Decides *how* to do the work and does not take directives from outside the project. |
+
+<Aside type="tip">
+The single most misunderstood role is **Scrum Master**. It sounds like "master of the team", but it's the opposite — a servant leader whose job is to clear obstacles and protect the process so the team can organise *itself*. If a Scrum Master is handing out tasks, something has gone wrong.
+</Aside>
+
+## 6 · The artefacts
+
+Artefacts are the physical (or digital) things the team works *on*. Scrum has three: the **Product Backlog**, the **Sprint Backlog**, and the **Increment**.
+
+### 6.1 The Product Backlog — and the DEEP rule
+
+The **Product Backlog** is the central specification artefact: one prioritised list of everything the product might need. The Product Owner manages it. Items can be polished user stories or just rough sketches and ideas — deliberately uneven in detail. A good backlog follows the **DEEP** rule:
+
+<Steps>
+
+1. **D**etailed appropriately — top items are specified in detail; far-off items stay rough. Don't over-specify what you might never build.
+2. **E**mergent — the backlog is *alive*. Items appear, change and get deleted as the project teaches you things.
+3. **E**stimated — every item carries a rough work-load estimate, more accurate near the top.
+4. **P**rioritised — items sit in strict priority order, most valuable first.
+
+</Steps>
+
+The payoff of "detailed appropriately" is **lean, just-in-time specification**: you spend your specifying effort only on what you're about to build, not on a giant document written before you understand the problem.
+
+### 6.2 User stories
+
+Backlog items are usually written as **user stories** — a short description of a requirement from the *user's* point of view, small enough to fit in one sprint, and valuable in itself. The classic template:
+
+> *As a [type of user], I want [goal], so that [reason].*
+
+There's a neat variant that puts the **reason first**:
+
+> *For [reason], I as [type of user] want [goal].*
+
+Why bother reversing it? Two reasons. Leading with the *reason* keeps the **why** central instead of letting it get dropped, and it nudges you to name a real *user type* rather than accidentally writing the story from the Product Owner's perspective. Small change, better stories.
+
+However you phrase them, good stories follow the **CCC** guideline:
+
+| C | Meaning |
+|---|---|
+| **Card** | Write the story on a small physical card. The limited space *forces* focus — you can't over-specify. |
+| **Conversation** | The real detail lives in a face-to-face discussion, not on the card. |
+| **Confirmation** | Agree the **acceptance criteria** with the Product Owner up front — written on the back of the card. |
+
+### 6.3 Epics and story mapping
+
+Some items are too big to be a single story — those are **epics**. An epic still carries clear business value and is described briefly, but it **breaks down into several user stories** during backlog refinement, and doesn't have to be finished in one sprint. Each story then breaks into **tasks** during sprint planning.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Epic<span class="sub">big, valuable, multi-sprint</span></div>
+    <span class="arrow">↓ breaks down (refinement)</span>
+    <div class="sc-flow">
+      <div class="sc-node amber">User story</div>
+      <div class="sc-node amber">User story</div>
+      <div class="sc-node amber">User story</div>
+    </div>
+    <span class="arrow">↓ breaks down (sprint planning)</span>
+    <div class="sc-flow">
+      <div class="sc-node green">task</div>
+      <div class="sc-node green">task</div>
+      <div class="sc-node green">task</div>
+    </div>
+  </div>
+  <figcaption>The zoom levels: an epic ("organise a conference dinner") splits into stories ("book a restaurant", "book a return bus"), each of which splits into concrete tasks.</figcaption>
+</div>
+
+**Story mapping** is a technique for laying epics and stories out in **chronological order** — say, building a house: preparation → foundations → structure → interior. It gives everyone the big-picture overview, doubles as a sanity check that the logic and sequence make sense, and feeds the backlog board.
+
+### 6.4 The backlog board and "ready for sprint"
+
+The **backlog board** organises the Product Backlog visually. Items flow toward a **Ready for sprint** column — but only once they pass a **readiness** check. Typical readiness criteria:
+
+- Product Owner and team **share a common understanding** of the item *and* of why it matters to the customer.
+- **Acceptance criteria** are agreed between them.
+- The item is the **right size** — no single item should exceed about a third of the team's sprint capacity.
+
+Items become "ready" during **backlog refinement** (more on that below).
+
+### 6.5 The Sprint Backlog and task board
+
+Once a sprint starts, the selected items move into the **Sprint Backlog** — the realisation plan of **tasks** for this one sprint. It usually lives on a physical **task board**, the central tool for the team to manage itself. Tasks flow left to right through columns:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Backlog<span class="sub">all tasks for the sprint</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">To-Do<span class="sub">picked for this iteration</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">In Process<span class="sub">someone is on it now</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Done<span class="sub">completed</span></div>
+  </div>
+  <figcaption>The task board — a dead-simple visual of project status. Team members <em>pull</em> a task into "In Process" and move it to "Done" when finished; a colour code shows who owns what.</figcaption>
+</div>
+
+### 6.6 The product increment
+
+The **increment** is the deliverable of a sprint: an individually **marketable** slice of product — for software, a release. Every sprint produces a new one, and each should raise **customer value**. Ideally an increment improves both the *observable* side (features the user sees) and the *hidden* side (technical quality under the hood) at once.
+
+## 7 · Estimation — story points and planning poker
+
+Before a sprint, the team has to size the work. Agile does this with **relative** estimation, not hours.
+
+### 7.1 Story points
+
+A **story point** is an abstract, relative measure of work-load — not hours, not days. You pick a small reference item, give it some arbitrary number of points, and then size everything else *relative to that*. The scale is **non-linear**, roughly Fibonacci-style — 1, 2, 3, 5, 8, 13, 20, 40… — and that's deliberate:
+
+<div class="sc-fig">
+  <div class="sc-formula">
+    <div>
+      <span class="name">The scale</span>
+      <code>1 · 2 · 3 · 5 · 8 · 13 · 20 · 40 · …</code>
+    </div>
+    <div>
+      <span class="name">Why the gaps grow</span>
+      the bigger the item, the fuzzier the estimate — so the buckets get wider
+    </div>
+  </div>
+  <figcaption>Nobody can honestly tell "85 points" from "86" — so the scale doesn't even offer that choice. It forces honest, coarse estimates for big items and fine ones only for small items.</figcaption>
+</div>
+
+The clever part: because points are relative and abstract, they're **independent of team speed**. As a team gets faster over a project, an item's point estimate stays stable — only how many points they clear per sprint (their **velocity**) goes up. And the shared reference item gives the team an objective anchor to argue from, so agreeing on numbers gets easier.
+
+### 7.2 Planning poker
+
+**Planning poker** is how the team turns individual guesses into a shared estimate — in two rounds:
+
+<Steps>
+
+1. **Round one.** Each member privately picks a card for a task's work-load, then everyone reveals at once. The **highest and lowest** estimators explain their reasoning — the outliers are where the useful disagreement hides.
+2. **Round two.** After the discussion, everyone estimates again. If the numbers are now close, take the average and move on.
+
+</Steps>
+
+The point isn't the number — it's the **conversation** the disagreement triggers. A wide spread means people are picturing different work, and that's exactly what you want to surface *before* you commit. (Special cards exist too — for "let's split this, it's too big", "merge it, too small", or just "can we have a break?".)
+
+## 8 · The events
+
+Scrum's meetings are all **time-boxed** and each has one job. Here's the set, in order around the loop.
+
+| Event | When | Who | The one job |
+|---|---|---|---|
+| **Backlog refinement** | Ongoing | Product Owner, team, Scrum Master | Keep the backlog fresh — add/remove items, re-prioritise, get top items "ready" |
+| **Sprint planning** | Start of sprint | Team, Scrum Master, (PO) | Agree the sprint target; pick and break down items into tasks |
+| **Daily Scrum** | Every day | Team (SM, PO optional) | Re-coordinate toward the sprint target |
+| **Sprint review** | End of sprint | Everyone + customer | Demo the increment; gather honest feedback |
+| **Retrospective** | End of sprint | Team, Scrum Master, PO | Improve *how the team works* |
+
+### 8.1 Backlog refinement
+
+**Refinement** keeps the backlog current with "fresh" customer input. The team adds new items and drops obsolete ones, folds in feedback from the last review, updates estimates, and specifies the top items to sprint-readiness. Advice from the slides: it can take up to half a day, but shouldn't eat more than about 10% of the team's capacity — and stick to just-in-time specification, don't over-polish.
+
+### 8.2 The Daily Scrum
+
+A short daily sync — about **15 minutes**, same time and place, **standing up** (standing keeps it short). Each member answers three questions:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Yesterday<span class="sub">what did I do toward the sprint target?</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Today<span class="sub">what will I do toward it?</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Blockers<span class="sub">is anything in the team's way?</span></div>
+  </div>
+  <figcaption>The three questions of the Daily Scrum. Best held in front of the task board so everyone can see the flow. Note it's the <em>team</em> coordinating itself — not a status report to a manager.</figcaption>
+</div>
+
+### 8.3 Sprint review — feedback on the *product*
+
+At the sprint's end the team **demonstrates the increment** to the Product Owner, customer, users and other stakeholders. They inspect what was built, and the feedback is categorised (must / should / could / won't) back into the backlog. Crucial advice from the slides: **don't optimise for nice feedback.** Go looking for the honest, possibly uncomfortable insight — that's the feedback that actually improves the product.
+
+### 8.4 Retrospective — feedback on the *team*
+
+The **retrospective** is the other feedback loop: not "is the product good?" but "are *we* working well together?". The team gathers data, digs for root causes (the "5 whys"), and commits to a few concrete, SMART improvements for next sprint. It's the direct agile equivalent of **"lessons learned"** in classic PM — except it happens every sprint, not once at the very end.
+
+### 8.5 The heartbeat: the Deming / PDCA cycle
+
+Zoom out and every Scrum loop is really the **Deming cycle**, also called **PDCA** — **Plan, Do, Check, Act**:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Plan<span class="sub">decide what to do</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Do<span class="sub">do it</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Check<span class="sub">did it work?</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Act<span class="sub">decide what to change</span></div>
+    <span class="arrow">↻</span>
+    <div class="sc-node amber">Plan again…</div>
+  </div>
+  <figcaption>Plan → Do → Check → Act, forever. Sprint planning is "Plan", the sprint is "Do", the review is "Check", the retrospective is "Act". The whole method is just this cycle running on a fast loop.</figcaption>
+</div>
+
+<Aside type="note">
+In class this clicked for me through the **Ball-Point Game** — a quick exercise where teams pass balls around under a few rules, *estimate* how many they can process, run a two-minute iteration, then take one minute to *improve* and *re-estimate*, over five rounds. The point of the debrief is to notice where you felt the "Scrum flow" — and to realise that flow was just PDCA in miniature: plan, do, check, act, improve, repeat.
+</Aside>
+
+## 9 · The burndown chart
+
+How do you *see* whether a sprint is on track? The **burndown chart** plots **remaining work** (in story points) against **sprint time** (in days). It starts at the total planned work and should "burn down" to zero as tasks complete.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Start<span class="sub">all story points remaining</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Ideal line<span class="sub">straight line down to zero</span></div>
+    <span class="arrow">vs</span>
+    <div class="sc-node amber">Actual line<span class="sub">the real remaining work</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">End<span class="sub">zero — all tasks done</span></div>
+  </div>
+  <figcaption>Compare actual against ideal at a glance: if the actual line sits <strong>below</strong> the ideal, you're ahead of schedule; if it sits <strong>above</strong>, you're behind. One picture tells the whole team where the sprint stands.</figcaption>
+</div>
+
+## 10 · Hybrid and real-world agile
+
+Pure agile is rare in big regulated industries. More often agile lives **inside** a plan-based frame — and the slides gave three real patterns worth knowing:
+
+| Pattern | The setup | Why it's arranged this way |
+|---|---|---|
+| **Agile inside a V-model** | A medical device is developed under a certified, waterfall-style **V-model** (specify fully, then verify level by level), but the **software sub-project** runs agile inside it. | The regulator demands a design-freeze and 100% specification per level — no incremental releases allowed — yet each prototype still gives real customer feedback. |
+| **Agile synced with a waterfall roll-out** | An HR tool is **built agile**, timed to land alongside the first wave of a **classic waterfall** regional roll-out (EMEA, then others). | The build can flex and learn; the roll-out is repetitive and predictable, so it stays classic. Each runs in the mode that suits it. |
+| **Agile then classic, consecutively** | **Agile development** of the concept first, then a **classic** verification-and-approval phase governed by the regulatory regime. | Explore freely while the design is fluid; switch to disciplined, documented process once it must be certified. |
+
+The lesson: agile and classic aren't enemies. You match the method to the part of the work — flex where you're learning, plan where you're repeating or must comply.
+
+### 10.1 Agile organisations and VUCA
+
+Finally, agile has grown beyond projects into a way of running **whole companies**. The driver is **VUCA** markets — **V**olatile, **U**ncertain, **C**omplex, **A**mbiguous. (Think of the automotive industry being reshaped by new mobility players.) If your market can flip in months, an org that decides its roadmap once a year can't keep up.
+
+One lens on this is **Laloux's evolution of organisational forms** — a sweep from tiny tribes, to command-and-control chiefdoms, to rule-bound hierarchies (church/military), to the innovation-and-meritocracy of modern corporations, to value-driven pluralistic firms — and, as the *next* stage, self-managing **"teal"** organisations built on self-management, wholeness and an evolving sense of purpose. It's the same agile idea — trust self-organising teams, respond to change — scaled up from a Scrum team to an entire company.
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Classic PM struggles** with change: product life cycles are shrinking (VW Golf roughly halved), ~45% of classic-built features were never used, and late change is expensive.
+- **Agile optimises** for high stakeholder impact at low cost of change. The triple-constraint flip: classic fixes **scope**; agile fixes the **time-box &amp; budget** and lets **scope** flex.
+- The **Agile Manifesto** = 4 values (people, working product, collaboration, responding to change) + 12 principles that group into: deliver early &amp; often, welcome change, collaborate, trust motivated people, sustainable pace, simplicity, reflect.
+- **Scrum loop:** Product Backlog → Sprint Planning → Sprint Backlog → Sprint (with Daily Scrum) → Increment → Review → Retrospective → repeat.
+- **Roles:** Product Owner (owns &amp; prioritises the backlog), Scrum Master (servant-leader, guards the process, clears blockers), Development Team (self-organising builders).
+- **Artefacts:** Product Backlog (**DEEP**), user stories (*As a [user], I want [goal], so that [reason]*; **CCC**), epics, story mapping, the Sprint Backlog + task board (Backlog → To-Do → In Process → Done), the increment.
+- **Estimation:** relative **story points** on a Fibonacci-style scale (speed-independent) via two-round **planning poker** — discuss the outliers.
+- **Events** run on the **PDCA / Deming** heartbeat; the **burndown chart** shows remaining work vs time (below ideal = ahead, above = behind).
+- **Hybrid** is normal: agile inside a V-model, synced with a waterfall roll-out, or before a classic approval phase — and **agile organisations** ("teal") answer VUCA markets.
+</Aside>
+
+*That completes the course. Back to the [course overview](/learnings/mba/applied-market-and-business-strategy/) — from deciding a strategy, to pitching it, to delivering it.*

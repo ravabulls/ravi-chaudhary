@@ -1,0 +1,384 @@
+---
+title: "Preisstrategie & Performance"
+description: "Den Preis zwischen Kostenuntergrenze und Wertobergrenze festlegen: Nachfragekurve und Preiselastizität, die Preis-Qualitäts-Strategiematrix, Value-in-Use und Freemium, Kanalmargen sowie die Gewinn- und Kennzahlenrechnung, die prüft, ob am Ende alles aufgeht."
+sidebar:
+  label: "5 · Preis & Performance"
+  order: 5
+---
+
+import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
+
+*Applied Market & Business Strategy (das „Strategy & Management Game") — NIT / TUHH, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Die Preissetzung ist die eine Entscheidung, die alle Teile der Strategie zugleich berührt — sie ist der einzige Hebel, der Umsatz direkt hereinholt, statt Kosten hinauszuschieben. Setzt man ihn zu hoch an, kauft niemand; setzt man ihn zu niedrig an, lässt man Geld (und manchmal das ganze Geschäft) liegen. Dieses Kapitel geht die ganze Kette durch: **wo ein Preis legal und sinnvoll liegen darf**, **wie man Nachfrage liest**, **welche Preishaltung man wählt**, **wie sich Margen entlang eines Vertriebskanals stapeln** und schließlich **die Gewinn- und Kennzahlenrechnung**, die verrät, ob das Ganze tatsächlich Geld verdient hat.
+
+Ich hole immer wieder **CERMEDES** herein — unseren mittelständischen deutschen Elektrowerkzeug-Hersteller —, weil seine aktuellen Fragen genau die dieses Kapitels sind: *welche Produkte tragen sich selbst, können wir die Preise erhöhen, und wie steht unser Return on Sales im Vergleich zur Branche da?*
+
+## 1 · Der Preisrahmen: eine Untergrenze, eine Obergrenze und eine umkämpfte Mitte
+
+Das sauberste Denkmodell, das ich aus der Sitzung mitgenommen habe: Ein Preis ist kein Punkt, den man erfindet, sondern ein Punkt, den man innerhalb eines Bandes *platziert*. Das Band hat zwei harte Ränder.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node slate">Obergrenze — wahrgenommener Wert<span class="sub">darüber keine Nachfrage</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Wettbewerbsmarktpreis<span class="sub">was Rivalen für Vergleichbares verlangen</span></div>
+    <span class="arrow">↕</span>
+    <div class="sc-node amber">Staatliche Einflüsse<span class="sub">Steuern, Zölle, Subventionen, Regulierung</span></div>
+    <span class="arrow">↑</span>
+    <div class="sc-node green">Untergrenze — die Kosten der Firma<span class="sub">darunter kein Gewinn</span></div>
+  </div>
+  <figcaption>Der Preis liegt zwischen einer Kostenuntergrenze und einer Wertobergrenze. Wettbewerbspreise und der Daumen des Staates auf der Waage (Steuern, Zölle, Währung, Regulierung) füllen die umkämpfte Mitte.</figcaption>
+</div>
+
+- **Die Untergrenze sind die Kosten.** Verkauft man unter dem, was Herstellung, Vertrieb und Verkauf eines Produkts kosten, kann das Geschäft nicht lange überleben. Aber „Kosten" ist keine einzelne Zahl — es ist eine Frage des unternehmerischen Ermessens: Vollkosten oder nur variable Kosten? Firmen setzen den Preis aus strategischen Gründen sogar bewusst *unter* die aktuellen Kosten (indem sie die Erfahrungskurve nach unten zu niedrigeren künftigen Kosten reiten oder Marktanteil kaufen).
+- **Die Obergrenze ist der wahrgenommene Wert.** Verlangt man mehr, als der Kunde das Produkt für wert hält, gibt es schlicht keinen Markt. Die Obergrenze ist für verschiedene Segmente unterschiedlich — und sie lässt sich *verschieben*, indem man Kunden lehrt, einen höheren Wert zu sehen (Branding, Demos, Nachweise).
+- **Die Mitte ist umkämpft.** Wo genau man zwischen Unter- und Obergrenze landet, ist das Strategische — geprägt davon, was die Wettbewerber verlangen, und von staatlichen Einflüssen, die von Land zu Land variieren: Preiskontrollen und Regulierung, Steuern und Zölle, Subventionen und Anreize, Währungs- und Geldpolitik.
+
+### 1.1 Zwei Wege, die Zahl tatsächlich festzulegen
+
+<div class="sc-fig">
+  <table class="sc-matrix">
+    <thead>
+      <tr><th>Ansatz</th><th>Wie der Preis gebildet wird</th><th>Blinder Fleck</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Cost-plus / Aufschlag</th><td class="hl">Stückkosten nehmen, eine Zielmarge obendrauf schlagen</td><td>Ignoriert, was der Kunde tatsächlich zahlen würde — kann Geld liegen lassen oder aus dem Markt herauspreisen</td></tr>
+      <tr><th>Wertbasiert</th><td class="hl">Beim wahrgenommenen Wert beginnen, zurück zu den Kosten rechnen</td><td>Schwieriger — man muss den Wert *messen*, und der Wert unterscheidet sich je Segment</td></tr>
+    </tbody>
+  </table>
+  <figcaption>Cost-plus startet an der Untergrenze und schaut nach oben; wertbasiert startet an der Obergrenze und schaut nach unten. Ernsthafte Preissetzung ist wertbasiert, mit den Kosten als Plausibilitätsprüfung.</figcaption>
+</div>
+
+<Aside type="note">
+Die wichtigste einzelne Bestimmungsgröße des Preises sind weder die Kosten noch der Kunde — es ist **das, was die Firma erreichen will**. Ein Preis, der Early Adopters *abschöpfen* soll (Skimming), ein Preis, der *Marktanteil greifen* soll, und ein Preis, der *einen neuen Wettbewerber abschrecken* soll, können für dasselbe Produkt allesamt vertretbar sein. Ziel zuerst, Zahl danach.
+</Aside>
+
+## 2 · Den wahrgenommenen Wert einschätzen
+
+Wenn der Wert die Obergrenze setzt, kann man ihn nicht einfach raten — man misst ihn. Das gängigste Werkzeug ist eine **Zahlungsbereitschafts-Befragung** (Willingness-to-Pay), üblicherweise ein Satz direkter Fragen an echte potenzielle Käufer:
+
+- *„Wie wahrscheinlich ist es, dass Sie dieses Produkt für 25 € kaufen?"*
+- *„Zu welchem Preis würden Sie dies **definitiv** kaufen?"*
+- *„Wie viel wären Sie bereit, dafür zu zahlen?"*
+- *„Wie viele Einheiten würden Sie für 0,99 € kaufen?"*
+- *„Bei welchem Preisunterschied würden Sie von Produkt A zu Produkt B wechseln?"*
+
+Die letzte Frage ist für CERMEDES am wichtigsten: Die Wechselpunkt-Frage offenbart keinen absoluten Wert, sondern einen *relativen* gegenüber dem nächstliegenden konkurrierenden Bohrer — und genau das entscheidet, ob eine Preiserhöhung überlebbar ist.
+
+## 3 · Die Nachfragekurve und die Preiselastizität
+
+### 3.1 Die Nachfragekurve
+
+Für die meisten Güter gilt die langweilig verlässliche Regel: **Preis rauf, Menge runter; Preis runter, Menge rauf.** Trägt man die Menge auf, die Kunden zu jedem Preis kaufen, erhält man eine **Nachfragekurve** — in ihrer einfachsten Form eine Gerade.
+
+Zwei Punkte verankern eine lineare Nachfragekurve, und sie dienen zugleich als Unter-/Obergrenze in Mengenbegriffen:
+
+- Wo sie die **Preisachse** schneidet = der Preis, der so hoch ist, dass *null* Einheiten verkauft werden (der äußere Rand der Zahlungsbereitschaft).
+- Wo sie die **Mengenachse** schneidet = die Einheiten, die man absetzen würde, wenn der Preis *null* wäre (die Maximalmenge, die überhaupt jemand nähme).
+
+Ein durchgerechnetes Beispiel aus den Notizen. Angenommen, Kunden kaufen **250 Einheiten bei 30 €** und **500 Einheiten bei 10 €**. Die Steigung einer Geraden ist die Preisänderung geteilt durch die Mengenänderung:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Steigung</span>
+    <code>m = ΔPrice / ΔQuantity = (30 − 10) / (250 − 500) = −0.08</code>
+  </div>
+  <div>
+    <span class="name">Achsenabschnitt</span>
+    <code>30 = (−0.08 × 250) + b  →  b = 50</code>
+  </div>
+  <div>
+    <span class="name">Gleichung</span>
+    <code>Price = −0.08 × Quantity + 50</code>
+  </div>
+</div>
+
+Jetzt ist die Gerade eine kleine Prognosemaschine: Man setzt einen beliebigen Preis ein und löst nach der Menge auf. Bei 20 € ist die Menge (20 − 50) / −0.08 = **375 Einheiten**. Praktisch, aber behandle es als *Modell* — traue ihm in der Nähe von Preisen, die du tatsächlich beobachtet hast, misstraue ihm bei extremen Hoch- oder Tiefwerten.
+
+### 3.2 Was die ganze Kurve verschiebt
+
+Elastizität (gleich) bewegt einen *entlang* einer Kurve. Andere Kräfte verschieben die **gesamte Kurve** nach links oder rechts — gleicher Preis, andere Menge:
+
+| Kraft | Kurve verschiebt sich **nach außen** (mehr Nachfrage), wenn … | … und **nach innen**, wenn |
+|---|---|---|
+| **Branding / Marketing** | Du Präferenz und Verlangen für das Produkt steigerst | Die Marke schwächelt oder ein Skandal zuschlägt |
+| **Wettbewerberzüge** | Das Substitut eines Rivalen *teurer* wird | Ein Rivale ein überzeugendes billigeres Substitut lanciert |
+| **Verbrauchereinkommen** | Einkommen steigen (z. B. hebt eine bekannte Gehaltserhöhung die Nachfrage nach Skiurlauben) | Einkommen im Abschwung sinken |
+| **Exogene Schocks** | Eine Regulierung dir nützt | Ein Zoll, ein Verbot oder eine Vorschrift dir schadet (z. B. Benziner aus einer historischen Innenstadt verbannt → Nachfrage nach ihnen sinkt) |
+
+### 3.3 Preiselastizität der Nachfrage
+
+**Preiselastizität der Nachfrage** (wie stark die Menge auf eine Preisänderung reagiert) ist das Verhältnis:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Elastizität (E)</span>
+    <code>E = %ΔQuantity / %ΔPrice</code>
+  </div>
+  <div>
+    <span class="name">Vorzeichen</span>
+    meist negativ (Preis und Menge bewegen sich gegenläufig); wir lesen den <em>Betrag</em> und ignorieren das Minus
+  </div>
+</div>
+
+Der Betrag ist die ganze Geschichte:
+
+- **Elastisch** — Betrag **größer als 1**. Die Menge reagiert sehr empfindlich: Eine kleine Preisänderung bewegt viel Volumen. Man denke an Softdrinks, Restaurants — viele Substitute, nicht essenziell. Ist E gleich 2, senkt eine Preiserhöhung um 10 % die Menge um 20 %.
+- **Unelastisch** — Betrag **zwischen 0 und 1**. Die Menge reagiert kaum. Man denke an Medikamente, Versorger — wenige Substitute, essenziell. Ist E gleich 0,5, hebt eine Preissenkung um 10 % die Menge nur um 5 %.
+
+In einem Diagramm sind unelastische Kurven **steiler** (senkrechter): Die Menge rührt sich kaum, wenn der Preis sich bewegt.
+
+**Durchgerechnete Elastizität, dieselbe Kurve wie oben.** Start bei 30 € (250 Einheiten). Absenkung auf 20 € (375 Einheiten):
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Bei 30 €</span>
+    <code>E = ((375−250)/250) / ((20−30)/30) = 50% / −33% = −1.5</code>
+  </div>
+  <div>
+    <span class="name">Lesart</span>
+    Betrag 1,5 → <strong>hier elastisch</strong>; die Preissenkung zahlt sich über das Volumen mehr als aus
+  </div>
+</div>
+
+Jetzt tiefer starten, bei 20 € (375 Einheiten), absenken auf 10 € (500 Einheiten):
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Bei 20 €</span>
+    <code>E = ((500−375)/375) / ((10−20)/20) = 33% / −50% = −0.67</code>
+  </div>
+  <div>
+    <span class="name">Lesart</span>
+    Betrag 0,67 → <strong>hier unelastisch</strong>; den Preis jetzt zu senken verschenkt vor allem Marge
+  </div>
+</div>
+
+<Aside type="tip">
+Schlüsselerkenntnis, über die viele stolpern: Auf einer geraden Nachfragekurve ist die Elastizität **nicht konstant** — sie fällt (im Betrag), je weiter man zu niedrigeren Preisen hinabgeht. Dasselbe *Produkt* ist bei hohen Preisen elastisch und bei niedrigen unelastisch. „Ist unser Produkt elastisch?" ist also die falsche Frage — frage „elastisch **beim Preis, den wir verlangen**?"
+</Aside>
+
+### 3.4 Preisdifferenzierung
+
+Könntest du wirklich wertbasiert bepreisen, würdest du jedem Käufer seine eigene Zahlungsbereitschaft in Rechnung stellen. Das ist bei physischen Gütern unpraktisch, sofern man Segmente nicht davon überzeugen kann, dass sich die Produkte unterscheiden — aber bei Dienstleistungen ist es allgegenwärtig. Vier klare Typen:
+
+| Typ | Preis aufteilen nach … | Alltagsbeispiele |
+|---|---|---|
+| **Zeitbasiert** | Tages-/Wochen-/Jahreszeit / Produktalter | Nebenzeit-Strom, Wochenendflüge, Saisonobst, Launch-Angebote |
+| **Raumbasiert** | Geografie — Land, Region, Stadt, Bezirk | Bier, Skiausrüstung, Zement je Ort unterschiedlich bepreist |
+| **Personenbasiert** | Persönliche Merkmale — Alter, Einkommen, Beruf | Kindertarife, Studentenrabatte, Beamten-Versicherungssätze |
+| **Mengenbasiert** | Wie viel gekauft wird | Packungsgrößen, Mengen-/Großabnahmerabatte |
+
+Damit Differenzierung hält, müssen die Segmente getrennt bleiben: Käufer im günstigen Markt dürfen nicht leicht in den teuren weiterverkaufen und dürfen nicht merken, dass es unter anderem Etikett das identische Produkt ist.
+
+## 4 · Die Preis-Qualitäts-Strategiematrix
+
+Kreuzt man **Preis** (niedrig/hoch) mit **Qualität** (niedrig/hoch), erhält man die vier klassischen Preishaltungen. Das ist das nützlichste einzelne Bild der Sitzung.
+
+<div class="sc-fig">
+  <div class="sc-quad">
+    <div class="q blue"><div class="qh">Skimming <small>hoher Preis · geringere Qualitätspassung</small></div><ul><li>Hoch starten, die eifrigsten Käufer abschöpfen, dann den Preis schrittweise senken</li><li>Höchste Marge pro Kunde; signalisiert Qualität; jede Senkung öffnet ein neues Segment</li><li>Aber: lädt Rivalen zum Unterbieten ein; kann überteuert wirken</li></ul></div>
+    <div class="q violet"><div class="qh">Premium <small>hoher Preis · hohe Qualität</small></div><ul><li>Hoher Preis, langfristig gehalten, gestützt auf echte Qualität</li><li>Fette Margen, starke Marke, hohe Zufriedenheit</li><li>Aber: schwer zu halten, ständiger Innovationsdruck, ein Ziel für billigere Rivalen, schwer zurückzugewinnen, wenn verloren</li></ul></div>
+    <div class="q amber"><div class="qh">Economy <small>niedriger Preis · niedrige Qualität</small></div><ul><li>Niedrigster Preis im Markt, wettbewerbsbasiert, alle unterbieten</li><li>Schneller Anteil; setzt Rivalen unter Druck; ein Einstieg zu teureren Linien</li><li>Aber: dünne Margen, riskiert ein Wettrennen nach unten, kann die Marke beschädigen</li></ul></div>
+    <div class="q green"><div class="qh">Penetration <small>niedriger Preis · hohe Qualität</small></div><ul><li>Echt gutes Produkt zu einem niedrigen Einstiegspreis, um schnell Anteil zu greifen</li><li>Kurbelt frühe Verkäufe an, erzeugt Aufmerksamkeit, baut Bekanntheit auf</li><li>Aber: niedrige frühe Marge, langsame Amortisation, verankert einen niedrigen Preis in den Köpfen der Käufer</li></ul></div>
+  </div>
+  <figcaption>Die 2×2 aus Preis × Qualität. Skimming und Premium starten beide hoch — Skimming plant, herunterzukommen, Premium plant, oben zu bleiben. Economy und Penetration starten beide niedrig — Economy bleibt billig-und-solide, Penetration ist ein gutes Produkt, das einen niedrigen Preis als Rammbock nutzt.</figcaption>
+</div>
+
+Die kurze Übung im Kurs war, pro Feld Marken zu nennen — ein guter Test, ob man die Aufteilung wirklich verstanden hat (ein Luxus-Uhrmacher sitzt im Premium; die günstige Einstiegsstufe eines Streamingdienstes ist Penetration; eine Supermarkt-Eigenmarke ist Economy; ein auffälliges neues Gadget, teuer lanciert und dann verramscht, ist Skimming).
+
+## 5 · Preissetzung neuer Produkte im Zeitverlauf
+
+Für ein wirklich neues Produkt schrumpft die Matrix auf eine echte Wahl: **hoch starten und herunterkommen (Skimming)** oder **niedrig starten und bleiben (Penetration)**. Der Unterschied ist eine Geschichte, erzählt über die *Zeit*.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node blue">Skimming<span class="sub">hoher Preis, im Zeitverlauf fallend</span></div>
+    <span class="arrow">vs</span>
+    <div class="sc-node green">Penetration<span class="sub">niedriger Preis, gehalten für Volumen</span></div>
+  </div>
+  <figcaption>Zwei Formen auf einem Preis-über-Zeit-Diagramm: Skimming steigt eine Treppe von einem hohen Start hinab; Penetration kommt niedrig und flach herein, um Rivalen auszusperren.</figcaption>
+</div>
+
+| | Skimming | Penetration |
+|---|---|---|
+| **Kernlogik** | Zuerst die wertvollsten Kunden mit hoher Marge bedienen, dann den Preis senken, um neue Segmente in absteigender Wertordnung zu öffnen | Niedrig bepreisen, um riesige Mengen zu bewegen und Wettbewerb erst gar nicht Fuß fassen zu lassen |
+| **Am besten, wenn** | Das Produkt echtes Prestige / echte Neuheit hat; deutliche Wertstufen unter den Käufern | Riesige latente Nachfrage bei niedrigen Preisen; das Produkt kann ohne langes Testen schnell adoptiert werden |
+| **Großer Vorteil** | Hoher Deckungsbeitrag pro Einheit; Prestige-Image; „kein Wettrennen nach unten" | Hohe Mengen; Wettbewerber abgeschreckt; Marktführerschaft (Bic hat das mit dem Kugelschreiber-Markt gemacht) |
+| **Großes Risiko** | Eine **offene Einladung an Wettbewerber**, unter dir einzutreten (klassisch in der Haute Couture) | Riskante Wette: braucht ein **makelloses Produkt** (keine Rückrufe), schnelle Adoption und genug **Werkskapazität + Distribution**, um die Nachfrage sofort zu bedienen |
+
+<Aside type="caution">
+Penetration funktioniert nur, wenn ein paar Bedingungen alle zugleich gelten: Das Produkt ist fehlerfrei, Kunden adoptieren es schnell (sodass Rivalen keine Zeit zur Reaktion haben), und du hast die Kapazität und die Kanäle, die von dir erzeugte Nachfrage tatsächlich zu bedienen. Es scheitert in reifen, langsam wachsenden Märkten voller etablierter Akteure, die einfach *ihre* Preise auf variable Kosten senken und den Neuling aushungern. Wie Folie 30 es formulierte: **hohes Risiko — mach deine Hausaufgaben.**
+</Aside>
+
+## 6 · Value-in-Use und Freemium
+
+Zwei Preismethoden, die nicht in die saubere Matrix passen, aber ständig auftauchen:
+
+- **Value-in-Use-Pricing (B2B).** Statt anhand *deiner* Kosten zu bepreisen, bepreist du anhand der *Ersparnis des Kunden*. Wenn dein Industrieschleifmittel es einer Fabrik erlaubt, eine Linie schneller laufen zu lassen oder weniger Teile auszuschussen, schätzt du das Geld, das ihr das spart, und schöpfst einen **Anteil davon** ab. Der Preis ist am objektiven Wert verankert, den der Käufer erhält, nicht an dem, was das Ding dich zu produzieren kostet. Das passt natürlich zu CERMEDES im Verkauf an das professionelle Handwerk: Ein Werkzeug, das einem Handwerker pro Auftrag Stunden spart, ist einen Anteil dieser Stunden wert.
+- **Freemium.** Eine Basisversion gratis abgeben, um eine große Nutzerbasis aufzubauen, dann für Premium-Funktionen, Kapazität oder Support kassieren. Die Gratis-Stufe ist ein Kundenakquisitionsaufwand; das kostenpflichtige Upgrade ist, wo das Geld liegt. Funktioniert, wenn die Grenzkosten des Gratis-Nutzers nahe null liegen und genug von ihnen konvertieren.
+
+## 7 · Kanalmargen & Aufschläge
+
+Nun die Arithmetik, die still entscheidet, ob ein „guter Preis" tatsächlich bei dir ankommt. Zuerst eine Unterscheidung, die viele ständig verwischen — **Marge vs. Aufschlag (Mark-up)**. Sie verwenden denselben Euro-Betrag, teilen ihn aber durch Verschiedenes:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">% Marge</span>
+    <code>Margin € / Selling price</code>
+  </div>
+  <div>
+    <span class="name">% Aufschlag</span>
+    <code>Margin € / Unit cost</code>
+  </div>
+</div>
+
+**Durchgerechnetes Beispiel.** Eine Einheit kostet 0,90 € und verkauft sich für 1,00 €, die Marge beträgt also 0,10 €.
+
+| Kennzahl | Rechnung | Ergebnis |
+|---|---|---|
+| **% Marge** | 0.10 / 1.00 | **10 %** |
+| **% Aufschlag** | 0.10 / 0.90 | **≈ 11 %** |
+
+Dieselben 0,10 €, zwei verschiedene Prozentsätze — weil der Nenner gewechselt hat. Ein größerer Abstand macht den Punkt schärfer: Eine Marge von 0,40 € auf einen Verkaufspreis von 1,00 € ist eine **Marge von 40 %**, aber ein **Aufschlag von 66 %** (0,40 / 0,60). Frage stets *„Prozent wovon?"*, bevor du eine Zahl nennst.
+
+### 7.1 Aufeinanderfolgende Wiederverkäufermargen
+
+Konsumgüter fließen **Hersteller → Großhändler → Einzelhändler → Kunde**, und die Marge jedes Wiederverkäufers wird *nacheinander* vom Preis zum Verbraucher abgezogen. Durchgerechnet aus den Notizen, an einem Artikel mit 1,00 € empfohlenem Verkaufspreis, bei dem der Einzelhändler 40 % und der Großhändler 10 % nimmt:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node green">Hersteller<span class="sub">verkauft zu 0,54 €</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Großhändler<span class="sub">kauft 0,54 €, verkauft 0,60 € → Marge 0,06 €</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Einzelhändler<span class="sub">kauft 0,60 €, verkauft 1,00 € → Marge 0,40 €</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Kunde<span class="sub">zahlt 1,00 €</span></div>
+  </div>
+  <figcaption>Der Einzelhändler nimmt 40 % vom 1,00-€-Listenpreis (behält 0,40 €, zahlt 0,60 €). Der Großhändler nimmt 10 % von diesen 0,60 € (behält 0,06 €, zahlt 0,54 €). Der Hersteller erlöst netto 0,54 € — die Margen verketten sich die Kette hinab, sie addieren sich nicht einfach.</figcaption>
+</div>
+
+Die Falle: 40 % + 10 % sind *nicht* 50 % Nachlass. Die 10 % des Großhändlers sind 10 % von 0,60 €, nicht von 1,00 € — der Hersteller behält also 0,54 €, nicht 0,50 €. Beachte außerdem: Ein empfohlener Verkaufspreis bindet den Einzelhändler nicht; senkt er darunter, geht der Fehlbetrag aus *seiner* Marge, nicht aus der des Herstellers.
+
+### 7.2 Mengenrabatte nach Segment
+
+Dasselbe Produkt kann für verschiedene Wiederverkäufersegmente unterschiedliche Preisstaffeln tragen, mit Mengenstufen innerhalb jedes Segments. Das Möbelpolitur-Beispiel (Rabatte als % vom Listenpreis ausgedrückt):
+
+| Großhändler (Kartons) | Nachlass vom Listenpreis | | Einzelhändler (Kartons) | Nachlass vom Listenpreis |
+|---|---|---|---|---|
+| 1–99 | 47.5% | | 1–5 | 30% |
+| 100–400 | 47.5% + 2.5% | | 6 und mehr | 30% + 10% |
+| 401–900 | 47.5% + 4.0% | | | |
+| 901 und mehr | 47.5% + 6.5% | | | |
+
+Größere Abnehmer verdienen tiefere Rabatte, und Großhändler (die mehr von der Distributionsarbeit leisten) sitzen auf einer grundsätzlich großzügigeren Staffel als Einzelhändler. Zusätzlich legen Firmen oft weitere Nachlässe obendrauf — z. B. einen kooperativen Werbekostenzuschuss von bis zu 5 % der Einkäufe des Wiederverkäufers als Anreiz, das Produkt zu bewerben.
+
+## 8 · Umsatz-, Kosten- und Gewinnstruktur
+
+Vor jeder Kennzahl die Klempnerei. **Umsatz** ist der einfache Teil:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Gesamtumsatz</span>
+    <code>Price per unit × Quantity sold</code>
+  </div>
+  <div>
+    <span class="name">Welcher Preis?</span>
+    der Einzelhandelspreis, wenn du direkt verkaufst; der Preis an deinen Kanalpartner, wenn du über Wiederverkäufer verkaufst
+  </div>
+</div>
+
+**Kosten** teilen sich auf zwei Arten, und die Aufteilung ist das ganze Spiel:
+
+| Kostenart | Verhalten mit dem Volumen | Typische Posten | Wo sie erscheint |
+|---|---|---|---|
+| **Fix** | Ändern sich nicht, wenn Einheiten steigen/fallen | Grundstücke, Anlagen & Ausrüstung; Managergehälter; Werbung | PP&E, SG&A, F&E-Positionen |
+| **Variabel** | Steigen und fallen direkt mit den Einheiten | Direkte Fertigungslöhne; Rohstoffe | Cost of Goods Sold (COGS) |
+
+<Aside type="note">
+Eine Feinheit, die man sich merken sollte: **COGS ist nicht rein variabel.** Nach Rechnungslegungsregeln (z. B. US-GAAP) allozieren Firmen *alle* Produktkosten — variable **plus** einen Anteil der Fixkosten der Produktherstellung — über die produzierten Einheiten. Wenn Einheiten verkauft werden, werden diese allozierten Kosten zu COGS. COGS trägt also variable Kosten *und* einen Teil der Fixkosten. Fixkosten wie Verwaltung der Zentrale und Werbung bleiben draußen in den SG&A.
+</Aside>
+
+Nun die zwei Margen, von denen Pricing-Leute leben:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Contribution Margin (Deckungsbeitrag)</span>
+    <code>Price − Variable cost per unit</code>
+  </div>
+  <div>
+    <span class="name">Gross Margin</span>
+    <code>Revenue − COGS</code>
+  </div>
+</div>
+
+Der **Contribution Margin (Deckungsbeitrag)** ist das, was jede zusätzliche Einheit zur Deckung der Fixkosten (und danach zum Gewinn) beiträgt — er verwendet nur die *variablen* Kosten und ist damit die richtige Zahl für Entscheidungen wie „sollen wir diesen Auftrag annehmen / diesen Preis senken?". Die **Gross Margin** zieht COGS ab (variabel + allozierte Fixkosten) und ist die berichtete Profitabilität der Produktlinie.
+
+**Mini-Szenario.** Ein CERMEDES-Bohrer verkauft sich an den Kanal zu 80 €, mit 50 € variablen Kosten pro Einheit und 600.000 € Fixkosten. Der Deckungsbeitrag pro Einheit ist 80 € − 50 € = **30 €**. Um die Fixkosten zu decken, muss die Firma 600.000 € / 30 € = **20.000 Einheiten** verkaufen, nur um die Gewinnschwelle zu erreichen; ab Einheit 20.001 fallen jeweils 30 € direkt Richtung Gewinn. Beachte: Weil die variablen Kosten mit dem Volumen mitlaufen, **musst du jedes Mal, wenn du ein anderes Mengenszenario durchspielst, *sowohl* den Gesamtumsatz *als auch* die Gesamtkosten neu berechnen** — du kannst nicht das eine bewegen und das andere lassen.
+
+## 9 · Performance-Kennzahlen — hat die Strategie tatsächlich funktioniert?
+
+Strategie muss sich irgendwann in den Zahlen zeigen. Hier die Kennzahlentafel aus der Sitzung — jede eine Formel plus das, was sie tatsächlich aussagt. (Notation: *Durchschnittliches X* = (Anfangs-X + End-X) / 2; **EBIT** = Ergebnis vor Zinsen und Steuern; **SGA** = Vertriebs-, Verwaltungs- und Gemeinkosten.)
+
+| Indikator | Formel | Was er aussagt |
+|---|---|---|
+| **Return on Sales (ROS)** | Net income / Sales *(oder EBIT / Sales)* | Wie gut die Firma Umsatz in Gewinn verwandelt — der Leit-Benchmark für CERMEDES |
+| **Return on Assets (ROA)** | Net income / Assets | Wie gut sie ihre Vermögenswerte in Gewinn verwandelt |
+| **Return on Equity (ROE)** | Net income / Equity | Wie gut sie das Eigenkapital der Eigentümer in Gewinn verwandelt |
+| **Umsatz pro Mitarbeiter** | Sales / Number of employees | Produktivität der Arbeitskraft |
+| **Verwaltungs- (& Vertriebs-)intensität** | Admin costs / Sales *(oder SGA / Sales)* | Anteil des Umsatzes, den Verwaltung und Vertrieb auffressen |
+| **F&E-Intensität** | R&D costs / Sales | Anteil des Umsatzes, der in F&E reinvestiert wird |
+| **Lagerumschlag** | Sales / Avg inventory *(oder COGS / Avg inventory)* | Wie oft der Bestand in der Periode verkauft wird |
+| **Ø Tage bis Lagerverkauf** | 365 / Inventory turnover | Wie viele Tage es im Schnitt dauert, den Bestand zu verkaufen |
+| **Anlagenumschlag** | Sales / Avg total assets | Wie effizient Vermögenswerte Umsatz erzeugen |
+| **Forderungsumschlag** | Sales / Avg accounts receivable | Wie effizient die Firma eintreibt, was ihr geschuldet wird |
+| **Verschuldungsgrad (Debt-to-Equity)** | Total debt / Total equity | Hebelwirkung und Risiko in der Kapitalstruktur |
+| **Fremdkapitalquote (Debt ratio)** | Total debt / Total assets | Anteil der Vermögenswerte, der durch Schulden finanziert ist |
+
+<div class="sc-formula">
+  <div>
+    <span class="name">ROS durchgerechnet</span>
+    <code>ROS = Net income / Sales = €4.2m / €60m = 7%</code>
+  </div>
+  <div>
+    <span class="name">Lesart</span>
+    liegt der Branchendurchschnitt bei Elektrowerkzeugen bei etwa 9 %, behält CERMEDES <strong>2 Punkte weniger</strong> von jedem Umsatz-Euro — eine Lücke, die die Preis-/Mix-Arbeit schließen muss
+  </div>
+</div>
+
+<Aside type="tip">
+Für den CERMEDES-Bericht ist die Anker-Kennzahl **ROS**, benchmarkt gegen die Branche. Zwei Wege, sie zu heben: **Preis erhöhen** (nur dort, wo die Nachfrage unelastisch genug ist, dass das Volumen überlebt — zurück zu §3) oder **Mix verbessern** (Volumen zu den Produkten mit hohem Deckungsbeitrag schieben und die schwachen reparieren oder aufgeben). Lagerumschlag und Tage-bis-Verkauf sind die stillen Begleiter: langsam drehende, unprofitable Linien binden Bargeld *und* drücken den ROS.
+</Aside>
+
+## 10 · Szenarioplanung — und das CERMEDES-Urteil
+
+Das letzte Werkzeug ist die **Szenarioplanung**: Statt vorzugeben, die Zukunft zu kennen, baust du zwei stimmige Geschichten — **optimistisch** und **pessimistisch** —, jede aus einer Handvoll *expliziter* Annahmen. Der schnörkellose Rat des Dozenten: **halt es einfach.** Ein paar klar formulierte Annahmen schlagen ein aufwendiges Modell, dem niemand traut.
+
+| Annahme | Pessimistisch | Optimistisch |
+|---|---|---|
+| Preisänderung bei Kernbohrern | −3 % (von Rivalen erzwungen) | +5 % (die Value-in-Use-Story kommt an) |
+| Stückvolumen | −8 % (Markt stagniert, Importe beißen) | +6 % (Anteilsgewinne durch Qualität) |
+| Variable Kosten pro Einheit | +4 % (Inputinflation) | flach (Lieferantendeal hält) |
+| Resultierende ROS-Richtung | rutscht unter die Branche | schließt die Lücke, auf oder über Branchenniveau |
+
+Nebeneinandergelegt verwandeln die Szenarien CERMEDES' aktuelle Fragen in prüfbare Aussagen. **Profitabelste/unprofitabelste Produkte?** — nach *Deckungsbeitrag* ranken, nicht nach Umsatz, und prüfen, ob die Linien mit geringem Deckungsbeitrag den pessimistischen Fall überhaupt überstehen. **Preiserhöhungen tragfähig?** — nur dort, wo die Elastizität mild genug ist, dass der Volumenverlust den höheren Preis nicht überschwemmt; die Zahlungsbereitschafts- und Wechselpunkt-Befragungen (§2) sind es, die dir das verraten. **Noch nicht profitable Produkte?** — die Optionen sind: neu bepreisen, neu kalkulieren, neu positionieren oder einstellen; die Szenarioplanung zeigt, welche ein schlechtes Jahr überleben. **ROS vs. Branche?** — berechnen (§9), benchmarken und das optimistisch/pessimistische Band zeigen lassen, wie viel der Lücke im Griff des Managements liegt und wie viel der Gnade des Marktes ausgeliefert ist.
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Der Preis sitzt in einem Band:** eine Kosten-**Untergrenze** (darunter kein Gewinn) und eine Wert-**Obergrenze** (darüber keine Nachfrage), mit Wettbewerbspreisen und staatlichen Einflüssen in der umkämpften Mitte. **Cost-plus** baut von den Kosten aus auf; **wertbasiert** rechnet vom wahrgenommenen Wert herunter.
+- Die **Nachfragekurve** verbindet Preis mit Menge; Kräfte wie Branding, Wettbewerberzüge, Einkommen und Schocks verschieben die ganze Kurve. **Elastizität = %ΔQ / %ΔP** — Betrag größer als 1 ist **elastisch** (Softdrinks), zwischen 0 und 1 ist **unelastisch** (Medikamente) — und auf einer Geraden ändert sie sich bei jedem Preis.
+- Die **Preis-Qualitäts-Matrix**: **Skimming** (hoch, dann herunter), **Premium** (hoch, dauerhaft), **Economy** (niedrig/niedrig), **Penetration** (niedriger Preis, hohe Qualität, um Anteil zu greifen). Wahl bei neuen Produkten = Skimmings hohe Marge (lädt Rivalen ein) vs. Penetrations hohes Volumen (braucht ein makelloses Produkt und echte Kapazität).
+- **Value-in-Use** schöpft einen Anteil dessen ab, was ein B2B-Kunde *spart*; **Freemium** gibt eine Basis her und kassiert für mehr.
+- **Marge ≠ Aufschlag** (dieselben Euro, verschiedene Nenner); Wiederverkäufermargen **verketten** sich die Kette hinab, sie addieren sich nicht.
+- **Contribution Margin (Deckungsbeitrag) = Preis − variable Kosten**; **Gross Margin = Umsatz − COGS**; änderst du ein Mengenszenario, musst du *sowohl* Umsatz *als auch* Kosten neu berechnen.
+- **Kennzahlen** messen den Erfolg — **ROS** an vorderster Stelle für CERMEDES — und die **Szenarioplanung** (halt es einfach, explizite Annahmen) verwandelt die Preis- und Profitabilitätsfragen in ein optimistisch-vs-pessimistisches Band.
+</Aside>
+
+*Weiter: [Pitching & strukturierte Kommunikation →](/de/learnings/mba/applied-market-and-business-strategy/06-pitching-and-structured-communication/) — wie man die Strategie in 15 Minuten verkauft.*
