@@ -1,0 +1,277 @@
+---
+title: "Spieltheorie"
+description: "Was passiert, wenn mein bester Zug von deinem abhängt — strategische Interaktion, das Gefangenendilemma, dominante Strategien (strikt und schwach) und das Nash-Gleichgewicht, und warum rationale Individuen oft nicht kooperieren."
+sidebar:
+  label: "4 · Spieltheorie"
+  order: 4
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Economics & Law — NIT Northern Institute of Technology / TUHH, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Bisher stand jeder Entscheider in diesen Notizen einer Welt gegenüber, die einfach *stillhält*: Preise sind gegeben, das Budget ist fest, und ich maximiere still vor mich hin. Aber viele der interessanten Probleme in Ökonomie und Recht sind nicht so. Mein bester Zug hängt von *deinem* Zug ab — und deiner von meinem. Zwei Firmen, die Preise setzen, zwei Länder, die über Aufrüstung entscheiden, zwei Verdächtige, die entscheiden, ob sie aussagen. Genau dieses Geflecht aus „es kommt darauf an, was du tust" soll die **Spieltheorie** entwirren.
+
+<Aside type="tip">
+**Die ganze Idee in einem Satz:** Wenn Ergebnisse von *aller* Entscheidungen zugleich abhängen, muss jede Person darüber nachdenken, was die anderen rational tun werden — und, verblüffenderweise, kann es sein, dass jeder perfekt in seinem eigenen Interesse denkt und die Gruppe trotzdem an einem Punkt landet, der für alle schlechter ist.
+</Aside>
+
+## 1 · Was Spieltheorie ist
+
+**Spieltheorie** ist ein Rahmen zur Analyse **strategischer Interaktionen** — Situationen, in denen das Ergebnis für jede Person nicht nur von ihrer eigenen Wahl abhängt, sondern auch davon, was die anderen wählen. Sie gibt uns ein sauberes Vokabular:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Spieler<span class="sub">die Entscheider</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Strategien<span class="sub">die Züge, die jeder wählen kann</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Auszahlungen<span class="sub">was jeder aus einem Ergebnis erhält</span></div>
+  </div>
+  <figcaption>Ein <strong>Spiel</strong> ist einfach diese drei Dinge: wer wählt, was gewählt werden kann und was jede Kombination von Entscheidungen den Beteiligten wert ist.</figcaption>
+</div>
+
+- **Spieler** — die Parteien, die Entscheidungen treffen (Menschen, Firmen, Regierungen).
+- **Strategien** — die Optionen, die jedem Spieler offenstehen (gestehen oder schweigen, eintreten oder draußen bleiben, hoher Preis oder niedriger Preis).
+- **Auszahlungen (Payoffs)** — eine Zahl dafür, wie gut ein Ergebnis *für diesen Spieler* ist (Gewinn, Jahre in Freiheit, Nutzen).
+
+Die Standardannahme, mit der wir arbeiten, ist die **nichtkooperative Spieltheorie**: Jeder Spieler ist **eigennützig** und kümmert sich nur um seine eigene Auszahlung. Sie können einander keine bindenden Versprechen geben. Wie wir sehen werden, ist genau dieses Eigeninteresse das, was oft die Kooperation *blockiert*, die alle bessergestellt hätte.
+
+<Aside type="note">
+**„Nichtkooperativ" ist ein Fachbegriff, keine Beleidigung.** Es bedeutet nicht, dass die Spieler feindselig sind. Es bedeutet, dass es keinen äußeren Vollstrecker gibt, der sie an eine Abmachung bindet — jeder handelt auf eigene Rechnung. Vieles von dem, was Recht und Institutionen später in diesen Notizen tun, besteht genau darin, diesen fehlenden Vollstrecker bereitzustellen.
+</Aside>
+
+## 2 · Das Gefangenendilemma
+
+Das berühmteste Spiel überhaupt, und dasjenige, das man im Schlaf beherrschen sollte. Hier die Geschichte.
+
+Zwei Räuber werden zum Verhör abgeführt und in **getrennte Räume** gesteckt — sie können nicht miteinander reden. Der Polizei gelingt es mit Sicherheit, beiden einen geringfügigen **Diebstahl** nachzuweisen, aber den schweren **Raub** kann sie nicht beweisen, es sei denn, jemand redet. Also wird jedem Verdächtigen derselbe Deal angeboten:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node slate">Beide gestehen<span class="sub">je 5 Jahre</span></div>
+    <div class="sc-node slate">Keiner gesteht<span class="sub">je 1 Jahr — nur der Diebstahl bleibt hängen</span></div>
+    <div class="sc-node amber">Einer gesteht, der andere schweigt<span class="sub">der Verräter kommt frei · der Schweigsame bekommt 10 Jahre</span></div>
+  </div>
+  <figcaption>Jedem Verdächtigen werden dieselben Bedingungen angeboten, und er muss <strong>allein</strong> entscheiden, ohne zu wissen, was der andere tun wird.</figcaption>
+</div>
+
+Wenn ich einer der Räuber bin — was tue ich?
+
+### Die Auszahlungsmatrix
+
+Wir halten das als **Auszahlungsmatrix** fest. Jahre im Gefängnis sind *schlecht*, also verzeichnen wir sie als **negative Auszahlungen** (eine längere Strafe ist eine stärker negative Zahl). Spieler 1 wählt eine **Zeile**; Spieler 2 wählt eine **Spalte**.
+
+| Spieler 1 ↓ / Spieler 2 → | Spieler 2: Gestehen | Spieler 2: Nicht gestehen |
+|---|---|---|
+| **Spieler 1: Gestehen** | (−5, −5) | (0, −10) |
+| **Spieler 1: Nicht gestehen** | (−10, 0) | (−1, −1) |
+
+**Wie man eine Zelle liest.** In jeder Zelle stehen zwei Zahlen. Die **linke** Zahl ist die Auszahlung von **Spieler 1**; die **rechte** Zahl ist die Auszahlung von **Spieler 2**. Die Zelle (0, −10) bedeutet also: *Spieler 1 bekommt 0 (kommt frei) und Spieler 2 bekommt −10 (zehn Jahre)* — das ist die Ecke, in der Spieler 1 gestanden und Spieler 2 geschwiegen hat.
+
+### Das gemeinsam beste Ergebnis — und warum sie es verfehlen
+
+Suche das Ergebnis, das für **das Paar als Ganzes** am besten ist. Das ist die Zelle unten rechts, **(−1, −1)**: Keiner gesteht, und sie sitzen nur je ein Jahr ab. Die gesamte Haftzeit ist hier am kleinsten — das ist das **Kaldor–Hicks-effiziente** Ergebnis (es erzeugt den größten Gesamt-„Kuchen" an Wohlergehen für die beiden zusammen).
+
+Und doch: Wenn jeder Räuber still *nur seine eigene* Auszahlung maximiert, landen sie nicht dort. Hier die Falle, aus Sicht von Spieler 1:
+
+- *Angenommen, Spieler 2 gesteht.* Dann wähle ich zwischen −5 (ich gestehe auch) und −10 (ich schweige). **−5 schlägt −10 → ich gestehe.**
+- *Angenommen, Spieler 2 schweigt.* Dann wähle ich zwischen 0 (ich gestehe) und −1 (ich schweige). **0 schlägt −1 → ich gestehe.**
+
+Was auch immer Spieler 2 tut, meine beste Antwort ist **gestehen**. Das Spiel ist symmetrisch, also treibt dieselbe Logik auch Spieler 2 zum Gestehen. Beide gestehen — und landen bei **(−5, −5)**, je fünf Jahre — obwohl **(−1, −1)** direkt greifbar war, besser für *beide*. Diese Kluft zwischen dem individuell Rationalen und dem kollektiv Besten ist das **Dilemma**.
+
+<Aside type="caution">
+**Warum sie sich nicht einfach einigen können.** Selbst wenn die beiden Räuber vorher geschworen hätten zu schweigen, hat jeder, sobald sie in getrennten Räumen sitzen, einen privaten Anreiz, den Schwur zu brechen (0 schlägt −1). Ohne eine Möglichkeit, das Versprechen zu *erzwingen*, zerfällt das kooperative Ergebnis. Merke dir das — es ist der ganze Grund, warum das Dilemma für das Recht von Bedeutung ist.
+</Aside>
+
+## 3 · Dominante Strategien
+
+Der Zug „gestehen" in diesem Spiel hat eine besondere Eigenschaft: Er war meine beste Antwort **egal, was** der andere Spieler tat. Das ist eine **dominante Strategie**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Frage: „Wenn mein Gegner X wählt, was ist mein bester Zug?"<span class="sub">dann frage erneut für Y, für Z…</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Wenn die Antwort <strong>jedes Mal derselbe Zug</strong> ist → dieser Zug ist eine dominante Strategie</div>
+  </div>
+  <figcaption>Eine dominante Strategie ist ein Zug, den du spielen willst, <strong>egal was</strong> die anderen Spieler tun — du musst sie also nicht einmal vorhersagen.</figcaption>
+</div>
+
+Es gibt zwei Stufen von „dominant", und der Unterschied betrifft nur Gleichstände:
+
+<div class="sc-split">
+  <div class="sc-panel">
+    <div class="head">Strikt dominant <small>strikt besser</small></div>
+    <ul>
+      <li>Ergibt eine <strong>strikt höhere</strong> Auszahlung als die Alternative in <strong>jedem</strong> Fall, den der Gegner herstellen könnte.</li>
+      <li>„Gestehen" im ursprünglichen Gefangenendilemma: −5 schlägt −10, <em>und</em> 0 schlägt −1. Besser in beiden Fällen.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Schwach dominant <small>mindestens genauso gut</small></div>
+    <ul>
+      <li>Ergibt eine Auszahlung, die in jedem Fall <strong>mindestens genauso gut</strong> und in mindestens einem Fall <strong>strikt besser</strong> ist.</li>
+      <li>Denke an die mathematische Kurzform „x ist schwach größer als y" für x ≥ y — dieselbe Idee: nie schlechter, manchmal besser.</li>
+    </ul>
+  </div>
+</div>
+
+**Eine schwache Variante des Räuberspiels.** Angenommen, die Zelle „keiner gesteht" zahlte **(0, 0)** statt (−1, −1). Wenn der andere Spieler jetzt *nicht* gesteht, sind meine beiden Optionen 0 (gestehen) und 0 (schweigen) — ein **Gleichstand**. Wenn der andere Spieler *doch* gesteht, ist es −5 (gestehen) gegen −10 (schweigen) — gestehen gewinnt. Gestehen ist also nun **immer mindestens genauso gut, einmal strikt besser**: Es ist nur **schwach** dominant, nicht strikt.
+
+### Durchgerechnete Beispiele — strikt, schwach und weder-noch erkennen
+
+Hier sind vier kleine 2×2-Spiele. In jedem **wählt Spieler 1 die Zeile (A oder B)** und **Spieler 2 die Spalte (A oder B)**; die Zellen lesen sich als (Spieler 1, Spieler 2). Klassifizieren wir die Lage jedes Spielers.
+
+**Spiel I**
+
+| S1 ↓ / S2 → | A | B |
+|---|---|---|
+| **A** | (1, 1) | (0, 0) |
+| **B** | (0, 0) | (0, 0) |
+
+**Spiel II**
+
+| S1 ↓ / S2 → | A | B |
+|---|---|---|
+| **A** | (1, 2) | (1, 1) |
+| **B** | (0, 0) | (2, 0) |
+
+**Spiel III**
+
+| S1 ↓ / S2 → | A | B |
+|---|---|---|
+| **A** | (1, 1) | (1, 1) |
+| **B** | (1, 1) | (1, 1) |
+
+**Spiel IV**
+
+| S1 ↓ / S2 → | A | B |
+|---|---|---|
+| **A** | (9, 1) | (0, 0) |
+| **B** | (8, 0) | (−2, −1) |
+
+Gehen wir **Spieler 1** durch (Vergleich der Zeilen A vs. B bei festgehaltener Spalte von Spieler 2):
+
+- **Spiel I** — wenn S2 A spielt: 1 (Zeile A) vs. 0 (Zeile B) → A. Wenn S2 B spielt: 0 vs. 0 → Gleichstand. Nie schlechter, einmal besser → **schwach dominant A**.
+- **Spiel II** — wenn S2 A spielt: 1 vs. 0 → A. Wenn S2 B spielt: 1 vs. 2 → B. Die beste Zeile kippt → **weder-noch** (keine dominante Strategie).
+- **Spiel III** — jede Auszahlung ist 1; beide Zeilen sind stets gleichauf → **weder-noch** (nichts dominiert).
+- **Spiel IV** — wenn S2 A spielt: 9 vs. 8 → A. Wenn S2 B spielt: 0 vs. −2 → A. Beide Male strikt besser → **strikt dominant A**.
+
+Und **Spieler 2** (Vergleich der Spalten A vs. B bei festgehaltener Zeile von Spieler 1):
+
+- **Spiel I** — wenn S1 A spielt: 1 vs. 0 → A. Wenn S1 B spielt: 0 vs. 0 → Gleichstand → **schwach dominant A**.
+- **Spiel II** — wenn S1 A spielt: 2 vs. 1 → A. Wenn S1 B spielt: 0 vs. 0 → Gleichstand → **schwach dominant A**.
+- **Spiel III** — alle Auszahlungen gleichauf → **weder-noch**.
+- **Spiel IV** — wenn S1 A spielt: 1 vs. 0 → A. Wenn S1 B spielt: 0 vs. −1 → A. Beide Male strikt besser → **strikt dominant A**.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Gleicher bester Zug + stets strikt vorn<span class="sub">strikt dominant</span></div>
+    <span class="arrow">·</span>
+    <div class="sc-node amber">Gleicher bester Zug, aber irgendwo Gleichstände<span class="sub">schwach dominant</span></div>
+    <span class="arrow">·</span>
+    <div class="sc-node violet">Bester Zug hängt vom Gegner ab<span class="sub">weder-noch</span></div>
+  </div>
+  <figcaption>Der Test ist immer derselbe: Halte die Wahl des Gegners fest, vergleiche deine eigenen Züge und sieh nach, ob ein Zug <strong>jeden</strong> Vergleich gewinnt — strikt oder mit Gleichständen.</figcaption>
+</div>
+
+<Aside type="note">
+**Eine dominante Strategie ist ein Geschenk, wenn man eine hat.** Sie bedeutet, dass du das ganze Gedankenlesen ignorieren und einfach deinen besten Zug spielen kannst. Aber die meisten interessanten Spiele — wie Spiel II und Spiel III oben — haben für mindestens einen Spieler keine dominante Strategie. Dafür brauchen wir eine umfassendere Idee.
+</Aside>
+
+## 4 · Nash-Gleichgewicht
+
+Benannt nach **John Nash** (1928–2015, Nobelpreisträger 1994), ist das **Nash-Gleichgewicht** *das* zentrale Lösungskonzept der Spieltheorie. Es ist allgemeiner als dominante Strategien — das Spiel dominanter Strategien ist nur ein besonderer, sauberer Sonderfall davon.
+
+<Aside type="tip">
+**Nash-Gleichgewicht, schlicht gesagt:** eine Kombination von Strategien, bei der **kein einzelner Spieler sich verbessern kann, indem er allein seinen eigenen Zug ändert**, während alle anderen ihren beibehalten. Jeder gibt gleichzeitig seine **beste Antwort** auf das, was alle anderen tun. Niemand hat ein Bedauern, das er allein beheben könnte.
+</Aside>
+
+### Wie man eines findet
+
+Der mechanische Test besteht darin, die Matrix abzuschreiten und nach einer **profitablen Abweichung** zu suchen:
+
+<Steps>
+
+1. Wähle eine beliebige Zelle (eine Kombination von Entscheidungen).
+
+2. Frage jeden Spieler der Reihe nach: *„Könnte ich, während ich die Wahl des anderen Spielers festhalte, meine eigene Auszahlung durch einen Wechsel meines Zuges erhöhen?"*
+
+3. Wenn **ja** für irgendjemanden, ist diese Zelle **kein** Nash-Gleichgewicht — folge der Abweichung zu einer neuen Zelle und wiederhole.
+
+4. Wenn **nein** für **alle** — niemand will sich einseitig bewegen — hast du ein **Nash-Gleichgewicht** gefunden.
+
+</Steps>
+
+Für das Gefangenendilemma ist **(Gestehen, Gestehen)** das Nash-Gleichgewicht: Wenn ich von dort zum Schweigen wechsle, während du weiter gestehst, gehe ich von −5 auf −10 — strikt schlechter, also lasse ich es. Du auch nicht. Beachte die unbequeme Lektion: Das Nash-Gleichgewicht ist hier das Ergebnis, das **für beide schlechter** ist als gegenseitiges Schweigen. Das Nash-Gleichgewicht sagt uns, wo sich eigennütziges Spiel *einpendelt*, nicht, wo es *hinsollte*.
+
+<Aside type="note">
+**Dominante Strategien vs. Nash — der Zusammenhang.** Wenn jeder Spieler eine dominante Strategie hat, ist es automatisch ein Nash-Gleichgewicht, wenn alle sie spielen (niemand würde je von einem Zug abweichen wollen, der gegen alles am besten ist). Ein Ergebnis aus dominanten Strategien ist also **immer ein Nash-Gleichgewicht.** Aber die Umkehrung gilt nicht: Viele Spiele haben Nash-Gleichgewichte, obwohl *niemand* eine dominante Strategie hat. Nash ist das größere Zelt.
+</Aside>
+
+### Ein durchgerechnetes Beispiel ohne dominante Strategien
+
+Zwei Spieler, **A** und **B**, jeder mit drei Zügen. Spieler A wählt die Zeile (A1, A2, A3), Spieler B wählt die Spalte (B1, B2, B3). Die Zellen lesen sich als (Spieler A, Spieler B).
+
+| A ↓ / B → | B1 | B2 | B3 |
+|---|---|---|---|
+| **A1** | (10, 10) | (0, 6) | (2, 2) |
+| **A2** | (15, 0) | (5, 5) | (4, 4) |
+| **A3** | (3, 5) | (7, 8) | (6, 6) |
+
+Keiner der Spieler hat hier eine dominante Strategie (prüfe A's beste Zeile: gegen B1 ist es A2, aber gegen B2 A3 — sie kippt). Jagen wir also nach Abweichungen, genau wie im Rezept:
+
+<Steps>
+
+1. **Start bei (A1, B1) = (10, 10).** Spieler A prüft Spalte B1: Die Auszahlungen sind 10, 15, 3 — A will also **A2** (15 schlägt 10). Bewegung.
+
+2. **Jetzt bei (A2, B1).** Spieler B prüft Zeile A2: B's Auszahlungen sind 0, 5, 4 — B will **B2** (5 schlägt 0). Bewegung.
+
+3. **Jetzt bei (A2, B2) = (5, 5).** Spieler A prüft Spalte B2: A's Auszahlungen sind 0, 5, 7 — A will **A3** (7 schlägt 5). Bewegung.
+
+4. **Jetzt bei (A3, B2) = (7, 8).** Spieler A prüft Spalte B2 erneut: 0, 5, 7 — A3 ist am besten, keine Bewegung. Spieler B prüft Zeile A3: B's Auszahlungen sind 5, 8, 6 — B2 ist am besten, keine Bewegung. **Niemand kann sich allein verbessern → (A3, B2) ist das Nash-Gleichgewicht.**
+
+</Steps>
+
+Das Spiel pendelt sich also bei **(A3, B2)** ein und zahlt **(7, 8)** — erreicht, ohne dass je einer der Spieler eine dominante Strategie hatte, was der ganze Sinn des Nash-Konzepts ist.
+
+<Aside type="caution">
+**Eines, keines oder mehrere.** Ein Spiel kann genau ein Nash-Gleichgewicht haben, mehrere, oder (in reinen Strategien) gar keines. Im Übungssatz des Kurses hat das symmetrische Spiel „regulieren / nicht regulieren" ein einziges Gleichgewicht, getrieben von einer strikt dominanten Strategie — beide Behörden regulieren, weil Regulieren 1 gegen 0 zahlt, egal was die andere tut — während ein anderes 3×3-Spiel *zwei* Nash-Gleichgewichte auf einmal hat. Prüfe immer jede Zelle; höre nicht bei der ersten auf.
+</Aside>
+
+## 5 · Warum das für Ökonomie & Recht wichtig ist
+
+Hier ist die Auszahlung (im doppelten Sinne) für einen Kurs zu Recht und Ökonomie. Eine enorme Bandbreite sozialer Probleme hat **genau die Struktur eines Gefangenendilemmas**: Jede Person, die rational in ihrem eigenen Interesse handelt, trifft eine Wahl, die — über alle aufsummiert — die ganze Gruppe schlechterstellt.
+
+| Problem | „Gestehen" (der verlockende eigennützige Zug) | Das Dilemma |
+|---|---|---|
+| **Umweltverschmutzung** | Abfall billig ablassen, statt zu säubern | Alle lassen ab → der gemeinsame Fluss ist für alle ruiniert |
+| **Rüstungswettläufe** | Mehr Waffen bauen, falls der Rivale es tut | Beide rüsten bis an die Zähne auf, ärmer und nicht sicherer, als wenn keiner es täte |
+| **Preiskriege** | Den Rivalen unterbieten, um Marktanteile zu ergattern | Beide senken die Preise → dünne Margen für beide |
+| **Steuerhinterziehung** | Einkommen verstecken, um mehr davon zu behalten | Alle hinterziehen → öffentliche Leistungen brechen für alle zusammen |
+| **Überfischung** | Jetzt so viel fangen, wie man kann | Der Bestand wird bis zur Ausrottung befischt → morgen fischt niemand mehr |
+
+In jedem Fall gibt die **individuell rationale Wahl ein kollektiv schlechtes Ergebnis** — das Nash-Gleichgewicht ist die „schlechte" Zelle, und gegenseitige Zurückhaltung (die gute Zelle) zerfällt, weil niemand den anderen — oder sich selbst — zutrauen kann, daran festzuhalten.
+
+Hier verdienen sich **Recht und Institutionen** ihren Lohn. Die privaten Parteien stecken fest, weil sie die Auszahlungen der anderen nicht ändern können. Aber ein Gesetz *kann* es: eine Umweltstrafe, eine Fangquote, ein Rüstungskontrollvertrag mit Inspektoren, eine Steuerbehörde mit Prüfungen — jedes davon **schreibt die Auszahlungsmatrix um**, sodass der kooperative Zug auch zur besten Antwort jedes Einzelnen wird. Ändere die Zahlen in den Zellen, und die dominante Strategie — und mit ihr das Nash-Gleichgewicht — kann sich zum Ergebnis verschieben, das für alle gut ist.
+
+<Aside type="tip">
+**Die Brücke zurück zu Kapitel 1.** Erinnere dich, dass Recht wirkt, indem es **Beschränkungen und Anreize** ändert, nicht Präferenzen. Die Spieltheorie zeigt uns *warum* dieser Hebel manchmal unverzichtbar ist: Wenn Individuen in einem Dilemma gefangen sind, kann nur eine äußere Änderung der Auszahlungen — meist eine rechtliche oder institutionelle — sie in die Kooperation befreien.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Spieltheorie** untersucht **strategische Interaktionen**: Ergebnisse hängen von aller Entscheidungen zugleich ab. Ein Spiel = **Spieler + Strategien + Auszahlungen**. Der Standard ist **nichtkooperativ** (jeder maximiert seine eigene Auszahlung, ohne durchsetzbare Abmachungen) — was oft die Kooperation blockiert.
+- Im **Gefangenendilemma** ist gegenseitiges Schweigen **(−1, −1)** gemeinsam am besten (Kaldor–Hicks-effizient), aber das Eigeninteresse jedes Räubers treibt sie zum Gestehen, sodass sie bei **(−5, −5)** landen — schlechter für beide. Lies eine Zelle als **(links = Spieler 1, rechts = Spieler 2)**.
+- Eine **dominante Strategie** ist dein bester Zug, *egal was* der Gegner tut. **Strikt** dominant = strikt besser in jedem Fall; **schwach** dominant = immer mindestens genauso gut, mindestens einmal strikt besser. Viele Spiele haben weder-noch.
+- Ein **Nash-Gleichgewicht** ist eine Kombination, bei der **kein Spieler durch alleiniges Ändern seines eigenen Zuges gewinnen kann** — jeder gibt die beste Antwort. Finde es, indem du **profitablen Abweichungen** nachjagst, bis keine mehr übrig sind. „Beide gestehen" ist das Nash-Gleichgewicht des Dilemmas.
+- Ein Ergebnis aus dominanten Strategien ist **immer** ein Nash-Gleichgewicht, aber Nash-Gleichgewichte können ohne **jede** dominante Strategie existieren (und ein Spiel kann eines, mehrere oder keines haben).
+- Umweltverschmutzung, Rüstungswettläufe, Preiskriege, Steuerhinterziehung und Überfischung sind allesamt **Gefangenendilemmata** — ein Argument dafür, dass **Recht und Institutionen die Auszahlungen umschreiben**, sodass Kooperation zur besten Antwort jedes Einzelnen wird.
+</Aside>
+
+*Weiter: [Funktionierende Märkte →](/de/learnings/mba/economics-and-law/05-functioning-markets/) — die tieferen Bedingungen, unter denen Handel alle besserstellt.*

@@ -1,0 +1,278 @@
+---
+title: "International Trade"
+description: "Why countries trade and who gains: comparative advantage and the gains from trade, the terms of trade, and how a tariff protects some at a larger cost to everyone — plus why trade cooperation is itself a prisoner's dilemma."
+sidebar:
+  label: "7 · International Trade"
+  order: 7
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+*Economics & Law — NIT Northern Institute of Technology / TUHH, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Trade is just specialisation across borders. Back in the production chapters we saw that a team is better off when each worker does the job they're relatively best at, then they swap. Draw a line on the map between two of those workers, call each side a *country*, and you've reinvented international trade. The surprising part — the result that made David Ricardo famous in 1817 — is that trade pays off **even when one country is better at making everything**. This chapter shows why, then looks at what happens when a government tries to block trade with a **tariff**, and why countries keep reaching for tariffs even though they'd all be better off without them.
+
+<Aside type="tip">
+**The one-line idea:** countries should specialise in what they give up the *least* to produce — their **comparative advantage** — not in what they're simply *good* at. Do that, and both sides can consume more than they could ever produce alone.
+</Aside>
+
+## 1 · Absolute vs comparative advantage
+
+Two different questions hide inside "who's better at making cloth?" — and mixing them up is the classic beginner's mistake.
+
+| Term | Definition | Question it answers |
+|---|---|---|
+| **Absolute advantage** | You can produce **more** of a good with the same inputs (fewer hours, fewer workers). | *Who is more productive?* |
+| **Comparative advantage** | You can produce a good at a **lower opportunity cost** — you give up less of the *other* good to make it. | *Who sacrifices the least to make it?* |
+
+The word doing all the work is **opportunity cost**: what you give up when you choose one thing over another (we met it in Chapter 1). To make one more car, a country pulls workers off wheat — the wheat it *loses* is the real cost of that car. Trade runs on this relative cost, **not** on raw productivity.
+
+<Aside type="note">
+**Why absolute advantage is a red herring.** A brilliant surgeon might also be the fastest typist in town. Should she type her own letters? No — every hour she types is an hour *not* operating, and that's a huge sacrifice. Her assistant types at a far lower opportunity cost. She has an absolute advantage at both jobs, but a **comparative** advantage only at surgery. Countries are exactly the same.
+</Aside>
+
+## 2 · A worked example: Northia and Southia
+
+Two countries, **Northia** and **Southia**, each with 100 workers, each able to make **gadgets** or **grain**. Here's what one worker produces in a day:
+
+| Country | Gadgets per worker | Grain (sacks) per worker |
+|---|---|---|
+| **Northia** | 4 | 8 |
+| **Southia** | 1 | 4 |
+
+Look closely: Northia beats Southia at **both** goods (4 gadgets vs 1, and 8 sacks vs 4). Northia has an **absolute advantage in everything**. The old intuition says "Northia should just make its own gadgets and grain and ignore tiny Southia." Ricardo says that intuition is wrong — and to see why, we ignore the productivity numbers and compute **opportunity costs** instead.
+
+To make one gadget, a Northian worker skips 8 sacks of grain but only makes 4 gadgets in that time, so **1 gadget costs 2 sacks**. Do this both ways for both countries:
+
+| Country | Cost of 1 gadget | Cost of 1 sack of grain |
+|---|---|---|
+| **Northia** | 2 sacks of grain | 0.5 gadget |
+| **Southia** | 4 sacks of grain | 0.25 gadget |
+
+Now the picture flips depending on the good:
+
+- **Gadgets:** Northia gives up 2 sacks, Southia gives up 4 sacks. Northia sacrifices less → **Northia has the comparative advantage in gadgets**.
+- **Grain:** Northia gives up 0.5 gadget per sack, Southia gives up only 0.25 gadget. Southia sacrifices less → **Southia has the comparative advantage in grain**.
+
+Even though Northia is the better producer across the board, the two countries are *relatively* best at different things. That's all trade needs.
+
+<div class="sc-fig">
+  <table class="sc-matrix">
+    <thead>
+      <tr><th>Good</th><th>Northia gives up…</th><th>Southia gives up…</th><th>Comparative advantage</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Gadgets</th><td class="hl">2 sacks</td><td>4 sacks</td><td>Northia</td></tr>
+      <tr><th>Grain</th><td>0.5 gadget</td><td class="hl">0.25 gadget</td><td>Southia</td></tr>
+    </tbody>
+  </table>
+  <figcaption>The lower opportunity cost in each row (highlighted) wins the comparative advantage — and the two rows point to <strong>different</strong> countries. That split is the whole basis for trade.</figcaption>
+</div>
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-flow">
+      <div class="sc-node amber">Northia<span class="sub">1 gadget costs only 2 sacks</span></div>
+      <div class="sc-node slate">Southia<span class="sub">1 sack costs only 0.25 gadget</span></div>
+    </div>
+    <span class="arrow">↓<small>each makes its lower-opportunity-cost good</small></span>
+    <div class="sc-node green">Specialise, then trade<span class="sub">Northia → gadgets · Southia → grain</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Both consume beyond their own frontier<span class="sub">more of both goods than either could make alone</span></div>
+  </div>
+  <figcaption>Comparative advantage in one flow: compare what each country <strong>gives up</strong>, let each specialise in the good it sacrifices least to make, then swap.</figcaption>
+</div>
+
+### When trade does *not* happen
+
+Here's the flip side that catches people out. Being more productive is not, on its own, a reason to trade — what matters is whether the opportunity-cost *ratios* differ. Suppose Southia were replaced by **Westland**, whose workers each make **2 gadgets or 4 sacks** a day. Northia is still twice as productive at both (4 vs 2, 8 vs 4) — a fat absolute advantage. But look at the opportunity costs:
+
+| Country | Cost of 1 gadget | Cost of 1 sack |
+|---|---|---|
+| **Northia** | 2 sacks | 0.5 gadget |
+| **Westland** | 2 sacks | 0.5 gadget |
+
+They're **identical**. Neither country sacrifices less than the other to make anything, so **no one has a comparative advantage and no trade occurs** — Northia's greater productivity buys it nothing to swap. This is why simply training your workers to be faster across the board (or paying them less across the board) doesn't create export opportunities: it shifts your *absolute* advantage without touching the *relative* costs that trade actually feeds on. To open up trade, a country has to become relatively better at *one* good than the other — that's what tilts the ratio.
+
+## 3 · The gains from trade and the terms of trade
+
+<Aside type="note">
+**The production-possibility frontier (PPF).** A country's PPF is the menu of output combinations it can physically manage if it uses all its workers — every gadget-and-grain basket on or inside the line. Without trade, a country can only *consume* what it can *produce*, so it's stuck on its own frontier. The magic of trade is that it lets a country consume at a point **beyond** that line: it produces one basket (specialised) but consumes a different, larger one by swapping at the world price. That's why the gains from trade are sometimes drawn as "reaching outside your own frontier."
+</Aside>
+
+Specialising is only half the story — the countries still have to agree on an exchange rate between gadgets and grain. That rate is the **terms of trade**, and there's a firm rule about where it can sit.
+
+Each country will only trade if the deal beats making the good itself:
+
+- Northia makes a gadget for **2 sacks** at home, so it will only sell a gadget for **more than 2 sacks**.
+- Southia makes a gadget for **4 sacks** at home, so it will only buy a gadget for **less than 4 sacks**.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Terms of trade must satisfy…</span>
+    <code>2 sacks &lt; price of 1 gadget &lt; 4 sacks</code>
+  </div>
+  <div>
+    <span class="name">Lower bound</span>
+    Northia's own cost of a gadget — sell for less and Northia won't bother.
+  </div>
+  <div>
+    <span class="name">Upper bound</span>
+    Southia's own cost of a gadget — pay more and Southia would just make its own.
+  </div>
+</div>
+
+The trade price has to land **between the two countries' opportunity costs**. Any figure in that band leaves *both* sides better off; the exact split just decides who pockets more of the gain. Let's say they settle on a round **3 sacks per gadget** and each country specialises completely.
+
+**Northia** puts all 100 workers on gadgets → 400 gadgets. **Southia** puts all 100 workers on grain → 400 sacks. Now they swap **40 gadgets for 120 sacks** (that's the 3-to-1 rate). Compare each country's final basket with the best it could have done alone:
+
+| | Gadgets held | Grain held | vs. going it alone |
+|---|---|---|---|
+| **Northia** — specialise + trade | 360 | 120 | — |
+| **Northia** — make both itself (for the same 120 sacks) | 340 | 120 | **+20 gadgets** |
+| **Southia** — specialise + trade | 40 | 280 | — |
+| **Southia** — make both itself (for the same 40 gadgets) | 40 | 240 | **+40 sacks** |
+
+Read the Northia rows: to enjoy 120 sacks of grain at home, Northia would have to divert 15 workers off gadgets, dropping it to 340 gadgets. Through trade it keeps **360**. Southia's story mirrors it — buying 40 gadgets from Northia costs it only 120 sacks, whereas making those gadgets itself would have cost 160 sacks. **Both countries end up outside their own production-possibility frontier** — the menu of baskets they could physically produce alone. That extra consumption, conjured out of nothing but a smarter division of labour, *is* the gains from trade.
+
+<Aside type="caution">
+**"Both gain" is not "both gain equally."** The gains are real, but they're split according to where the price lands in the 2-to-4 band, and *within* each country there are winners and losers (the grain farmers in gadget-specialising Northia don't thank anyone). Trade grows the total pie — a **Kaldor–Hicks improvement**, where winners gain enough to *could* compensate losers — but it doesn't promise everyone a bigger slice. Hold that thought; it's exactly why tariffs are politically tempting.
+</Aside>
+
+## 4 · What decides a country's comparative advantage?
+
+Comparative advantage isn't fixed by geography alone — it's whatever makes a country's *relative* opportunity costs low, and that shifts over time as economies invest and develop:
+
+<div class="sc-chips">
+  <span class="sc-chip">Natural resources</span>
+  <span class="sc-chip amber">Factor endowments <small>(land, labour, capital)</small></span>
+  <span class="sc-chip green">Technology</span>
+  <span class="sc-chip violet">Human capital &amp; skills</span>
+  <span class="sc-chip">Institutions &amp; legal system</span>
+  <span class="sc-chip amber">Infrastructure</span>
+  <span class="sc-chip green">Climate &amp; geography</span>
+</div>
+
+Oil-rich Saudi Arabia exports petroleum; low-wage, labour-abundant Bangladesh exports textiles; skill-heavy Germany exports precision machinery. None of this is an accident — it's each country producing what it sacrifices least to make. And because these drivers can be *built* (a training programme, a new port, a research cluster), comparative advantage is something policy can shape, not just inherit.
+
+## 5 · Opening the border: who wins from imports and exports
+
+The comparative-advantage story explains *why* countries specialise. Looking at a single market with our surplus tools (from the demand-and-supply chapters) shows *who* inside a country feels it. When a market opens up, the domestic price jumps to the **world price**, and which way it jumps decides the winners:
+
+| Case | World price vs domestic | Domestic price | Consumer surplus | Producer surplus | Total surplus |
+|---|---|---|---|---|---|
+| **Imports** | World price **lower** | Falls to world price | **Up** (cheaper, buy more) | Down (undercut) | **Up** |
+| **Exports** | World price **higher** | Rises to world price | Down (pricier, buy less) | **Up** (sell abroad, higher price) | **Up** |
+
+The pattern is symmetric. With **imports**, consumers gain more than producers lose; with **exports**, producers gain more than consumers lose. Either way the **total surplus rises** — a **Kaldor–Hicks improvement**: the winners gain enough that they *could* fully compensate the losers and still be ahead. But notice the sting in the tail — in each case one group at home is a genuine loser, and that loser is exactly who shows up asking the government for a tariff.
+
+## 6 · Tariffs: protecting the few at a cost to the many
+
+Free trade lowers the price consumers pay and hands production to whoever's cheapest — but the domestic producers who *lose* that competition have every reason to lobby for shelter. The classic shelter is a **tariff**: a **tax on imported goods**.
+
+Picture a country that imports gadgets at a world price of, say, **100 euros**. Domestic firms can't match that, so consumers buy imports. Now the government adds a **20-euro tariff** per gadget: imports arrive priced at **120 euros**, and the whole domestic market rises with them. At 120 euros, local firms who couldn't survive at 100 can suddenly compete, so **domestic production climbs, consumption falls, and imports shrink**. Walk through what that single price rise does to everyone:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Winners</div>
+    <ul>
+      <li><strong>Domestic producers</strong> — the higher price lets them sell more, at more, so their producer surplus grows. This is the "protection" the tariff is sold on.</li>
+      <li><strong>The government</strong> — it collects tariff revenue on every unit still imported (tax per unit × imports).</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Losers</div>
+    <ul>
+      <li><strong>Domestic consumers</strong> — they pay the higher price and buy less. Their consumer surplus shrinks by a lot — more than the producer and government gains combined.</li>
+    </ul>
+  </div>
+</div>
+
+Using the surplus tools from the earlier chapters, we can tally the whole thing up. The consumers' loss is the big rectangle-plus-triangles under the demand curve; part of it is simply *transferred* to producers and to the government, but two slices are lost to **no one** — they vanish:
+
+| Welfare component | Effect of the tariff |
+|---|---|
+| Consumer surplus | **Falls** (biggest change) |
+| Producer surplus | Rises (transfer from consumers) |
+| Government revenue | Rises (transfer from consumers) |
+| **Deadweight loss** | **Appears** — pure efficiency loss |
+| **Total welfare** | **Falls** |
+
+That leftover — the **deadweight loss (DWL)** — is the heart of the matter. It has two sources:
+
+1. **Production inefficiency.** The tariff coaxes *high-cost* domestic firms into making units that the world could have supplied more cheaply. Real resources are wasted making things the hard way.
+2. **Consumption loss.** Some consumers who valued the good above the world price, but not above the tariff-inflated price, simply go without — a trade that *would* have made both sides better off never happens.
+
+<Aside type="note">
+**The verdict.** A tariff genuinely does protect local suppliers — that part of the sales pitch is true. But the consumer loss is strictly larger than the producer gain plus the government's revenue, so society as a whole comes out **behind**. The protection is real; it's just paid for by everyone else, plus a slice that nobody collects at all. (A production subsidy, incidentally, protects the same producers with a *smaller* deadweight loss, since it doesn't distort what consumers pay — but it spends taxpayer money to prop up inefficient production.)
+</Aside>
+
+## 7 · Trade policy is a prisoner's dilemma
+
+If tariffs shrink total welfare, why are they everywhere? Because from *one* country's point of view, a tariff can look like a winner — and that self-interested logic traps everyone. This is the **prisoner's dilemma** from the game-theory chapter, wearing a trade-policy costume.
+
+Two countries — say **Northia** and **Southia** again — each choose **free trade** or **tariff**. Free trade all round is jointly best. But slap a tariff on while your partner stays open, and you protect your producers *and* keep exporting freely — you come out ahead in the short run. Here are the welfare payoffs (Northia's first, Southia's second):
+
+<div class="sc-fig">
+<table class="sc-matrix">
+  <thead>
+    <tr><th>Northia ↓ &nbsp;/&nbsp; Southia →</th><th>Free trade</th><th>Tariff</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>Free trade</th><td>4 , 4</td><td>1 , 5</td></tr>
+    <tr><th>Tariff</th><td>5 , 1</td><td class="hl">2 , 2</td></tr>
+  </tbody>
+</table>
+<figcaption>The tariff game. Each country's best reply is always "tariff", so both land on <strong>(2 , 2)</strong> — worse for everyone than the <strong>(4 , 4)</strong> they'd get from mutual free trade.</figcaption>
+</div>
+
+Follow the reasoning each country goes through:
+
+- *If my partner keeps free trade,* I get **5** by imposing a tariff versus **4** by staying open → tariff wins.
+- *If my partner imposes a tariff,* I get **2** by matching versus **1** by staying open → tariff wins again.
+
+So "tariff" is a **dominant strategy** — better no matter what the other side does. Both reach for it, and they settle at **(2, 2)**: the **Nash equilibrium**, where nobody can improve by switching alone. Yet **(4, 4)** — mutual free trade — would leave both better off. Individually rational choices produce a collectively worse outcome. That's the dilemma, and it's the economic engine behind real **trade wars**: the US–China tariff exchanges of recent years walked straight into this box, and both economies bore the deadweight cost.
+
+<Aside type="tip">
+**Escaping the trap — the game-theory chapter's toolkit.** Countries play this game **over and over**, not once. In a repeated game a country can hold cooperation together with a **grim-trigger** threat: *"I'll keep free trade — but the first time you cheat, I retaliate with tariffs forever."* If both sides value the future enough (a high discount factor), the fear of losing all future gains from trade outweighs the one-time tariff windfall, and free trade becomes sustainable. Institutions like the **WTO** are this idea made concrete: they monitor policies, enforce agreements, and license retaliation, nudging countries from the (2, 2) trap toward (4, 4). The catch is the **last-period effect** — in a game with a known final round, cooperation unravels backward from the end, which is why lasting trade deals are open-ended rather than fixed-term.
+</Aside>
+
+## 8 · So why does protection persist anyway?
+
+The economics is lopsided — free trade grows the pie — yet tariffs never disappear. The reason isn't bad economics; it's **politics**, and it turns on *how the winners and losers are arranged*.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Concentrated benefits</div>
+    <ul>
+      <li>A tariff's gains pile onto a <strong>small, organised group</strong> — one industry, its firms and workers.</li>
+      <li>Each member gains a lot, so each has a strong incentive to lobby, donate, and campaign.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Diffuse costs</div>
+    <ul>
+      <li>The larger loss is smeared thinly across <strong>millions of consumers</strong>, a few cents or euros each.</li>
+      <li>No single consumer feels it enough to fight back — so nobody organises against it.</li>
+    </ul>
+  </div>
+</div>
+
+A well-organised handful with a lot to gain will out-shout a vast, distracted crowd with a little to lose each — even when the crowd's total loss is bigger. So the policy that's worse for society can still be the one that's best for a politician chasing support. That's not a footnote; it's the whole subject of the next chapter, where the government stops being a benevolent referee and becomes just another self-interested player.
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Absolute advantage** = making more with the same inputs; **comparative advantage** = making it at a **lower opportunity cost**. Trade runs on the second, not the first.
+- Even a country that's better at **everything** gains from trade: each side specialises in the good it **sacrifices least** to make, then swaps. (Northia → gadgets, Southia → grain.)
+- The **terms of trade** must sit **between the two countries' opportunity costs** (2 to 4 sacks per gadget in our example). Anywhere in that band, both sides consume **beyond their own production frontier** — the gains from trade.
+- A **tariff** is a tax on imports. It protects domestic producers and raises government revenue, but consumers lose more than those two gain, leaving a **deadweight loss** — society is worse off overall.
+- Trade policy is a **prisoner's dilemma**: "tariff" is each country's dominant strategy, so both land in a mutual-tariff trap that's worse than mutual free trade. **Repeated play, grim-trigger threats, and the WTO** are how countries climb back out.
+- Protection survives because its **benefits are concentrated** (a lobby that fights hard) while its **costs are diffuse** (consumers who barely notice) — the bridge to political economy.
+</Aside>
+
+*Next: [Political Economy →](/learnings/mba/economics-and-law/08-political-economy/) — when the government itself is just another self-interested player.*

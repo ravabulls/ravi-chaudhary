@@ -1,0 +1,261 @@
+---
+title: "Efficiency & Welfare"
+description: "Measuring what a market is worth: consumer and producer surplus, the two ideas of efficiency (Pareto and Kaldor-Hicks), and the tension between efficiency and justice (Rawls and the veil of ignorance)."
+sidebar:
+  label: "3 · Efficiency & Welfare"
+  order: 3
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Economics & Law — NIT Northern Institute of Technology / TUHH, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Chapter 2 got a market to settle on a price and a quantity. This chapter asks the follow-up question a lawyer and an economist both care about: **is that a good outcome?** To answer it we need a way to *measure* how much value a market creates — and then a definition of what "good" even means. That second part is where economics and law start to pull in slightly different directions, and the last section is about how to reconcile them.
+
+<Aside type="tip">
+**The whole chapter in one line:** a trade creates **surplus** (value over and above what people paid or spent). Add up everyone's surplus and you get the **size of the pie** — total welfare. **Efficiency** is about making that pie as big as possible; **justice** is about how you slice it. Good policy usually has to worry about both.
+</Aside>
+
+## 1 · Consumer surplus: getting more than you paid for
+
+Start with a simple observation. When you buy something, you often would have been *willing* to pay more than you actually did. You would have paid 8 euros for that coffee on a freezing morning; the café charged 3. That leftover 5 euros of value you pocketed is your **consumer surplus** — a bonus you keep because the price was lower than what the coffee was worth to you.
+
+**Consumer surplus** — the gap between what a buyer was *willing* to pay for a good and what they *actually* paid. Summed across all buyers, it is a measure of the welfare consumers gain from a market.
+
+Where does the "willing to pay" number come from? The **demand curve**. Recall from Chapter 2 that the demand curve traces, for each unit, the most someone would pay for it. The first units go to people who value the good highly (high willingness to pay); later units go to people who barely value it above the price. Everyone, though, pays the **same single market price**. So for almost every unit sold, buyers paid *less* than their personal maximum.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Willingness to pay<span class="sub">the demand curve — the top edge</span></div>
+    <span class="arrow">−</span>
+    <div class="sc-node slate">Price actually paid<span class="sub">the flat market price — the bottom edge</span></div>
+    <span class="arrow">=</span>
+    <div class="sc-node green">Consumer surplus<span class="sub">the wedge in between</span></div>
+  </div>
+  <figcaption>Consumer surplus is the area <strong>under the demand curve and above the price line</strong> — the stack of little "bonuses" that every buyer keeps because they paid less than their personal maximum.</figcaption>
+</div>
+
+### Worked example: finding the triangle
+
+Numbers make this concrete. Suppose the demand curve for some good is
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Demand</span>
+    <code>P = 8 − 2Q</code>
+  </div>
+  <div>
+    <span class="name">P</span>
+    the price (in euros)
+  </div>
+  <div>
+    <span class="name">Q</span>
+    the quantity demanded at that price
+  </div>
+</div>
+
+and the market clears at a price of **P = 2**. To measure consumer surplus we find the corners of the wedge, then use the area formula from school geometry.
+
+<Steps>
+
+1. **Top corner (point A).** Where the demand curve hits the vertical axis, nobody has bought anything yet, so **Q = 0**. Plug in: `P = 8 − 2(0) = 8`. The very first, most eager buyer would have paid **8**.
+
+2. **Bottom corner (point B).** At the market price **P = 2**, how many units sell? Set `2 = 8 − 2Q`, which gives `2Q = 6`, so **Q = 3**. Buyers purchase **three units** when the price is 2.
+
+3. **The height** of the wedge is the drop from the top corner's price down to the market price: `8 − 2 = 6`.
+
+4. **The base** is the quantity traded: `Q = 3`.
+
+5. **The area** of the triangle is `½ × base × height = ½ × 3 × 6 =` **9**.
+
+</Steps>
+
+So consumers, as a group, walk away with **9 euros of surplus** — value they enjoyed beyond what they handed over. That single number is the market's gift to the buying side.
+
+<Aside type="note">
+**Why a triangle?** Because demand is a straight, downward-sloping line and the price is flat, the "leftover value" region is a right-angled triangle sitting on top of the price line. Steeper (more inelastic) demand makes that triangle fatter — buyers who *really* need the good keep a bigger bonus. Flatter demand makes it thinner.
+</Aside>
+
+## 2 · Producer surplus: the seller's half of the pie
+
+Sellers get their own version of the same bonus. A producer has some **cost** of making each unit — the supply curve traces those costs. If the market price sits *above* what it cost to produce a unit, the seller keeps the difference. That difference, summed over all units, is the **producer surplus** (also called supplier surplus).
+
+**Producer surplus** — the price a seller receives minus the cost of producing the good. On the diagram it is the area **above the supply curve and below the price line** — the mirror image of consumer surplus.
+
+Put the two wedges together and you have measured the **entire value the market created**:
+
+<div class="sc-split">
+  <div class="sc-panel">
+    <div class="head">Consumer surplus <small>buyers' bonus</small></div>
+    <ul>
+      <li>Willingness to pay minus price</li>
+      <li>Area <strong>under demand, above price</strong></li>
+      <li>The gain to the buying side</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Producer surplus <small>sellers' bonus</small></div>
+    <ul>
+      <li>Price minus production cost</li>
+      <li>Area <strong>above supply, below price</strong></li>
+      <li>The gain to the selling side</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sc-formula">
+  <div>
+    <span class="name">The size of the pie</span>
+    <code>Total surplus = Consumer surplus + Producer surplus</code>
+  </div>
+</div>
+
+This **total surplus** is the number economists reach for when they ask "how much is this market worth to society?" A rule, tax, or intervention that shrinks the pie is destroying value; one that grows it is creating value. That framing — the pie — is what the rest of the chapter is built on.
+
+## 3 · Two ideas of efficiency
+
+Economists say an outcome is **efficient** when it makes good use of scarce resources — but there are two different, precise versions of that idea, and they disagree. Getting the difference straight is one of the most useful things in the whole course.
+
+### 3.1 · Pareto efficiency — nobody can win without someone losing
+
+**Pareto efficiency** (named after Vilfredo Pareto) — an allocation is Pareto efficient when you **cannot make anyone better off without making at least one other person worse off**. Every possible gain has been squeezed out; the only way left to help one person is to hurt another.
+
+The gentler, everyday cousin of this is a **Pareto improvement**: a change that makes **at least one person better off and nobody worse off**. A Pareto improvement is an unambiguous win — literally no one can object, because no one loses. The catch is that in the real world, almost every interesting policy creates *some* loser, so pure Pareto improvements are rare. Pareto efficiency is a demanding, cautious standard.
+
+### 3.2 · Kaldor-Hicks efficiency — grow the pie, worry about slices later
+
+**Kaldor-Hicks efficiency** loosens the rule. A change is a **Kaldor-Hicks improvement** if the winners gain *so much* that they **could hypothetically compensate the losers and still come out ahead**. The crucial word is *hypothetically* — the compensation **does not actually have to be paid**. All Kaldor-Hicks asks is that the **total pie grows**; it stays silent on who ends up with the slices. This means a Kaldor-Hicks improvement **can genuinely leave some people worse off** in practice.
+
+<Aside type="note">
+**Vocabulary alert.** When economists (and this course) say **"efficiency"** with no qualifier, they almost always mean **Kaldor-Hicks**. It is the workhorse standard precisely because it does not demand that literally nobody loses — it just asks whether total welfare went up.
+</Aside>
+
+<div class="sc-split">
+  <div class="sc-panel">
+    <div class="head">Pareto <small>the cautious test</small></div>
+    <ul>
+      <li>Improvement = someone gains, <strong>nobody loses</strong></li>
+      <li>Efficient = no more free wins left</li>
+      <li>Losers can <strong>veto</strong>; hard to satisfy</li>
+      <li>Cares about winners <em>and</em> losers</li>
+    </ul>
+  </div>
+  <div class="sc-panel eff">
+    <div class="head">Kaldor-Hicks <small>the workhorse test</small></div>
+    <ul>
+      <li>Improvement = <strong>total pie grows</strong></li>
+      <li>Winners <em>could</em> compensate losers…</li>
+      <li>…but <strong>need not actually do so</strong></li>
+      <li>Some people <strong>may end up worse off</strong></li>
+    </ul>
+  </div>
+</div>
+
+### 3.3 · Worked example: Homer, Bart and one slice of bacon
+
+The classic teaching example nails all four terms at once. **Homer** loves bacon and values a slice at **10 euros**. **Bart** also likes it, but values the same slice at only **5 euros**. You hold one slice and must decide what to do with it. The **baseline** is that nobody has any bacon (everyone at 0).
+
+| Option | Homer's value | Bart's value | **Total (the pie)** |
+|---|---|---|---|
+| **Baseline** — no one gets it | 0 | 0 | **0** |
+| **1 · Give it all to Homer** | 10 | 0 | **10** |
+| **2 · Give it all to Bart** | 0 | 5 | **5** |
+| **3 · Split it in half** | 5 | 2.5 | **7.5** |
+| **4 · Half to Homer, bin the rest** | 5 | 0 | **5** |
+
+Now read the definitions off the table:
+
+<div class="sc-tiers" style="overflow-x:auto;">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Pareto improvements<span class="n">vs. baseline</span></div>
+    <div class="sc-node green soft">Options 1, 2, 3 &amp; 4<span class="sub">every option helps someone and hurts no one, so all four beat "nobody gets bacon"</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Pareto efficient<span class="n">no free win left</span></div>
+    <div class="sc-node violet soft">Options 1, 2 &amp; 3<span class="sub">Option 4 is NOT — you can move to Option 3 and help Homer without hurting Bart</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Kaldor-Hicks efficient<span class="n">biggest pie</span></div>
+    <div class="sc-node amber soft">Option 1 only<span class="sub">total = 10, the largest pie of all; Homer could hand Bart something and still win</span></div>
+  </div>
+</div>
+
+Walk through the logic:
+
+- **All four options are Pareto improvements over the baseline** — each gives value to someone (Homer, Bart, or both) while leaving the other person no worse than their starting 0.
+- **Options 1, 2 and 3 are Pareto efficient**, but **Option 4 is not**. Why? Because from Option 4 you can switch to Option 3, which raises Bart from 0 to 2.5 *without touching Homer's 5*. A free win still exists at Option 4, so it fails the Pareto test. Throwing half the bacon in the bin is exactly the kind of pure waste Pareto efficiency rules out.
+- **Only Option 1 is Kaldor-Hicks efficient** — it produces the **biggest total pie (10)**. Because Homer values bacon more than Bart does, putting it all in Homer's hands squeezes out the most total value. In principle Homer could give Bart a euro or two as compensation and *still* be ahead — but Kaldor-Hicks does not require him to.
+
+<Aside type="caution">
+**Notice the discomfort.** The Kaldor-Hicks "winner" is **Option 1**, which gives Bart **nothing at all**. Maximising the pie handed the entire slice to the person who was already the bigger bacon-lover, and left the other kid empty-handed. That is efficient — and it might also feel *unfair*. Hold that thought; it is the whole point of the next section.
+</Aside>
+
+## 4 · Efficiency versus justice
+
+The bacon example exposes the fault line. Kaldor-Hicks efficiency is a **utilitarian** goal: it tries to **maximise the sum of everyone's utility** — the total pie — and is deliberately indifferent to how that pie is divided. If handing everything to one person makes the total biggest, so be it.
+
+**Utilitarianism** — the ethical view that the best outcome is the one that maximises the *total* of everyone's welfare (utility) added together. Distribution between people is not, in itself, a concern.
+
+A lawyer's instinct often runs the other way. Jurists tend to care about **distributive justice** — how fairly wealth and welfare are *shared out*, and especially about **equality**. To a lawyer, an outcome that maximises the total but leaves someone with nothing can be a *bad* outcome, no matter how big the pie. So how do we settle these two views?
+
+### 4.1 · Rawls and the veil of ignorance
+
+The philosopher **John Rawls** offered a famous thought experiment for thinking about fairness. Imagine you must design the rules of society **before you know who you will be in it** — rich or poor, healthy or sick, talented or not. You choose from behind a **"veil of ignorance"** that hides your future position.
+
+**Veil of ignorance** — Rawls' device: pick the rules of society as if you had no idea which slot in it you will occupy. Because you might turn out to be the worst-off person, self-interest itself pushes you to protect that position.
+
+The striking conclusion Rawls draws is a very different welfare rule from the utilitarian one. Behind the veil, a rational, risk-wary person cares most about **not being destitute if they land at the bottom**. So social welfare, on this view, **rises only when the worst-off person is made better off**. Giving more to the already-comfortable does nothing; giving more to the *poorest* is what counts.
+
+<div class="sc-split">
+  <div class="sc-panel">
+    <div class="head">Utilitarian <small>Kaldor-Hicks</small></div>
+    <ul>
+      <li>Goal: maximise the <strong>sum</strong> of utilities</li>
+      <li>The <strong>total pie</strong> is all that matters</li>
+      <li>Blind to distribution — a loser is fine if the total rose</li>
+      <li>Bacon → <strong>give it to Homer</strong> (biggest total)</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Rawlsian <small>veil of ignorance</small></div>
+    <ul>
+      <li>Goal: lift the <strong>worst-off</strong> person</li>
+      <li>Welfare rises <strong>only</strong> when the poorest gains</li>
+      <li>Deeply concerned with distribution and equality</li>
+      <li>Bacon → worry that <strong>Bart got nothing</strong></li>
+    </ul>
+  </div>
+</div>
+
+### 4.2 · Reconciling the two
+
+These look like rival worldviews, but economics is more flexible than it first appears, and two moves bring them much closer together.
+
+<Steps>
+
+1. **Economics can maximise *any* welfare function — not only the utilitarian sum.** The mathematical toolkit for "find the allocation that makes some objective as large as possible" does not care what the objective is. Feed it the utilitarian sum and you get Kaldor-Hicks. Feed it **Rawls' rule** ("make the worst-off person as well off as possible") and the very same machinery optimises *that* instead. Efficiency is a method; the goal is a choice you plug in.
+
+2. **Utility functions can include altruism.** The homo economicus from Chapter 1 was assumed purely self-interested, but that assumption can be relaxed. If **I genuinely gain utility from helping the poor**, then me "selfishly" maximising my own utility will *automatically* channel resources toward the poor — because their well-being is now part of what I value. Selfishness and fairness stop being opposites once caring about others is written into the preferences.
+
+</Steps>
+
+<Aside type="tip">
+**The reconciliation in a sentence.** Efficiency (maximising) is a **tool**, not a value. Economists usually point it at the utilitarian pie, but they can just as well point it at a Rawlsian or any other **social welfare function** — and once utility includes concern for others, the economist's "efficient" outcome and the lawyer's "just" outcome can move a long way toward each other.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Consumer surplus** = willingness to pay minus price = the area **under the demand curve and above the price**. For `P = 8 − 2Q` at a price of 2: corners at (Q=0, P=8) and (Q=3, P=2), so area = `½ × 3 × 6 =` **9**.
+- **Producer surplus** = price minus production cost = the area **above the supply curve and below the price**. **Total surplus = consumer + producer surplus** — the "size of the pie", the value a market creates.
+- **Pareto efficiency**: you can't help anyone without hurting someone. A **Pareto improvement** helps someone and harms **nobody** — a rare, uncontroversial win.
+- **Kaldor-Hicks efficiency**: winners *could hypothetically* compensate losers and still gain — so the change just needs to **grow the total pie**, and it **can leave some people worse off**. "Efficiency" usually means Kaldor-Hicks.
+- **Homer & Bart bacon** (Homer values it 10, Bart 5): all four options beat the baseline (Pareto improvements); Options 1-3 are Pareto efficient (Option 4 wastes half); **only Option 1 is Kaldor-Hicks efficient** (biggest pie = 10) — but it leaves Bart with nothing.
+- **Efficiency vs justice**: Kaldor-Hicks is **utilitarian** (maximise the sum) and can be unfair; lawyers care about **distributive justice**. **Rawls' veil of ignorance** says welfare rises only when the **worst-off** improve. The two reconcile because economics can maximise **any** welfare function, and utility can include **altruism**.
+</Aside>
+
+*Next: [Game Theory →](/learnings/mba/economics-and-law/04-game-theory/) — what happens when my best move depends on yours.*

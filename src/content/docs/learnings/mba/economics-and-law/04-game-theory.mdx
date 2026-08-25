@@ -1,0 +1,277 @@
+---
+title: "Game Theory"
+description: "What happens when my best move depends on yours — strategic interaction, the prisoner's dilemma, dominant strategies (strict and weak) and Nash equilibrium, and why rational individuals often fail to cooperate."
+sidebar:
+  label: "4 · Game Theory"
+  order: 4
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Economics & Law — NIT Northern Institute of Technology / TUHH, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+So far, every decision-maker in these notes has faced a world that just *sits there*: prices are given, the budget is fixed, and I quietly maximise. But a lot of the interesting problems in economics and law aren't like that. My best move depends on *your* move — and yours depends on mine. Two firms setting prices, two countries deciding whether to arm, two suspects deciding whether to talk. That tangle of "it depends what you do" is exactly what **game theory** is built to untangle.
+
+<Aside type="tip">
+**The whole idea in one line:** when outcomes depend on *everyone's* choices at once, each person has to reason about what the others will rationally do — and, strikingly, everyone reasoning perfectly in their own interest can land the group in a spot that's worse for everybody.
+</Aside>
+
+## 1 · What game theory is
+
+**Game theory** is a framework for analysing **strategic interactions** — situations where the result for each person depends not just on their own choice but on what the others choose too. It gives us a tidy vocabulary:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Players<span class="sub">the decision-makers</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Strategies<span class="sub">the moves each can pick</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Payoffs<span class="sub">what each gets from an outcome</span></div>
+  </div>
+  <figcaption>A <strong>game</strong> is just these three things: who is choosing, what they can choose, and what each combination of choices is worth to them.</figcaption>
+</div>
+
+- **Players** — the parties making choices (people, firms, governments).
+- **Strategies** — the options open to each player (confess or stay quiet, enter or stay out, high price or low price).
+- **Payoffs** — a number for how good an outcome is *for that player* (profit, years of freedom, utility).
+
+The default assumption we'll use is **non-cooperative game theory**: every player is **selfish** and cares only about their own payoff. They can't make binding promises to each other. As we'll see, this self-interest is precisely what often *blocks* the cooperation that would have made everyone better off.
+
+<Aside type="note">
+**"Non-cooperative" is a technical label, not an insult.** It doesn't mean the players are hostile. It means there's no outside enforcer holding them to a deal — each acts on their own account. Much of what law and institutions do, later in these notes, is exactly to supply that missing enforcer.
+</Aside>
+
+## 2 · The prisoner's dilemma
+
+The most famous game of all, and the one worth knowing cold. Here's the story.
+
+Two robbers are hauled in for questioning and put in **separate rooms** — they can't talk to each other. The police can definitely pin a minor **theft** charge on both, but they can't prove the serious **robbery** unless someone talks. So each suspect is offered the same deal:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node slate">Both confess<span class="sub">5 years each</span></div>
+    <div class="sc-node slate">Neither confesses<span class="sub">1 year each — only the theft sticks</span></div>
+    <div class="sc-node amber">One confesses, the other stays quiet<span class="sub">the snitch walks free · the silent one gets 10 years</span></div>
+  </div>
+  <figcaption>Each suspect is offered the same terms and must decide <strong>alone</strong>, not knowing what the other will do.</figcaption>
+</div>
+
+If I'm one of the robbers — what do I do?
+
+### The payoff matrix
+
+We write this down as a **payoff matrix**. Prison years are *bad*, so we record them as **negative payoffs** (a longer sentence is a more negative number). Player 1 picks a **row**; Player 2 picks a **column**.
+
+| Player 1 ↓ / Player 2 → | Player 2: Confess | Player 2: Don't confess |
+|---|---|---|
+| **Player 1: Confess** | (−5, −5) | (0, −10) |
+| **Player 1: Don't confess** | (−10, 0) | (−1, −1) |
+
+**How to read a cell.** Inside each cell there are two numbers. The **left** number is **Player 1's** payoff; the **right** number is **Player 2's** payoff. So the cell (0, −10) means: *Player 1 gets 0 (walks free) and Player 2 gets −10 (ten years)* — this is the corner where Player 1 confessed and Player 2 stayed silent.
+
+### The jointly best outcome — and why they miss it
+
+Look for the outcome that is best for the **pair taken together**. That's the bottom-right cell, **(−1, −1)**: neither confesses, and they serve just one year each. Total prison time is smallest here — this is the **Kaldor–Hicks efficient** outcome (it produces the biggest total "pie" of wellbeing across the two of them).
+
+And yet, if each robber quietly maximises *only their own* payoff, they don't end up there. Here's the trap, from Player 1's point of view:
+
+- *Suppose Player 2 confesses.* Then I choose between −5 (I also confess) and −10 (I stay quiet). **−5 beats −10 → I confess.**
+- *Suppose Player 2 stays quiet.* Then I choose between 0 (I confess) and −1 (I stay quiet). **0 beats −1 → I confess.**
+
+Whatever Player 2 does, my best reply is **confess**. The game is symmetric, so the same logic drives Player 2 to confess too. Both confess — landing in **(−5, −5)**, five years each — even though **(−1, −1)** was sitting right there, better for *both* of them. That gap between what's individually rational and what's collectively best is the **dilemma**.
+
+<Aside type="caution">
+**Why they can't just agree.** Even if the two robbers swore an oath beforehand to stay silent, once they're in separate rooms each has a private incentive to break it (0 beats −1). With no way to *enforce* the promise, the cooperative outcome unravels. Hold onto this — it's the whole reason the dilemma matters for law.
+</Aside>
+
+## 3 · Dominant strategies
+
+The move "confess" in that game has a special property: it was my best reply **no matter what** the other player did. That's a **dominant strategy**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Ask: "If my opponent picks X, what's my best move?"<span class="sub">then ask again for Y, for Z…</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">If the answer is the <strong>same move every time</strong> → that move is a dominant strategy</div>
+  </div>
+  <figcaption>A dominant strategy is a move you'd want to play <strong>whatever</strong> the other players do — so you don't even need to predict them.</figcaption>
+</div>
+
+There are two grades of "dominant", and the difference is only about ties:
+
+<div class="sc-split">
+  <div class="sc-panel">
+    <div class="head">Strictly dominant <small>strictly better</small></div>
+    <ul>
+      <li>Gives a <strong>strictly higher</strong> payoff than the alternative in <strong>every</strong> case the opponent might create.</li>
+      <li>"Confess" in the original prisoner's dilemma: −5 beats −10, <em>and</em> 0 beats −1. Better in both cases.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Weakly dominant <small>at least as good</small></div>
+    <ul>
+      <li>Gives a payoff that is <strong>at least as good</strong> in every case, and <strong>strictly better</strong> in at least one.</li>
+      <li>Think of the maths shorthand "x is weakly greater than y" for x ≥ y — same idea: never worse, sometimes better.</li>
+    </ul>
+  </div>
+</div>
+
+**A weak variant of the robbers' game.** Suppose the "neither confesses" cell paid **(0, 0)** instead of (−1, −1). Now, if the other player *doesn't* confess, my two options are 0 (confess) and 0 (stay quiet) — a **tie**. If the other player *does* confess, it's −5 (confess) versus −10 (quiet) — confess wins. So confessing is now **at least as good always, strictly better once**: it's only **weakly** dominant, not strictly.
+
+### Worked examples — spotting strict, weak and neither
+
+Here are four little 2×2 games. In each, **Player 1 picks the row (A or B)** and **Player 2 picks the column (A or B)**; cells read (Player 1, Player 2). Let's classify each player's situation.
+
+**Game I**
+
+| P1 ↓ / P2 → | A | B |
+|---|---|---|
+| **A** | (1, 1) | (0, 0) |
+| **B** | (0, 0) | (0, 0) |
+
+**Game II**
+
+| P1 ↓ / P2 → | A | B |
+|---|---|---|
+| **A** | (1, 2) | (1, 1) |
+| **B** | (0, 0) | (2, 0) |
+
+**Game III**
+
+| P1 ↓ / P2 → | A | B |
+|---|---|---|
+| **A** | (1, 1) | (1, 1) |
+| **B** | (1, 1) | (1, 1) |
+
+**Game IV**
+
+| P1 ↓ / P2 → | A | B |
+|---|---|---|
+| **A** | (9, 1) | (0, 0) |
+| **B** | (8, 0) | (−2, −1) |
+
+Let me reason through **Player 1** (comparing rows A vs B, holding Player 2's column fixed):
+
+- **Game I** — if P2 plays A: 1 (row A) vs 0 (row B) → A. If P2 plays B: 0 vs 0 → tie. Never worse, better once → **weakly dominant A**.
+- **Game II** — if P2 plays A: 1 vs 0 → A. If P2 plays B: 1 vs 2 → B. Best row flips → **neither** (no dominant strategy).
+- **Game III** — every payoff is 1; both rows are always tied → **neither** (nothing dominates).
+- **Game IV** — if P2 plays A: 9 vs 8 → A. If P2 plays B: 0 vs −2 → A. Strictly better both times → **strictly dominant A**.
+
+And **Player 2** (comparing columns A vs B, holding Player 1's row fixed):
+
+- **Game I** — if P1 plays A: 1 vs 0 → A. If P1 plays B: 0 vs 0 → tie → **weakly dominant A**.
+- **Game II** — if P1 plays A: 2 vs 1 → A. If P1 plays B: 0 vs 0 → tie → **weakly dominant A**.
+- **Game III** — all payoffs tie → **neither**.
+- **Game IV** — if P1 plays A: 1 vs 0 → A. If P1 plays B: 0 vs −1 → A. Strictly better both → **strictly dominant A**.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Same best move + always strictly ahead<span class="sub">strictly dominant</span></div>
+    <span class="arrow">·</span>
+    <div class="sc-node amber">Same best move, but ties somewhere<span class="sub">weakly dominant</span></div>
+    <span class="arrow">·</span>
+    <div class="sc-node violet">Best move depends on the opponent<span class="sub">neither</span></div>
+  </div>
+  <figcaption>The test is always the same: fix the opponent's choice, compare your own moves, and see whether one move wins <strong>every</strong> comparison — strictly, or with ties.</figcaption>
+</div>
+
+<Aside type="note">
+**A dominant strategy is a gift, when you have one.** It means you can ignore all the mind-reading and just play your best move. But most interesting games — like Game II and Game III above — have no dominant strategy for at least one player. For those, we need a broader idea.
+</Aside>
+
+## 4 · Nash equilibrium
+
+Named after **John Nash** (1928–2015, Nobel laureate 1994), the **Nash equilibrium** is *the* central solution concept in game theory. It's more general than dominant strategies — dominant-strategy play is just a special, tidy case of it.
+
+<Aside type="tip">
+**Nash equilibrium, plainly:** a combination of strategies where **no single player can do better by changing their own move on their own**, while everyone else keeps theirs. Everyone is simultaneously giving their **best response** to what everyone else is doing. Nobody has a regret they can fix alone.
+</Aside>
+
+### How to find one
+
+The mechanical test is to walk around the matrix looking for a **profitable deviation**:
+
+<Steps>
+
+1. Pick any cell (a combination of choices).
+
+2. Ask each player in turn: *"Holding the other player's choice fixed, could I raise my own payoff by switching my move?"*
+
+3. If **yes** for anyone, that cell is **not** a Nash equilibrium — follow the deviation to a new cell and repeat.
+
+4. If **no** for **everyone** — nobody wants to move unilaterally — you've found a **Nash equilibrium**.
+
+</Steps>
+
+For the prisoner's dilemma, **(Confess, Confess)** is the Nash equilibrium: from there, if I switch to staying quiet while you keep confessing, I go from −5 to −10 — strictly worse, so I won't. Neither will you. Note the uncomfortable lesson: the Nash equilibrium here is the outcome that's **worse for both** than mutual silence. Nash equilibrium tells us where selfish play *settles*, not where it *ought* to.
+
+<Aside type="note">
+**Dominant strategies vs Nash — the relationship.** If every player has a dominant strategy, everyone playing it is automatically a Nash equilibrium (nobody would ever want to deviate from a move that's best against everything). So **a dominant-strategy outcome is always a Nash equilibrium.** But the reverse fails: plenty of games have Nash equilibria even though *no one* has a dominant strategy. Nash is the bigger tent.
+</Aside>
+
+### A worked example with no dominant strategies
+
+Two players, **A** and **B**, each with three moves. Player A picks the row (A1, A2, A3), Player B picks the column (B1, B2, B3). Cells read (Player A, Player B).
+
+| A ↓ / B → | B1 | B2 | B3 |
+|---|---|---|---|
+| **A1** | (10, 10) | (0, 6) | (2, 2) |
+| **A2** | (15, 0) | (5, 5) | (4, 4) |
+| **A3** | (3, 5) | (7, 8) | (6, 6) |
+
+Neither player has a dominant strategy here (check A's best row: it's A2 against B1, but A3 against B2 — it flips). So let's hunt by chasing deviations, exactly as in the recipe:
+
+<Steps>
+
+1. **Start at (A1, B1) = (10, 10).** Player A checks column B1: the payoffs are 10, 15, 3 — so A wants **A2** (15 beats 10). Move.
+
+2. **Now at (A2, B1).** Player B checks row A2: B's payoffs are 0, 5, 4 — B wants **B2** (5 beats 0). Move.
+
+3. **Now at (A2, B2) = (5, 5).** Player A checks column B2: A's payoffs are 0, 5, 7 — A wants **A3** (7 beats 5). Move.
+
+4. **Now at (A3, B2) = (7, 8).** Player A checks column B2 again: 0, 5, 7 — A3 is best, no move. Player B checks row A3: B's payoffs are 5, 8, 6 — B2 is best, no move. **Nobody can improve alone → (A3, B2) is the Nash equilibrium.**
+
+</Steps>
+
+So the game settles at **(A3, B2)**, paying **(7, 8)** — reached without either player ever having a dominant strategy, which is the whole point of the Nash concept.
+
+<Aside type="caution">
+**One, none, or several.** A game can have exactly one Nash equilibrium, several, or (in pure strategies) none at all. In the course's practice set, the symmetric "regulate / don't regulate" game has a single equilibrium driven by a strictly dominant strategy — both bodies regulate, because regulating pays 1 versus 0 whatever the other does — while another 3×3 game has *two* Nash equilibria at once. Always check every cell; don't stop at the first.
+</Aside>
+
+## 5 · Why this matters for economics & law
+
+Here's the payoff (pun intended) for a law-and-economics course. An enormous range of social problems have **exactly the structure of a prisoner's dilemma**: each person, acting rationally in their own interest, makes a choice that — added up across everyone — leaves the whole group worse off.
+
+| Problem | "Confess" (the tempting selfish move) | The dilemma |
+|---|---|---|
+| **Pollution** | Dump waste cheaply rather than clean up | Everyone dumps → the shared river is ruined for all |
+| **Arms races** | Build more weapons in case the rival does | Both arm to the teeth, poorer and no safer than if neither did |
+| **Price wars** | Undercut the rival to grab market share | Both slash prices → thin margins for both |
+| **Tax evasion** | Hide income to keep more of it | Everyone evades → public services collapse for all |
+| **Over-fishing** | Catch as much as you can now | The stock is fished to extinction → nobody fishes tomorrow |
+
+In each case the **individually rational choice gives a collectively bad outcome** — the Nash equilibrium is the "bad" cell, and mutual restraint (the good cell) unravels because no one can trust the others, or themselves, to hold to it.
+
+This is where **law and institutions** earn their keep. The private parties are stuck because they can't change each other's payoffs. But a law *can*: a pollution fine, a fishing quota, an arms-control treaty with inspectors, a tax authority with audits — each one **rewrites the payoff matrix** so that the cooperative move becomes each individual's best response too. Change the numbers in the cells, and the dominant strategy — and with it the Nash equilibrium — can shift to the outcome that's good for everyone.
+
+<Aside type="tip">
+**The bridge back to Chapter 1.** Recall that law works by changing **constraints and incentives**, not preferences. Game theory shows us *why* that lever is sometimes indispensable: when individuals are trapped in a dilemma, only an outside change to the payoffs — usually a legal or institutional one — can spring them into cooperation.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Game theory** studies **strategic interactions**: outcomes depend on everyone's choices at once. A game = **players + strategies + payoffs**. The default is **non-cooperative** (each maximises their own payoff, with no enforceable deals) — which often blocks cooperation.
+- In the **prisoner's dilemma**, mutual silence **(−1, −1)** is jointly best (Kaldor–Hicks efficient), but each robber's self-interest drives them to confess, landing at **(−5, −5)** — worse for both. Read a cell **(left = Player 1, right = Player 2)**.
+- A **dominant strategy** is your best move *whatever* the opponent does. **Strictly** dominant = strictly better in every case; **weakly** dominant = at least as good always, strictly better at least once. Many games have neither.
+- A **Nash equilibrium** is a combination where **no player can gain by changing their own move alone** — everyone is best-responding. Find it by chasing **profitable deviations** until none remain. "Both confess" is the dilemma's Nash equilibrium.
+- A dominant-strategy outcome is **always** a Nash equilibrium, but Nash equilibria can exist with **no** dominant strategies (and a game may have one, several, or none).
+- Pollution, arms races, price wars, tax evasion and over-fishing are all **prisoner's dilemmas** — a case for **law and institutions to rewrite the payoffs** so cooperation becomes each person's best response.
+</Aside>
+
+*Next: [Functioning Markets →](/learnings/mba/economics-and-law/05-functioning-markets/) — the deeper conditions under which trade makes everyone better off.*
