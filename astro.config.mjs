@@ -146,7 +146,17 @@ export default defineConfig({
 								},
 							],
 						},
-						{ label: 'Non-Fiction Books', translations: { de: 'Sachbücher' }, collapsed: true, autogenerate: { directory: 'learnings/books' } },
+						{
+							label: 'Non-Fiction Books', translations: { de: 'Sachbücher' },
+							collapsed: true,
+							items: [
+								{ label: 'Overview', link: 'learnings/books', translations: { de: 'Übersicht' } },
+								{ label: 'Innovation, Business & Tech', translations: { de: 'Innovation, Business & Technik' }, collapsed: true, autogenerate: { directory: 'learnings/books/innovation-business-and-tech' } },
+								{ label: 'Economics, Society & Big Ideas', translations: { de: 'Wirtschaft, Gesellschaft & große Ideen' }, collapsed: true, autogenerate: { directory: 'learnings/books/economics-society-and-big-ideas' } },
+								{ label: 'Communication & Persuasion', translations: { de: 'Kommunikation & Überzeugung' }, collapsed: true, autogenerate: { directory: 'learnings/books/communication-and-persuasion' } },
+								{ label: 'Mind, Habits & Growth', translations: { de: 'Psyche, Gewohnheiten & Wachstum' }, collapsed: true, autogenerate: { directory: 'learnings/books/mind-habits-and-growth' } },
+							],
+						},
 						{
 							label: 'Workshops & Programmes', translations: { de: 'Workshops & Programme' },
 							collapsed: true,
