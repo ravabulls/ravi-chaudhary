@@ -8,7 +8,7 @@ sidebar:
 
 import { Aside, Badge } from '@astrojs/starlight/components';
 
-During my MBA program, I designed and built an AI-powered decision-support tool for the Venture Client process — the corporate methodology for engaging startups as paying customers rather than as portfolio investments. The dashboard operationalises a multi-stage evaluation framework based on Oliver Gassmann's Venture Clienting methodology into a single interactive web application, guiding an innovation team from initial startup scouting through to a structured go/no-go recommendation.
+During my MBA program, I designed and built an AI-powered decision-support tool for the Venture Client process - the corporate methodology for engaging startups as paying customers rather than as portfolio investments. The dashboard operationalises a multi-stage evaluation framework based on Oliver Gassmann's Venture Clienting methodology into a single interactive web application, guiding an innovation team from initial startup scouting through to a structured go/no-go recommendation.
 
 ---
 
@@ -18,7 +18,7 @@ The tool is built around the five canonical stages of the Venture Client methodo
 
 **Discovery → Assessment → Buy → Pilot → Adoption**
 
-Each startup in the system is tagged with its current stage. The dashboard is purpose-built for the Assessment stage — the most analytically intensive step — while supporting the broader process through procurement-ready PDF reports, stage tracking across the pipeline, and a dedicated methodology reference tab that explains each stage, its key activities, and where the tool fits.
+Each startup in the system is tagged with its current stage. The dashboard is purpose-built for the Assessment stage - the most analytically intensive step - while supporting the broader process through procurement-ready PDF reports, stage tracking across the pipeline, and a dedicated methodology reference tab that explains each stage, its key activities, and where the tool fits.
 
 ---
 
@@ -28,16 +28,16 @@ Each startup in the system is tagged with its current stage. The dashboard is pu
 
 <Badge text="Four-Agent Committee" variant="note" />
 
-The core of the dashboard is a four-agent AI system, where each agent has a defined persona and area of responsibility. The agents are chained — each subsequent agent reads the previous agents' outputs before writing its own assessment:
+The core of the dashboard is a four-agent AI system, where each agent has a defined persona and area of responsibility. The agents are chained - each subsequent agent reads the previous agents' outputs before writing its own assessment:
 
-- **Agent 1 — Innovation Scout (Maria Chen)**: Evaluates Team, Traction, and Technology — the "3Ts" matchmaking layer that answers whether the startup is real and ready
-- **Agent 2 — Business Unit Director (Klaus Weber)**: Scores Desirability, Feasibility, and Viability from a business and commercial perspective
-- **Agent 3 — Risk & Compliance Officer (Dr. Anna Müller)**: Assesses Compatibility, Capability, and Contextuality — covering legal, IP, GDPR, and integration risks
-- **Agent 4 — Committee Chair (Heinrich Bauer)**: Synthesises all three reports and issues a final recommendation with justification
+- **Agent 1 - Innovation Scout (Maria Chen)**: Evaluates Team, Traction, and Technology - the "3Ts" matchmaking layer that answers whether the startup is real and ready
+- **Agent 2 - Business Unit Director (Klaus Weber)**: Scores Desirability, Feasibility, and Viability from a business and commercial perspective
+- **Agent 3 - Risk & Compliance Officer (Dr. Anna Müller)**: Assesses Compatibility, Capability, and Contextuality - covering legal, IP, GDPR, and integration risks
+- **Agent 4 - Committee Chair (Heinrich Bauer)**: Synthesises all three reports and issues a final recommendation with justification
 
 Every score is an integer from 1 to 5, accompanied by a cited data source, a confidence level (high / medium / low), and structured reasoning covering four elements: the specific evidence used, its implication for the pilot, what information is missing, and a one-sentence verdict. The system enforces an anti-hallucination rule: when evidence is insufficient, the score defaults to 3 with low confidence rather than fabricating a number.
 
-The pipeline supports four AI providers selectable at runtime — Anthropic Claude, OpenAI, Google Gemini, and Mistral — with a configurable token budget per agent.
+The pipeline supports four AI providers selectable at runtime - Anthropic Claude, OpenAI, Google Gemini, and Mistral - with a configurable token budget per agent.
 
 ### Qualifying Checklist
 
@@ -47,7 +47,7 @@ Before the AI agents run, the tool programmatically evaluates five binary must-h
 
 - Legal entity registration (confirmed via funding data)
 - HQ location and GDPR compliance zone (DACH / EU / Non-EU)
-- Adequate funding and runway — minimum 9 months required to sustain a pilot
+- Adequate funding and runway - minimum 9 months required to sustain a pilot
 - Reference clients as evidence of market validation
 - Preliminary problem-solution fit based on ARR and product maturity
 
@@ -57,7 +57,7 @@ Each criterion receives a green / amber / red status with an explanatory note. T
 
 <Badge text="Three-Layer Scoring Model" variant="success" />
 
-The overall score (0–100) combines three evaluation layers with fixed weights reflecting the methodology:
+The overall score (0-100) combines three evaluation layers with fixed weights reflecting the methodology:
 
 | Layer | Weight | Source |
 |---|---|---|
@@ -77,7 +77,7 @@ Before any AI scoring, the tool automatically gathers external information about
 
 ### Stage Tracking Across the Pipeline
 
-Each startup in the evaluation pipeline is assigned a current Venture Client stage — Discovery, Assessment, Buy, Pilot, or Adoption. A visual progress bar on every startup card shows the full five-stage journey, with completed stages marked in green and the active stage highlighted. The analyst can move a startup to the next stage with a single dropdown selection, and the pipeline table reflects the current stage for all evaluated startups simultaneously.
+Each startup in the evaluation pipeline is assigned a current Venture Client stage - Discovery, Assessment, Buy, Pilot, or Adoption. A visual progress bar on every startup card shows the full five-stage journey, with completed stages marked in green and the active stage highlighted. The analyst can move a startup to the next stage with a single dropdown selection, and the pipeline table reflects the current stage for all evaluated startups simultaneously.
 
 ### Input Sanity Checks
 
@@ -86,8 +86,8 @@ A pre-submission validation layer runs before the AI is called, catching common 
 - Problem statements shorter than 50 characters (blocked)
 - Startup descriptions under 30 words (blocked)
 - Contradictions between funding stage and revenue (e.g. Series B but pre-revenue)
-- Critical runway below 3 months — flags the startup as unable to sustain a pilot
-- Malformed website URLs — scraping is skipped with a warning
+- Critical runway below 3 months - flags the startup as unable to sustain a pilot
+- Malformed website URLs - scraping is skipped with a warning
 
 Errors block submission; warnings are surfaced to the analyst without blocking.
 
@@ -95,7 +95,7 @@ Errors block submission; warnings are surfaced to the analyst without blocking.
 
 Given that the tool sends startup data to external AI providers, two privacy controls are built in:
 
-A **Data & Privacy panel** in the sidebar lists exactly what is transmitted to the AI provider — startup name, description, problem statement, financial data, corporate strategic profile summary, and publicly available scraped content — along with links to each provider's API data policy confirming that API-tier data is not used for AI training.
+A **Data & Privacy panel** in the sidebar lists exactly what is transmitted to the AI provider - startup name, description, problem statement, financial data, corporate strategic profile summary, and publicly available scraped content - along with links to each provider's API data policy confirming that API-tier data is not used for AI training.
 
 A **pre-evaluation confirmation checkbox** requires the analyst to confirm that no personal data (employee names, personal contacts) has been entered before the AI evaluation runs. This serves as a lightweight GDPR compliance nudge without blocking the workflow.
 
@@ -112,7 +112,7 @@ The dashboard maintains a session-state pipeline of all evaluated startups. The 
 
 - Gauge chart showing the overall composite score with recommendation colour
 - Radar charts for 3Ts matchmaking and six-dimension scoring
-- Dimension breakdown bar chart — bar colour encodes score level (green for 4–5, yellow for 3, orange for 2, red for 1); bar opacity encodes AI confidence level (solid = high, semi-transparent = medium, faded = low)
+- Dimension breakdown bar chart - bar colour encodes score level (green for 4-5, yellow for 3, orange for 2, red for 1); bar opacity encodes AI confidence level (solid = high, semi-transparent = medium, faded = low)
 - Pipeline funnel and comparison bubble chart across all candidates
 
 ### PDF Export
@@ -121,7 +121,7 @@ A one-click export generates a formatted PDF report containing the startup ident
 
 ### Unit KPI Dashboard
 
-A KPI tab aggregates metrics across the entire evaluation pipeline: total startups evaluated, number cleared for pilot, pilot conversion rate, startups in further evaluation, declined count, and average scores for Desirability and Viability. These metrics track the health of the innovation unit's scouting and evaluation process over time, with an industry benchmark of 20–30% conversion rate from evaluation to pilot.
+A KPI tab aggregates metrics across the entire evaluation pipeline: total startups evaluated, number cleared for pilot, pilot conversion rate, startups in further evaluation, declined count, and average scores for Desirability and Viability. These metrics track the health of the innovation unit's scouting and evaluation process over time, with an industry benchmark of 20-30% conversion rate from evaluation to pilot.
 
 ---
 
@@ -141,11 +141,11 @@ A KPI tab aggregates metrics across the entire evaluation pipeline: total startu
 
 ## What I Learned
 
-This project taught me what it means to translate a qualitative business framework into a working software system. The hardest part was not the code — it was the design decisions: how do you make an LLM consistently follow scoring rules without fabricating evidence? How do you build a scoring model that is both rigorous and explainable to a non-technical stakeholder? How do you handle data privacy when your tool sends corporate strategy to a US-based AI server?
+This project taught me what it means to translate a qualitative business framework into a working software system. The hardest part was not the code - it was the design decisions: how do you make an LLM consistently follow scoring rules without fabricating evidence? How do you build a scoring model that is both rigorous and explainable to a non-technical stakeholder? How do you handle data privacy when your tool sends corporate strategy to a US-based AI server?
 
-On the technical side, I gained hands-on experience with multi-agent prompt chaining, structured JSON output parsing, Streamlit session state management, PDF generation, and deploying Python applications to the cloud. I also learned to think about users who are not software engineers — every design choice in the UI exists because a real analyst would need to trust the output enough to present it in a meeting.
+On the technical side, I gained hands-on experience with multi-agent prompt chaining, structured JSON output parsing, Streamlit session state management, PDF generation, and deploying Python applications to the cloud. I also learned to think about users who are not software engineers - every design choice in the UI exists because a real analyst would need to trust the output enough to present it in a meeting.
 
-The feedback from the venture client team confirmed that the tool's framework alignment — particularly the 5-stage process structure and the six-dimension scoring — matches how practitioners actually think about startup evaluation. That validation mattered more to me than the technical implementation.
+The feedback from the venture client team confirmed that the tool's framework alignment - particularly the 5-stage process structure and the six-dimension scoring - matches how practitioners actually think about startup evaluation. That validation mattered more to me than the technical implementation.
 
 ---
 
@@ -154,7 +154,7 @@ The feedback from the venture client team confirmed that the tool's framework al
 [Open dashboard in new tab →](https://dashboardventureclient.streamlit.app/)
 
 <Aside type="note">
-The app is hosted on Streamlit Community Cloud's free tier and may take 20–30 seconds to wake up on first load.
+The app is hosted on Streamlit Community Cloud's free tier and may take 20-30 seconds to wake up on first load.
 </Aside>
 
 ---

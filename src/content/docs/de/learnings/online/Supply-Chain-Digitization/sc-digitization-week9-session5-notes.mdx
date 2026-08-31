@@ -1,5 +1,5 @@
 ---
-title: "Woche 9 | Session 5: DEA — Linearisierung, Excel Solver & Interpretation der Ergebnisse"
+title: "Woche 9 | Session 5: DEA - Linearisierung, Excel Solver & Interpretation der Ergebnisse"
 description: "Erfahren Sie, wie Sie das nicht-lineare Modell der Data Envelopment Analysis (DEA) in ein Problem der linearen Programmierung umwandeln, es in Excel lösen und die Effizienzergebnisse interpretieren."
 sidebar:
   order: 46
@@ -7,35 +7,35 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Rückblick — Session 4
+- Rückblick - Session 4
 - Umwandlung von nicht-linearer DEA in lineare Programmierung
-- Linearisiertes DEA-Modell — Standort 1 (Beispiel)
+- Linearisiertes DEA-Modell - Standort 1 (Beispiel)
 - Allgemeines DEA-Modell
-- Excel Solver — Setup & Schritte
-- Effizienzergebnisse — Alle 9 Standorte
-- Wie man DEA-Ergebnisse interpretiert — Fokus auf Gewichte
+- Excel Solver - Setup & Schritte
+- Effizienzergebnisse - Alle 9 Standorte
+- Wie man DEA-Ergebnisse interpretiert - Fokus auf Gewichte
 </Aside>
 
 ---
 
-## 1. Rückblick — Session 4
+## 1. Rückblick - Session 4
 
 - **DEA-Modell formuliert:** Maximiere gewichteten Output ÷ gewichteten Input für jeden Standort, unter der Bedingung, dass die Effizienz aller Standorte ≤ 1 ist.
-- **Problem:** Das Modell ist nicht-linear — Entscheidungsvariablen kommen sowohl im Zähler als auch im Nenner vor.
+- **Problem:** Das Modell ist nicht-linear - Entscheidungsvariablen kommen sowohl im Zähler als auch im Nenner vor.
 - **Diese Session:** Das Modell linearisieren, im Excel Solver lösen und Ergebnisse interpretieren.
 
 ---
 
 ## 2. Umwandlung von nicht-linearer DEA in lineare Programmierung
 
-*Neun Anlagen — zwei Outputs (höher = besser) und zwei Inputs (niedriger = besser):*
+*Neun Anlagen - zwei Outputs (höher = besser) und zwei Inputs (niedriger = besser):*
 
 | Anlage | Produktionsausbeute (%) | OEE (%) | Taktzeit (Min.) | Ressourcennutzung (%) |
 |---|---|---|---|---|
@@ -77,17 +77,17 @@ Strategie: Zwei separate Transformationen anwenden.
 
 ---
 
-## 3. Linearisiertes DEA-Modell — Standort 1 (Beispiel)
+## 3. Linearisiertes DEA-Modell - Standort 1 (Beispiel)
 
 - **Zielfunktion (linear):** Maximieren `92·V1 + 80·V2`
 - **Nebenbedingung 0 (Nenner = 1):** `32·U1 + 88·U2 = 1` *(ändert sich pro Standort)*
-- **Nebenbedingungen 1–9 (Effizienz ≤ 1):** *(linear, fest für alle Läufe)*
+- **Nebenbedingungen 1-9 (Effizienz ≤ 1):** *(linear, fest für alle Läufe)*
   - F1: `92·V1 + 80·V2 − 32·U1 − 88·U2 ≤ 0`
   - F2: `88·V1 + 78·V2 − 35·U1 − 94·U2 ≤ 0`
   - ... *(wiederholen für F3 bis F9)*
 
 ### Entscheidungsvariablen & Nicht-Negativität
-`V1, V2, U1, U2 ≥ ε` (Nutzen Sie ε = 0,000001 — niemals exakt 0, um Nullgewichte zu vermeiden).
+`V1, V2, U1, U2 ≥ ε` (Nutzen Sie ε = 0,000001 - niemals exakt 0, um Nullgewichte zu vermeiden).
 
 ---
 
@@ -102,25 +102,25 @@ Strategie: Zwei separate Transformationen anwenden.
 
 ---
 
-## 5. Excel Solver — Setup & Schritte
+## 5. Excel Solver - Setup & Schritte
 
 <Steps>
 1. **Daten eingeben:** Daten + Variablenzellen anlegen. VLOOKUP für Koeffizienten nutzen.
 2. **Zielzelle festlegen:** Z.B. `92·V1 + 80·V2` (Maximieren).
 3. **Variablenzellen ändern:** `V1, V2, U1, U2` Zellen auswählen.
 4. **Nebenbedingung 0 hinzufügen:** `32·U1 + 88·U2 = 1`.
-5. **Nebenbedingungen 1–9 hinzufügen:** Alle 9 Standort-Bedingungen `≤ 0`.
+5. **Nebenbedingungen 1-9 hinzufügen:** Alle 9 Standort-Bedingungen `≤ 0`.
 6. **Lösen:** **Simplex LP** wählen, untere Grenze = `ε`. Ergebnisse notieren und 9 Mal wiederholen.
 </Steps>
 
 ---
 
-## 6. Effizienzergebnisse — Alle 9 Standorte
+## 6. Effizienzergebnisse - Alle 9 Standorte
 
 | Standort | Effizienz | Lücke | Parameter mit höchstem Gewicht | Status |
 |---|---|---|---|---|
-| **F4** | 100% | 0% | — | **Effizient ★** |
-| **F7** | 100% | 0% | — | **Effizient ★** |
+| **F4** | 100% | 0% | - | **Effizient ★** |
+| **F7** | 100% | 0% | - | **Effizient ★** |
 | **F1** | 95.72% | 4.28% | OEE (V2 am höchsten) | Nicht effizient |
 | **F9** | 92.00% | 8.00% | Zykluszeit (U1 = 0.033) | Nicht effizient |
 | **F2** | 87.00% | 13.00% | OEE & Ressourcenauslastung | Nicht effizient |
@@ -130,13 +130,13 @@ Strategie: Zwei separate Transformationen anwenden.
 
 ---
 
-## 7. Wie man DEA-Ergebnisse interpretiert — Fokus auf Gewichte
+## 7. Wie man DEA-Ergebnisse interpretiert - Fokus auf Gewichte
 
 Der Parameter mit dem höchsten Gewicht ist derjenige, auf den die Effizienz am empfindlichsten reagiert. Fokussieren Sie Verbesserungen dort.
 
 | Szenario | Bedeutung | Aktion |
 |---|---|---|
-| **Effizienz = 100%** | Standort liegt auf der Effizienzgrenze | Keine Verbesserung nötig — Benchmark |
+| **Effizienz = 100%** | Standort liegt auf der Effizienzgrenze | Keine Verbesserung nötig - Benchmark |
 | **Output-Gewicht (Vk) am höchsten** | Dieser Output ist am empfindlichsten | Output-Wert erhöhen |
 | **Input-Gewicht (Uj) am höchsten** | Dieser Input zieht Effizienz nach unten | Input-Wert reduzieren |
 | **Mehrere hohe Gewichte** | Output & Input tragen zur Ineffizienz bei | Beides gleichzeitig verbessern |

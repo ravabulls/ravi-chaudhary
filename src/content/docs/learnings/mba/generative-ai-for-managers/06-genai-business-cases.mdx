@@ -1,6 +1,6 @@
 ---
-title: Day 6 — GenAI Business Cases
-description: How managers spot, prioritise, and pitch GenAI ideas that truly create value — from fit filters and value sizing to MVP design, governance, rollout KPIs, and the capstone business case.
+title: Day 6 - GenAI Business Cases
+description: How managers spot, prioritise, and pitch GenAI ideas that truly create value - from fit filters and value sizing to MVP design, governance, rollout KPIs, and the capstone business case.
 sidebar:
   label: 6 · Business Cases
   order: 6
@@ -8,11 +8,11 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
 
 ---
 
-Days 1 to 5 were about *how* the technology works — prompting, retrieval, extraction, agents, and a little machine learning. Day 6 flips the whole question around. For the first five days I kept asking "**can** we build this?" Today the only question that matters is the manager's question: "**should** we build this — and if so, why, and how would I prove it?"
+Days 1 to 5 were about *how* the technology works - prompting, retrieval, extraction, agents, and a little machine learning. Day 6 flips the whole question around. For the first five days I kept asking "**can** we build this?" Today the only question that matters is the manager's question: "**should** we build this - and if so, why, and how would I prove it?"
 
 So this is the day where the technical stuff turns into a **business case**: a short, honest document that convinces a decision-maker to fund a small pilot. Below are my revision notes on how to build one, in the order the course walks through it.
 
@@ -36,7 +36,7 @@ The whole day builds toward a single package a real team would take to a steerin
   <span class="arrow">→</span>
   <div class="sc-node green">D · Deploy<span class="sub">& measure</span></div>
 </div>
-<figcaption>The four blocks of Day 6 — each one hands its output to the next.</figcaption>
+<figcaption>The four blocks of Day 6 - each one hands its output to the next.</figcaption>
 </figure>
 
 By the end you have **six connected pieces**:
@@ -52,13 +52,13 @@ By the end you have **six connected pieces**:
 
 The rest of this chapter is really just the thinking behind each of these.
 
-## Step 1 — Find where GenAI actually fits
+## Step 1 - Find where GenAI actually fits
 
 Not every task is a good GenAI candidate. The fastest way to waste money is to point the technology at the wrong job. Two quick lenses help.
 
 **Good fit vs poor fit.** GenAI shines at repetitive *language* tasks and at turning messy, unstructured text into something structured or useful.
 
-| Good fit for GenAI | Poor fit — rethink it |
+| Good fit for GenAI | Poor fit - rethink it |
 |--------------------|-----------------------|
 | Repetitive drafting (emails, replies, summaries) | One-off decisions done a handful of times a year |
 | Turning messy text into structure (invoices → data) | Tasks where nobody can judge if the output is good |
@@ -73,13 +73,13 @@ Not every task is a good GenAI candidate. The fastest way to waste money is to p
 | Clear input/output | Can I define what goes in and what "good" out looks like? | Fixed reply categories; a data schema |
 | Evaluable quality | Can I *measure* whether the output is any good? | Human-check 50 samples; ≥85% accuracy |
 | Low MVP complexity | Can a useful v1 exist without complex integrations? | A standalone tool before wiring into legacy systems |
-| Feasible data access | Can I get the data given policy and law? | Internal docs — *not* customer personal data without controls |
+| Feasible data access | Can I get the data given policy and law? | Internal docs - *not* customer personal data without controls |
 
 <Aside type="caution" title="The rule I keep coming back to">
 If you cannot describe **how you will measure whether the output is good**, it is not a capstone-ready use case. "Make it smarter" is not a metric.
 </Aside>
 
-And the anti-patterns to avoid on sight — vague, unmeasurable, or impossibly broad ideas:
+And the anti-patterns to avoid on sight - vague, unmeasurable, or impossibly broad ideas:
 
 <div class="sc-chips">
   <span class="sc-chip">"A chatbot for everything"</span>
@@ -88,7 +88,7 @@ And the anti-patterns to avoid on sight — vague, unmeasurable, or impossibly b
   <span class="sc-chip">Success can't be measured</span>
 </div>
 
-## Step 2 — Prioritise like a manager
+## Step 2 - Prioritise like a manager
 
 Once you have a list of candidate ideas, you rank them by **impact first, with a realistic path to a pilot**. Two tools do the job.
 
@@ -96,42 +96,42 @@ Once you have a list of candidate ideas, you rank them by **impact first, with a
 
 | | Fast to value | Slow to value |
 |---|---------------|---------------|
-| **High value** | **Quick wins** — launch first, build momentum | **Strategic bets** — plan carefully, need exec sponsorship |
-| **Low value** | **Fill-ins** — only if resources are idle | **Avoid** — don't waste effort |
+| **High value** | **Quick wins** - launch first, build momentum | **Strategic bets** - plan carefully, need exec sponsorship |
+| **Low value** | **Fill-ins** - only if resources are idle | **Avoid** - don't waste effort |
 
-**The 1–5 scoring rubric.** Score each shortlisted idea on five criteria, for a total out of 25. Note that two criteria are *reversed* — for time-to-value and risk, a high score means "fast" and "low risk," so higher is always better.
+**The 1-5 scoring rubric.** Score each shortlisted idea on five criteria, for a total out of 25. Note that two criteria are *reversed* - for time-to-value and risk, a high score means "fast" and "low risk," so higher is always better.
 
 | Criterion | Score 1 (low) | Score 3 (medium) | Score 5 (high) |
 |-----------|---------------|------------------|----------------|
-| Value potential | Minor convenience (under 5% saved) | Meaningful (15–25% less manual work) | Major (>€500k/yr or big risk cut) |
-| Time-to-value <Badge text="reverse" variant="note" /> | 6+ months to ROI | 2–3 months to pilot results | under 4 weeks to first results |
-| Feasibility | Major integration, shaky data | 1–2 systems, structured data | Plug-and-play, standard formats |
+| Value potential | Minor convenience (under 5% saved) | Meaningful (15-25% less manual work) | Major (>€500k/yr or big risk cut) |
+| Time-to-value <Badge text="reverse" variant="note" /> | 6+ months to ROI | 2-3 months to pilot results | under 4 weeks to first results |
+| Feasibility | Major integration, shaky data | 1-2 systems, structured data | Plug-and-play, standard formats |
 | Risk/constraints <Badge text="reverse" variant="note" /> | Regulated, sensitive personal data | Some sensitive data, policies exist | Internal data only, low risk |
 | Evaluability | No metric, subjective | Proxy metrics exist | Clear ground truth, easy to audit |
 
-Read the total like this: **18+** is usually MVP-ready; **12–17** needs more validation; **below 12**, reconsider. One human note from the course that I like — after the maths, also ask: *does the team actually care about this domain?* The best pick is often the process someone has been personally frustrated by for years.
+Read the total like this: **18+** is usually MVP-ready; **12-17** needs more validation; **below 12**, reconsider. One human note from the course that I like - after the maths, also ask: *does the team actually care about this domain?* The best pick is often the process someone has been personally frustrated by for years.
 
 *Jargon check.* **ROI** = return on investment (the value you get back versus what you spend). **Ground truth** = a known-correct answer you can compare the AI's output against.
 
-The output of this step is the **use-case one-pager** — your business case boiled onto a single page:
+The output of this step is the **use-case one-pager** - your business case boiled onto a single page:
 
 <Steps>
 
-1. **Use-case name** — clear, not cute (e.g. "Automated invoice line-item extraction").
-2. **Primary users** — who, in which department, and how often they do the task.
-3. **Problem statement** — 2–3 sentences: what manual work happens, the pain, why it matters.
-4. **Why GenAI** (not simple rules or classic machine learning) — three bullets.
-5. **Constraints & dependencies** — data sensitivity, systems, timeline, approvals needed.
-6. **Expected value** — quantified where possible, given as a *range*.
-7. **Score & next steps** — the rubric total, and what to validate before designing the MVP.
+1. **Use-case name** - clear, not cute (e.g. "Automated invoice line-item extraction").
+2. **Primary users** - who, in which department, and how often they do the task.
+3. **Problem statement** - 2-3 sentences: what manual work happens, the pain, why it matters.
+4. **Why GenAI** (not simple rules or classic machine learning) - three bullets.
+5. **Constraints & dependencies** - data sensitivity, systems, timeline, approvals needed.
+6. **Expected value** - quantified where possible, given as a *range*.
+7. **Score & next steps** - the rubric total, and what to validate before designing the MVP.
 
 </Steps>
 
-## Step 3 — Prove the value
+## Step 3 - Prove the value
 
 A one-pager gets attention; a **process map plus value sizing** turns it into a business case. This is Block B.
 
-**Map one workflow, before and after.** Pick a single workflow (6–10 steps — not the whole company). First draw the **as-is** map: every step, who does it, how long it takes, and where errors or rework creep in. Then draw the **to-be** map with GenAI inserted *only* where it genuinely helps, keeping a human in the loop for any real decision.
+**Map one workflow, before and after.** Pick a single workflow (6-10 steps - not the whole company). First draw the **as-is** map: every step, who does it, how long it takes, and where errors or rework creep in. Then draw the **to-be** map with GenAI inserted *only* where it genuinely helps, keeping a human in the loop for any real decision.
 
 <figure class="sc-fig">
 <div class="sc-flow">
@@ -157,14 +157,14 @@ A one-pager gets attention; a **process map plus value sizing** turns it into a 
 <figcaption>A support-ticket example: the AI drafts, but the human still reviews and sends. The judgement stays human; the grunt work shrinks.</figcaption>
 </figure>
 
-Notice what stayed human — the **review** and **send** steps. GenAI assists; it does not replace judgement on anything customer-facing.
+Notice what stayed human - the **review** and **send** steps. GenAI assists; it does not replace judgement on anything customer-facing.
 
-**Size the value with transparent maths.** You are not building a fancy financial model (no DCF — *discounted cash flow*, a detailed multi-year valuation). You just need "good enough," auditable numbers to justify a pilot:
+**Size the value with transparent maths.** You are not building a fancy financial model (no DCF - *discounted cash flow*, a detailed multi-year valuation). You just need "good enough," auditable numbers to justify a pilot:
 
 > **Annual hours saved** = (volume per year × minutes saved per case) ÷ 60
 > **Annual value** = annual hours saved × loaded hourly cost
 
-"Loaded hourly cost" means the fully-costed hourly rate of the person (salary plus overhead). Always give a **low / likely / high** range and write down your assumptions — the honesty matters more than false precision. Source your volumes from real data ("we log ~500 tickets a week"), never from "a lot."
+"Loaded hourly cost" means the fully-costed hourly rate of the person (salary plus overhead). Always give a **low / likely / high** range and write down your assumptions - the honesty matters more than false precision. Source your volumes from real data ("we log ~500 tickets a week"), never from "a lot."
 
 | Assumption | Low | Likely | High |
 |------------|-----|--------|------|
@@ -178,23 +178,23 @@ Notice what stayed human — the **review** and **send** steps. GenAI assists; i
 
 Then a **6-line business-case narrative** ties it together: where the value comes from, why it is measurable, your biggest assumption plus how you'll test it, the main risks, what success looks like at 30 days, and what would make you stop.
 
-## Step 4 — Design the product
+## Step 4 - Design the product
 
 Block C turns the idea into something buildable: a PRD, an architecture sketch, and a build-vs-buy call.
 
-**The MVP PRD** (Product Requirements Document — the spec of what you're building). For GenAI, the PRD's real job is **scope discipline**: the biggest risk in any AI project is scope creep (endlessly adding features). It must contain:
+**The MVP PRD** (Product Requirements Document - the spec of what you're building). For GenAI, the PRD's real job is **scope discipline**: the biggest risk in any AI project is scope creep (endlessly adding features). It must contain:
 
 <Steps>
 
-1. **Target users + job-to-be-done** (JTBD) — the outcome the user actually wants.
-2. **3–5 user stories** — "As a [role], I want [thing] so that [benefit]."
-3. **Output format + constraints** — what "good" looks like (tone, latency, accuracy).
-4. **Non-features** — an explicit list of what you are *not* building. This is the most valuable part; saying no is what separates a 12-week MVP from an 18-month slog.
-5. **Acceptance criteria** — testable pass/fail bars (e.g. "80%+ of suggestions accepted over a 2-week pilot").
+1. **Target users + job-to-be-done** (JTBD) - the outcome the user actually wants.
+2. **3-5 user stories** - "As a [role], I want [thing] so that [benefit]."
+3. **Output format + constraints** - what "good" looks like (tone, latency, accuracy).
+4. **Non-features** - an explicit list of what you are *not* building. This is the most valuable part; saying no is what separates a 12-week MVP from an 18-month slog.
+5. **Acceptance criteria** - testable pass/fail bars (e.g. "80%+ of suggestions accepted over a 2-week pilot").
 
 </Steps>
 
-**Pick one architecture pattern** and sketch it. Every sketch must show four things: data sources (what you read), outputs (what you write), human approval points (where risk is managed), and logging (what you measure). The four manager-level patterns map neatly onto Days 1–5:
+**Pick one architecture pattern** and sketch it. Every sketch must show four things: data sources (what you read), outputs (what you write), human approval points (where risk is managed), and logging (what you measure). The four manager-level patterns map neatly onto Days 1-5:
 
 <Tabs>
 <TabItem label="Copilot">
@@ -220,14 +220,14 @@ Block C turns the idea into something buildable: a PRD, an architecture sketch, 
 </Tabs>
 
 <Aside type="note" title="Start with evals">
-Whatever the pattern, define **how you'll measure success before you build** — design your evaluation set (a batch of test cases with known-good answers) during the PRD phase, not after launch.
+Whatever the pattern, define **how you'll measure success before you build** - design your evaluation set (a batch of test cases with known-good answers) during the PRD phase, not after launch.
 </Aside>
 
 **Build vs buy.** Do you build custom, buy a platform, or go hybrid? Trim the comparison to what matters for a pilot:
 
 | Criterion | Build custom | Buy platform |
 |-----------|--------------|--------------|
-| Speed to MVP | Slow (8–16 weeks) | Fast (2–4 weeks) |
+| Speed to MVP | Slow (8-16 weeks) | Fast (2-4 weeks) |
 | Data & security | Full control | Vendor-dependent |
 | Year-1 cost | High (engineers) | Medium (license) |
 | Differentiation | High (custom logic) | Low (same as rivals) |
@@ -246,24 +246,24 @@ The course is refreshingly blunt here: this is not an ethics lecture, it is **op
 | Data classification | What data does the model see? | Label every input public / internal / confidential |
 | Access control | Who can use the tool? | Define roles and permissions; log who accesses it |
 | Logging & audit | What must be recorded? | Log inputs, outputs, user actions, timestamps |
-| Evaluation plan | How do we know it works? | 50–100 labelled test cases; a human-review cadence |
+| Evaluation plan | How do we know it works? | 50-100 labelled test cases; a human-review cadence |
 | Human-in-the-loop (HITL) | Who approves high-impact actions? | Define the review scope and the escalation path |
 
-Alongside this, name your **failure modes** honestly — hallucination (the model inventing false facts), bias, data leaks, user rejection — and decide, in advance, **when a human steps in and who can pause the pilot**.
+Alongside this, name your **failure modes** honestly - hallucination (the model inventing false facts), bias, data leaks, user rejection - and decide, in advance, **when a human steps in and who can pause the pilot**.
 
-## Step 5 — Plan the rollout and measure it
+## Step 5 - Plan the rollout and measure it
 
 Block D is deployment. You don't flip a switch for everyone at once; you roll out in three phases, each with a "success gate" that must be cleared before expanding.
 
 <Steps>
 
-1. **Days 1–30 — Pilot.** Pick a small pilot group (say 5–10 users) and say *why* them. Train them, give a prompt library and usage guide, run a weekly feedback loop. *Gate:* is this "good enough to continue"?
-2. **Days 31–60 — Expand.** Broaden the group using pilot learnings, fix the top three issues, refine prompts and approval gates. *Gate:* is this "ready to scale"?
-3. **Days 61–90 — Scale.** Full team/department rollout, integrate with existing systems, set an ongoing monitoring cadence, and do the first formal **ROI readout**.
+1. **Days 1-30 - Pilot.** Pick a small pilot group (say 5-10 users) and say *why* them. Train them, give a prompt library and usage guide, run a weekly feedback loop. *Gate:* is this "good enough to continue"?
+2. **Days 31-60 - Expand.** Broaden the group using pilot learnings, fix the top three issues, refine prompts and approval gates. *Gate:* is this "ready to scale"?
+3. **Days 61-90 - Scale.** Full team/department rollout, integrate with existing systems, set an ongoing monitoring cadence, and do the first formal **ROI readout**.
 
 </Steps>
 
-**KPIs: leading *and* lagging.** A KPI (Key Performance Indicator) is a number you track to judge success. You need two kinds — leading indicators tell you *early* whether people are adopting it; lagging indicators tell you *later* whether real value appeared.
+**KPIs: leading *and* lagging.** A KPI (Key Performance Indicator) is a number you track to judge success. You need two kinds - leading indicators tell you *early* whether people are adopting it; lagging indicators tell you *later* whether real value appeared.
 
 | Type | What it measures | When you see it |
 |------|------------------|-----------------|
@@ -279,11 +279,11 @@ Spread your KPIs across four categories, and give each one a definition, a data 
 | Quality | Is the output good? | Rework rate; human override rate |
 | Business outcomes | Did it move the needle? | Cost per case; CSAT or cycle time |
 
-*"Human override rate"* — how often users reject the AI's suggestion — is my favourite quiet metric: a high one is an early warning that quality isn't there yet.
+*"Human override rate"* - how often users reject the AI's suggestion - is my favourite quiet metric: a high one is an early warning that quality isn't there yet.
 
-## How Day 6 ties back to Days 1–5
+## How Day 6 ties back to Days 1-5
 
-The neat thing about this day is that nothing from the earlier days is wasted — the technical fluency becomes the *credibility* behind the business case.
+The neat thing about this day is that nothing from the earlier days is wasted - the technical fluency becomes the *credibility* behind the business case.
 
 | From an earlier day | What it gave me | How Day 6 uses it |
 |---------------------|-----------------|-------------------|
@@ -297,34 +297,34 @@ The technical skills give you the right to be believed; the business thinking gi
 
 ## Hands-on: the business-case assignment
 
-Day 6 has **no notebooks to download** — the deliverable is a team **capstone**, not a coding exercise. In teams, you produce the full **Capstone Proposal Pack** and pitch it, as if to a CEO deciding whether to fund the pilot.
+Day 6 has **no notebooks to download** - the deliverable is a team **capstone**, not a coding exercise. In teams, you produce the full **Capstone Proposal Pack** and pitch it, as if to a CEO deciding whether to fund the pilot.
 
 There are two things to submit:
 
 <Steps>
 
-1. **The Capstone Proposal Pack** — one PDF (~9–10 pages) containing all six components: the use-case one-pager, process map + value sizing, MVP PRD, build/buy + architecture sketch, rollout plan + KPIs, and the governance-lite checklist.
-2. **The pitch** — a slide deck (8–12 slides) plus a **recorded 10-minute video** (link on the first or last slide). The pitch runs: Problem → Why now → MVP → Value → Plan → Ask, and should *lead with the business problem, not the technology*.
+1. **The Capstone Proposal Pack** - one PDF (~9-10 pages) containing all six components: the use-case one-pager, process map + value sizing, MVP PRD, build/buy + architecture sketch, rollout plan + KPIs, and the governance-lite checklist.
+2. **The pitch** - a slide deck (8-12 slides) plus a **recorded 10-minute video** (link on the first or last slide). The pitch runs: Problem → Why now → MVP → Value → Plan → Ask, and should *lead with the business problem, not the technology*.
 
 </Steps>
 
-Marking rewards **specificity above ambition** — a detailed plan for a simple use case beats a vague plan for a grand one. The golden test throughout: if a reader can't tell *who does what, when, and how success is measured*, it isn't finished. (The pack is also designed to extend naturally into a master thesis, if you want to carry it further.)
+Marking rewards **specificity above ambition** - a detailed plan for a simple use case beats a vague plan for a grand one. The golden test throughout: if a reader can't tell *who does what, when, and how success is measured*, it isn't finished. (The pack is also designed to extend naturally into a master thesis, if you want to carry it further.)
 
-**My capstone submission:** [Business-case proposal (PDF)](/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf) · [Pitch deck (PDF)](/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf) — my team's final deliverables for the course.
+**My capstone submission:** [Business-case proposal (PDF)](/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf) · [Pitch deck (PDF)](/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf) - my team's final deliverables for the course.
 
 ## Revision summary
 
 | Must-know | One-line recall |
 |-----------|-----------------|
-| The core shift | Move from "*can* we build it?" to "*should* we — and can I prove it?" |
+| The core shift | Move from "*can* we build it?" to "*should* we - and can I prove it?" |
 | Good use case | Bounded + measurable + feasible as a ~4-week MVP. |
 | GenAI sweet spot | Repetitive language tasks and messy-text-to-structure, done at high volume. |
 | MVP filter | High volume · clear I/O · evaluable · low complexity · data you can access. |
-| Prioritisation | Value × time-to-value 2×2, then score 1–5 across five criteria (18+ = ready). |
+| Prioritisation | Value × time-to-value 2×2, then score 1-5 across five criteria (18+ = ready). |
 | Value sizing | (volume × minutes saved ÷ 60) × loaded cost, always as low/likely/high. |
 | Human stays in | GenAI drafts; the human reviews and approves anything that matters. |
-| PRD's real job | Scope discipline — the non-features list is the most valuable part. |
-| Architecture patterns | Copilot · RAG · extractor · agentic — each maps to a Day 1–5 skill. |
+| PRD's real job | Scope discipline - the non-features list is the most valuable part. |
+| Architecture patterns | Copilot · RAG · extractor · agentic - each maps to a Day 1-5 skill. |
 | Build vs buy | Core advantage → build; commodity efficiency → buy. |
 | Governance-lite | Classify data, control access, log everything, plan evals, keep HITL. |
 | Rollout & KPIs | 30/60/90 phases with gates; track leading *and* lagging KPIs. |

@@ -1,5 +1,5 @@
 ---
-title: "Woche 6 | Session 5: Klassifikationsbaum in Python — Volle Praxis mit Code"
+title: "Woche 6 | Session 5: Klassifikationsbaum in Python - Volle Praxis mit Code"
 description: "Eine Schritt-für-Schritt-Anleitung zum Erstellen und Evaluieren eines Klassifikationsbaums für die vorausschauende Wartung mit Python, pandas und scikit-learn."
 sidebar:
   order: 31
@@ -7,14 +7,14 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Verwendete Bibliotheken — pandas, sklearn, matplotlib
+- Verwendete Bibliotheken - pandas, sklearn, matplotlib
 - Schritt 1: Daten importieren (maintenance.csv → DataFrame)
 - Schritt 2: Variablen auflisten, X (Merkmale) und Y (Ziel) definieren
 - Schritt 3: In Trainings- (70%) und Testdaten (30%) aufteilen
@@ -26,12 +26,12 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Session-Kontext — Von der Theorie zum Code
+## Session-Kontext - Von der Theorie zum Code
 
 - **Sessions 3 & 4:** Zeigten den Output des Modells und erklärten WIE es aufgebaut ist (Gini, Knotenaufteilung, Stoppkriterien)
-- **Session 5:** Reproduzieren genau desselben Outputs mit Python-Code — schließt den Kreis von Theorie zu Implementierung
-- **Plattform:** Google Colab — browserbasierte Python-Umgebung, keine lokale Installation nötig
-- **Datendatei:** `maintenance.csv` — 1000 Zeilen, 8 Spalten (derselbe Datensatz wie in Sessions 3 & 4)
+- **Session 5:** Reproduzieren genau desselben Outputs mit Python-Code - schließt den Kreis von Theorie zu Implementierung
+- **Plattform:** Google Colab - browserbasierte Python-Umgebung, keine lokale Installation nötig
+- **Datendatei:** `maintenance.csv` - 1000 Zeilen, 8 Spalten (derselbe Datensatz wie in Sessions 3 & 4)
 - **Erwarteter Output:** Gleiche Entscheidungsbaum-Struktur, gleiche Gini-Werte, gleiche Knotenzahlen wie in den Theorie-Folien
 
 ---
@@ -46,25 +46,25 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Komplette Code-Referenz — Alle Schritte zusammen
+## Komplette Code-Referenz - Alle Schritte zusammen
 
 <figure class="sc-fig">
   <div class="sc-tree">
-    <div class="node"><b>Ölverunreinigung ≤ 5,5</b> — gini 0,462 · Stichproben 700 · Wert [253, 447] · Klasse = <b>Maschine ausgefallen</b></div>
+    <div class="node"><b>Ölverunreinigung ≤ 5,5</b> - gini 0,462 · Stichproben 700 · Wert [253, 447] · Klasse = <b>Maschine ausgefallen</b></div>
     <div class="branch">
-      <div class="node"><b>Auslastung ≤ 92,05</b> — gini 0,444 · Stichproben 141 · Wert [94, 47] · Klasse = Maschine nicht ausgefallen</div>
+      <div class="node"><b>Auslastung ≤ 92,05</b> - gini 0,444 · Stichproben 141 · Wert [94, 47] · Klasse = Maschine nicht ausgefallen</div>
       <div class="branch">
         <div class="node">gini 0,288 · Stichproben 109 · Wert [90, 19] · Klasse = <b>Maschine nicht ausgefallen</b></div>
         <div class="node">gini 0,219 · Stichproben 32 · Wert [4, 28] · Klasse = <b>Maschine ausgefallen</b></div>
       </div>
-      <div class="node"><b>MTBF ≤ 23,95</b> — gini 0,407 · Stichproben 559 · Wert [159, 400] · Klasse = Maschine ausgefallen</div>
+      <div class="node"><b>MTBF ≤ 23,95</b> - gini 0,407 · Stichproben 559 · Wert [159, 400] · Klasse = Maschine ausgefallen</div>
       <div class="branch">
         <div class="node">gini 0,351 · Stichproben 493 · Wert [112, 381] · Klasse = <b>Maschine ausgefallen</b></div>
         <div class="node">gini 0,41 · Stichproben 66 · Wert [47, 19] · Klasse = <b>Maschine nicht ausgefallen</b></div>
       </div>
     </div>
   </div>
-  <figcaption>Python-Ausgabe — der <code>scikit-learn</code>-Entscheidungsbaum reproduziert dieselbe Struktur wie die Handrechnung: jeder Knoten zeigt Gini-Unreinheit, Stichprobenzahl, Klassenaufteilung und vorhergesagte Klasse.</figcaption>
+  <figcaption>Python-Ausgabe - der <code>scikit-learn</code>-Entscheidungsbaum reproduziert dieselbe Struktur wie die Handrechnung: jeder Knoten zeigt Gini-Unreinheit, Stichprobenzahl, Klassenaufteilung und vorhergesagte Klasse.</figcaption>
 </figure>
 
 ```python
@@ -112,15 +112,15 @@ print("Accuracy:", acc)
 
 ## Schritt-für-Schritt Aufschlüsselung
 
-### Schritt 1 — Daten importieren
-- `pd.read_csv()`: Liest die CSV-Datei und speichert sie als DataFrame (`df`) — eine Tabelle mit beschrifteten Zeilen und Spalten.
+### Schritt 1 - Daten importieren
+- `pd.read_csv()`: Liest die CSV-Datei und speichert sie als DataFrame (`df`) - eine Tabelle mit beschrifteten Zeilen und Spalten.
 - Nach diesem Schritt: `df` hat 1000 Zeilen und 8 Spalten einschließlich des Ziels (`machine_failure`).
 
-### Schritt 2 — X (Merkmale) und Y (Ziel) definieren
-- `X`: 7 unabhängige Variablen (alle Spalten außer `machine_failure`) — werden verwendet, um Y vorherzusagen.
-- `Y`: Spalte `machine_failure` — was das Modell vorhersagen muss (0 = nicht ausgefallen, 1 = ausgefallen).
+### Schritt 2 - X (Merkmale) und Y (Ziel) definieren
+- `X`: 7 unabhängige Variablen (alle Spalten außer `machine_failure`) - werden verwendet, um Y vorherzusagen.
+- `Y`: Spalte `machine_failure` - was das Modell vorhersagen muss (0 = nicht ausgefallen, 1 = ausgefallen).
 
-### Schritt 3 — Train-Test-Aufteilung (70/30)
+### Schritt 3 - Train-Test-Aufteilung (70/30)
 - **Warum aufteilen?** Wenn das Modell mit denselben Daten trainiert und getestet wird → künstlich überhöhte Genauigkeit (Overfitting). Testdaten müssen zurückgehalten und DÜRFEN NIEMALS beim Training verwendet werden.
 - `test_size=0.30`: 30% = 300 Beobachtungen zum Testen. 70% = 700 zum Training.
 
@@ -128,19 +128,19 @@ print("Accuracy:", acc)
 **★ Prüfungstipp:** Erklären Sie immer, WARUM ein Train-Test-Split nötig ist (um Overfitting zu vermeiden und eine unvoreingenommene Schätzung der Modellgenauigkeit bei neuen Daten zu erhalten). Erwähnen Sie 70/30 und dass Testdaten vom Modell während des Trainings nie gesehen werden.
 </Aside>
 
-### Schritt 4 — Klassifikationsbaum erstellen
+### Schritt 4 - Klassifikationsbaum erstellen
 - `criterion="gini"`: Nutzt den Gini-Unreinheitsindex, um zu entscheiden, welche Variable und welcher Cutoff zum Aufteilen jedes Knotens verwendet wird.
 - `max_depth=2`: Stoppt die Aufteilung, nachdem 2 Ebenen von der Wurzel erreicht wurden. Verhindert Overfitting. Produziert 4 Blattknoten.
-- `clf.fit(X_train, Y_train)`: Trainiert das Modell — der Algorithmus findet die besten Splits unter Verwendung von 700 Trainingsbeobachtungen.
+- `clf.fit(X_train, Y_train)`: Trainiert das Modell - der Algorithmus findet die besten Splits unter Verwendung von 700 Trainingsbeobachtungen.
 
-### Schritt 5 — Entscheidungsbaum visualisieren
+### Schritt 5 - Entscheidungsbaum visualisieren
 - Der Output entspricht exakt dem Diagramm aus Session 3: Gleiche Splits (Ölkontamination → MTBF / Auslastung), gleiche Gini-Werte, gleiche Stichprobenzahlen.
 - **Knoten 0 (Wurzel):** 700 Samples | Gini = 0,462 | Split: `oil_contamination ≤ 5.5`
 
-### Schritt 6 — Auf Testdaten vorhersagen und Modell evaluieren
+### Schritt 6 - Auf Testdaten vorhersagen und Modell evaluieren
 
 #### 6a. Vorhersagen generieren
-- `clf.predict(X_test)`: Wendet das trainierte Modell auf die 300 Testbeobachtungen an — produziert vorhergesagte Y-Werte.
+- `clf.predict(X_test)`: Wendet das trainierte Modell auf die 300 Testbeobachtungen an - produziert vorhergesagte Y-Werte.
 
 #### 6b. Confusion Matrix (Wahrheitsmatrix)
 
@@ -149,10 +149,10 @@ print("Accuracy:", acc)
 | **Tatsächlich: FÄLLT NICHT AUS (0)** | 57 ✓ True Negative (Richtig Negativ) | 65 ✗ False Positive (Falsch Positiv) |
 | **Tatsächlich: FÄLLT AUS (1)** | 16 ✗ False Negative (Falsch Negativ) | 162 ✓ True Positive (Richtig Positiv) |
 
-- **True Negative (57):** Modell hat richtig vorhergesagt, dass die Maschine NICHT ausfällt — tatsächlich auch nicht ausgefallen.
-- **True Positive (162):** Modell hat richtig vorhergesagt, dass die Maschine AUSFÄLLT — tatsächlich auch ausgefallen.
-- **False Positive (65):** Modell hat AUSFALL vorhergesagt — Maschine ist aber NICHT ausgefallen (Fehlalarm).
-- **False Negative (16):** Modell hat KEINEN AUSFALL vorhergesagt — Maschine ist aber AUSGEFALLEN (verpasster Ausfall — in der Praxis viel gefährlicher).
+- **True Negative (57):** Modell hat richtig vorhergesagt, dass die Maschine NICHT ausfällt - tatsächlich auch nicht ausgefallen.
+- **True Positive (162):** Modell hat richtig vorhergesagt, dass die Maschine AUSFÄLLT - tatsächlich auch ausgefallen.
+- **False Positive (65):** Modell hat AUSFALL vorhergesagt - Maschine ist aber NICHT ausgefallen (Fehlalarm).
+- **False Negative (16):** Modell hat KEINEN AUSFALL vorhergesagt - Maschine ist aber AUSGEFALLEN (verpasster Ausfall - in der Praxis viel gefährlicher).
 
 #### 6c. Genauigkeitswert (Accuracy)
 - **Genauigkeit = 73%:** 73 von 100 Testinstanzen werden richtig vorhergesagt. `(57 + 162) / 300 = 0,73`.
@@ -173,14 +173,14 @@ print("Accuracy:", acc)
 5. Das Entscheidungsbaum-Diagramm wird im Ausgabebereich gerendert. Confusion Matrix und Genauigkeit werden unten gedruckt.
 
 <Aside type="tip">
-**★ Prüfungstipp:** Sie sollten in der Lage sein, den 6-Schritte-Codeablauf (Import → X/Y definieren → aufteilen → aufbauen → ausgeben → evaluieren) aus dem Gedächtnis aufzuschreiben. Wissen Sie, was jeder Schritt macht. Kennen Sie den Aufbau der Confusion Matrix — TP, TN, FP, FN.
+**★ Prüfungstipp:** Sie sollten in der Lage sein, den 6-Schritte-Codeablauf (Import → X/Y definieren → aufteilen → aufbauen → ausgeben → evaluieren) aus dem Gedächtnis aufzuschreiben. Wissen Sie, was jeder Schritt macht. Kennen Sie den Aufbau der Confusion Matrix - TP, TN, FP, FN.
 </Aside>
 
 ---
 
 ## Zusammenfassung der Session
 
-- **Session 3:** Setup der Fallstudie + OUTPUT des Entscheidungsbaums — 4 Blattknoten, Geschäftsregeln, 2 Vorhersagebeispiele
-- **Session 4:** WIE der Baum aufgebaut wird — Gini-Index, Entropie, Logik der Knotenaufteilung, Stoppkriterien, Overfitting
-- **Session 5 (diese Session):** Python-Implementierung — 6-Schritte-Code, exakt gleicher verifizierter Output, Confusion Matrix, 73% Testgenauigkeit
-- **Nächstes Modul:** KI/ML für Bedarfsplanung — weitere Predictive-Analytics-Anwendungen im SCM
+- **Session 3:** Setup der Fallstudie + OUTPUT des Entscheidungsbaums - 4 Blattknoten, Geschäftsregeln, 2 Vorhersagebeispiele
+- **Session 4:** WIE der Baum aufgebaut wird - Gini-Index, Entropie, Logik der Knotenaufteilung, Stoppkriterien, Overfitting
+- **Session 5 (diese Session):** Python-Implementierung - 6-Schritte-Code, exakt gleicher verifizierter Output, Confusion Matrix, 73% Testgenauigkeit
+- **Nächstes Modul:** KI/ML für Bedarfsplanung - weitere Predictive-Analytics-Anwendungen im SCM

@@ -1,6 +1,6 @@
 ---
 title: MBA-Lernmaterial
-description: Notizen und Gedanken aus dem MBA in Technologiemanagement an der TUHH / NIT Hamburg — Themen wie KI, Strategie, Innovation, Supply Chain und digitale Transformation.
+description: Notizen und Gedanken aus dem MBA in Technologiemanagement an der TUHH / NIT Hamburg - Themen wie KI, Strategie, Innovation, Supply Chain und digitale Transformation.
 sidebar:
   label: Überblick
   order: 0

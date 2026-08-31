@@ -1,5 +1,5 @@
 ---
-title: "Week 9 | Session 2: K-means Clustering — Algorithm, WCSS & Elbow Method"
+title: "Week 9 | Session 2: K-means Clustering - Algorithm, WCSS & Elbow Method"
 description: "A deep dive into the inner workings of the K-means algorithm, understanding Within-Cluster Sum of Squares (WCSS), and using the Elbow Method to find the optimal number of clusters."
 sidebar:
   order: 43
@@ -7,24 +7,24 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Recap — Session 1
-- K-means Clustering — 5-Step Algorithm
-- Key Formulas — Euclidean Distance & Centroid
+- Recap - Session 1
+- K-means Clustering - 5-Step Algorithm
+- Key Formulas - Euclidean Distance & Centroid
 - Within-Cluster Sum of Squares (WCSS)
-- Elbow Method — Determining Optimal K
+- Elbow Method - Determining Optimal K
 - K-means Output → Input to Optimization Model
 </Aside>
 
 ---
 
-## 1. K-means Clustering — 5-Step Algorithm
+## 1. K-means Clustering - 5-Step Algorithm
 
 <figure class="sc-fig">
   <svg viewBox="0 0 500 300" role="img" aria-label="Elbow diagram: sum of squared error falls sharply then flattens, with the elbow around three clusters" style="width:100%;max-width:540px;font-family:inherit">
@@ -38,7 +38,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
     <text x="265" y="294" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle">Number of clusters</text>
     <text x="16" y="140" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90 16 140)">Sum of squared error</text>
   </svg>
-  <figcaption>The elbow method — sum of squared error drops steeply up to about three clusters, then flattens. The "elbow" marks the point of diminishing returns, giving the practical choice of K.</figcaption>
+  <figcaption>The elbow method - sum of squared error drops steeply up to about three clusters, then flattens. The "elbow" marks the point of diminishing returns, giving the practical choice of K.</figcaption>
 </figure>
 
 Assume `K` is already decided (e.g., K = 3 means we want 3 DCs).
@@ -59,11 +59,11 @@ Assume `K` is already decided (e.g., K = 3 means we want 3 DCs).
 
 ## 2. Key Formulas
 
-### Euclidean Distance — Step 2
+### Euclidean Distance - Step 2
 Distance from customer `(xi, yi)` to centroid `k` `(μk, ηk)`:
 `d(i → k) = √ [ (xi − μk)² + (yi − ηk)² ]`
 
-### Centroid Recalculation — Step 4
+### Centroid Recalculation - Step 4
 After forming clusters, recompute each centroid as the mean of its members:
 `New centroid = ( Σxi / n , Σyi / n )`
 *(x-coordinate = average of all xi in cluster; y-coordinate = average of all yi in cluster)*
@@ -77,7 +77,7 @@ After forming clusters, recompute each centroid as the mean of its members:
 - Lower WCSS = customers are closer to their DC = better responsiveness.
 
 ### How WCSS Changes with K
-As K increases, WCSS always decreases — more clusters mean tighter groupings.
+As K increases, WCSS always decreases - more clusters mean tighter groupings.
 - **K = 1:** All 811 in one cluster → WCSS is maximum.
 - **K = 811:** Every customer is its own cluster → WCSS = 0 (infeasible).
 
@@ -85,7 +85,7 @@ Neither extreme is practical → need to find the sweet spot using the Elbow Met
 
 ---
 
-## 4. Elbow Method — Determining Optimal K
+## 4. Elbow Method - Determining Optimal K
 
 ### Concept
 Plot WCSS (y-axis) vs K (x-axis). The curve drops steeply at first, then flattens. The bend = **elbow**.
@@ -123,7 +123,7 @@ K-means gives cluster centroids (proposed DC lat/long) and customer-to-DC mappin
 
 ## Session Summary
 
-- **K-means Algorithm:** 5 steps — random centroids → distance calc → assign → recompute centroid → repeat till convergence.
+- **K-means Algorithm:** 5 steps - random centroids → distance calc → assign → recompute centroid → repeat till convergence.
 - **Euclidean Distance:** `d = √[(xi−μk)² + (yi−ηk)²]`
 - **Centroid Formula:** `(Σxi/n, Σyi/n)`
 - **WCSS:** Σ squared distances from each point to its centroid. Lower = tighter clusters.

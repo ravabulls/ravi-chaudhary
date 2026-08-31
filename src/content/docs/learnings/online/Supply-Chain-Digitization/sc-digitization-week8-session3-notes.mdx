@@ -7,25 +7,25 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Recap — Week 8 So Far
-- Case Study — Two Telecom Equipment Manufacturers
+- Recap - Week 8 So Far
+- Case Study - Two Telecom Equipment Manufacturers
 - Demand Allocation Model
 - Key Insight from Solution (Maxxio)
-- Merger Scenario — Maxvie
+- Merger Scenario - Maxvie
 - Capacitated Plant Location Problem (CPLP)
 - Results & Cost Comparison
 </Aside>
 
 ---
 
-## 1. Recap — Week 8 So Far
+## 1. Recap - Week 8 So Far
 
 *Production + transportation cost per thousand units (₹ thousand), plus each plant's capacity and monthly fixed cost:*
 
@@ -36,7 +36,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 | **Mumbai** | 2,000 | 2,500 | 1,300 | 450 | 950 | 900 | 25 | 5,600 |
 | **Gurugram** | 400 | 1,400 | 600 | 1,200 | 560 | 2,400 | 24 | 4,200 |
 | **Kolkata** | 1,080 | 1,700 | 650 | 540 | 321 | 1,800 | 32 | 2,400 |
-| **Monthly demand (K)** | 12 | 7 | 15 | 8 | 12 | 10 | — | — |
+| **Monthly demand (K)** | 12 | 7 | 15 | 8 | 12 | 10 | - | - |
 
 | Session | Topic | Method / Tool |
 |---|---|---|
@@ -50,7 +50,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## 2. Case Study — Two Telecom Equipment Manufacturers
+## 2. Case Study - Two Telecom Equipment Manufacturers
 
 **The Companies:** Maxxio (North+East India) and Wavie Communications (South+West India).
 Both companies have enough capacity to fulfill all market demand. The decision is HOW to allocate, not whether.
@@ -65,7 +65,7 @@ Both companies have enough capacity to fulfill all market demand. The decision i
 |---|---|---|---|
 | B23 | `= H5*H15 − SUM(B15:G15)` | Excess capacity (per plant) | B24:B27 |
 | B29 | `= B10 − SUM(B15:B19)` | Unmet demand (per market) | C29:G29 |
-| B32 | `= SUMPRODUCT(B5:G9, B15:G19) + SUMPRODUCT(I5:I9, H15:H19)` | Objective (total cost) | — |
+| B32 | `= SUMPRODUCT(B5:G9, B15:G19) + SUMPRODUCT(I5:I9, H15:H19)` | Objective (total cost) | - |
 
 ---
 
@@ -79,7 +79,7 @@ Both companies have enough capacity to fulfill all market demand. The decision i
 - `Si` = supply capacity of plant i
 - `Dj` = demand at market j
 
-### LP Formulation — Demand Allocation
+### LP Formulation - Demand Allocation
 - **Minimize Z:** `Σi Σj (Cij × Xij)` (total production + transportation cost)
 - **Supply constraint:** `Σj Xij ≤ Si` for all i (supply ≤ capacity)
 - **Demand constraint:** `Σi Xij = Dj` for all j (demand fully met)
@@ -101,7 +101,7 @@ The Kolkata facility is barely utilized despite fixed cost being incurred becaus
 
 ---
 
-## 4. Merger Scenario — Maxvie (Maxxio + Wavie)
+## 4. Merger Scenario - Maxvie (Maxxio + Wavie)
 
 Management merges the companies into a new company: **Maxvie**.
 - Now has 5 plants and needs to serve 6 markets.
@@ -123,18 +123,18 @@ This is a **Capacitated Plant Location Problem (CPLP)**.
   - `yi = 0` → plant i is closed
 - Add fixed cost `fi` for each plant to the objective function.
 
-### LP Formulation — CPLP
+### LP Formulation - CPLP
 - **Minimize Z:** `Σi Σj (Cij × Xij) + Σi (fi × yi)` (variable cost + fixed cost of open plants)
 - **Supply constraint:** `Σj Xij ≤ Si × yi` for all i (plant can only supply if open)
 - **Demand constraint:** `Σi Xij = Dj` for all j
 - **Binary variable:** `yi ∈ {0, 1}` for all i
 
-### Solving in Excel — Solver Settings
-- **Solving Method:** **Simplex LP** (model is linear — yi is handled via integer constraint).
+### Solving in Excel - Solver Settings
+- **Solving Method:** **Simplex LP** (model is linear - yi is handled via integer constraint).
 
 <figure class="sc-fig">
   <div class="sc-panel" style="max-width:34rem;margin:0 auto">
-    <div class="head">Excel Solver — CPLP setup</div>
+    <div class="head">Excel Solver - CPLP setup</div>
     <ul>
       <li><b>Set Objective:</b> total-cost cell (B32) → <b>Min</b></li>
       <li><b>By Changing Cells:</b> allocations X<sub>ij</sub> <i>and</i> plant open/close flags y<sub>i</sub></li>
@@ -142,14 +142,14 @@ This is a **Capacitated Plant Location Problem (CPLP)**.
       <li><b>Solving Method:</b> <b>Simplex LP</b> (linear; y<sub>i</sub> enforced as binary)</li>
     </ul>
   </div>
-  <figcaption>The CPLP adds a binary open/close variable per plant and each plant's fixed cost to the objective — Solver then decides both which plants to open and how much to ship.</figcaption>
+  <figcaption>The CPLP adds a binary open/close variable per plant and each plant's fixed cost to the objective - Solver then decides both which plants to open and how much to ship.</figcaption>
 </figure>
 
 ---
 
 ## 6. Results & Cost Comparison
 
-**CPLP Solution (Maxvie — Merged):**
+**CPLP Solution (Maxvie - Merged):**
 - Optimal plants to keep open: **Chennai, Gurugram, Kolkata** (only 3 out of 5).
 - Plants closed: Delhi and Mumbai (saving their fixed costs).
 
@@ -160,15 +160,15 @@ This is a **Capacitated Plant Location Problem (CPLP)**.
 Monthly saving from merger + network redesign: approximately **₹50 lakhs / month**.
 
 <Aside type="note">
-**★** Merger alone doesn't save cost — it's the network REDESIGN that reduces cost by closing inefficient plants.
+**★** Merger alone doesn't save cost - it's the network REDESIGN that reduces cost by closing inefficient plants.
 </Aside>
 
 ---
 
 ## Session Summary
 
-- **Demand Allocation Model:** Decides `Xij` to minimize variable cost — plants are fixed. (Simplex LP)
-- **CPLP:** Decides BOTH `Xij` (flow) AND `yi` (open/close plant) — minimizes variable + fixed cost. (Simplex LP with binary constraint)
+- **Demand Allocation Model:** Decides `Xij` to minimize variable cost - plants are fixed. (Simplex LP)
+- **CPLP:** Decides BOTH `Xij` (flow) AND `yi` (open/close plant) - minimizes variable + fixed cost. (Simplex LP with binary constraint)
 - **Merger result:** MaxV operates 3 plants instead of 5 → ~₹50L/month saving.
 
 <Aside type="tip">

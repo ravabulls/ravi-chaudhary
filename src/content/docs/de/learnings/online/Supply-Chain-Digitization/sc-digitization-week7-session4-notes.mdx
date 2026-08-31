@@ -1,5 +1,5 @@
 ---
-title: "Woche 7 | Session 4: Regressionsbaum in Python — Dummy-Variablen & Volle Implementierung"
+title: "Woche 7 | Session 4: Regressionsbaum in Python - Dummy-Variablen & Volle Implementierung"
 description: "Ein umfassender Leitfaden zur Implementierung eines Regressionsbaums in Python, der den entscheidenden Schritt der Dummy-Variablen-Codierung für kategoriale Daten hervorhebt."
 sidebar:
   order: 35
@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
@@ -15,11 +15,11 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 <Aside type="note">
 - Warum kategoriale Variablen vor dem Modellaufbau eine Sonderbehandlung benötigen
-- Dummy-Variablen-Codierung — Regel, Formel, Basiskategorie
-- Wie Dummy-Variablen gelesen werden — Praxisbeispiele
+- Dummy-Variablen-Codierung - Regel, Formel, Basiskategorie
+- Wie Dummy-Variablen gelesen werden - Praxisbeispiele
 - Anzahl der Variablen: vorher (7 Merkmale) vs. nach der Codierung (10 Merkmale)
-- Kompletter Python-Code — Schritt für Schritt (Import → Codieren → Aufteilen → Aufbauen → Ausgeben)
-- Output-Verifizierung — Python-Output entspricht exakt dem theoretischen Baum
+- Kompletter Python-Code - Schritt für Schritt (Import → Codieren → Aufteilen → Aufbauen → Ausgeben)
+- Output-Verifizierung - Python-Output entspricht exakt dem theoretischen Baum
 - Nächste Session: Modell auf Testdaten validieren + Fehlermetriken
 </Aside>
 
@@ -27,9 +27,9 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Warum kategoriale Variablen codiert werden müssen
 
-**Problem:** Die Region hat die Werte "Süd", "Ost", "West", "Nord" — das ist TEXT, keine Zahlen. ML-Modelle (Entscheidungsbaum, Random Forest, Logistische Regression etc.) können keine direkten mathematischen Operationen mit Text durchführen.
+**Problem:** Die Region hat die Werte "Süd", "Ost", "West", "Nord" - das ist TEXT, keine Zahlen. ML-Modelle (Entscheidungsbaum, Random Forest, Logistische Regression etc.) können keine direkten mathematischen Operationen mit Text durchführen.
 
-**Lösung:** Wandeln Sie kategorialen Text in binäre (0/1) numerische Dummy-Variablen um — eine Spalte pro Kategorie (abzüglich einer Basiskategorie).
+**Lösung:** Wandeln Sie kategorialen Text in binäre (0/1) numerische Dummy-Variablen um - eine Spalte pro Kategorie (abzüglich einer Basiskategorie).
 
 - **Regel:** Wenn eine kategoriale Variable `m` Kategorien hat → erstellen Sie `(m − 1)` Dummy-Variablen. Eine Kategorie wird als "Basiskategorie" weggelassen.
 - **Warum (m − 1)?** Die m-te Kategorie ist impliziert, wenn alle (m − 1) Dummy-Variablen = 0 sind. Das Einbeziehen aller m würde perfekte Multikollinearität (Dummy-Variablen-Falle) erzeugen.
@@ -41,14 +41,14 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Erstellte Dummy-Variablen — Region und Standort
+## Erstellte Dummy-Variablen - Region und Standort
 
 | Variable | Kategorien (m) | Erstellte Dummy-Variablen (m − 1) | Basiskategorie (nicht erstellt) | Interpretationsregel |
 |---|---|---|---|---|
 | **Region** | 4 (N, S, O, W) | `region_north`, `region_south`, `region_west` | **Ost** (alle drei Dummies = 0) | Wenn `region_south = 1` → Süd. Wenn alle drei = 0 → Ost (Basis). |
 | **Standort** | 3 (Ländlich, Semi-Urban, Urban) | `location_semi_urban`, `location_urban` | **Ländlich** (beide Dummies = 0) | Wenn `location_urban = 1` → Urban. Wenn beide = 0 → Ländlich (Basis). |
 
-### Wie Dummy-Variablen gelesen werden — Praxisbeispiele
+### Wie Dummy-Variablen gelesen werden - Praxisbeispiele
 
 | Beob. | Tatsächliche Region | `region_north` | `region_south` | `region_west` | Tatsächlicher Standort | `location_semi_urban` |
 |---|---|---|---|---|---|---|
@@ -61,7 +61,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 **★ Wichtig:** Ein Einzelhändler befindet sich in der Basiskategorie, wenn ALLE Dummy-Variablen für diese Gruppe = 0 sind. Es ist keine separate Spalte für die Basiskategorie nötig.
 </Aside>
 
-### Anzahl der Variablen — Vorher vs. Nachher
+### Anzahl der Variablen - Vorher vs. Nachher
 
 | Variable | Vor der Codierung | Nach der Codierung |
 |---|---|---|
@@ -72,7 +72,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Kompletter Python-Code — 6 Schritte
+## Kompletter Python-Code - 6 Schritte
 
 ```python
 # ── SCHRITT 1: Daten importieren ──────────────────────────────────
@@ -117,7 +117,7 @@ plt.show()
 
 ---
 
-## Output-Verifizierung — Python entspricht exakt der Theorie
+## Output-Verifizierung - Python entspricht exakt der Theorie
 
 | Knoten | Bedingung | Python Output (ȳ, Obs, MSE) | Theorie Output (Session 7.2) | Übereinstimmung? |
 |---|---|---|---|---|
@@ -139,11 +139,11 @@ plt.show()
 |---|---|---|
 | **sklearn Import** | `DecisionTreeClassifier` | `DecisionTreeRegressor` |
 | **Aufteilungskriterium** | `criterion="gini"` | Standard: `squared_error` (MSE) |
-| **Dummy-Variablen-Codierung** | Nicht nötig | **ERFORDERLICH** — Region und Standort sind kategorial |
+| **Dummy-Variablen-Codierung** | Nicht nötig | **ERFORDERLICH** - Region und Standort sind kategorial |
 | **Art der Zielvariablen** | Kategorisch (0/1) | Kontinuierlich (bestellte Einheiten) |
 
 <Aside type="tip">
-**★ Prüfungstipp:** Die Dummy-Variablen-Codierung ist ein OBLIGATORISCHER Datenvorverarbeitungsschritt für jedes ML-Modell mit kategorialen Variablen. Im Code — verwenden Sie `pd.get_dummies(X_df, drop_first=True)`. In der Theorie — m Kategorien → (m−1) Dummies, Basiskategorie = alle Nullen.
+**★ Prüfungstipp:** Die Dummy-Variablen-Codierung ist ein OBLIGATORISCHER Datenvorverarbeitungsschritt für jedes ML-Modell mit kategorialen Variablen. Im Code - verwenden Sie `pd.get_dummies(X_df, drop_first=True)`. In der Theorie - m Kategorien → (m−1) Dummies, Basiskategorie = alle Nullen.
 </Aside>
 
 ---

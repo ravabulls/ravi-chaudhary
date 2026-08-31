@@ -56,7 +56,7 @@ export default defineConfig({
 									collapsed: true,
 									items: [
 										{ label: 'Overview', link: 'learnings/mba/generative-ai-for-managers', translations: { de: 'Übersicht' } },
-										{ label: 'Setup — Colab & Gemini', link: 'learnings/mba/generative-ai-for-managers/00-setup', translations: { de: 'Einrichtung — Colab & Gemini' } },
+										{ label: 'Setup - Colab & Gemini', link: 'learnings/mba/generative-ai-for-managers/00-setup', translations: { de: 'Einrichtung - Colab & Gemini' } },
 										{ label: '1 · LLMs & Transformers', link: 'learnings/mba/generative-ai-for-managers/01-llms-and-transformers', translations: { de: '1 · LLMs & Transformer' } },
 										{ label: '2 · Prompting & Extraction', link: 'learnings/mba/generative-ai-for-managers/02-prompting-and-extraction', translations: { de: '2 · Prompting & Extraktion' } },
 										{ label: '3 · RAG', link: 'learnings/mba/generative-ai-for-managers/03-retrieval-augmented-generation', translations: { de: '3 · RAG' } },
@@ -93,7 +93,7 @@ export default defineConfig({
 										{ label: '4 · Managing Global Innovation', link: 'learnings/mba/global-innovation-management/04-managing-global-innovation', translations: { de: '4 · Globale Innovation steuern' } },
 										{ label: '5 · Lead Markets & Footprint', link: 'learnings/mba/global-innovation-management/05-lead-markets-and-innovation-footprint', translations: { de: '5 · Leitmärkte & Footprint' } },
 										{ label: '6 · Transnational Model', link: 'learnings/mba/global-innovation-management/06-the-transnational-model', translations: { de: '6 · Transnationales Modell' } },
-										{ label: '7 · Frugal — Concept', link: 'learnings/mba/global-innovation-management/07-frugal-innovation-concept', translations: { de: '7 · Frugal — Konzept' } },
+										{ label: '7 · Frugal - Concept', link: 'learnings/mba/global-innovation-management/07-frugal-innovation-concept', translations: { de: '7 · Frugal - Konzept' } },
 										{ label: '8 · Frugal in Practice', link: 'learnings/mba/global-innovation-management/08-frugal-innovation-in-practice', translations: { de: '8 · Frugal in der Praxis' } },
 									],
 								},
@@ -161,7 +161,7 @@ export default defineConfig({
 							label: 'Workshops & Programmes', translations: { de: 'Workshops & Programme' },
 							collapsed: true,
 							items: [
-								{ label: 'ReDI School — Creative Communication', translations: { de: 'ReDI School — Kreative Kommunikation' }, link: 'learnings/workshops/redi-school-creative-communication' },
+								{ label: 'ReDI School - Creative Communication', translations: { de: 'ReDI School - Kreative Kommunikation' }, link: 'learnings/workshops/redi-school-creative-communication' },
 							],
 						},
 						{
@@ -303,7 +303,7 @@ export default defineConfig({
 								items: [
 									{ label: 'Overview', link: 'learnings/online/project-management', translations: { de: 'Übersicht' } },
 									{
-										label: 'Course 1 — Foundations', translations: { de: 'Kurs 1 — Grundlagen' },
+										label: 'Course 1 - Foundations', translations: { de: 'Kurs 1 - Grundlagen' },
 										collapsed: true,
 										items: [
 											{ label: 'M1 · Embarking', translations: { de: 'M1 · Einstieg' }, link: 'learnings/online/project-management/foundations-1-embarking' },
@@ -313,7 +313,7 @@ export default defineConfig({
 										],
 									},
 									{
-										label: 'Course 2 — Project Initiation', translations: { de: 'Kurs 2 — Projektinitiierung' },
+										label: 'Course 2 - Project Initiation', translations: { de: 'Kurs 2 - Projektinitiierung' },
 										collapsed: true,
 										items: [
 											{ label: '1 · Initiation Components', translations: { de: '1 · Initiierungskomponenten' }, link: 'learnings/online/project-management/initiation-1-components' },
@@ -330,7 +330,7 @@ export default defineConfig({
 								items: [
 									{ label: 'Overview', link: 'learnings/online/sap-erp-consulting', translations: { de: 'Übersicht' } },
 									{
-										label: 'Block I — Foundations', translations: { de: 'Block I — Grundlagen' },
+										label: 'Block I - Foundations', translations: { de: 'Block I - Grundlagen' },
 										collapsed: true,
 										items: [
 											{ label: '1 · SAP & ERP Foundations', link: 'learnings/online/sap-erp-consulting/01-sap-erp-foundations', translations: { de: '1 · SAP- & ERP-Grundlagen' } },

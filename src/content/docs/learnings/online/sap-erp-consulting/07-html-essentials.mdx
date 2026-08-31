@@ -1,6 +1,6 @@
 ---
 title: "HTML Essentials"
-description: "The structure layer of the web — how an HTML document is built, elements/tags/attributes, headings and text semantics, lists, links, images, containers and block vs inline, multi-page sites, data tables, and forms."
+description: "The structure layer of the web - how an HTML document is built, elements/tags/attributes, headings and text semantics, lists, links, images, containers and block vs inline, multi-page sites, data tables, and forms."
 sidebar:
   label: "7 · HTML Essentials"
   order: 7
@@ -8,21 +8,21 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+*SAP Implementation Consulting & ERP - Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
 
 ---
 
 ## Where HTML sits: the three languages of the web
 
-Almost every page on the web is built from **three languages**, and each has exactly one job. Getting this split clear first makes everything below easier — HTML never tries to look good, and that is on purpose.
+Almost every page on the web is built from **three languages**, and each has exactly one job. Getting this split clear first makes everything below easier - HTML never tries to look good, and that is on purpose.
 
 | Language | Its one job | Says things like |
 |---|---|---|
-| **HTML** | **Structure & content** — what each thing *is* | "this is a heading", "this is a list" |
-| **CSS** | **Appearance** — what it *looks like* | "this heading is dark green, in this font" |
-| **JavaScript** | **Behavior** — what it *does* | "when this button is clicked, do X" |
+| **HTML** | **Structure & content** - what each thing *is* | "this is a heading", "this is a list" |
+| **CSS** | **Appearance** - what it *looks like* | "this heading is dark green, in this font" |
+| **JavaScript** | **Behavior** - what it *does* | "when this button is clicked, do X" |
 
-This chapter is only the first row. The web deliberately keeps them separate — most other software mashes structure, looks, and logic into one codebase, but the web splits them so a design can change without touching content, and so machines that only read structure (search engines, screen readers) can understand a page without running any code.
+This chapter is only the first row. The web deliberately keeps them separate - most other software mashes structure, looks, and logic into one codebase, but the web splits them so a design can change without touching content, and so machines that only read structure (search engines, screen readers) can understand a page without running any code.
 
 <Aside type="note" title="One line to memorise">
 HTML is the **skeleton**, CSS is the **clothing**, JavaScript is the **muscles**. A page can be live and useful with the skeleton alone.
@@ -30,8 +30,8 @@ HTML is the **skeleton**, CSS is the **clothing**, JavaScript is the **muscles**
 
 **Two words worth defining now, because they run through everything:**
 
-- **Browser** — the program that reads these three languages and paints the page (Chrome, Firefox, Edge, Safari). It is the *universal client*: written once, a page works on every device with nothing to install.
-- **Semantic** — "carrying meaning". A *semantic* element says what its content **is**; a non-semantic one says nothing. This idea is the thread through the whole chapter.
+- **Browser** - the program that reads these three languages and paints the page (Chrome, Firefox, Edge, Safari). It is the *universal client*: written once, a page works on every device with nothing to install.
+- **Semantic** - "carrying meaning". A *semantic* element says what its content **is**; a non-semantic one says nothing. This idea is the thread through the whole chapter.
 
 ---
 
@@ -39,14 +39,14 @@ HTML is the **skeleton**, CSS is the **clothing**, JavaScript is the **muscles**
 
 **HTML** = **HyperText Markup Language**. Break the name apart:
 
-- **HyperText** — text that contains **links** to other text. Links are what turned separate documents into a connected *web*.
-- **Markup** — annotating content with **labels** that say what each piece is. The labels are not the content; they are information *about* the content.
-- **Language** — it has fixed rules and a fixed vocabulary that every browser agrees on, which is why the same page renders the same everywhere.
+- **HyperText** - text that contains **links** to other text. Links are what turned separate documents into a connected *web*.
+- **Markup** - annotating content with **labels** that say what each piece is. The labels are not the content; they are information *about* the content.
+- **Language** - it has fixed rules and a fixed vocabulary that every browser agrees on, which is why the same page renders the same everywhere.
 
-The single most important idea: **HTML says what content *is*, not what it looks like.** When I write `<h1>My Bakery</h1>`, I am not saying "make this big" — I am saying "this is the most important heading on the page". The browser *chooses* to show it big by default, and CSS can later make it any size while it stays the most important heading.
+The single most important idea: **HTML says what content *is*, not what it looks like.** When I write `<h1>My Bakery</h1>`, I am not saying "make this big" - I am saying "this is the most important heading on the page". The browser *chooses* to show it big by default, and CSS can later make it any size while it stays the most important heading.
 
 <Aside type="tip" title="The moving-box analogy">
-Writing HTML is like labelling moving boxes **KITCHEN** and **FRAGILE**. The label doesn't change what's inside or what colour the box is — it tells whoever handles it what they're dealing with. The "handlers" here are browsers, search engines, and screen readers.
+Writing HTML is like labelling moving boxes **KITCHEN** and **FRAGILE**. The label doesn't change what's inside or what colour the box is - it tells whoever handles it what they're dealing with. The "handlers" here are browsers, search engines, and screen readers.
 </Aside>
 
 The same words with three different labels *mean* three different things to a machine:
@@ -57,18 +57,18 @@ The same words with three different labels *mean* three different things to a ma
 <li>Fresh bread every morning</li>    <!-- one item in a list -->
 ```
 
-Identical text. A search engine weighs the `h1` words far more than the `p` words, and a screen reader (software that reads a page aloud for people who cannot see it) treats each completely differently. **Honest labelling is not pedantry — it is how the page stays usable for every reader, human and machine.**
+Identical text. A search engine weighs the `h1` words far more than the `p` words, and a screen reader (software that reads a page aloud for people who cannot see it) treats each completely differently. **Honest labelling is not pedantry - it is how the page stays usable for every reader, human and machine.**
 
 ---
 
 ## Anatomy of an HTML document
 
-Every proper HTML page — from a five-line placeholder to a global newspaper — has the same four-part skeleton, in this order. Here it is, annotated:
+Every proper HTML page - from a five-line placeholder to a global newspaper - has the same four-part skeleton, in this order. Here it is, annotated:
 
 ```html
 <!DOCTYPE html>                <!-- 1. Declaration: "read this as modern HTML" -->
 <html lang="en">              <!-- 2. Root element, wraps everything; lang = content language -->
-  <head>                      <!-- 3. Info ABOUT the page — not shown on the page -->
+  <head>                      <!-- 3. Info ABOUT the page - not shown on the page -->
     <meta charset="UTF-8">     <!-- which alphabet the file uses (UTF-8 = all languages) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bakery</title>   <!-- shows in the browser TAB, bookmarks, search results -->
@@ -85,19 +85,19 @@ The four parts, top to bottom:
 | Part | What it is | Key point |
 |---|---|---|
 | **`<!DOCTYPE html>`** | A **declaration**, not an element | Always line 1, always this exact spelling, never has a closing partner |
-| **`<html>`** | The **root** that wraps everything | `lang="en"` names the language — screen readers & translation rely on it |
+| **`<html>`** | The **root** that wraps everything | `lang="en"` names the language - screen readers & translation rely on it |
 | **`<head>`** | Info **about** the page (metadata) | Nothing here is drawn on the page itself |
 | **`<body>`** | Everything the visitor **sees** | Headings, paragraphs, images, links all live here |
 
-<Aside type="note" title="The two meta lines — treat as fixed anatomy">
+<Aside type="note" title="The two meta lines - treat as fixed anatomy">
 - **`charset="UTF-8"`** names the file's character set so accented letters like ä, ö, ü show correctly instead of garbage. Comes first in the head, always.
 - **`viewport`** tells phones to render at their real width instead of pretending to be a desktop and shrinking everything. Without it, mobile visitors pinch-zoom to read.
 
-Both go in *every* page's head, spelled exactly like this, from day one. **Metadata** just means "data about data" — that's what `meta` is short for.
+Both go in *every* page's head, spelled exactly like this, from day one. **Metadata** just means "data about data" - that's what `meta` is short for.
 </Aside>
 
 <Aside type="caution" title="'It shows up, so it's fine' is a trap">
-Browsers silently **repair** broken or incomplete HTML — a missing head or body still renders. Convenient and dangerous: two browsers may repair differently, and tools that *don't* repair (some search-engine readers) simply misread the page. Rendering proves very little; valid markup is the real evidence.
+Browsers silently **repair** broken or incomplete HTML - a missing head or body still renders. Convenient and dangerous: two browsers may repair differently, and tools that *don't* repair (some search-engine readers) simply misread the page. Rendering proves very little; valid markup is the real evidence.
 </Aside>
 
 ---
@@ -108,9 +108,9 @@ Three words appear on every page of this topic. Developers say them loosely; err
 
 <div class="sc-flow"><div class="sc-node amber">&lt;p&gt;</div><span class="arrow">→</span><div class="sc-node soft">content</div><span class="arrow">→</span><div class="sc-node amber">&lt;/p&gt;</div><span class="arrow">=</span><div class="sc-node green">one element</div></div>
 
-- **Element** — a complete piece of the page: the markup **plus** its content. `<p>Fresh bread</p>` is one element.
-- **Tag** — the bracketed marker that opens or closes an element. `<p>` opens, `</p>` closes; the **slash** is what makes it a closer.
-- **Attribute** — a `name="value"` pair inside an *opening* tag that configures the element. In `<html lang="en">`, the name is `lang` and the value is `"en"`.
+- **Element** - a complete piece of the page: the markup **plus** its content. `<p>Fresh bread</p>` is one element.
+- **Tag** - the bracketed marker that opens or closes an element. `<p>` opens, `</p>` closes; the **slash** is what makes it a closer.
+- **Attribute** - a `name="value"` pair inside an *opening* tag that configures the element. In `<html lang="en">`, the name is `lang` and the value is `"en"`.
 
 So a typical element reads: **opening tag (maybe with attributes) → content → closing tag.**
 
@@ -120,43 +120,43 @@ So a typical element reads: **opening tag (maybe with attributes) → content �
 
 One element, two tags, one attribute (`lang="de"`, marking just this paragraph as German), content in the middle.
 
-**Void elements** carry no content, so there is nothing to close — no closing tag. The two I meet constantly are `<meta>` and `<img>`; everything they need is said in attributes. Void elements are the exception; when in doubt, an element closes.
+**Void elements** carry no content, so there is nothing to close - no closing tag. The two I meet constantly are `<meta>` and `<img>`; everything they need is said in attributes. Void elements are the exception; when in doubt, an element closes.
 
 <Aside type="tip" title="Parcel, tape, labels">
-The **element** is the whole parcel, the **tags** are the tape sealing its start and end, and the **attributes** are the shipping labels stuck on the tape carrying settings. Attributes live *only* inside opening tags — never in closing tags, never floating in content.
+The **element** is the whole parcel, the **tags** are the tape sealing its start and end, and the **attributes** are the shipping labels stuck on the tape carrying settings. Attributes live *only* inside opening tags - never in closing tags, never floating in content.
 </Aside>
 
-**Nesting** — elements contain elements (the `body` contains the `h1`; the `html` contains everything). One rule governs it: **the element opened last closes first.** Boxes inside boxes, never overlapping rings.
+**Nesting** - elements contain elements (the `body` contains the `h1`; the `html` contains everything). One rule governs it: **the element opened last closes first.** Boxes inside boxes, never overlapping rings.
 
 ```html
-<!-- WRONG: strong opened last but p closes first — they overlap -->
+<!-- WRONG: strong opened last but p closes first - they overlap -->
 <p>Our bread is <strong>baked fresh</p></strong>
 
 <!-- RIGHT: close in reverse order of opening -->
 <p>Our bread is <strong>baked fresh</strong></p>
 ```
 
-Indentation (two spaces per level) is purely for humans — the browser ignores it completely. I indent so future-me can read the nesting.
+Indentation (two spaces per level) is purely for humans - the browser ignores it completely. I indent so future-me can read the nesting.
 
-<Aside type="caution" title="The three beginner errors — learn their symptoms">
+<Aside type="caution" title="The three beginner errors - learn their symptoms">
 - **Typo in a tag name** (`<h11>`) → the label seems to have *no effect*; check spelling first.
 - **Unclosed element** (`<h1>` never closed) → *far too much* of the page changes; find where the weirdness starts.
 - **Overlap** (wrong closing order) → *no visible symptom*, which is the trap; fix with the nesting rule.
 
-VS Code colours recognised tags and dims what it can't parse — if the colours look wrong, the markup is wrong. And **MDN Web Docs** is the reference to look things up: arrive with a question, take the answer, leave. Good developers memorise ~20 elements and look up the rest.
+VS Code colours recognised tags and dims what it can't parse - if the colours look wrong, the markup is wrong. And **MDN Web Docs** is the reference to look things up: arrive with a question, take the answer, leave. Good developers memorise ~20 elements and look up the rest.
 </Aside>
 
 ---
 
 ## The tag reference table
 
-The most-used tags, grouped. This is the working vocabulary for the whole chapter — I don't memorise it, I recognise it.
+The most-used tags, grouped. This is the working vocabulary for the whole chapter - I don't memorise it, I recognise it.
 
 **Headings & text**
 
 | Tag | Purpose | Example |
 |---|---|---|
-| `<h1>`–`<h6>` | Section titles, ranked by importance (1 = top) | `<h1>My Bakery</h1>` |
+| `<h1>`-`<h6>` | Section titles, ranked by importance (1 = top) | `<h1>My Bakery</h1>` |
 | `<p>` | One paragraph of text | `<p>Baked every morning.</p>` |
 | `<strong>` | Content that is *seriously important* | `Closes <strong>Thursday</strong>.` |
 | `<em>` | Vocal *stress* that can change meaning | `We bake <em>everything</em>.` |
@@ -166,8 +166,8 @@ The most-used tags, grouped. This is the working vocabulary for the whole chapte
 
 | Tag | Purpose | Example |
 |---|---|---|
-| `<ul>` | Unordered list — sequence doesn't matter | `<ul><li>Milk</li></ul>` |
-| `<ol>` | Ordered list — sequence *is* the point | `<ol><li>Preheat</li></ol>` |
+| `<ul>` | Unordered list - sequence doesn't matter | `<ul><li>Milk</li></ul>` |
+| `<ol>` | Ordered list - sequence *is* the point | `<ol><li>Preheat</li></ol>` |
 | `<li>` | One item in either kind of list | `<li>Croissant</li>` |
 
 **Links & images**
@@ -181,12 +181,12 @@ The most-used tags, grouped. This is the working vocabulary for the whole chapte
 
 | Tag | Purpose | Example |
 |---|---|---|
-| `<header>` | Intro area — site name & navigation | `<header>…</header>` |
+| `<header>` | Intro area - site name & navigation | `<header>…</header>` |
 | `<nav>` | The navigation links themselves | `<nav>…</nav>` |
 | `<main>` | The unique content of this page (one per page) | `<main>…</main>` |
 | `<section>` | One thematic group, usually with its own heading | `<section>…</section>` |
 | `<article>` | A self-contained piece (a post, a card) | `<article>…</article>` |
-| `<footer>` | Closing area — small print, secondary info | `<footer>…</footer>` |
+| `<footer>` | Closing area - small print, secondary info | `<footer>…</footer>` |
 | `<div>` | Block container with **no** meaning (for grouping) | `<div>…</div>` |
 | `<span>` | Inline container with **no** meaning (few words) | `Price: <span>5.80</span>` |
 
@@ -204,30 +204,30 @@ The most-used tags, grouped. This is the working vocabulary for the whole chapte
 
 ### Headings are an outline, not a font-size picker
 
-`h1`–`h6` are **ranks of importance**, not sizes. Together they form the page's **outline**, like a book's chapters and sections. Two rules keep the outline honest:
+`h1`-`h6` are **ranks of importance**, not sizes. Together they form the page's **outline**, like a book's chapters and sections. Two rules keep the outline honest:
 
-- **One `<h1>` per page** — it names what the whole page is about. Two `h1`s = two claims to the same throne.
-- **Don't skip levels** — after an `h2`, go to `h3` when you go deeper, not straight to `h4`.
+- **One `<h1>` per page** - it names what the whole page is about. Two `h1`s = two claims to the same throne.
+- **Don't skip levels** - after an `h2`, go to `h3` when you go deeper, not straight to `h4`.
 
-Browsers render higher levels bigger by default, which tempts beginners to pick a heading *by its size*. Resist it — CSS will make any heading any size later. The level is a statement about **meaning** that outlives every design change.
+Browsers render higher levels bigger by default, which tempts beginners to pick a heading *by its size*. Resist it - CSS will make any heading any size later. The level is a statement about **meaning** that outlives every design change.
 
 <Aside type="tip" title="The table-of-contents test">
-Read a page's headings alone, in order. If they tell a sensible story, the structure is right. If they read like random labels, the structure is wrong no matter how good the page looks — because headings alone are exactly how a screen reader user skims the page.
+Read a page's headings alone, in order. If they tell a sensible story, the structure is right. If they read like random labels, the structure is wrong no matter how good the page looks - because headings alone are exactly how a screen reader user skims the page.
 </Aside>
 
 ### Paragraphs and collapsing whitespace
 
-`<p>` marks one paragraph. The surprise everyone hits once: **the browser collapses whitespace.** Any run of spaces, tabs, and line breaks in the source becomes a *single* space on the page. Pressing Enter five times changes nothing — only a new `<p>` creates a new paragraph. This is freeing: I can format the source for human readability and the rendered page is unaffected.
+`<p>` marks one paragraph. The surprise everyone hits once: **the browser collapses whitespace.** Any run of spaces, tabs, and line breaks in the source becomes a *single* space on the page. Pressing Enter five times changes nothing - only a new `<p>` creates a new paragraph. This is freeing: I can format the source for human readability and the rendered page is unaffected.
 
-### strong vs em — meaning, not bold and italic
+### strong vs em - meaning, not bold and italic
 
 Both look like styling switches (browsers show `strong` bold and `em` italic by default), but they carry **meaning**:
 
-- **`<strong>`** — this content is *seriously important* (a warning, a deadline, a key fact).
-- **`<em>`** — this word is *stressed*, the way my voice would stress it aloud. "We bake `<em>everything</em>` ourselves" vs "We bake everything `<em>ourselves</em>`" stress different claims with the same words.
+- **`<strong>`** - this content is *seriously important* (a warning, a deadline, a key fact).
+- **`<em>`** - this word is *stressed*, the way my voice would stress it aloud. "We bake `<em>everything</em>` ourselves" vs "We bake everything `<em>ourselves</em>`" stress different claims with the same words.
 
 <Aside type="note" title="Which one? A quick test">
-**strong survives out of context** (a deadline is important however the sentence reads). **em only makes sense read aloud** (the stress lives in the voice). If I'd raise my voice on the word → `em`. If I'd highlight it in a summary → `strong`. The old `<b>` and `<i>` produce the same look with *no* meaning attached — use the element that says what you mean.
+**strong survives out of context** (a deadline is important however the sentence reads). **em only makes sense read aloud** (the stress lives in the voice). If I'd raise my voice on the word → `em`. If I'd highlight it in a summary → `strong`. The old `<b>` and `<i>` produce the same look with *no* meaning attached - use the element that says what you mean.
 </Aside>
 
 ---
@@ -236,9 +236,9 @@ Both look like styling switches (browsers show `strong` bold and `em` italic by 
 
 Three elements, and the choice between them is a **meaning** choice like everything in HTML:
 
-- **`<ul>`** — unordered list (sequence doesn't matter): a shopping list.
-- **`<ol>`** — ordered list (sequence is the point): recipe steps.
-- **`<li>`** — one item, used inside both.
+- **`<ul>`** - unordered list (sequence doesn't matter): a shopping list.
+- **`<ol>`** - ordered list (sequence is the point): recipe steps.
+- **`<li>`** - one item, used inside both.
 
 ```html
 <ul>
@@ -249,7 +249,7 @@ Three elements, and the choice between them is a **meaning** choice like everyth
 
 **Structural rule:** the *only* direct children a `ul` or `ol` may have are `li` elements. Text and other elements go **inside** the list items, never loose between them.
 
-**Nested lists** build categories — a list item can hold a whole list, which is how a menu with categories is shaped:
+**Nested lists** build categories - a list item can hold a whole list, which is how a menu with categories is shaped:
 
 ```html
 <ul>
@@ -267,13 +267,13 @@ Three elements, and the choice between them is a **meaning** choice like everyth
 </ul>
 ```
 
-The inner `<ul>` lives *inside* its category's `<li>`, before that `li` closes — the nesting rule doing real work. Don't hand-type "1." and "2." inside paragraphs: a screen reader announces a real list ("list, four items") and lets users skip it; typed numbers give none of that.
+The inner `<ul>` lives *inside* its category's `<li>`, before that `li` closes - the nesting rule doing real work. Don't hand-type "1." and "2." inside paragraphs: a screen reader announces a real list ("list, four items") and lets users skip it; typed numbers give none of that.
 
 ---
 
 ## Links
 
-The **H** in HTML is HyperText — links are what make a web a web.
+The **H** in HTML is HyperText - links are what make a web a web.
 
 ### Reading a URL
 
@@ -281,9 +281,9 @@ A **URL** (Uniform Resource Locator) is the address of a resource. Every one dec
 
 <div class="sc-flow"><div class="sc-node violet">https</div><span class="arrow">·</span><div class="sc-node amber">example.github.io</div><span class="arrow">·</span><div class="sc-node green">/my-site/</div></div>
 
-- **`https`** — the **scheme**: which protocol to use (here, the secure web protocol).
-- **`example.github.io`** — the **domain**: which server to ask.
-- **`/my-site/`** — the **path**: which resource on that server.
+- **`https`** - the **scheme**: which protocol to use (here, the secure web protocol).
+- **`example.github.io`** - the **domain**: which server to ask.
+- **`/my-site/`** - the **path**: which resource on that server.
 
 ### The `<a>` element
 
@@ -291,15 +291,15 @@ A **URL** (Uniform Resource Locator) is the address of a resource. Every one dec
 <a href="menu.html">See our menu</a>
 ```
 
-The text between the tags is what the visitor clicks — write text that **says where it leads** ("See our menu", not "click here"). Screen-reader users often jump link to link hearing only the link texts, and a page of "click here, click here" tells them nothing.
+The text between the tags is what the visitor clicks - write text that **says where it leads** ("See our menu", not "click here"). Screen-reader users often jump link to link hearing only the link texts, and a page of "click here, click here" tells them nothing.
 
 **Two kinds of address in `href`:**
 
-- **Relative** — points from the current file to another file *in my own project*: `menu.html`, `images/hero.png`. No scheme, no domain. Relative links keep working everywhere the project goes (local preview, live server, a teammate's copy).
-- **Absolute** — a full URL with scheme and domain: `https://www.example.com`. Use it *only* for destinations outside my project. Hard-coding my own live URL into internal links is the classic self-inflicted wound: the site then breaks everywhere except that one address.
+- **Relative** - points from the current file to another file *in my own project*: `menu.html`, `images/hero.png`. No scheme, no domain. Relative links keep working everywhere the project goes (local preview, live server, a teammate's copy).
+- **Absolute** - a full URL with scheme and domain: `https://www.example.com`. Use it *only* for destinations outside my project. Hard-coding my own live URL into internal links is the classic self-inflicted wound: the site then breaks everywhere except that one address.
 
-<Aside type="note" title="Opening a new tab — rarely">
-`target="_blank"` opens a link in a new tab. Inside my own site: **never** — visitors navigate in one tab and the back button is theirs. Defensible only for external links, and pair it with `rel="noopener"` (severs a handle the new page would otherwise get back to yours):
+<Aside type="note" title="Opening a new tab - rarely">
+`target="_blank"` opens a link in a new tab. Inside my own site: **never** - visitors navigate in one tab and the back button is theirs. Defensible only for external links, and pair it with `rel="noopener"` (severs a handle the new page would otherwise get back to yours):
 
 ```html
 <a href="https://www.example.com" target="_blank" rel="noopener">External site</a>
@@ -314,21 +314,21 @@ The text between the tags is what the visitor clicks — write text that **says 
 <img src="images/hero.png" alt="The bakery counter with fresh loaves on wooden shelves.">
 ```
 
-`<img>` is a **void element** — no closing tag, because its "content" is the picture file its `src` points at. Everything is said in attributes.
+`<img>` is a **void element** - no closing tag, because its "content" is the picture file its `src` points at. Everything is said in attributes.
 
-- **`src`** — the path to the file. Convention: keep images in an **`images/` folder** in the project and reach them with a relative path. The image file is committed, reviewed, and released *with* the markup that uses it — always in the same commit, because one without the other is a broken state.
-- **`alt`** — the text a visitor receives *instead of* the image: read aloud by screen readers, shown when the file fails to load, read by search engines. **Every image gets an alt sentence** — a full sentence a person could hear and still follow the page, not a keyword and not the file name.
+- **`src`** - the path to the file. Convention: keep images in an **`images/` folder** in the project and reach them with a relative path. The image file is committed, reviewed, and released *with* the markup that uses it - always in the same commit, because one without the other is a broken state.
+- **`alt`** - the text a visitor receives *instead of* the image: read aloud by screen readers, shown when the file fails to load, read by search engines. **Every image gets an alt sentence** - a full sentence a person could hear and still follow the page, not a keyword and not the file name.
 
 <Aside type="caution" title="Two image traps">
-- **File size** — the browser downloads the *full* file regardless of display size. A 4 MB photo shown small is still a 4 MB download. Compress before committing (Squoosh, TinyPNG) — aim for kilobytes, not megabytes.
-- **Capital letters** — a path that works locally can break live. Many machines treat `Hero.png` and `hero.png` as the same file; a real web server does **not**. Rule that prevents it: **all-lowercase file names, always.**
+- **File size** - the browser downloads the *full* file regardless of display size. A 4 MB photo shown small is still a 4 MB download. Compress before committing (Squoosh, TinyPNG) - aim for kilobytes, not megabytes.
+- **Capital letters** - a path that works locally can break live. Many machines treat `Hero.png` and `hero.png` as the same file; a real web server does **not**. Rule that prevents it: **all-lowercase file names, always.**
 </Aside>
 
 ---
 
 ## Page structure and containers
 
-Five **semantic** elements name the areas almost every page has. Each is a meaning label — like `strong`, but for a whole area:
+Five **semantic** elements name the areas almost every page has. Each is a meaning label - like `strong`, but for a whole area:
 
 <div class="sc-flow"><div class="sc-node soft">header (nav)</div><span class="arrow">→</span><div class="sc-node green">main (section…)</div><span class="arrow">→</span><div class="sc-node soft">footer</div></div>
 
@@ -344,32 +344,32 @@ Five **semantic** elements name the areas almost every page has. Each is a meani
 </body>
 ```
 
-- **`<header>`** — intro area, usually site name and navigation.
-- **`<nav>`** — the navigation itself, a group of links.
-- **`<main>`** — the unique content of this page (one per page).
-- **`<section>`** — one thematic group within the content, usually with a heading.
-- **`<footer>`** — closing area, small print and secondary info.
+- **`<header>`** - intro area, usually site name and navigation.
+- **`<nav>`** - the navigation itself, a group of links.
+- **`<main>`** - the unique content of this page (one per page).
+- **`<section>`** - one thematic group within the content, usually with a heading.
+- **`<footer>`** - closing area, small print and secondary info.
 
-These barely change how anything *looks*. What they change is what the page **means**: screen readers announce them as **landmarks** and let users jump straight to `main` or `nav`, skipping repetition. Search engines and reader modes lean on them too, and accessible structure is a legal matter for many public sites — it's the cheapest compliance work there is, free at writing time.
+These barely change how anything *looks*. What they change is what the page **means**: screen readers announce them as **landmarks** and let users jump straight to `main` or `nav`, skipping repetition. Search engines and reader modes lean on them too, and accessible structure is a legal matter for many public sites - it's the cheapest compliance work there is, free at writing time.
 
 **The two meaning-free containers**, for when I need to group things purely to style them later:
 
-- **`<div>`** — a **block** container that says nothing about its content.
-- **`<span>`** — an **inline** container that says nothing, for a few words inside text.
+- **`<div>`** - a **block** container that says nothing about its content.
+- **`<span>`** - an **inline** container that says nothing, for a few words inside text.
 
 ```html
 <p>Whole loaf: <span>5.80</span></p>
 ```
 
 <Aside type="tip" title="The professional order">
-**Semantic element first, neutral container only when no meaning applies.** A `div` where a `section` belongs, or a `span` where `strong` belongs, is a small lie of omission. `div` isn't bad practice — using it *where a semantic element fits* is.
+**Semantic element first, neutral container only when no meaning applies.** A `div` where a `section` belongs, or a `span` where `strong` belongs, is a small lie of omission. `div` isn't bad practice - using it *where a semantic element fits* is.
 </Aside>
 
 ---
 
 ## Block vs inline
 
-Every element renders one of two default ways. I've been seeing this all along — here's its name:
+Every element renders one of two default ways. I've been seeing this all along - here's its name:
 
 | | **Block-level** | **Inline** |
 |---|---|---|
@@ -378,7 +378,7 @@ Every element renders one of two default ways. I've been seeing this all along �
 | Examples | headings, `p`, lists, `div`, all 5 structure elements | `strong`, `em`, `a`, `span` |
 | Behaviour | Stack vertically, each its own row | Live inside lines, never break them |
 
-Block elements pile up like stacked bars; inline elements sit in the flow of text. This is the *default* behaviour of every element, visible before a single line of CSS — later, CSS's `display` property can change it, which is the doorway to layout.
+Block elements pile up like stacked bars; inline elements sit in the flow of text. This is the *default* behaviour of every element, visible before a single line of CSS - later, CSS's `display` property can change it, which is the doorway to layout.
 
 ---
 
@@ -386,12 +386,12 @@ Block elements pile up like stacked bars; inline elements sit in the flow of tex
 
 A small site is just several complete HTML documents sitting side by side in the project root, next to the `images/` folder:
 
-- **`index.html`** — the home page. It keeps this special name because a web server, when asked for a *folder* rather than a file, answers with that folder's `index.html`. That's why a live address like `example.github.io/my-site/` needs no file name.
-- **`menu.html`, `order.html`** — other pages, named **descriptively**. Only the default page gets the special name.
+- **`index.html`** - the home page. It keeps this special name because a web server, when asked for a *folder* rather than a file, answers with that folder's `index.html`. That's why a live address like `example.github.io/my-site/` needs no file name.
+- **`menu.html`, `order.html`** - other pages, named **descriptively**. Only the default page gets the special name.
 
 Each file is a **complete** document: full anatomy, its own `<title>` (so three open tabs are tellable apart), its own single `<h1>`.
 
-**One nav, on every page** — for a small site, that means the same markup copied into each file:
+**One nav, on every page** - for a small site, that means the same markup copied into each file:
 
 ```html
 <nav>
@@ -401,22 +401,22 @@ Each file is a **complete** document: full anatomy, its own `<title>` (so three 
 </nav>
 ```
 
-Yes, copies — when the nav changes I update all of them. Feel that small pain: repeating identical markup is a real problem with real solutions later (JavaScript), but for a few pages honest repetition is the right call. Every page links to *all* pages, itself included, so the nav stays stable.
+Yes, copies - when the nav changes I update all of them. Feel that small pain: repeating identical markup is a real problem with real solutions later (JavaScript), but for a few pages honest repetition is the right call. Every page links to *all* pages, itself included, so the nav stays stable.
 
-<Aside type="caution" title="Works-locally-broken-live — the three causes">
+<Aside type="caution" title="Works-locally-broken-live - the three causes">
 Everything works in local preview, then a link or image breaks on the live site. Nearly always one of:
 1. **A typo in the path** (`menue.html`, `image/` for `images/`).
-2. **Wrong capitalisation** — my machine may forgive `Menu.html` vs `menu.html`; the live server does **not**. The single most common beginner bug. Fix: lowercase names, always.
-3. **A forgotten extension** (`href="menu"` finds nothing — browsers don't guess `.html`).
+2. **Wrong capitalisation** - my machine may forgive `Menu.html` vs `menu.html`; the live server does **not**. The single most common beginner bug. Fix: lowercase names, always.
+3. **A forgotten extension** (`href="menu"` finds nothing - browsers don't guess `.html`).
 
-The habit that catches all three: **after every release, click through the live site** — every nav link on every page, every image. Thirty seconds on the address that actually matters.
+The habit that catches all three: **after every release, click through the live site** - every nav link on every page, every image. Thirty seconds on the address that actually matters.
 </Aside>
 
 ---
 
 ## Tables for data
 
-A table holds **rows and columns of related data** — and nothing else. (Before CSS could do layout, developers abused tables to position whole pages; that practice is dead. Tables hold data; layout belongs to CSS.)
+A table holds **rows and columns of related data** - and nothing else. (Before CSS could do layout, developers abused tables to position whole pages; that practice is dead. Tables hold data; layout belongs to CSS.)
 
 | Tag | Purpose |
 |---|---|
@@ -447,7 +447,7 @@ A table holds **rows and columns of related data** — and nothing else. (Before
 </table>
 ```
 
-`thead` and `tbody` aren't decoration: screen readers use them to announce each header **with the data it belongs to**, and CSS uses them to target header vs body rows separately (for example, striping every second data row). Data tables are the correct, accessible element for data — nothing else does their job.
+`thead` and `tbody` aren't decoration: screen readers use them to announce each header **with the data it belongs to**, and CSS uses them to target header vs body rows separately (for example, striping every second data row). Data tables are the correct, accessible element for data - nothing else does their job.
 
 ---
 
@@ -455,7 +455,7 @@ A table holds **rows and columns of related data** — and nothing else. (Before
 
 A **web form** is a section of a page that **collects input from the visitor and sends it somewhere** for processing. Two halves: the **collecting** (HTML's job, and the whole of this section) and the **sending** (explained conceptually here, made real in later courses).
 
-Forms are everywhere once you notice: the search box on every site, logins, checkouts, newsletter signups, a pull request's title and description. **Forms are how the web listens** — the one mechanism by which pages stop being read-only.
+Forms are everywhere once you notice: the search box on every site, logins, checkouts, newsletter signups, a pull request's title and description. **Forms are how the web listens** - the one mechanism by which pages stop being read-only.
 
 ### Building a form
 
@@ -474,13 +474,13 @@ The pieces, from the outside in:
 
 **Four attributes that matter on inputs:**
 
-- **`type`** — what kind of question. Common: `text` (free text), `email` (browser checks for email shape), `radio` (choose exactly one of a group), `checkbox` (choose any number). **Radio for one, checkbox for many.** Radios sharing one `name` form one choose-one group; giving one the `checked` attribute preselects a default.
-- **`name`** — the **key** the value travels under (`customer-name=Sarah`). An input with **no `name` submits nothing**, silently — the field looks perfect and its data never leaves. This is the most important attribute to never forget.
-- **`required`** — the browser refuses to submit while the field is empty, with its own built-in message, no code needed.
-- **`placeholder`** — faint example text inside an empty field. An example, **never** a label — it vanishes the moment typing starts.
+- **`type`** - what kind of question. Common: `text` (free text), `email` (browser checks for email shape), `radio` (choose exactly one of a group), `checkbox` (choose any number). **Radio for one, checkbox for many.** Radios sharing one `name` form one choose-one group; giving one the `checked` attribute preselects a default.
+- **`name`** - the **key** the value travels under (`customer-name=Sarah`). An input with **no `name` submits nothing**, silently - the field looks perfect and its data never leaves. This is the most important attribute to never forget.
+- **`required`** - the browser refuses to submit while the field is empty, with its own built-in message, no code needed.
+- **`placeholder`** - faint example text inside an empty field. An example, **never** a label - it vanishes the moment typing starts.
 
-<Aside type="caution" title="Every input needs a label — no exceptions">
-A `<label>` is wired to its input by matching `for` (on the label) and `id` (on the input). This does two jobs: screen readers speak the label when the input gets focus, and clicking the label focuses/toggles the input (vital for small radio and checkbox targets). **Label is for humans, `name` is for the data, `id` connects the label to the input** — they usually all match for sanity. A placeholder is *not* a label.
+<Aside type="caution" title="Every input needs a label - no exceptions">
+A `<label>` is wired to its input by matching `for` (on the label) and `id` (on the input). This does two jobs: screen readers speak the label when the input gets focus, and clicking the label focuses/toggles the input (vital for small radio and checkbox targets). **Label is for humans, `name` is for the data, `id` connects the label to the input** - they usually all match for sanity. A placeholder is *not* a label.
 </Aside>
 
 Here is a full, copy-pasteable form showing every rule at once:
@@ -535,16 +535,16 @@ Here is a full, copy-pasteable form showing every rule at once:
 
 Read the radio group carefully: both share `name="pickup-day"` so they exclude each other, each has a **distinct `id`**, each has its own wired label, and Saturday is preselected with `checked`.
 
-<Aside type="note" title="Styling forms — a CSS job, in brief">
-Making a form *get filled in* is mostly spacing: labels sitting **above** text fields, inputs wide and comfortably padded, and form controls told to use the site's font (they keep system styling until told otherwise). One rule this course treats as law: the **focus ring** (the outline that shows keyboard users where they are) may be **restyled but never removed** — deleting it locks keyboard users out. All of that is CSS and lives in the styling chapter; here I just build the structure.
+<Aside type="note" title="Styling forms - a CSS job, in brief">
+Making a form *get filled in* is mostly spacing: labels sitting **above** text fields, inputs wide and comfortably padded, and form controls told to use the site's font (they keep system styling until told otherwise). One rule this course treats as law: the **focus ring** (the outline that shows keyboard users where they are) may be **restyled but never removed** - deleting it locks keyboard users out. All of that is CSS and lives in the styling chapter; here I just build the structure.
 </Aside>
 
 ### What happens on submit
 
 Two attributes on `<form>` describe the sending:
 
-- **`action`** — the **address** the data is sent to.
-- **`method`** — **how** it travels: `get` or `post`.
+- **`action`** - the **address** the data is sent to.
+- **`method`** - **how** it travels: `get` or `post`.
 
 With `action="#"` (this same page) and `method="get"` and no server at all, I can *watch* a submission happen: fill the form, press submit, and read the **address bar**. The URL now carries every named field as key-value pairs after a `?`:
 
@@ -552,15 +552,15 @@ With `action="#"` (this same page) and `method="get"` and no server at all, I ca
 mypage.html?customer-name=Alex&pickup-day=saturday&items=loaf
 ```
 
-Keys come from the `name` attributes, values from what the visitor typed. This is also the proof that unnamed fields vanish — anything without a `name` simply isn't in that URL.
+Keys come from the `name` attributes, values from what the visitor typed. This is also the proof that unnamed fields vanish - anything without a `name` simply isn't in that URL.
 
 | | **GET** | **POST** |
 |---|---|---|
 | Where the data goes | In the **URL**, visible & bookmarkable | Inside the request, **out of** the URL |
-| Right for | Searches, filters — the data is a *question* | Orders, logins, messages — changes or private data |
+| Right for | Searches, filters - the data is a *question* | Orders, logins, messages - changes or private data |
 
 <Aside type="caution" title="Browser checks help the visitor, not the server">
-`required` and the email-shape check help the **visitor** fill the form correctly. They protect the **server** not at all — anyone can send a request without your form, or with the checks stripped. **Real validation is always server-side.** The professional posture for now: know which side each check lives on. (Also: inside a form, a bare `<button>` defaults to submitting — any button that *isn't* the submit needs `type="button"` or it will fire the form.)
+`required` and the email-shape check help the **visitor** fill the form correctly. They protect the **server** not at all - anyone can send a request without your form, or with the checks stripped. **Real validation is always server-side.** The professional posture for now: know which side each check lives on. (Also: inside a form, a bare `<button>` defaults to submitting - any button that *isn't* the submit needs `type="button"` or it will fire the form.)
 </Aside>
 
 ---
@@ -569,22 +569,22 @@ Keys come from the `name` attributes, values from what the visitor typed. This i
 
 | Must-know | One-line recall |
 |---|---|
-| Three languages | HTML = structure, CSS = looks, JS = behavior — one job each |
-| What HTML is | HyperText Markup Language — labels saying what content *is*, never how it looks |
+| Three languages | HTML = structure, CSS = looks, JS = behavior - one job each |
+| What HTML is | HyperText Markup Language - labels saying what content *is*, never how it looks |
 | Document anatomy | doctype → `html` → `head` (about the page) → `body` (what's seen) |
-| The two meta lines | `charset="UTF-8"` (alphabet) + viewport (real width on phones) — fixed in every head |
+| The two meta lines | `charset="UTF-8"` (alphabet) + viewport (real width on phones) - fixed in every head |
 | Element vs tag vs attribute | Element = markup + content; tag = the bracketed marker; attribute = `name="value"` in the opening tag |
-| Void elements | `<meta>`, `<img>`, `<br>`, `<input>` — no content, no closing tag |
-| Nesting rule | Opened last, closed first — boxes inside boxes, never overlapping |
-| Headings | `h1`–`h6` are a ranked outline, not sizes; one `h1`, don't skip levels |
-| Whitespace collapses | Runs of spaces/newlines become one space — only elements create structure |
+| Void elements | `<meta>`, `<img>`, `<br>`, `<input>` - no content, no closing tag |
+| Nesting rule | Opened last, closed first - boxes inside boxes, never overlapping |
+| Headings | `h1`-`h6` are a ranked outline, not sizes; one `h1`, don't skip levels |
+| Whitespace collapses | Runs of spaces/newlines become one space - only elements create structure |
 | strong vs em | `strong` = important (survives out of context); `em` = vocal stress |
 | Lists | `ul` (order-free), `ol` (order matters), `li` items; only `li` directly inside |
 | Links | `<a href>`; relative inside the project, absolute only for external |
 | Images | `<img src alt>` void; every image gets an alt sentence; lowercase names; compress |
 | Semantic structure | `header nav main section article footer` = landmarks; `div`/`span` only when no meaning fits |
 | Block vs inline | Block = own line, full width; inline = flows in text, content-width |
-| index.html | Server returns a folder's `index.html` by default — that's the home page |
+| index.html | Server returns a folder's `index.html` by default - that's the home page |
 | Tables | `table/thead/tbody/tr/th/td` for **data** only, never layout |
 | Form basics | `form` frames it; every `input` needs a wired `label` and a `name` (no name → sends nothing) |
 | Input types | `text`, `email`, `radio` (one, shared name), `checkbox` (many), plus `textarea`/`select` |

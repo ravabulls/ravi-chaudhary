@@ -1,5 +1,5 @@
 ---
-title: "Week 8 | Session 5: SC Network Design — LP Optimization & Final Comparison"
+title: "Week 8 | Session 5: SC Network Design - LP Optimization & Final Comparison"
 description: "Discover how to use Linear Programming (LP) and Excel Solver to find the guaranteed optimal solution for Supply Chain Network Design, proving its superiority over heuristic approaches."
 sidebar:
   order: 41
@@ -7,25 +7,25 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Recap — Same Problem, Better Method
-- LP Formulation — SC Network Design
+- Recap - Same Problem, Better Method
+- LP Formulation - SC Network Design
 - Objective Function
 - Constraints (Supply, Flow Balance, Demand)
-- Solving in Excel — Step-by-Step
+- Solving in Excel - Step-by-Step
 - Result & Final Comparison
 - Scalability & Practical Relevance
 </Aside>
 
 ---
 
-## 1. Recap — Same Problem, Better Method
+## 1. Recap - Same Problem, Better Method
 
 **Same SC network as Session 4:** 2 Manufacturers, 3 Warehouses, 4 Retailers, 1 product.
 - **Objectives:** Find optimal distribution strategy to satisfy retailer demand and minimize total distribution costs.
@@ -38,13 +38,13 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## 2. LP Formulation — SC Network Design
+## 2. LP Formulation - SC Network Design
 
-### Decision Variables — 18 total
-- **6 variables (M→W tier):** Quantity moved between each Manufacturer–Warehouse pair (e.g., `QM1W1`).
-- **12 variables (W→R tier):** Quantity moved between each Warehouse–Retailer pair (e.g., `XW1R1`).
+### Decision Variables - 18 total
+- **6 variables (M→W tier):** Quantity moved between each Manufacturer-Warehouse pair (e.g., `QM1W1`).
+- **12 variables (W→R tier):** Quantity moved between each Warehouse-Retailer pair (e.g., `XW1R1`).
 
-All initialized to 0 in Excel — Solver finds the optimal values.
+All initialized to 0 in Excel - Solver finds the optimal values.
 
 <figure class="sc-fig">
   <div class="sc-formula">
@@ -54,7 +54,7 @@ All initialized to 0 in Excel — Solver finds the optimal values.
     </div>
     <div>
       <div class="name">Demand constraint (per retailer)</div>
-      <code>X<sub>w1r1</sub> + X<sub>w2r1</sub> + X<sub>w3r1</sub> = 45,000 &nbsp;(and 35,000 / 68,000 / 70,000 for r2–r4)</code>
+      <code>X<sub>w1r1</sub> + X<sub>w2r1</sub> + X<sub>w3r1</sub> = 45,000 &nbsp;(and 35,000 / 68,000 / 70,000 for r2-r4)</code>
     </div>
   </div>
   <figcaption>The 18 decision variables (6 manufacturer→warehouse, 12 warehouse→retailer) all start at 0. Flow-balance keeps each warehouse a pass-through node; demand constraints force every retailer's requirement to be met exactly.</figcaption>
@@ -73,17 +73,17 @@ All initialized to 0 in Excel — Solver finds the optimal values.
 
 ## 4. Constraints
 
-Three types of constraints — all must be satisfied simultaneously for a valid solution.
+Three types of constraints - all must be satisfied simultaneously for a valid solution.
 
 | Constraint Type | Expression | What it ensures |
 |---|---|---|
 | **Supply** (2) | `QM1W1+QM1W2+QM1W3 ≤ 1,50,000` | Total shipped from each Mfr ≤ its capacity |
-| **Flow Balance** (3) | `Σ(in to W1) = Σ(out of W1)` | What comes into a WH must go out — no stockpiling |
+| **Flow Balance** (3) | `Σ(in to W1) = Σ(out of W1)` | What comes into a WH must go out - no stockpiling |
 | **Demand** (4) | `XW1Rj+XW2Rj+XW3Rj = Dj` | All three WHs together must fulfill each retailer's demand |
 | **Non-negativity** | All `Q` and `X` variables ≥ 0 | Quantities cannot be negative |
 
-### Flow Balance Constraint — Key New Concept
-Ensures warehouses are pass-through nodes — they do not hold inventory.
+### Flow Balance Constraint - Key New Concept
+Ensures warehouses are pass-through nodes - they do not hold inventory.
 `For W1: QM1W1 + QM2W1 = XW1R1 + XW1R2 + XW1R3 + XW1R4`
 
 <Aside type="note">
@@ -92,7 +92,7 @@ Ensures warehouses are pass-through nodes — they do not hold inventory.
 
 ---
 
-## 5. Solving in Excel — Step-by-Step
+## 5. Solving in Excel - Step-by-Step
 
 <Steps>
 1. **Set Objective:** Select the Total Cost cell → choose Minimize.
@@ -105,7 +105,7 @@ Ensures warehouses are pass-through nodes — they do not hold inventory.
 
 <figure class="sc-fig">
   <div class="sc-panel" style="max-width:34rem;margin:0 auto">
-    <div class="head">Excel Solver — LP network setup</div>
+    <div class="head">Excel Solver - LP network setup</div>
     <ul>
       <li><b>Set Objective:</b> total-cost cell → <b>Min</b> &nbsp;(cell = <code>SUMPRODUCT(costs, quantities)</code>)</li>
       <li><b>By Changing Cells:</b> all 18 decision-variable cells</li>
@@ -125,7 +125,7 @@ Ensures warehouses are pass-through nodes — they do not hold inventory.
 Solver confirms: all constraints and optimality conditions satisfied.
 **Total Distribution Cost = ₹6,89,000** ← global optimum.
 
-*Optimal decision variables (units shipped) — total cost ₹6,89,000:*
+*Optimal decision variables (units shipped) - total cost ₹6,89,000:*
 
 | Warehouse | ← m1 | ← m2 | → r1 | → r2 | → r3 | → r4 |
 |---|---|---|---|---|---|---|
@@ -141,23 +141,23 @@ Solver confirms: all constraints and optimality conditions satisfied.
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Retailers</div><div class="sc-node violet">R1 · 45,000 <span class="sub">via W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">via W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">via W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">via W3</span></div></div>
   </div>
-  <figcaption>LP optimum — W1 serves R1, R2, R4 (fed by M1) and W3 serves R3 (fed by M2). Routing R4 through W1 and R3 through W3 undercuts both heuristics.</figcaption>
+  <figcaption>LP optimum - W1 serves R1, R2, R4 (fed by M1) and W3 serves R3 (fed by M2). Routing R4 through W1 and R3 through W3 undercuts both heuristics.</figcaption>
 </figure>
 
 ### Approach Comparison
 
 | Approach | Method | Total Cost | Optimal? | Savings vs H1 |
 |---|---|---|---|---|
-| **Heuristic 1** | Cheapest WH for all | ₹9,61,000 | No | — |
+| **Heuristic 1** | Cheapest WH for all | ₹9,61,000 | No | - |
 | **Heuristic 2** | Cheapest path per retailer | ₹7,57,000 | No | ₹2,04,000 |
-| **LP Optimization** | Simplex LP via Excel Solver | **₹6,89,000** | **Yes — guaranteed** | **₹2,72,000** |
+| **LP Optimization** | Simplex LP via Excel Solver | **₹6,89,000** | **Yes - guaranteed** | **₹2,72,000** |
 
 <Aside type="tip">
-LP (₹6,89,000) beats Heuristic 2 (₹7,57,000) by **₹68,000** and Heuristic 1 (₹9,61,000) by **₹2,72,000** — and, unlike the heuristics, it is *guaranteed* optimal: no feasible distribution can cost less.
+LP (₹6,89,000) beats Heuristic 2 (₹7,57,000) by **₹68,000** and Heuristic 1 (₹9,61,000) by **₹2,72,000** - and, unlike the heuristics, it is *guaranteed* optimal: no feasible distribution can cost less.
 </Aside>
 
 <Aside type="note">
-**★** The LP solution is guaranteed optimal — no other feasible distribution can cost less. This is the power of optimization.
+**★** The LP solution is guaranteed optimal - no other feasible distribution can cost less. This is the power of optimization.
 </Aside>
 
 ---

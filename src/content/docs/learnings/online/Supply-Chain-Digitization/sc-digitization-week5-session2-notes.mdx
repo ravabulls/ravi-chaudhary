@@ -1,5 +1,5 @@
 ---
-title: "Week 5 | Session 2: NVP — Supplier Payoffs, SC Conflict & Revenue Sharing Contracts"
+title: "Week 5 | Session 2: NVP - Supplier Payoffs, SC Conflict & Revenue Sharing Contracts"
 description: "Analyzes the three-way conflict in the probabilistic News Vendor Problem and demonstrates how revenue sharing contracts can achieve supply chain coordination."
 sidebar:
   order: 23
@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 2: Digital Business in SC*
+*Course: Supply Chain Digitization - Module 2: Digital Business in SC*
 
 ---
 
@@ -16,16 +16,16 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 <Aside type="note">
 - Recap: NV optimal order = 40,000 units → E[Profit] = ₹2,00,000
 - Supplier payoff analysis under probabilistic setting
-- Three-way conflict: NV vs RS vs SC — global optimal is 50,000 units
-- Contracts as a coordination tool — types and logic
-- Revenue sharing contract — worked example with parameter tuning
+- Three-way conflict: NV vs RS vs SC - global optimal is 50,000 units
+- Contracts as a coordination tool - types and logic
+- Revenue sharing contract - worked example with parameter tuning
 - Key result: 32% revenue share + ₹2.75 wholesale price → all players better off
 - Bridge to platform economy
 </Aside>
 
 ---
 
-## Recap — Probabilistic NVP (Session 1)
+## Recap - Probabilistic NVP (Session 1)
 
 - **Demand distribution:** 5 scenarios → 10K(20%), 20K(15%), 30K(10%), 40K(25%), 50K(30%)
 - **NV profit formula:** min(D, S) × ₹20 − S × ₹10
@@ -35,12 +35,12 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Supplier Payoff — Probabilistic Setting
+## Supplier Payoff - Probabilistic Setting
 
-RS profit does NOT depend on demand D — only on the order size S placed by NV.
+RS profit does NOT depend on demand D - only on the order size S placed by NV.
 **Why?** RS fulfils the order and gets paid wholesale price ₹10/unit. Market demand is NV's problem, not RS's.
 - `RS profit = S × (₹10 − ₹5) − ₹1,50,000 = S × ₹5 − ₹1,50,000`
-- **RS prefers:** As large an order as possible — more units = more marginal profit at ₹5/unit
+- **RS prefers:** As large an order as possible - more units = more marginal profit at ₹5/unit
 
 | Supplier <br /> Potential Order Size | 10000 | 20000 | 30000 | 40000 | 50000 |
 |---|---|---|---|---|---|
@@ -53,7 +53,7 @@ RS profit does NOT depend on demand D — only on the order size S placed by NV.
 | **Potential Profits as per Newsvendor's Best Order** | | | | 50000 | |
 | **Suppliers Actual Profit (Rs.)** | | | | 50000 | |
 
-*Table 1: RS profit for each possible order size — NV picks 40K, RS wants 50K*
+*Table 1: RS profit for each possible order size - NV picks 40K, RS wants 50K*
 
 ### RS break-even and engagement decision by order size
 
@@ -65,7 +65,7 @@ RS profit does NOT depend on demand D — only on the order size S placed by NV.
 | **S = 40,000 ← NV picks** | ₹1,50,000 | ₹2,00,000 | ₹4,00,000 | +₹50,000 ✓ | Yes ✓ |
 | **S = 50,000 ← RS wants** | ₹1,50,000 | ₹2,50,000 | ₹5,00,000 | +₹1,00,000 ✓✓ | Yes ✓✓ |
 
-### Entity-wise outcomes — NV, RS, and SC total profit by order size
+### Entity-wise outcomes - NV, RS, and SC total profit by order size
 
 | Entity-wise decisions and outcomes <br /> Potential Order Size | 10000 | 20000 | 30000 | 40000 | 50000 |
 |---|---|---|---|---|---|
@@ -81,12 +81,12 @@ RS profit does NOT depend on demand D — only on the order size S placed by NV.
 - **NV will NOT order 50,000:** E[NV Profit] at S=50K = ₹1,60,000 < ₹2,00,000 at S=40K → NV has no incentive
 
 <Aside type="note">
-**★** RS is profitable at NV's optimal order (S=40K) but earns less than it could. NV has no incentive to order more. Classic decentralised SC conflict — even in probabilistic setting.
+**★** RS is profitable at NV's optimal order (S=40K) but earns less than it could. NV has no incentive to order more. Classic decentralised SC conflict - even in probabilistic setting.
 </Aside>
 
 ---
 
-## Three-Way Conflict — NV vs RS vs SC
+## Three-Way Conflict - NV vs RS vs SC
 
 | Order Size | NV E[Profit] | RS Profit | SC Total E[Profit] | Preferred by? |
 |---|---|---|---|---|
@@ -110,12 +110,12 @@ RS profit does NOT depend on demand D — only on the order size S placed by NV.
 
 ---
 
-## Why Contracts? — The Coordination Need
+## Why Contracts? - The Coordination Need
 
 - **Problem:** NV's individually rational decision (S=40K) leaves ₹10,000 of SC profit unrealised
 - **Solution needed:** A mechanism that incentivises NV to voluntarily order S=50K → while still being profitable
 - **Contract:** A formal agreement between parties with agreed terms and conditions. Contract parameters can include: Price | Order quantity | Ordering schedule | Payment terms | Credit period | Duration | Returns policy.
-- **Effective contract:** Moves ALL players to a better-off position than without the contract — Pareto improvement
+- **Effective contract:** Moves ALL players to a better-off position than without the contract - Pareto improvement
 - **Information shared via contracts:** Market demand info | Inventory levels | Risk | Costs
 
 <Aside type="tip">
@@ -130,14 +130,14 @@ RS profit does NOT depend on demand D — only on the order size S placed by NV.
 |---|---|---|---|
 | **Revenue Sharing ★** | NV shares % of revenues with RS. RS gives wholesale price discount in return. | NV shares revenue risk with RS | Incentivises NV to order more; lowers NV procurement cost |
 | **Buyback** | RS agrees to buy back excess unsold stock from NV at agreed price after selling period. | RS absorbs overstock risk | NV orders more (lower downside); RS shares demand info |
-| **Quantity Flexibility** | NV can return PART of excess stock (not all) at agreed price — partial buyback. | Partial risk sharing | More flexible than buyback; intermediate order incentive |
+| **Quantity Flexibility** | NV can return PART of excess stock (not all) at agreed price - partial buyback. | Partial risk sharing | More flexible than buyback; intermediate order incentive |
 | **Quantity Discount** | RS gives lower wholesale price per unit for larger order quantities (e.g. ₹8/unit for 50K vs ₹10/unit for smaller orders). | NV takes on volume risk | Directly incentivises larger NV orders |
 | **Sales Rebate** | NV gets a reward/rebate for selling above a threshold quantity. Encourages discounts to end customers. | NV incentivised to push demand | NV shares demand info; boosts market throughput |
 | **Cost Sharing** | NV shares cost information with RS; RS reduces price accordingly. Not applicable to current NVP scenario. | Cost visibility shared | Enables larger production runs by RS |
-| **Payback** | RS has excess unsold inventory; NV agrees to purchase it. Reverse of buyback — RS has market info here. | NV absorbs RS overstock | Applicable when RS has more market knowledge than NV |
+| **Payback** | RS has excess unsold inventory; NV agrees to purchase it. Reverse of buyback - RS has market info here. | NV absorbs RS overstock | Applicable when RS has more market knowledge than NV |
 
 *Contracts explored in this example:* Revenue Sharing (detailed) + Quantity Discount (mentioned).
-*Cost sharing & Payback:* Not directly applicable to this NVP scenario — RS does not have more market info than NV here.
+*Cost sharing & Payback:* Not directly applicable to this NVP scenario - RS does not have more market info than NV here.
 
 <Aside type="tip">
 **★ Exam tip:** Know all 5-6 contract types with one-line definitions. For exam answers, always explain the mechanism + what information/risk gets shared + which player is incentivised to change behaviour.
@@ -145,7 +145,7 @@ RS profit does NOT depend on demand D — only on the order size S placed by NV.
 
 ---
 
-## Revenue Sharing Contract — Detailed Example
+## Revenue Sharing Contract - Detailed Example
 
 ### Concept
 - **NV offers RS:** X% of revenues earned from sales
@@ -177,7 +177,7 @@ Applying the contract formula gives NV’s adjusted profits. Under these paramet
 | **Expected Profit of Newsvendor** | **70000** | **106000** | **116500** | **110000** | **61000** |
 | **Newsvendor's order size (units)** | | | 30000 | | |
 
-The supplier’s payoff under the RS contract — including the expected revenue share received from NV — is shown below:
+The supplier’s payoff under the RS contract - including the expected revenue share received from NV - is shown below:
 
 | Supplier <br /> Potential Order Size | 10000 | 20000 | 30000 | 40000 | 50000 |
 |---|---|---|---|---|---|
@@ -195,18 +195,18 @@ The supplier’s payoff under the RS contract — including the expected revenue
 
 ---
 
-## Parameter Tuning — What Happens at Different Values?
+## Parameter Tuning - What Happens at Different Values?
 
 | Rev Share % | W/sale Price (₹) | NV's Best S | NV E[Profit] | RS Profit | SC Total | Both better? |
 |---|---|---|---|---|---|---|
-| **0% (baseline)** | ₹10 | 40,000 | ₹2,00,000 | ₹50,000 | ₹2,50,000 | — (reference) |
-| **10%** | ₹10 | 30,000 | ₹1,16,500 ✗ | ₹73,500 ✓ | ₹1,90,000 ✗ | No — NV worse, SC worse |
-| **0%** | ₹7 | 40,000 | ₹2,30,000 ✓ | ₹20,000 ✗ | ₹2,50,000 | No — RS worse |
-| **10%** | ₹7 | 40,000 | ₹2,30,000 ✓ | ₹20,000 ✗ | ₹2,50,000 | No — RS still worse |
-| **32% ★** | **₹2.75 ★** | **50,000 ★** | **₹2,03,200 ✓** | **₹56,800 ✓** | **₹2,60,000 ★** | **YES — All better ✓** |
+| **0% (baseline)** | ₹10 | 40,000 | ₹2,00,000 | ₹50,000 | ₹2,50,000 | - (reference) |
+| **10%** | ₹10 | 30,000 | ₹1,16,500 ✗ | ₹73,500 ✓ | ₹1,90,000 ✗ | No - NV worse, SC worse |
+| **0%** | ₹7 | 40,000 | ₹2,30,000 ✓ | ₹20,000 ✗ | ₹2,50,000 | No - RS worse |
+| **10%** | ₹7 | 40,000 | ₹2,30,000 ✓ | ₹20,000 ✗ | ₹2,50,000 | No - RS still worse |
+| **32% ★** | **₹2.75 ★** | **50,000 ★** | **₹2,03,200 ✓** | **₹56,800 ✓** | **₹2,60,000 ★** | **YES - All better ✓** |
 
-### Reading the Table — Key Observations
-- **Rev share 10%, w=₹10 (no discount):** NV orders only 30K (lower than before) → NV worse, SC worse. RS slightly better but irrelevant — NV won't sign.
+### Reading the Table - Key Observations
+- **Rev share 10%, w=₹10 (no discount):** NV orders only 30K (lower than before) → NV worse, SC worse. RS slightly better but irrelevant - NV won't sign.
 - **Rev share 0%, w=₹7 (discount only):** NV orders 40K → NV better (+₹30K). RS worse (loses discount revenue). NV might like this but RS won't sign.
 - **Rev share 10%, w=₹7:** NV orders 40K → NV still better. RS still worse than baseline. SC same as baseline. Not sufficient.
 - **Rev share 32%, w=₹2.75:** NV orders 50K ✓ → NV better (+₹3,200) | RS better (+₹6,800) | SC = ₹2,60,000 (global best ✓). All players win.
@@ -218,9 +218,9 @@ The supplier’s payoff under the RS contract — including the expected revenue
 ### Contract Design as an Optimisation Problem
 - **Goal:** Find (revenue share %, wholesale price w) that maximises total SC profit such that both NV and RS are individually better off than without the contract.
 - **Constraints:** NV E[Profit] ≥ ₹2,00,000 (NV's outside option) | RS Profit ≥ ₹50,000 (RS's outside option).
-- The 32%/₹2.75 solution is one valid point — many combinations exist that satisfy both constraints simultaneously.
-- *Prof's approach:* Manual exploration (not formal optimisation) — demonstrates the concept.
-- *Formal approach:* Set up as LP/NLP and solve — covered in more advanced SCM/OR courses.
+- The 32%/₹2.75 solution is one valid point - many combinations exist that satisfy both constraints simultaneously.
+- *Prof's approach:* Manual exploration (not formal optimisation) - demonstrates the concept.
+- *Formal approach:* Set up as LP/NLP and solve - covered in more advanced SCM/OR courses.
 
 <Aside type="tip">
 **★ Exam tip:** "Design an effective contract" = find parameters where BOTH players are strictly better off (participation constraints satisfied) AND total SC profit improves. State this logic explicitly.
@@ -228,9 +228,9 @@ The supplier’s payoff under the RS contract — including the expected revenue
 
 ---
 
-## Final Summary — Decentralised vs. Centralised vs. Coordinated
+## Final Summary - Decentralised vs. Centralised vs. Coordinated
 
-The table below compares the key outcomes across all three SC regimes — no contract, central planner, and revenue-sharing contract:
+The table below compares the key outcomes across all three SC regimes - no contract, central planner, and revenue-sharing contract:
 
 | Aspect | Decentralised (No contract) | Centralised (Central planner) | Coordinated (Revenue share contract) |
 |---|---|---|---|
@@ -238,34 +238,34 @@ The table below compares the key outcomes across all three SC regimes — no con
 | **NV E[Profit]** | ₹2,00,000 | Less (NV wouldn't comply) | ₹2,03,200 ✓ |
 | **RS Profit** | ₹50,000 | ₹1,00,000 (RS wants this) | ₹56,800 ✓ |
 | **SC Total E[Profit]** | ₹2,50,000 | ₹2,60,000 ★ (global best) | ₹2,60,000 ★ ✓ |
-| **Will it happen?** | Yes — NV acts alone | No — NV has no incentive | Yes — both players voluntarily agree ✓ |
+| **Will it happen?** | Yes - NV acts alone | No - NV has no incentive | Yes - both players voluntarily agree ✓ |
 
 <Aside type="note">
-**★** Contracts enable decentralised players to voluntarily achieve the centralised SC optimum — without a central authority. This is the power of coordination contracts.
+**★** Contracts enable decentralised players to voluntarily achieve the centralised SC optimum - without a central authority. This is the power of coordination contracts.
 </Aside>
 
-### What Contracts Enable — Four Levers
+### What Contracts Enable - Four Levers
 - **Information visibility:** NV shares market demand signals. RS understands actual market conditions.
 - **Inventory visibility:** Both parties know stock levels, order quantities, and sales outcomes.
 - **Risk sharing:** Revenue share → NV shares demand risk with RS. Buyback → RS absorbs overstock risk for NV.
 - **Cost visibility:** Cost sharing contracts → player reveals costs → enables trust-based pricing.
 
 <Aside type="note">
-**★** These four levers (info / inventory / risk / cost visibility) are also the core value proposition of platform economy in SCM — next series of lectures.
+**★** These four levers (info / inventory / risk / cost visibility) are also the core value proposition of platform economy in SCM - next series of lectures.
 </Aside>
 
 ---
 
-## Bridge — SC Coordination → Platform Economy
+## Bridge - SC Coordination → Platform Economy
 
 Same coordination logic applies in platform economy scenarios:
 - **Taxi driver:** Join cab aggregator platform OR find customers directly OR both → tradeoffs in revenue share and market access
 - **Seller on e-commerce:** Sell on Amazon/Flipkart (share revenue) vs. own website → SC reach vs. margin tradeoff
 - **Digital content:** Free content (ad-supported) vs. subscription → demand vs. revenue model tradeoff
-- **Platform:** A coordination mechanism at scale — reduces search & selection problems + enables risk/revenue sharing across SC players
+- **Platform:** A coordination mechanism at scale - reduces search & selection problems + enables risk/revenue sharing across SC players
 
 <Aside type="tip">
-**★ Exam tip:** Platform economy connection — platforms do for SC what contracts do for two-player NVP: they enable information visibility, risk sharing, and coordination. But at scale, across many players simultaneously.
+**★ Exam tip:** Platform economy connection - platforms do for SC what contracts do for two-player NVP: they enable information visibility, risk sharing, and coordination. But at scale, across many players simultaneously.
 </Aside>
 
 ---
@@ -278,4 +278,4 @@ Same coordination logic applies in platform economy scenarios:
 - **Revenue sharing contract:** NV gives X% of revenue to RS. RS gives wholesale price discount. Must balance both parameters.
 - **Optimal contract (this example):** Rev share = 32%, wholesale price = ₹2.75 → NV orders 50K → all players better off → SC profit = ₹2,60,000
 - **Key principle:** Effective contract = all players individually better off (participation constraint) + SC total profit maximised
-- **Bridge:** Same coordination logic underpins platform economy — platforms enable info/risk/cost visibility at scale
+- **Bridge:** Same coordination logic underpins platform economy - platforms enable info/risk/cost visibility at scale

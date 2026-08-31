@@ -1,6 +1,6 @@
 ---
-title: "Day 5 — GenAI-Assisted Machine Learning"
-description: "A manager's guide to classic predictive machine learning — churn and value modelling — and how GenAI and AutoML help you build, interpret, and communicate models without being a data scientist."
+title: "Day 5 - GenAI-Assisted Machine Learning"
+description: "A manager's guide to classic predictive machine learning - churn and value modelling - and how GenAI and AutoML help you build, interpret, and communicate models without being a data scientist."
 sidebar:
   label: "5 · GenAI-Assisted ML"
   order: 5
@@ -8,13 +8,13 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
 
 ---
 
-Days 1 to 4 were all about **text**: understanding LLMs, prompting them, grounding them in documents (RAG), and letting them take actions (agents). Day 5 is a different beast. It's about **prediction from tables of numbers** — the kind of question a spreadsheet full of customers raises: *Which of these people will cancel next quarter? How much is each one worth? Where should we spend our limited attention?*
+Days 1 to 4 were all about **text**: understanding LLMs, prompting them, grounding them in documents (RAG), and letting them take actions (agents). Day 5 is a different beast. It's about **prediction from tables of numbers** - the kind of question a spreadsheet full of customers raises: *Which of these people will cancel next quarter? How much is each one worth? Where should we spend our limited attention?*
 
-That job belongs to **machine learning (ML)**, not to a chatbot. But here's the twist that makes this a *GenAI* course: GenAI doesn't do the predicting — it makes the whole ML process **accessible to a non-coder**. It helps you frame the problem, clean the data, write the code, read the results, and explain them to your boss. So the mental model for the whole day is:
+That job belongs to **machine learning (ML)**, not to a chatbot. But here's the twist that makes this a *GenAI* course: GenAI doesn't do the predicting - it makes the whole ML process **accessible to a non-coder**. It helps you frame the problem, clean the data, write the code, read the results, and explain them to your boss. So the mental model for the whole day is:
 
 > **Human manager + ML model + GenAI copilot.** The ML model produces the number. GenAI helps you decide *what* number to compute, *how* to compute it, and *how to explain it*.
 
@@ -35,9 +35,9 @@ The single most useful idea to start with: **GenAI and predictive ML solve diffe
 | "Decide something from a table of data" | **Supervised ML** | A number: a probability or a prediction |
 | "Rank thousands of customers, target the best" | **ML + decision rules** | A ranked list + who to act on |
 
-GenAI is brilliant at **unstructured** work (language). Predictive ML is brilliant at **structured** decisions (rows and columns — numbers, categories, dates): ranking, targeting, forecasting, risk scoring. They're teammates, not rivals.
+GenAI is brilliant at **unstructured** work (language). Predictive ML is brilliant at **structured** decisions (rows and columns - numbers, categories, dates): ranking, targeting, forecasting, risk scoring. They're teammates, not rivals.
 
-**Why this matters now:** ML has traditionally been locked behind data scientists — expensive to hire, slow to iterate with, and their outputs need translating before a manager can act. GenAI + **AutoML** (more on that later) lowers that wall so people like me can meaningfully take part in an ML project instead of just receiving a slide at the end.
+**Why this matters now:** ML has traditionally been locked behind data scientists - expensive to hire, slow to iterate with, and their outputs need translating before a manager can act. GenAI + **AutoML** (more on that later) lowers that wall so people like me can meaningfully take part in an ML project instead of just receiving a slide at the end.
 
 ---
 
@@ -57,12 +57,12 @@ For business, two families matter most:
 | **Supervised** | Learn from **labelled** examples (we already know the answer) | Churn prediction, fraud detection, forecasting | "This customer has a 78% chance of leaving" |
 | **Unsupervised** | Find patterns in **unlabelled** data | Customer segmentation, anomaly detection | "These 5 groups behave differently" |
 
-Today is almost entirely **supervised** learning, which itself splits in two — and we'll use both:
+Today is almost entirely **supervised** learning, which itself splits in two - and we'll use both:
 
 <Tabs>
 <TabItem label="Classification">
 **Question: which category?** The answer is a class, usually delivered as a probability.
-*Our example:* Will this customer churn — yes or no? → `p(churn)`, e.g. 0.78.
+*Our example:* Will this customer churn - yes or no? → `p(churn)`, e.g. 0.78.
 </TabItem>
 <TabItem label="Regression">
 **Question: what number?** The answer is a quantity.
@@ -82,24 +82,24 @@ Today is almost entirely **supervised** learning, which itself splits in two —
 
 Our running example all day is **customer churn** ("churn" = a customer leaving/cancelling) for a telecom company. But here's the crucial managerial point:
 
-> A churn model is only useful if it connects to an **action** — offer a discount, make a call, improve service, or do nothing. Prediction without a decision is trivia.
+> A churn model is only useful if it connects to an **action** - offer a discount, make a call, improve service, or do nothing. Prediction without a decision is trivia.
 
 And to decide well, one number isn't enough. A high-risk customer might be cheap to lose; a medium-risk customer might be your most valuable account. So we combine two predictions:
 
 <figure class="sc-fig">
-<div class="sc-flow"><div class="sc-node violet">Risk<span class="sub">p(churn) — classification</span></div><span class="arrow">×</span><div class="sc-node green">Value<span class="sub">monthly charges — regression</span></div><span class="arrow">=</span><div class="sc-node amber">Revenue at Risk<span class="sub">who to prioritise</span></div></div>
-<figcaption>Revenue at Risk = p(churn) × predicted monthly value. This one formula is the bridge between the classification model and the regression model — and it's what managers actually care about: where the money is, not just who is nervous.</figcaption>
+<div class="sc-flow"><div class="sc-node violet">Risk<span class="sub">p(churn) - classification</span></div><span class="arrow">×</span><div class="sc-node green">Value<span class="sub">monthly charges - regression</span></div><span class="arrow">=</span><div class="sc-node amber">Revenue at Risk<span class="sub">who to prioritise</span></div></div>
+<figcaption>Revenue at Risk = p(churn) × predicted monthly value. This one formula is the bridge between the classification model and the regression model - and it's what managers actually care about: where the money is, not just who is nervous.</figcaption>
 </figure>
 
 **A tiny decision-rule exercise** that shows why probability alone drives action. Say a retention offer costs **€10**, and losing a churner costs you **€150**. It's worth making the offer when the expected saved loss beats the cost:
 
 > Offer if `p(churn) × 150 > 10`, i.e. when `p(churn) > 10/150 ≈ 0.067`.
 
-So even a **7% churn probability** justifies a €10 offer here. The "right" threshold is a *business* number (costs and capacity), not a technical default — a theme we return to constantly.
+So even a **7% churn probability** justifies a €10 offer here. The "right" threshold is a *business* number (costs and capacity), not a technical default - a theme we return to constantly.
 
 ---
 
-## The data — and the traps a manager must know
+## The data - and the traps a manager must know
 
 The Telco dataset has ~7,000 customers and columns like: demographics (senior citizen, partner), services (internet, streaming, phone), contract & billing (contract type, payment method), an age proxy (**tenure** = months as a customer), money (**MonthlyCharges**, **TotalCharges**), and the target (**Churn**: Yes/No).
 
@@ -107,51 +107,51 @@ Real data is messy, and you should *expect* these issues:
 
 - **Missing values** (e.g. `TotalCharges` blank for brand-new customers).
 - **Mixed types** (text and numbers together).
-- **Class imbalance** — usually far fewer churners than stayers (here ~27% churn). This quietly breaks naïve accuracy (explained below).
-- **Leakage** — the single most dangerous trap.
+- **Class imbalance** - usually far fewer churners than stayers (here ~27% churn). This quietly breaks naïve accuracy (explained below).
+- **Leakage** - the single most dangerous trap.
 
 <Aside type="danger" title="Data leakage = cheating (and it's a manager's job to catch it)">
-**Leakage** is when the model is fed information it would *not* have at the real moment of decision. Classic example: a "cancellation date" column — of course that predicts churn perfectly, it *is* churn. A leaky model looks brilliant in testing and then **collapses in production**. In this dataset, `TotalCharges` roughly equals `MonthlyCharges × tenure`, so including all three hands the model "free" answers. Ask relentlessly: *would we actually know this at the time we make the call?*
+**Leakage** is when the model is fed information it would *not* have at the real moment of decision. Classic example: a "cancellation date" column - of course that predicts churn perfectly, it *is* churn. A leaky model looks brilliant in testing and then **collapses in production**. In this dataset, `TotalCharges` roughly equals `MonthlyCharges × tenure`, so including all three hands the model "free" answers. Ask relentlessly: *would we actually know this at the time we make the call?*
 </Aside>
 
 ---
 
 ## The supervised learning workflow
 
-Every ML project — churn, demand, fraud — follows roughly the same six steps:
+Every ML project - churn, demand, fraud - follows roughly the same six steps:
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node amber">Define problem<span class="sub">business Q → ML task</span></div><span class="arrow">→</span><div class="sc-node amber">Collect &amp; clean<span class="sub">fix, merge, impute</span></div><span class="arrow">→</span><div class="sc-node slate">Engineer features<span class="sub">create predictors</span></div><span class="arrow">→</span><div class="sc-node green">Train &amp; tune<span class="sub">fit the model</span></div><span class="arrow">→</span><div class="sc-node violet">Evaluate<span class="sub">on held-out data</span></div><span class="arrow">→</span><div class="sc-node soft">Deploy &amp; monitor<span class="sub">watch for drift</span></div></div>
-<figcaption>The ML workflow. GenAI can assist at every single one of these steps — and AutoML automates the training-and-tuning part in the middle.</figcaption>
+<figcaption>The ML workflow. GenAI can assist at every single one of these steps - and AutoML automates the training-and-tuning part in the middle.</figcaption>
 </figure>
 
 <Aside type="tip" title="The 80/20 rule of ML (surprising, and important for budgeting)">
-Roughly **80% of the effort is data** — defining the problem, collecting, cleaning, and engineering features (steps 1–3). Only ~20% is the glamorous "machine learning" part (steps 4–6). So when someone says "let's just train a model", remember most of the real work happens *before* any model exists. Conveniently, GenAI helps most with that heavy 80%, and AutoML handles much of the 20%.
+Roughly **80% of the effort is data** - defining the problem, collecting, cleaning, and engineering features (steps 1-3). Only ~20% is the glamorous "machine learning" part (steps 4-6). So when someone says "let's just train a model", remember most of the real work happens *before* any model exists. Conveniently, GenAI helps most with that heavy 80%, and AutoML handles much of the 20%.
 </Aside>
 
 ### Train/test split, and over- vs under-fitting
 
 We must know whether a model **generalises** to *new* customers, not just the ones it memorised. So we split the data:
 
-- **Training set** — used to fit the model.
-- **Test set** — locked away until the very end, then used once as a realistic report card.
+- **Training set** - used to fit the model.
+- **Test set** - locked away until the very end, then used once as a realistic report card.
 
 <Aside type="caution" title="The exam analogy (this is the whole idea)">
-The test set is like an exam. Don't let the model "study the exam questions". If it scores **99% on training data but 65% on new data**, it hasn't learned — it has memorised. That gap is the tell.
+The test set is like an exam. Don't let the model "study the exam questions". If it scores **99% on training data but 65% on new data**, it hasn't learned - it has memorised. That gap is the tell.
 </Aside>
 
 Every model lives on a tension between two failure modes:
 
 | Failure | Nickname | What it looks like |
 |---|---|---|
-| **Underfitting** (high bias) | Too simple | Poor on *both* training and test data — e.g. predicting the same churn risk for everyone |
-| **Overfitting** (high variance) | Too complex | Great on training, poor on test — memorised the noise |
+| **Underfitting** (high bias) | Too simple | Poor on *both* training and test data - e.g. predicting the same churn risk for everyone |
+| **Overfitting** (high variance) | Too complex | Great on training, poor on test - memorised the noise |
 
 The goal is the sweet spot: complex enough to catch real patterns, simple enough to travel. This is exactly why we build models in a **ladder from simple to complex** (below) and only add complexity when the test set proves it helps.
 
 ### Pipelines: one tidy, leak-proof process
 
-A reliable ML system isn't "a model" — it's a **pipeline** that always does the same steps in the same order: fill missing values → encode categories into numbers → (scale if needed) → predict. Bundling this into one object is what *prevents leakage* from the test set and makes results reproducible.
+A reliable ML system isn't "a model" - it's a **pipeline** that always does the same steps in the same order: fill missing values → encode categories into numbers → (scale if needed) → predict. Bundling this into one object is what *prevents leakage* from the test set and makes results reproducible.
 
 ```python
 # A minimal scikit-learn pipeline: preprocessing + model in one object
@@ -174,17 +174,17 @@ model = Pipeline([("prep", preprocess),
 ```
 
 <Aside type="note" title="What 'one-hot encoding' means">
-Models only eat numbers, so a text column like `contract` with values *Month-to-month, One year, Two year* gets turned into separate 0/1 columns — one per option. That's **one-hot encoding**. GenAI will happily write this boilerplate for you.
+Models only eat numbers, so a text column like `contract` with values *Month-to-month, One year, Two year* gets turned into separate 0/1 columns - one per option. That's **one-hot encoding**. GenAI will happily write this boilerplate for you.
 </Aside>
 
 ---
 
 ## GenAI meets ML: two engines working together
 
-This is the heart of Day 5. GenAI **does not replace the model** — it removes the friction at every step. Think of two engines:
+This is the heart of Day 5. GenAI **does not replace the model** - it removes the friction at every step. Think of two engines:
 
-- **AutoML** handles the *mechanical* complexity — trying algorithms, tuning settings, comparing models.
-- **GenAI** handles the *cognitive* complexity — understanding the data, suggesting features, explaining results in plain English.
+- **AutoML** handles the *mechanical* complexity - trying algorithms, tuning settings, comparing models.
+- **GenAI** handles the *cognitive* complexity - understanding the data, suggesting features, explaining results in plain English.
 
 | Workflow step | The old way | With a GenAI copilot |
 |---|---|---|
@@ -197,9 +197,9 @@ This is the heart of Day 5. GenAI **does not replace the model** — it removes 
 
 ### GenAI for understanding data and inventing features
 
-Before building anything, you *describe your dataset to the LLM* — column names, types, a few sample rows — and ask what it notices. It'll often spot that `TotalCharges` may be blank for new customers, that a wide `MonthlyCharges` range hints at service tiers, or that too much class imbalance means "predicting no-churn for everyone" will look deceptively accurate.
+Before building anything, you *describe your dataset to the LLM* - column names, types, a few sample rows - and ask what it notices. It'll often spot that `TotalCharges` may be blank for new customers, that a wide `MonthlyCharges` range hints at service tiers, or that too much class imbalance means "predicting no-churn for everyone" will look deceptively accurate.
 
-**Feature engineering** — inventing better predictor columns from the raw ones — is traditionally the hardest, most creative part of ML. It's also where an LLM shines, because it has "read" millions of business documents. You ask for ideas as **structured JSON** (a direct callback to Day 2) so you can use them programmatically:
+**Feature engineering** - inventing better predictor columns from the raw ones - is traditionally the hardest, most creative part of ML. It's also where an LLM shines, because it has "read" millions of business documents. You ask for ideas as **structured JSON** (a direct callback to Day 2) so you can use them programmatically:
 
 ```python
 # Ask the model for derived-feature ideas, returned as clean JSON
@@ -213,33 +213,33 @@ resp = client.models.generate_content(
 )
 ```
 
-Typical suggestions: `is_new_customer` (tenure under 6 months — new customers churn more), `support_ticket_rate` (tickets ÷ tenure), or `is_month_to_month` (no lock-in = easy to leave).
+Typical suggestions: `is_new_customer` (tenure under 6 months - new customers churn more), `support_ticket_rate` (tickets ÷ tenure), or `is_month_to_month` (no lock-in = easy to leave).
 
 <Aside type="caution" title="Treat the LLM as a brainstorming colleague, not an oracle">
-You don't accept every feature it proposes. It's like brainstorming with someone who has read every analytics textbook but knows nothing about *your* business. Combine its creativity with your domain sense — **and validate every idea with real numbers in the notebook.** An LLM will also cheerfully suggest a leaky feature.
+You don't accept every feature it proposes. It's like brainstorming with someone who has read every analytics textbook but knows nothing about *your* business. Combine its creativity with your domain sense - **and validate every idea with real numbers in the notebook.** An LLM will also cheerfully suggest a leaky feature.
 </Aside>
 
 ---
 
 ## The model ladder: simple → strong → best
 
-A key managerial principle: **start transparent, add complexity only if it earns its place.** For churn (classification) we climb a three-rung ladder. First, always beat a dumb **baseline** (e.g. "always predict no churn", or "month-to-month = churn") — if a fancy model can't beat a naïve rule, it shouldn't ship.
+A key managerial principle: **start transparent, add complexity only if it earns its place.** For churn (classification) we climb a three-rung ladder. First, always beat a dumb **baseline** (e.g. "always predict no churn", or "month-to-month = churn") - if a fancy model can't beat a naïve rule, it shouldn't ship.
 
 | Model | How it works (plain English) | Interpretability | Typical performance | Watch for |
 |---|---|---|---|---|
-| **Logistic regression** | Weighted sum of features → squeezed into a 0–1 probability | **High** — read each feature's weight | Good baseline | Only finds simple patterns |
+| **Logistic regression** | Weighted sum of features → squeezed into a 0-1 probability | **High** - read each feature's weight | Good baseline | Only finds simple patterns |
 | **Random forest** | Hundreds of decision trees on random data slices, **averaged** | Medium | Strong out-of-the-box | Little tuning needed |
 | **Gradient boosting** | Trees built **one after another**, each fixing the last one's mistakes | Medium (use SHAP) | **Often the best** on tables | Needs tuning; can overfit |
 
 A few intuitions worth carrying:
 
 - **Logistic regression** gives every feature one readable coefficient: "month-to-month contract adds +1.2 to the churn score; a two-year contract subtracts 0.8." That transparency is why it's the natural starting point.
-- A single **decision tree** is just a flowchart of yes/no questions ("Is the contract month-to-month?" → "Is tenure short?"). Intuitive, but one tree is unstable — nudge the data and you get a totally different tree.
+- A single **decision tree** is just a flowchart of yes/no questions ("Is the contract month-to-month?" → "Is tenure short?"). Intuitive, but one tree is unstable - nudge the data and you get a totally different tree.
 - A **random forest** fixes that instability by building many diverse trees and averaging them, so their individual mistakes cancel out (this averaging trick is called *bagging*).
-- **Gradient boosting** is cleverer still: each new tree is trained on the **leftover errors** of all previous trees, so the model keeps patching its own weak spots. It usually wins on tabular data — at the cost of careful tuning.
+- **Gradient boosting** is cleverer still: each new tree is trained on the **leftover errors** of all previous trees, so the model keeps patching its own weak spots. It usually wins on tabular data - at the cost of careful tuning.
 
 <Aside type="caution" title="A correlation-vs-causation trap to say out loud">
-A feature's weight shows **association useful for prediction** — *not* what will happen if you intervene. "Month-to-month contract predicts churn" does **not** prove "moving people to annual contracts will stop churn." Proving that needs an experiment (A/B test), not a model.
+A feature's weight shows **association useful for prediction** - *not* what will happen if you intervene. "Month-to-month contract predicts churn" does **not** prove "moving people to annual contracts will stop churn." Proving that needs an experiment (A/B test), not a model.
 </Aside>
 
 The exact same ladder works for the **regression** side (predicting MonthlyCharges): linear regression → random-forest regressor → gradient-boosting regressor.
@@ -248,7 +248,7 @@ The exact same ladder works for the **regression** side (predicting MonthlyCharg
 
 ## Evaluating models the way a manager should
 
-This section is where managers add the most value — because **the obvious metric is usually the wrong one.**
+This section is where managers add the most value - because **the obvious metric is usually the wrong one.**
 
 ### The confusion matrix (four buckets)
 
@@ -264,7 +264,7 @@ In manager language: a **False Positive** means you spent effort on someone who 
 ### Why accuracy lies
 
 <Aside type="danger" title="The accuracy trap">
-If only 27% of customers churn, a model that predicts "**nobody will churn**" is **73% accurate** — and completely useless, because it never catches a single churner. High accuracy on imbalanced data is a warning sign, not a trophy.
+If only 27% of customers churn, a model that predicts "**nobody will churn**" is **73% accurate** - and completely useless, because it never catches a single churner. High accuracy on imbalanced data is a warning sign, not a trophy.
 </Aside>
 
 So we use metrics that actually reflect the goal:
@@ -277,23 +277,23 @@ So we use metrics that actually reflect the goal:
 | **ROC-AUC** | "Chance the model ranks a random churner above a random stayer" (1.0 = perfect, 0.5 = coin flip) | Comparing models broadly; balanced classes |
 | **PR-AUC** | Overall ranking quality focused on the **rare** positive class | The honest choice for churn/fraud (imbalanced) |
 
-**Why F1 uses a "harmonic mean" and not a plain average:** imagine 95% precision but only 10% recall (super picky, catches almost nobody). A plain average says 52.5% — sounds fine. F1 correctly reports ~18%, exposing that the model is nearly useless for actually finding churners. F1 refuses to be fooled by one good number.
+**Why F1 uses a "harmonic mean" and not a plain average:** imagine 95% precision but only 10% recall (super picky, catches almost nobody). A plain average says 52.5% - sounds fine. F1 correctly reports ~18%, exposing that the model is nearly useless for actually finding churners. F1 refuses to be fooled by one good number.
 
-**Why ROC can look too rosy, and PR is more honest for churn:** ROC's false-positive rate is diluted by the huge crowd of stayers, so a moderate number of false alarms barely moves it — the same model might show ROC-AUC 0.87 (looks great) but PR-AUC 0.68 (more sober). PR only looks at the customers you actually flagged, so every false alarm hurts. **Report both; decide on PR-AUC** for imbalanced problems.
+**Why ROC can look too rosy, and PR is more honest for churn:** ROC's false-positive rate is diluted by the huge crowd of stayers, so a moderate number of false alarms barely moves it - the same model might show ROC-AUC 0.87 (looks great) but PR-AUC 0.68 (more sober). PR only looks at the customers you actually flagged, so every false alarm hurts. **Report both; decide on PR-AUC** for imbalanced problems.
 
 ### Thresholds are a business decision
 
-The model outputs a probability; **you** choose the cut-off that turns it into a yes/no. The default 0.5 is arbitrary. Lower the threshold and you flag more people — catching more churners (higher recall) but with more false alarms (lower precision). Same model, different threshold → a completely different call list. Pick it from **costs and capacity**, not from a textbook default.
+The model outputs a probability; **you** choose the cut-off that turns it into a yes/no. The default 0.5 is arbitrary. Lower the threshold and you flag more people - catching more churners (higher recall) but with more false alarms (lower precision). Same model, different threshold → a completely different call list. Pick it from **costs and capacity**, not from a textbook default.
 
-### Lift and deciles — the most manager-friendly view
+### Lift and deciles - the most manager-friendly view
 
-AUC scores are for comparing models. But a manager's real question is concrete: *"I can only call 500 customers this week — how many churners will I catch?"* That's what **lift** answers.
+AUC scores are for comparing models. But a manager's real question is concrete: *"I can only call 500 customers this week - how many churners will I catch?"* That's what **lift** answers.
 
 Rank everyone by predicted risk, split into ten equal groups (deciles), and compare against random dialling:
 
 - Contact the **top 10%** → the model captures, say, **52%** of all churners (random would get 10%). That's a **lift of ~5.2×**.
 - Contact the top 30% → capture ~88% of churners.
-- By decile 4, lift drops below 1.0 — those customers are *less* likely than average to churn, so calling them wastes effort.
+- By decile 4, lift drops below 1.0 - those customers are *less* likely than average to churn, so calling them wastes effort.
 
 Lift maps directly onto operational capacity, which is why executives love it: it tells you whether your limited 500 calls will find 5× more churners than random, or barely beat a coin.
 
@@ -301,13 +301,13 @@ Lift maps directly onto operational capacity, which is why executives love it: i
 
 | Metric | Manager translation | Best for |
 |---|---|---|
-| **MAE** (mean absolute error) | "On average we're off by €8.50" | Communicating to stakeholders — most intuitive |
+| **MAE** (mean absolute error) | "On average we're off by €8.50" | Communicating to stakeholders - most intuitive |
 | **RMSE** (root mean squared error) | "Typical error, but punishes big misses" | Flagging occasional wild predictions |
 | **R²** | "The model explains 75% of the variation" | Comparing models (less intuitive to non-experts) |
 
 ### Let GenAI translate the numbers
 
-Instead of handing an exec a table of metrics, you can ask the LLM to explain them — but only *after* you've computed them for real:
+Instead of handing an exec a table of metrics, you can ask the LLM to explain them - but only *after* you've computed them for real:
 
 ```python
 # Feed REAL metrics; ask for a plain-language, cost-aware explanation
@@ -323,7 +323,7 @@ resp = client.models.generate_content(
 
 ## Explaining predictions with SHAP
 
-A model that predicts churn is useful. A model that explains **why** is far more valuable — because it tells you *what to do*, and it lets you defend the decision (vital in regulated settings).
+A model that predicts churn is useful. A model that explains **why** is far more valuable - because it tells you *what to do*, and it lets you defend the decision (vital in regulated settings).
 
 **SHAP** (SHapley Additive exPlanations) borrows a fair-credit idea from game theory: if a team produces a result, how do you divide the credit fairly among players? SHAP treats each **feature as a player** and the **prediction as the team's result**, and works out how much each feature pushed *this specific prediction* away from the average.
 
@@ -331,7 +331,7 @@ For one customer, the prediction is built additively from the baseline:
 
 > `prediction = average prediction + contribution₁ + contribution₂ + … + contributionₙ`
 
-Each contribution is a signed number — positive pushes toward churn, negative pulls toward staying.
+Each contribution is a signed number - positive pushes toward churn, negative pulls toward staying.
 
 <Tabs>
 <TabItem label="Global (what drives churn overall?)">
@@ -339,7 +339,7 @@ Aggregate SHAP across all customers and you get a ranked picture of what the mod
 
 <div class="sc-chips"><span class="sc-chip">month-to-month contract · 0.18</span><span class="sc-chip">tenure · 0.15</span><span class="sc-chip">support tickets · 0.12</span><span class="sc-chip">monthly charges · 0.09</span></div>
 
-It answers: "What drives churn risk in our data — and are those drivers sensible?"
+It answers: "What drives churn risk in our data - and are those drivers sensible?"
 </TabItem>
 <TabItem label="Local (why THIS customer?)">
 For Customer #123, read the story top to bottom: baseline risk 0.27; month-to-month contract **+0.18**; short tenure **+0.15**; support tickets **+0.12**; has a partner **−0.07** → final **0.78**.
@@ -352,13 +352,13 @@ This is the bridge from model to action: the reasons for the risk suggest the in
 High importance does **not** mean "change this feature." Some drivers are **non-actionable** (you can't reset someone's tenure) or are **proxies** for something deeper (fiber-optic may really stand for a pricing tier, not the technology). And, as always, importance ≠ causation.
 </Aside>
 
-Then GenAI turns SHAP into words — global drivers into a recommended strategy, or one customer's contributions into a two-line note for the customer-success rep: *"Flagged because of a month-to-month contract, very short tenure, and four recent support tickets; suggested action: offer a discounted annual plan."*
+Then GenAI turns SHAP into words - global drivers into a recommended strategy, or one customer's contributions into a two-line note for the customer-success rep: *"Flagged because of a month-to-month contract, very short tenure, and four recent support tickets; suggested action: offer a discounted annual plan."*
 
 ---
 
 ## AutoML: autopilot for model selection
 
-**AutoML** automates the mechanical parts — trying several algorithms, tuning their settings, and combining them — to get a strong model *fast*. In the labs you can run it with a tiny time budget and compare it to your hand-built pipeline:
+**AutoML** automates the mechanical parts - trying several algorithms, tuning their settings, and combining them - to get a strong model *fast*. In the labs you can run it with a tiny time budget and compare it to your hand-built pipeline:
 
 ```python
 from flaml import AutoML
@@ -368,19 +368,19 @@ automl.fit(X_train, y_train, task="classification",
            time_budget=60)      # give it 60 seconds
 ```
 
-<Aside type="danger" title="What AutoML does NOT solve — the manager's checklist">
+<Aside type="danger" title="What AutoML does NOT solve - the manager's checklist">
 AutoML picks a model; it does **not** supply judgement. Before trusting any leaderboard "winner", check:
-1. **Decision & cost** — what action is this for; what do a false positive and false negative each cost?
-2. **Validation** — is there a true held-out test set that reflects reality?
-3. **Leakage scan** — any feature encoding future knowledge?
-4. **Metric choice** — PR-AUC / lift for imbalanced churn, not raw accuracy.
-5. **Explainability** — do the SHAP drivers make sense?
-6. **Stability & monitoring** — does it hold across segments; what triggers a retrain?
+1. **Decision & cost** - what action is this for; what do a false positive and false negative each cost?
+2. **Validation** - is there a true held-out test set that reflects reality?
+3. **Leakage scan** - any feature encoding future knowledge?
+4. **Metric choice** - PR-AUC / lift for imbalanced churn, not raw accuracy.
+5. **Explainability** - do the SHAP drivers make sense?
+6. **Stability & monitoring** - does it hold across segments; what triggers a retrain?
 
 The common failure: teams ship the AutoML winner, then performance collapses in production from leakage, drift, or the wrong metric.
 </Aside>
 
-**Course rule of thumb:** use AutoML as a *benchmark* after you've built a transparent baseline (logistic/linear) and a strong manual model (forest/boosting) — not as a replacement for thinking.
+**Course rule of thumb:** use AutoML as a *benchmark* after you've built a transparent baseline (logistic/linear) and a strong manual model (forest/boosting) - not as a replacement for thinking.
 
 ---
 
@@ -389,11 +389,11 @@ The common failure: teams ship the AutoML winner, then performance collapses in 
 A model earns its keep only when it changes what the business does. A simple retention playbook:
 
 <Steps>
-1. **Score everyone** — compute `p(churn)` for all customers.
-2. **Value everyone** — predict monthly value (regression).
+1. **Score everyone** - compute `p(churn)` for all customers.
+2. **Value everyone** - predict monthly value (regression).
 3. **Rank by Revenue at Risk** = `p(churn) × MonthlyCharges`.
-4. **Apply real-world constraints** — contact capacity (e.g. 500 calls/week), eligibility rules (don't offer discounts to customers already on a promo).
-5. **Run an experiment** — A/B test the retention offer and measure the *incremental* save, because the model shows who's at risk, not what fixes it.
+4. **Apply real-world constraints** - contact capacity (e.g. 500 calls/week), eligibility rules (don't offer discounts to customers already on a promo).
+5. **Run an experiment** - A/B test the retention offer and measure the *incremental* save, because the model shows who's at risk, not what fixes it.
 </Steps>
 
 ### Monitoring: models rot quietly
@@ -413,7 +413,7 @@ The usual fix when drift appears: retrain on more recent data.
 
 ## The last mile: communicating results
 
-You built the model, the SHAP makes sense — but now you face the VP, the CFO, or the board. **They don't care about F1 scores; they care about revenue and what to do.** This is where GenAI closes the loop, turning outputs into an executive-ready story. What executives actually ask:
+You built the model, the SHAP makes sense - but now you face the VP, the CFO, or the board. **They don't care about F1 scores; they care about revenue and what to do.** This is where GenAI closes the loop, turning outputs into an executive-ready story. What executives actually ask:
 
 | They ask… | You give them… |
 |---|---|
@@ -423,71 +423,71 @@ You built the model, the SHAP makes sense — but now you face the VP, the CFO, 
 | "How confident are you?" | "High for the top 50 customers, moderate for the next 100." |
 | "What could go wrong?" | "Trained on 2024 data; a big price change could reduce accuracy." |
 
-You can draft this memo with GenAI — feeding it your **real** numbers and asking for a structured one-pager (key finding → business impact → recommended actions → confidence & limitations → next steps) aimed at a non-technical reader.
+You can draft this memo with GenAI - feeding it your **real** numbers and asking for a structured one-pager (key finding → business impact → recommended actions → confidence & limitations → next steps) aimed at a non-technical reader.
 
 ---
 
 ## The manager's real job (and GenAI's limits)
 
-Pulling the whole day together: the human isn't automated away — the human sets the questions and guards the quality.
+Pulling the whole day together: the human isn't automated away - the human sets the questions and guards the quality.
 
 <Aside type="tip" title="Where GenAI genuinely helps">
-- **Framing** — turning a fuzzy business goal into a prediction task and the right metric.
-- **Building** — drafting pipelines, debugging error messages, refactoring notebooks.
-- **Deciding** — recommending thresholding strategies, explaining *why* PR-AUC/lift fit churn.
-- **Communicating** — translating SHAP into business language and drafting the manager memo.
+- **Framing** - turning a fuzzy business goal into a prediction task and the right metric.
+- **Building** - drafting pipelines, debugging error messages, refactoring notebooks.
+- **Deciding** - recommending thresholding strategies, explaining *why* PR-AUC/lift fit churn.
+- **Communicating** - translating SHAP into business language and drafting the manager memo.
 </Aside>
 
-<Aside type="danger" title="Where GenAI will mislead you — stay skeptical">
-- **Invented results** — it may claim "AUC = 0.92" without anything being computed. *If it wasn't run in the notebook, it isn't real.*
-- **Silent leakage** — suggesting features that won't exist at decision time.
-- **Wrong metric** — optimising accuracy on an imbalanced problem.
-- **Overconfident stories** — narratives not backed by the actual plots/metrics.
+<Aside type="danger" title="Where GenAI will mislead you - stay skeptical">
+- **Invented results** - it may claim "AUC = 0.92" without anything being computed. *If it wasn't run in the notebook, it isn't real.*
+- **Silent leakage** - suggesting features that won't exist at decision time.
+- **Wrong metric** - optimising accuracy on an imbalanced problem.
+- **Overconfident stories** - narratives not backed by the actual plots/metrics.
 
-**Non-negotiable rule:** anything GenAI suggests must be **validated in your notebook with real outputs** — metrics, plots, saved files. Hence the required **Copilot Log** in the labs: for each prompt, note what you asked, what you changed, and what you verified by hand. Credit is for *validated improvements*, not for prompt count.
+**Non-negotiable rule:** anything GenAI suggests must be **validated in your notebook with real outputs** - metrics, plots, saved files. Hence the required **Copilot Log** in the labs: for each prompt, note what you asked, what you changed, and what you verified by hand. Credit is for *validated improvements*, not for prompt count.
 </Aside>
 
 ---
 
 ## Hands-on: labs & assignment
 
-The theory lands only once you run it on real data. All three exercises use the Telco churn dataset in Google Colab, with GenAI as a copilot for coding, debugging, and interpretation — never for inventing results.
+The theory lands only once you run it on real data. All three exercises use the Telco churn dataset in Google Colab, with GenAI as a copilot for coding, debugging, and interpretation - never for inventing results.
 
 <Badge text="Guided Lab" variant="tip" /> **Churn + value modelling with explainable ML.** Load and clean the Telco data, build a leak-proof preprocessing pipeline, train and compare all three churn models with manager-friendly metrics (lift + PR-AUC), add a MonthlyCharges regression model, generate global and local SHAP explanations, and produce a ranked Revenue-at-Risk call list.
 
-<Badge text="Independent Lab" variant="note" /> **From predictions to decisions.** Pick one extension track and take it further: **(A)** cost & capacity targeting (choose a threshold by expected value), **(B)** calibration & probability quality (calibration curve + Brier score), **(C)** an AutoML benchmark vs. your manual models, or **(D)** a segment stress-test (does the model hold up across contract types and tenure bands?). Deliver improved reports, a final call list, and a short manager recommendation — plus a Copilot Log.
+<Badge text="Independent Lab" variant="note" /> **From predictions to decisions.** Pick one extension track and take it further: **(A)** cost & capacity targeting (choose a threshold by expected value), **(B)** calibration & probability quality (calibration curve + Brier score), **(C)** an AutoML benchmark vs. your manual models, or **(D)** a segment stress-test (does the model hold up across contract types and tenure bands?). Deliver improved reports, a final call list, and a short manager recommendation - plus a Copilot Log.
 
 <Badge text="Assignment 5" variant="caution" /> **Model card + manager recommendation.** The graded deliverable, continuing your chosen track: a defensible workflow with an explicit leakage scan, 5-fold cross-validation across all models, business-facing evaluation (lift, threshold chosen by a **cost curve**, capacity plan), SHAP global + three local stories, a Revenue-at-Risk call list with reason codes, and a monitoring/risk plan. Submit a notebook, a call-list CSV, a metrics JSON, and a one-page manager memo in plain business language.
 
 **Download the notebooks** (open in Google Colab):
 
-- [Guided Lab — Day 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab1-guided.ipynb)
-- [Independent Lab — Day 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab2-independent.ipynb)
-- [Assignment — Day 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-assignment.ipynb)
+- [Guided Lab - Day 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab1-guided.ipynb)
+- [Independent Lab - Day 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab2-independent.ipynb)
+- [Assignment - Day 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-assignment.ipynb)
 
 ---
 
-**My submitted solution:** [Assignment 5 — my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day5-assignment-solution.ipynb) — my own work from the course.
+**My submitted solution:** [Assignment 5 - my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day5-assignment-solution.ipynb) - my own work from the course.
 
 ## Revision summary
 
 | Must-know | One-line recall |
 |---|---|
-| Two AI jobs | GenAI handles unstructured text; predictive ML handles structured decisions — teammates, not rivals |
+| Two AI jobs | GenAI handles unstructured text; predictive ML handles structured decisions - teammates, not rivals |
 | Supervised learning | Learn from labelled examples: **classification** (which category) or **regression** (what number) |
 | Features vs. label | Features are the input columns; the label is the answer we predict |
-| Revenue at Risk | `p(churn) × predicted value` — the formula that bridges the two models and drives targeting |
+| Revenue at Risk | `p(churn) × predicted value` - the formula that bridges the two models and drives targeting |
 | Leakage | A feature the model wouldn't have at decision time; looks great, then fails in production |
-| The 80/20 rule | ~80% of ML effort is data work (steps 1–3), only ~20% is modelling |
+| The 80/20 rule | ~80% of ML effort is data work (steps 1-3), only ~20% is modelling |
 | Train/test split | Test set = a locked exam; a big train-vs-test gap means overfitting |
 | Over/underfitting | Overfit = memorised noise (great train, poor test); underfit = too simple (poor on both) |
 | Model ladder | Logistic (transparent) → random forest (strong default) → gradient boosting (often best) |
-| Accuracy trap | On imbalanced data, "predict no churn" scores high and is useless — use precision/recall/PR-AUC |
+| Accuracy trap | On imbalanced data, "predict no churn" scores high and is useless - use precision/recall/PR-AUC |
 | Precision vs. recall | Precision = right when we flag; recall = share of churners caught; F1 balances both |
-| Threshold | A business choice from costs/capacity — same model, different threshold, different call list |
-| Lift | "How many times better than random" for your top decile — maps to call capacity |
+| Threshold | A business choice from costs/capacity - same model, different threshold, different call list |
+| Lift | "How many times better than random" for your top decile - maps to call capacity |
 | SHAP | Fairly splits a prediction into per-feature contributions; global (drivers) + local (this customer) |
-| AutoML | Automates model search & tuning — a fast benchmark, never a replacement for judgement |
+| AutoML | Automates model search & tuning - a fast benchmark, never a replacement for judgement |
 | Drift | Models decay as the world shifts; demand a monitoring & retraining plan before deployment |
-| Correlation ≠ causation | A model says *who's at risk*, not *what fixes it* — prove impact with an experiment |
-| GenAI is copilot, not pilot | It frames, codes, interprets, and communicates — but every claim must be validated with real outputs |
+| Correlation ≠ causation | A model says *who's at risk*, not *what fixes it* - prove impact with an experiment |
+| GenAI is copilot, not pilot | It frames, codes, interprets, and communicates - but every claim must be validated with real outputs |

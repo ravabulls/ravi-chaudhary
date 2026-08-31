@@ -1,13 +1,13 @@
 ---
-title: "Week 11 | Session 2: SC Digital Twin — Green Field Analysis (GFA) with Excel & AnyLogistix"
-description: "Build a small supply chain digital twin to perform Green Field Analysis — find the optimal DC location for a pharma company serving western India markets using an Excel optimization model with spherical distance, then validate with AnyLogistix software."
+title: "Week 11 | Session 2: SC Digital Twin - Green Field Analysis (GFA) with Excel & AnyLogistix"
+description: "Build a small supply chain digital twin to perform Green Field Analysis - find the optimal DC location for a pharma company serving western India markets using an Excel optimization model with spherical distance, then validate with AnyLogistix software."
 sidebar:
   order: 53
 ---
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 4: Digital Infrastructure*
+*Course: Supply Chain Digitization - Module 4: Digital Infrastructure*
 
 ---
 
@@ -15,13 +15,13 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 <Aside type="note">
 - Recap & Session Scope
-- Case Study — Pharma Company: DC Location for Western India
-- Problem Framing — Why Intuition is Insufficient
+- Case Study - Pharma Company: DC Location for Western India
+- Problem Framing - Why Intuition is Insufficient
 - Optimization Model Formulation
-- Distance Formulas — Three Methods
-- Solving in Excel — Step-by-Step
-- Digital Twin Visualization — What it Adds
-- Scaling Up — AnyLogistix Software for Large Problems
+- Distance Formulas - Three Methods
+- Solving in Excel - Step-by-Step
+- Digital Twin Visualization - What it Adds
+- Scaling Up - AnyLogistix Software for Large Problems
 - Digital Twin Framework Applied to This Example
 </Aside>
 
@@ -30,19 +30,19 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 ## 1. What is Green Field Analysis (GFA)?
 
 <Aside type="note">
-**★** GFA = Green Field Analysis — finding the **optimal location for a NEW facility** (DC/factory) where none exists yet. It is a **prescriptive analytics** application of the digital twin.
+**★** GFA = Green Field Analysis - finding the **optimal location for a NEW facility** (DC/factory) where none exists yet. It is a **prescriptive analytics** application of the digital twin.
 </Aside>
 
-This session builds a small SC digital twin to perform GFA — finding the optimal DC location using:
+This session builds a small SC digital twin to perform GFA - finding the optimal DC location using:
 1. **Excel + Solver** for small-scale problems (understanding the mechanics).
 2. **AnyLogistix software** for large-scale, real-world problems.
 
 ---
 
-## 2. Case Study — Pharma Company: DC Location for Western India
+## 2. Case Study - Pharma Company: DC Location for Western India
 
 <Aside type="note">
-The four demand markets — **Ahmedabad, Surat, Mumbai and Pune** — shown on a map of western India. Greenfield Analysis (GFA) searches this open geography for the single DC location that minimises total distance-weighted demand — a "greenfield" site unconstrained by any existing facility.
+The four demand markets - **Ahmedabad, Surat, Mumbai and Pune** - shown on a map of western India. Greenfield Analysis (GFA) searches this open geography for the single DC location that minimises total distance-weighted demand - a "greenfield" site unconstrained by any existing facility.
 </Aside>
 
 A pharmaceutical company wants to set up **1 Distribution Center** to serve the western region of India.
@@ -62,7 +62,7 @@ Cost assumption: **$1 per km per unit** of demand transported.
 
 ---
 
-## 3. Problem Framing — Why Intuition is Insufficient
+## 3. Problem Framing - Why Intuition is Insufficient
 
 | DC placed near… | Problem |
 |---|---|
@@ -70,11 +70,11 @@ Cost assumption: **$1 per km per unit** of demand transported.
 | **Pune** | Cost to Mumbai, Ahmedabad, Surat all increase |
 | **Ahmedabad** | Cost to Mumbai, Pune, Surat all increase |
 
-**Conclusion:** there is a trade-off — need an optimization model. Infinite possible DC locations exist; cannot evaluate manually.
+**Conclusion:** there is a trade-off - need an optimization model. Infinite possible DC locations exist; cannot evaluate manually.
 
 ---
 
-## 4. Optimization Model — Formulation
+## 4. Optimization Model - Formulation
 
 <figure class="sc-fig">
   <div class="sc-formula">
@@ -87,7 +87,7 @@ Cost assumption: **$1 per km per unit** of demand transported.
       <code>Δlat = x_DC − xᵢ &nbsp;·&nbsp; Δlon = y_DC − yᵢ<br/>distance((xᵢ, yᵢ), (x_DC, y_DC)) = R·c</code>
     </div>
   </div>
-  <figcaption>The Haversine formula gives the true over-the-earth distance between two latitude/longitude points — used to measure each market's distance from a candidate DC location.</figcaption>
+  <figcaption>The Haversine formula gives the true over-the-earth distance between two latitude/longitude points - used to measure each market's distance from a candidate DC location.</figcaption>
 </figure>
 
 **Decision Variables:**
@@ -102,30 +102,30 @@ Z = Σ(i=1 to 4) [ Demand_i × d(xᵢ,yᵢ → xDC,yDC) × Cost per km per unit 
 
 | Component | Detail |
 |---|---|
-| **Distance formula** | Haversine / Spherical — accounts for earth's curved surface → gives accurate km distance |
-| **Solver method** | GRG Non-linear — because the spherical distance formula is non-linear |
-| **Constraints** | None — DC can be placed at any (xDC, yDC) coordinate |
+| **Distance formula** | Haversine / Spherical - accounts for earth's curved surface → gives accurate km distance |
+| **Solver method** | GRG Non-linear - because the spherical distance formula is non-linear |
+| **Constraints** | None - DC can be placed at any (xDC, yDC) coordinate |
 
 ---
 
-## 5. Distance Formulas — Three Methods
+## 5. Distance Formulas - Three Methods
 
 | Method | Formula | Accuracy |
 |---|---|---|
-| **Direct Line (Euclidean)** | √[(xᵢ−xDC)² + (yᵢ−yDC)²] | Low — straight-line, not realistic |
-| **Corner (Manhattan)** | \|xᵢ−xDC\| + \|yᵢ−yDC\| | Medium — accounts for turns, flat grid only |
-| **Spherical (Haversine)** | Haversine / Spherical trig formula | **High ✓ — used in this case** |
+| **Direct Line (Euclidean)** | √[(xᵢ−xDC)² + (yᵢ−yDC)²] | Low - straight-line, not realistic |
+| **Corner (Manhattan)** | \|xᵢ−xDC\| + \|yᵢ−yDC\| | Medium - accounts for turns, flat grid only |
+| **Spherical (Haversine)** | Haversine / Spherical trig formula | **High ✓ - used in this case** |
 
 ### Why Spherical Formula is Used
-Earth's surface is not flat — lat/long are coordinates on a curved surface. The spherical formula captures earth's curvature → most accurate real-world km distance. It makes the objective function **non-linear** → must use **GRG Non-linear solver** (not Simplex LP).
+Earth's surface is not flat - lat/long are coordinates on a curved surface. The spherical formula captures earth's curvature → most accurate real-world km distance. It makes the objective function **non-linear** → must use **GRG Non-linear solver** (not Simplex LP).
 
 ---
 
-## 6. Solving in Excel — Step-by-Step
+## 6. Solving in Excel - Step-by-Step
 
 <Steps>
 1. **Enter market data:** Input demand, latitude, longitude for all 4 markets (Pune, Mumbai, Ahmedabad, Surat).
-2. **Set initial DC location:** `xDC = 20` (latitude), `yDC = 72` (longitude) — random starting values; not the answer yet.
+2. **Set initial DC location:** `xDC = 20` (latitude), `yDC = 72` (longitude) - random starting values; not the answer yet.
 3. **Calculate distances:** Apply spherical distance formula from each DC location to each market → 4 distance values.
 4. **Calculate individual costs:** `Cost_i = Demand_i × Distance_i × $1` (cost per km per unit).
 5. **Calculate total cost Z:** Z = Sum of all 4 individual costs. At initial (20, 72): **Z = 12,44,89,119**.
@@ -145,7 +145,7 @@ Earth's surface is not flat — lat/long are coordinates on a curved surface. Th
 
 ### Optimal Solution from Solver
 
-*Excel setup — with a trial DC at (20.00, 72.00), the Haversine distance to each market and the total distance-weighted cost:*
+*Excel setup - with a trial DC at (20.00, 72.00), the Haversine distance to each market and the total distance-weighted cost:*
 
 | Market | Cost/km·unit | Demand (units) | Latitude | Longitude | Distance (km) |
 |---|---|---|---|---|---|
@@ -164,44 +164,44 @@ Earth's surface is not flat — lat/long are coordinates on a curved surface. Th
 | Cost saving from optimization | **~₹2.7 crore / year** |
 
 <Aside type="note">
-**★** The solver tells us: **Mumbai is the mathematically optimal location** for the DC — weighted by demand and distance, it minimizes total transportation cost across all 4 markets.
+**★** The solver tells us: **Mumbai is the mathematically optimal location** for the DC - weighted by demand and distance, it minimizes total transportation cost across all 4 markets.
 </Aside>
 
 ---
 
-## 7. Digital Twin Visualization — What it Adds
+## 7. Digital Twin Visualization - What it Adds
 
-The Excel model gives the coordinates — but no visual map of the SC. Digital twin visualization adds:
+The Excel model gives the coordinates - but no visual map of the SC. Digital twin visualization adds:
 - Exact geographic position of each market plotted using lat/long.
 - DC location plotted at the optimized coordinates.
-- Routes from DC to each market shown — visual confirmation of the network.
+- Routes from DC to each market shown - visual confirmation of the network.
 - Immediate intuition about coverage area and travel paths.
 
-This is what tools like **AnyLogistix** provide — map-based visualization + optimization combined.
+This is what tools like **AnyLogistix** provide - map-based visualization + optimization combined.
 
 ---
 
-## 8. Scaling Up — AnyLogistix Software for Large Problems
+## 8. Scaling Up - AnyLogistix Software for Large Problems
 
 ### Why Excel Fails at Scale
-Excel works for 4 markets — but 4,000 or 40,000 markets make it impractical. Manual lat/long entry for thousands of cities is not feasible. Formula setup, solver configuration, and interpretation become unmanageable.
+Excel works for 4 markets - but 4,000 or 40,000 markets make it impractical. Manual lat/long entry for thousands of cities is not feasible. Formula setup, solver configuration, and interpretation become unmanageable.
 
 ### How AnyLogistix Solves This
 
 | Attribute | Excel Solver | AnyLogistix (DT software) |
 |---|---|---|
-| **Scale** | Small (4 markets — manageable manually) | Large (thousands of markets — nationwide / global) |
+| **Scale** | Small (4 markets - manageable manually) | Large (thousands of markets - nationwide / global) |
 | **Lat/Long input** | Must be manually entered for each location | Enter city name → auto-retrieves lat/long from database |
-| **Visualization** | Basic — no map plotting built in | Plots all nodes on actual map automatically after input |
-| **Algorithm** | Non-linear Solver (GRG) — user sets it up | Built-in optimization algorithm runs automatically |
+| **Visualization** | Basic - no map plotting built in | Plots all nodes on actual map automatically after input |
+| **Algorithm** | Non-linear Solver (GRG) - user sets it up | Built-in optimization algorithm runs automatically |
 | **Result output** | Optimal xDC, yDC + total cost (cell values) | Optimal DC location plotted on map + lat/long + connections |
-| **Speed** | Feasible but manual — formula setup required | Click of a button — fully automated for any scale |
+| **Speed** | Feasible but manual - formula setup required | Click of a button - fully automated for any scale |
 | **Typical use** | Teaching, small-scale understanding | Real-world SC network design and digital twin development |
 
-AnyLogistix result confirmed: **GFA optimal DC = lat 19.09, long 72.87 = Mumbai** — matches Excel Solver output exactly.
+AnyLogistix result confirmed: **GFA optimal DC = lat 19.09, long 72.87 = Mumbai** - matches Excel Solver output exactly.
 
 <Aside type="note">
-**★** AnyLogistix is a digital twin enabler — it automates visualization, optimization, and result display for large-scale SC network design that Excel cannot handle.
+**★** AnyLogistix is a digital twin enabler - it automates visualization, optimization, and result display for large-scale SC network design that Excel cannot handle.
 </Aside>
 
 ---
@@ -210,21 +210,21 @@ AnyLogistix result confirmed: **GFA optimal DC = lat 19.09, long 72.87 = Mumbai*
 
 - **Digital Visualization:** 4 markets + optimal DC location plotted on geographic map with routes.
 - **Digital Technology:** AnyLogistix software + optimization algorithm (connects physical SC problem to digital model).
-- **Prescriptive Analytics:** model tells WHERE to locate DC to minimize cost — a direct prescriptive output.
+- **Prescriptive Analytics:** model tells WHERE to locate DC to minimize cost - a direct prescriptive output.
 
-This is a **full mini digital twin** — not just a visualization, but an analytically driven location decision.
+This is a **full mini digital twin** - not just a visualization, but an analytically driven location decision.
 
 ---
 
 ## Session Summary
 
-- **GFA:** finding optimal location for a NEW DC using optimization — a prescriptive analytics application.
+- **GFA:** finding optimal location for a NEW DC using optimization - a prescriptive analytics application.
 - **Case:** pharma company, 4 western India markets (Pune, Mumbai, Ahmedabad, Surat), minimize transportation cost.
 - **Model:** Minimize Z = Σ(Demand_i × Distance_i × Cost/km/unit). Decision variables: xDC, yDC.
-- **3 distance formulas:** Direct line (low acc) → Corner/Manhattan (medium) → Spherical/Haversine (high — used here).
+- **3 distance formulas:** Direct line (low acc) → Corner/Manhattan (medium) → Spherical/Haversine (high - used here).
 - **Spherical formula = non-linear** → must use GRG Non-linear solver (not Simplex LP).
 - **Excel result:** Optimal xDC = 19.09, yDC = 72.87 (Mumbai). Cost = ₹9.73 Cr vs ₹12.44 Cr at random start.
-- **AnyLogistix:** same result plotted on map automatically — scales to thousands of markets.
+- **AnyLogistix:** same result plotted on map automatically - scales to thousands of markets.
 - **DT components used:** Visualization (map) + Technology (AnyLogistix) + Prescriptive Analytics (location optimization).
 
 <Aside type="tip">

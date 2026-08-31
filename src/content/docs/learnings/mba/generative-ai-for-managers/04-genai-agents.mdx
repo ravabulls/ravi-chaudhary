@@ -1,6 +1,6 @@
 ---
-title: "Day 4 — GenAI Agents"
-description: "How an LLM becomes an agent — one that plans, calls tools, acts and observes in a loop — with function calling, the ReAct loop, memory, and the guardrails that keep autonomy safe."
+title: "Day 4 - GenAI Agents"
+description: "How an LLM becomes an agent - one that plans, calls tools, acts and observes in a loop - with function calling, the ReAct loop, memory, and the guardrails that keep autonomy safe."
 sidebar:
   label: "4 · GenAI Agents"
   order: 4
@@ -8,25 +8,25 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
 
 ---
 
-For three days the model could only ever *talk back*. I asked, it answered — one turn, done. Useful, but oddly passive: it could tell me *how* to find our churned customers and draft re-engagement emails, but it couldn't actually go and do it.
+For three days the model could only ever *talk back*. I asked, it answered - one turn, done. Useful, but oddly passive: it could tell me *how* to find our churned customers and draft re-engagement emails, but it couldn't actually go and do it.
 
-Day 4 closes that gap. An **agent** is what you get when you wrap an LLM in a loop and hand it a few **tools** — functions it can ask to run. Now the same model can *look up* the customers, *read* their support tickets, *draft* an email for each, and keep going until the job is finished. Same brain, but it can now reach out and act on the world.
+Day 4 closes that gap. An **agent** is what you get when you wrap an LLM in a loop and hand it a few **tools** - functions it can ask to run. Now the same model can *look up* the customers, *read* their support tickets, *draft* an email for each, and keep going until the job is finished. Same brain, but it can now reach out and act on the world.
 
 <Aside type="note" title="The one-line version">
 An LLM alone can only **think**. An agent can **think and act**. The formula the course keeps coming back to is delightfully small: **Agent = LLM + Tools + Loop.**
 </Aside>
 
-## 1 · Why agents — the automation gap
+## 1 · Why agents - the automation gap
 
 Look at what we built so far, and the wall each version hits:
 
 | Day | What it could do | Where it stopped |
 |---|---|---|
-| Day 1 | Understand how an LLM generates text | Only produces words — no actions |
+| Day 1 | Understand how an LLM generates text | Only produces words - no actions |
 | Day 2 | Prompt well, pull out structured data | One shot: every call stands alone |
 | Day 3 | Ground answers in real documents (RAG) | Fixed pipeline: always *retrieve → generate* |
 
@@ -34,9 +34,9 @@ Every one of these is a **single-turn** interaction: one request in, one respons
 
 Three things made agents practical only recently:
 
-- **Reliable function calling** — models can now reliably output a clean, structured "please run this function with these arguments" request, consistent enough to trust in a real product.
-- **Bigger context windows** — the agent can pile up tool results and its own intermediate reasoning without losing the thread.
-- **Stronger reasoning** — models got much better at planning multi-step work and at recovering when a step goes wrong.
+- **Reliable function calling** - models can now reliably output a clean, structured "please run this function with these arguments" request, consistent enough to trust in a real product.
+- **Bigger context windows** - the agent can pile up tool results and its own intermediate reasoning without losing the thread.
+- **Stronger reasoning** - models got much better at planning multi-step work and at recovering when a step goes wrong.
 
 <Aside type="tip" title="Chatbot would advise; agent would do">
 Ask *"Find churned customers and draft re-engagement emails."* A **chatbot** hands you a to-do list. An **agent** calls `get_churned_customers(...)`, then for each one `get_support_tickets(...)`, spots the common complaints, calls `draft_email(...)`, and returns twelve finished, personalised drafts. It decides *which* tools to call, reads the results, and keeps reasoning until it's done.
@@ -51,21 +51,21 @@ An **AI agent** is a system where an LLM runs inside a loop and is allowed to:
 - **Observe** the results those tools give back,
 - **Decide** whether to keep going or stop with a final answer.
 
-The word "tool" just means a piece of your code the model is permitted to request — a function that looks up a customer, searches your docs, does a calculation. The "loop" is what makes it an agent rather than a one-off call: it can go round again, using what it just learned.
+The word "tool" just means a piece of your code the model is permitted to request - a function that looks up a customer, searches your docs, does a calculation. The "loop" is what makes it an agent rather than a one-off call: it can go round again, using what it just learned.
 
-### The agent spectrum — not everything needs an agent
+### The agent spectrum - not everything needs an agent
 
 "Agent" isn't all-or-nothing. It's a ladder of autonomy, and most of the business value sits in the **middle**:
 
 | Level | What it is | Who decides the steps |
 |---|---|---|
-| 0 · Direct call | *"Translate this sentence"* — one plain generate call | You, in one shot |
+| 0 · Direct call | *"Translate this sentence"* - one plain generate call | You, in one shot |
 | 1 · Fixed pipeline | RAG, extraction chains | Your code, fixed order |
 | 2 · Tool-augmented LLM | Model picks from tools you offer, one call per turn | Model, one step |
 | 3 · Autonomous agent | Model plans, calls several tools, loops until done | Model, many steps |
 | 4 · Multi-agent system | Several specialised agents collaborate | An orchestrator |
 
-The labs live at **Levels 2–3** — enough autonomy to be genuinely useful, little enough to stay understandable and safe.
+The labs live at **Levels 2-3** - enough autonomy to be genuinely useful, little enough to stay understandable and safe.
 
 ### Chatbot vs pipeline vs agent
 
@@ -76,21 +76,21 @@ The labs live at **Levels 2–3** — enough autonomy to be genuinely useful, li
 | Who's in control | Human drives | Code drives | **LLM drives** |
 | Good for | Simple Q&A | Knowledge lookup | Multi-step tasks needing judgement |
 
-## 3 · Function calling — teaching the model to use tools
+## 3 · Function calling - teaching the model to use tools
 
 Function calling is the mechanism that makes all of this possible. Here's the single most important thing to hold onto, because it's the source of most confusion:
 
 <Aside type="caution" title="The model never runs your code">
-The LLM does **not** execute functions and never touches your systems. It only *requests* a call — "run `get_customer_info` with `customer_id='CUST-1234'`". **Your** application code runs the real function and hands the result back. You decide entirely what the model is even allowed to ask for. (Products like coding assistants *do* act on your machine — but that's the surrounding *application* granting the request, not the model reaching in itself.)
+The LLM does **not** execute functions and never touches your systems. It only *requests* a call - "run `get_customer_info` with `customer_id='CUST-1234'`". **Your** application code runs the real function and hands the result back. You decide entirely what the model is even allowed to ask for. (Products like coding assistants *do* act on your machine - but that's the surrounding *application* granting the request, not the model reaching in itself.)
 </Aside>
 
 <Aside type="note" title='"Function calling" and "tool calling" are the same thing'>
-You'll see both terms, sometimes in the same paragraph. They mean one idea: the model asks your code to run a named function with specific arguments. The mixed vocabulary is just historical — some SDKs say *function*, others say *tool*. Don't let it trip you up; there's no conceptual difference.
+You'll see both terms, sometimes in the same paragraph. They mean one idea: the model asks your code to run a named function with specific arguments. The mixed vocabulary is just historical - some SDKs say *function*, others say *tool*. Don't let it trip you up; there's no conceptual difference.
 </Aside>
 
 ### The three layers
 
-With the Gemini SDK (`google.genai`), a tool is built from three layers — and the model only ever sees the middle one:
+With the Gemini SDK (`google.genai`), a tool is built from three layers - and the model only ever sees the middle one:
 
 | Layer | What it is | Its job |
 |---|---|---|
@@ -98,7 +98,7 @@ With the Gemini SDK (`google.genai`), a tool is built from three layers — and 
 | `FunctionDeclaration` | A schema: the function's name, its parameters, what it's for | The **only** thing the model sees |
 | `Tool` | A container grouping one or more declarations | What you pass to the API via `tools=[...]` |
 
-The model reads the *description* and decides whether to call the function and with what arguments. It never sees your source code — so a clear name, good docstring and honest parameter descriptions **are** the instructions the model uses to choose well.
+The model reads the *description* and decides whether to call the function and with what arguments. It never sees your source code - so a clear name, good docstring and honest parameter descriptions **are** the instructions the model uses to choose well.
 
 ### The easy way: hand the SDK a plain Python function
 
@@ -108,7 +108,7 @@ The simplest approach is to pass a normal function. The SDK reads its name, docs
 from google import genai
 from google.genai import types
 
-client = genai.Client()  # reads the API key from the environment — never hard-code it
+client = genai.Client()  # reads the API key from the environment - never hard-code it
 
 def get_customer_info(customer_id: str) -> dict:
     """Look up a customer's account details.
@@ -132,49 +132,49 @@ response = client.models.generate_content(
 print(response.text)
 ```
 
-There's also a manual route where you write the `FunctionDeclaration` yourself — useful when the function lives on a remote server, or when you want fine control over the descriptions. Most projects start with the easy way and only reach for the manual one when they actually need it. The full code for both is in the notebooks.
+There's also a manual route where you write the `FunctionDeclaration` yourself - useful when the function lives on a remote server, or when you want fine control over the descriptions. Most projects start with the easy way and only reach for the manual one when they actually need it. The full code for both is in the notebooks.
 
 <Aside type="tip" title="A tool description is a prompt (echo of Day 2)">
 On Day 2 a schema told the model *what to extract*. Here a tool description tells it *when and how to use a tool*. Same discipline: **"Look up a customer's account details (name, plan, MRR) by their customer ID"** beats **"Get data"** every time. Vague descriptions → wrong tool picked.
 </Aside>
 
-### Tool-calling modes — how much freedom the model gets
+### Tool-calling modes - how much freedom the model gets
 
 When you offer tools, the model still *reasons* about whether it even needs one. The **mode** setting controls that freedom:
 
 | Mode | Behaviour | Use when |
 |---|---|---|
-| `AUTO` *(default)* | Model decides: call a tool, or just answer in text | General use — let it judge |
+| `AUTO` *(default)* | Model decides: call a tool, or just answer in text | General use - let it judge |
 | `ANY` | Model **must** call at least one tool (it still picks which) | You want to force tool use |
 | `NONE` | Model may **not** call any tool (descriptions still visible) | You want a pure text reply |
 
-`AUTO` is the one to understand — it's what turns the model into an *active reasoner* about tools rather than a blind executor. It weighs your request against the tool descriptions and decides on its own whether a call would actually help.
+`AUTO` is the one to understand - it's what turns the model into an *active reasoner* about tools rather than a blind executor. It weighs your request against the tool descriptions and decides on its own whether a call would actually help.
 
 ## 4 · The agent loop
 
-This is the heart of the day. Strip away frameworks and providers, and every agent runs the same cycle. The model does exactly **one** thing in it — the *Reason* step — and your code does everything else.
+This is the heart of the day. Strip away frameworks and providers, and every agent runs the same cycle. The model does exactly **one** thing in it - the *Reason* step - and your code does everything else.
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node slate">History<span class="sub">build the context so far</span></div><span class="arrow">→</span><div class="sc-node amber">Reason<span class="sub">model: tool call or final answer?</span></div><span class="arrow">→</span><div class="sc-node green">Act<span class="sub">your code runs the function</span></div><span class="arrow">→</span><div class="sc-node violet">Observe<span class="sub">result added back to history</span></div></div>
-<figcaption>The loop: assemble the conversation, let the model reason, run any tool it asks for, feed the result back — then round again. If the model returns text instead of a tool request, the loop stops and that text is the answer.</figcaption>
+<figcaption>The loop: assemble the conversation, let the model reason, run any tool it asks for, feed the result back - then round again. If the model returns text instead of a tool request, the loop stops and that text is the answer.</figcaption>
 </figure>
 
 Walking the five steps once:
 
 <Steps>
-1. **History** *(your code)* — assemble the whole conversation so far: the user's message, the model's earlier replies, and any tool results. This is the *only* thing the model gets to see.
-2. **Reason** *(the model)* — it reads the history and decides: request a tool call, or produce a final text answer. **This is the model's only move.**
-3. **Act** *(your code)* — if it asked for a tool, you look up the matching function and run it for real.
-4. **Observe** *(your code)* — you wrap the result in a `FunctionResponse` and append it to the history, so the model can see it next time round.
-5. **Repeat or stop** — still missing information? Go back to step 2. Enough to answer? It returns text and the loop ends. Always cap the rounds with a `max_steps` limit so it can't spin forever.
+1. **History** *(your code)* - assemble the whole conversation so far: the user's message, the model's earlier replies, and any tool results. This is the *only* thing the model gets to see.
+2. **Reason** *(the model)* - it reads the history and decides: request a tool call, or produce a final text answer. **This is the model's only move.**
+3. **Act** *(your code)* - if it asked for a tool, you look up the matching function and run it for real.
+4. **Observe** *(your code)* - you wrap the result in a `FunctionResponse` and append it to the history, so the model can see it next time round.
+5. **Repeat or stop** - still missing information? Go back to step 2. Enough to answer? It returns text and the loop ends. Always cap the rounds with a `max_steps` limit so it can't spin forever.
 </Steps>
 
 ### Automatic vs manual execution
 
 There are two ways to actually run this loop, and they're a *separate* choice from the `AUTO`/`ANY`/`NONE` modes above (that was *whether* the model may ask; this is *who executes* once it asks):
 
-- **Automatic function calling** — the SDK runs the whole loop inside a single `generate_content()` call: it executes your function, feeds the result back, repeats. Great for a quick prototype, but you can't *see* what happened. You'd still set a safety ceiling like `maximum_remote_calls=5`.
-- **Manual loop** — you write the `for` loop yourself, executing each tool call and printing every step. More code, but total visibility. The labs use this so you can *watch* every decision.
+- **Automatic function calling** - the SDK runs the whole loop inside a single `generate_content()` call: it executes your function, feeds the result back, repeats. Great for a quick prototype, but you can't *see* what happened. You'd still set a safety ceiling like `maximum_remote_calls=5`.
+- **Manual loop** - you write the `for` loop yourself, executing each tool call and printing every step. More code, but total visibility. The labs use this so you can *watch* every decision.
 
 Here's the manual loop, trimmed to its bones:
 
@@ -184,7 +184,7 @@ def run_agent(user_message, tools, max_steps=10):
     history = [types.Content(role="user", parts=[types.Part(text=user_message)])]
 
     for step in range(max_steps):
-        # REASON — send full history; model may ask for a tool
+        # REASON - send full history; model may ask for a tool
         response = client.models.generate_content(
             model="gemini-2.5-flash-lite",
             contents=history,
@@ -197,7 +197,7 @@ def run_agent(user_message, tools, max_steps=10):
         )
         history.append(types.Content(role="model", parts=response.parts))
 
-        # ACT + OBSERVE — run any requested tool, append its result
+        # ACT + OBSERVE - run any requested tool, append its result
         function_results = []
         for part in response.parts:
             if part.function_call:
@@ -218,22 +218,22 @@ def run_agent(user_message, tools, max_steps=10):
 ```
 
 <Aside type="caution" title="A subtle trap: disable ≠ no tools">
-`automatic_function_calling(disable=True)` does **not** stop the model from *choosing* tools — it reasons about them exactly the same. It only changes *who runs* the function: with disable on, the SDK hands the request back to your code and you run it. That's precisely what makes the manual loop transparent.
+`automatic_function_calling(disable=True)` does **not** stop the model from *choosing* tools - it reasons about them exactly the same. It only changes *who runs* the function: with disable on, the SDK hands the request back to your code and you run it. That's precisely what makes the manual loop transparent.
 </Aside>
 
-<Aside type="tip" title="Everything from Days 1–3 is now a tool">
-The neatest realisation of the day: your **Day 3 RAG pipeline** becomes a single function — `search_knowledge_base(query)` — that the agent calls whenever *it* decides a search would help. A calculator, a CRM lookup, a web search: each is just one more tool. The agent chooses when to reach for which, and combines the results.
+<Aside type="tip" title="Everything from Days 1-3 is now a tool">
+The neatest realisation of the day: your **Day 3 RAG pipeline** becomes a single function - `search_knowledge_base(query)` - that the agent calls whenever *it* decides a search would help. A calculator, a CRM lookup, a web search: each is just one more tool. The agent chooses when to reach for which, and combines the results.
 </Aside>
 
-## 5 · How agents think — ReAct and plan-first
+## 5 · How agents think - ReAct and plan-first
 
-### ReAct — Reason + Act
+### ReAct - Reason + Act
 
 The most common pattern is **ReAct**: the model openly alternates between a **Thought** (what should I do next?) and an **Action** (calling a tool), then reads the **Observation** and thinks again.
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node amber">Thought<span class="sub">what do I need?</span></div><span class="arrow">→</span><div class="sc-node green">Action<span class="sub">call a tool</span></div><span class="arrow">→</span><div class="sc-node violet">Observation<span class="sub">read the result</span></div><span class="arrow">→</span><div class="sc-node soft">…until enough<span class="sub">then answer</span></div></div>
-<figcaption>A ReAct trace, in plain terms: think about the next move, take it, look at what came back, repeat — the visible "Thought" step is what keeps the model deliberate instead of just reacting.</figcaption>
+<figcaption>A ReAct trace, in plain terms: think about the next move, take it, look at what came back, repeat - the visible "Thought" step is what keeps the model deliberate instead of just reacting.</figcaption>
 </figure>
 
 A real trace reads almost like someone reasoning aloud:
@@ -252,12 +252,12 @@ Action: calculate(expression="12000 * 12 * 0.85")
 Observation: 122400.0
 
 Answer: Acme Corp is on Enterprise at $12k/month. A 15% annual discount
-        gives $122,400/year — within our 20% policy limit.
+        gives $122,400/year - within our 20% policy limit.
 ```
 
 You encourage this simply by asking for it in the system prompt ("explain your reasoning in a Thought step before each action; reflect on each result").
 
-### Plan-and-Execute — plan first, then do
+### Plan-and-Execute - plan first, then do
 
 For well-defined tasks, it's often better to make the model write a **plan** up front, then execute it step by step. The win is *transparency*: you can show a human the plan before anything runs, and revise it if a step fails.
 
@@ -270,12 +270,12 @@ For well-defined tasks, it's often better to make the model write a **plan** up 
 Many production agents do both: **plan first, then reason ReAct-style within each step.** The labs use ReAct because once you get it, plan-first is a small extension.
 
 <Aside type="caution" title="Valid JSON ≠ good plan">
-You can force a plan into a clean JSON structure (the Day 2 structured-output trick). But that only guarantees the *format*, never the *content* — a perfectly-formed plan can still be a terrible idea. You still need tool allow-lists, input checks, and human sign-off on risky steps.
+You can force a plan into a clean JSON structure (the Day 2 structured-output trick). But that only guarantees the *format*, never the *content* - a perfectly-formed plan can still be a terrible idea. You still need tool allow-lists, input checks, and human sign-off on risky steps.
 </Aside>
 
-## 6 · Memory — the context window as a scratchpad
+## 6 · Memory - the context window as a scratchpad
 
-An agent's **working memory** is just its conversation history. Every tool call and every result gets appended, so by turn four the model can reason over everything it gathered in turns one to three. Powerful — but the context window is *finite*, so long-running agents eventually have to **summarise** older steps to stay within the limit.
+An agent's **working memory** is just its conversation history. Every tool call and every result gets appended, so by turn four the model can reason over everything it gathered in turns one to three. Powerful - but the context window is *finite*, so long-running agents eventually have to **summarise** older steps to stay within the limit.
 
 | Type | Scope | How it's done |
 |---|---|---|
@@ -286,7 +286,7 @@ An agent's **working memory** is just its conversation history. Every tool call 
 That last row reuses Day 3 directly: the same embeddings-and-vector-search idea, but storing *summaries of past agent work* so it can recall and build on what it did before.
 
 <Aside type="caution" title="What never to store in agent memory">
-Secrets (API keys, passwords, tokens) — never persist them. Personal data without consent — respect privacy law. Raw sensitive logs — summarise and redact instead of keeping them verbatim.
+Secrets (API keys, passwords, tokens) - never persist them. Personal data without consent - respect privacy law. Raw sensitive logs - summarise and redact instead of keeping them verbatim.
 </Aside>
 
 ## 7 · Designing good tools
@@ -295,17 +295,17 @@ Because tool descriptions *are* prompts, tool design is where a lot of agent qua
 
 | Principle | Why it matters |
 |---|---|
-| **Single responsibility** | One tool does one thing well — separate `search_docs` from `search_tickets` |
+| **Single responsibility** | One tool does one thing well - separate `search_docs` from `search_tickets` |
 | **Clear boundaries** | The model can tell which tool fits ("customer data" vs "product info") |
-| **Descriptive parameters** | It sends the right arguments — spell out the format, e.g. `customer_id: 'CUST-1234'` |
+| **Descriptive parameters** | It sends the right arguments - spell out the format, e.g. `customer_id: 'CUST-1234'` |
 | **Graceful errors** | Return `{"error": "Not found"}` instead of crashing, so the agent can recover |
-| **Minimal scope** | Give narrow, specific tools — never a "run any SQL" tool |
+| **Minimal scope** | Give narrow, specific tools - never a "run any SQL" tool |
 
 And for what a tool hands *back*: return structured data (a dict) with stable keys like `status`, `data`, `error`; keep it short so it doesn't clog the context; and always include error info so the agent can react to a failure instead of guessing past it.
 
 ## 8 · Safety and guardrails
 
-This is the part that matters most for a manager, because an agent with tools has real *power* — and therefore real ways to cause harm. A chatbot can only say a wrong thing; an agent can *do* a wrong thing.
+This is the part that matters most for a manager, because an agent with tools has real *power* - and therefore real ways to cause harm. A chatbot can only say a wrong thing; an agent can *do* a wrong thing.
 
 | Risk | What it looks like | Guardrail |
 |---|---|---|
@@ -325,10 +325,10 @@ A clean, practical pattern is to sort tools by how much damage they can do, and 
 | Write | Create a ticket, update the CRM, save a draft | Require human approval |
 | Irreversible | Send an email, delete records, place an order | Require explicit confirmation |
 
-The **human-in-the-loop** pattern implements this: before a sensitive tool runs, the agent pauses and asks a person to approve (`user_confirmed=True`). And the aim isn't to prevent all failure — agents *will* fail — it's to make failure **cheap and recoverable**: timeouts, retries with backoff, fallbacks ("if search fails, ask the user for the document"), and always a step ceiling.
+The **human-in-the-loop** pattern implements this: before a sensitive tool runs, the agent pauses and asks a person to approve (`user_confirmed=True`). And the aim isn't to prevent all failure - agents *will* fail - it's to make failure **cheap and recoverable**: timeouts, retries with backoff, fallbacks ("if search fails, ask the user for the document"), and always a step ceiling.
 
 <Aside type="danger" title="The golden rule of agent safety">
-**Never give an agent a tool you wouldn't trust an intern to use unsupervised.** Start with read-only tools, add write tools only with human approval, and remove the approval gate only after real testing. Every tool you grant is a *capability* — a tool that can send emails means the agent can send emails.
+**Never give an agent a tool you wouldn't trust an intern to use unsupervised.** Start with read-only tools, add write tools only with human approval, and remove the approval gate only after real testing. Every tool you grant is a *capability* - a tool that can send emails means the agent can send emails.
 </Aside>
 
 ## 9 · When to use an agent (and when not)
@@ -349,17 +349,17 @@ The honest answer is: often you *shouldn't*. Reach for an agent only when a task
 
 ### Where it pays off in business
 
-Customer-support triage (knowledge base + CRM + ticketing), sales research (CRM + market data), financial analysis (database + calculator + report templates), IT helpdesk, content pipelines — all share the same shape: **naturally iterative work** where the agent may search, refine, and combine several times before answering. That's exactly where a fixed pipeline breaks, because you'd have to anticipate every step in advance.
+Customer-support triage (knowledge base + CRM + ticketing), sales research (CRM + market data), financial analysis (database + calculator + report templates), IT helpdesk, content pipelines - all share the same shape: **naturally iterative work** where the agent may search, refine, and combine several times before answering. That's exactly where a fixed pipeline breaks, because you'd have to anticipate every step in advance.
 
-For bigger workflows, agents even compose into **multi-agent systems** — an orchestrator routing to specialists, a research→analysis→writing pipeline, or a *draft-then-critique* pair where one agent writes and another reviews. Useful, but a warning: if every agent shares the same wrong assumption, more agents just amplifies the error. Always ground the key facts in trusted tools or human input.
+For bigger workflows, agents even compose into **multi-agent systems** - an orchestrator routing to specialists, a research→analysis→writing pipeline, or a *draft-then-critique* pair where one agent writes and another reviews. Useful, but a warning: if every agent shares the same wrong assumption, more agents just amplifies the error. Always ground the key facts in trusted tools or human input.
 
 ## Hands-on: labs & assignment
 
 The theory above is the map; the notebooks are where I actually built a working agent from scratch and watched every step of its loop.
 
-- **Guided Lab — Your first AI agent.** Define a Python function as a tool, see the model request a call, compare `AUTO`/`ANY`/`NONE` modes, then build the manual agent loop by hand. Add a second and third tool (customer lookup, calculator) so the model has to *choose*, and finish by writing test cases with expected keywords to measure how well it did.
-- **Independent Lab — Build your own agentic system.** Pick a business track (support, research, finance, or HR), design three domain tools with docstrings and graceful error handling, write a system prompt (role, tools, rules, refusal behaviour), then evaluate a **v1**, do error analysis, and improve it to a measurably better **v2**. The track you pick here carries into the assignment.
-- **Assignment — A production-ready agent.** The full package: refined tools, a final system prompt with all six components, 12+ queries run through the loop, a golden test set, **LLM-as-judge** scoring on tool selection / reasoning / completeness, a proper error analysis, and a deployment "playbook" for handing the agent to a team.
+- **Guided Lab - Your first AI agent.** Define a Python function as a tool, see the model request a call, compare `AUTO`/`ANY`/`NONE` modes, then build the manual agent loop by hand. Add a second and third tool (customer lookup, calculator) so the model has to *choose*, and finish by writing test cases with expected keywords to measure how well it did.
+- **Independent Lab - Build your own agentic system.** Pick a business track (support, research, finance, or HR), design three domain tools with docstrings and graceful error handling, write a system prompt (role, tools, rules, refusal behaviour), then evaluate a **v1**, do error analysis, and improve it to a measurably better **v2**. The track you pick here carries into the assignment.
+- **Assignment - A production-ready agent.** The full package: refined tools, a final system prompt with all six components, 12+ queries run through the loop, a golden test set, **LLM-as-judge** scoring on tool selection / reasoning / completeness, a proper error analysis, and a deployment "playbook" for handing the agent to a team.
 
 **Download the notebooks** (open in Google Colab):
 
@@ -368,29 +368,29 @@ The theory above is the map; the notebooks are where I actually built a working 
 - [Assignment notebook](/learnings/mba/generative-ai-for-managers/notebooks/day4-assignment.ipynb)
 
 <Aside type="caution" title="API keys, again">
-The notebooks need a Gemini API key. Store it in Colab **Secrets** and read it from there — never paste a key into a cell or a shared file.
+The notebooks need a Gemini API key. Store it in Colab **Secrets** and read it from there - never paste a key into a cell or a shared file.
 </Aside>
 
-**My submitted solution:** [Assignment 4 — my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day4-assignment-solution.ipynb) — my own work from the course.
+**My submitted solution:** [Assignment 4 - my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day4-assignment-solution.ipynb) - my own work from the course.
 
 ## Revision summary
 
 | Must-know | One-line recall |
 |---|---|
-| What an agent is | **Agent = LLM + Tools + Loop** — it reasons, calls tools, observes, repeats until done. |
+| What an agent is | **Agent = LLM + Tools + Loop** - it reasons, calls tools, observes, repeats until done. |
 | Agent vs plain LLM | An LLM only *thinks*; an agent *thinks and acts* over multiple steps. |
-| Function calling | The model *requests* a named function with arguments — a tool. |
+| Function calling | The model *requests* a named function with arguments - a tool. |
 | The model never runs code | It only asks; **your** code executes the function and returns the result. |
 | The three layers | Python function → `FunctionDeclaration` (all the model sees) → `Tool`. |
 | Tool-calling modes | `AUTO` = decide, `ANY` = must call one, `NONE` = no calls. |
 | The agent loop | History → Reason → Act → Observe → repeat or stop. |
 | Only Reason is the model | Every other step is your code, including running the tool. |
 | ReAct | Alternate Thought → Action → Observation; the visible Thought keeps it deliberate. |
-| Plan-and-Execute | Plan first, then run steps — predictable and reviewable. |
+| Plan-and-Execute | Plan first, then run steps - predictable and reviewable. |
 | Tool descriptions are prompts | Clear, specific docstrings → better tool selection. |
 | Memory | History is working memory; summarise or use a vector DB when it grows. |
 | Safety scales with power | Read-only free, write needs approval, irreversible needs confirmation. |
 | The golden rule | Never give an agent a tool you wouldn't trust an intern with unsupervised. |
 | Always cap steps | `max_steps` prevents runaway loops. |
-| When *not* to | If one call with no tools works, do that — add agents only on real pain. |
-| RAG becomes a tool | Everything from Days 1–3 is now a capability the agent can invoke. |
+| When *not* to | If one call with no tools works, do that - add agents only on real pain. |
+| RAG becomes a tool | Everything from Days 1-3 is now a capability the agent can invoke. |

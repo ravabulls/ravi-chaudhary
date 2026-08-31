@@ -1,24 +1,24 @@
 ---
-title: "Einrichtung — Google Colab & die Gemini API"
+title: "Einrichtung - Google Colab & die Gemini API"
 description: "Eine rund 15-minütige Einrichtung für die praktischen Labs: Google Colab, ein Gemini-API-Key sicher in den Colab Secrets abgelegt, das google-genai SDK, ein erster Testaufruf und eine Fehlerbehebungs-Tabelle."
 sidebar:
-  label: "Einrichtung — Colab & Gemini"
+  label: "Einrichtung - Colab & Gemini"
   order: 1
 ---
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
 
 ---
 
-Jedes Lab in diesem Kurs läuft in **Google Colab** (ein kostenloses Notebook im Browser — nichts muss auf meinem Laptop installiert werden) und ruft die **Gemini API** auf (Googles LLM-Dienst). Diese Seite ist die einmalige Einrichtung, damit die Notebooks an den Tagen 1–5 einfach funktionieren. Sie dauert etwa 15 Minuten.
+Jedes Lab in diesem Kurs läuft in **Google Colab** (ein kostenloses Notebook im Browser - nichts muss auf meinem Laptop installiert werden) und ruft die **Gemini API** auf (Googles LLM-Dienst). Diese Seite ist die einmalige Einrichtung, damit die Notebooks an den Tagen 1-5 einfach funktionieren. Sie dauert etwa 15 Minuten.
 
 <Aside type="note">
 **Was die einzelnen Bausteine sind:**
-- **Google Colab** — eine Website, die Python-Notebooks in der Cloud ausführt. Ein *Notebook* ist ein Dokument, das Text und ausführbare Code-Zellen kombiniert.
-- **Gemini API** — die Schnittstelle, über die mein Code Prompts an Googles Modell schickt und Antworten zurückbekommt.
-- **API-Key** — ein geheimes Passwort, das mein Konto gegenüber der API ausweist. Wer ihn hat, kann auf meine Kosten Kontingent verbrauchen — also muss er geschützt werden.
+- **Google Colab** - eine Website, die Python-Notebooks in der Cloud ausführt. Ein *Notebook* ist ein Dokument, das Text und ausführbare Code-Zellen kombiniert.
+- **Gemini API** - die Schnittstelle, über die mein Code Prompts an Googles Modell schickt und Antworten zurückbekommt.
+- **API-Key** - ein geheimes Passwort, das mein Konto gegenüber der API ausweist. Wer ihn hat, kann auf meine Kosten Kontingent verbrauchen - also muss er geschützt werden.
 </Aside>
 
 ## Was ich brauche
@@ -28,7 +28,7 @@ Jedes Lab in diesem Kurs läuft in **Google Colab** (ein kostenloses Notebook im
   <span class="sc-chip">Ein Google-Konto</span>
 </div>
 
-## Schritt 1 — Google Colab öffnen
+## Schritt 1 - Google Colab öffnen
 
 <Steps>
 
@@ -46,7 +46,7 @@ Jedes Lab in diesem Kurs läuft in **Google Colab** (ein kostenloses Notebook im
 
 </Steps>
 
-## Schritt 2 — Einen Gemini-API-Key erstellen
+## Schritt 2 - Einen Gemini-API-Key erstellen
 
 <Steps>
 
@@ -54,19 +54,19 @@ Jedes Lab in diesem Kurs läuft in **Google Colab** (ein kostenloses Notebook im
 
 2. In der Oberfläche **Get API key** (oder **API keys**) suchen und **einen neuen API-Key erstellen**.
 
-3. Ihn an einem sicheren Ort speichern — ein Passwort-Manager ist ideal. **Ihn genau wie ein Passwort behandeln.**
+3. Ihn an einem sicheren Ort speichern - ein Passwort-Manager ist ideal. **Ihn genau wie ein Passwort behandeln.**
 
 </Steps>
 
 <Aside type="danger">
-**Den API-Key niemals preisgeben.** Ihn nicht in ein geteiltes Notebook, einen Screenshot, einen Chat oder ein Dokument einfügen — und niemals nach GitHub committen. Sollte ein Key jemals durchsickern (auch in einer Datei, die ich geteilt habe), gilt er als kompromittiert: **ihn im AI Studio löschen und einen neuen erstellen**. Beim sicheren Muster weiter unten taucht der Key im Text des Notebooks gar nicht erst auf.
+**Den API-Key niemals preisgeben.** Ihn nicht in ein geteiltes Notebook, einen Screenshot, einen Chat oder ein Dokument einfügen - und niemals nach GitHub committen. Sollte ein Key jemals durchsickern (auch in einer Datei, die ich geteilt habe), gilt er als kompromittiert: **ihn im AI Studio löschen und einen neuen erstellen**. Beim sicheren Muster weiter unten taucht der Key im Text des Notebooks gar nicht erst auf.
 </Aside>
 
 <Aside type="note">
 Verfügbarkeit des kostenlosen Kontingents und Rate-Limits hängen von Region und Konto ab und können sich ändern. Nutzung klein halten und den Hinweisen im Unterricht folgen.
 </Aside>
 
-## Schritt 3 — Den Key sicher in Colab ablegen (Secrets)
+## Schritt 3 - Den Key sicher in Colab ablegen (Secrets)
 
 Der richtige Weg, dem Notebook den Key zu geben, ohne ihn in den Code zu schreiben:
 
@@ -74,7 +74,7 @@ Der richtige Weg, dem Notebook den Key zu geben, ohne ihn in den Code zu schreib
 
 1. In Colab auf das **Schlüssel-Symbol** (🔑 **Secrets**) in der linken Seitenleiste klicken.
 
-2. Ein neues Secret hinzufügen — **Name:** `GEMINI_API_KEY`, **Value:** den Key einfügen.
+2. Ein neues Secret hinzufügen - **Name:** `GEMINI_API_KEY`, **Value:** den Key einfügen.
 
 3. Für dieses Secret **Notebook access** aktivieren.
 
@@ -101,10 +101,10 @@ os.environ["GEMINI_API_KEY"] = getpass.getpass("Paste your GEMINI_API_KEY: ")
 print("Key loaded:", bool(os.environ.get("GEMINI_API_KEY")))
 ```
 
-`getpass` verbirgt die Eingabe während des Tippens — trotzdem: den Key niemals im Notebook selbst speichern.
+`getpass` verbirgt die Eingabe während des Tippens - trotzdem: den Key niemals im Notebook selbst speichern.
 </Aside>
 
-## Schritt 4 — Das SDK installieren und einen ersten Aufruf machen
+## Schritt 4 - Das SDK installieren und einen ersten Aufruf machen
 
 <Steps>
 
@@ -133,7 +133,7 @@ print("Key loaded:", bool(os.environ.get("GEMINI_API_KEY")))
 </Steps>
 
 <Aside type="note">
-**Modellname:** Die Labs verwenden `gemini-2.5-flash-lite` — ein kleines, schnelles, günstiges Modell, das zum Lernen völlig ausreicht. Später wechsle ich zu anderen Modellen, wenn eine Aufgabe mehr Leistung erfordert.
+**Modellname:** Die Labs verwenden `gemini-2.5-flash-lite` - ein kleines, schnelles, günstiges Modell, das zum Lernen völlig ausreicht. Später wechsle ich zu anderen Modellen, wenn eine Aufgabe mehr Leistung erfordert.
 </Aside>
 
 ## Fehlerbehebung
@@ -143,7 +143,7 @@ print("Key loaded:", bool(os.environ.get("GEMINI_API_KEY")))
 | `Key loaded: False` | Name des Secrets stimmt nicht überein | Genau `GEMINI_API_KEY` benennen (Groß-/Kleinschreibung beachten) |
 | `SecretNotFoundError` | Notebook access ausgeschaltet | **Notebook access** für das Secret aktivieren |
 | `PermissionDenied` / `InvalidApiKey` | Key ungültig oder abgelaufen | Einen neuen Key im AI Studio erzeugen |
-| `ResourceExhausted` / quota exceeded | Rate-Limit des kostenlosen Kontingents erreicht | 1–2 Minuten warten, dann erneut versuchen |
+| `ResourceExhausted` / quota exceeded | Rate-Limit des kostenlosen Kontingents erreicht | 1-2 Minuten warten, dann erneut versuchen |
 | `ModelNotFound` | Falscher Modellname | Z. B. `gemini-2.5-flash-lite` verwenden |
 | `ModuleNotFoundError: google.genai` | SDK nicht installiert | `!pip -q install -U google-genai` erneut ausführen |
 
@@ -156,4 +156,4 @@ print("Key loaded:", bool(os.environ.get("GEMINI_API_KEY")))
 | Sichere Ablage | Den Key in den Colab **Secrets** als `GEMINI_API_KEY` ablegen; niemals fest im Code hinterlegen |
 | Key laden | `userdata.get("GEMINI_API_KEY")` → Umgebungsvariable; `genai.Client()` liest ihn automatisch |
 | Installieren & aufrufen | `!pip install -U google-genai`; `client.models.generate_content(model=..., contents=...)` |
-| Wenn ein Key durchsickert | Ihn im AI Studio löschen und einen neuen erstellen — als kompromittiert behandeln |
+| Wenn ein Key durchsickert | Ihn im AI Studio löschen und einen neuen erstellen - als kompromittiert behandeln |

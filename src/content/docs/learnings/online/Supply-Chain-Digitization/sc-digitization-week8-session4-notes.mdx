@@ -1,5 +1,5 @@
 ---
-title: "Week 8 | Session 4: SC Network Design — Heuristic Approaches (H1 & H2)"
+title: "Week 8 | Session 4: SC Network Design - Heuristic Approaches (H1 & H2)"
 description: "An introduction to 2-tier Supply Chain Network Design using rule-based heuristic approaches (H1 and H2) to find practical distribution solutions quickly."
 sidebar:
   order: 40
@@ -7,23 +7,23 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Case — SC Network Design Problem
+- Case - SC Network Design Problem
 - What is a Heuristic?
-- Heuristic 1 — Cheapest Warehouse First
-- Heuristic 2 — Cheapest End-to-End Path per Retailer
+- Heuristic 1 - Cheapest Warehouse First
+- Heuristic 2 - Cheapest End-to-End Path per Retailer
 - Heuristic Comparison & Open Question
 </Aside>
 
 ---
 
-## 1. Case — SC Network Design Problem
+## 1. Case - SC Network Design Problem
 
 **Network Structure:** 2-tier network (Manufacturer → Warehouse → Retailer).
 - **Manufacturers:** M1, M2
@@ -53,14 +53,14 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
       <div class="sc-node violet">R4 · 70,000</div>
     </div>
   </div>
-  <figcaption>A two-tier network — two manufacturers feed three warehouses, which serve four retailers. The task is to choose which manufacturer supplies which warehouse, and which warehouse serves which retailer, at minimum cost.</figcaption>
+  <figcaption>A two-tier network - two manufacturers feed three warehouses, which serve four retailers. The task is to choose which manufacturer supplies which warehouse, and which warehouse serves which retailer, at minimum cost.</figcaption>
 </figure>
 
 **Assumptions:** Production and handling costs are the same across facilities (simplified). Only transportation costs vary.
 
-**Objective:** Find the optimal distribution strategy — which manufacturer supplies which warehouse, and which warehouse serves which retailer — to minimize total distribution cost.
+**Objective:** Find the optimal distribution strategy - which manufacturer supplies which warehouse, and which warehouse serves which retailer - to minimize total distribution cost.
 
-*Per-unit shipment cost — manufacturer→warehouse (m1, m2) and warehouse→retailer (r1–r4):*
+*Per-unit shipment cost - manufacturer→warehouse (m1, m2) and warehouse→retailer (r1-r4):*
 
 | Warehouse | m1 | m2 | r1 | r2 | r3 | r4 |
 |---|---|---|---|---|---|---|
@@ -84,13 +84,13 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
 
 ---
 
-## 3. Heuristic 1 — Cheapest Warehouse First
+## 3. Heuristic 1 - Cheapest Warehouse First
 
 ### Logic
 <Steps>
 1. Pick the warehouse with lowest total shipping cost to all retailers.
 2. Route all retailer demand through that warehouse.
-3. Pick the cheapest manufacturer to supply that warehouse — exhaust its capacity first.
+3. Pick the cheapest manufacturer to supply that warehouse - exhaust its capacity first.
 4. Fulfill remaining demand from the next manufacturer.
 </Steps>
 
@@ -121,14 +121,14 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Retailers</div><div class="sc-node violet">R1 · 45,000</div><div class="sc-node violet">R2 · 35,000</div><div class="sc-node violet">R3 · 68,000</div><div class="sc-node violet">R4 · 70,000</div></div>
   </div>
-  <figcaption>Heuristic 1 — route <b>all</b> retailer demand through the single cheapest warehouse (W1), supplied first by the cheapest manufacturer (M1), then M2 for the balance.</figcaption>
+  <figcaption>Heuristic 1 - route <b>all</b> retailer demand through the single cheapest warehouse (W1), supplied first by the cheapest manufacturer (M1), then M2 for the balance.</figcaption>
 </figure>
 
 **Result:** Total Cost = **₹9,61,000**
 
 ---
 
-## 4. Heuristic 2 — Cheapest End-to-End Path per Retailer
+## 4. Heuristic 2 - Cheapest End-to-End Path per Retailer
 
 ### Logic
 - For each retailer individually, evaluate all 6 possible paths (2 Manufacturers × 3 Warehouses).
@@ -156,7 +156,7 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Retailers</div><div class="sc-node violet">R1 · 45,000 <span class="sub">via W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">via W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">via W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">via W2</span></div></div>
   </div>
-  <figcaption>Heuristic 2 — R1–R3 flow through W1 as before, but R4 is routed through <b>W2</b> (M2 → W2 → R4), which is cheaper end-to-end once M1's capacity is nearly exhausted.</figcaption>
+  <figcaption>Heuristic 2 - R1-R3 flow through W1 as before, but R4 is routed through <b>W2</b> (M2 → W2 → R4), which is cheaper end-to-end once M1's capacity is nearly exhausted.</figcaption>
 </figure>
 
 **Result:** Total Cost = **₹7,57,000** ← better than H1. (H2 routes R4 via W2 instead of W1).
@@ -171,14 +171,14 @@ A rule-based, practical approach to find a *good* (not necessarily optimal) solu
 | **Total Cost** | ₹9,61,000 | ₹7,57,000 | ? (≤ ₹7,57,000) |
 
 <Aside type="note">
-Cost to serve all four retailers, routed through each single warehouse: **W1 → 4,03,000** (cheapest) · W2 → 8,49,000 · W3 → 8,41,000. This is why Heuristic 1 picks W1 — but Heuristic 2's per-path view still beats it.
+Cost to serve all four retailers, routed through each single warehouse: **W1 → 4,03,000** (cheapest) · W2 → 8,49,000 · W3 → 8,41,000. This is why Heuristic 1 picks W1 - but Heuristic 2's per-path view still beats it.
 </Aside>
 
 H2 improved cost by ~21% over H1 simply by evaluating full paths.
 **But:** Is H2 the best possible? We don't know yet. The next session will solve this using LP/Solver to find the true optimal.
 
 <Aside type="note">
-**★** Heuristics are path-dependent — the order in which you assign demand changes your result. Only LP guarantees the global optimum.
+**★** Heuristics are path-dependent - the order in which you assign demand changes your result. Only LP guarantees the global optimum.
 </Aside>
 
 ---

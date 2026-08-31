@@ -1,6 +1,6 @@
 ---
-title: "Day 1 — LLMs & Transformers: The Engine Behind GenAI"
-description: "A plain-English tour of how large language models actually work — next-token prediction, tokens and embeddings, the transformer and attention, the three training stages, and the practical knobs managers need."
+title: "Day 1 - LLMs & Transformers: The Engine Behind GenAI"
+description: "A plain-English tour of how large language models actually work - next-token prediction, tokens and embeddings, the transformer and attention, the three training stages, and the practical knobs managers need."
 sidebar:
   label: "1 · LLMs & Transformers"
   order: 1
@@ -8,11 +8,11 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · part of my Technology Management MBA · my own study notes, rewritten in my words.*
 
 ---
 
-Day 1 was the "lift the hood and look at the engine" session. No maths, no coding — just building an honest mental model of what a large language model (LLM) really is, so that everything we do later (prompting, retrieval, agents, business cases) rests on solid ground. These are my revision notes, written the way I'd explain it to a colleague over coffee.
+Day 1 was the "lift the hood and look at the engine" session. No maths, no coding - just building an honest mental model of what a large language model (LLM) really is, so that everything we do later (prompting, retrieval, agents, business cases) rests on solid ground. These are my revision notes, written the way I'd explain it to a colleague over coffee.
 
 The single most useful idea to hold on to before we start: **an LLM is not a database of facts and it is not a thinking person. It is a very, very good next-word guesser.** Almost every strength and every weakness we'll see comes straight out of that one sentence.
 
@@ -26,10 +26,10 @@ AI didn't appear overnight. It moved through a few clearly different eras, and e
 
 | Era | Approach | What it meant in practice |
 |---|---|---|
-| 1950s–1990s | Hand-coded rules | A human wrote every "if this, then that" by hand — e.g. *if the message says "refund", send it to the returns team.* |
-| 1990s–2010s | Machine Learning | Humans picked useful features; the computer learned the weights from labelled examples (classic spam filters). |
+| 1950s-1990s | Hand-coded rules | A human wrote every "if this, then that" by hand - e.g. *if the message says "refund", send it to the returns team.* |
+| 1990s-2010s | Machine Learning | Humans picked useful features; the computer learned the weights from labelled examples (classic spam filters). |
 | 2010s | Deep Learning | Neural networks learned the patterns themselves from labelled data (image recognition, voice). |
-| 2017–now | Large Language Models | Networks learn language directly from enormous amounts of raw text — no hand-written rules, no manual features. |
+| 2017-now | Large Language Models | Networks learn language directly from enormous amounts of raw text - no hand-written rules, no manual features. |
 
 The key shift is about effort. Older systems needed a human to *define* the rules or hand-pick the important signals. LLMs skip that: they read raw text at a scale no human ever could and work out the patterns on their own. That's the leap that made today's chatbots possible.
 
@@ -37,7 +37,7 @@ The key shift is about effort. Older systems needed a human to *define* the rule
 
 Strip away the hype and an LLM does exactly one thing: it looks at some text and predicts what comes next.
 
-Give it *"The capital of France is"* and it predicts *"Paris"* with high confidence. That's it. But here's the clever part — to get good at that one game, the model is forced to absorb grammar, facts, reasoning patterns, writing styles, even the structure of computer code. You can't reliably guess the next word across billions of sentences without picking all of that up along the way.
+Give it *"The capital of France is"* and it predicts *"Paris"* with high confidence. That's it. But here's the clever part - to get good at that one game, the model is forced to absorb grammar, facts, reasoning patterns, writing styles, even the structure of computer code. You can't reliably guess the next word across billions of sentences without picking all of that up along the way.
 
 <Aside type="note">
 **Autocomplete on steroids.** Your phone's keyboard guesses your next word from the last one or two. An LLM does the same *kind* of thing, but with a deep sense of context, meaning, and world knowledge behind every guess. Same game, vastly bigger brain.
@@ -45,7 +45,7 @@ Give it *"The capital of France is"* and it predicts *"Paris"* with high confide
 
 ### 2.1 From one guess to a whole essay
 
-So how does "guess one word" turn into a full paragraph? Through a loop called **autoregressive generation** — a fancy term for a simple habit: *predict a token, stick it onto the end, then predict again using the longer text.* The model keeps eating its own output.
+So how does "guess one word" turn into a full paragraph? Through a loop called **autoregressive generation** - a fancy term for a simple habit: *predict a token, stick it onto the end, then predict again using the longer text.* The model keeps eating its own output.
 
 <figure class="sc-fig">
   <div class="sc-flow">
@@ -74,17 +74,17 @@ This is worth internalising because it explains a lot of everyday behaviour: the
 
 ## 3 · Tokens: the chunks the model actually reads
 
-We keep saying "token" instead of "word" on purpose, because LLMs don't read whole words. They read **tokens** — pieces of text that are often, but not always, a full word.
+We keep saying "token" instead of "word" on purpose, because LLMs don't read whole words. They read **tokens** - pieces of text that are often, but not always, a full word.
 
 | Text | How it splits into tokens |
 |---|---|
-| `Hello` | `["Hello"]` — one common word, one token |
-| `ChatGPT` | `["Chat", "G", "PT"]` — an unusual string, split into pieces |
-| `unhappiness` | `["un", "happiness"]` — a prefix plus a known chunk |
+| `Hello` | `["Hello"]` - one common word, one token |
+| `ChatGPT` | `["Chat", "G", "PT"]` - an unusual string, split into pieces |
+| `unhappiness` | `["un", "happiness"]` - a prefix plus a known chunk |
 
 Why chop words up like this? Because common pieces show up far more often than rare whole words. Working in reusable chunks keeps the model's vocabulary manageable and lets it handle words it has never seen before by assembling them from familiar parts.
 
-### 3.1 How tokenising works — BPE in one line
+### 3.1 How tokenising works - BPE in one line
 
 Most modern models use **Byte Pair Encoding (BPE)**. The idea is refreshingly simple: start with individual characters, then repeatedly glue together the pair that appears most often, over and over. Frequent combinations (like `th`, `ing`, or whole common words) end up as single tokens; rare stuff stays broken into smaller pieces.
 
@@ -92,21 +92,21 @@ Most modern models use **Byte Pair Encoding (BPE)**. The idea is refreshingly si
 **The rule of thumb worth memorising:** *1 token ≈ 4 characters ≈ ¾ of a word* in English. So a 1,000-word document is roughly 1,300 tokens. You'll use this constantly for estimating cost and checking length limits.
 </Aside>
 
-Tokens are not an academic detail — they're the unit that gets billed, capped, and timed, which is exactly why they come back later as a "practitioner knob."
+Tokens are not an academic detail - they're the unit that gets billed, capped, and timed, which is exactly why they come back later as a "practitioner knob."
 
 ## 4 · Why words become numbers: embeddings
 
-Here's a problem that sounds obvious once stated: **computers can't do anything with the letters "c-a-t".** They only work with numbers. So every token has to become a number — actually a list of numbers — before the model can process it. The trick is doing that *meaningfully*.
+Here's a problem that sounds obvious once stated: **computers can't do anything with the letters "c-a-t".** They only work with numbers. So every token has to become a number - actually a list of numbers - before the model can process it. The trick is doing that *meaningfully*.
 
 ### 4.1 The naive way (and why it fails)
 
-The simplest idea is to give each word its own slot — this is called **one-hot encoding**:
+The simplest idea is to give each word its own slot - this is called **one-hot encoding**:
 
 - `cat`  = `[1, 0, 0, 0, …]`
 - `dog`  = `[0, 1, 0, 0, …]`
 - `bank` = `[0, 0, 1, 0, …]`
 
-It works, but it's dumb in one specific way: it treats *every* word as equally unrelated to every other. By this scheme, "cat" is no closer to "dog" than it is to "bank" — which is nonsense. There's no notion of meaning anywhere in these numbers.
+It works, but it's dumb in one specific way: it treats *every* word as equally unrelated to every other. By this scheme, "cat" is no closer to "dog" than it is to "bank" - which is nonsense. There's no notion of meaning anywhere in these numbers.
 
 ### 4.2 The good way: word embeddings
 
@@ -131,12 +131,12 @@ That only works because the direction from *man* to *woman* encodes "gender", an
 
 ### 4.3 Why this matters for business
 
-Embeddings aren't a party trick — they quietly power a lot of practical tools, because "close together in number-space" is a machine-friendly stand-in for "similar in meaning".
+Embeddings aren't a party trick - they quietly power a lot of practical tools, because "close together in number-space" is a machine-friendly stand-in for "similar in meaning".
 
 | Application | How embeddings help |
 |---|---|
 | Search | Find documents that *mean* the same thing, not just ones sharing keywords |
-| Recommendations | "Customers who liked X also liked Y" — X and Y sit near each other |
+| Recommendations | "Customers who liked X also liked Y" - X and Y sit near each other |
 | Clustering | Automatically group similar customer feedback or tickets |
 | RAG (Day 3) | Fetch the most relevant context to feed the model before it answers |
 
@@ -146,15 +146,15 @@ Embeddings aren't a party trick — they quietly power a lot of practical tools,
 
 ## 5 · The transformer and self-attention
 
-We now have tokens turned into meaningful numbers. The **transformer** is the architecture that processes them — and it's the "T" in GPT. It arrived with a 2017 paper titled *"Attention Is All You Need"*, and it's genuinely the reason modern GenAI works.
+We now have tokens turned into meaningful numbers. The **transformer** is the architecture that processes them - and it's the "T" in GPT. It arrived with a 2017 paper titled *"Attention Is All You Need"*, and it's genuinely the reason modern GenAI works.
 
 ### 5.1 What it replaced
 
 Before 2017, models read text strictly left to right, one word at a time. That had three nagging problems:
 
-- **Slow** — each word had to wait for the one before it; you couldn't process them together.
-- **Forgetful** — details from early in a long passage faded by the time the model reached the end.
-- **Short-sighted** — long documents were a real struggle.
+- **Slow** - each word had to wait for the one before it; you couldn't process them together.
+- **Forgetful** - details from early in a long passage faded by the time the model reached the end.
+- **Short-sighted** - long documents were a real struggle.
 
 The transformer fixed all three with two moves: it looks at **all the words at once** (so it's parallel and fast), and it uses **self-attention** to let every word decide which other words are relevant to it.
 
@@ -166,7 +166,7 @@ The transformer fixed all three with two moves: it looks at **all the words at o
 
 Attention answers one question for each word: *"which other words should I pay attention to in order to understand myself?"*
 
-The classic example: *"The cat sat on the mat because **it** was tired."* What does "it" refer to? You knew instantly — the cat, not the mat. Attention is the mechanism that lets the model learn and apply exactly that kind of connection.
+The classic example: *"The cat sat on the mat because **it** was tired."* What does "it" refer to? You knew instantly - the cat, not the mat. Attention is the mechanism that lets the model learn and apply exactly that kind of connection.
 
 Each word produces three things, and the easiest way to remember them is the **library analogy**:
 
@@ -184,19 +184,19 @@ Let me trace it for the word "it" in *"The cat sat because it was tired"*:
 
 <Steps>
 
-1. **"it" forms a Query** — essentially asking *"what do I refer to?"*
-2. **Every word offers a Key** — "cat" advertises *"I'm an animal, a noun"*, "sat" advertises *"I'm an action"*, and so on.
+1. **"it" forms a Query** - essentially asking *"what do I refer to?"*
+2. **Every word offers a Key** - "cat" advertises *"I'm an animal, a noun"*, "sat" advertises *"I'm an action"*, and so on.
 3. **Compare the Query against every Key** to score relevance:
    - it vs "The" → 0.05 (low)
-   - it vs **"cat" → 0.72 (high — best match!)**
+   - it vs **"cat" → 0.72 (high - best match!)**
    - it vs "sat" → 0.15 (medium)
    - it vs "because" → 0.08 (low)
-4. **Normalise the scores** (a step called *softmax*) so they add up to 1.0 — now they're clean weights.
+4. **Normalise the scores** (a step called *softmax*) so they add up to 1.0 - now they're clean weights.
 5. **Blend the Values** using those weights. Since "cat" carries 0.72 of the weight, the result is *mostly* information from "cat".
 
 </Steps>
 
-Result: the model's internal representation of "it" now effectively *contains* "cat". That's a contextual embedding being built in real time — the same word would blend differently in a different sentence.
+Result: the model's internal representation of "it" now effectively *contains* "cat". That's a contextual embedding being built in real time - the same word would blend differently in a different sentence.
 
 <Aside type="note">
 **One-liner to remember the whole thing:** *Query asks, Keys answer, Values deliver.* Or: "look at all words, decide which ones matter, mix their information accordingly."
@@ -210,11 +210,11 @@ A fair question: why not just use the word's embedding directly for all three ro
 - As a **Key** it advertises: *"I could be financial or geographical."*
 - As a **Value** it provides: *"here's my actual meaning."*
 
-Asking, advertising, and delivering are genuinely different jobs, so the model learns three separate transformations — one for each.
+Asking, advertising, and delivering are genuinely different jobs, so the model learns three separate transformations - one for each.
 
 ### 5.5 Multi-head attention and stacking blocks
 
-Real transformers don't run attention just once. They run several **attention heads** in parallel, each a different "perspective" on the same sentence — one head might track grammar, another meaning, another simple word-position. Running many heads lets the model spot many kinds of relationship at once (a large model might use dozens of heads).
+Real transformers don't run attention just once. They run several **attention heads** in parallel, each a different "perspective" on the same sentence - one head might track grammar, another meaning, another simple word-position. Running many heads lets the model spot many kinds of relationship at once (a large model might use dozens of heads).
 
 And attention is only part of one **transformer block**. A block bundles together:
 
@@ -229,7 +229,7 @@ And attention is only part of one **transformer block**. A block bundles togethe
   <figcaption>One transformer block: attention finds the relationships, a feed-forward network digests them, and residual connections plus normalisation keep earlier information intact and training stable.</figcaption>
 </figure>
 
-Then these blocks are **stacked** — modern models pile up dozens of them. Each layer adds a level of abstraction: early layers handle grammar and word relationships, middle layers build up meaning and facts, and later layers do the heavier reasoning. Depth is where sophistication comes from.
+Then these blocks are **stacked** - modern models pile up dozens of them. Each layer adds a level of abstraction: early layers handle grammar and word relationships, middle layers build up meaning and facts, and later layers do the heavier reasoning. Depth is where sophistication comes from.
 
 ## 6 · How LLMs are trained: three stages
 
@@ -249,30 +249,30 @@ A finished, helpful assistant is built in three distinct phases. Skipping any on
 <Tabs>
 <TabItem label="1 · Pre-training">
 
-The model reads an enormous pile of text — books, Wikipedia, websites, forums, academic papers, code, news — and plays the next-token game over and over. Through nothing but that game it picks up grammar, facts, reasoning patterns, style, and code structure.
+The model reads an enormous pile of text - books, Wikipedia, websites, forums, academic papers, code, news - and plays the next-token game over and over. Through nothing but that game it picks up grammar, facts, reasoning patterns, style, and code structure.
 
-**Scale to appreciate:** trillions of words, thousands of specialised chips running for months, and an estimated cost of roughly **$10M–$100M+** for a frontier model. This is why only a handful of organisations train models from scratch.
+**Scale to appreciate:** trillions of words, thousands of specialised chips running for months, and an estimated cost of roughly **$10M-$100M+** for a frontier model. This is why only a handful of organisations train models from scratch.
 
-*Analogy:* it's like learning to write by reading every book in every library, millions of times over — you'd absorb grammar and facts without anyone teaching you a single rule.
+*Analogy:* it's like learning to write by reading every book in every library, millions of times over - you'd absorb grammar and facts without anyone teaching you a single rule.
 
 </TabItem>
 <TabItem label="2 · Instruction tuning">
 
-A purely pre-trained model can *complete* text but isn't actually **helpful**. Ask it *"What is the capital of France?"* and it might reply *"What is the capital of Germany? What is the capital of Spain?"* — happily continuing the pattern of questions instead of answering.
+A purely pre-trained model can *complete* text but isn't actually **helpful**. Ask it *"What is the capital of France?"* and it might reply *"What is the capital of Germany? What is the capital of Spain?"* - happily continuing the pattern of questions instead of answering.
 
 The fix: fine-tune it on many examples of *instruction → good response*. This teaches the model to treat your input as a request to fulfil, not a pattern to extend. This is also the stage where a company could fine-tune a model on its own support conversations, internal docs, or house style.
 
 </TabItem>
 <TabItem label="3 · RLHF">
 
-Even after instruction tuning, "helpful" is subjective — is a long thorough answer better, or a short punchy one? **RLHF (Reinforcement Learning from Human Feedback)** settles it using human taste:
+Even after instruction tuning, "helpful" is subjective - is a long thorough answer better, or a short punchy one? **RLHF (Reinforcement Learning from Human Feedback)** settles it using human taste:
 
 1. Generate several candidate responses.
 2. Have humans rank them (A better than B better than C).
 3. Train a "reward model" to imitate those human preferences.
 4. Nudge the LLM to produce answers the reward model scores highly.
 
-This is what teaches helpfulness, safety (avoiding harmful content), honesty (admitting uncertainty), and appropriate tone. It's also *why different models have different personalities* — each reflects the preferences it was tuned on.
+This is what teaches helpfulness, safety (avoiding harmful content), honesty (admitting uncertainty), and appropriate tone. It's also *why different models have different personalities* - each reflects the preferences it was tuned on.
 
 </TabItem>
 </Tabs>
@@ -285,15 +285,15 @@ These are the handful of terms you'll actually touch when working with a model. 
 
 Because everything is measured in tokens, tokens are the currency of working with LLMs:
 
-- **Pricing** — APIs charge per token, counting *both* your input and the model's output.
-- **Limits** — every model has a maximum it can handle at once (see context window below).
-- **Speed** — more tokens means more processing time.
+- **Pricing** - APIs charge per token, counting *both* your input and the model's output.
+- **Limits** - every model has a maximum it can handle at once (see context window below).
+- **Speed** - more tokens means more processing time.
 
 The money angle is real: a verbose 1,000-token prompt costs 5× a tight 200-token one for the same job. Concise prompts, caching repeated requests, and using a smaller model for simple tasks are the easy wins.
 
 ### 7.2 Context window = the size of the model's desk
 
-The **context window** is the maximum amount of text the model can "see" at one moment — and crucially it covers your input *and* the generated output together.
+The **context window** is the maximum amount of text the model can "see" at one moment - and crucially it covers your input *and* the generated output together.
 
 | Model | Context window | Roughly |
 |---|---|---|
@@ -312,13 +312,13 @@ The **context window** is the maximum amount of text the model can "see" at one 
 
 | Use case | Recommended temperature |
 |---|---|
-| Data extraction | 0.0 – 0.2 <Badge text="most precise" variant="success" /> |
-| Summarisation | 0.2 – 0.4 |
-| General Q&A | 0.5 – 0.7 |
-| Creative writing | 0.7 – 0.9 |
-| Brainstorming | 0.9 – 1.0 <Badge text="most varied" variant="note" /> |
+| Data extraction | 0.0 - 0.2 <Badge text="most precise" variant="success" /> |
+| Summarisation | 0.2 - 0.4 |
+| General Q&A | 0.5 - 0.7 |
+| Creative writing | 0.7 - 0.9 |
+| Brainstorming | 0.9 - 1.0 <Badge text="most varied" variant="note" /> |
 
-At **0.0** the model is deterministic — same input, same output. Around **0.7–0.9** you get useful creative variety. Push past **1.0** and it often turns incoherent.
+At **0.0** the model is deterministic - same input, same output. Around **0.7-0.9** you get useful creative variety. Push past **1.0** and it often turns incoherent.
 
 <Aside type="note">
 **Analogy:** temperature is like the difference between playing sheet music exactly as written (0.0) and jazz improvisation inspired by the theme but unpredictable (1.0). For anything factual, keep it low.
@@ -326,21 +326,21 @@ At **0.0** the model is deterministic — same input, same output. Around **0.7�
 
 ### 7.4 Parameters = model size
 
-**Parameters** are the internal learned values — think of them as millions or billions of tiny knobs that training adjusted. Rough sizing:
+**Parameters** are the internal learned values - think of them as millions or billions of tiny knobs that training adjusted. Rough sizing:
 
 | Size | Parameters | Typical use |
 |---|---|---|
-| Small | 7–13 billion | Fast and cheap; good for simple tasks |
-| Medium | 30–70 billion | A balance of capability and cost |
+| Small | 7-13 billion | Fast and cheap; good for simple tasks |
+| Medium | 30-70 billion | A balance of capability and cost |
 | Large | 100B+ | Frontier capability, highest cost and latency |
 
-More parameters generally means more knowledge, more nuance, and better reasoning — but also more money, slower responses, and heavier hardware.
+More parameters generally means more knowledge, more nuance, and better reasoning - but also more money, slower responses, and heavier hardware.
 
 <Aside type="caution">
-**Bigger isn't automatically better.** A well-chosen, well-prompted 7B model can beat a poorly prompted 70B one. Training data, fine-tuning, and how you prompt matter as much as raw size. (Worth noting: the context window and number of attention heads *don't* change the parameter count — they affect memory and the variety of patterns at runtime, not the model's stored size.)
+**Bigger isn't automatically better.** A well-chosen, well-prompted 7B model can beat a poorly prompted 70B one. Training data, fine-tuning, and how you prompt matter as much as raw size. (Worth noting: the context window and number of attention heads *don't* change the parameter count - they affect memory and the variety of patterns at runtime, not the model's stored size.)
 </Aside>
 
-## 8 · What LLMs do well — and where they trip
+## 8 · What LLMs do well - and where they trip
 
 Being clear-eyed here is the whole point of the day. LLMs are astonishing at some things and quietly unreliable at others, and a manager needs to know which is which.
 
@@ -352,16 +352,16 @@ Being clear-eyed here is the whole point of the day. LLMs are astonishing at som
 | Summarising and extracting | Exact counting and arithmetic |
 | Creative variations | Very long, perfectly consistent output |
 
-The pattern: **LLMs excel at tasks humans do with language.** If a job can be phrased as *"read this, then write that,"* an LLM can probably help. Now the four failure modes worth naming — each with its fix:
+The pattern: **LLMs excel at tasks humans do with language.** If a job can be phrased as *"read this, then write that,"* an LLM can probably help. Now the four failure modes worth naming - each with its fix:
 
 <Tabs>
 <TabItem label="Hallucination">
 
-**What:** the model states confident but false information — e.g. inventing plausible-sounding research paper titles that don't exist.
+**What:** the model states confident but false information - e.g. inventing plausible-sounding research paper titles that don't exist.
 
 **Why:** it predicts likely-sounding text; it is *not* looking anything up in a database of facts. Fluent and correct are not the same thing.
 
-**Mitigation:** **Retrieval-Augmented Generation (RAG)** — give the model the real source documents to answer from. That's the whole of Day 3.
+**Mitigation:** **Retrieval-Augmented Generation (RAG)** - give the model the real source documents to answer from. That's the whole of Day 3.
 
 </TabItem>
 <TabItem label="Maths & counting">
@@ -375,7 +375,7 @@ The pattern: **LLMs excel at tasks humans do with language.** If a job can be ph
 </TabItem>
 <TabItem label="Real-time info">
 
-**What:** the model has a **knowledge cutoff** — it doesn't know events after its training finished. Ask about last week's news and it can't help from memory.
+**What:** the model has a **knowledge cutoff** - it doesn't know events after its training finished. Ask about last week's news and it can't help from memory.
 
 **Why:** its knowledge is frozen at the moment training stopped.
 
@@ -388,13 +388,13 @@ The pattern: **LLMs excel at tasks humans do with language.** If a job can be ph
 
 **Why:** juggling many hard constraints simultaneously is genuinely difficult for it.
 
-**Mitigation:** break the task into steps, verify each constraint, and refine iteratively — core skills we build on Day 2.
+**Mitigation:** break the task into steps, verify each constraint, and refine iteratively - core skills we build on Day 2.
 
 </TabItem>
 </Tabs>
 
 <Aside type="danger">
-**The manager's golden rule:** LLMs **augment, they don't replace.** They're powerful tools that still need human oversight — especially for anything high-stakes. Always spot-check important outputs.
+**The manager's golden rule:** LLMs **augment, they don't replace.** They're powerful tools that still need human oversight - especially for anything high-stakes. Always spot-check important outputs.
 </Aside>
 
 ## 9 · The model landscape
@@ -406,30 +406,30 @@ The field moves fast, but the main players and the three architecture families a
 | OpenAI | GPT-4, GPT-4o | Pioneered modern LLMs; strong reasoning |
 | Google | Gemini | Multimodal (text + images); tied into Google |
 | Anthropic | Claude | Emphasis on safety and helpfulness |
-| Meta | Llama | Open weights — you can run it yourself |
+| Meta | Llama | Open weights - you can run it yourself |
 | Mistral | Mistral, Mixtral | European; efficient open models |
 
 Under the hood, transformer-based models come in three shapes depending on the job:
 
 | Architecture | Examples | Best for |
 |---|---|---|
-| Decoder-only | GPT, Claude, Llama | *Generating* text — chat, writing |
-| Encoder-only | BERT, RoBERTa | *Understanding* text — classification, search |
+| Decoder-only | GPT, Claude, Llama | *Generating* text - chat, writing |
+| Encoder-only | BERT, RoBERTa | *Understanding* text - classification, search |
 | Encoder-decoder | T5, BART | Translation, summarisation |
 
-Almost every chatbot you've used (GPT-4, Claude, Gemini) is **decoder-only** — built to generate, one token at a time, exactly as we traced back in section 2.
+Almost every chatbot you've used (GPT-4, Claude, Gemini) is **decoder-only** - built to generate, one token at a time, exactly as we traced back in section 2.
 
 ## Hands-on: labs & assignment
 
-Day 1 pairs the theory above with time in **Google Colab**, calling the **Gemini API** for real. Full working code lives in the notebooks — download them and open in Colab to run along.
+Day 1 pairs the theory above with time in **Google Colab**, calling the **Gemini API** for real. Full working code lives in the notebooks - download them and open in Colab to run along.
 
-**The guided lab — *Your First LLM Interactions*** — is instructor-led and walks through: setting up the environment and API key safely, making your first calls and reading the response, experimenting with **temperature** (comparing 0.0 vs 1.0 outputs) and **max tokens**, building a **multi-turn conversation** that remembers context, and assembling two small business tools — an email-response generator and a meeting-summary generator. It ends by exporting a **prompt log** so every experiment is tracked.
+**The guided lab - *Your First LLM Interactions*** - is instructor-led and walks through: setting up the environment and API key safely, making your first calls and reading the response, experimenting with **temperature** (comparing 0.0 vs 1.0 outputs) and **max tokens**, building a **multi-turn conversation** that remembers context, and assembling two small business tools - an email-response generator and a meeting-summary generator. It ends by exporting a **prompt log** so every experiment is tracked.
 
-The **independent lab** and **assignment** then let you practise on your own: pick a business use case, apply the same parameters and multi-turn patterns yourself, and log and review what you build — reinforcing the four ground rules from the lab (*if unsure, say so; specify the output format; don't invent facts; verify important outputs*).
+The **independent lab** and **assignment** then let you practise on your own: pick a business use case, apply the same parameters and multi-turn patterns yourself, and log and review what you build - reinforcing the four ground rules from the lab (*if unsure, say so; specify the output format; don't invent facts; verify important outputs*).
 
 **Download the notebooks** (open in Google Colab):
 
-- [Guided Lab — Your First LLM Interactions](/learnings/mba/generative-ai-for-managers/notebooks/day1-lab1-guided.ipynb)
+- [Guided Lab - Your First LLM Interactions](/learnings/mba/generative-ai-for-managers/notebooks/day1-lab1-guided.ipynb)
 - [Independent Lab](/learnings/mba/generative-ai-for-managers/notebooks/day1-lab2-independent.ipynb)
 - [Assignment](/learnings/mba/generative-ai-for-managers/notebooks/day1-assignment.ipynb)
 
@@ -448,22 +448,22 @@ print(response.text)
 ```
 </Aside>
 
-**My submitted solution:** [Assignment 1 — my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day1-assignment-solution.ipynb) — my own work from the course.
+**My submitted solution:** [Assignment 1 - my solved notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day1-assignment-solution.ipynb) - my own work from the course.
 
 ## Revision summary
 
 | Must-know | One-line recall |
 |---|---|
-| What an LLM is | A very good next-token predictor — not a fact database, not a person. |
-| Autoregressive generation | Predict one token, append it, repeat — no full-answer plan up front. |
+| What an LLM is | A very good next-token predictor - not a fact database, not a person. |
+| Autoregressive generation | Predict one token, append it, repeat - no full-answer plan up front. |
 | Tokens | The chunks models read; **1 token ≈ 4 chars ≈ ¾ word**; they drive cost, limits, speed. |
 | BPE | Build a vocabulary by repeatedly merging the most frequent character pairs. |
-| Embeddings | Words as meaningful vectors — *king − man + woman ≈ queen*; power search, recs, clustering, RAG. |
-| Attention (Q/K/V) | *Query asks, Keys answer, Values deliver* — how "it" learns it means "cat". |
+| Embeddings | Words as meaningful vectors - *king − man + woman ≈ queen*; power search, recs, clustering, RAG. |
+| Attention (Q/K/V) | *Query asks, Keys answer, Values deliver* - how "it" learns it means "cat". |
 | Multi-head + stacking | Many perspectives per layer; stacked blocks build grammar → meaning → reasoning. |
 | Three training stages | Pre-training → instruction tuning → RLHF (language → helpfulness → human taste). |
 | The four knobs | Tokens (cost), context window (capacity), temperature (creativity), parameters (size). |
-| Temperature | Low (0–0.2) for facts; high (0.7–1.0) for creativity; 0.0 = deterministic. |
-| Limitations | Hallucination, maths/counting, real-time info, complex constraints — fix with RAG, code, search, step-by-step. |
+| Temperature | Low (0-0.2) for facts; high (0.7-1.0) for creativity; 0.0 = deterministic. |
+| Limitations | Hallucination, maths/counting, real-time info, complex constraints - fix with RAG, code, search, step-by-step. |
 | Architectures | Decoder-only (generate) · encoder-only (understand) · encoder-decoder (translate). |
-| The golden rule | LLMs **augment, not replace** — always verify high-stakes outputs. |
+| The golden rule | LLMs **augment, not replace** - always verify high-stakes outputs. |

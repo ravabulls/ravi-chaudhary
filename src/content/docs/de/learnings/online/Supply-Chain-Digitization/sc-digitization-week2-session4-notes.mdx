@@ -1,6 +1,6 @@
 ---
 title: "Woche 2 | Sitzung 4: Analytische Produktsegmentierung und Kraljic-Matrix"
-description: "Behandelt zwei datengestützte Produktsegmentierungsrahmen — das Nachfragevariabilität-vs-Wochenumsatz-Quadrant (unter Verwendung des Variationskoeffizienten) und die Kraljic-Matrix — und verknüpft jedes Quadrant mit einer konkreten SC- oder Beschaffungsstrategie."
+description: "Behandelt zwei datengestützte Produktsegmentierungsrahmen - das Nachfragevariabilität-vs-Wochenumsatz-Quadrant (unter Verwendung des Variationskoeffizienten) und die Kraljic-Matrix - und verknüpft jedes Quadrant mit einer konkreten SC- oder Beschaffungsstrategie."
 sidebar:
   order: 10
 ---
@@ -17,15 +17,15 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 **Vorherige Sitzungen behandelten:** SC-Herausforderungen → Segmentierungsstrategien und deren Zuordnung zum SC-Typ.
 
 **Diese Sitzung:** Eine vertiefte Analyse der **Produktsegmentierung** mit zwei analytischen Rahmen:
-1. **Nachfragevariabilität vs. Wochenumsatz-Quadrant** — eine datengestützte Klassifizierungsmethode
-2. **Kraljic-Matrix** — ein Beschaffungs- und Einkaufsentscheidungsrahmen
+1. **Nachfragevariabilität vs. Wochenumsatz-Quadrant** - eine datengestützte Klassifizierungsmethode
+2. **Kraljic-Matrix** - ein Beschaffungs- und Einkaufsentscheidungsrahmen
 
 Beide sind praktische Tools. Prüfungsfragen werden wahrscheinlich **fallbasiert** sein.
 </Aside>
 
 ---
 
-## Teil 1 — Analytische Produktsegmentierung: Nachfragevariabilität und Wochenumsatz
+## Teil 1 - Analytische Produktsegmentierung: Nachfragevariabilität und Wochenumsatz
 
 <Badge text="Datengestützte Segmentierung" variant="note" />
 
@@ -33,7 +33,7 @@ Beide sind praktische Tools. Prüfungsfragen werden wahrscheinlich **fallbasiert
 
 **Unternehmen:** Hersteller von Elektronikgeräten mit einer großen Vielfalt an SKUs.
 **Produkte:** Smartphones, Tablets, Smartwatches und andere Gadgets.
-**Betrieb:** 2 Städte — Stadt A und Stadt B; 2 Kanäle — Online und Einzelhandel.
+**Betrieb:** 2 Städte - Stadt A und Stadt B; 2 Kanäle - Online und Einzelhandel.
 **Verfügbare Daten:** Wochenumsatz für 20 SKUs über 8 Wochen für beide Städte.
 **Jahresumsatz:** 1 Mrd. USD.
 
@@ -41,12 +41,12 @@ Beide sind praktische Tools. Prüfungsfragen werden wahrscheinlich **fallbasiert
 
 | Variable | Was sie misst |
 |---|---|
-| **Durchschnittlicher Wochenumsatz** | Volumenindikator — wie viele eines SKUs pro Woche durchschnittlich verkauft werden |
-| **Nachfragevariabilität / Bestellvariabilität** | Stabilitätsindikator — wie stark die Nachfrage von Woche zu Woche schwankt |
+| **Durchschnittlicher Wochenumsatz** | Volumenindikator - wie viele eines SKUs pro Woche durchschnittlich verkauft werden |
+| **Nachfragevariabilität / Bestellvariabilität** | Stabilitätsindikator - wie stark die Nachfrage von Woche zu Woche schwankt |
 
 ---
 
-### Nachfragevariabilität messen — Variationskoeffizient (VK)
+### Nachfragevariabilität messen - Variationskoeffizient (VK)
 
 <Aside type="note">
 **Nachfragevariabilität** = Schwankungen in Bestellungen, einschließlich Änderungen in Anzahl und Größe der Bestellungen über die Zeit.
@@ -58,9 +58,9 @@ Beide sind praktische Tools. Prüfungsfragen werden wahrscheinlich **fallbasiert
 | Maß | Was es erfasst | Einschränkung |
 |---|---|---|
 | **Standardabweichung (σ)** | Absolute Variabilität um den Mittelwert | Kann nicht zwischen SKUs mit verschiedenen Nachfrageniveaus verglichen werden |
-| **VK (σ / μ)** | Variabilität *relativ* zur Durchschnittsnachfrage — normiert über SKUs | Keine — genau deshalb wird er bevorzugt |
+| **VK (σ / μ)** | Variabilität *relativ* zur Durchschnittsnachfrage - normiert über SKUs | Keine - genau deshalb wird er bevorzugt |
 
-VK ermöglicht fairen **Vergleich über SKUs mit sehr unterschiedlichen Nachfrageniveaus** — ein großer analytischer Vorteil.
+VK ermöglicht fairen **Vergleich über SKUs mit sehr unterschiedlichen Nachfrageniveaus** - ein großer analytischer Vorteil.
 </Aside>
 
 **Formeln:**
@@ -84,14 +84,14 @@ VK ermöglicht fairen **Vergleich über SKUs mit sehr unterschiedlichen Nachfrag
 ### Schritte zur Berechnung und Segmentierung (Excel-basierter Workflow)
 
 <Steps>
-1. **Daten erfassen** — 8-Wochen-Wochennachfragedaten für alle 20 SKUs für Stadt A und Stadt B separat sammeln
-2. **SKU-weisen Durchschnittsbedarf berechnen** — bedingte `AVERAGEIFS`-Formel für jede Stadt verwenden
-3. **SKU-weise Standardabweichung berechnen** — bedingte `STDEVIFS`-Formel für jede Stadt verwenden
-4. **VK berechnen** — σ durch μ für jede SKU je Stadt dividieren: `VK = σ / μ`
-5. **Streudiagramm erstellen** — X-Achse: VK (Nachfragevariabilität); Y-Achse: Durchschnittlicher Wochenumsatz
-6. **Stadt-A- + Stadt-B-Nachfrage kombinieren** — gemeinsamen Durchschnittsbedarf, gemeinsames σ und gemeinsamen VK für jede SKU berechnen
-7. **Kombiniertes (gemeinsames) Streudiagramm erstellen** — repräsentiert die **Verteilzentrumsperspektive**
-8. **4-Quadranten-Matrix erstellen** — jeder Produktgruppe je nach Quadrantposition eine SC-Strategie zuweisen
+1. **Daten erfassen** - 8-Wochen-Wochennachfragedaten für alle 20 SKUs für Stadt A und Stadt B separat sammeln
+2. **SKU-weisen Durchschnittsbedarf berechnen** - bedingte `AVERAGEIFS`-Formel für jede Stadt verwenden
+3. **SKU-weise Standardabweichung berechnen** - bedingte `STDEVIFS`-Formel für jede Stadt verwenden
+4. **VK berechnen** - σ durch μ für jede SKU je Stadt dividieren: `VK = σ / μ`
+5. **Streudiagramm erstellen** - X-Achse: VK (Nachfragevariabilität); Y-Achse: Durchschnittlicher Wochenumsatz
+6. **Stadt-A- + Stadt-B-Nachfrage kombinieren** - gemeinsamen Durchschnittsbedarf, gemeinsames σ und gemeinsamen VK für jede SKU berechnen
+7. **Kombiniertes (gemeinsames) Streudiagramm erstellen** - repräsentiert die **Verteilzentrumsperspektive**
+8. **4-Quadranten-Matrix erstellen** - jeder Produktgruppe je nach Quadrantposition eine SC-Strategie zuweisen
 </Steps>
 
 ---
@@ -118,7 +118,7 @@ Gesamter Datensatz = **20 SKUs × 8 Wochen × 2 Städte**. Die daraus berechnete
 
 ---
 
-### VK-Berechnungen — Stadt A
+### VK-Berechnungen - Stadt A
 
 | Produkt | Durchschn. Nachfrage | Std.-Abweichung | VK |
 |---|---|---|---|
@@ -145,7 +145,7 @@ Gesamter Datensatz = **20 SKUs × 8 Wochen × 2 Städte**. Die daraus berechnete
 
 ---
 
-### VK-Berechnungen — Stadt B
+### VK-Berechnungen - Stadt B
 
 | Produkt | Durchschn. Nachfrage | Std.-Abweichung | VK |
 |---|---|---|---|
@@ -172,7 +172,7 @@ Gesamter Datensatz = **20 SKUs × 8 Wochen × 2 Städte**. Die daraus berechnete
 
 ---
 
-### Gemeinsamer (Kombinierter) VK — Verteilzentrumsperspektive
+### Gemeinsamer (Kombinierter) VK - Verteilzentrumsperspektive
 
 | Produkt | Durchschn. Nachfrage | Std.-Abweichung | VK |
 |---|---|---|---|
@@ -199,15 +199,15 @@ Gesamter Datensatz = **20 SKUs × 8 Wochen × 2 Städte**. Die daraus berechnete
 
 ---
 
-### Streudiagramm — Stadt A und Stadt B kombiniert
+### Streudiagramm - Stadt A und Stadt B kombiniert
 
 <Aside type="note">
-Trägt man jede SKU als **VK (x-Achse)** gegen den **durchschnittlichen Wochenumsatz (y-Achse)** auf — getrennt für Stadt A und Stadt B — zeigt sich in beiden Städten dasselbe Grundmuster: höhere Nachfragevariabilität geht tendenziell mit niedrigerem Durchschnittsumsatz einher. Beide Städte werden dann zur gemeinsamen **Verteilzentrumssicht** unten zusammengeführt — dem operativ relevanten Streudiagramm für das SC-Design.
+Trägt man jede SKU als **VK (x-Achse)** gegen den **durchschnittlichen Wochenumsatz (y-Achse)** auf - getrennt für Stadt A und Stadt B - zeigt sich in beiden Städten dasselbe Grundmuster: höhere Nachfragevariabilität geht tendenziell mit niedrigerem Durchschnittsumsatz einher. Beide Städte werden dann zur gemeinsamen **Verteilzentrumssicht** unten zusammengeführt - dem operativ relevanten Streudiagramm für das SC-Design.
 </Aside>
 
 ---
 
-### Streudiagramm — Verteilzentrum (Gemeinsam)
+### Streudiagramm - Verteilzentrum (Gemeinsam)
 
 <figure class="sc-fig">
   <svg viewBox="0 0 600 390" role="img" aria-label="Streudiagramm: durchschnittlicher Wochenumsatz gegen Nachfragevariabilität (VK) für 20 SKUs, Verteilzentrumssicht" style="width:100%;max-width:620px;font-family:inherit">
@@ -235,7 +235,7 @@ Trägt man jede SKU als **VK (x-Achse)** gegen den **durchschnittlichen Wochenum
       <circle cx="374" cy="198" r="4.5"/><circle cx="393" cy="249" r="4.5"/><circle cx="274" cy="168" r="4.5"/><circle cx="219" cy="175" r="4.5"/><circle cx="324" cy="214" r="4.5"/>
     </g>
   </svg>
-  <figcaption>Verteilzentrumssicht — jeder Punkt ist eine der 20 SKUs, positioniert nach gemeinsamer Nachfragevariabilität (VK) und durchschnittlichem Wochenumsatz. Die fallende Tendenz bestätigt: die variabelsten SKUs sind meist die umsatzschwächeren.</figcaption>
+  <figcaption>Verteilzentrumssicht - jeder Punkt ist eine der 20 SKUs, positioniert nach gemeinsamer Nachfragevariabilität (VK) und durchschnittlichem Wochenumsatz. Die fallende Tendenz bestätigt: die variabelsten SKUs sind meist die umsatzschwächeren.</figcaption>
 </figure>
 
 ---
@@ -253,7 +253,7 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
     </div>
     <div class="q amber">
       <div class="qh">Q3 · Hybrid Push-Pull <small>(hoher VK, hoher Umsatz)</small></div>
-      <ul><li>Unterhaltungselektronik / High-Tech</li><li>Hohes Volumen <b>und</b> hohe Variabilität — am komplexesten</li></ul>
+      <ul><li>Unterhaltungselektronik / High-Tech</li><li>Hohes Volumen <b>und</b> hohe Variabilität - am komplexesten</li></ul>
     </div>
     <div class="q amber">
       <div class="qh">Q4 · Hybrid Push-Pull <small>(niedriger VK, niedriger Umsatz)</small></div>
@@ -268,7 +268,7 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
   <figcaption>Das Streudiagramm wird durch Schwellenwerte für VK und durchschnittlichen Wochenumsatz in vier Quadranten geteilt; jeder Quadrant entspricht einer eigenen Lieferkettenstrategie.</figcaption>
 </figure>
 
-#### Quadrant 1 — Niedriger VK + Hoher Umsatz (Oben-Links)
+#### Quadrant 1 - Niedriger VK + Hoher Umsatz (Oben-Links)
 
 <Badge text="Push-Strategie" variant="note" />
 
@@ -278,9 +278,9 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 | **Merkmale** | Immer nachgefragt, stabil, vorhersagbar |
 | **Beispiele** | Standardgüter, Alltagskonsumgüter |
 | **SC-Typ** | Effiziente Lieferkette |
-| **Strategie** | **PUSH** — prognosegesteuert, Massenproduktion |
+| **Strategie** | **PUSH** - prognosegesteuert, Massenproduktion |
 
-#### Quadrant 2 — Hoher VK + Niedriger Umsatz (Unten-Rechts)
+#### Quadrant 2 - Hoher VK + Niedriger Umsatz (Unten-Rechts)
 
 <Badge text="Pull-Strategie" variant="caution" />
 
@@ -290,20 +290,20 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 | **Merkmale** | Geringes Nachfragevolumen + hohe Unvorhersagbarkeit |
 | **Beispiele** | Sondereditionen, hochgradig maßgefertigte Produkte |
 | **SC-Typ** | Reaktionsfähige Lieferkette |
-| **Strategie** | **PULL** — nachfragegesteuert, hohe Anpassung |
+| **Strategie** | **PULL** - nachfragegesteuert, hohe Anpassung |
 
-#### Quadrant 3 — Hoher VK + Hoher Umsatz (Oben-Rechts)
+#### Quadrant 3 - Hoher VK + Hoher Umsatz (Oben-Rechts)
 
 <Badge text="Hybrid Push-Pull" variant="danger" />
 
 | Merkmal | Detail |
 |---|---|
 | **Produkttyp** | Unterhaltungselektronik / High-Tech-Produkte |
-| **Merkmale** | Hohes Volumen UND hohe Variabilität — der komplexeste Quadrant |
+| **Merkmale** | Hohes Volumen UND hohe Variabilität - der komplexeste Quadrant |
 | **Beispiele** | Unterhaltungselektronik, Tech-Gadgets mit schnellen Modellwechseln |
-| **Strategie** | **Hybrid Push-Pull** — Push-Pull-Grenzrahmen aus Sitzung 3 anwenden |
+| **Strategie** | **Hybrid Push-Pull** - Push-Pull-Grenzrahmen aus Sitzung 3 anwenden |
 
-#### Quadrant 4 — Niedriger VK + Niedriger Umsatz (Unten-Links)
+#### Quadrant 4 - Niedriger VK + Niedriger Umsatz (Unten-Links)
 
 <Badge text="Hybrid Push-Pull" variant="note" />
 
@@ -312,7 +312,7 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 | **Produkttyp** | Basis- / Langsam drehende Produkte |
 | **Merkmale** | Niedriger Umsatz + stabile Nachfrage |
 | **Beispiele** | Saisonunabhängige Bekleidungsbasics, einfache Elektronikkomponenten |
-| **Strategie** | **Hybrid Push-Pull** — spezifische Kombination je Produktanforderung |
+| **Strategie** | **Hybrid Push-Pull** - spezifische Kombination je Produktanforderung |
 
 <Aside type="note">
 **★ Schnellerinnerung:**
@@ -324,7 +324,7 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 
 ---
 
-## Teil 2 — Kraljic-Matrix: Beschaffungs- und Einkaufssegmentierung
+## Teil 2 - Kraljic-Matrix: Beschaffungs- und Einkaufssegmentierung
 
 <Badge text="Beschaffungsstrategierahmen" variant="note" />
 
@@ -338,8 +338,8 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 
 | Achse | Was sie misst | Wichtige Faktoren |
 |---|---|---|
-| **X-Achse — Versorgungsrisiko** | Wie schwierig oder riskant es ist, die Komponente zu beschaffen | Verfügbarkeit der Komponente; Anzahl der Lieferanten; Wettbewerbsnachfrage; Make-or-Buy-Machbarkeit; andere versorgungsseitige Risikofaktoren |
-| **Y-Achse — Gewinnauswirkung** | Wie stark die Komponente die Geschäftsrentabilität beeinflusst | Erforderliches Volumen; Prozentsatz der Gesamteinkaufskosten; direkte oder indirekte Auswirkung auf das Geschäftswachstum |
+| **X-Achse - Versorgungsrisiko** | Wie schwierig oder riskant es ist, die Komponente zu beschaffen | Verfügbarkeit der Komponente; Anzahl der Lieferanten; Wettbewerbsnachfrage; Make-or-Buy-Machbarkeit; andere versorgungsseitige Risikofaktoren |
+| **Y-Achse - Gewinnauswirkung** | Wie stark die Komponente die Geschäftsrentabilität beeinflusst | Erforderliches Volumen; Prozentsatz der Gesamteinkaufskosten; direkte oder indirekte Auswirkung auf das Geschäftswachstum |
 
 ---
 
@@ -369,28 +369,28 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
   <figcaption>Die Kraljic-Matrix klassifiziert eingekaufte Komponenten nach Versorgungsrisiko und Gewinnauswirkung und weist jedem der vier Quadranten eine eigene Beschaffungsstrategie zu.</figcaption>
 </figure>
 
-#### 1. Unkritische Artikel — Geringes Versorgungsrisiko + Geringe Gewinnauswirkung
+#### 1. Unkritische Artikel - Geringes Versorgungsrisiko + Geringe Gewinnauswirkung
 
 | Merkmal | Detail |
 |---|---|
-| **Merkmale** | Hochgradig standardisiert; reichlich Angebot — viele Lieferanten verfügbar; einfach zu managen |
-| **Strategie** | **Beschaffung rationalisieren** — Verwaltungsaufwand reduzieren, Bestellung automatisieren wo möglich |
+| **Merkmale** | Hochgradig standardisiert; reichlich Angebot - viele Lieferanten verfügbar; einfach zu managen |
+| **Strategie** | **Beschaffung rationalisieren** - Verwaltungsaufwand reduzieren, Bestellung automatisieren wo möglich |
 
-#### 2. Hebel-Artikel — Geringes Versorgungsrisiko + Hohe Gewinnauswirkung
+#### 2. Hebel-Artikel - Geringes Versorgungsrisiko + Hohe Gewinnauswirkung
 
 | Merkmal | Detail |
 |---|---|
 | **Merkmale** | Reichlich Angebot verfügbar aber **hohe Gewinnauswirkung**; Unternehmen hat starke Einkaufsmacht |
-| **Strategie** | **Volle Einkaufsmacht nutzen** — Wettbewerbsgebote, aggressive Preisverhandlungen |
+| **Strategie** | **Volle Einkaufsmacht nutzen** - Wettbewerbsgebote, aggressive Preisverhandlungen |
 
-#### 3. Strategische Artikel — Hohes Versorgungsrisiko + Hohe Gewinnauswirkung
+#### 3. Strategische Artikel - Hohes Versorgungsrisiko + Hohe Gewinnauswirkung
 
 | Merkmal | Detail |
 |---|---|
-| **Merkmale** | Kritischste Kategorie — **hohes Risiko UND hohe Gewinnauswirkung**; langfristige Auswirkung; Lieferantenwechsel schwierig |
-| **Strategie** | **Langfristige Lieferantenbeziehungen + tiefe Zusammenarbeit** — Partnerschaftsansatz, gemeinsame Entwicklung, strategische Allianzen; Fokus auf Versorgungskontinuität |
+| **Merkmale** | Kritischste Kategorie - **hohes Risiko UND hohe Gewinnauswirkung**; langfristige Auswirkung; Lieferantenwechsel schwierig |
+| **Strategie** | **Langfristige Lieferantenbeziehungen + tiefe Zusammenarbeit** - Partnerschaftsansatz, gemeinsame Entwicklung, strategische Allianzen; Fokus auf Versorgungskontinuität |
 
-#### 4. Engpass-Artikel — Hohes Versorgungsrisiko + Geringe Gewinnauswirkung
+#### 4. Engpass-Artikel - Hohes Versorgungsrisiko + Geringe Gewinnauswirkung
 
 | Merkmal | Detail |
 |---|---|
@@ -399,7 +399,7 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 
 ---
 
-### Kraljic-Matrix — Schnellreferenz
+### Kraljic-Matrix - Schnellreferenz
 
 | Quadrant | Versorgungsrisiko | Gewinnauswirkung | Beschaffungsstrategie |
 |---|---|---|---|
@@ -409,14 +409,14 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 | **Engpass** | Hoch | Niedrig | Versorgung sichern; Sicherheitsbestand halten; eng überwachen |
 
 <Aside type="tip">
-**★ Prüfungstipp — Kraljic-Matrix:** Nach Versorgungsrisiko (X-Achse) und Gewinnauswirkung (Y-Achse) klassifizieren. Vier Quadranten = Unkritisch, Hebel, Strategisch, Engpass. Jeder erfordert eine grundlegend andere Lieferantenstrategie.
+**★ Prüfungstipp - Kraljic-Matrix:** Nach Versorgungsrisiko (X-Achse) und Gewinnauswirkung (Y-Achse) klassifizieren. Vier Quadranten = Unkritisch, Hebel, Strategisch, Engpass. Jeder erfordert eine grundlegend andere Lieferantenstrategie.
 
-**Achtung bei Engpass-Artikeln:** Geringe Gewinnauswirkung bedeutet nicht geringe Priorität — das Betriebsunterbrechungsrisiko macht sie trotz ihrer begrenzten finanziellen Bedeutung wichtig zu managen.
+**Achtung bei Engpass-Artikeln:** Geringe Gewinnauswirkung bedeutet nicht geringe Priorität - das Betriebsunterbrechungsrisiko macht sie trotz ihrer begrenzten finanziellen Bedeutung wichtig zu managen.
 </Aside>
 
 ---
 
-## Sitzungszusammenfassung — Zwei analytische Tools
+## Sitzungszusammenfassung - Zwei analytische Tools
 
 | Tool | Achsen | Ergebnis | Zugeordnete Strategie |
 |---|---|---|---|
@@ -424,5 +424,5 @@ Die Streudiagramme werden basierend auf Schwellenwerten für VK und durchschnitt
 | **Kraljic-Matrix** | X: Versorgungsrisiko, Y: Gewinnauswirkung | 4-Quadranten-Komponentenklassifikation | Unkritisch = Rationalisieren \| Hebel = Verhandeln \| Strategisch = Partnerschaft \| Engpass = Sichern |
 
 <Aside type="note">
-Beide Rahmen sind **datengestützt und direkt umsetzbar** — sie nehmen messbare Eingaben (Umsatzdaten, Versorgungsrisiko, Gewinnbeitrag) und produzieren klare strategische Empfehlungen. In Prüfungen werden Sie wahrscheinlich einen Datensatz oder ein Szenario erhalten und gebeten, Artikel zu klassifizieren und die empfohlene Strategie zu begründen.
+Beide Rahmen sind **datengestützt und direkt umsetzbar** - sie nehmen messbare Eingaben (Umsatzdaten, Versorgungsrisiko, Gewinnbeitrag) und produzieren klare strategische Empfehlungen. In Prüfungen werden Sie wahrscheinlich einen Datensatz oder ein Szenario erhalten und gebeten, Artikel zu klassifizieren und die empfohlene Strategie zu begründen.
 </Aside>

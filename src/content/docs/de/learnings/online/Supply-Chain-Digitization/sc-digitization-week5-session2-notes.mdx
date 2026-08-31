@@ -1,5 +1,5 @@
 ---
-title: "Woche 5 | Session 2: NVP — Lieferantenauszahlungen, SC-Konflikt & Revenue-Sharing-Verträge"
+title: "Woche 5 | Session 2: NVP - Lieferantenauszahlungen, SC-Konflikt & Revenue-Sharing-Verträge"
 description: "Analysiert den Dreieckskonflikt im probabilistischen News-Vendor-Problem und zeigt, wie Revenue-Sharing-Verträge die Koordination in der Supply Chain erreichen können."
 sidebar:
   order: 23
@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 2: Digital Business in der SC*
+*Kurs: Supply Chain Digitalisierung - Modul 2: Digital Business in der SC*
 
 ---
 
@@ -16,16 +16,16 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 <Aside type="note">
 - Rückblick: Optimale NV-Bestellung = 40.000 Einheiten → E[Gewinn] = ₹2.00.000
 - Analyse der Lieferantenauszahlungen im probabilistischen Umfeld
-- Dreieckskonflikt: NV vs. RS vs. SC — globales Optimum liegt bei 50.000 Einheiten
-- Verträge als Koordinationsinstrument — Arten und Logik
-- Revenue-Sharing-Vertrag — durchgerechnetes Beispiel mit Parameterabstimmung
+- Dreieckskonflikt: NV vs. RS vs. SC - globales Optimum liegt bei 50.000 Einheiten
+- Verträge als Koordinationsinstrument - Arten und Logik
+- Revenue-Sharing-Vertrag - durchgerechnetes Beispiel mit Parameterabstimmung
 - Kernergebnis: 32% Umsatzbeteiligung + ₹2,75 Großhandelspreis → alle Akteure stehen besser da
 - Brücke zur Plattformökonomie
 </Aside>
 
 ---
 
-## Rückblick — Probabilistisches NVP (Session 1)
+## Rückblick - Probabilistisches NVP (Session 1)
 
 - **Nachfrageverteilung:** 5 Szenarien → 10K(20%), 20K(15%), 30K(10%), 40K(25%), 50K(30%)
 - **NV-Gewinnformel:** min(D, S) × ₹20 − S × ₹10
@@ -35,12 +35,12 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Lieferantenauszahlung — Probabilistisches Umfeld
+## Lieferantenauszahlung - Probabilistisches Umfeld
 
-Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S, die vom NV aufgegeben wird.
+Der RS-Gewinn hängt NICHT von der Nachfrage D ab - nur von der Bestellmenge S, die vom NV aufgegeben wird.
 **Warum?** RS erfüllt die Bestellung und wird zum Großhandelspreis von ₹10/Einheit bezahlt. Die Marktnachfrage ist das Problem des NV, nicht das von RS.
 - `RS-Gewinn = S × (₹10 − ₹5) − ₹1.50.000 = S × ₹5 − ₹1.50.000`
-- **RS bevorzugt:** Eine so große Bestellung wie möglich — mehr Einheiten = mehr Grenzgewinn zu ₹5/Einheit
+- **RS bevorzugt:** Eine so große Bestellung wie möglich - mehr Einheiten = mehr Grenzgewinn zu ₹5/Einheit
 
 | Lieferant <br /> Potenzielle Bestellmenge | 10000 | 20000 | 30000 | 40000 | 50000 |
 |---|---|---|---|---|---|
@@ -53,7 +53,7 @@ Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S
 | **Potenzielle Gewinne gemäß der besten Bestellung des Newsvendors** | | | | 50000 | |
 | **Tatsächlicher Gewinn des Lieferanten (Rs.)** | | | | 50000 | |
 
-*Tabelle 1: RS-Gewinn für jede mögliche Bestellmenge — NV wählt 40K, RS will 50K*
+*Tabelle 1: RS-Gewinn für jede mögliche Bestellmenge - NV wählt 40K, RS will 50K*
 
 ### RS-Breakeven und Teilnahmeentscheidung nach Bestellmenge
 
@@ -65,7 +65,7 @@ Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S
 | **S = 40.000 ← NV wählt** | ₹1.50.000 | ₹2.00.000 | ₹4.00.000 | +₹50.000 ✓ | Ja ✓ |
 | **S = 50.000 ← RS will** | ₹1.50.000 | ₹2.50.000 | ₹5.00.000 | +₹1.00.000 ✓✓ | Ja ✓✓ |
 
-### Ergebnisse nach Entität — Gesamter SC-Gewinn, NV, RS nach Bestellmenge
+### Ergebnisse nach Entität - Gesamter SC-Gewinn, NV, RS nach Bestellmenge
 
 | Entscheidungen und Ergebnisse nach Entität <br /> Potenzielle Bestellmenge | 10000 | 20000 | 30000 | 40000 | 50000 |
 |---|---|---|---|---|---|
@@ -81,12 +81,12 @@ Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S
 - **Der NV wird NICHT 50.000 bestellen:** E[NV-Gewinn] bei S=50K = ₹1.60.000 < ₹2.00.000 bei S=40K → NV hat keinen Anreiz
 
 <Aside type="note">
-**★** RS ist bei der optimalen Bestellung des NV (S=40K) profitabel, verdient aber weniger, als es könnte. Der NV hat keinen Anreiz, mehr zu bestellen. Ein klassischer dezentralisierter SC-Konflikt — auch im probabilistischen Umfeld.
+**★** RS ist bei der optimalen Bestellung des NV (S=40K) profitabel, verdient aber weniger, als es könnte. Der NV hat keinen Anreiz, mehr zu bestellen. Ein klassischer dezentralisierter SC-Konflikt - auch im probabilistischen Umfeld.
 </Aside>
 
 ---
 
-## Dreieckskonflikt — NV vs. RS vs. SC
+## Dreieckskonflikt - NV vs. RS vs. SC
 
 | Bestellmenge | NV E[Gewinn] | RS Gewinn | SC Gesamt E[Gewinn] | Bevorzugt von? |
 |---|---|---|---|---|
@@ -110,12 +110,12 @@ Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S
 
 ---
 
-## Warum Verträge? — Der Koordinationsbedarf
+## Warum Verträge? - Der Koordinationsbedarf
 
 - **Problem:** Die individuell rationale Entscheidung des NV (S=40K) lässt ₹10.000 SC-Gewinn ungenutzt
 - **Lösung erforderlich:** Ein Mechanismus, der dem NV einen Anreiz bietet, freiwillig S=50K zu bestellen → und dabei weiterhin profitabel zu sein
 - **Vertrag:** Eine formelle Vereinbarung zwischen Parteien mit vereinbarten Bedingungen. Vertragsparameter können umfassen: Preis | Bestellmenge | Bestellplan | Zahlungsbedingungen | Kreditlaufzeit | Dauer | Rückgaberichtlinien.
-- **Effektiver Vertrag:** Bringt ALLE Akteure in eine bessere Position als ohne den Vertrag — Pareto-Verbesserung
+- **Effektiver Vertrag:** Bringt ALLE Akteure in eine bessere Position als ohne den Vertrag - Pareto-Verbesserung
 - **Durch Verträge geteilte Informationen:** Marktnachfragedaten | Lagerbestände | Risiko | Kosten
 
 <Aside type="tip">
@@ -130,14 +130,14 @@ Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S
 |---|---|---|---|
 | **Revenue Sharing (Umsatzbeteiligung) ★** | NV teilt % des Umsatzes mit RS. RS gewährt im Gegenzug Großhandelspreisnachlass. | NV teilt Umsatzrisiko mit RS | Gibt dem NV Anreiz, mehr zu bestellen; senkt NV-Beschaffungskosten |
 | **Buyback (Rückkauf)** | RS stimmt zu, überschüssigen unverkaufen Bestand nach der Verkaufsperiode zu vereinbartem Preis vom NV zurückzukaufen. | RS trägt Überbestandsrisiko | NV bestellt mehr (geringeres Abwärtsrisiko); RS teilt Nachfrageinfos |
-| **Quantity Flexibility (Mengenflexibilität)** | NV kann TEIL des überschüssigen Bestands zu vereinbartem Preis zurückgeben — teilweiser Rückkauf. | Teilweise Risikoteilung | Flexibler als Buyback; mittlerer Bestellanreiz |
+| **Quantity Flexibility (Mengenflexibilität)** | NV kann TEIL des überschüssigen Bestands zu vereinbartem Preis zurückgeben - teilweiser Rückkauf. | Teilweise Risikoteilung | Flexibler als Buyback; mittlerer Bestellanreiz |
 | **Quantity Discount (Mengenrabatt)** | RS gibt niedrigeren Großhandelspreis pro Einheit für größere Bestellmengen (z.B. ₹8/Einh. für 50K vs. ₹10/Einh. für kleinere Bestellungen). | NV trägt Volumenrisiko | Bietet direkten Anreiz für größere NV-Bestellungen |
 | **Sales Rebate (Verkaufsrabatt)** | NV erhält Belohnung/Rabatt für Verkäufe über einer Schwellenmenge. Fördert Rabatte für Endkunden. | NV hat Anreiz, Nachfrage anzukurbeln | NV teilt Nachfrageinfos; erhöht Marktdurchsatz |
 | **Cost Sharing (Kostenteilung)** | NV teilt Kosteninfos mit RS; RS senkt Preis entsprechend. Nicht auf aktuelles NVP-Szenario anwendbar. | Kostensichtbarkeit geteilt | Ermöglicht größere Produktionsläufe durch RS |
-| **Payback (Amortisation)** | RS hat überschüssigen unverkauften Bestand; NV stimmt dem Kauf zu. Umkehrung des Buybacks — RS hat hier Marktinfos. | NV trägt RS-Überbestand | Anwendbar, wenn RS mehr Marktwissen als NV hat |
+| **Payback (Amortisation)** | RS hat überschüssigen unverkauften Bestand; NV stimmt dem Kauf zu. Umkehrung des Buybacks - RS hat hier Marktinfos. | NV trägt RS-Überbestand | Anwendbar, wenn RS mehr Marktwissen als NV hat |
 
 *In diesem Beispiel untersuchte Verträge:* Revenue Sharing (detailliert) + Quantity Discount (erwähnt).
-*Cost Sharing & Payback:* Nicht direkt anwendbar auf dieses NVP-Szenario — RS hat hier nicht mehr Marktinfos als der NV.
+*Cost Sharing & Payback:* Nicht direkt anwendbar auf dieses NVP-Szenario - RS hat hier nicht mehr Marktinfos als der NV.
 
 <Aside type="tip">
 **★ Prüfungstipp:** Kennen Sie alle 5-6 Vertragsarten mit einzeiligen Definitionen. Erklären Sie in Prüfungsantworten immer den Mechanismus + welche Infos/Risiken geteilt werden + welcher Akteur Anreize erhält, sein Verhalten zu ändern.
@@ -145,7 +145,7 @@ Der RS-Gewinn hängt NICHT von der Nachfrage D ab — nur von der Bestellmenge S
 
 ---
 
-## Revenue-Sharing-Vertrag — Detailliertes Beispiel
+## Revenue-Sharing-Vertrag - Detailliertes Beispiel
 
 ### Konzept
 - **NV bietet RS:** X% der aus Verkäufen erzielten Einnahmen
@@ -177,7 +177,7 @@ Die Anwendung der Vertragsformel ergibt die angepassten Gewinne des NV. Unter di
 | **Erwarteter Gewinn des Newsvendors** | **70000** | **106000** | **116500** | **110000** | **61000** |
 | **Bestellmenge des Newsvendors (Einheiten)** | | | 30000 | | |
 
-Die Auszahlung an den Lieferanten im Rahmen des RS-Vertrags — einschließlich der vom NV erwarteten Umsatzbeteiligung — ist unten dargestellt:
+Die Auszahlung an den Lieferanten im Rahmen des RS-Vertrags - einschließlich der vom NV erwarteten Umsatzbeteiligung - ist unten dargestellt:
 
 | Lieferant <br /> Potenzielle Bestellmenge | 10000 | 20000 | 30000 | 40000 | 50000 |
 |---|---|---|---|---|---|
@@ -195,18 +195,18 @@ Die Auszahlung an den Lieferanten im Rahmen des RS-Vertrags — einschließlich 
 
 ---
 
-## Parameterabstimmung — Was passiert bei verschiedenen Werten?
+## Parameterabstimmung - Was passiert bei verschiedenen Werten?
 
 | Umsatzbeteiligung % | Großhandelspreis (₹) | NV bestes S | NV E[Gewinn] | RS Gewinn | SC Gesamt | Beide besser? |
 |---|---|---|---|---|---|---|
-| **0% (Basislinie)** | ₹10 | 40.000 | ₹2.00.000 | ₹50.000 | ₹2.50.000 | — (Referenz) |
-| **10%** | ₹10 | 30.000 | ₹1.16.500 ✗ | ₹73.500 ✓ | ₹1.90.000 ✗ | Nein — NV schlechter, SC schlechter |
-| **0%** | ₹7 | 40.000 | ₹2.30.000 ✓ | ₹20.000 ✗ | ₹2.50.000 | Nein — RS schlechter |
-| **10%** | ₹7 | 40.000 | ₹2.30.000 ✓ | ₹20.000 ✗ | ₹2.50.000 | Nein — RS immer noch schlechter |
-| **32% ★** | **₹2,75 ★** | **50.000 ★** | **₹2.03.200 ✓** | **₹56.800 ✓** | **₹2.60.000 ★** | **JA — Alle besser ✓** |
+| **0% (Basislinie)** | ₹10 | 40.000 | ₹2.00.000 | ₹50.000 | ₹2.50.000 | - (Referenz) |
+| **10%** | ₹10 | 30.000 | ₹1.16.500 ✗ | ₹73.500 ✓ | ₹1.90.000 ✗ | Nein - NV schlechter, SC schlechter |
+| **0%** | ₹7 | 40.000 | ₹2.30.000 ✓ | ₹20.000 ✗ | ₹2.50.000 | Nein - RS schlechter |
+| **10%** | ₹7 | 40.000 | ₹2.30.000 ✓ | ₹20.000 ✗ | ₹2.50.000 | Nein - RS immer noch schlechter |
+| **32% ★** | **₹2,75 ★** | **50.000 ★** | **₹2.03.200 ✓** | **₹56.800 ✓** | **₹2.60.000 ★** | **JA - Alle besser ✓** |
 
-### Lesen der Tabelle — Wichtige Beobachtungen
-- **Umsatzbeteiligung 10%, w=₹10 (kein Rabatt):** NV bestellt nur 30K (weniger als vorher) → NV schlechter, SC schlechter. RS leicht besser, aber irrelevant — NV wird nicht unterschreiben.
+### Lesen der Tabelle - Wichtige Beobachtungen
+- **Umsatzbeteiligung 10%, w=₹10 (kein Rabatt):** NV bestellt nur 30K (weniger als vorher) → NV schlechter, SC schlechter. RS leicht besser, aber irrelevant - NV wird nicht unterschreiben.
 - **Umsatzbeteiligung 0%, w=₹7 (nur Rabatt):** NV bestellt 40K → NV besser (+₹30K). RS schlechter (verliert Rabatteinnahmen). NV mag das vielleicht, aber RS wird nicht unterschreiben.
 - **Umsatzbeteiligung 10%, w=₹7:** NV bestellt 40K → NV immer noch besser. RS immer noch schlechter als die Basislinie. SC gleich wie die Basislinie. Nicht ausreichend.
 - **Umsatzbeteiligung 32%, w=₹2,75:** NV bestellt 50K ✓ → NV besser (+₹3.200) | RS besser (+₹6.800) | SC = ₹2.60.000 (globales Bestes ✓). Alle Akteure gewinnen.
@@ -218,9 +218,9 @@ Die Auszahlung an den Lieferanten im Rahmen des RS-Vertrags — einschließlich 
 ### Vertragsgestaltung als Optimierungsproblem
 - **Ziel:** Finde (Umsatzbeteiligung %, Großhandelspreis w), was den gesamten SC-Gewinn maximiert, sodass sowohl NV als auch RS individuell besser dastehen als ohne Vertrag.
 - **Bedingungen:** NV E[Gewinn] ≥ ₹2.00.000 (NV-Außenoption) | RS-Gewinn ≥ ₹50.000 (RS-Außenoption).
-- Die 32%/₹2,75-Lösung ist ein gültiger Punkt — es gibt viele Kombinationen, die beide Bedingungen gleichzeitig erfüllen.
-- *Ansatz des Professors:* Manuelle Erkundung (keine formale Optimierung) — demonstriert das Konzept.
-- *Formaler Ansatz:* Aufstellung als LP/NLP und Lösung — wird in weiterführenden SCM/OR-Kursen behandelt.
+- Die 32%/₹2,75-Lösung ist ein gültiger Punkt - es gibt viele Kombinationen, die beide Bedingungen gleichzeitig erfüllen.
+- *Ansatz des Professors:* Manuelle Erkundung (keine formale Optimierung) - demonstriert das Konzept.
+- *Formaler Ansatz:* Aufstellung als LP/NLP und Lösung - wird in weiterführenden SCM/OR-Kursen behandelt.
 
 <Aside type="tip">
 **★ Prüfungstipp:** "Gestalten Sie einen effektiven Vertrag" = Finden Sie Parameter, bei denen BEIDE Akteure strikt bessergestellt sind (Teilnahmebedingungen erfüllt) UND sich der gesamte SC-Gewinn verbessert. Erklären Sie diese Logik ausdrücklich.
@@ -228,9 +228,9 @@ Die Auszahlung an den Lieferanten im Rahmen des RS-Vertrags — einschließlich 
 
 ---
 
-## Abschließende Zusammenfassung — Dezentralisiert vs. Zentralisiert vs. Koordiniert
+## Abschließende Zusammenfassung - Dezentralisiert vs. Zentralisiert vs. Koordiniert
 
-Die folgende Tabelle vergleicht die wichtigsten Ergebnisse über alle drei SC-Regime hinweg — ohne Vertrag, zentraler Planer und Revenue-Sharing-Vertrag:
+Die folgende Tabelle vergleicht die wichtigsten Ergebnisse über alle drei SC-Regime hinweg - ohne Vertrag, zentraler Planer und Revenue-Sharing-Vertrag:
 
 | Aspekt | Dezentralisiert (Kein Vertrag) | Zentralisiert (Zentraler Planer) | Koordiniert (Revenue-Share-Vertrag) |
 |---|---|---|---|
@@ -238,34 +238,34 @@ Die folgende Tabelle vergleicht die wichtigsten Ergebnisse über alle drei SC-Re
 | **NV E[Gewinn]** | ₹2.00.000 | Weniger (NV würde nicht zustimmen) | ₹2.03.200 ✓ |
 | **RS-Gewinn** | ₹50.000 | ₹1.00.000 (RS will dies) | ₹56.800 ✓ |
 | **SC-Gesamt E[Gewinn]** | ₹2.50.000 | ₹2.60.000 ★ (globales Bestes) | ₹2.60.000 ★ ✓ |
-| **Wird es passieren?** | Ja — NV handelt allein | Nein — NV hat keinen Anreiz | Ja — beide Parteien stimmen freiwillig zu ✓ |
+| **Wird es passieren?** | Ja - NV handelt allein | Nein - NV hat keinen Anreiz | Ja - beide Parteien stimmen freiwillig zu ✓ |
 
 <Aside type="note">
-**★** Verträge ermöglichen es dezentralisierten Akteuren, freiwillig das zentralisierte SC-Optimum zu erreichen — ohne eine zentrale Autorität. Dies ist die Stärke von Koordinationsverträgen.
+**★** Verträge ermöglichen es dezentralisierten Akteuren, freiwillig das zentralisierte SC-Optimum zu erreichen - ohne eine zentrale Autorität. Dies ist die Stärke von Koordinationsverträgen.
 </Aside>
 
-### Was Verträge ermöglichen — Vier Hebel
+### Was Verträge ermöglichen - Vier Hebel
 - **Informationssichtbarkeit:** NV teilt Marktnachfragesignale. RS versteht die tatsächlichen Marktbedingungen.
 - **Bestandssichtbarkeit:** Beide Parteien kennen Lagerbestände, Bestellmengen und Verkaufsergebnisse.
 - **Risikoteilung:** Umsatzbeteiligung → NV teilt das Nachfragerisiko mit RS. Buyback → RS trägt das Überbestandsrisiko für NV.
 - **Kostensichtbarkeit:** Cost-Sharing-Verträge → Akteur legt Kosten offen → ermöglicht vertrauensbasierte Preisgestaltung.
 
 <Aside type="note">
-**★** Diese vier Hebel (Info- / Bestands- / Risiko- / Kostensichtbarkeit) sind auch das zentrale Wertversprechen der Plattformökonomie im SCM — die nächste Vorlesungsreihe.
+**★** Diese vier Hebel (Info- / Bestands- / Risiko- / Kostensichtbarkeit) sind auch das zentrale Wertversprechen der Plattformökonomie im SCM - die nächste Vorlesungsreihe.
 </Aside>
 
 ---
 
-## Brücke — SC-Koordination → Plattformökonomie
+## Brücke - SC-Koordination → Plattformökonomie
 
 Dieselbe Koordinationslogik gilt in Plattformökonomie-Szenarien:
 - **Taxifahrer:** Einer Taxi-Aggregator-Plattform beitreten ODER Kunden direkt finden ODER beides → Kompromisse bei Umsatzbeteiligung und Marktzugang
 - **Verkäufer im E-Commerce:** Verkauf auf Amazon/Flipkart (Umsatzbeteiligung) vs. eigene Website → Kompromiss zwischen SC-Reichweite und Marge
 - **Digitale Inhalte:** Kostenlose Inhalte (werbefinanziert) vs. Abonnement → Kompromiss zwischen Nachfrage und Erlösmodell
-- **Plattform:** Ein Koordinationsmechanismus in großem Maßstab — reduziert Such- und Auswahlprobleme + ermöglicht Risiko-/Umsatzteilung über SC-Akteure hinweg
+- **Plattform:** Ein Koordinationsmechanismus in großem Maßstab - reduziert Such- und Auswahlprobleme + ermöglicht Risiko-/Umsatzteilung über SC-Akteure hinweg
 
 <Aside type="tip">
-**★ Prüfungstipp:** Verbindung zur Plattformökonomie — Plattformen tun für die SC das, was Verträge für das NVP mit zwei Akteuren tun: Sie ermöglichen Informationssichtbarkeit, Risikoteilung und Koordination. Aber in großem Maßstab, über viele Akteure gleichzeitig hinweg.
+**★ Prüfungstipp:** Verbindung zur Plattformökonomie - Plattformen tun für die SC das, was Verträge für das NVP mit zwei Akteuren tun: Sie ermöglichen Informationssichtbarkeit, Risikoteilung und Koordination. Aber in großem Maßstab, über viele Akteure gleichzeitig hinweg.
 </Aside>
 
 ---
@@ -278,4 +278,4 @@ Dieselbe Koordinationslogik gilt in Plattformökonomie-Szenarien:
 - **Revenue-Sharing-Vertrag:** NV gibt X% des Umsatzes an RS. RS gewährt einen Nachlass auf den Großhandelspreis. Muss beide Parameter ausbalancieren.
 - **Optimaler Vertrag (dieses Beispiel):** Umsatzbeteiligung = 32%, Großhandelspreis = ₹2,75 → NV bestellt 50K → alle Akteure stehen besser da → SC-Gewinn = ₹2.60.000
 - **Kernprinzip:** Effektiver Vertrag = alle Akteure individuell bessergestellt (Teilnahmebedingung) + SC-Gesamtgewinn maximiert
-- **Brücke:** Dieselbe Koordinationslogik untermauert die Plattformökonomie — Plattformen ermöglichen Info-/Risiko-/Kostensichtbarkeit in großem Maßstab
+- **Brücke:** Dieselbe Koordinationslogik untermauert die Plattformökonomie - Plattformen ermöglichen Info-/Risiko-/Kostensichtbarkeit in großem Maßstab

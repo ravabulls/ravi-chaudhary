@@ -1,35 +1,35 @@
 ---
-title: "Week 11 | Session 4: SC Digital Twin — Network Optimization (Excel + AnyLogistix)"
-description: "Move beyond GFA to Network Optimization — simultaneously decide which factories and DCs to open and how to route product flows to maximize profit. Full model formulation with binary and continuous variables, Big M trick, flow balance constraint, Simplex LP solution, and AnyLogistix validation."
+title: "Week 11 | Session 4: SC Digital Twin - Network Optimization (Excel + AnyLogistix)"
+description: "Move beyond GFA to Network Optimization - simultaneously decide which factories and DCs to open and how to route product flows to maximize profit. Full model formulation with binary and continuous variables, Big M trick, flow balance constraint, Simplex LP solution, and AnyLogistix validation."
 sidebar:
   order: 55
 ---
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 4: Digital Infrastructure*
+*Course: Supply Chain Digitization - Module 4: Digital Infrastructure*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Context — Moving from GFA to Network Optimization
-- GFA vs Network Optimization — Comparison
-- Case Study — Pharma Company Network Redesign
+- Context - Moving from GFA to Network Optimization
+- GFA vs Network Optimization - Comparison
+- Case Study - Pharma Company Network Redesign
 - Decision Variables
-- Objective Function — Maximize Profit
+- Objective Function - Maximize Profit
 - Constraints
-- Excel Solver — Setup & Results
-- Optimal Solution — Results
-- AnyLogistix — Network Optimization Module
+- Excel Solver - Setup & Results
+- Optimal Solution - Results
+- AnyLogistix - Network Optimization Module
 </Aside>
 
 ---
 
-## 1. Context — Moving from GFA to Network Optimization
+## 1. Context - Moving from GFA to Network Optimization
 
-GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimize transport cost.
+GFA (Sessions 2 & 3) found the optimal DC location from scratch - 1 DC, minimize transport cost.
 
 **This session:** demand has doubled, a new factory is needed, and the existing DC lease is expiring. Must **simultaneously decide**: which factory to open, which DC to open, and how to route flows.
 
@@ -37,23 +37,23 @@ GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimi
 **★** Network Optimization = decide **which nodes to open** (binary) AND **how much to flow between them** (continuous). Much richer decision than GFA.
 </Aside>
 
-### GFA vs Network Optimization — Comparison
+### GFA vs Network Optimization - Comparison
 
 | Attribute | GFA (Sessions 2 & 3) | Network Optimization (This Session) |
 |---|---|---|
 | **Question answered** | WHERE to place a new DC from scratch? | Which factories/DCs to open AND how to route flows? |
 | **Objective** | Minimize transportation cost | Maximize profit (Revenue − all costs) |
-| **Decision variables** | xDC (lat), yDC (long) — 2 variables only | yᵢ (factory open), zⱼ (DC open), xᵢⱼ (flows), qⱼₖ (flows) |
-| **Facility options** | Infinite possible coordinates | Fixed candidate locations — choose which to open |
-| **Variable type** | Continuous — lat/long are real numbers | Mixed Integer — binary (yᵢ, zⱼ) + continuous (xᵢⱼ, qⱼₖ) |
+| **Decision variables** | xDC (lat), yDC (long) - 2 variables only | yᵢ (factory open), zⱼ (DC open), xᵢⱼ (flows), qⱼₖ (flows) |
+| **Facility options** | Infinite possible coordinates | Fixed candidate locations - choose which to open |
+| **Variable type** | Continuous - lat/long are real numbers | Mixed Integer - binary (yᵢ, zⱼ) + continuous (xᵢⱼ, qⱼₖ) |
 | **Solver method** | GRG Non-linear (spherical distance is non-linear) | **Simplex LP** (all linear constraints and objective) |
 | **Cost components** | Distance × demand × transport cost only | Fixed + production + inbound/outbound + transport costs |
 
 ---
 
-## 2. Case Study — Pharma Company Network Redesign
+## 2. Case Study - Pharma Company Network Redesign
 
-*Demand data — four markets (yearly demand doubled for the 3-year horizon):*
+*Demand data - four markets (yearly demand doubled for the 3-year horizon):*
 
 | Market | Yearly Demand | Latitude | Longitude |
 |---|---|---|---|
@@ -63,10 +63,10 @@ GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimi
 | Surat | 87,600 | 21.18 | 72.83 |
 
 **Background:**
-- Demand in western region will **double** in next 3 years — current capacity insufficient.
+- Demand in western region will **double** in next 3 years - current capacity insufficient.
 - Management decides to set up a new factory at one of: **Nashik** OR **Aurangabad**.
-- DC in Mumbai (from GFA) lease is expiring — must relocate to one of: **VAPI** OR **V1D (Viwandi)**.
-- Markets remain: Pune, Mumbai, Ahmedabad, Surat — but demand is now doubled.
+- DC in Mumbai (from GFA) lease is expiring - must relocate to one of: **VAPI** OR **V1D (Viwandi)**.
+- Markets remain: Pune, Mumbai, Ahmedabad, Surat - but demand is now doubled.
 
 ### All Node Data
 
@@ -83,7 +83,7 @@ GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimi
 1. Open factory at Nashik, Aurangabad, or both?
 2. Open DC at VAPI, V1D, or both?
 3. Which factory supplies which DC (xᵢⱼ)?
-4. Which DC serves which market — and how much (qⱼₖ)?
+4. Which DC serves which market - and how much (qⱼₖ)?
 
 <Aside type="note">
 **★** All 4 decisions must be optimized **simultaneously** to maximize overall profit. Solving them separately gives a sub-optimal result.
@@ -119,11 +119,11 @@ GFA (Sessions 2 & 3) found the optimal DC location from scratch — 1 DC, minimi
 | **xᵢⱼ** | Continuous ≥ 0 | Quantity shipped from ith factory to jth DC |
 | **qⱼₖ** | Continuous ≥ 0 | Quantity shipped from jth DC to kth customer (k = 1..4 markets) |
 
-**Big M:** a very large number. If a facility is **open** (y=1 or z=1), capacity = M (unlimited). If **closed** (=0), capacity = 0 — cannot send or receive anything.
+**Big M:** a very large number. If a facility is **open** (y=1 or z=1), capacity = M (unlimited). If **closed** (=0), capacity = 0 - cannot send or receive anything.
 
 ---
 
-## 4. Objective Function — Maximize Profit
+## 4. Objective Function - Maximize Profit
 
 ```
 Maximize Z = Revenue − Factory Fixed Cost − DC Fixed Cost
@@ -161,12 +161,12 @@ Maximize Z = Revenue − Factory Fixed Cost − DC Fixed Cost
 
 ---
 
-## 6. Excel Solver — Setup & Results
+## 6. Excel Solver - Setup & Results
 
 <figure class="sc-fig">
   <div class="sc-formula">
     <div>
-      <div class="name">Objective — maximise profit</div>
+      <div class="name">Objective - maximise profit</div>
       <code>max &nbsp;Σ Rev·Q<sub>jk</sub> − [ Σ FixedFac<sub>i</sub>·Y<sub>i</sub> + Σ FixedDC<sub>j</sub>·Z<sub>j</sub> + Σ ProdFac<sub>i</sub>·X<sub>ij</sub> + Σ InbDC<sub>j</sub>·X<sub>ij</sub> + Σ OutbDC<sub>j</sub>·Q<sub>jk</sub> + Σ Trans<sub>ij</sub>·X<sub>ij</sub> + Σ Trans<sub>jk</sub>·Q<sub>jk</sub> ]</code>
     </div>
     <div>
@@ -174,7 +174,7 @@ Maximize Z = Revenue − Factory Fixed Cost − DC Fixed Cost
       <code>Σ<sub>j</sub> Q<sub>jk</sub> = demand<sub>k</sub> &nbsp;·&nbsp; Σ<sub>j</sub> X<sub>ij</sub> ≤ M·Y<sub>i</sub> &nbsp;·&nbsp; Σ<sub>i</sub> X<sub>ij</sub> ≤ M·Z<sub>j</sub><br/>Σ<sub>i</sub> X<sub>ij</sub> = Σ<sub>k</sub> Q<sub>jk</sub> (flow balance) &nbsp;·&nbsp; Y<sub>i</sub>, Z<sub>j</sub> ∈ {0,1} &nbsp;·&nbsp; X<sub>ij</sub>, Q<sub>jk</sub> ≥ 0</code>
     </div>
   </div>
-  <figcaption>The full network-optimisation model — binary variables Y<sub>i</sub> / Z<sub>j</sub> decide which factories and DCs to open, while X<sub>ij</sub> / Q<sub>jk</sub> set the flows, all chosen to maximise revenue minus fixed, production, handling and transport costs.</figcaption>
+  <figcaption>The full network-optimisation model - binary variables Y<sub>i</sub> / Z<sub>j</sub> decide which factories and DCs to open, while X<sub>ij</sub> / Q<sub>jk</sub> set the flows, all chosen to maximise revenue minus fixed, production, handling and transport costs.</figcaption>
 </figure>
 
 | Solver Setting | Value / Detail |
@@ -187,19 +187,19 @@ Maximize Z = Revenue − Factory Fixed Cost − DC Fixed Cost
 | **Constraint 3** | Factory outflow ≤ factory capacity (= M×yᵢ) |
 | **Constraint 4** | Flow balance: DC inflow = DC outflow |
 | **Binary constraint** | yᵢ and zⱼ set as binary (0 or 1 only) |
-| **Method** | **Simplex LP** — objective and all constraints are linear |
+| **Method** | **Simplex LP** - objective and all constraints are linear |
 | **Result** | **Aurangabad factory: OPEN. VAPI DC: OPEN. Nashik + V1D: CLOSED. Profit = ₹59,27,495** |
 
 ### Why Simplex LP (not GRG Non-linear)?
-Distances are given as fixed inputs (km values) — not calculated via spherical formula. Objective function and all constraints are **linear** in the decision variables. Binary variables are handled as integer constraints — Simplex LP handles this as Mixed Integer LP.
+Distances are given as fixed inputs (km values) - not calculated via spherical formula. Objective function and all constraints are **linear** in the decision variables. Binary variables are handled as integer constraints - Simplex LP handles this as Mixed Integer LP.
 
 ---
 
-## 7. Optimal Solution — Results
+## 7. Optimal Solution - Results
 
 **Facilities to Open:**
-- **Factory: Aurangabad — OPEN** (lower production cost $5/unit vs Nashik $7/unit)
-- **DC: VAPI — OPEN** (lower inbound/outbound cost $0.25 vs V1D $0.50)
+- **Factory: Aurangabad - OPEN** (lower production cost $5/unit vs Nashik $7/unit)
+- **DC: VAPI - OPEN** (lower inbound/outbound cost $0.25 vs V1D $0.50)
 - Nashik factory: CLOSED. V1D (Viwandi) DC: CLOSED.
 
 **Product Flow:**
@@ -208,7 +208,7 @@ Distances are given as fixed inputs (km values) — not calculated via spherical
 - VAPI DC → Pune: 3,15,360 units
 - VAPI DC → Surat & Ahmedabad: demand matched exactly.
 
-**Optimal Profit: ₹59,27,495** — identical from Excel Solver and AnyLogistix.
+**Optimal Profit: ₹59,27,495** - identical from Excel Solver and AnyLogistix.
 
 <Aside type="note">
 **★** Aurangabad + VAPI selected because: **lower production cost at Aurangabad + lower DC processing cost at VAPI + proximity to high-demand markets** (Mumbai, Pune, Surat).
@@ -216,7 +216,7 @@ Distances are given as fixed inputs (km values) — not calculated via spherical
 
 ---
 
-## 8. AnyLogistix — Network Optimization Module
+## 8. AnyLogistix - Network Optimization Module
 
 <figure class="sc-fig">
   <div class="sc-flow">
@@ -226,23 +226,23 @@ Distances are given as fixed inputs (km values) — not calculated via spherical
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Customers</div><div class="sc-node violet">Mumbai</div><div class="sc-node violet">Pune</div><div class="sc-node violet">Surat</div><div class="sc-node violet">Ahmedabad</div></div>
   </div>
-  <figcaption>The optimised network — the model selects which factories and DCs to open and routes each market's demand through the least-cost factory→DC→customer path, the result a tool like anyLogistix also plots on a map.</figcaption>
+  <figcaption>The optimised network - the model selects which factories and DCs to open and routes each market's demand through the least-cost factory→DC→customer path, the result a tool like anyLogistix also plots on a map.</figcaption>
 </figure>
 
 When 4 SKUs are added + daily demand → number of decision variables multiplies. Excel cannot handle large Mixed Integer Programs (MIP) efficiently. AnyLogistix has built-in MIP solver + map visualization + route details + flow breakdown.
 
-### Data Entry in AnyLogistix — Network Optimization Module
-- **Customers:** Pune, Mumbai, Ahmedabad, Surat — 4 markets.
+### Data Entry in AnyLogistix - Network Optimization Module
+- **Customers:** Pune, Mumbai, Ahmedabad, Surat - 4 markets.
 - **Facilities:** Aurangabad (factory), Nashik (factory), VAPI (DC), V1D (DC).
 - **Demand:** per day per SKU (4 SKUs × 4 markets = 16 demand entries).
 - **Revenue:** $15 per unit. **Facility expenses:** fixed cost per day.
 - **Objective:** Revenue − Fixed cost − Inbound − Outbound − Production − Transport.
-- **Run → solution in seconds — same result as Excel:** Aurangabad + VAPI, profit = ₹59,27,495.
+- **Run → solution in seconds - same result as Excel:** Aurangabad + VAPI, profit = ₹59,27,495.
 
 ### Additional Outputs from AnyLogistix
 
 <Aside type="note">
-Drilling into a single flow (e.g. **Aurangabad → Vapi**) shows the per-link quantity and cost the optimiser assigned — the granular routing detail behind the network-level result above.
+Drilling into a single flow (e.g. **Aurangabad → Vapi**) shows the per-link quantity and cost the optimiser assigned - the granular routing detail behind the network-level result above.
 </Aside>
 
 - **Map visualization:** actual road routes from Aurangabad → VAPI → customers.
@@ -251,7 +251,7 @@ Drilling into a single flow (e.g. **Aurangabad → Vapi**) shows the per-link qu
 - **Multiple cost layers:** processing cost, flow cost, transport cost shown separately per arc.
 
 <Aside type="note">
-**★** AnyLogistix shows the **actual road route** — not just straight-line connections. Key for real-world delivery planning where road distance > straight-line distance.
+**★** AnyLogistix shows the **actual road route** - not just straight-line connections. Key for real-world delivery planning where road distance > straight-line distance.
 </Aside>
 
 ---
@@ -262,7 +262,7 @@ Drilling into a single flow (e.g. **Aurangabad → Vapi**) shows the per-link qu
 - **4 decisions:** which factories to open (yᵢ), which DCs to open (zⱼ), factory→DC flows (xᵢⱼ), DC→customer flows (qⱼₖ).
 - **Objective:** Maximize Profit = Revenue − all 7 cost components (fixed + variable + transport).
 - **Big M trick:** if facility closed (0) → capacity = 0 → cannot send/receive. Open (1) → capacity = M (unlimited).
-- **Flow balance:** inflow to DC = outflow from DC. DCs are pass-through — no inventory held.
+- **Flow balance:** inflow to DC = outflow from DC. DCs are pass-through - no inventory held.
 - **Solver: Simplex LP** (linear model, binary integer constraints). Contrast with GFA which used GRG Non-linear.
 - **Result:** Aurangabad factory + VAPI DC. Profit = ₹59,27,495. Identical from Excel and AnyLogistix.
 
@@ -271,7 +271,7 @@ Drilling into a single flow (e.g. **Aurangabad → Vapi**) shows the per-link qu
 
 **★ Exam Tip:** Big M constraint: Σⱼ xᵢⱼ ≤ M × yᵢ. If yᵢ=0 → capacity=0 → cannot ship. If yᵢ=1 → capacity=M (unlimited). Replace M with actual capacity to add real capacity limits.
 
-**★ Exam Tip:** Flow balance at DC: Σᵢ xᵢⱼ = Σₖ qⱼₖ for each j. All inflow must equal all outflow — DCs don't hold inventory. This is unique to multi-tier network models.
+**★ Exam Tip:** Flow balance at DC: Σᵢ xᵢⱼ = Σₖ qⱼₖ for each j. All inflow must equal all outflow - DCs don't hold inventory. This is unique to multi-tier network models.
 
 **★ Exam Tip:** Network optimization solver = Simplex LP (linear). GFA solver = GRG Non-linear (spherical distance formula). Knowing WHY each method is used is key.
 </Aside>

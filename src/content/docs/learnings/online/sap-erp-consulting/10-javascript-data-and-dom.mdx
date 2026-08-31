@@ -1,6 +1,6 @@
 ---
-title: "JavaScript — Data & the DOM"
-description: "Working with data and the page in JavaScript — arrays and loops, the key array methods, objects and this, classes and inheritance, references vs copies and destructuring, and manipulating the DOM: selecting, changing, and creating elements and handling events and forms."
+title: "JavaScript - Data & the DOM"
+description: "Working with data and the page in JavaScript - arrays and loops, the key array methods, objects and this, classes and inheritance, references vs copies and destructuring, and manipulating the DOM: selecting, changing, and creating elements and handling events and forms."
 sidebar:
   label: "10 · JS Data & DOM"
   order: 10
@@ -8,24 +8,24 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+*SAP Implementation Consulting & ERP - Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
 
 ---
 
-Up to now my variables held *one* thing at a time — a name, a price, a yes/no. This chapter is about holding *many* things and *structured* things: lists (**arrays**), described things (**objects**), and blueprints for making objects (**classes**). Then it puts them on a real web page through the **DOM**. The through-line of the whole week: **content as data + one repeatable rule** beats hand-copying anything.
+Up to now my variables held *one* thing at a time - a name, a price, a yes/no. This chapter is about holding *many* things and *structured* things: lists (**arrays**), described things (**objects**), and blueprints for making objects (**classes**). Then it puts them on a real web page through the **DOM**. The through-line of the whole week: **content as data + one repeatable rule** beats hand-copying anything.
 
-## Arrays — an ordered list in one variable
+## Arrays - an ordered list in one variable
 
-An **array** is an ordered list of values stored under one name. I write it with square brackets (an *array literal*) and read items back by their **index** — a position number that starts at **0**, not 1.
+An **array** is an ordered list of values stored under one name. I write it with square brackets (an *array literal*) and read items back by their **index** - a position number that starts at **0**, not 1.
 
 ```js
 'use strict';
 
 const flavors = ["rye", "spelt", "wheat"];
 
-console.log(flavors[0]);      // rye   — first item
-console.log(flavors[2]);      // wheat — last of three
-console.log(flavors.length);  // 3     — how many items
+console.log(flavors[0]);      // rye   - first item
+console.log(flavors[2]);      // wheat - last of three
+console.log(flavors.length);  // 3     - how many items
 flavors[1] = "sourdough";     // overwrite the second item
 ```
 
@@ -36,10 +36,10 @@ wheat
 ```
 
 <Aside type="caution" title="The classic off-by-one bug">
-The last index is `length - 1`, **not** `length`. A 3-item array has indexes 0, 1, 2. Reading past the end (`flavors[99]`) doesn't crash — it quietly returns `undefined`, and the real error only shows up one step later when I try to *use* that nothing.
+The last index is `length - 1`, **not** `length`. A 3-item array has indexes 0, 1, 2. Reading past the end (`flavors[99]`) doesn't crash - it quietly returns `undefined`, and the real error only shows up one step later when I try to *use* that nothing.
 </Aside>
 
-### Array methods — mutating vs non-mutating
+### Array methods - mutating vs non-mutating
 
 The single most important distinction: some methods **change the array in place** (mutate it), others **leave it alone and return a new value**. Getting these mixed up is where surprises come from.
 
@@ -55,25 +55,25 @@ The single most important distinction: some methods **change the array in place*
 const flavors = ["rye", "spelt", "wheat"];
 
 flavors.push("olive");                 // now 4 items, changed in place
-console.log(flavors.pop());            // olive  — removed & returned
+console.log(flavors.pop());            // olive  - removed & returned
 console.log(flavors.includes("rye"));  // true
 console.log(flavors.indexOf("wheat")); // 2
-console.log(flavors.slice(0, 2));      // [ 'rye', 'spelt' ] — a NEW array
+console.log(flavors.slice(0, 2));      // [ 'rye', 'spelt' ] - a NEW array
 console.log(flavors.join(" and "));    // rye and spelt and wheat
 ```
 
 <Aside type="note" title="Rule of thumb">
-`push`/`pop`/`shift`/`unshift`/`splice`/`reverse`/`sort` **change** the original. `slice`/`concat`/`join`/`map`/`filter` **return something new** and leave the original untouched — reach for these when the original must survive.
+`push`/`pop`/`shift`/`unshift`/`splice`/`reverse`/`sort` **change** the original. `slice`/`concat`/`join`/`map`/`filter` **return something new** and leave the original untouched - reach for these when the original must survive.
 </Aside>
 
-## Loops — run the same block many times
+## Loops - run the same block many times
 
 A **loop** runs a block of code repeatedly. This is how I honour **DRY** ("Don't Repeat Yourself") over data instead of writing near-identical lines by hand.
 
 <Tabs>
 <TabItem label="for...of (everyday default)">
 
-Visits every item directly — no index bookkeeping. Read it as *"for each flavor of the flavors"*.
+Visits every item directly - no index bookkeeping. Read it as *"for each flavor of the flavors"*.
 
 ```js
 const flavors = ["rye", "spelt", "wheat"];
@@ -126,7 +126,7 @@ while (countdown > 0) {
 
 ### Building output from data with one loop
 
-Here is the payoff — the same rule applied to every item, no copy-paste:
+Here is the payoff - the same rule applied to every item, no copy-paste:
 
 ```js
 const artists = ["Pinkfong", "Asake", "Johnny Cash"];
@@ -150,7 +150,7 @@ Add a fourth artist to the array and a fourth card appears for free. Fix the sen
 
 ## Callback array methods
 
-These methods take a **callback** — a function I hand over, which the method runs once per item. The arrow form (`(x) => ...`) keeps each one to a readable one-liner. Pin this table above the desk:
+These methods take a **callback** - a function I hand over, which the method runs once per item. The arrow form (`(x) => ...`) keeps each one to a readable one-liner. Pin this table above the desk:
 
 | Method | Returns | Use it to… |
 |---|---|---|
@@ -174,12 +174,12 @@ const allBig   = prices.every((p) => p > 10);        // false
 ```
 
 <Aside type="caution" title="The famous forEach trap">
-`forEach` **always** returns `undefined`. Storing its result and wondering where the array went is a rite of passage — when I want results back, the method I wanted was `map`. Also: `map` and `filter` do **not** change the original; the result is in the return value.
+`forEach` **always** returns `undefined`. Storing its result and wondering where the array went is a rite of passage - when I want results back, the method I wanted was `map`. Also: `map` and `filter` do **not** change the original; the result is in the return value.
 </Aside>
 
 ## Copies vs shared references
 
-Arrays and objects are **reference types**. A variable doesn't hold the list itself — it holds an *arrow* (a reference) pointing at the one list in memory. So plain assignment copies the *arrow*, not the list:
+Arrays and objects are **reference types**. A variable doesn't hold the list itself - it holds an *arrow* (a reference) pointing at the one list in memory. So plain assignment copies the *arrow*, not the list:
 
 ```js
 const original = ["rye", "spelt"];
@@ -189,7 +189,7 @@ copy.push("wheat");
 console.log(original);   // [ 'rye', 'spelt', 'wheat' ]  ← the "original" changed too
 ```
 
-Two names, one shared list — write through either and both see it. The deliberate way to make a *genuinely new* array is **spread syntax** — three dots inside a new literal:
+Two names, one shared list - write through either and both see it. The deliberate way to make a *genuinely new* array is **spread syntax** - three dots inside a new literal:
 
 ```js
 const original = ["rye", "spelt"];
@@ -200,13 +200,13 @@ console.log(realCopy.length);   // 3
 console.log(original.length);   // 2  ← untouched
 ```
 
-<Aside type="note" title="Shallow copy — the honest label">
+<Aside type="note" title="Shallow copy - the honest label">
 Spread makes a new array at the **top level** only. If items are themselves arrays/objects, those inner references are still shared. For flat lists this is simply "a copy"; for nested data, `structuredClone(value)` makes a fully independent deep copy.
 </Aside>
 
-## Objects — a described thing
+## Objects - a described thing
 
-An array answers *"which items, in what order?"*. An **object** answers *"what do I know about this one thing?"*. It's a collection of named values written with braces (an *object literal*). Each pair is a **property**: the **key** on the left, the **value** on the right (any type — string, number, boolean, even another array or object).
+An array answers *"which items, in what order?"*. An **object** answers *"what do I know about this one thing?"*. It's a collection of named values written with braces (an *object literal*). Each pair is a **property**: the **key** on the left, the **value** on the right (any type - string, number, boolean, even another array or object).
 
 ```js
 const croissant = {
@@ -215,17 +215,17 @@ const croissant = {
   vegetarian: true,
 };
 
-console.log(croissant.name);        // Butter Croissant  — dot notation
+console.log(croissant.name);        // Butter Croissant  - dot notation
 const field = "price";
-console.log(croissant[field]);      // 2.8  — bracket notation, key from a variable
+console.log(croissant[field]);      // 2.8  - bracket notation, key from a variable
 croissant.price = 3.0;              // change a property
 ```
 
-Working rule: **dots when I can, brackets when the key lives in a variable** (or contains characters a plain name can't). Reading a key that doesn't exist quietly returns `undefined` — a misspelled key is the usual culprit.
+Working rule: **dots when I can, brackets when the key lives in a variable** (or contains characters a plain name can't). Reading a key that doesn't exist quietly returns `undefined` - a misspelled key is the usual culprit.
 
 ### Methods and `this`
 
-A **method** is just a property whose value is a function. Inside a method, the keyword **`this`** refers to the object the method was called on — that's how a method reads its own sibling properties.
+A **method** is just a property whose value is a function. Inside a method, the keyword **`this`** refers to the object the method was called on - that's how a method reads its own sibling properties.
 
 ```js
 const croissant = {
@@ -240,7 +240,7 @@ console.log(croissant.describe()); // Butter Croissant costs 2.8 euros
 ```
 
 <Aside type="tip" title="Why not an arrow here?">
-Methods that use `this` are written with the `function` form (or the class shorthand shown later), **not** arrow functions — arrows handle `this` differently and won't point at the object. Every built-in call like `"maison".toUpperCase()` was this exact pattern all along.
+Methods that use `this` are written with the `function` form (or the class shorthand shown later), **not** arrow functions - arrows handle `this` differently and won't point at the object. Every built-in call like `"maison".toUpperCase()` was this exact pattern all along.
 </Aside>
 
 ### Arrays of objects
@@ -264,7 +264,7 @@ console.log(popActs.length); // 1
 
 ### Iterating an object's properties
 
-An object has no items to loop over — it has properties. Three built-ins turn its contents into arrays, and then every array tool applies:
+An object has no items to loop over - it has properties. Three built-ins turn its contents into arrays, and then every array tool applies:
 
 | Helper | Returns |
 |---|---|
@@ -299,17 +299,17 @@ const [first, second] = flavors;            // by position
 console.log(first, second);                 // rye spelt
 ```
 
-That `[day, time]` in the entries loop above was array destructuring on each pair. Destructuring is everywhere in modern frameworks — worth reading fluently now. (Watch the case: `const { Name }` finds nothing and hands back `undefined`.)
+That `[day, time]` in the entries loop above was array destructuring on each pair. Destructuring is everywhere in modern frameworks - worth reading fluently now. (Watch the case: `const { Name }` finds nothing and hands back `undefined`.)
 
-## OOP — classes as blueprints
+## OOP - classes as blueprints
 
 When every artist object carries the same keys and the same `describe` method, copying that structure by hand gets silly. **Object-oriented programming (OOP)** solves it: describe the *shape* once as a **class** (the blueprint), then manufacture as many **instances** (concrete objects) as the data needs.
 
 <Aside type="tip" title="Why this matters for the SAP path">
-ABAP — SAP's own language — is object-oriented. ABAP Objects is built from classes, methods, instances, and inheritance, so this exact vocabulary (`class`, `constructor`, `instance`, `extends`) transfers straight into the certification path.
+ABAP - SAP's own language - is object-oriented. ABAP Objects is built from classes, methods, instances, and inheritance, so this exact vocabulary (`class`, `constructor`, `instance`, `extends`) transfers straight into the certification path.
 </Aside>
 
-The compact example shows the whole toolkit — `class`, `constructor`, `new`, a method, plus `extends` and `super` for inheritance:
+The compact example shows the whole toolkit - `class`, `constructor`, `new`, a method, plus `extends` and `super` for inheritance:
 
 ```js
 'use strict';
@@ -320,7 +320,7 @@ class Artist {
     this.genre = genre;
     this.total = total;
   }
-  describe() {                        // class method — shorthand, no `function`
+  describe() {                        // class method - shorthand, no `function`
     return `${this.name}, ${this.genre}, ${this.total} of music`;
   }
 }
@@ -330,7 +330,7 @@ class FeaturedArtist extends Artist {  // subclass inherits everything from Arti
     super(name, genre, total);         // run the parent constructor FIRST
     this.blurb = blurb;                // then add my own property
   }
-  describe() {                         // override — build on the parent version
+  describe() {                         // override - build on the parent version
     return `${super.describe()}. Featured: ${this.blurb}`;
   }
 }
@@ -359,9 +359,9 @@ Asake, Afrobeats, 14:08 of music. Featured: Loudest new voice out of Lagos
 Before 2015, the same job was done with a plain `function Artist(...)` used with `new`, and methods attached to `Artist.prototype`. The `class` syntax is just a clearer notation over that **same machinery** (which is why `typeof Artist` still says `"function"`). I **read and translate** the old form; I **write** classes. Forgetting `new` before a class throws a clear `TypeError`; forgetting `super()` in a subclass constructor throws before `this` is ready.
 </Aside>
 
-## The DOM — putting data on the page
+## The DOM - putting data on the page
 
-When the browser reads an HTML file it doesn't keep the text — it builds the **DOM (Document Object Model)**: a live **tree of node objects** in memory, one per element, nested exactly as the HTML nests. The rendered page is drawn from this tree, so the one sentence everything rests on: **change the tree, and the page changes on screen, instantly.**
+When the browser reads an HTML file it doesn't keep the text - it builds the **DOM (Document Object Model)**: a live **tree of node objects** in memory, one per element, nested exactly as the HTML nests. The rendered page is drawn from this tree, so the one sentence everything rests on: **change the tree, and the page changes on screen, instantly.**
 
 <figure class="sc-fig">
 <div class="sc-flow">
@@ -383,12 +383,12 @@ First, connect the script to the page. This line goes in the `<head>`; **`defer`
 ```
 
 <Aside type="caution" title="If a selection is null, check defer first">
-A script without `defer` that reaches for elements runs *before* they exist and finds `null` — the crash comes one line later. `defer` is the standard, boring, correct fix. (Also: the browser has no Node — `require`, `process` and friends don't exist here.)
+A script without `defer` that reaches for elements runs *before* they exist and finds `null` - the crash comes one line later. `defer` is the standard, boring, correct fix. (Also: the browser has no Node - `require`, `process` and friends don't exist here.)
 </Aside>
 
 ### Selecting and changing elements
 
-`document` is the tree's entry point. **`querySelector(cssSelector)`** returns the **first** element matching a CSS selector (same selectors as CSS — `.class`, `#id`, `tag`); **`querySelectorAll`** returns **all** matches as a list I can loop.
+`document` is the tree's entry point. **`querySelector(cssSelector)`** returns the **first** element matching a CSS selector (same selectors as CSS - `.class`, `#id`, `tag`); **`querySelectorAll`** returns **all** matches as a list I can loop.
 
 | Task | How |
 |---|---|
@@ -406,7 +406,7 @@ heading.textContent = "Startupistan Records";  // tree changes → screen change
 heading.classList.add("highlight");            // CSS defines the look; JS decides when
 ```
 
-The division of labour: **CSS owns appearance**, **JavaScript decides when** an element wears a class. A selector that matches nothing returns `null` quietly — remember the dot for classes and the hash for ids.
+The division of labour: **CSS owns appearance**, **JavaScript decides when** an element wears a class. A selector that matches nothing returns `null` quietly - remember the dot for classes and the hash for ids.
 
 ### Creating elements from data
 
@@ -434,12 +434,12 @@ for (const artist of artists) {
 Read the loop body as an assembly line: **build → fill from data → assemble → mount**. Add a third artist to the array, reload, and a third card appears. This data-to-elements pattern is the beating heart of every framework I'll meet later.
 
 <Aside type="caution" title="The classic silent miss">
-A created element is detached until an `append` places it. Forget the final `append` and there's **no error and no element** — just nothing on screen.
+A created element is detached until an `append` places it. Forget the final `append` and there's **no error and no element** - just nothing on screen.
 </Aside>
 
-### Events and forms — a worked example
+### Events and forms - a worked example
 
-Everything so far runs once at load. **`addEventListener(eventName, callback)`** registers a function to run **every time** a named event happens. Hand the callback over **unrun** (no parentheses) — writing `()` runs it once at load and never again.
+Everything so far runs once at load. **`addEventListener(eventName, callback)`** registers a function to run **every time** a named event happens. Hand the callback over **unrun** (no parentheses) - writing `()` runs it once at load and never again.
 
 For forms, two more pieces: an input's **`value`** property holds whatever the visitor typed, and the **`submit`** event fires when they send the form. A submitting form navigates away by default, so I call **`event.preventDefault()`** on the event object to stop that and handle it in place.
 
@@ -472,8 +472,8 @@ form.addEventListener("submit", (event) => {  // callback handed over UNRUN
 });
 ```
 
-<Aside type="note" title="Where this course stops — and the next begins">
-All the data here lived inside my own file. Real apps load data from *elsewhere* — files, servers, other services — which brings in `fetch`, JSON, HTTP, and asynchronous code. That's exactly where the System Design Fundamentals course picks up, standing on everything in this chapter.
+<Aside type="note" title="Where this course stops - and the next begins">
+All the data here lived inside my own file. Real apps load data from *elsewhere* - files, servers, other services - which brings in `fetch`, JSON, HTTP, and asynchronous code. That's exactly where the System Design Fundamentals course picks up, standing on everything in this chapter.
 </Aside>
 
 ## Revision summary
@@ -486,7 +486,7 @@ All the data here lived inside my own file. Real apps load data from *elsewhere*
 | DRY | Content as data + one loop replaces every hand-copied line |
 | forEach vs map | `forEach` returns `undefined` (acts); `map` returns a new array (transforms) |
 | filter / find / reduce | keep many / get first match / boil down to one value |
-| Reference types | Assigning an array/object copies the *arrow*, not the thing — use spread `[...x]` / `{...x}` to copy |
+| Reference types | Assigning an array/object copies the *arrow*, not the thing - use spread `[...x]` / `{...x}` to copy |
 | Shallow copy | Spread copies the top level only; nested references stay shared (`structuredClone` for deep) |
 | Object | Named values (key: value); `.` when key is literal, `[var]` when key is in a variable |
 | Method & this | Method = property holding a function; `this` = the object before the dot (not an arrow) |
@@ -497,6 +497,6 @@ All the data here lived inside my own file. Real apps load data from *elsewhere*
 | DOM | Live tree of node objects; change the tree → page updates instantly |
 | defer | Runs the script after the document is parsed, so selections aren't `null` |
 | Select / change | `querySelector` (first) / `querySelectorAll` (all); `textContent`, `classList`, `style` |
-| Create / append | `createElement` builds detached; `append` mounts it — forget append = silent nothing |
+| Create / append | `createElement` builds detached; `append` mounts it - forget append = silent nothing |
 | Events | `addEventListener("click", cb)` runs `cb` each time; hand the callback over unrun |
 | Forms | Read `input.value`; `event.preventDefault()` stops the submit navigating away |

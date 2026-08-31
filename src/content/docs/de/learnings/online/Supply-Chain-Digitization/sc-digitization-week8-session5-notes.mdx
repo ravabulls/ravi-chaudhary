@@ -1,5 +1,5 @@
 ---
-title: "Woche 8 | Session 5: SC-Netzwerkdesign — LP-Optimierung & Finaler Vergleich"
+title: "Woche 8 | Session 5: SC-Netzwerkdesign - LP-Optimierung & Finaler Vergleich"
 description: "Erfahren Sie, wie Sie Linear Programming (LP) und den Excel Solver nutzen, um die garantiert optimale Lösung für das Supply-Chain-Netzwerkdesign zu finden und so die Überlegenheit gegenüber heuristischen Ansätzen zu beweisen."
 sidebar:
   order: 41
@@ -7,25 +7,25 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Rückblick — Gleiches Problem, bessere Methode
-- LP-Formulierung — SC-Netzwerkdesign
+- Rückblick - Gleiches Problem, bessere Methode
+- LP-Formulierung - SC-Netzwerkdesign
 - Zielfunktion
 - Nebenbedingungen (Angebot, Flussbilanz, Nachfrage)
-- Lösung in Excel — Schritt für Schritt
+- Lösung in Excel - Schritt für Schritt
 - Ergebnis & Finaler Vergleich
 - Skalierbarkeit & Praxisrelevanz
 </Aside>
 
 ---
 
-## 1. Rückblick — Gleiches Problem, bessere Methode
+## 1. Rückblick - Gleiches Problem, bessere Methode
 
 **Gleiches SC-Netzwerk wie in Session 4:** 2 Hersteller, 3 Lager, 4 Einzelhändler, 1 Produkt.
 - **Ziele:** Finden der optimalen Distributionsstrategie zur Erfüllung der Einzelhändlernachfrage und zur Minimierung der Gesamtdistributionskosten.
@@ -38,13 +38,13 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## 2. LP-Formulierung — SC-Netzwerkdesign
+## 2. LP-Formulierung - SC-Netzwerkdesign
 
-### Entscheidungsvariablen — insgesamt 18
+### Entscheidungsvariablen - insgesamt 18
 - **6 Variablen (M→W Ebene):** Bewegte Menge zwischen jedem Hersteller-Lager-Paar (z.B. `QM1W1`).
 - **12 Variablen (W→R Ebene):** Bewegte Menge zwischen jedem Lager-Einzelhändler-Paar (z.B. `XW1R1`).
 
-Alle werden in Excel mit 0 initialisiert — der Solver findet die optimalen Werte.
+Alle werden in Excel mit 0 initialisiert - der Solver findet die optimalen Werte.
 
 <figure class="sc-fig">
   <div class="sc-formula">
@@ -54,7 +54,7 @@ Alle werden in Excel mit 0 initialisiert — der Solver findet die optimalen Wer
     </div>
     <div>
       <div class="name">Nachfrage-Nebenbedingung (je Einzelhändler)</div>
-      <code>X<sub>w1r1</sub> + X<sub>w2r1</sub> + X<sub>w3r1</sub> = 45.000 &nbsp;(sowie 35.000 / 68.000 / 70.000 für r2–r4)</code>
+      <code>X<sub>w1r1</sub> + X<sub>w2r1</sub> + X<sub>w3r1</sub> = 45.000 &nbsp;(sowie 35.000 / 68.000 / 70.000 für r2-r4)</code>
     </div>
   </div>
   <figcaption>Die 18 Entscheidungsvariablen (6 Hersteller→Lager, 12 Lager→Einzelhändler) starten alle bei 0. Die Flussbilanz hält jedes Lager als Durchlaufknoten; die Nachfrage-Nebenbedingungen erzwingen die exakte Erfüllung jedes Einzelhändlerbedarfs.</figcaption>
@@ -73,17 +73,17 @@ Alle werden in Excel mit 0 initialisiert — der Solver findet die optimalen Wer
 
 ## 4. Nebenbedingungen
 
-Drei Arten von Nebenbedingungen — alle müssen gleichzeitig erfüllt sein für eine gültige Lösung.
+Drei Arten von Nebenbedingungen - alle müssen gleichzeitig erfüllt sein für eine gültige Lösung.
 
 | Art der Nebenbedingung | Ausdruck | Was sie sicherstellt |
 |---|---|---|
 | **Angebot** (2) | `QM1W1+QM1W2+QM1W3 ≤ 1.50.000` | Gesamtlieferung jedes Herstellers ≤ seiner Kapazität |
-| **Flussbilanz** (3) | `Σ(in W1) = Σ(aus W1)` | Was in ein Lager kommt, muss auch hinaus — keine Vorratshaltung |
+| **Flussbilanz** (3) | `Σ(in W1) = Σ(aus W1)` | Was in ein Lager kommt, muss auch hinaus - keine Vorratshaltung |
 | **Nachfrage** (4) | `XW1Rj+XW2Rj+XW3Rj = Dj` | Alle 3 Lager zusammen müssen die Nachfrage jedes Einzelhändlers erfüllen |
 | **Nicht-Negativität** | Alle `Q`- und `X`-Variablen ≥ 0 | Mengen können nicht negativ sein |
 
-### Flussbilanz (Flow Balance) — Wichtiges neues Konzept
-Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Bestände.
+### Flussbilanz (Flow Balance) - Wichtiges neues Konzept
+Stellt sicher, dass Lager nur Durchgangsstationen sind - sie halten keine Bestände.
 `Für W1: QM1W1 + QM2W1 = XW1R1 + XW1R2 + XW1R3 + XW1R4`
 
 <Aside type="note">
@@ -92,7 +92,7 @@ Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Best
 
 ---
 
-## 5. Lösung in Excel — Schritt für Schritt
+## 5. Lösung in Excel - Schritt für Schritt
 
 <Steps>
 1. **Ziel festlegen:** Wählen Sie die Zelle für die Gesamtkosten → auf Minimieren setzen.
@@ -105,7 +105,7 @@ Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Best
 
 <figure class="sc-fig">
   <div class="sc-panel" style="max-width:34rem;margin:0 auto">
-    <div class="head">Excel Solver — LP-Netzwerk-Einrichtung</div>
+    <div class="head">Excel Solver - LP-Netzwerk-Einrichtung</div>
     <ul>
       <li><b>Ziel festlegen:</b> Gesamtkosten-Zelle → <b>Min</b> &nbsp;(Zelle = <code>SUMMENPRODUKT(Kosten; Mengen)</code>)</li>
       <li><b>Durch Ändern der Zellen:</b> alle 18 Entscheidungsvariablen-Zellen</li>
@@ -125,7 +125,7 @@ Stellt sicher, dass Lager nur Durchgangsstationen sind — sie halten keine Best
 Der Solver bestätigt: Alle Nebenbedingungen und Optimalitätsbedingungen sind erfüllt.
 **Gesamtdistributionskosten = ₹6.89.000** ← globales Optimum.
 
-*Optimale Entscheidungsvariablen (gelieferte Einheiten) — Gesamtkosten ₹6,89,000:*
+*Optimale Entscheidungsvariablen (gelieferte Einheiten) - Gesamtkosten ₹6,89,000:*
 
 | Lager | ← m1 | ← m2 | → r1 | → r2 | → r3 | → r4 |
 |---|---|---|---|---|---|---|
@@ -141,23 +141,23 @@ Der Solver bestätigt: Alle Nebenbedingungen und Optimalitätsbedingungen sind e
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Einzelhändler</div><div class="sc-node violet">R1 · 45,000 <span class="sub">über W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">über W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">über W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">über W3</span></div></div>
   </div>
-  <figcaption>LP-Optimum — W1 bedient R1, R2, R4 (von M1 gespeist) und W3 bedient R3 (von M2 gespeist). Das Leiten von R4 über W1 und R3 über W3 unterbietet beide Heuristiken.</figcaption>
+  <figcaption>LP-Optimum - W1 bedient R1, R2, R4 (von M1 gespeist) und W3 bedient R3 (von M2 gespeist). Das Leiten von R4 über W1 und R3 über W3 unterbietet beide Heuristiken.</figcaption>
 </figure>
 
 ### Ansatz-Vergleich
 
 | Ansatz | Methode | Gesamtkosten | Optimal? | Ersparnis vs. H1 |
 |---|---|---|---|---|
-| **Heuristik 1** | Günstigstes Lager für alle | ₹9.61.000 | Nein | — |
+| **Heuristik 1** | Günstigstes Lager für alle | ₹9.61.000 | Nein | - |
 | **Heuristik 2** | Günstigster Pfad pro Einzelhändler | ₹7.57.000 | Nein | ₹2.04.000 |
-| **LP-Optimierung** | Simplex LP über Excel Solver | **₹6.89.000** | **Ja — garantiert** | **₹2.72.000** |
+| **LP-Optimierung** | Simplex LP über Excel Solver | **₹6.89.000** | **Ja - garantiert** | **₹2.72.000** |
 
 <Aside type="tip">
-LP (₹6,89,000) schlägt Heuristik 2 (₹7,57,000) um **₹68,000** und Heuristik 1 (₹9,61,000) um **₹2,72,000** — und ist, anders als die Heuristiken, *garantiert* optimal: keine zulässige Distribution kann günstiger sein.
+LP (₹6,89,000) schlägt Heuristik 2 (₹7,57,000) um **₹68,000** und Heuristik 1 (₹9,61,000) um **₹2,72,000** - und ist, anders als die Heuristiken, *garantiert* optimal: keine zulässige Distribution kann günstiger sein.
 </Aside>
 
 <Aside type="note">
-**★** Die LP-Lösung ist garantiert optimal — keine andere machbare Verteilung kann weniger kosten. Das ist die Macht der Optimierung.
+**★** Die LP-Lösung ist garantiert optimal - keine andere machbare Verteilung kann weniger kosten. Das ist die Macht der Optimierung.
 </Aside>
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Woche 8 | Session 4: SC-Netzwerkdesign — Heuristische Ansätze (H1 & H2)"
+title: "Woche 8 | Session 4: SC-Netzwerkdesign - Heuristische Ansätze (H1 & H2)"
 description: "Eine Einführung in das zweistufige Supply-Chain-Netzwerkdesign unter Verwendung regelbasierter heuristischer Ansätze (H1 und H2), um schnell praktische Distributionslösungen zu finden."
 sidebar:
   order: 40
@@ -7,23 +7,23 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Fallstudie — Problem des SC-Netzwerkdesigns
+- Fallstudie - Problem des SC-Netzwerkdesigns
 - Was ist eine Heuristik?
-- Heuristik 1 — Günstigstes Lager zuerst
-- Heuristik 2 — Günstigster End-to-End-Pfad pro Einzelhändler
+- Heuristik 1 - Günstigstes Lager zuerst
+- Heuristik 2 - Günstigster End-to-End-Pfad pro Einzelhändler
 - Heuristik-Vergleich & Offene Frage
 </Aside>
 
 ---
 
-## 1. Fallstudie — Problem des SC-Netzwerkdesigns
+## 1. Fallstudie - Problem des SC-Netzwerkdesigns
 
 **Netzwerkstruktur:** 2-stufiges Netzwerk (Hersteller → Lager → Einzelhändler).
 - **Hersteller:** M1, M2
@@ -53,14 +53,14 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
       <div class="sc-node violet">R4 · 70,000</div>
     </div>
   </div>
-  <figcaption>Ein zweistufiges Netzwerk — zwei Hersteller beliefern drei Lager, die vier Einzelhändler bedienen. Die Aufgabe ist, zu minimalen Kosten festzulegen, welcher Hersteller welches Lager beliefert und welches Lager welchen Einzelhändler bedient.</figcaption>
+  <figcaption>Ein zweistufiges Netzwerk - zwei Hersteller beliefern drei Lager, die vier Einzelhändler bedienen. Die Aufgabe ist, zu minimalen Kosten festzulegen, welcher Hersteller welches Lager beliefert und welches Lager welchen Einzelhändler bedient.</figcaption>
 </figure>
 
 **Annahmen:** Produktions- und Handhabungskosten sind an allen Standorten gleich (vereinfacht). Nur die Transportkosten variieren.
 
-**Ziel:** Finden Sie die optimale Distributionsstrategie — welcher Hersteller beliefert welches Lager, und welches Lager bedient welchen Einzelhändler — um die Gesamtdistributionskosten zu minimieren.
+**Ziel:** Finden Sie die optimale Distributionsstrategie - welcher Hersteller beliefert welches Lager, und welches Lager bedient welchen Einzelhändler - um die Gesamtdistributionskosten zu minimieren.
 
-*Transportkosten je Einheit — Hersteller→Lager (m1, m2) und Lager→Einzelhändler (r1–r4):*
+*Transportkosten je Einheit - Hersteller→Lager (m1, m2) und Lager→Einzelhändler (r1-r4):*
 
 | Lager | m1 | m2 | r1 | r2 | r3 | r4 |
 |---|---|---|---|---|---|---|
@@ -84,13 +84,13 @@ Ein regelbasierter, praktischer Ansatz, um *schnell* eine *gute* (nicht zwingend
 
 ---
 
-## 3. Heuristik 1 — Günstigstes Lager zuerst
+## 3. Heuristik 1 - Günstigstes Lager zuerst
 
 ### Logik
 <Steps>
 1. Wählen Sie das Lager mit den niedrigsten Gesamtversandkosten zu allen Einzelhändlern.
 2. Leiten Sie die gesamte Einzelhändlernachfrage über dieses Lager.
-3. Wählen Sie den günstigsten Hersteller zur Belieferung dieses Lagers — schöpfen Sie dessen Kapazität zuerst aus.
+3. Wählen Sie den günstigsten Hersteller zur Belieferung dieses Lagers - schöpfen Sie dessen Kapazität zuerst aus.
 4. Erfüllen Sie die restliche Nachfrage durch den nächsten Hersteller.
 </Steps>
 
@@ -121,14 +121,14 @@ Ein regelbasierter, praktischer Ansatz, um *schnell* eine *gute* (nicht zwingend
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Einzelhändler</div><div class="sc-node violet">R1 · 45,000</div><div class="sc-node violet">R2 · 35,000</div><div class="sc-node violet">R3 · 68,000</div><div class="sc-node violet">R4 · 70,000</div></div>
   </div>
-  <figcaption>Heuristik 1 — die <b>gesamte</b> Einzelhändlernachfrage über das einzige günstigste Lager (W1) leiten, zuerst vom günstigsten Hersteller (M1), dann M2 für den Rest.</figcaption>
+  <figcaption>Heuristik 1 - die <b>gesamte</b> Einzelhändlernachfrage über das einzige günstigste Lager (W1) leiten, zuerst vom günstigsten Hersteller (M1), dann M2 für den Rest.</figcaption>
 </figure>
 
 **Ergebnis:** Gesamtkosten = **₹9.61.000**
 
 ---
 
-## 4. Heuristik 2 — Günstigster End-to-End-Pfad pro Einzelhändler
+## 4. Heuristik 2 - Günstigster End-to-End-Pfad pro Einzelhändler
 
 ### Logik
 - Bewerten Sie für jeden Einzelhändler individuell alle 6 möglichen Pfade (2 Hersteller × 3 Lager).
@@ -156,7 +156,7 @@ Ein regelbasierter, praktischer Ansatz, um *schnell* eine *gute* (nicht zwingend
     <span class="arrow">→</span>
     <div class="sc-tier"><div class="sc-tier-head">Einzelhändler</div><div class="sc-node violet">R1 · 45,000 <span class="sub">über W1</span></div><div class="sc-node violet">R2 · 35,000 <span class="sub">über W1</span></div><div class="sc-node violet">R3 · 68,000 <span class="sub">über W1</span></div><div class="sc-node violet">R4 · 70,000 <span class="sub">über W2</span></div></div>
   </div>
-  <figcaption>Heuristik 2 — R1–R3 laufen wie zuvor über W1, doch R4 wird über <b>W2</b> geleitet (M2 → W2 → R4), was End-to-End günstiger ist, sobald M1s Kapazität fast erschöpft ist.</figcaption>
+  <figcaption>Heuristik 2 - R1-R3 laufen wie zuvor über W1, doch R4 wird über <b>W2</b> geleitet (M2 → W2 → R4), was End-to-End günstiger ist, sobald M1s Kapazität fast erschöpft ist.</figcaption>
 </figure>
 
 **Ergebnis:** Gesamtkosten = **₹7.57.000** ← besser als H1. (H2 leitet R4 über W2 statt W1).
@@ -171,14 +171,14 @@ Ein regelbasierter, praktischer Ansatz, um *schnell* eine *gute* (nicht zwingend
 | **Gesamtkosten** | ₹9.61.000 | ₹7.57.000 | ? (≤ ₹7.57.000) |
 
 <Aside type="note">
-Kosten, um alle vier Einzelhändler über je ein einzelnes Lager zu bedienen: **W1 → 4,03,000** (am günstigsten) · W2 → 8,49,000 · W3 → 8,41,000. Deshalb wählt Heuristik 1 W1 — doch die Pfad-Betrachtung von Heuristik 2 schlägt sie dennoch.
+Kosten, um alle vier Einzelhändler über je ein einzelnes Lager zu bedienen: **W1 → 4,03,000** (am günstigsten) · W2 → 8,49,000 · W3 → 8,41,000. Deshalb wählt Heuristik 1 W1 - doch die Pfad-Betrachtung von Heuristik 2 schlägt sie dennoch.
 </Aside>
 
 H2 verbesserte die Kosten um ca. 21% gegenüber H1, nur durch die Bewertung kompletter Pfade.
 **Aber:** Ist H2 das bestmögliche Ergebnis? Das wissen wir noch nicht. Die nächste Session wird dies mit LP/Solver lösen, um das wahre Optimum zu finden.
 
 <Aside type="note">
-**★** Heuristiken sind pfadabhängig — die Reihenfolge, in der Sie die Nachfrage zuweisen, ändert Ihr Ergebnis. Nur LP garantiert das globale Optimum.
+**★** Heuristiken sind pfadabhängig - die Reihenfolge, in der Sie die Nachfrage zuweisen, ändert Ihr Ergebnis. Nur LP garantiert das globale Optimum.
 </Aside>
 
 ---

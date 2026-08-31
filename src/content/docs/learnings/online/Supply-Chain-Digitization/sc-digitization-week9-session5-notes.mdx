@@ -1,5 +1,5 @@
 ---
-title: "Week 9 | Session 5: DEA — Linearization, Excel Solver & Interpretation of Results"
+title: "Week 9 | Session 5: DEA - Linearization, Excel Solver & Interpretation of Results"
 description: "Learn how to convert the non-linear Data Envelopment Analysis (DEA) model into a Linear Programming problem, solve it in Excel, and interpret the efficiency results."
 sidebar:
   order: 46
@@ -7,35 +7,35 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Recap — Session 4
+- Recap - Session 4
 - Converting Non-linear DEA to Linear Programming
-- Linearized DEA Model — Facility 1 (Worked Example)
+- Linearized DEA Model - Facility 1 (Worked Example)
 - Generalized DEA Model
-- Excel Solver — Setup & Steps
-- Efficiency Results — All 9 Facilities
-- How to Interpret DEA Results — Weight-Based Focus
+- Excel Solver - Setup & Steps
+- Efficiency Results - All 9 Facilities
+- How to Interpret DEA Results - Weight-Based Focus
 </Aside>
 
 ---
 
-## 1. Recap — Session 4
+## 1. Recap - Session 4
 
 - **DEA model formulated:** Maximize weighted output ÷ weighted input for each facility, subject to all facilities' efficiency ≤ 1.
-- **Problem:** The model is non-linear — decision variables appear in both numerator and denominator.
+- **Problem:** The model is non-linear - decision variables appear in both numerator and denominator.
 - **This session:** Linearize the model, solve in Excel Solver, and interpret results.
 
 ---
 
 ## 2. Converting Non-linear DEA to Linear Programming
 
-*Nine facilities — two outputs (higher = better) and two inputs (lower = better):*
+*Nine facilities - two outputs (higher = better) and two inputs (lower = better):*
 
 | Facility | Production Yield (%) | OEE (%) | Cycle Time (min) | Resource Utilisation (%) |
 |---|---|---|---|---|
@@ -77,17 +77,17 @@ Strategy: Apply two separate transformations.
 
 ---
 
-## 3. Linearized DEA Model — Facility 1 (Worked Example)
+## 3. Linearized DEA Model - Facility 1 (Worked Example)
 
 - **Objective Function (linear):** Maximize `92·V1 + 80·V2`
 - **Constraint 0 (Denominator = 1):** `32·U1 + 88·U2 = 1` *(changes per facility)*
-- **Constraints 1–9 (Efficiency ≤ 1):** *(linear, fixed for all runs)*
+- **Constraints 1-9 (Efficiency ≤ 1):** *(linear, fixed for all runs)*
   - F1: `92·V1 + 80·V2 − 32·U1 − 88·U2 ≤ 0`
   - F2: `88·V1 + 78·V2 − 35·U1 − 94·U2 ≤ 0`
   - ... *(repeat for F3 through F9)*
 
 ### Decision Variables & Non-negativity
-`V1, V2, U1, U2 ≥ ε` (use ε = 0.000001 — never exactly 0 to avoid zero weights).
+`V1, V2, U1, U2 ≥ ε` (use ε = 0.000001 - never exactly 0 to avoid zero weights).
 
 ---
 
@@ -102,25 +102,25 @@ Strategy: Apply two separate transformations.
 
 ---
 
-## 5. Excel Solver — Setup & Steps
+## 5. Excel Solver - Setup & Steps
 
 <Steps>
 1. **Enter data:** Put data + decision variable cells. Use VLOOKUP to auto-fill coefficients.
 2. **Set objective cell:** E.g., `92·V1 + 80·V2` (Maximize).
 3. **Changing variable cells:** Select `V1, V2, U1, U2` cells.
 4. **Add Constraint 0:** `32·U1 + 88·U2 = 1`.
-5. **Add Constraints 1–9:** All 9 facilities' constraints `≤ 0`.
+5. **Add Constraints 1-9:** All 9 facilities' constraints `≤ 0`.
 6. **Solve:** Use **Simplex LP**, lower bounds = `ε`. Record results and repeat 9 times.
 </Steps>
 
 ---
 
-## 6. Efficiency Results — All 9 Facilities
+## 6. Efficiency Results - All 9 Facilities
 
 | Fac. | Efficiency | Gap | Highest Weight Parameter | Status |
 |---|---|---|---|---|
-| **F4** | 100% | 0% | — | **Efficient ★** |
-| **F7** | 100% | 0% | — | **Efficient ★** |
+| **F4** | 100% | 0% | - | **Efficient ★** |
+| **F7** | 100% | 0% | - | **Efficient ★** |
 | **F1** | 95.72% | 4.28% | OEE (V2 highest) | Not efficient |
 | **F9** | 92.00% | 8.00% | Cycle Time (U1 = 0.033) | Not efficient |
 | **F2** | 87.00% | 13.00% | OEE & Resource Util | Not efficient |
@@ -130,13 +130,13 @@ Strategy: Apply two separate transformations.
 
 ---
 
-## 7. How to Interpret DEA Results — Weight-Based Focus
+## 7. How to Interpret DEA Results - Weight-Based Focus
 
 The parameter with the highest weight is where efficiency is most sensitive. Focus improvement effort there.
 
 | Scenario | Meaning | Action |
 |---|---|---|
-| **Efficiency = 100%** | Facility is on the efficient frontier | No improvement needed — benchmark |
+| **Efficiency = 100%** | Facility is on the efficient frontier | No improvement needed - benchmark |
 | **Output weight (Vk) highest** | That output is most sensitive | Increase that output value |
 | **Input weight (Uj) highest** | That input is dragging efficiency down | Reduce that input value |
 | **Multiple high weights** | Both output and input contribute | Improve both simultaneously |

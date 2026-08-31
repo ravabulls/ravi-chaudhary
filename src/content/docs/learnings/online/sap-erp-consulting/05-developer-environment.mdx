@@ -1,6 +1,6 @@
 ---
 title: "The Developer Environment"
-description: "Setting up a working developer machine — the terminal and essential shell commands, the four core tools (Git, Node.js, VS Code, the browser), editor vs IDE, a verify-and-install checklist, and how to troubleshoot setup problems."
+description: "Setting up a working developer machine - the terminal and essential shell commands, the four core tools (Git, Node.js, VS Code, the browser), editor vs IDE, a verify-and-install checklist, and how to troubleshoot setup problems."
 sidebar:
   label: "5 · Developer Environment"
   order: 5
@@ -8,7 +8,7 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+*SAP Implementation Consulting & ERP - Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
 
 ---
 
@@ -18,13 +18,13 @@ Before I write a single line of real code, my machine needs a workbench: a place
 
 There are exactly two ways to give a computer instructions:
 
-- **GUI — Graphical User Interface.** Clicking icons, dragging windows, picking from menus. This is how nearly everyone uses a computer.
-- **CLI — Command-Line Interface.** Typing a written instruction, pressing Enter, and reading a written answer. Older, and still everywhere in the developer world.
+- **GUI - Graphical User Interface.** Clicking icons, dragging windows, picking from menus. This is how nearly everyone uses a computer.
+- **CLI - Command-Line Interface.** Typing a written instruction, pressing Enter, and reading a written answer. Older, and still everywhere in the developer world.
 
 The **terminal** is the window where the CLI happens.
 
 <Aside type="note" title="The terminal, in one picture">
-It's a chat window with my computer. I type a short message (a **command**), press Enter to send it, and the computer replies in text. Nothing happens while I'm still typing — only Enter sends. The catch: this chat partner is *extremely* literal. It does exactly what I typed, not what I meant, which is why a small typo matters.
+It's a chat window with my computer. I type a short message (a **command**), press Enter to send it, and the computer replies in text. Nothing happens while I'm still typing - only Enter sends. The catch: this chat partner is *extremely* literal. It does exactly what I typed, not what I meant, which is why a small typo matters.
 </Aside>
 
 ### The vocabulary that gets used loosely
@@ -33,9 +33,9 @@ Four words float around, related but not identical. Worth pinning down once:
 
 | Word | What it actually means |
 |---|---|
-| **Terminal** | The *window* — the app I open (Windows Terminal, macOS Terminal, GNOME Terminal, Hyper) |
+| **Terminal** | The *window* - the app I open (Windows Terminal, macOS Terminal, GNOME Terminal, Hyper) |
 | **Shell** | The *program inside* that reads and runs my commands (PowerShell, Bash, Zsh) |
-| **Command line** | The line I type on — and loosely, this whole way of working |
+| **Command line** | The line I type on - and loosely, this whole way of working |
 | **Console** | An older, catch-all synonym for any of the above |
 
 In everyday speech developers mix these freely. "Open a console," "open a shell," "open a terminal" all mean the same thing: get to the place where I can type commands.
@@ -45,12 +45,12 @@ In everyday speech developers mix these freely. "Open a console," "open a shell,
 If clicking works, why type?
 
 - **The tools live there.** Git, Node.js, and npm are command-line tools first. Their native home is the terminal, and every tutorial online assumes it.
-- **It's precise and repeatable.** A command is one exact thing — copyable, shareable, re-runnable identically. "Click the third icon, then the second tab" is none of those.
+- **It's precise and repeatable.** A command is one exact thing - copyable, shareable, re-runnable identically. "Click the third icon, then the second tab" is none of those.
 - **It scales.** Renaming one file is easier with a mouse. Renaming five hundred is one command.
 - **Servers have no desktop.** The machines that run real software usually have no GUI at all. The command line is how professionals reach them.
 
 <Aside type="tip" title="One job, both ways">
-Make a folder called `projects` inside Documents. **GUI:** open the file explorer, go to Documents, right-click, New → Folder, type the name, Enter — six steps. **CLI:** `mkdir projects` — one line. Neither is wrong; now I see why folder-makers-all-day prefer the short version.
+Make a folder called `projects` inside Documents. **GUI:** open the file explorer, go to Documents, right-click, New → Folder, type the name, Enter - six steps. **CLI:** `mkdir projects` - one line. Neither is wrong; now I see why folder-makers-all-day prefer the short version.
 </Aside>
 
 ## Opening a terminal
@@ -65,7 +65,7 @@ The built-in app is called **Terminal** (also *Windows Terminal*), and it runs t
 2. Type `terminal`.
 3. Press Enter (or click **Terminal**).
 
-A window opens with a line like `PS C:\Users\ravi>`. On older Windows 10 machines Terminal may be missing — search `powershell` instead and open **Windows PowerShell**; same place.
+A window opens with a line like `PS C:\Users\ravi>`. On older Windows 10 machines Terminal may be missing - search `powershell` instead and open **Windows PowerShell**; same place.
 
 Ignore **Command Prompt** (*cmd*): it's an older shell this program doesn't use. If a window shows `C:\Users\ravi>` *without* the `PS`, close it and open Terminal/PowerShell.
   </TabItem>
@@ -76,36 +76,36 @@ This program sets up **Hyper** ([hyper.is](https://hyper.is/)) as the terminal, 
 2. Type `hyper`.
 3. Press Enter.
 
-Hyper's prompt is themed (colored blocks and arrows instead of plain text), but the shell underneath is ordinary Zsh — every command works the same. The always-there fallback is the built-in **Terminal** app (Cmd + Space → `terminal`).
+Hyper's prompt is themed (colored blocks and arrows instead of plain text), but the shell underneath is ordinary Zsh - every command works the same. The always-there fallback is the built-in **Terminal** app (Cmd + Space → `terminal`).
   </TabItem>
   <TabItem label="Linux">
 This program sets up **Hyper** ([hyper.is](https://hyper.is/)) as the terminal, running **Bash**.
 
 Search my applications for `hyper` and open it. Themed prompt, ordinary shell underneath.
 
-The always-there fallback is my distribution's own terminal — **GNOME Terminal** on Ubuntu, **Konsole** on KDE — usually one **Ctrl + Alt + T** away. A plain prompt looks like `ravi@laptop:~$`.
+The always-there fallback is my distribution's own terminal - **GNOME Terminal** on Ubuntu, **Konsole** on KDE - usually one **Ctrl + Alt + T** away. A plain prompt looks like `ravi@laptop:~$`.
   </TabItem>
 </Tabs>
 
 <Aside type="note" title="Reading the prompt">
-That waiting line is the **prompt** — the shell saying "ready, your turn." It usually shows *where I am* (`~` is shorthand for my home folder) and *which shell* I'm in, by its ending symbol: PowerShell ends with `>`, Zsh (macOS) ends with `%`, Bash (Linux) ends with `$`.
+That waiting line is the **prompt** - the shell saying "ready, your turn." It usually shows *where I am* (`~` is shorthand for my home folder) and *which shell* I'm in, by its ending symbol: PowerShell ends with `>`, Zsh (macOS) ends with `%`, Bash (Linux) ends with `$`.
 
-When a tutorial shows a command after a `$` or `>`, **that symbol is the prompt — I never type it**, only what comes after.
+When a tutorial shows a command after a `$` or `>`, **that symbol is the prompt - I never type it**, only what comes after.
 </Aside>
 
 <Aside type="caution" title="Opening a terminal changes nothing by itself">
-A black window full of text is what *ready* looks like, not an error. I can open it, type, delete, close it again, and my computer is exactly as it was. Nothing runs until Enter. So there's nothing to be scared of — open it as often as I like.
+A black window full of text is what *ready* looks like, not an error. I can open it, type, delete, close it again, and my computer is exactly as it was. Nothing runs until Enter. So there's nothing to be scared of - open it as often as I like.
 </Aside>
 
-## Essential commands — the reference table
+## Essential commands - the reference table
 
 Everything is the same loop: **type, Enter, read the answer.** Here's the working vocabulary. Most of these aliases work in PowerShell too, but where Windows differs I've noted its native command.
 
 | Command | What it does | macOS / Linux | Windows PowerShell |
 |---|---|---|---|
-| **pwd** | Print working directory — "where am I?" | `pwd` | `pwd` |
+| **pwd** | Print working directory - "where am I?" | `pwd` | `pwd` |
 | **ls** / **dir** | List what's in this folder | `ls` | `ls` or `dir` |
-| **cd** | Change directory — step *into* a folder | `cd Documents` | `cd Documents` |
+| **cd** | Change directory - step *into* a folder | `cd Documents` | `cd Documents` |
 | **cd ..** | Step *up* one folder (`..` = the folder above) | `cd ..` | `cd ..` |
 | **mkdir** | Make a new folder here | `mkdir projects` | `mkdir projects` |
 | **touch** / New-Item | Create an empty file | `touch notes.txt` | `New-Item notes.txt` |
@@ -117,11 +117,11 @@ Everything is the same loop: **type, Enter, read the answer.** Here's the workin
 | **rm** | Delete a file (add `-r` for a folder) | `rm old.txt` | `rm old.txt` |
 
 <Aside type="caution" title="Two things that trip up beginners">
-- **`touch` doesn't exist in PowerShell** — use `New-Item filename` there. Everything else in the table has a working PowerShell alias.
-- **`rm` deletes for real** — there's no Recycle Bin stop. Double-check the name before pressing Enter, and never `rm -r` a folder unless I'm certain.
+- **`touch` doesn't exist in PowerShell** - use `New-Item filename` there. Everything else in the table has a working PowerShell alias.
+- **`rm` deletes for real** - there's no Recycle Bin stop. Double-check the name before pressing Enter, and never `rm -r` a folder unless I'm certain.
 </Aside>
 
-Here's what the loop actually feels like — a short walk that uses the first five. The `$` is the prompt, so I type only what follows it; lines without a `$` are the computer answering:
+Here's what the loop actually feels like - a short walk that uses the first five. The `$` is the prompt, so I type only what follows it; lines without a `$` are the computer answering:
 
 ```bash
 $ pwd
@@ -144,37 +144,37 @@ Read it like a story: *check where I am, look around, step in, confirm, make a f
 <Aside type="tip" title="Three habits that prevent most frustration">
 - **"Run a command" = type it, then press Enter.** Nothing runs mid-typing.
 - **Spelling and case matter.** On macOS/Linux, `Documents` and `documents` can be different folders. Type names exactly as `ls` shows them.
-- **Success is usually silent.** `cd` and `mkdir` say nothing when they work — silence means success. I confirm with `pwd` and `ls`, not by re-running the command five times.
+- **Success is usually silent.** `cd` and `mkdir` say nothing when they work - silence means success. I confirm with `pwd` and `ls`, not by re-running the command five times.
 </Aside>
 
 <Aside type="note" title="Absolute vs relative paths">
-Every location is a **path**. An **absolute path** starts from the very top (`/Users/ravi/Documents`, or `C:\Users\ravi\Documents`) and means the same thing wherever I stand. A **relative path** (`Documents`, `..`, `notes/drafts`) is measured from my current folder, so its meaning shifts as I move. `cd` takes both — and knowing the difference explains most "why didn't that work?" moments before they happen.
+Every location is a **path**. An **absolute path** starts from the very top (`/Users/ravi/Documents`, or `C:\Users\ravi\Documents`) and means the same thing wherever I stand. A **relative path** (`Documents`, `..`, `notes/drafts`) is measured from my current folder, so its meaning shifts as I move. `cd` takes both - and knowing the difference explains most "why didn't that work?" moments before they happen.
 </Aside>
 
 ## Reading and fixing command-line errors
 
-Sooner or later the terminal answers with a complaint instead of what I wanted. That's *good* — the error is the shell being helpful, and it always stops **before doing anything**. An error never means I broke the computer. The three I'll meet first:
+Sooner or later the terminal answers with a complaint instead of what I wanted. That's *good* - the error is the shell being helpful, and it always stops **before doing anything**. An error never means I broke the computer. The three I'll meet first:
 
 | Error message | What it really means | The fix |
 |---|---|---|
-| `command not found` / `not recognized` | The first word isn't a command it knows — a **typo**, or the program **isn't installed** | Check spelling first; if spelt right, it's an install/PATH issue (see troubleshooting) |
+| `command not found` / `not recognized` | The first word isn't a command it knows - a **typo**, or the program **isn't installed** | Check spelling first; if spelt right, it's an install/PATH issue (see troubleshooting) |
 | `no such file or directory` | It knows the command, but can't see that folder/file *from where I'm standing* | `pwd` to see where I am, `ls` to see what's here, then `cd` to what actually shows |
-| `too many arguments` | A **space** in a name split it into two pieces | Wrap the name in quotes: `cd "My Projects"` — or avoid spaces entirely |
+| `too many arguments` | A **space** in a name split it into two pieces | Wrap the name in quotes: `cd "My Projects"` - or avoid spaces entirely |
 
 <Aside type="tip" title="Read the first line, slowly">
-The answer is almost always right there in plain words — "not found," "does not exist," "too many arguments." Beginners who read the message calmly fix things faster than experts who don't.
+The answer is almost always right there in plain words - "not found," "does not exist," "too many arguments." Beginners who read the message calmly fix things faster than experts who don't.
 
-And name folders `my-projects` or `my_projects` — no spaces means no quoting and no surprises. I'll do that with everything I create.
+And name folders `my-projects` or `my_projects` - no spaces means no quoting and no surprises. I'll do that with everything I create.
 </Aside>
 
 <Aside type="caution" title="No error doesn't always mean I got what I wanted">
-`mkdir client work` doesn't fail — it quietly makes *two* folders (`client` and `work`), because the space split it. So I confirm with `ls` even when there's no error.
+`mkdir client work` doesn't fail - it quietly makes *two* folders (`client` and `work`), because the space split it. So I confirm with `ls` even when there's no error.
 </Aside>
 
 <Aside type="note" title="Three shortcuts that prevent errors before they happen">
-- **Tab completion** — type the first letters of a name, press **Tab**, and the shell finishes it with the exact spelling (quoting included). Developers press Tab constantly.
-- **Up arrow** — brings back a previous command, so a long line with one typo is recalled and fixed, not retyped.
-- **Built-in help** — `mkdir --help` on macOS/Linux, or `Get-Help mkdir` in PowerShell, explains any command.
+- **Tab completion** - type the first letters of a name, press **Tab**, and the shell finishes it with the exact spelling (quoting included). Developers press Tab constantly.
+- **Up arrow** - brings back a previous command, so a long line with one typo is recalled and fixed, not retyped.
+- **Built-in help** - `mkdir --help` on macOS/Linux, or `Get-Help mkdir` in PowerShell, explains any command.
 </Aside>
 
 ## The four core tools
@@ -184,9 +184,9 @@ My machine runs on four tools, one per job. Together they form a loop I'll repea
 | Tool | What it is | Its one job |
 |---|---|---|
 | **VS Code** | A code editor | *Write* and organize code |
-| **Git** | A version-control system | *Remember* — record the history of my work so nothing is ever lost |
+| **Git** | A version-control system | *Remember* - record the history of my work so nothing is ever lost |
 | **Node.js** | A JavaScript runtime (brings **npm**) | *Run* JavaScript outside the browser, and install building blocks |
-| **The browser** (Chrome) | A browser + inspection lab | *Show and inspect* — where web code runs, previews, and gets debugged |
+| **The browser** (Chrome) | A browser + inspection lab | *Show and inspect* - where web code runs, previews, and gets debugged |
 
 <figure class="sc-fig">
   <div class="sc-flow">
@@ -204,48 +204,48 @@ My machine runs on four tools, one per job. Together they form a loop I'll repea
 </figure>
 
 <Aside type="note" title="These aren't beginner tools I'll outgrow">
-This *is* the professional toolchain. The same four (or their direct equivalents) sit on the machines of developers with twenty years of experience. I'll use a small slice of each and grow into the rest — nobody knows all of VS Code or all of Git, including the people who built them.
+This *is* the professional toolchain. The same four (or their direct equivalents) sit on the machines of developers with twenty years of experience. I'll use a small slice of each and grow into the rest - nobody knows all of VS Code or all of Git, including the people who built them.
 </Aside>
 
 ### Git = version control
 
 The problem Git solves is the folder full of `website-final.html`, `website-final2.html`, `website-FINAL-REALLY.html`. Which one did I send? What changed between two of them? What broke it today? A **version-control system (VCS)** answers all of that properly:
 
-- **Save points** — at any moment I choose, it snapshots the whole project with a timestamp, my name, and a message.
-- **A readable history** — the full list of those save points, so "what changed, when, why" is always answerable.
-- **Time travel** — any earlier save point can be restored. Broke something today? Back to yesterday's working state in seconds.
-- **Safe teamwork** — several people work on the same project; the VCS merges their work and shows exactly where it collides.
+- **Save points** - at any moment I choose, it snapshots the whole project with a timestamp, my name, and a message.
+- **A readable history** - the full list of those save points, so "what changed, when, why" is always answerable.
+- **Time travel** - any earlier save point can be restored. Broke something today? Back to yesterday's working state in seconds.
+- **Safe teamwork** - several people work on the same project; the VCS merges their work and shows exactly where it collides.
 
-**Git** is *the* standard VCS — so dominant that "version control" and "Git" are near-synonyms.
+**Git** is *the* standard VCS - so dominant that "version control" and "Git" are near-synonyms.
 
-<Aside type="tip" title="Git vs GitHub — the confusion to clear up once">
-**Git is the tool on my machine; GitHub is an online service where Git projects live.** Git works fully offline, recording history on my own computer. GitHub (a website owned by Microsoft) hosts a copy of that history online so I can back it up, share it, and collaborate. Related, used together constantly — not the same thing.
+<Aside type="tip" title="Git vs GitHub - the confusion to clear up once">
+**Git is the tool on my machine; GitHub is an online service where Git projects live.** Git works fully offline, recording history on my own computer. GitHub (a website owned by Microsoft) hosts a copy of that history online so I can back it up, share it, and collaborate. Related, used together constantly - not the same thing.
 </Aside>
 
 ### Node.js = run JavaScript outside the browser
 
-**JavaScript** is the language of the web, and for years it could only run *inside* a browser. **Node.js** is a **runtime** — a program whose job is to run programs — that removed that cage. Install it, and JavaScript runs directly on my machine, no browser needed. That turned JavaScript into a language that also powers servers, command-line tools, and nearly all modern web-development tooling.
+**JavaScript** is the language of the web, and for years it could only run *inside* a browser. **Node.js** is a **runtime** - a program whose job is to run programs - that removed that cage. Install it, and JavaScript runs directly on my machine, no browser needed. That turned JavaScript into a language that also powers servers, command-line tools, and nearly all modern web-development tooling.
 
-<Aside type="note" title="npm — the part that quietly matters most">
-Installing Node.js also installs **npm** (the **Node package manager**). Its job is to fetch and install **packages** — ready-made blocks of code other developers have published — from the world's largest code registry. Modern web development is *assembly* as much as writing: real projects stand on dozens of packages, and npm is how they arrive and stay updated. When a tutorial says "npm install something," now I know exactly which tool is doing what.
+<Aside type="note" title="npm - the part that quietly matters most">
+Installing Node.js also installs **npm** (the **Node package manager**). Its job is to fetch and install **packages** - ready-made blocks of code other developers have published - from the world's largest code registry. Modern web development is *assembly* as much as writing: real projects stand on dozens of packages, and npm is how they arrive and stay updated. When a tutorial says "npm install something," now I know exactly which tool is doing what.
 </Aside>
 
 ### The browser = inspect and debug
 
-To most people a browser just shows websites. To a developer it's the machine their work runs on — HTML, CSS, and JavaScript run *inside the browser* of whoever opens the page. That makes it my test bench, plus a full inspection lab one right-click away.
+To most people a browser just shows websites. To a developer it's the machine their work runs on - HTML, CSS, and JavaScript run *inside the browser* of whoever opens the page. That makes it my test bench, plus a full inspection lab one right-click away.
 
 <Steps>
 
 1. Right-click anything on a page (a headline works well) and choose **Inspect**.
 
-2. A panel opens — the **DevTools** (Developer Tools). The **Elements** tab shows the page's actual HTML; hovering a line highlights the matching part of the page.
+2. A panel opens - the **DevTools** (Developer Tools). The **Elements** tab shows the page's actual HTML; hovering a line highlights the matching part of the page.
 
-3. Double-click a headline's text, type something else, press Enter — the page changes. Now refresh: it's back.
+3. Double-click a headline's text, type something else, press Enter - the page changes. Now refresh: it's back.
 
 </Steps>
 
 <Aside type="tip" title="Why that vanishing matters">
-**DevTools edits my browser's local copy of the page, never the real website.** That's exactly what makes it a safe laboratory — I can poke at any page on the internet, including my own, and a refresh undoes everything. It's a sandbox, not a control panel.
+**DevTools edits my browser's local copy of the page, never the real website.** That's exactly what makes it a safe laboratory - I can poke at any page on the internet, including my own, and a refresh undoes everything. It's a sandbox, not a control panel.
 </Aside>
 
 ## Editor vs IDE
@@ -254,7 +254,7 @@ Someone will eventually ask which **IDE** I use. The honest answer needs a defin
 
 | | Code editor | IDE (Integrated Development Environment) |
 |---|---|---|
-| **Starts as** | Light and general — edits any language out of the box | A complete workshop for *one* ecosystem, everything preinstalled |
+| **Starts as** | Light and general - edits any language out of the box | A complete workshop for *one* ecosystem, everything preinstalled |
 | **Grows via** | Extensions I choose, per project | Already wired together: build system, debugger, templates, refactoring |
 | **Examples** | VS Code, Sublime Text, Vim | IntelliJ (Java), PyCharm (Python), Visual Studio (.NET), Eclipse |
 | **Best when** | One tool must cover many languages | Deep, single-ecosystem work |
@@ -262,7 +262,7 @@ Someone will eventually ask which **IDE** I use. The honest answer needs a defin
 <Aside type="note" title="The one question that settles it">
 **Built for everything, or built for one thing?** Extensions I add myself = editor thinking. A complete preinstalled workshop for one ecosystem = IDE thinking.
 
-The line is blurry — VS Code with the right extensions behaves like a lightweight IDE. The classical answer to keep: **VS Code is an editor** that extensions can push toward IDE territory. This block fits an editor (one light tool for HTML, CSS, JavaScript). The **SAP / ABAP** world later comes with its own deeply integrated IDE — and now I'll know why it feels so different: I'm stepping out of the general toolbox into a specialist's workshop.
+The line is blurry - VS Code with the right extensions behaves like a lightweight IDE. The classical answer to keep: **VS Code is an editor** that extensions can push toward IDE territory. This block fits an editor (one light tool for HTML, CSS, JavaScript). The **SAP / ABAP** world later comes with its own deeply integrated IDE - and now I'll know why it feels so different: I'm stepping out of the general toolbox into a specialist's workshop.
 </Aside>
 
 ## The golden rule of setup
@@ -270,21 +270,21 @@ The line is blurry — VS Code with the right extensions behaves like a lightwei
 Before any install steps, the one habit that prevents half of all "it didn't work" moments:
 
 <Aside type="caution" title="After every single install: close the terminal, open a fresh one">
-A terminal reads its setup — which programs exist and where they live — **once, the moment it opens.** A terminal that was already open *before* an install never saw the new program, and will insist it doesn't exist. So after installing anything: close the terminal completely, open a new one, *then* verify.
+A terminal reads its setup - which programs exist and where they live - **once, the moment it opens.** A terminal that was already open *before* an install never saw the new program, and will insist it doesn't exist. So after installing anything: close the terminal completely, open a new one, *then* verify.
 </Aside>
 
 Two more facts before installing anything:
 
 - **Know my machine.** Every download page asks what I'm running. Windows: type `about` → **About your PC** (or run `winver`). macOS: **Apple menu → About This Mac**. Linux: `cat /etc/os-release`.
-- **Administrator rights.** Installing changes the machine for every user, so the OS asks permission — the "allow this app to make changes?" pop-up on Windows, a password prompt on macOS/Linux (where the terminal word is **sudo**). On my own laptop I click Yes / type my password. On a company or family device, installs may be locked to someone else's account — that's policy, not an error; the fix is asking the owner or IT, not fighting the dialog.
+- **Administrator rights.** Installing changes the machine for every user, so the OS asks permission - the "allow this app to make changes?" pop-up on Windows, a password prompt on macOS/Linux (where the terminal word is **sudo**). On my own laptop I click Yes / type my password. On a company or family device, installs may be locked to someone else's account - that's policy, not an error; the fix is asking the owner or IT, not fighting the dialog.
 
 ## Verify, then install
 
-Everything was set up at program start, so the first move for each tool is **verify** — check it already works. Install steps are the reference for a new machine or a reinstall.
+Everything was set up at program start, so the first move for each tool is **verify** - check it already works. Install steps are the reference for a new machine or a reinstall.
 
 ### The terminal (macOS & Linux only)
 
-Windows uses Windows Terminal — nothing to do. macOS/Linux run Hyper, and it's verified first because everything else gets checked *inside* a terminal.
+Windows uses Windows Terminal - nothing to do. macOS/Linux run Hyper, and it's verified first because everything else gets checked *inside* a terminal.
 
 <Steps>
 
@@ -297,7 +297,7 @@ Windows uses Windows Terminal — nothing to do. macOS/Linux run Hyper, and it's
    /Users/ravi
    ```
 
-3. Opens and answers — verified. **Install reference:** download from [hyper.is](https://hyper.is/); on macOS drag it into Applications, on Linux install the `.deb` (`sudo apt install ./hyper_*.deb`). Built-in terminals (macOS Terminal, GNOME Terminal) are the permanent fallback.
+3. Opens and answers - verified. **Install reference:** download from [hyper.is](https://hyper.is/); on macOS drag it into Applications, on Linux install the `.deb` (`sudo apt install ./hyper_*.deb`). Built-in terminals (macOS Terminal, GNOME Terminal) are the permanent fallback.
 
 </Steps>
 
@@ -312,7 +312,7 @@ Windows uses Windows Terminal — nothing to do. macOS/Linux run Hyper, and it's
    git version 2.45.1
    ```
 
-2. **Any version number = done.** My number will differ — that's fine. Only `command not found` needs fixing: try a fresh terminal first, then install.
+2. **Any version number = done.** My number will differ - that's fine. Only `command not found` needs fixing: try a fresh terminal first, then install.
 
 3. **Install reference:**
 
@@ -320,7 +320,7 @@ Windows uses Windows Terminal — nothing to do. macOS/Linux run Hyper, and it's
 
 <Tabs>
   <TabItem label="Windows">
-Download the installer from [git-scm.com/downloads](https://git-scm.com/downloads), run it, and **accept the defaults on every screen** — the wall of option pages intimidates everyone once, but none of them need changing here. It also installs **Git Bash**, a bonus terminal that speaks the macOS/Linux command language. Open a *new* terminal and run `git --version`.
+Download the installer from [git-scm.com/downloads](https://git-scm.com/downloads), run it, and **accept the defaults on every screen** - the wall of option pages intimidates everyone once, but none of them need changing here. It also installs **Git Bash**, a bonus terminal that speaks the macOS/Linux command language. Open a *new* terminal and run `git --version`.
   </TabItem>
   <TabItem label="macOS">
 Installed via **Homebrew** ([brew.sh](https://brew.sh/)), the Mac's popular package manager. One-time prep first:
@@ -329,7 +329,7 @@ Installed via **Homebrew** ([brew.sh](https://brew.sh/)), the Mac's popular pack
 $ touch ~/.zshrc
 ```
 
-`touch` creates the file if it's missing (harmless if it exists). `~/.zshrc` is my Zsh config, read every time a terminal opens — it's where Homebrew and nvm write their setup lines. On a fresh Mac it doesn't exist yet, and without it those lines have nowhere to go, causing mysterious `command not found` errors later. Then:
+`touch` creates the file if it's missing (harmless if it exists). `~/.zshrc` is my Zsh config, read every time a terminal opens - it's where Homebrew and nvm write their setup lines. On a fresh Mac it doesn't exist yet, and without it those lines have nowhere to go, causing mysterious `command not found` errors later. Then:
 
 ```bash
 $ brew --version     # confirm Homebrew is present
@@ -362,13 +362,13 @@ $ npm --version
 
 Two version numbers = done. Different numbers are expected.
 
-<Aside type="tip" title="LTS — the one decision that matters">
-Node ships in two lines. **LTS (Long Term Support)** is the stable version, patched for years — *always choose this one.* **Current** is the newest features, changing fast, for people on the leading edge. Professional teams run LTS almost universally. Remember the acronym and the choice: LTS, stability over novelty.
+<Aside type="tip" title="LTS - the one decision that matters">
+Node ships in two lines. **LTS (Long Term Support)** is the stable version, patched for years - *always choose this one.* **Current** is the newest features, changing fast, for people on the leading edge. Professional teams run LTS almost universally. Remember the acronym and the choice: LTS, stability over novelty.
 </Aside>
 
 <Tabs>
   <TabItem label="Windows">
-Download the **LTS** installer from [nodejs.org](https://nodejs.org/), run it with defaults. npm rides along automatically — no separate install. Open a *new* terminal and run both verify commands.
+Download the **LTS** installer from [nodejs.org](https://nodejs.org/), run it with defaults. npm rides along automatically - no separate install. Open a *new* terminal and run both verify commands.
   </TabItem>
   <TabItem label="macOS">
 Installed via **nvm** (Node Version Manager). `~/.zshrc` must exist first (the `touch ~/.zshrc` from the Git step covers it). Then:
@@ -393,12 +393,12 @@ If nvm says `command not found`, install it from [github.com/nvm-sh/nvm](https:/
 </Tabs>
 
 <Aside type="note" title="Why nvm instead of a plain installer (macOS/Linux)">
-Different projects genuinely need different Node versions, and nvm switches between them with one command. Updates become trivial (`nvm install --lts` again, whenever). And it installs everything inside my home folder — no `sudo`, no admin password, none of the permission tangles of a system-wide install. Rare tool that's both the beginner-friendly *and* the professional route.
+Different projects genuinely need different Node versions, and nvm switches between them with one command. Updates become trivial (`nvm install --lts` again, whenever). And it installs everything inside my home folder - no `sudo`, no admin password, none of the permission tangles of a system-wide install. Rare tool that's both the beginner-friendly *and* the professional route.
 </Aside>
 
 ### VS Code
 
-No command — three moves I already know:
+No command - three moves I already know:
 
 <Steps>
 
@@ -406,27 +406,27 @@ No command — three moves I already know:
 
 2. **File → Open Folder**, and pick a folder I made earlier (e.g. `startupistan-practice`).
 
-3. Press **Ctrl + backtick** (the `` ` `` key, top-left) to open the integrated terminal, and run `pwd` — it should answer with the folder's path.
+3. Press **Ctrl + backtick** (the `` ` `` key, top-left) to open the integrated terminal, and run `pwd` - it should answer with the folder's path.
 
 </Steps>
 
 All three work → editor ready. **Install reference:** download from [code.visualstudio.com](https://code.visualstudio.com/), defaults throughout (Windows installer; drag to Applications on macOS; `.deb` on Linux).
 
 <Aside type="note" title="The trust prompt, explained once">
-The first time I open a folder, VS Code asks: *"Do you trust the authors of the files in this folder?"* — a real security feature, since some extensions run code automatically. Rule of thumb: folders I made myself and course projects → **Yes, I trust the authors.** Random code from unknown corners of the internet → restricted mode is exactly what it's for. And it's free with no sign-in — the optional account only syncs settings between machines.
+The first time I open a folder, VS Code asks: *"Do you trust the authors of the files in this folder?"* - a real security feature, since some extensions run code automatically. Rule of thumb: folders I made myself and course projects → **Yes, I trust the authors.** Random code from unknown corners of the internet → restricted mode is exactly what it's for. And it's free with no sign-in - the optional account only syncs settings between machines.
 </Aside>
 
-### VS Code extensions — the curated twelve
+### VS Code extensions - the curated twelve
 
 Extensions are where a plain editor gains its abilities. Installing all twelve takes ~10 minutes. The procedure, repeated twelve times:
 
 <Steps>
 
-1. Open the Extensions view — the four-squares icon, or **Ctrl + Shift + X**.
+1. Open the Extensions view - the four-squares icon, or **Ctrl + Shift + X**.
 
 2. Type the extension's name in the search box.
 
-3. **Check the publisher matches** the one listed below — imitations of popular extensions exist, and the publisher line is my guarantee.
+3. **Check the publisher matches** the one listed below - imitations of popular extensions exist, and the publisher line is my guarantee.
 
 4. Click **Install**. Active in seconds, no restart.
 
@@ -435,15 +435,15 @@ Extensions are where a plain editor gains its abilities. Installing all twelve t
 | Group | Extensions | Why |
 |---|---|---|
 | **Formatting & quality** | Prettier, ESLint, HTMLHint, Code Spell Checker | Keep code clean; flag problems before I run anything |
-| **Web workflow** | Live Server, Auto Rename Tag, JS (ES6) snippets | Speed up building pages — Live Server auto-refreshes the browser on save |
+| **Web workflow** | Live Server, Auto Rename Tag, JS (ES6) snippets | Speed up building pages - Live Server auto-refreshes the browser on save |
 | **Git support** | GitLens, Git History | Who changed each line, and a browsable project history |
 | **Comfort & readability** | Andromeda (theme), Material Icon Theme, Better Comments | The shared look, meaningful file icons, highlighted TODO/warning comments |
 
 <Aside type="caution" title="Quiet isn't broken">
-Some extensions work immediately; others wake up in later courses. Live Server lights up in Web Foundations, ESLint from JavaScript onward, and **GitLens shows nothing until a folder is a Git project** — so its silence now is expected, not a fault. Also: more extensions is *not* better — each costs a little speed and attention. Twelve curated beats fifty accumulated.
+Some extensions work immediately; others wake up in later courses. Live Server lights up in Web Foundations, ESLint from JavaScript onward, and **GitLens shows nothing until a folder is a Git project** - so its silence now is expected, not a fault. Also: more extensions is *not* better - each costs a little speed and attention. Twelve curated beats fifty accumulated.
 </Aside>
 
-### VS Code settings — the course five
+### VS Code settings - the course five
 
 Extensions give abilities; **settings** decide behavior. Open Settings with **Ctrl + ,** (comma), use the search box, and set five things:
 
@@ -452,7 +452,7 @@ Extensions give abilities; **settings** decide behavior. Open Settings with **Ct
 | `format on save` | **tick** Format On Save | Code tidies itself every time I save |
 | `format on paste` | **tick** Format On Paste | Pasted code adopts my formatting instantly |
 | `default formatter` | **Prettier - Code formatter** | Tells the two above *which tool* tidies |
-| `minimap` | **untick** Minimap: Enabled | Removes the tiny code-overview strip — more room, less noise |
+| `minimap` | **untick** Minimap: Enabled | Removes the tiny code-overview strip - more room, less noise |
 | `telemetry` | Telemetry Level → **off** | No usage data leaves my machine (Datenschutz hygiene) |
 
 <Aside type="tip" title="Prove the whole chain in ten seconds">
@@ -461,18 +461,18 @@ In my practice folder, make a file `test.js`, type `const x=1;` (spacing mess in
 
 ### The browser (Chrome as default)
 
-Two checks: **installed and current** (three-dots menu → Help → About Google Chrome — it updates itself right there), and **set as default** (the honest test: click a link from outside a browser — an email, a PDF — and see if it opens in Chrome).
+Two checks: **installed and current** (three-dots menu → Help → About Google Chrome - it updates itself right there), and **set as default** (the honest test: click a link from outside a browser - an email, a PDF - and see if it opens in Chrome).
 
-Setting the default: **Windows** — Settings → Apps → Default apps → Google Chrome → Set default. **macOS** — System Settings → Desktop & Dock → Default web browser. **Linux** — Settings → Default Applications. It only changes *which app opens links*; every other browser stays installed.
+Setting the default: **Windows** - Settings → Apps → Default apps → Google Chrome → Set default. **macOS** - System Settings → Desktop & Dock → Default web browser. **Linux** - Settings → Default Applications. It only changes *which app opens links*; every other browser stays installed.
 
 ### The GitHub account
 
-Not software — an identity on the web, and in Course 05 it becomes the online home of everything I build. **Verify:** log in at [github.com](https://github.com/); seeing my dashboard is the whole check. Lost password? Use "Forgot password?" *now*, not mid-course.
+Not software - an identity on the web, and in Course 05 it becomes the online home of everything I build. **Verify:** log in at [github.com](https://github.com/); seeing my dashboard is the whole check. Lost password? Use "Forgot password?" *now*, not mid-course.
 
 <Aside type="note" title="If creating a new account">
-- **Username: choose like it's permanent and public — because it's both.** My GitHub profile becomes part of my professional identity; employers look at it, and it sits on my CV. Something built on my name ages well; jokes and gamer tags don't. Renaming later breaks every existing link.
+- **Username: choose like it's permanent and public - because it's both.** My GitHub profile becomes part of my professional identity; employers look at it, and it sits on my CV. Something built on my name ages well; jokes and gamer tags don't. Renaming later breaks every existing link.
 - **Email:** one I'll keep long-term, not tied to a current job or school.
-- **Password + 2FA:** a strong unique password, and turn on **two-factor authentication** — GitHub increasingly requires it, and an account holding months of work deserves the second lock.
+- **Password + 2FA:** a strong unique password, and turn on **two-factor authentication** - GitHub increasingly requires it, and an account holding months of work deserves the second lock.
 
 What I *don't* do yet: connect Git on my machine to this account. That handshake opens Course 05. It's free, and it's the only account this module needs.
 </Aside>
@@ -493,19 +493,19 @@ One sitting, run from the VS Code integrated terminal. A machine that passes all
 | 8 | GitHub | I can log in at github.com |
 
 <Aside type="tip" title="A failing line now is a success story">
-Version numbers differing from any example is a *pass*, not a fail — they differ on every machine. And if a line genuinely fails, that's exactly what this checklist is for: it costs nothing to fix now, versus mid-course.
+Version numbers differing from any example is a *pass*, not a fail - they differ on every machine. And if a line genuinely fails, that's exactly what this checklist is for: it costs nothing to fix now, versus mid-course.
 </Aside>
 
-## Troubleshooting — the three patterns
+## Troubleshooting - the three patterns
 
 | Pattern | What's really happening | The fix |
 |---|---|---|
-| **`command not found` right after installing** | My terminal read its list of program folders *when it opened*, before the install added the new one | **Fresh terminal first** — close completely, reopen, retry. Reinstall only if a genuinely fresh terminal still fails |
+| **`command not found` right after installing** | My terminal read its list of program folders *when it opened*, before the install added the new one | **Fresh terminal first** - close completely, reopen, retry. Reinstall only if a genuinely fresh terminal still fails |
 | **The installer won't run / admin prompt rejects me** | I'm on a machine where install rights belong to someone else (company/family device) | Human, not technical: the owner or IT enters credentials or installs it. Nothing should bypass that |
-| **An old version was already there** | An install from years ago | Almost never matters here. If a tool misbehaves and my version is far behind, installing the current version fresh simply replaces the old one — that's the whole upgrade |
+| **An old version was already there** | An install from years ago | Almost never matters here. If a tool misbehaves and my version is far behind, installing the current version fresh simply replaces the old one - that's the whole upgrade |
 
 <Aside type="note" title="The PATH, one level deeper">
-That "list of folders" has a name: the **PATH** — an environment variable holding the directories the shell searches, in order, for any command I type. Installers append their folder to it; a running terminal keeps the copy of PATH it started with. That's the entire mystery of pattern #1 — and the entire reason for the golden rule. See mine with `echo $PATH` (macOS/Linux) or `$env:Path` (PowerShell).
+That "list of folders" has a name: the **PATH** - an environment variable holding the directories the shell searches, in order, for any command I type. Installers append their folder to it; a running terminal keeps the copy of PATH it started with. That's the entire mystery of pattern #1 - and the entire reason for the golden rule. See mine with `echo $PATH` (macOS/Linux) or `$env:Path` (PowerShell).
 </Aside>
 
 ## Revision summary
@@ -514,17 +514,17 @@ That "list of folders" has a name: the **PATH** — an environment variable hold
 |---|---|
 | GUI vs CLI | Clicking vs typing; the **terminal** is the window where the CLI lives |
 | Terminal vs shell | Terminal = the window; shell (PowerShell / Zsh / Bash) = the program inside that runs commands |
-| Never type the prompt | The `$`, `%`, or `>` is the prompt — I type only what comes *after* it |
-| The five-command rhythm | `pwd` (where) · `ls` (what's here) · `cd` (move, `..` = up) · `mkdir` (make) — **check-move-confirm** |
+| Never type the prompt | The `$`, `%`, or `>` is the prompt - I type only what comes *after* it |
+| The five-command rhythm | `pwd` (where) · `ls` (what's here) · `cd` (move, `..` = up) · `mkdir` (make) - **check-move-confirm** |
 | Windows vs Unix commands | `touch` → `New-Item` in PowerShell; most others (`ls`, `cat`, `cp`, `rm`) alias fine |
 | Silence = success | `cd` / `mkdir` say nothing when they work; confirm with `pwd` / `ls` |
 | Reading errors | `not found` = typo/missing program · `no such file` = wrong folder · `too many arguments` = quote the space |
 | The four tools | VS Code writes · Git remembers · Node.js runs JS (+ npm) · browser shows & inspects |
 | Git vs GitHub | Git = the tool on my machine (offline); GitHub = the online home for Git projects |
 | Node.js = runtime | Runs JavaScript anywhere, not just in a browser; brings **npm** (package installer) |
-| DevTools is a sandbox | Inspect edits my *local copy* only; a refresh undoes it — safe to poke anything |
+| DevTools is a sandbox | Inspect edits my *local copy* only; a refresh undoes it - safe to poke anything |
 | Editor vs IDE | Editor = light + general, extend per need (VS Code); IDE = complete workshop for one ecosystem (ABAP later) |
 | The golden rule | After every install: **close the terminal, open a fresh one, then verify** |
-| Verify = any version | `--version` answering with *any* number is the pass — numbers differ on every machine |
+| Verify = any version | `--version` answering with *any* number is the pass - numbers differ on every machine |
 | Node: choose LTS | Long Term Support = stability over novelty; what professional teams run |
-| `command not found` after install | Almost always a stale terminal — fresh terminal first (the **PATH** was read at open) |
+| `command not found` after install | Almost always a stale terminal - fresh terminal first (the **PATH** was read at open) |

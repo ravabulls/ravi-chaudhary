@@ -1,5 +1,5 @@
 ---
-title: "Week 9 | Session 3: K-means Clustering — Python Implementation (Google Colab)"
+title: "Week 9 | Session 3: K-means Clustering - Python Implementation (Google Colab)"
 description: "A practical guide to implementing K-means clustering in Python using Google Colab, covering data import, optimal K selection, and cluster visualization."
 sidebar:
   order: 44
@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
@@ -16,9 +16,9 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 <Aside type="note">
 - Context & Session Goal
 - Libraries Used
-- Full Pipeline — 8 Steps
+- Full Pipeline - 8 Steps
 - Step-by-Step Code & Explanation
-- Final Output — Centroid (DC) Locations
+- Final Output - Centroid (DC) Locations
 - Key Python Notes for Exam / Practice
 </Aside>
 
@@ -26,9 +26,9 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 1. Context & Session Goal
 
-- **Previous Sessions:** Concept — what K-means is, how the algorithm works, WCSS, Elbow Method.
-- **This Session:** Implementation — write Python code in Google Colab, reproduce the cluster output.
-- **Dataset:** `customer_location.csv` — 811 rows, 3 columns (serial no., latitude, longitude).
+- **Previous Sessions:** Concept - what K-means is, how the algorithm works, WCSS, Elbow Method.
+- **This Session:** Implementation - write Python code in Google Colab, reproduce the cluster output.
+- **Dataset:** `customer_location.csv` - 811 rows, 3 columns (serial no., latitude, longitude).
 
 <Aside type="note">
 **★** All code shown here can be run directly in Google Colab.
@@ -40,20 +40,20 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 | Library / Alias | Purpose |
 |---|---|
-| **pandas (pd)** | Data manipulation and analysis library — read CSV, create DataFrames. |
-| **numpy (np)** | Numerical Python — mathematical and logical operations on arrays. |
-| **matplotlib.pyplot (plt)** | Plotting library for Python — line charts, scatter plots. |
-| **seaborn (sn)** | High-level visualization library — attractive cluster plots with color coding. |
-| **sklearn.cluster.KMeans** | K-means clustering implementation — fit clusters, get labels & centroids. |
+| **pandas (pd)** | Data manipulation and analysis library - read CSV, create DataFrames. |
+| **numpy (np)** | Numerical Python - mathematical and logical operations on arrays. |
+| **matplotlib.pyplot (plt)** | Plotting library for Python - line charts, scatter plots. |
+| **seaborn (sn)** | High-level visualization library - attractive cluster plots with color coding. |
+| **sklearn.cluster.KMeans** | K-means clustering implementation - fit clusters, get labels & centroids. |
 
 ---
 
-## 3. Full Pipeline — 8 Steps
+## 3. Full Pipeline - 8 Steps
 
 <Steps>
 1. **Import Data:** Load `customer_location.csv` using pandas.
 2. **Plot Raw Data:** Visualize all 811 points on a lat/long scatter plot (seaborn).
-3. **Select Features:** Drop serial number column — keep only latitude & longitude.
+3. **Select Features:** Drop serial number column - keep only latitude & longitude.
 4. **Find Optimal K:** Loop K=1 to 9, compute WCSS, plot Elbow Diagram.
 5. **Form Clusters:** Run `KMeans(n_clusters=4).fit()`. Assign IDs.
 6. **Plot Clusters:** Color-coded scatter plot.
@@ -65,14 +65,14 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## 4. Step-by-Step Code & Explanation
 
-### Step 1 — Import Data
+### Step 1 - Import Data
 ```python
 import pandas as pd
 df = pd.read_csv('customer_location.csv')
 df.head()
 ```
 
-### Step 2 — Plot Raw Data
+### Step 2 - Plot Raw Data
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -83,13 +83,13 @@ plt.title('Customer Locations')
 plt.show()
 ```
 
-### Step 3 — Select Features
+### Step 3 - Select Features
 Remove irrelevant columns.
 ```python
 new_df = df[['latitude', 'longitude']]
 ```
 
-### Step 4 — Find Optimal K (Elbow Diagram)
+### Step 4 - Find Optimal K (Elbow Diagram)
 ```python
 from sklearn.cluster import KMeans
 
@@ -109,7 +109,7 @@ plt.ylabel('Sum of Squared Error')
 plt.show()
 ```
 
-### Step 5 — Form Clusters (K = 4)
+### Step 5 - Form Clusters (K = 4)
 ```python
 clusters_new = KMeans(4)          # set K = 4
 clusters_new.fit(new_df)          
@@ -118,14 +118,14 @@ clusters_new.fit(new_df)
 new_df.insert(loc=2, column='cluster_id', value=clusters_new.labels_)
 ```
 
-### Step 6 — Plot Clusters
+### Step 6 - Plot Clusters
 ```python
 sn.lmplot(x='latitude', y='longitude', data=new_df,
           hue='cluster_id', fit_reg=False, height=4)
 plt.show()
 ```
 
-### Step 7 — Extract Centroid Coordinates
+### Step 7 - Extract Centroid Coordinates
 ```python
 centers = np.array(clusters_new.cluster_centers_)
 print(centers)
@@ -133,7 +133,7 @@ print(centers)
 # Cluster 0:  [27.68,  80.90]
 ```
 
-### Step 8 — Plot Centroids on Cluster Map
+### Step 8 - Plot Centroids on Cluster Map
 ```python
 sn.lmplot(x='latitude', y='longitude', data=new_df,
           hue='cluster_id', fit_reg=False, height=4)
@@ -144,9 +144,9 @@ plt.show()
 
 ---
 
-## 5. Final Output — Centroid (DC) Locations
+## 5. Final Output - Centroid (DC) Locations
 
-After running the full code, K-means returns 4 centroids — the proposed DC locations:
+After running the full code, K-means returns 4 centroids - the proposed DC locations:
 
 | Cluster ID | Centroid Lat | Centroid Long | Proposed DC serves... |
 |---|---|---|---|

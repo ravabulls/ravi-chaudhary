@@ -1,13 +1,13 @@
 ---
-title: "Woche 11 | Session 2: SC Digital Twin — Green Field Analysis (GFA) mit Excel & AnyLogistix"
-description: "Aufbau eines kleinen Supply Chain Digital Twins zur Durchführung einer Green Field Analysis — optimaler DC-Standort für ein Pharmaunternehmen in Westindien mittels Excel-Optimierungsmodell mit sphärischer Distanz und Validierung mit AnyLogistix-Software."
+title: "Woche 11 | Session 2: SC Digital Twin - Green Field Analysis (GFA) mit Excel & AnyLogistix"
+description: "Aufbau eines kleinen Supply Chain Digital Twins zur Durchführung einer Green Field Analysis - optimaler DC-Standort für ein Pharmaunternehmen in Westindien mittels Excel-Optimierungsmodell mit sphärischer Distanz und Validierung mit AnyLogistix-Software."
 sidebar:
   order: 53
 ---
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 4: Digitale Infrastruktur*
+*Kurs: Supply Chain Digitalisierung - Modul 4: Digitale Infrastruktur*
 
 ---
 
@@ -15,13 +15,13 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 <Aside type="note">
 - Was ist Green Field Analysis (GFA)?
-- Fallstudie — Pharmaunternehmen: DC-Standort für Westindien
-- Problemstellung — Warum Intuition unzureichend ist
+- Fallstudie - Pharmaunternehmen: DC-Standort für Westindien
+- Problemstellung - Warum Intuition unzureichend ist
 - Optimierungsmodell-Formulierung
-- Distanzformeln — Drei Methoden
-- Lösung in Excel — Schritt für Schritt
-- Digital Twin Visualisierung — Was sie hinzufügt
-- Skalierung — AnyLogistix-Software für große Probleme
+- Distanzformeln - Drei Methoden
+- Lösung in Excel - Schritt für Schritt
+- Digital Twin Visualisierung - Was sie hinzufügt
+- Skalierung - AnyLogistix-Software für große Probleme
 - Digital Twin Framework angewendet auf dieses Beispiel
 </Aside>
 
@@ -30,7 +30,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 ## 1. Was ist Green Field Analysis (GFA)?
 
 <Aside type="note">
-**★** GFA = Green Field Analysis — Finden des **optimalen Standorts für eine NEUE Einrichtung** (DC/Fabrik), wo noch keine existiert. Sie ist eine **präskriptive Analytik**-Anwendung des Digital Twins.
+**★** GFA = Green Field Analysis - Finden des **optimalen Standorts für eine NEUE Einrichtung** (DC/Fabrik), wo noch keine existiert. Sie ist eine **präskriptive Analytik**-Anwendung des Digital Twins.
 </Aside>
 
 Diese Session baut einen kleinen SC-Digital-Twin zur Durchführung von GFA:
@@ -39,10 +39,10 @@ Diese Session baut einen kleinen SC-Digital-Twin zur Durchführung von GFA:
 
 ---
 
-## 2. Fallstudie — Pharmaunternehmen: DC-Standort für Westindien
+## 2. Fallstudie - Pharmaunternehmen: DC-Standort für Westindien
 
 <Aside type="note">
-Die vier Nachfragemärkte — **Ahmedabad, Surat, Mumbai und Pune** — auf einer Karte Westindiens. Die Greenfield-Analyse (GFA) durchsucht diese offene Geografie nach dem einen DC-Standort, der die gesamte entfernungsgewichtete Nachfrage minimiert — ein „grüner" Standort, ungebunden an jede bestehende Anlage.
+Die vier Nachfragemärkte - **Ahmedabad, Surat, Mumbai und Pune** - auf einer Karte Westindiens. Die Greenfield-Analyse (GFA) durchsucht diese offene Geografie nach dem einen DC-Standort, der die gesamte entfernungsgewichtete Nachfrage minimiert - ein „grüner" Standort, ungebunden an jede bestehende Anlage.
 </Aside>
 
 Ein Pharmaunternehmen möchte **1 Distributionszentrum** für die westliche Region Indiens einrichten.
@@ -62,7 +62,7 @@ Kostennahnahme: **1 $ pro km pro Einheit** transportierter Nachfrage.
 
 ---
 
-## 3. Problemstellung — Warum Intuition unzureichend ist
+## 3. Problemstellung - Warum Intuition unzureichend ist
 
 | DC nahe… | Problem |
 |---|---|
@@ -70,11 +70,11 @@ Kostennahnahme: **1 $ pro km pro Einheit** transportierter Nachfrage.
 | **Pune** | Kosten nach Mumbai, Ahmedabad, Surat steigen alle |
 | **Ahmedabad** | Kosten nach Mumbai, Pune, Surat steigen alle |
 
-**Fazit:** Es gibt einen Trade-off — ein Optimierungsmodell wird benötigt. Unendlich viele mögliche DC-Standorte existieren; manuell nicht auswertbar.
+**Fazit:** Es gibt einen Trade-off - ein Optimierungsmodell wird benötigt. Unendlich viele mögliche DC-Standorte existieren; manuell nicht auswertbar.
 
 ---
 
-## 4. Optimierungsmodell — Formulierung
+## 4. Optimierungsmodell - Formulierung
 
 <figure class="sc-fig">
   <div class="sc-formula">
@@ -87,7 +87,7 @@ Kostennahnahme: **1 $ pro km pro Einheit** transportierter Nachfrage.
       <code>Δlat = x_DC − xᵢ &nbsp;·&nbsp; Δlon = y_DC − yᵢ<br/>distance((xᵢ, yᵢ), (x_DC, y_DC)) = R·c</code>
     </div>
   </div>
-  <figcaption>Die Haversine-Formel liefert die tatsächliche Entfernung über die Erdoberfläche zwischen zwei Breiten-/Längengrad-Punkten — hier zur Messung der Entfernung jedes Marktes von einem möglichen DC-Standort.</figcaption>
+  <figcaption>Die Haversine-Formel liefert die tatsächliche Entfernung über die Erdoberfläche zwischen zwei Breiten-/Längengrad-Punkten - hier zur Messung der Entfernung jedes Marktes von einem möglichen DC-Standort.</figcaption>
 </figure>
 
 **Entscheidungsvariablen:**
@@ -102,29 +102,29 @@ Z = Σ(i=1 bis 4) [ Nachfrage_i × d(xᵢ,yᵢ → xDC,yDC) × Kosten pro km pro
 
 | Komponente | Detail |
 |---|---|
-| **Distanzformel** | Haversine / Sphärisch — berücksichtigt die Erdkrümmung → genaue km-Distanz |
-| **Lösungsmethode** | GRG Nichtlinear — weil die sphärische Distanzformel nichtlinear ist |
-| **Nebenbedingungen** | Keine — DC kann an beliebigen (xDC, yDC) Koordinaten platziert werden |
+| **Distanzformel** | Haversine / Sphärisch - berücksichtigt die Erdkrümmung → genaue km-Distanz |
+| **Lösungsmethode** | GRG Nichtlinear - weil die sphärische Distanzformel nichtlinear ist |
+| **Nebenbedingungen** | Keine - DC kann an beliebigen (xDC, yDC) Koordinaten platziert werden |
 
 ---
 
-## 5. Distanzformeln — Drei Methoden
+## 5. Distanzformeln - Drei Methoden
 
 | Methode | Genauigkeit |
 |---|---|
-| **Direktlinie (Euklidisch)** | Niedrig — gerade Linie, unrealistisch |
-| **Eck/Manhattan** | Mittel — berücksichtigt Kurven, nur flaches Gitter |
-| **Sphärisch (Haversine)** | **Hoch ✓ — in diesem Fall verwendet** |
+| **Direktlinie (Euklidisch)** | Niedrig - gerade Linie, unrealistisch |
+| **Eck/Manhattan** | Mittel - berücksichtigt Kurven, nur flaches Gitter |
+| **Sphärisch (Haversine)** | **Hoch ✓ - in diesem Fall verwendet** |
 
-**Warum die sphärische Formel?** Die Erdoberfläche ist nicht flach — Breiten-/Längengrade sind Koordinaten auf einer gekrümmten Oberfläche. Die sphärische Formel macht die Zielfunktion **nichtlinear** → **GRG-Nichtlinear-Solver** erforderlich (nicht Simplex LP).
+**Warum die sphärische Formel?** Die Erdoberfläche ist nicht flach - Breiten-/Längengrade sind Koordinaten auf einer gekrümmten Oberfläche. Die sphärische Formel macht die Zielfunktion **nichtlinear** → **GRG-Nichtlinear-Solver** erforderlich (nicht Simplex LP).
 
 ---
 
-## 6. Lösung in Excel — Schritt für Schritt
+## 6. Lösung in Excel - Schritt für Schritt
 
 <Steps>
 1. **Marktdaten eingeben:** Nachfrage, Breitengrad, Längengrad für alle 4 Märkte eingeben.
-2. **Ersten DC-Standort setzen:** xDC = 20, yDC = 72 — zufällige Startwerte; noch nicht die Antwort.
+2. **Ersten DC-Standort setzen:** xDC = 20, yDC = 72 - zufällige Startwerte; noch nicht die Antwort.
 3. **Distanzen berechnen:** Sphärische Distanzformel von jedem DC-Standort zu jedem Markt anwenden → 4 Distanzwerte.
 4. **Einzelkosten berechnen:** Kosten_i = Nachfrage_i × Distanz_i × 1$.
 5. **Gesamtkosten Z berechnen:** Z = Summe aller 4 Einzelkosten. Bei (20, 72): **Z = 12,44,89,119**.
@@ -134,7 +134,7 @@ Z = Σ(i=1 bis 4) [ Nachfrage_i × d(xᵢ,yᵢ → xDC,yDC) × Kosten pro km pro
 
 ### Optimale Lösung vom Solver
 
-*Excel-Aufbau — mit einem Probe-DC bei (20,00, 72,00) die Haversine-Distanz zu jedem Markt und die entfernungsgewichteten Gesamtkosten:*
+*Excel-Aufbau - mit einem Probe-DC bei (20,00, 72,00) die Haversine-Distanz zu jedem Markt und die entfernungsgewichteten Gesamtkosten:*
 
 | Markt | Kosten/km·Einheit | Nachfrage (Einheiten) | Breitengrad | Längengrad | Distanz (km) |
 |---|---|---|---|---|---|
@@ -153,41 +153,41 @@ Z = Σ(i=1 bis 4) [ Nachfrage_i × d(xᵢ,yᵢ → xDC,yDC) × Kosten pro km pro
 | Kosteneinsparung durch Optimierung | **~₹2,7 Crore / Jahr** |
 
 <Aside type="note">
-**★** Der Solver sagt uns: **Mumbai ist der mathematisch optimale Standort** für das DC — gewichtet nach Nachfrage und Distanz, minimiert es die Gesamttransportkosten.
+**★** Der Solver sagt uns: **Mumbai ist der mathematisch optimale Standort** für das DC - gewichtet nach Nachfrage und Distanz, minimiert es die Gesamttransportkosten.
 </Aside>
 
 ---
 
-## 7. Digital Twin Visualisierung — Was sie hinzufügt
+## 7. Digital Twin Visualisierung - Was sie hinzufügt
 
-Das Excel-Modell liefert die Koordinaten — aber keine visuelle Karte der SC. DT-Visualisierung fügt hinzu:
+Das Excel-Modell liefert die Koordinaten - aber keine visuelle Karte der SC. DT-Visualisierung fügt hinzu:
 - Genaue geografische Position jedes Marktes auf Karte.
 - DC-Standort bei optimierten Koordinaten eingezeichnet.
-- Routen vom DC zu jedem Markt — visuelle Bestätigung des Netzwerks.
+- Routen vom DC zu jedem Markt - visuelle Bestätigung des Netzwerks.
 
-Genau das bieten Tools wie **AnyLogistix** — kartenbasierte Visualisierung + Optimierung kombiniert.
+Genau das bieten Tools wie **AnyLogistix** - kartenbasierte Visualisierung + Optimierung kombiniert.
 
 ---
 
-## 8. Skalierung — AnyLogistix-Software für große Probleme
+## 8. Skalierung - AnyLogistix-Software für große Probleme
 
 | Attribut | Excel Solver | AnyLogistix (DT-Software) |
 |---|---|---|
-| **Skalierung** | Klein (4 Märkte — manuell handhabbar) | Groß (tausende von Märkten — landesweit / global) |
+| **Skalierung** | Klein (4 Märkte - manuell handhabbar) | Groß (tausende von Märkten - landesweit / global) |
 | **Breiten-/Längengradingabe** | Muss für jeden Standort manuell eingegeben werden | Stadtname eingeben → Koordinaten werden automatisch abgerufen |
-| **Visualisierung** | Grundlegend — keine eingebaute Kartendarstellung | Alle Knoten werden nach Eingabe automatisch auf Karte eingetragen |
-| **Algorithmus** | Nichtlinearer Solver (GRG) — Benutzer richtet ihn ein | Eingebauter Optimierungsalgorithmus läuft automatisch |
+| **Visualisierung** | Grundlegend - keine eingebaute Kartendarstellung | Alle Knoten werden nach Eingabe automatisch auf Karte eingetragen |
+| **Algorithmus** | Nichtlinearer Solver (GRG) - Benutzer richtet ihn ein | Eingebauter Optimierungsalgorithmus läuft automatisch |
 | **Typische Nutzung** | Lehre, kleines Verständnis | Reale SC-Netzwerkgestaltung und DT-Entwicklung |
 
-AnyLogistix-Ergebnis bestätigt: **GFA optimaler DC = Breitengrad 19.09, Längengrad 72.87 = Mumbai** — stimmt exakt mit Excel-Solver überein.
+AnyLogistix-Ergebnis bestätigt: **GFA optimaler DC = Breitengrad 19.09, Längengrad 72.87 = Mumbai** - stimmt exakt mit Excel-Solver überein.
 
 ---
 
 ## Zusammenfassung der Session
 
-- **GFA:** optimalen Standort für ein NEUES DC mittels Optimierung finden — präskriptive Analytik-Anwendung.
+- **GFA:** optimalen Standort für ein NEUES DC mittels Optimierung finden - präskriptive Analytik-Anwendung.
 - **Fallstudie:** 4 westindische Märkte, Gesamttransportkosten minimieren. Modell: Minimiere Z = Σ(Nachfrage_i × Distanz_i × Kosten/km/Einheit).
-- **3 Distanzformeln:** Direklinie (gering) → Eck/Manhattan (mittel) → Sphärisch/Haversine (hoch — hier verwendet).
+- **3 Distanzformeln:** Direklinie (gering) → Eck/Manhattan (mittel) → Sphärisch/Haversine (hoch - hier verwendet).
 - **Sphärische Formel = nichtlinear** → GRG Nichtlinear-Solver erforderlich (nicht Simplex LP).
 - **Ergebnis:** optimaler DC = Mumbai (19.09, 72.87). Kosten ₹9.73 Crore vs ₹12.44 Crore.
 

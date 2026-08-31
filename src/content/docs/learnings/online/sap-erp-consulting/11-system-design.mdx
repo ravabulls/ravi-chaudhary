@@ -1,6 +1,6 @@
 ---
 title: "System Design Fundamentals"
-description: "How real applications are structured — client and server, the browser-to-server round trip, JSON, asynchronous JavaScript (the call stack, event loop, promises and async/await), APIs and HTTP (methods, status codes, headers, fetch, CORS, auth), the three-tier model, databases, environments, and scaling."
+description: "How real applications are structured - client and server, the browser-to-server round trip, JSON, asynchronous JavaScript (the call stack, event loop, promises and async/await), APIs and HTTP (methods, status codes, headers, fetch, CORS, auth), the three-tier model, databases, environments, and scaling."
 sidebar:
   label: "11 · System Design"
   order: 11
@@ -8,32 +8,32 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+*SAP Implementation Consulting & ERP - Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
 
 ---
 
-The one idea that reframes this whole block: the same code can live inside completely different **systems**. A function that draws a card on screen doesn't care whether the data sat in a local file or arrived from across the world — the code stays put while the system around it changes. **System design** is the separate skill of deciding *what the pieces are, what each piece is responsible for, and how they talk to each other*. That is exactly what an implementation consultant is paid for: not clever functions, but knowing what an organisation has, what it needs, and how it all must connect.
+The one idea that reframes this whole block: the same code can live inside completely different **systems**. A function that draws a card on screen doesn't care whether the data sat in a local file or arrived from across the world - the code stays put while the system around it changes. **System design** is the separate skill of deciding *what the pieces are, what each piece is responsible for, and how they talk to each other*. That is exactly what an implementation consultant is paid for: not clever functions, but knowing what an organisation has, what it needs, and how it all must connect.
 
 <Aside type="note" title="Why this matters for SAP work">
-An ERP like SAP *is* a system-design problem at industrial scale — many parts, strict contracts between them, business rules in the middle. Every term below reappears in enterprise conversations, so I'm learning the vocabulary that consulting runs on.
+An ERP like SAP *is* a system-design problem at industrial scale - many parts, strict contracts between them, business rules in the middle. Every term below reappears in enterprise conversations, so I'm learning the vocabulary that consulting runs on.
 </Aside>
 
 ## Arc A · Client, server & where data lives
 
 ### Client vs server
 
-Every exchange in this whole topic has exactly **two roles**. The **client** asks; the **server** answers. That's it — it's not a conversation, and the server *never speaks first*. Think of a restaurant: I (client) ask the kitchen (server) for a dish; the kitchen prepares it and sends it out, but never walks to my table unprompted.
+Every exchange in this whole topic has exactly **two roles**. The **client** asks; the **server** answers. That's it - it's not a conversation, and the server *never speaks first*. Think of a restaurant: I (client) ask the kitchen (server) for a dish; the kitchen prepares it and sends it out, but never walks to my table unprompted.
 
 | | Client | Server |
 |---|---|---|
 | Role | Asks (sends a **request**) | Answers (sends a **response**) |
-| Who starts | Always initiates | Only replies — never first |
+| Who starts | Always initiates | Only replies - never first |
 | Example here | The browser running my page | A program listening for requests |
 | Key truth | Can be edited/bypassed by anyone | The only participant I control |
 
-The deepest point: **a server is a role, not a machine.** Any program that listens and answers is a server, wherever it runs — even a dev server on my own laptop. One laptop can hold both roles at once.
+The deepest point: **a server is a role, not a machine.** Any program that listens and answers is a server, wherever it runs - even a dev server on my own laptop. One laptop can hold both roles at once.
 
-### The round trip — what happens when a browser follows a URL
+### The round trip - what happens when a browser follows a URL
 
 First, a **URL** (Uniform Resource Locator) breaks into named parts:
 
@@ -44,29 +44,29 @@ scheme    host            port path         query      fragment
 
 <div class="sc-chips"><span class="sc-chip">scheme = the rules (usually https)</span><span class="sc-chip">host = who to ask</span><span class="sc-chip">port = numbered door</span><span class="sc-chip">path = what I want</span><span class="sc-chip">query = extra name=value detail</span><span class="sc-chip">fragment = note to the browser, never sent</span></div>
 
-Then the journey. Note **DNS** (Domain Name System) — the internet's phone book that turns a name like `example.com` into a numeric address:
+Then the journey. Note **DNS** (Domain Name System) - the internet's phone book that turns a name like `example.com` into a numeric address:
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node amber">Ask DNS<span class="sub">name → number</span></div><span class="arrow">→</span><div class="sc-node slate">Connect<span class="sub">open to host:port</span></div><span class="arrow">→</span><div class="sc-node slate">Request<span class="sub">browser asks</span></div><span class="arrow">→</span><div class="sc-node green">Response<span class="sub">server answers</span></div><span class="arrow">→</span><div class="sc-node violet">Fetch assets<span class="sub">CSS, JS, images</span></div></div>
-<figcaption>One page load is many requests, not one — the first response names every stylesheet, script and image, and the browser asks again for each. Every row in the DevTools Network tab is one of these requests.</figcaption>
+<figcaption>One page load is many requests, not one - the first response names every stylesheet, script and image, and the browser asks again for each. Every row in the DevTools Network tab is one of these requests.</figcaption>
 </figure>
 
-<Aside type="tip" title="Cache — met here, seen three times">
+<Aside type="tip" title="Cache - met here, seen three times">
 Reload the same page and it's usually faster: the browser kept copies of things it already fetched. **A stored answer that spares a repeated request is a cache.** The idea returns in APIs and again in scaling.
 </Aside>
 
 ### Where application data lives
 
-The first design decision is usually to move data **out of the code**. Four reasons — all *design* reasons, not programming ones:
+The first design decision is usually to move data **out of the code**. Four reasons - all *design* reasons, not programming ones:
 
-- **It changes independently** — adding one record shouldn't mean editing code and redeploying.
-- **It can be too big to ship** — five records weigh nothing; 500,000 customer records can't be sent to every visitor.
-- **It's shared, so it must agree** — two people must see the *same* list, which needs one authoritative copy both can reach.
-- **Some of it must stay private** — anything in downloaded code is public; credentials, unreleased prices and personal records can't live there.
+- **It changes independently** - adding one record shouldn't mean editing code and redeploying.
+- **It can be too big to ship** - five records weigh nothing; 500,000 customer records can't be sent to every visitor.
+- **It's shared, so it must agree** - two people must see the *same* list, which needs one authoritative copy both can reach.
+- **Some of it must stay private** - anything in downloaded code is public; credentials, unreleased prices and personal records can't live there.
 
-### JSON — the text form data travels in
+### JSON - the text form data travels in
 
-Memory can't cross a network — only **text** can. So there's an agreed way to write an object as text, send it, and rebuild it on the other side: **JSON** (JavaScript Object Notation). It looks like a JS object literal but with stricter rules.
+Memory can't cross a network - only **text** can. So there's an agreed way to write an object as text, send it, and rebuild it on the other side: **JSON** (JavaScript Object Notation). It looks like a JS object literal but with stricter rules.
 
 ```json
 {
@@ -76,7 +76,7 @@ Memory can't cross a network — only **text** can. So there's an agreed way to 
 }
 ```
 
-Rules that *break the file* if ignored: every key in **double quotes**, **no trailing commas**, **no comments**, and **no functions / no `undefined`** — JSON carries data only. Two methods move between the worlds:
+Rules that *break the file* if ignored: every key in **double quotes**, **no trailing commas**, **no comments**, and **no functions / no `undefined`** - JSON carries data only. Two methods move between the worlds:
 
 ```js
 const artist = { name: "Ada", genre: "Country" };
@@ -92,13 +92,13 @@ A `.json` file is just text on disk; it only becomes objects when something **pa
 When a submission reaches a server it does three things, and the middle one is the whole point:
 
 <Steps>
-1. **Validates again** — everything the browser checked, plus rules the browser *never could* (is this email already registered?).
+1. **Validates again** - everything the browser checked, plus rules the browser *never could* (is this email already registered?).
 2. **Stores what it accepts** somewhere durable that outlives the request.
 3. **Responds**, telling the browser whether it worked.
 </Steps>
 
 <Aside type="caution" title="The rule that repeats all block">
-Browser validation is a *courtesy for honest visitors* — anyone can disable JavaScript, edit the page, or send a request by hand. **Server validation is the actual defence, because the server is the only participant I control.**
+Browser validation is a *courtesy for honest visitors* - anyone can disable JavaScript, edit the page, or send a request by hand. **Server validation is the actual defence, because the server is the only participant I control.**
 </Aside>
 
 ### The three-tier model
@@ -106,21 +106,21 @@ Browser validation is a *courtesy for honest visitors* — anyone can disable Ja
 Professionals split an application into three layers, each with one responsibility:
 
 <figure class="sc-fig">
-<div class="sc-flow"><div class="sc-node soft">Presentation<span class="sub">shows &amp; collects — never decides</span></div><span class="arrow">→</span><div class="sc-node violet">Application<span class="sub">rules &amp; decisions — the business</span></div><span class="arrow">→</span><div class="sc-node green">Data<span class="sub">stored facts that outlive requests</span></div></div>
-<figcaption>Presentation shows, application decides, data persists. The dividing lines exist so each layer can be rebuilt without breaking the others — systems live for years and change one piece at a time.</figcaption>
+<div class="sc-flow"><div class="sc-node soft">Presentation<span class="sub">shows &amp; collects - never decides</span></div><span class="arrow">→</span><div class="sc-node violet">Application<span class="sub">rules &amp; decisions - the business</span></div><span class="arrow">→</span><div class="sc-node green">Data<span class="sub">stored facts that outlive requests</span></div></div>
+<figcaption>Presentation shows, application decides, data persists. The dividing lines exist so each layer can be rebuilt without breaking the others - systems live for years and change one piece at a time.</figcaption>
 </figure>
 
-The boundaries are **logical, not physical** — the three might share one laptop today and spread across many machines in production. And here's the punchline for this career: **the application layer is where a business actually lives** — pricing rules, approval flows, who may do what. An enterprise system like SAP *is* that middle layer built at industrial scale, and fitting it to a real organisation is precisely the implementation consultant's job.
+The boundaries are **logical, not physical** - the three might share one laptop today and spread across many machines in production. And here's the punchline for this career: **the application layer is where a business actually lives** - pricing rules, approval flows, who may do what. An enterprise system like SAP *is* that middle layer built at industrial scale, and fitting it to a real organisation is precisely the implementation consultant's job.
 
 ### What a database is
 
 A JSON file is an honest data layer for five records; real systems outgrow files fast. A **database** is a program built for three jobs files can't do:
 
-- **Querying** — answer precise questions about *slices* ("all folk artists, sorted, counted") without shipping everything.
-- **Concurrent access** — keep many simultaneous readers and writers consistent.
-- **Rules** — refuse data that breaks the stated shape.
+- **Querying** - answer precise questions about *slices* ("all folk artists, sorted, counted") without shipping everything.
+- **Concurrent access** - keep many simultaneous readers and writers consistent.
+- **Rules** - refuse data that breaks the stated shape.
 
-Two families: **relational** databases store data in tables with defined columns and enforce relationships between them (the family SAP is built on, queried with **SQL** — Structured Query Language); **non-relational** stores documents or key–value pairs where flexibility beats fixed structure. One placement rule, always: **the browser never talks to the database directly** — every request passes through the middle layer first, because that's where permission and validation live.
+Two families: **relational** databases store data in tables with defined columns and enforce relationships between them (the family SAP is built on, queried with **SQL** - Structured Query Language); **non-relational** stores documents or key-value pairs where flexibility beats fixed structure. One placement rule, always: **the browser never talks to the database directly** - every request passes through the middle layer first, because that's where permission and validation live.
 
 ### Environments
 
@@ -132,19 +132,19 @@ An **environment** is a complete copy of the system, running for one purpose:
 | Test / staging | Verify changes under realistic conditions | Before real users meet them |
 | Production | Real users, real data, real consequences | Nothing casual happens here |
 
-The discipline: **the same code runs in all three, against different data.** What changes between them is *configuration* — which addresses, which database, which keys — never the code itself. To **promote** a change is to move it up the ladder (dev → test → prod) with verification at each rung, so a data-destroying bug is caught in test, not discovered in production. SAP work runs on a formalised version of exactly this ladder.
+The discipline: **the same code runs in all three, against different data.** What changes between them is *configuration* - which addresses, which database, which keys - never the code itself. To **promote** a change is to move it up the ladder (dev → test → prod) with verification at each rung, so a data-destroying bug is caught in test, not discovered in production. SAP work runs on a formalised version of exactly this ladder.
 
 ## Arc B · Asynchronous JavaScript
 
 ### Why blocking is bad
 
-**Synchronous** code finishes each line before the next starts. That's fine until a line has to *wait on the world* — a file, a click, and above all a network request. JavaScript runs a page on a **single thread**: one lane where everything happens in order. If code sits in that lane waiting (or spinning in a loop for five seconds), *nothing else can run* — no clicks, no other handlers, not even the repaint that redraws the screen. That frozen-tab feeling is **blocking**: some code is holding the lane.
+**Synchronous** code finishes each line before the next starts. That's fine until a line has to *wait on the world* - a file, a click, and above all a network request. JavaScript runs a page on a **single thread**: one lane where everything happens in order. If code sits in that lane waiting (or spinning in a loop for five seconds), *nothing else can run* - no clicks, no other handlers, not even the repaint that redraws the screen. That frozen-tab feeling is **blocking**: some code is holding the lane.
 
-**Asynchronous** code breaks the wait on purpose — start a task, move on immediately, handle the result whenever it arrives. Same total time; the difference is what I did while it worked. (Like taking a number at a counter and sitting down instead of standing frozen at the till.)
+**Asynchronous** code breaks the wait on purpose - start a task, move on immediately, handle the result whenever it arrives. Same total time; the difference is what I did while it worked. (Like taking a number at a counter and sitting down instead of standing frozen at the till.)
 
 ### The call stack
 
-Code runs inside **execution contexts** — one **global** context created when the script starts, plus a fresh **function context** for every call. The engine tracks its place with the **call stack**: a call is *pushed* on, a return *pops* it off, and the top item is what's running now.
+Code runs inside **execution contexts** - one **global** context created when the script starts, plus a fresh **function context** for every call. The engine tracks its place with the **call stack**: a call is *pushed* on, a return *pops* it off, and the top item is what's running now.
 
 ```js
 function prepare(a) { return "Now playing " + format(a); }
@@ -153,14 +153,14 @@ console.log(prepare({ name: "Ada" }));
 // stack grows: global → prepare → format, then unwinds as each returns
 ```
 
-A **stack trace** in an error is simply a photograph of this stack at the moment things broke, innermost call first. (Runaway recursion — a function calling itself with no stop — overflows it: `RangeError: Maximum call stack size exceeded`.)
+A **stack trace** in an error is simply a photograph of this stack at the moment things broke, innermost call first. (Runaway recursion - a function calling itself with no stop - overflows it: `RangeError: Maximum call stack size exceeded`.)
 
 ### The event loop
 
-The stack is the *only* place code runs. So how does one thread wait on a thousand things? The **browser** (around the engine) does the actual waiting off to the side, freeing the lane instantly. When a waiting task finishes, its callback doesn't barge in — it lines up in a **queue**. The **event loop** is the dispatcher with one rule forever: *when the call stack is empty, take the next queued callback and push it on.* Never before the stack is empty, never interrupting running code.
+The stack is the *only* place code runs. So how does one thread wait on a thousand things? The **browser** (around the engine) does the actual waiting off to the side, freeing the lane instantly. When a waiting task finishes, its callback doesn't barge in - it lines up in a **queue**. The **event loop** is the dispatcher with one rule forever: *when the call stack is empty, take the next queued callback and push it on.* Never before the stack is empty, never interrupting running code.
 
 <figure class="sc-fig">
-<div class="sc-flow"><div class="sc-node amber">Call stack<span class="sub">runs one thing</span></div><span class="arrow">→</span><div class="sc-node slate">Browser waits<span class="sub">timer / network, off-thread</span></div><span class="arrow">→</span><div class="sc-node violet">Microtask queue<span class="sub">promises — empties first</span></div><span class="arrow">→</span><div class="sc-node soft">Task queue<span class="sub">timer callbacks</span></div><span class="arrow">→</span><div class="sc-node green">Event loop<span class="sub">→ stack when empty</span></div></div>
+<div class="sc-flow"><div class="sc-node amber">Call stack<span class="sub">runs one thing</span></div><span class="arrow">→</span><div class="sc-node slate">Browser waits<span class="sub">timer / network, off-thread</span></div><span class="arrow">→</span><div class="sc-node violet">Microtask queue<span class="sub">promises - empties first</span></div><span class="arrow">→</span><div class="sc-node soft">Task queue<span class="sub">timer callbacks</span></div><span class="arrow">→</span><div class="sc-node green">Event loop<span class="sub">→ stack when empty</span></div></div>
 <figcaption>Two queues: the <strong>microtask queue</strong> (promise reactions) always empties fully before the <strong>task queue</strong> (timer callbacks) gets a turn.</figcaption>
 </figure>
 
@@ -173,21 +173,21 @@ console.log("three");
 // prints: one, three, two
 ```
 
-A `0`ms timer doesn't mean *now* — it means the callback enters the task queue immediately and is delivered only *after* the stack finishes the current run. **A timer's delay is a minimum wait, never an exact appointment.**
+A `0`ms timer doesn't mean *now* - it means the callback enters the task queue immediately and is delivered only *after* the stack finishes the current run. **A timer's delay is a minimum wait, never an exact appointment.**
 
 ### Callbacks → promises → async/await
 
-**Callbacks** are the first tool: `setTimeout(fn, ms)` runs `fn` once after *at least* `ms` (cancel with `clearTimeout(id)`); `setInterval(fn, ms)` repeats until `clearInterval(id)`. They work, but chained waiting (load A, then B that needs A, then C that needs B) nests callbacks into a rightward staircase — the infamous *callback hell*. That pain is why **Promises** exist.
+**Callbacks** are the first tool: `setTimeout(fn, ms)` runs `fn` once after *at least* `ms` (cancel with `clearTimeout(id)`); `setInterval(fn, ms)` repeats until `clearInterval(id)`. They work, but chained waiting (load A, then B that needs A, then C that needs B) nests callbacks into a rightward staircase - the infamous *callback hell*. That pain is why **Promises** exist.
 
 A **Promise** is an object standing for a result that hasn't arrived yet. Being an *object* (not a fire-and-forget instruction) is its power: it can be stored, passed and returned. It's always in exactly one of three states:
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node amber">Pending<span class="sub">not arrived yet</span></div><span class="arrow">→</span><div class="sc-node green">Fulfilled<span class="sub">holds the value</span></div></div>
 <div class="sc-flow"><div class="sc-node amber">Pending<span class="sub">not arrived yet</span></div><span class="arrow">→</span><div class="sc-node slate">Rejected<span class="sub">holds the reason</span></div></div>
-<figcaption>Once fulfilled or rejected a Promise is <strong>settled</strong> — permanently. It never changes state again, never fires twice, never goes back. That's why promises are trustworthy.</figcaption>
+<figcaption>Once fulfilled or rejected a Promise is <strong>settled</strong> - permanently. It never changes state again, never fires twice, never goes back. That's why promises are trustworthy.</figcaption>
 </figure>
 
-Attach handlers with three methods — `then()` for success, `catch()` for failure, `finally()` for cleanup that must run either way (classically clearing a loading spinner):
+Attach handlers with three methods - `then()` for success, `catch()` for failure, `finally()` for cleanup that must run either way (classically clearing a loading spinner):
 
 ```js
 loadArtists()
@@ -196,9 +196,9 @@ loadArtists()
   .finally(() => (statusBox.textContent = ""));
 ```
 
-Promises also **chain** and flatten the staircase: return a value from `then()` and the next `then()` receives it; return a *promise* and the chain waits for it to settle first. A single `catch()` at the end covers every step above it — a failure anywhere skips the rest and lands there.
+Promises also **chain** and flatten the staircase: return a value from `then()` and the next `then()` receives it; return a *promise* and the chain waits for it to settle first. A single `catch()` at the end covers every step above it - a failure anywhere skips the rest and lands there.
 
-But most everyday async code today uses two keywords that make promise code *look* synchronous. **`async`** marks a function (it always returns a Promise); **`await`** pauses *only that function* until a promise settles, then hands back the value — without blocking the thread, because underneath it's still promise machinery:
+But most everyday async code today uses two keywords that make promise code *look* synchronous. **`async`** marks a function (it always returns a Promise); **`await`** pauses *only that function* until a promise settles, then hands back the value - without blocking the thread, because underneath it's still promise machinery:
 
 ```js
 async function showEverything() {
@@ -213,7 +213,7 @@ async function showEverything() {
 
 ### Error handling around await
 
-Wrap awaited work in **`try...catch`** — a rejection lands in `catch` exactly as it would in a chain's `.catch()`. `finally` runs regardless:
+Wrap awaited work in **`try...catch`** - a rejection lands in `catch` exactly as it would in a chain's `.catch()`. `finally` runs regardless:
 
 ```js
 async function showArtists() {
@@ -228,17 +228,17 @@ async function showArtists() {
 }
 ```
 
-Two habits worth locking in: **`throw` an `Error` object, never a bare string** (an `Error` carries `message`, `name` and the stack trace every tool expects — `TypeError`, `ReferenceError` etc. are just its subclasses); and when I catch something I can't handle, **add context and rethrow** rather than swallowing it. The most expensive habit in professional code is the empty `catch` block — the failure happened, the evidence was destroyed, and someone spends a day rediscovering it.
+Two habits worth locking in: **`throw` an `Error` object, never a bare string** (an `Error` carries `message`, `name` and the stack trace every tool expects - `TypeError`, `ReferenceError` etc. are just its subclasses); and when I catch something I can't handle, **add context and rethrow** rather than swallowing it. The most expensive habit in professional code is the empty `catch` block - the failure happened, the evidence was destroyed, and someone spends a day rediscovering it.
 
-### Promise.all — concurrency
+### Promise.all - concurrency
 
 `await` lines run one after another, which is correct for *dependent* steps. But three *independent* requests awaited in sequence take three round trips when they could take one. The combinators run promises together; choose between them by asking **"what should happen when one fails?"**
 
 | Combinator | Waits for | On one failure |
 |---|---|---|
-| `Promise.all` | all to fulfil | rejects immediately — use when results only make sense together |
-| `Promise.allSettled` | all to settle | never rejects — reports every outcome; use when partial results help |
-| `Promise.any` | first success | ignores failures unless *all* fail — use when any source will do |
+| `Promise.all` | all to fulfil | rejects immediately - use when results only make sense together |
+| `Promise.allSettled` | all to settle | never rejects - reports every outcome; use when partial results help |
+| `Promise.any` | first success | ignores failures unless *all* fail - use when any source will do |
 
 ```js
 const [artists, label] = await Promise.all([loadArtists(), loadLabel()]);
@@ -248,25 +248,25 @@ const [artists, label] = await Promise.all([loadArtists(), loadLabel()]);
 
 ### What an API is
 
-An **API** (Application Programming Interface) is an *agreed* way for one program to ask another for something. The "agreed" part carries all the weight — two programs written by strangers, in different languages, cooperate because both honour the same agreement. The kind meant here is a **web API**: a server reached over the network that answers with data, usually JSON. Two clarifications that prevent endless confusion: an API is **not a database** (it's the front desk deciding what may be asked; storage lives behind it) and **not a website** (a website answers with pages for *humans*; an API answers with data for *programs*).
+An **API** (Application Programming Interface) is an *agreed* way for one program to ask another for something. The "agreed" part carries all the weight - two programs written by strangers, in different languages, cooperate because both honour the same agreement. The kind meant here is a **web API**: a server reached over the network that answers with data, usually JSON. Two clarifications that prevent endless confusion: an API is **not a database** (it's the front desk deciding what may be asked; storage lives behind it) and **not a website** (a website answers with pages for *humans*; an API answers with data for *programs*).
 
 The professional habit is **reading the docs before writing code**, establishing five things:
 
-<div class="sc-chips"><span class="sc-chip">Address (endpoint)</span><span class="sc-chip">Method — kind of asking</span><span class="sc-chip">Parameters it accepts</span><span class="sc-chip">Response shape</span><span class="sc-chip">Limits — how often / how much</span></div>
+<div class="sc-chips"><span class="sc-chip">Address (endpoint)</span><span class="sc-chip">Method - kind of asking</span><span class="sc-chip">Parameters it accepts</span><span class="sc-chip">Response shape</span><span class="sc-chip">Limits - how often / how much</span></div>
 
-### HTTP — the web's rulebook
+### HTTP - the web's rulebook
 
 A **protocol** is an agreed set of rules for an exchange. The web's is **HTTP** (HyperText Transfer Protocol): one request, one response, then done. Every **request** carries a method, an address, headers, and sometimes a body; every **response** carries a status code, headers, and usually a body.
 
-The property that shapes whole systems: **HTTP is stateless.** The server doesn't remember my previous request — each request must carry everything it needs, *every time*. When a site "remembers" me (logged in, cart kept), that memory is built on top of stateless HTTP by sending an identifying token with every single request. That's *why* sessions and tokens exist at all. (The **S** in `https` = the same HTTP wrapped in encryption so nobody on the route can read or alter it.)
+The property that shapes whole systems: **HTTP is stateless.** The server doesn't remember my previous request - each request must carry everything it needs, *every time*. When a site "remembers" me (logged in, cart kept), that memory is built on top of stateless HTTP by sending an identifying token with every single request. That's *why* sessions and tokens exist at all. (The **S** in `https` = the same HTTP wrapped in encryption so nobody on the route can read or alter it.)
 
 ### Request methods
 
-The method is the first word of every request — a **promise about intent** that browsers, caches and servers all rely on. A `GET` that secretly changes data isn't bad style; it's a bug other software's *correct* behaviour will trip over.
+The method is the first word of every request - a **promise about intent** that browsers, caches and servers all rely on. A `GET` that secretly changes data isn't bad style; it's a bug other software's *correct* behaviour will trip over.
 
 | Method | Meaning | Changes data? |
 |---|---|---|
-| `GET` | Ask for something | No — safe to repeat/cache |
+| `GET` | Ask for something | No - safe to repeat/cache |
 | `POST` | Send something new to be created | Yes |
 | `PUT` | Replace something whole | Yes |
 | `PATCH` | Amend part of something | Yes |
@@ -274,7 +274,7 @@ The method is the first word of every request — a **promise about intent** tha
 
 ### Status codes
 
-Every response leads with a three-digit **status code**; the first digit sorts it into a family. The line that matters most in practice runs between **4xx** (the *asker* erred) and **5xx** (the *answerer* broke) — that one digit tells me which side to debug.
+Every response leads with a three-digit **status code**; the first digit sorts it into a family. The line that matters most in practice runs between **4xx** (the *asker* erred) and **5xx** (the *answerer* broke) - that one digit tells me which side to debug.
 
 | Family | Meaning | Everyday codes |
 |---|---|---|
@@ -288,22 +288,22 @@ Quick reads: **401** = *who are you?* (identity required); **403** = *identity k
 
 ### Headers
 
-**Headers** are name–value pairs describing the exchange — the envelope, not the letter. The one I set myself is **`Content-Type`**, which labels what the body *is* (a body is just bytes until labelled); JSON says `Content-Type: application/json`. Three more worth recognising: **`Accept`** (what answer the client can handle), **`Authorization`** (proof of identity), **`User-Agent`** (what software is asking).
+**Headers** are name-value pairs describing the exchange - the envelope, not the letter. The one I set myself is **`Content-Type`**, which labels what the body *is* (a body is just bytes until labelled); JSON says `Content-Type: application/json`. Three more worth recognising: **`Accept`** (what answer the client can handle), **`Authorization`** (proof of identity), **`User-Agent`** (what software is asking).
 
 ### The fetch API
 
-`fetch()` is the browser's built-in way to make HTTP requests. The part that surprises everyone: `fetch()` returns a Promise that fulfils with a **`Response` object, not with the data**. So reading JSON takes **two awaits** — headers first, body second:
+`fetch()` is the browser's built-in way to make HTTP requests. The part that surprises everyone: `fetch()` returns a Promise that fulfils with a **`Response` object, not with the data**. So reading JSON takes **two awaits** - headers first, body second:
 
 ```js
 const response = await fetch("http://localhost:3000/artists");
 const artists = await response.json();  // second await parses the body
 ```
 
-The `Response` also carries `ok` (true for 2xx — about to be the most important property), `status`, `statusText`, `headers`, `url`, and `text()` for non-JSON bodies.
+The `Response` also carries `ok` (true for 2xx - about to be the most important property), `status`, `statusText`, `headers`, `url`, and `text()` for non-JSON bodies.
 
 ### Handling request failures
 
-The trap that catches every beginner: **`fetch()` does NOT reject on a 404 or 500.** From the network's view a request was sent and an answer came back, so the Promise *fulfils* — even when the answer says "not found". Only *no answer at all* (server down, network gone) makes `fetch()` reject. So **checking is my job**:
+The trap that catches every beginner: **`fetch()` does NOT reject on a 404 or 500.** From the network's view a request was sent and an answer came back, so the Promise *fulfils* - even when the answer says "not found". Only *no answer at all* (server down, network gone) makes `fetch()` reject. So **checking is my job**:
 
 ```js
 async function loadArtists() {
@@ -315,15 +315,15 @@ async function loadArtists() {
 }
 ```
 
-Those four lines give every caller one honest contract: *fulfilled = good data, rejected = any failure at all*. Three failure families to expect: **network errors** (no answer — `fetch` rejects itself), **request errors** (an answer said the request was wrong — caught by the `ok` check), and **errors inside a successful response** (status 200 but the body reports a problem). A failed request must never mean a silently empty page — show an honest message, clear the loading state in `finally`.
+Those four lines give every caller one honest contract: *fulfilled = good data, rejected = any failure at all*. Three failure families to expect: **network errors** (no answer - `fetch` rejects itself), **request errors** (an answer said the request was wrong - caught by the `ok` check), and **errors inside a successful response** (status 200 but the body reports a problem). A failed request must never mean a silently empty page - show an honest message, clear the loading state in `finally`.
 
 ### CORS in one paragraph
 
-An **origin** is the combination of *scheme + host + port* — change any one and it's a different origin. By default a **browser** stops a page from *reading* responses fetched from a different origin. **CORS** (Cross-Origin Resource Sharing) is the mechanism by which the answering *server* relaxes that rule, declaring in a response header (`Access-Control-Allow-...`) which origins may read its answers. The rule exists to protect *the visitor, not the API*: my browser carries my cookies and logins, so without it any page I open could quietly fetch my webmail from inside my logged-in browser and read the reply. Two things to remember: a CORS failure shows as a distinctive console error, and the fix **always belongs on the server** — no client code can grant consent, and a request that works from a terminal tool can still fail in the browser.
+An **origin** is the combination of *scheme + host + port* - change any one and it's a different origin. By default a **browser** stops a page from *reading* responses fetched from a different origin. **CORS** (Cross-Origin Resource Sharing) is the mechanism by which the answering *server* relaxes that rule, declaring in a response header (`Access-Control-Allow-...`) which origins may read its answers. The rule exists to protect *the visitor, not the API*: my browser carries my cookies and logins, so without it any page I open could quietly fetch my webmail from inside my logged-in browser and read the reply. Two things to remember: a CORS failure shows as a distinctive console error, and the fix **always belongs on the server** - no client code can grant consent, and a request that works from a terminal tool can still fail in the browser.
 
 ### Sending data with a POST
 
-Sending data fills in `fetch()`'s second argument — the **options** object naming the method, headers, and body:
+Sending data fills in `fetch()`'s second argument - the **options** object naming the method, headers, and body:
 
 ```js
 form.addEventListener("submit", async (event) => {
@@ -337,11 +337,11 @@ form.addEventListener("submit", async (event) => {
   };
 
   const response = await fetch("http://localhost:3000/artists", options);
-  console.log(response.status); // 201 Created — the right answer to a good POST
+  console.log(response.status); // 201 Created - the right answer to a good POST
 });
 ```
 
-Every piece is already familiar: the **method** is the sending kind of asking, the **`Content-Type`** header labels the body, and **`JSON.stringify()`** turns the object into text that can travel. After a successful POST the data **persists** — refresh and it's still there; open a second tab and it's there too. *Two clients, one truth*, agreeing because both ask the same server — which is the reason servers exist at all.
+Every piece is already familiar: the **method** is the sending kind of asking, the **`Content-Type`** header labels the body, and **`JSON.stringify()`** turns the object into text that can travel. After a successful POST the data **persists** - refresh and it's still there; open a second tab and it's there too. *Two clients, one truth*, agreeing because both ask the same server - which is the reason servers exist at all.
 
 ### API authentication at a glance
 
@@ -353,11 +353,11 @@ Real APIs need to know *who is asking*. Three forms of proof cover most of it:
 | Bearer token | A *signed-in user* | The `Authorization` header |
 | OAuth | Sign-in via another account | A protocol that produces tokens, no password shared |
 
-One rule outranks the details: **a secret placed in client-side JavaScript is not a secret** — everything the browser downloads, anyone can read. So real systems keep the key on *their own server* (whose code no visitor can read) and let it make the authenticated request. Identity also enables **rate limiting** — counting how often a key asks, and returning **429** when it exceeds its allowance.
+One rule outranks the details: **a secret placed in client-side JavaScript is not a secret** - everything the browser downloads, anyone can read. So real systems keep the key on *their own server* (whose code no visitor can read) and let it make the authenticated request. Identity also enables **rate limiting** - counting how often a key asks, and returning **429** when it exceeds its allowance.
 
 ## Scale & reliability
 
-The words that describe systems meeting the real world — each is a **trade-off**, never a free win:
+The words that describe systems meeting the real world - each is a **trade-off**, never a free win:
 
 | Term | Plain meaning |
 |---|---|
@@ -365,19 +365,19 @@ The words that describe systems meeting the real world — each is a **trade-off
 | Throughput | How much can flow per unit of time (can be good even when latency is bad) |
 | Load | How much is being asked at once; every system has a capacity |
 | Scaling up / out | A *stronger* machine vs *more* machines sharing the work |
-| Caching | Reusing a stored answer — fast, but can serve stale data |
+| Caching | Reusing a stored answer - fast, but can serve stale data |
 | Single point of failure | One piece whose failure takes everything down; the fix is **redundancy** |
 
-The honest professional question is never "which option is best?" but "which costs can I afford?" — the fastest system is often the one serving yesterday's data, and whether that's acceptable is a *business* decision, not a technical one.
+The honest professional question is never "which option is best?" but "which costs can I afford?" - the fastest system is often the one serving yesterday's data, and whether that's acceptable is a *business* decision, not a technical one.
 
 ### System integration
 
-Almost nothing runs alone — payroll talks to time-tracking, a shop talks to payment and warehouse systems. **Integration** is systems exchanging requests with systems, using the same request/response model, now with no human at either end. What makes it work is the **contract**: the agreed addresses, shapes and rules of the exchange (exactly the five things read from API docs). The deep principle — **the contract matters more than either system's internals.** Either side can be rewritten entirely tomorrow and the integration survives, as long as the contract holds. Enterprise implementation work, SAP above all, is largely this: what connects to what, under which contract, with which data flowing when.
+Almost nothing runs alone - payroll talks to time-tracking, a shop talks to payment and warehouse systems. **Integration** is systems exchanging requests with systems, using the same request/response model, now with no human at either end. What makes it work is the **contract**: the agreed addresses, shapes and rules of the exchange (exactly the five things read from API docs). The deep principle - **the contract matters more than either system's internals.** Either side can be rewritten entirely tomorrow and the integration survives, as long as the contract holds. Enterprise implementation work, SAP above all, is largely this: what connects to what, under which contract, with which data flowing when.
 
 ## Common misconceptions
 
 - **"A server is one machine."** A server is a *role*; behind a busy address stand many machines sharing it.
-- **"More machines always means faster."** Scaling out adds coordination cost, and work that can't be divided can't be spread — sometimes it's slower. Measure, don't assume.
+- **"More machines always means faster."** Scaling out adds coordination cost, and work that can't be divided can't be spread - sometimes it's slower. Measure, don't assume.
 - **"The browser can be trusted because I wrote the page."** I wrote the page *honest* visitors run; anyone can edit or bypass it. Validation and permission live on the server.
 - **"System design only matters at large scale."** Even a five-record system has layers, an origin boundary, a contract, latency, and a single point of failure. Scale raises the stakes on these questions; it doesn't create them.
 
@@ -387,22 +387,22 @@ Almost nothing runs alone — payroll talks to time-tracking, a shop talks to pa
 
 | Must-know | One-line recall |
 |---|---|
-| System design | Deciding the pieces, their responsibilities, and how they talk — separate from coding |
+| System design | Deciding the pieces, their responsibilities, and how they talk - separate from coding |
 | Client vs server | Client asks, server answers; server never speaks first |
-| Server is a role | Any program that listens and answers — not a specific machine |
+| Server is a role | Any program that listens and answers - not a specific machine |
 | Round trip | DNS → connect → request → response → fetch assets; one load = many requests |
 | Data out of code | Changes independently, too big to ship, shared, sometimes private |
 | JSON | Text form data travels in; double-quoted keys, no trailing commas/comments/functions |
-| Form data | Server validates *again*, stores, responds — server checks are the real defence |
-| Three-tier | Presentation shows · Application decides · Data persists — SAP is the middle at scale |
+| Form data | Server validates *again*, stores, responds - server checks are the real defence |
+| Three-tier | Presentation shows · Application decides · Data persists - SAP is the middle at scale |
 | Database | Querying + concurrency + rules; browser never reaches it except via the server |
-| Environments | Dev / test / prod — same code, different data/config; promote up the ladder |
+| Environments | Dev / test / prod - same code, different data/config; promote up the ladder |
 | Blocking | Single thread; code holding the lane freezes clicks, handlers, rendering |
 | Call stack | Calls push, returns pop; a stack trace is its photo at the error |
 | Event loop | Queued callbacks run only when the stack is empty; microtasks before tasks |
 | Promise | Object for a future result; pending → fulfilled/rejected, settling is permanent |
 | async/await | `async` returns a Promise; `await` pauses only that function, no blocking |
-| Error handling | try/catch around await; throw `Error` objects; never swallow — add context, rethrow |
+| Error handling | try/catch around await; throw `Error` objects; never swallow - add context, rethrow |
 | Promise.all | Runs independents together; rejects if any fails (choose by "what if one fails?") |
 | API | Agreed way for programs to ask each other; not a database, not a website |
 | HTTP stateless | Server forgets each request; anything remembered travels every time |
@@ -410,9 +410,9 @@ Almost nothing runs alone — payroll talks to time-tracking, a shop talks to pa
 | Status codes | 2xx ok · 3xx elsewhere · 4xx asker erred · 5xx server broke |
 | Headers | Describe the exchange; `Content-Type` labels the body |
 | fetch | Returns a Response, not data → two awaits (headers, then body) |
-| fetch trap | Doesn't reject on 404/500 — check `response.ok` yourself |
+| fetch trap | Doesn't reject on 404/500 - check `response.ok` yourself |
 | CORS | Browser blocks cross-origin reads; server grants consent; protects the visitor |
 | POST data | method + Content-Type + JSON.stringify body; persists across refresh |
 | Auth | API key / bearer token / OAuth; a secret in client JS is not a secret |
-| Scale | Latency, throughput, load, cache, single point of failure — all trade-offs |
+| Scale | Latency, throughput, load, cache, single point of failure - all trade-offs |
 | Integration | Systems talking under a contract; the contract outranks the internals |

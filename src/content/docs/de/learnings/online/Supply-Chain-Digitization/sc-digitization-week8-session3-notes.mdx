@@ -7,25 +7,25 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Rückblick — Woche 8 bisher
-- Fallstudie — Zwei Hersteller von Telekommunikationsausrüstung
+- Rückblick - Woche 8 bisher
+- Fallstudie - Zwei Hersteller von Telekommunikationsausrüstung
 - Modell zur Nachfrageallokation (Demand Allocation Model)
 - Wichtige Erkenntnis aus der Lösung (Maxxio)
-- Fusions-Szenario — Maxvie
+- Fusions-Szenario - Maxvie
 - Kapazitiertes Standortproblem (Capacitated Plant Location Problem - CPLP)
 - Ergebnisse & Kostenvergleich
 </Aside>
 
 ---
 
-## 1. Rückblick — Woche 8 bisher
+## 1. Rückblick - Woche 8 bisher
 
 *Produktions- + Transportkosten je tausend Einheiten (₹ tausend), plus Kapazität und monatliche Fixkosten je Werk:*
 
@@ -36,7 +36,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 | **Mumbai** | 2.000 | 2.500 | 1.300 | 450 | 950 | 900 | 25 | 5.600 |
 | **Gurugram** | 400 | 1.400 | 600 | 1.200 | 560 | 2.400 | 24 | 4.200 |
 | **Kolkata** | 1.080 | 1.700 | 650 | 540 | 321 | 1.800 | 32 | 2.400 |
-| **Monatliche Nachfrage (K)** | 12 | 7 | 15 | 8 | 12 | 10 | — | — |
+| **Monatliche Nachfrage (K)** | 12 | 7 | 15 | 8 | 12 | 10 | - | - |
 
 | Session | Thema | Methode / Tool |
 |---|---|---|
@@ -50,7 +50,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## 2. Fallstudie — Zwei Hersteller von Telekommunikationsausrüstung
+## 2. Fallstudie - Zwei Hersteller von Telekommunikationsausrüstung
 
 **Die Unternehmen:** Maxxio (Nord- & Ostindien) und Wavie Communications (Süd- & Westindien).
 Beide Unternehmen haben genug Kapazität, um die gesamte Marktnachfrage zu decken. Die Entscheidung ist, WIE zugeteilt wird, nicht ob.
@@ -65,7 +65,7 @@ Beide Unternehmen haben genug Kapazität, um die gesamte Marktnachfrage zu decke
 |---|---|---|---|
 | B23 | `= H5*H15 − SUMME(B15:G15)` | Überkapazität (je Werk) | B24:B27 |
 | B29 | `= B10 − SUMME(B15:B19)` | Unerfüllte Nachfrage (je Markt) | C29:G29 |
-| B32 | `= SUMMENPRODUKT(B5:G9; B15:G19) + SUMMENPRODUKT(I5:I9; H15:H19)` | Zielfunktion (Gesamtkosten) | — |
+| B32 | `= SUMMENPRODUKT(B5:G9; B15:G19) + SUMMENPRODUKT(I5:I9; H15:H19)` | Zielfunktion (Gesamtkosten) | - |
 
 ---
 
@@ -79,7 +79,7 @@ Beide Unternehmen haben genug Kapazität, um die gesamte Marktnachfrage zu decke
 - `Si` = Lieferkapazität von Werk i
 - `Dj` = Nachfrage auf Markt j
 
-### LP-Formulierung — Nachfrageallokation
+### LP-Formulierung - Nachfrageallokation
 - **Z minimieren:** `Σi Σj (Cij × Xij)` (Gesamtproduktions- + Transportkosten)
 - **Angebotsbeschränkung:** `Σj Xij ≤ Si` für alle i (Angebot ≤ Kapazität)
 - **Nachfragebeschränkung:** `Σi Xij = Dj` für alle j (Nachfrage vollständig gedeckt)
@@ -101,7 +101,7 @@ Die Einrichtung in Kolkata wird trotz anfallender Fixkosten kaum genutzt, da die
 
 ---
 
-## 4. Fusions-Szenario — Maxvie (Maxxio + Wavie)
+## 4. Fusions-Szenario - Maxvie (Maxxio + Wavie)
 
 Das Management fusioniert die Unternehmen zu einem neuen Unternehmen: **Maxvie**.
 - Hat nun 5 Werke und muss 6 Märkte beliefern.
@@ -123,18 +123,18 @@ Dies ist ein **Kapazitiertes Standortproblem (CPLP)**.
   - `yi = 0` → Werk i ist geschlossen
 - Fügen Sie die Fixkosten `fi` für jedes Werk zur Zielfunktion hinzu.
 
-### LP-Formulierung — CPLP
+### LP-Formulierung - CPLP
 - **Z minimieren:** `Σi Σj (Cij × Xij) + Σi (fi × yi)` (Variable Kosten + Fixkosten der offenen Werke)
 - **Angebotsbeschränkung:** `Σj Xij ≤ Si × yi` für alle i (Werk kann nur liefern, wenn es offen ist)
 - **Nachfragebeschränkung:** `Σi Xij = Dj` für alle j
 - **Binäre Variable:** `yi ∈ {0, 1}` für alle i
 
-### Lösung in Excel — Solver-Einstellungen
-- **Lösungsmethode:** **Simplex LP** (Modell ist linear — yi wird über einen Integer-Constraint behandelt).
+### Lösung in Excel - Solver-Einstellungen
+- **Lösungsmethode:** **Simplex LP** (Modell ist linear - yi wird über einen Integer-Constraint behandelt).
 
 <figure class="sc-fig">
   <div class="sc-panel" style="max-width:34rem;margin:0 auto">
-    <div class="head">Excel Solver — CPLP-Einrichtung</div>
+    <div class="head">Excel Solver - CPLP-Einrichtung</div>
     <ul>
       <li><b>Ziel festlegen:</b> Gesamtkosten-Zelle (B32) → <b>Min</b></li>
       <li><b>Durch Ändern der Zellen:</b> Allokationen X<sub>ij</sub> <i>und</i> Werk-Auf/Zu-Flags y<sub>i</sub></li>
@@ -142,14 +142,14 @@ Dies ist ein **Kapazitiertes Standortproblem (CPLP)**.
       <li><b>Lösungsmethode:</b> <b>Simplex LP</b> (linear; y<sub>i</sub> als binär erzwungen)</li>
     </ul>
   </div>
-  <figcaption>Das CPLP fügt je Werk eine binäre Auf/Zu-Variable und die Fixkosten des Werks zur Zielfunktion hinzu — Solver entscheidet dann sowohl, welche Werke geöffnet werden, als auch, wie viel geliefert wird.</figcaption>
+  <figcaption>Das CPLP fügt je Werk eine binäre Auf/Zu-Variable und die Fixkosten des Werks zur Zielfunktion hinzu - Solver entscheidet dann sowohl, welche Werke geöffnet werden, als auch, wie viel geliefert wird.</figcaption>
 </figure>
 
 ---
 
 ## 6. Ergebnisse & Kostenvergleich
 
-**CPLP-Lösung (Maxvie — Fusioniert):**
+**CPLP-Lösung (Maxvie - Fusioniert):**
 - Optimale Werke, die offen bleiben sollen: **Chennai, Gurugram, Kolkata** (nur 3 von 5).
 - Geschlossene Werke: Delhi und Mumbai (Einsparung ihrer Fixkosten).
 
@@ -160,15 +160,15 @@ Dies ist ein **Kapazitiertes Standortproblem (CPLP)**.
 Monatliche Einsparung durch Fusion + Netzwerk-Redesign: ca. **₹50 Lakhs / Monat**.
 
 <Aside type="note">
-**★** Eine Fusion allein spart keine Kosten — erst das REDESIGN des Netzwerks senkt die Kosten durch Schließung ineffizienter Werke.
+**★** Eine Fusion allein spart keine Kosten - erst das REDESIGN des Netzwerks senkt die Kosten durch Schließung ineffizienter Werke.
 </Aside>
 
 ---
 
 ## Zusammenfassung der Session
 
-- **Nachfrageallokationsmodell:** Bestimmt `Xij`, um variable Kosten zu minimieren — Werke sind fixiert. (Simplex LP)
-- **CPLP:** Bestimmt SOWOHL `Xij` (Fluss) ALS AUCH `yi` (Werk auf/zu) — minimiert variable + Fixkosten. (Simplex LP mit binärer Einschränkung)
+- **Nachfrageallokationsmodell:** Bestimmt `Xij`, um variable Kosten zu minimieren - Werke sind fixiert. (Simplex LP)
+- **CPLP:** Bestimmt SOWOHL `Xij` (Fluss) ALS AUCH `yi` (Werk auf/zu) - minimiert variable + Fixkosten. (Simplex LP mit binärer Einschränkung)
 - **Fusionsergebnis:** MaxV betreibt 3 statt 5 Werke → ~₹50L/Monat Ersparnis.
 
 <Aside type="tip">

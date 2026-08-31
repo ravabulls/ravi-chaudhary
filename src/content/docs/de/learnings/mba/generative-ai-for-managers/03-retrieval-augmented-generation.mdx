@@ -1,6 +1,6 @@
 ---
-title: "Tag 3 — Retrieval-Augmented Generation (RAG)"
-description: "Wie man ein LLM in den eigenen Dokumenten verankert — Embeddings, Chunking und eine komplette RAG-Pipeline für genaue, quellengestützte Unternehmens-Fragen und -Antworten."
+title: "Tag 3 - Retrieval-Augmented Generation (RAG)"
+description: "Wie man ein LLM in den eigenen Dokumenten verankert - Embeddings, Chunking und eine komplette RAG-Pipeline für genaue, quellengestützte Unternehmens-Fragen und -Antworten."
 sidebar:
   label: "3 · RAG"
   order: 3
@@ -8,13 +8,13 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
 
 ---
 
-An Tag 1 habe ich gelernt, was ein Large Language Model (LLM) eigentlich ist, und an Tag 2, wie man gut *mit* ihm spricht — durch Prompting. Doch eine Frage stand immer im Raum: **Das Modell weiß nur, was es während des Trainings gesehen hat.** Es hat nie das Handbuch meines Unternehmens gelesen, nie die Umsätze des letzten Quartals gesehen und keine Ahnung, was gestern in den Nachrichten passiert ist. An Tag 3 geht es genau darum, das zu beheben — dem Modell die richtigen Informationen *in dem Moment zu geben, in dem ich frage*, damit seine Antworten in echten Daten verankert sind statt auf Vermutungen zu beruhen. Diese Technik heißt **Retrieval-Augmented Generation**, kurz **RAG**.
+An Tag 1 habe ich gelernt, was ein Large Language Model (LLM) eigentlich ist, und an Tag 2, wie man gut *mit* ihm spricht - durch Prompting. Doch eine Frage stand immer im Raum: **Das Modell weiß nur, was es während des Trainings gesehen hat.** Es hat nie das Handbuch meines Unternehmens gelesen, nie die Umsätze des letzten Quartals gesehen und keine Ahnung, was gestern in den Nachrichten passiert ist. An Tag 3 geht es genau darum, das zu beheben - dem Modell die richtigen Informationen *in dem Moment zu geben, in dem ich frage*, damit seine Antworten in echten Daten verankert sind statt auf Vermutungen zu beruhen. Diese Technik heißt **Retrieval-Augmented Generation**, kurz **RAG**.
 
-## 1. Warum es RAG gibt — die Wissenslücke
+## 1. Warum es RAG gibt - die Wissenslücke
 
 Ein LLM wird einmalig auf einer riesigen Momentaufnahme von Text trainiert und dann eingefroren. Daraus ergeben sich drei Probleme, die *kein noch so cleveres Prompting* lösen kann:
 
@@ -24,13 +24,13 @@ Ein LLM wird einmalig auf einer riesigen Momentaufnahme von Text trainiert und d
 | **Privates Wissen** | Es hat Ihre internen Daten nie gesehen | „Wie hoch waren unsere Umsätze in Q4 2025?" |
 | **Halluzination** | Wenn es etwas nicht weiß, erfindet es eine selbstbewusste, falsche Antwort | „Was sagt unser Handbuch zum Thema Homeoffice?" |
 
-Das letzte Problem — **Halluzination** (das Modell produziert plausibel klingende, aber falsche Aussagen) — ist das gefährliche für Unternehmen. Das Modell *sagt* nicht „Ich weiß es nicht"; es füllt die Lücke mit etwas, das sich perfekt liest und schlicht erfunden ist.
+Das letzte Problem - **Halluzination** (das Modell produziert plausibel klingende, aber falsche Aussagen) - ist das gefährliche für Unternehmen. Das Modell *sagt* nicht „Ich weiß es nicht"; es füllt die Lücke mit etwas, das sich perfekt liest und schlicht erfunden ist.
 
 <Aside type="note">
-**Die Kernidee in einem Satz.** Anstatt zu *hoffen*, dass das Modell die Antwort ohnehin schon kennt, holen wir zuerst die relevanten Fakten aus unseren eigenen Daten (**Retrieval**), fügen sie dann als Kontext in den Prompt ein und lassen das Modell damit antworten. Erst abrufen, dann generieren — das ist RAG.
+**Die Kernidee in einem Satz.** Anstatt zu *hoffen*, dass das Modell die Antwort ohnehin schon kennt, holen wir zuerst die relevanten Fakten aus unseren eigenen Daten (**Retrieval**), fügen sie dann als Kontext in den Prompt ein und lassen das Modell damit antworten. Erst abrufen, dann generieren - das ist RAG.
 </Aside>
 
-Ein einfacher Vergleich: eine Prüfung ohne Hilfsmittel gegenüber einer Prüfung mit erlaubten Unterlagen. Ein einfaches LLM schreibt eine Prüfung ohne Hilfsmittel — es antwortet aus dem Gedächtnis, und wenn das Gedächtnis versagt, bluffed es. RAG macht daraus eine Prüfung mit Unterlagen: Bevor es antwortet, schlägt es genau die richtigen Seiten *Ihres* Lehrbuchs auf und liest daraus vor. Derselbe Prüfling, weit zuverlässigere Antworten.
+Ein einfacher Vergleich: eine Prüfung ohne Hilfsmittel gegenüber einer Prüfung mit erlaubten Unterlagen. Ein einfaches LLM schreibt eine Prüfung ohne Hilfsmittel - es antwortet aus dem Gedächtnis, und wenn das Gedächtnis versagt, bluffed es. RAG macht daraus eine Prüfung mit Unterlagen: Bevor es antwortet, schlägt es genau die richtigen Seiten *Ihres* Lehrbuchs auf und liest daraus vor. Derselbe Prüfling, weit zuverlässigere Antworten.
 
 ## 2. Von der Stichwortsuche zur bedeutungsbasierten Suche
 
@@ -38,9 +38,9 @@ Die erste Aufgabe von RAG ist das *Finden* der richtigen Seiten. Um zu verstehen
 
 ### Der alte Weg: Stichwortsuche
 
-Klassische Suche (man denke an ein herkömmliches Suchfeld oder an Algorithmen mit Namen wie **TF-IDF** und **BM25**) behandelt jedes Dokument als **Bag of Words** — buchstäblich eine Strichliste, welche Wörter wie oft vorkommen, ohne die Wortreihenfolge zu beachten. Häufige Wörter wie „der" zählen wenig; seltene, unterscheidende Wörter zählen viel. Um eine Anfrage zu beantworten, findet sie Dokumente, die *exakt dieselben Wörter* enthalten.
+Klassische Suche (man denke an ein herkömmliches Suchfeld oder an Algorithmen mit Namen wie **TF-IDF** und **BM25**) behandelt jedes Dokument als **Bag of Words** - buchstäblich eine Strichliste, welche Wörter wie oft vorkommen, ohne die Wortreihenfolge zu beachten. Häufige Wörter wie „der" zählen wenig; seltene, unterscheidende Wörter zählen viel. Um eine Anfrage zu beantworten, findet sie Dokumente, die *exakt dieselben Wörter* enthalten.
 
-Die fatale Schwäche ist das **Vokabular-Mismatch-Problem**: Es findet nur wörtliche Übereinstimmungen. Fragen Sie nach „Homeoffice", und es übersieht ein Dokument, das von „von zu Hause arbeiten" oder „Telearbeit" spricht, weil die Buchstaben nicht zusammenpassen — obwohl die *Bedeutung* identisch ist.
+Die fatale Schwäche ist das **Vokabular-Mismatch-Problem**: Es findet nur wörtliche Übereinstimmungen. Fragen Sie nach „Homeoffice", und es übersieht ein Dokument, das von „von zu Hause arbeiten" oder „Telearbeit" spricht, weil die Buchstaben nicht zusammenpassen - obwohl die *Bedeutung* identisch ist.
 
 ### Der neue Weg: Semantic Search
 
@@ -53,16 +53,16 @@ Die fatale Schwäche ist das **Vokabular-Mismatch-Problem**: Es findet nur wört
 | „Kundenbeschwerden" | nur „Kundenbeschwerden" | negative Bewertungen, Support-Tickets, verärgertes Feedback |
 
 <Aside type="tip">
-**Warum das für Unternehmen wichtig ist.** Das meiste Unternehmenswissen steckt in Dokumenten, mit denen die Stichwortsuche schlecht umgeht — Menschen formulieren dieselbe Sache auf hundert verschiedene Weisen. Semantic Search erschließt dieses Wissen, indem sie erfasst, was der Nutzer *meint*, nicht welche Wörter er zufällig getippt hat.
+**Warum das für Unternehmen wichtig ist.** Das meiste Unternehmenswissen steckt in Dokumenten, mit denen die Stichwortsuche schlecht umgeht - Menschen formulieren dieselbe Sache auf hundert verschiedene Weisen. Semantic Search erschließt dieses Wissen, indem sie erfasst, was der Nutzer *meint*, nicht welche Wörter er zufällig getippt hat.
 </Aside>
 
-## 3. Embeddings — Bedeutung in Zahlen verwandeln
+## 3. Embeddings - Bedeutung in Zahlen verwandeln
 
-Wie kann Software überhaupt *Bedeutung* vergleichen? Durch **Embeddings** — die Idee, die uns schon an Tag 1 begegnet ist.
+Wie kann Software überhaupt *Bedeutung* vergleichen? Durch **Embeddings** - die Idee, die uns schon an Tag 1 begegnet ist.
 
 Ein **Embedding** ist eine Liste von Zahlen (ein **Vektor**), die ein Stück Text als Punkt in einem riesigen, mehrdimensionalen Raum darstellt. Der Trick, der das nützlich macht: **Texte mit ähnlicher Bedeutung landen in diesem Raum nahe beieinander**, unverwandte Texte landen weit auseinander. „Auto" und „Kraftfahrzeug" werden zu Nachbarn; „Auto" und „Banane" liegen weit auseinander. Diese Anordnung hat das Modell durch das Lesen enormer Textmengen gelernt.
 
-An Tag 1 sahen wir das für einzelne *Wörter*. Für RAG brauchen wir es für ganze *Passagen* — Sätze, Absätze, Chunks — jeweils zu einem Vektor verdichtet:
+An Tag 1 sahen wir das für einzelne *Wörter*. Für RAG brauchen wir es für ganze *Passagen* - Sätze, Absätze, Chunks - jeweils zu einem Vektor verdichtet:
 
 | Ebene | Was es erfasst | Typische Nutzung |
 |---|---|---|
@@ -71,17 +71,17 @@ An Tag 1 sahen wir das für einzelne *Wörter*. Für RAG brauchen wir es für ga
 | **Passage-Embedding** | **ein Absatz / Chunk** | **RAG-Retrieval** |
 | Dokument-Embedding | ein ganzes Dokument | Dokumentklassifikation |
 
-Ein modernes Embedding-Modell (der Kurs verwendet Googles `gemini-embedding-001`) liest eine Passage und gibt einen einzigen langen Vektor zurück — in diesem Fall **3.072 Zahlen** —, der für die Bedeutung dieser gesamten Passage steht.
+Ein modernes Embedding-Modell (der Kurs verwendet Googles `gemini-embedding-001`) liest eine Passage und gibt einen einzigen langen Vektor zurück - in diesem Fall **3.072 Zahlen** -, der für die Bedeutung dieser gesamten Passage steht.
 
 ### „Nähe" messen: Cosine Similarity
 
-Sobald zwei Texte Vektoren sind, brauchen wir eine einzige Zahl dafür, *wie ähnlich* sie sind. Das Standardmaß ist die **Cosine Similarity** (Kosinus-Ähnlichkeit) — sie betrachtet den *Winkel* zwischen zwei Vektoren statt ihre Länge. Gleiche Richtung bedeutet gleiche Bedeutung.
+Sobald zwei Texte Vektoren sind, brauchen wir eine einzige Zahl dafür, *wie ähnlich* sie sind. Das Standardmaß ist die **Cosine Similarity** (Kosinus-Ähnlichkeit) - sie betrachtet den *Winkel* zwischen zwei Vektoren statt ihre Länge. Gleiche Richtung bedeutet gleiche Bedeutung.
 
 | Kosinus-Wert | Was er bedeutet |
 |---|---|
 | `1.0` | identische Bedeutung |
-| `0.7` – `0.9` | sehr ähnlich |
-| `0.3` – `0.6` | lose verwandt |
+| `0.7` - `0.9` | sehr ähnlich |
+| `0.3` - `0.6` | lose verwandt |
 | unter `0.3` | unverwandt |
 
 ```python
@@ -96,7 +96,7 @@ print(f"Similarity: {sim:.3f}")
 
 ### Embeddings mit der Gemini-API erstellen
 
-Das aktuelle `google-genai`-SDK macht das zu einer Sache von wenigen Zeilen. (Fügen Sie niemals einen echten Schlüssel in den Code ein — bewahren Sie ihn in den Colab-**Secrets** auf, wie die [Setup](/de/learnings/mba/generative-ai-for-managers/00-setup/)-Notizen zeigen.)
+Das aktuelle `google-genai`-SDK macht das zu einer Sache von wenigen Zeilen. (Fügen Sie niemals einen echten Schlüssel in den Code ein - bewahren Sie ihn in den Colab-**Secrets** auf, wie die [Setup](/de/learnings/mba/generative-ai-for-managers/00-setup/)-Notizen zeigen.)
 
 ```python
 from google import genai
@@ -127,9 +127,9 @@ for i, emb in enumerate(response.embeddings):
     print(f"Document {i}: {len(emb.values)} dimensions")
 ```
 
-## 4. Chunking — Dokumente in mundgerechte Stücke schneiden
+## 4. Chunking - Dokumente in mundgerechte Stücke schneiden
 
-Echte Dokumente sind lang — ein 100-seitiges Handbuch, ein Finanzbericht, ein Produkthandbuch. Wir können nicht einfach das Ganze als einen Vektor embedden, und zwar aus vier Gründen:
+Echte Dokumente sind lang - ein 100-seitiges Handbuch, ein Finanzbericht, ein Produkthandbuch. Wir können nicht einfach das Ganze als einen Vektor embedden, und zwar aus vier Gründen:
 
 | Problem | Warum es weh tut |
 |---|---|
@@ -155,12 +155,12 @@ Also **chunken** wir: Wir teilen jedes Dokument in kleinere Stücke, embedden je
 Die Chunk-Größe ist eine der folgenreichsten Design-Entscheidungen in einem RAG-System. Kleine Chunks (~100 Token) sind messerscharf präzise, können aber umgebenden Kontext verpassen; große Chunks (~500 Token) tragen mehr Kontext, verwässern aber die Bedeutung und sind teurer zu durchsuchen.
 
 <Aside type="tip">
-**Faustregel.** Beginnen Sie mit **200–500 Token pro Chunk** und einer **Überlappung von 50–100 Token** zwischen Nachbarn, und justieren Sie dann anhand von Tests.
+**Faustregel.** Beginnen Sie mit **200-500 Token pro Chunk** und einer **Überlappung von 50-100 Token** zwischen Nachbarn, und justieren Sie dann anhand von Tests.
 </Aside>
 
-**Warum Überlappung?** Ohne sie wird ein Fakt, der auf einer Chunk-Grenze sitzt, in zwei Hälften geschnitten und möglicherweise nie abgerufen. Stellen Sie sich einen Satz vor — *„Der Umsatz in Q3 wuchs um 12 %, getrieben von der neuen Produktlinie, die im Juli gestartet wurde"* —, der so geschnitten wird, dass „die neue Produktlinie" in Chunk 1 und „die im Juli gestartet wurde" in Chunk 2 landet. Keiner der beiden Chunks enthält nun den ganzen Fakt. Lässt man die Chunks sich um ein paar Sätze überlappen, trägt jeder den vollständigen Gedanken über die Nahtstelle hinweg.
+**Warum Überlappung?** Ohne sie wird ein Fakt, der auf einer Chunk-Grenze sitzt, in zwei Hälften geschnitten und möglicherweise nie abgerufen. Stellen Sie sich einen Satz vor - *„Der Umsatz in Q3 wuchs um 12 %, getrieben von der neuen Produktlinie, die im Juli gestartet wurde"* -, der so geschnitten wird, dass „die neue Produktlinie" in Chunk 1 und „die im Juli gestartet wurde" in Chunk 2 landet. Keiner der beiden Chunks enthält nun den ganzen Fakt. Lässt man die Chunks sich um ein paar Sätze überlappen, trägt jeder den vollständigen Gedanken über die Nahtstelle hinweg.
 
-### Metadaten — das Etikett auf jedem Chunk
+### Metadaten - das Etikett auf jedem Chunk
 
 Clevere Systeme heften jedem Chunk einen kleinen Datensatz an **Metadaten** an: aus welchem Dokument er stammt, die Seite, den Abschnitt, das Datum. Genau das ermöglicht es Ihnen später, Quellen zu *zitieren*, zu *filtern* („nur HR-Dokumente durchsuchen") und Fehler zu suchen („welcher Chunk hat diese falsche Antwort erzeugt?").
 
@@ -188,7 +188,7 @@ Jetzt fügt sich das Ganze zusammen. Ein RAG-System läuft in **zwei Phasen**: e
   <span class="arrow">→</span>
   <div class="sc-node green">Vector Store<span class="sub">Vektoren speichern</span></div>
 </div>
-<figcaption>Phase 1 — Indexing (offline, einmalig): Verwandeln Sie Ihre Dokumente in eine durchsuchbare Bibliothek von Vektoren.</figcaption>
+<figcaption>Phase 1 - Indexing (offline, einmalig): Verwandeln Sie Ihre Dokumente in eine durchsuchbare Bibliothek von Vektoren.</figcaption>
 </figure>
 
 <figure class="sc-fig">
@@ -203,7 +203,7 @@ Jetzt fügt sich das Ganze zusammen. Ein RAG-System läuft in **zwei Phasen**: e
   <span class="arrow">→</span>
   <div class="sc-node soft">Verankerte Antwort</div>
 </div>
-<figcaption>Phase 2 — Querying (online, pro Frage): die relevantesten Chunks finden und das LLM daraus antworten lassen.</figcaption>
+<figcaption>Phase 2 - Querying (online, pro Frage): die relevantesten Chunks finden und das LLM daraus antworten lassen.</figcaption>
 </figure>
 
 Beide Phasen als eine Komponententabelle gelesen:
@@ -219,9 +219,9 @@ Beide Phasen als eine Komponententabelle gelesen:
 | 7. Augmentieren | Querying | diese Chunks als Kontext in den Prompt einfügen |
 | 8. Generieren | Querying | das LLM schreibt eine in diesem Kontext verankerte Antwort |
 
-Der Schritt, der die *k* nächstgelegenen Chunks abruft, heißt **Nearest-Neighbour-Suche** (*k* ist einfach „wie viele Chunks man greift" — oft 3 bis 5).
+Der Schritt, der die *k* nächstgelegenen Chunks abruft, heißt **Nearest-Neighbour-Suche** (*k* ist einfach „wie viele Chunks man greift" - oft 3 bis 5).
 
-### Der augmentierte Prompt — wo RAG auf Tag 2 trifft
+### Der augmentierte Prompt - wo RAG auf Tag 2 trifft
 
 Das Herz von RAG ist, *wie* die abgerufenen Chunks in den Prompt eingebaut werden. Und das ist reines Prompting aus Tag 2: die Trennung von System und User, **Delimiter** (Trennzeichen), um den Kontext abzugrenzen, und eine explizite **Grounding-Anweisung**, die dem Modell sagt, es solle *nur* aus dem antworten, was ihm gegeben wurde.
 
@@ -245,9 +245,9 @@ User: Answer the question based ONLY on the context below.
 **Das ist die Brücke von Tag 2.** Die `<context>`-Delimiter, die „antworte NUR aus dem Kontext"-Grounding-Regel und die eingebaute Verweigerung („sag, dass du nicht genug Informationen hast") sind allesamt Prompting-Techniken aus Tag 2. RAG ist einfach *Informationsabruf plus diszipliniertes Prompting*.
 </Aside>
 
-### Citations — aus einer Blackbox einen Rechercheassistenten machen
+### Citations - aus einer Blackbox einen Rechercheassistenten machen
 
-Für den Unternehmenseinsatz reicht eine korrekte Antwort nicht — Menschen müssen wissen, *woher* sie stammt, um sie überprüfen zu können. Sie weisen das Modell an, jede Aussage mit ihrer Quelle zu kennzeichnen:
+Für den Unternehmenseinsatz reicht eine korrekte Antwort nicht - Menschen müssen wissen, *woher* sie stammt, um sie überprüfen zu können. Sie weisen das Modell an, jede Aussage mit ihrer Quelle zu kennzeichnen:
 
 ```text
 Rules:
@@ -256,21 +256,21 @@ Rules:
 - If sources conflict, surface the conflict and prefer the most recent/authoritative.
 ```
 
-Das Modell antwortet dann etwa so: *„Die aktuelle Regelung erlaubt bis zu 3 Tage pro Woche [Source 1], doch eine neuere Aktualisierung erhöht dies ab Q4 2025 auf 4 Tage [Source 2]."* In regulierten Bereichen — Recht, Gesundheitswesen, Finanzen — ist diese Nachvollziehbarkeit der Unterschied zwischen Spielzeug und Werkzeug. Wenn Dokumente sich tatsächlich widersprechen, definiert ein guter Grounding-Prompt eine **Autoritätshierarchie** (offizielle Richtlinie > Standardverfahren > FAQ > informelles Wiki) und bevorzugt innerhalb einer Ebene das neueste Dokument — und macht den Widerspruch immer *sichtbar*, statt still zu raten.
+Das Modell antwortet dann etwa so: *„Die aktuelle Regelung erlaubt bis zu 3 Tage pro Woche [Source 1], doch eine neuere Aktualisierung erhöht dies ab Q4 2025 auf 4 Tage [Source 2]."* In regulierten Bereichen - Recht, Gesundheitswesen, Finanzen - ist diese Nachvollziehbarkeit der Unterschied zwischen Spielzeug und Werkzeug. Wenn Dokumente sich tatsächlich widersprechen, definiert ein guter Grounding-Prompt eine **Autoritätshierarchie** (offizielle Richtlinie > Standardverfahren > FAQ > informelles Wiki) und bevorzugt innerhalb einer Ebene das neueste Dokument - und macht den Widerspruch immer *sichtbar*, statt still zu raten.
 
 ## 6. Ein minimales RAG-System in ~40 Zeilen
 
-Das Lab baut ein vollständiges, funktionierendes RAG-System mit nichts weiter als Python-Listen und der Gemini-API — keine Datenbank nötig. So sieht es im Groben aus:
+Das Lab baut ein vollständiges, funktionierendes RAG-System mit nichts weiter als Python-Listen und der Gemini-API - keine Datenbank nötig. So sieht es im Groben aus:
 
 <Steps>
 
-1. **Dokumente vorbereiten** — eine kleine „Wissensbasis" aus kurzen Textausschnitten, die für echte Unternehmensfakten stehen (Gründungsgeschichte, Homeoffice-Regelung, Q3-Umsatz, Urlaubsregelung, Produktdetails).
+1. **Dokumente vorbereiten** - eine kleine „Wissensbasis" aus kurzen Textausschnitten, die für echte Unternehmensfakten stehen (Gründungsgeschichte, Homeoffice-Regelung, Q3-Umsatz, Urlaubsregelung, Produktdetails).
 
-2. **Alles embedden** — ein gebündelter Aufruf embeddet alle Dokumente auf einmal mit `task_type="RETRIEVAL_DOCUMENT"`, und wir behalten die Vektoren als NumPy-Arrays.
+2. **Alles embedden** - ein gebündelter Aufruf embeddet alle Dokumente auf einmal mit `task_type="RETRIEVAL_DOCUMENT"`, und wir behalten die Vektoren als NumPy-Arrays.
 
-3. **Nach Bedeutung suchen** — die eingehende Frage mit `RETRIEVAL_QUERY` embedden, sie per Cosine Similarity mit jedem gespeicherten Vektor vergleichen und die Top-k zurückgeben.
+3. **Nach Bedeutung suchen** - die eingehende Frage mit `RETRIEVAL_QUERY` embedden, sie per Cosine Similarity mit jedem gespeicherten Vektor vergleichen und die Top-k zurückgeben.
 
-4. **Eine verankerte Antwort generieren** — diese Top-k-Chunks in den augmentierten Prompt einfügen und das Chat-Modell aufrufen.
+4. **Eine verankerte Antwort generieren** - diese Top-k-Chunks in den augmentierten Prompt einfügen und das Chat-Modell aufrufen.
 
 </Steps>
 
@@ -299,12 +299,12 @@ Question: {question}"""
 ```
 
 <Aside type="tip">
-**Der Moment, in dem der Groschen fällt.** Fragen Sie dieses System „Welche Programmiersprache verwendet das Produkt?", wenn dieser Fakt nicht in der Wissensbasis steht, und ein gut verankertes Modell antwortet *„Ich habe nicht genug Informationen"*, statt eine Antwort zu erfinden. Diese Verweigerung ist RAG, das **richtig** funktioniert — verankert, nicht ratend.
+**Der Moment, in dem der Groschen fällt.** Fragen Sie dieses System „Welche Programmiersprache verwendet das Produkt?", wenn dieser Fakt nicht in der Wissensbasis steht, und ein gut verankertes Modell antwortet *„Ich habe nicht genug Informationen"*, statt eine Antwort zu erfinden. Diese Verweigerung ist RAG, das **richtig** funktioniert - verankert, nicht ratend.
 </Aside>
 
-## 7. Vektordatenbanken — wenn Listen nicht mehr skalieren
+## 7. Vektordatenbanken - wenn Listen nicht mehr skalieren
 
-Der Ansatz mit Python-Listen ist ideal zum Lernen, aber er durchsucht *jeden* Vektor bei *jeder* Anfrage und vergisst beim Neustart alles. Echte Deployments nutzen eine **Vektordatenbank** — Speicher, der eigens für Embeddings gebaut ist.
+Der Ansatz mit Python-Listen ist ideal zum Lernen, aber er durchsucht *jeden* Vektor bei *jeder* Anfrage und vergisst beim Neustart alles. Echte Deployments nutzen eine **Vektordatenbank** - Speicher, der eigens für Embeddings gebaut ist.
 
 | Herausforderung | Listen im Arbeitsspeicher | Vektordatenbank |
 |---|---|---|
@@ -316,45 +316,45 @@ Der Ansatz mit Python-Listen ist ideal zum Lernen, aber er durchsucht *jeden* Ve
 
 Die Geschwindigkeit kommt von der **indizierten Suche**: Statt die Anfrage mit jedem Vektor zu vergleichen, organisieren Algorithmen (mit Namen wie **HNSW** oder **IVF**) die Vektoren vorab in Cluster oder Graphen, sodass eine Anfrage nur eine kleine, vielversprechende Teilmenge prüft. Es ist der Vektorraum-Cousin des alten Stichwort-„Inverted Index". Beliebte Optionen reichen von **ChromaDB** (am einfachsten zum Einstieg) über **FAISS** und **pgvector** (Open Source, selbst gehostet) bis zu **Pinecone**, **Weaviate** und **Qdrant** (managed / mit vollem Funktionsumfang). Ein sinnvoller Weg: mit ChromaDB prototypen, zu einem Managed-Dienst wechseln, wenn Sie Skalierung brauchen.
 
-## 8. RAG vs. Fine-tuning — warum RAG bei Unternehmens-Q&A gewinnt
+## 8. RAG vs. Fine-tuning - warum RAG bei Unternehmens-Q&A gewinnt
 
-Eine naheliegende Frage: Wenn das Modell meine Daten nicht kennt, warum es nicht einfach **fine-tunen** — es so lange auf Unternehmensdokumenten nachtrainieren, bis es sie „kennt"? Für Unternehmens-Fragen-und-Antworten gewinnt RAG fast immer. Hier der ehrliche Vergleich:
+Eine naheliegende Frage: Wenn das Modell meine Daten nicht kennt, warum es nicht einfach **fine-tunen** - es so lange auf Unternehmensdokumenten nachtrainieren, bis es sie „kennt"? Für Unternehmens-Fragen-und-Antworten gewinnt RAG fast immer. Hier der ehrliche Vergleich:
 
 | Dimension | RAG (Abruf zur Anfragezeit) | Fine-tuning (Nachtraining auf Ihren Daten) |
 |---|---|---|
-| Wissen aktualisieren | Dokument hinzufügen/ersetzen — sofort | Modell neu trainieren — langsam, teuer |
-| Quellen-Citations | ja — verweist auf den exakten Chunk | nein — Wissen ist eingebacken, nicht nachvollziehbar |
-| Halluzinationskontrolle | stark — Antworten sind im abgerufenen Text verankert | schwächer — generiert weiterhin aus dem Gedächtnis |
-| Kosten & Können | gering — keine Trainings-Pipeline nötig | hoch — GPUs, ML-Expertise, Datenaufbereitung |
-| Zugriffskontrolle | Chunks nach Nutzerrechten filtern | schwer — alle bekommen dasselbe eingebackene Modell |
+| Wissen aktualisieren | Dokument hinzufügen/ersetzen - sofort | Modell neu trainieren - langsam, teuer |
+| Quellen-Citations | ja - verweist auf den exakten Chunk | nein - Wissen ist eingebacken, nicht nachvollziehbar |
+| Halluzinationskontrolle | stark - Antworten sind im abgerufenen Text verankert | schwächer - generiert weiterhin aus dem Gedächtnis |
+| Kosten & Können | gering - keine Trainings-Pipeline nötig | hoch - GPUs, ML-Expertise, Datenaufbereitung |
+| Zugriffskontrolle | Chunks nach Nutzerrechten filtern | schwer - alle bekommen dasselbe eingebackene Modell |
 | Am besten für | das Einspeisen von **Fakten/Wissen** | das Vermitteln von **Stil, Format oder Ton** |
 
-Die zentrale Erkenntnis: Fine-tuning ändert, *wie sich das Modell verhält*; RAG ändert, *was das Modell gerade jetzt weiß*. Unternehmens-Q&A ist ein Wissensproblem — die Fakten ändern sich wöchentlich, müssen zitierbar sein und müssen respektieren, wer was sehen darf. Das ist RAGs Heimspiel. (Die beiden sind eigentlich keine Rivalen: Fine-tunen Sie, um den *Ton* zu korrigieren, und nutzen Sie RAG, um *Fakten* zu liefern.)
+Die zentrale Erkenntnis: Fine-tuning ändert, *wie sich das Modell verhält*; RAG ändert, *was das Modell gerade jetzt weiß*. Unternehmens-Q&A ist ein Wissensproblem - die Fakten ändern sich wöchentlich, müssen zitierbar sein und müssen respektieren, wer was sehen darf. Das ist RAGs Heimspiel. (Die beiden sind eigentlich keine Rivalen: Fine-tunen Sie, um den *Ton* zu korrigieren, und nutzen Sie RAG, um *Fakten* zu liefern.)
 
 <Aside type="caution">
-**„Warum nicht einfach ein riesiges Context Window nehmen?"** Moderne Modelle nehmen enorme Prompts an (Gemini bis zu ~2 Millionen Token), sodass man für einen *kleinen, statischen* Satz von Dokumenten das Retrieval manchmal überspringen und einfach alles hineinkopieren kann. Das ist einfacher — aber Sie zahlen bei *jeder einzelnen Anfrage* für all diese Token. RAG bleibt die bessere Wahl, sobald Ihre Wissensbasis das Context Window sprengt oder Sie die Kosten im großen Maßstab kontrollieren müssen.
+**„Warum nicht einfach ein riesiges Context Window nehmen?"** Moderne Modelle nehmen enorme Prompts an (Gemini bis zu ~2 Millionen Token), sodass man für einen *kleinen, statischen* Satz von Dokumenten das Retrieval manchmal überspringen und einfach alles hineinkopieren kann. Das ist einfacher - aber Sie zahlen bei *jeder einzelnen Anfrage* für all diese Token. RAG bleibt die bessere Wahl, sobald Ihre Wissensbasis das Context Window sprengt oder Sie die Kosten im großen Maßstab kontrollieren müssen.
 </Aside>
 
-## 9. RAG besser machen — fortgeschrittene Techniken
+## 9. RAG besser machen - fortgeschrittene Techniken
 
-Einfaches RAG (embed → retrieve → generate) funktioniert beeindruckend gut. Produktionssysteme setzen dann Verfeinerungen obendrauf — es lohnt sich, sie *zu kennen*, auch wenn die Labs bei den Grundlagen bleiben:
+Einfaches RAG (embed → retrieve → generate) funktioniert beeindruckend gut. Produktionssysteme setzen dann Verfeinerungen obendrauf - es lohnt sich, sie *zu kennen*, auch wenn die Labs bei den Grundlagen bleiben:
 
 | Technik | Welches Problem sie löst |
 |---|---|
 | **Reranking** | schnelles Retrieval greift *grob* relevante Chunks; ein langsameres, schärferes Zweitmodell bewertet die Top ~20 neu und dampft sie auf die besten 3 ein |
 | **Hybrid Search** | reine Semantic Search kann exakte Begriffe verpassen (ein Akronym, „ISO 27001"); kombinieren Sie sie mit Stichwort-/BM25-Suche, um beides zu erwischen |
-| **Query-Transformation** | eine vage Frage vor der Suche umschreiben — Begriffe erweitern oder zuerst eine allgemeinere „Step-back"-Frage stellen |
+| **Query-Transformation** | eine vage Frage vor der Suche umschreiben - Begriffe erweitern oder zuerst eine allgemeinere „Step-back"-Frage stellen |
 | **Multi-Hop-RAG** | mehrere Retrievals verketten für Fragen, die sich über Dokumente erstrecken („welcher unserer Top-3-Kunden hat den längsten Vertrag?") |
-| **Query-Routing** | das LLM entscheiden lassen, *welche* Quelle durchsucht wird — Wissensbasis vs. CRM vs. Kalender |
-| **Agentic RAG** | das LLM entscheiden lassen, *ob*, *was*, *wo* und *wann* abgerufen wird — die Tür zu Tag 4 |
+| **Query-Routing** | das LLM entscheiden lassen, *welche* Quelle durchsucht wird - Wissensbasis vs. CRM vs. Kalender |
+| **Agentic RAG** | das LLM entscheiden lassen, *ob*, *was*, *wo* und *wann* abgerufen wird - die Tür zu Tag 4 |
 
 <Aside type="note">
-**Brücke zu Tag 4.** *Agentic RAG* ist der Punkt, an dem Retrieval auf **Agenten** trifft. Einfaches RAG heißt „eine Sache nachschlagen"; agentic RAG heißt „ein Thema autonom recherchieren" — mehrere Schritte planen, Werkzeuge jenseits der Suche nutzen und beurteilen, wann genug für eine Antwort vorliegt. Mehr dazu morgen.
+**Brücke zu Tag 4.** *Agentic RAG* ist der Punkt, an dem Retrieval auf **Agenten** trifft. Einfaches RAG heißt „eine Sache nachschlagen"; agentic RAG heißt „ein Thema autonom recherchieren" - mehrere Schritte planen, Werkzeuge jenseits der Suche nutzen und beurteilen, wann genug für eine Antwort vorliegt. Mehr dazu morgen.
 </Aside>
 
-## 10. Evaluation — ist mein RAG eigentlich gut?
+## 10. Evaluation - ist mein RAG eigentlich gut?
 
-Ein RAG-System kann an *zwei verschiedenen Stellen* scheitern: beim **Retrieval** (die falschen Chunks geholt) oder bei der **Generation** (die richtigen Chunks gehabt, aber schlecht geantwortet). Man muss beides messen. Der Rahmen des Kurses ist die **RAG-Triade** — drei sich ergänzende Bewertungen:
+Ein RAG-System kann an *zwei verschiedenen Stellen* scheitern: beim **Retrieval** (die falschen Chunks geholt) oder bei der **Generation** (die richtigen Chunks gehabt, aber schlecht geantwortet). Man muss beides messen. Der Rahmen des Kurses ist die **RAG-Triade** - drei sich ergänzende Bewertungen:
 
 <div class="sc-chips">
   <span class="sc-chip violet">Context Relevance</span>
@@ -368,10 +368,10 @@ Ein RAG-System kann an *zwei verschiedenen Stellen* scheitern: beim **Retrieval*
 | **Groundedness** | Wird die Antwort von diesen Chunks *gestützt*? | jede Aussage zu einem Chunk zurückverfolgen |
 | **Answer Relevance** | Geht die Antwort tatsächlich auf die *Frage* ein? | die Antwort gegen die ursprüngliche Frage bewerten |
 
-Sie brauchen alle drei, weil jede einen anderen Fehler abfängt: Perfekte Chunks können trotzdem eine falsche Antwort erzeugen (niedrige Groundedness), und eine wunderschön geschriebene Antwort kann die Frage völlig verfehlen (niedrige Answer Relevance). Um im großen Maßstab zu bewerten, nutzen die Labs **LLM-as-Judge** — ein zweites LLM bewertet jede Dimension mit 1–5 und gibt JSON zurück. Speziell fürs Retrieval helfen auch klassische Metriken: **Precision@k** (welcher Anteil der abgerufenen Chunks relevant war) und **Recall@k** (welchen Anteil der relevanten Chunks wir gefunden haben) — beide brauchen einen **Golden Test Set** aus echten Fragen mit bekannten korrekten Antworten.
+Sie brauchen alle drei, weil jede einen anderen Fehler abfängt: Perfekte Chunks können trotzdem eine falsche Antwort erzeugen (niedrige Groundedness), und eine wunderschön geschriebene Antwort kann die Frage völlig verfehlen (niedrige Answer Relevance). Um im großen Maßstab zu bewerten, nutzen die Labs **LLM-as-Judge** - ein zweites LLM bewertet jede Dimension mit 1-5 und gibt JSON zurück. Speziell fürs Retrieval helfen auch klassische Metriken: **Precision@k** (welcher Anteil der abgerufenen Chunks relevant war) und **Recall@k** (welchen Anteil der relevanten Chunks wir gefunden haben) - beide brauchen einen **Golden Test Set** aus echten Fragen mit bekannten korrekten Antworten.
 
 <Aside type="caution">
-**Der mit Abstand größte Fehler** ist, nicht mit *echten Nutzerfragen* zu testen. Bauen Sie das System, und werfen Sie ihm dann die chaotischen, mehrdeutigen, außerhalb des Themas liegenden Fragen zu, die Ihre tatsächlichen Nutzer stellen werden — nicht nur die einfachen. Selbst 30 gut gewählte Fragen (einfache Nachschlagefragen, mehrstufiges Schlussfolgern, Themenfremdes und bekannte Widersprüche) legen die meisten Probleme offen.
+**Der mit Abstand größte Fehler** ist, nicht mit *echten Nutzerfragen* zu testen. Bauen Sie das System, und werfen Sie ihm dann die chaotischen, mehrdeutigen, außerhalb des Themas liegenden Fragen zu, die Ihre tatsächlichen Nutzer stellen werden - nicht nur die einfachen. Selbst 30 gut gewählte Fragen (einfache Nachschlagefragen, mehrstufiges Schlussfolgern, Themenfremdes und bekannte Widersprüche) legen die meisten Probleme offen.
 </Aside>
 
 ### Häufige Fallstricke, auf die man achten sollte
@@ -405,39 +405,39 @@ Die Praxis von Tag 3 führt die Theorie den ganzen Weg bis zu einem dokumentiert
 
 <Tabs>
 <TabItem label="Angeleitetes Lab">
-**Eine RAG-Pipeline bauen (dozentengeführt, ~60–75 Min).** Schritt für Schritt: Embeddings mit der Gemini-API erstellen, Cosine Similarity und Nearest-Neighbour-Suche implementieren, ein Dokument chunken (feste Größe vs. satzbasiert, mit Überlappung und Metadaten), die vollständige *retrieve → augment → generate*-Pipeline zusammensetzen und sie dann evaluieren — die RAG-Triade, LLM-as-Judge-Bewertung und Precision@k / Recall@k. Enthält die aufschlussreiche „mit vs. ohne Kontext"-Halluzinations-Demo und einen Verweigerungstest bei themenfremden Fragen.
+**Eine RAG-Pipeline bauen (dozentengeführt, ~60-75 Min).** Schritt für Schritt: Embeddings mit der Gemini-API erstellen, Cosine Similarity und Nearest-Neighbour-Suche implementieren, ein Dokument chunken (feste Größe vs. satzbasiert, mit Überlappung und Metadaten), die vollständige *retrieve → augment → generate*-Pipeline zusammensetzen und sie dann evaluieren - die RAG-Triade, LLM-as-Judge-Bewertung und Precision@k / Recall@k. Enthält die aufschlussreiche „mit vs. ohne Kontext"-Halluzinations-Demo und einen Verweigerungstest bei themenfremden Fragen.
 </TabItem>
 <TabItem label="Eigenständiges Lab">
-**Bauen Sie Ihren eigenen RAG-Assistenten mit Hybrid Retrieval (~90–120 Min).** Wählen Sie eine Domäne (HR, Produktdokumente, Support oder Forschung), bauen Sie eine Wissensbasis aus 4+ Dokumenten, entwerfen Sie eine Chunking-Strategie und schreiben Sie einen Grounding-System-Prompt mit expliziten Verweigerungsregeln. Die neuen Zutaten: **Hybrid Retrieval** (Stichwort + semantisch, eine 60/40-gewichtete Mischung), **Metadaten-Filterung**, um den Suchbereich einzuschränken, und ein Golden Test Set aus 10+ Fragen (einfach, mittel, schwer, Verweigerung). Iterieren Sie dann den Prompt von v1 → v2 und *messen* Sie die Verbesserung.
+**Bauen Sie Ihren eigenen RAG-Assistenten mit Hybrid Retrieval (~90-120 Min).** Wählen Sie eine Domäne (HR, Produktdokumente, Support oder Forschung), bauen Sie eine Wissensbasis aus 4+ Dokumenten, entwerfen Sie eine Chunking-Strategie und schreiben Sie einen Grounding-System-Prompt mit expliziten Verweigerungsregeln. Die neuen Zutaten: **Hybrid Retrieval** (Stichwort + semantisch, eine 60/40-gewichtete Mischung), **Metadaten-Filterung**, um den Suchbereich einzuschränken, und ein Golden Test Set aus 10+ Fragen (einfach, mittel, schwer, Verweigerung). Iterieren Sie dann den Prompt von v1 → v2 und *messen* Sie die Verbesserung.
 </TabItem>
 <TabItem label="Aufgabe">
-**Produktionsreifes RAG-System.** Das Gesamtpaket: eine Wissensbasis aus 4–6 Dokumenten (1.000+ Wörter), ein System-Prompt mit allen acht Komponenten (Rolle, Aufgabe, Grounding-Regeln, Umfang, Format, Verweigerung, ein Beispiel und Konfliktbehandlung), 15+ durch die Pipeline laufende Fragen und ein Golden Set aus 15+ Einträgen. Berichten Sie die vollständige RAG-Triade (Zielwerte jeweils 4,0/5), schreiben Sie eine strukturierte Fehleranalyse von Retrieval- vs. Generation- vs. Verweigerungsfehlern und erstellen Sie ein **RAG-Playbook**, das jede Design-Entscheidung für die Übergabe im Team dokumentiert.
+**Produktionsreifes RAG-System.** Das Gesamtpaket: eine Wissensbasis aus 4-6 Dokumenten (1.000+ Wörter), ein System-Prompt mit allen acht Komponenten (Rolle, Aufgabe, Grounding-Regeln, Umfang, Format, Verweigerung, ein Beispiel und Konfliktbehandlung), 15+ durch die Pipeline laufende Fragen und ein Golden Set aus 15+ Einträgen. Berichten Sie die vollständige RAG-Triade (Zielwerte jeweils 4,0/5), schreiben Sie eine strukturierte Fehleranalyse von Retrieval- vs. Generation- vs. Verweigerungsfehlern und erstellen Sie ein **RAG-Playbook**, das jede Design-Entscheidung für die Übergabe im Team dokumentiert.
 </TabItem>
 </Tabs>
 
 **Notebooks herunterladen** (in Google Colab öffnen):
 
-- [Angeleitetes Lab — day3-lab1-guided.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-lab1-guided.ipynb)
-- [Eigenständiges Lab — day3-lab2-independent.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-lab2-independent.ipynb)
-- [Aufgabe — day3-assignment.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-assignment.ipynb)
+- [Angeleitetes Lab - day3-lab1-guided.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-lab1-guided.ipynb)
+- [Eigenständiges Lab - day3-lab2-independent.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-lab2-independent.ipynb)
+- [Aufgabe - day3-assignment.ipynb](/learnings/mba/generative-ai-for-managers/notebooks/day3-assignment.ipynb)
 
-**Meine eingereichte Lösung:** [Aufgabe 3 — mein gelöstes Notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day3-assignment-solution.ipynb) — meine eigene Arbeit aus dem Kurs.
+**Meine eingereichte Lösung:** [Aufgabe 3 - mein gelöstes Notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day3-assignment-solution.ipynb) - meine eigene Arbeit aus dem Kurs.
 
 ## Wiederholungs-Zusammenfassung
 
 | Kernpunkt | Kurz gemerkt |
 |---|---|
-| Warum es RAG gibt | LLMs sind zum Trainingszeitpunkt eingefroren — ihnen fehlen private, aktuelle und Nischen-Fakten, und sie halluzinieren, um die Lücke zu füllen |
+| Warum es RAG gibt | LLMs sind zum Trainingszeitpunkt eingefroren - ihnen fehlen private, aktuelle und Nischen-Fakten, und sie halluzinieren, um die Lücke zu füllen |
 | Was RAG tut | die relevanten Chunks aus *Ihren* Daten abrufen und das LLM damit antworten lassen (Prüfung mit Unterlagen) |
 | Embeddings | Text in Vektoren verwandelt, in denen ähnliche *Bedeutung* nah beieinander sitzt |
 | Cosine Similarity | eine Zahl dafür, wie ähnlich zwei Vektoren sind; ~1,0 identisch, unter 0,3 unverwandt |
-| Task Types | `RETRIEVAL_DOCUMENT` für gespeicherte Dokumente, `RETRIEVAL_QUERY` für Fragen — sie abzustimmen steigert die Genauigkeit |
-| Chunking | lange Dokumente in 200–500-Token-Stücke mit 50–100-Token-Überlappung teilen, damit kein Fakt zerschnitten wird |
+| Task Types | `RETRIEVAL_DOCUMENT` für gespeicherte Dokumente, `RETRIEVAL_QUERY` für Fragen - sie abzustimmen steigert die Genauigkeit |
+| Chunking | lange Dokumente in 200-500-Token-Stücke mit 50-100-Token-Überlappung teilen, damit kein Fakt zerschnitten wird |
 | Metadaten | jeden Chunk kennzeichnen (Quelle, Seite, Datum), um Citations, Filterung und Debugging zu ermöglichen |
 | Die Pipeline | **Indexing** offline (chunk → embed → store) + **Querying** online (embed → retrieve → augment → generate) |
-| Augmentierter Prompt | abgerufene Chunks in Delimiter einfassen und „antworte NUR aus dem Kontext" anweisen — reines Prompting aus Tag 2 |
+| Augmentierter Prompt | abgerufene Chunks in Delimiter einfassen und „antworte NUR aus dem Kontext" anweisen - reines Prompting aus Tag 2 |
 | Citations | das Modell `[Source N]` zitieren lassen, damit Antworten überprüfbar sind; eine Autoritätshierarchie für Widersprüche festlegen |
 | Vektordatenbank | im großen Maßstab nötig für Geschwindigkeit, Persistenz, Filterung und einfache Aktualisierungen (ChromaDB → Pinecone) |
 | RAG vs. Fine-tuning | RAG speist *Fakten* ein (günstig, sofort, zitierbar, rechtebewusst); Fine-tuning vermittelt *Stil* |
-| RAG-Triade | Context Relevance + Groundedness + Answer Relevance — alle drei messen, um jeden Fehler zu erwischen |
+| RAG-Triade | Context Relevance + Groundedness + Answer Relevance - alle drei messen, um jeden Fehler zu erwischen |
 | Größter Fehler | nicht mit echten, chaotischen, themenfremden Nutzerfragen zu testen |

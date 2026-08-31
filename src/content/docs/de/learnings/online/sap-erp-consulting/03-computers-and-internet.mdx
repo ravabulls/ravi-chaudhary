@@ -1,6 +1,6 @@
 ---
 title: "Wie Computer und das Internet funktionieren"
-description: "Die physische und logische Maschine — Hardware, Bits und Bytes, das Betriebssystem, Dateien und Ordner, lokal vs. Server vs. Cloud, Virtualisierung und wie das Internet und das Web Daten tatsächlich bewegen."
+description: "Die physische und logische Maschine - Hardware, Bits und Bytes, das Betriebssystem, Dateien und Ordner, lokal vs. Server vs. Cloud, Virtualisierung und wie das Internet und das Web Daten tatsächlich bewegen."
 sidebar:
   label: "3 · Computer & Internet"
   order: 3
@@ -8,37 +8,37 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+*SAP Implementation Consulting & ERP - Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
 
 ---
 
 ## Hardware vs. Software
 
-Jeder Computer besteht aus zwei Hälften, die zusammenarbeiten. **Hardware** ist der physische Körper — die Teile, die ich anfassen kann. **Software** sind die Anweisungen, die der Hardware sagen, was sie tun soll. Hardware ohne Software ist ein toter Kasten; Software ohne Hardware ist eine Idee ohne Ort, an dem sie laufen kann. Keins von beiden ist allein nützlich.
+Jeder Computer besteht aus zwei Hälften, die zusammenarbeiten. **Hardware** ist der physische Körper - die Teile, die ich anfassen kann. **Software** sind die Anweisungen, die der Hardware sagen, was sie tun soll. Hardware ohne Software ist ein toter Kasten; Software ohne Hardware ist eine Idee ohne Ort, an dem sie laufen kann. Keins von beiden ist allein nützlich.
 
 ## Die Teile, auf die es ankommt, und was jedes davon macht
 
-Ich muss nicht jede Komponente mit Namen kennen — ich brauche ein paar Teile danach, *was sie tun*, und was kaputtgeht, wenn von jedem nicht genug da ist.
+Ich muss nicht jede Komponente mit Namen kennen - ich brauche ein paar Teile danach, *was sie tun*, und was kaputtgeht, wenn von jedem nicht genug da ist.
 
 | Teil | Vollständiger Name | Aufgabe | Symptom bei Mangel |
 |---|---|---|---|
-| **CPU** | Central Processing Unit | Erledigt die eigentliche Arbeit — Denken, Rechnen | „Langsamer Computer" ist meistens eine CPU-Geschichte |
+| **CPU** | Central Processing Unit | Erledigt die eigentliche Arbeit - Denken, Rechnen | „Langsamer Computer" ist meistens eine CPU-Geschichte |
 | **RAM** | Random Access Memory | Kurzfristiger Arbeitsplatz für alles, was *gerade jetzt* geöffnet ist | Zu wenig → alles kriecht; ein „Memory Leak" frisst ihn leise auf |
 | **Speicher** | SSD / Festplatte | Bewahrt Dateien, Fotos, Programme auf, wenn der Strom aus ist | „Speicher voll" → nichts lässt sich speichern, bis man Platz schafft |
-| **GPU** | Graphics Processing Unit | Grafik, Video, Spiele zeichnen — und heute auch KI trainieren/ausführen | Schwache GPU → ruckelnde Videos, keine anspruchsvollen Spiele |
-| **I/O** | Peripherie + Anschlüsse | Bildschirm, Tastatur, Maus stecken über Anschlüsse (USB der gängigste) ein | — |
+| **GPU** | Graphics Processing Unit | Grafik, Video, Spiele zeichnen - und heute auch KI trainieren/ausführen | Schwache GPU → ruckelnde Videos, keine anspruchsvollen Spiele |
+| **I/O** | Peripherie + Anschlüsse | Bildschirm, Tastatur, Maus stecken über Anschlüsse (USB der gängigste) ein | - |
 
-<Aside type="tip" title="Die Schreibtisch-Analogie — und die eine Erkenntnis">
-RAM ist die **Schreibtischoberfläche** (was ich ausbreite, um jetzt daran zu arbeiten), Speicher ist der **Aktenschrank** (aufbewahrt für später), die CPU bin **ich, die arbeitende Person**. Also: **mehr RAM ≠ mehr Speicher.** Mehr RAM = mehr *gleichzeitig* tun, ohne langsamer zu werden. Mehr Speicher = mehr Dinge *behalten*. Die beiden zu verwechseln ist der klassische Anfängerfehler — eine langsame Maschine braucht meistens RAM, nicht eine größere Platte.
+<Aside type="tip" title="Die Schreibtisch-Analogie - und die eine Erkenntnis">
+RAM ist die **Schreibtischoberfläche** (was ich ausbreite, um jetzt daran zu arbeiten), Speicher ist der **Aktenschrank** (aufbewahrt für später), die CPU bin **ich, die arbeitende Person**. Also: **mehr RAM ≠ mehr Speicher.** Mehr RAM = mehr *gleichzeitig* tun, ohne langsamer zu werden. Mehr Speicher = mehr Dinge *behalten*. Die beiden zu verwechseln ist der klassische Anfängerfehler - eine langsame Maschine braucht meistens RAM, nicht eine größere Platte.
 </Aside>
 
-Dieselbe Grundidee skaliert über **Desktop, Laptop, Tablet, Handy** — jedes hat einen Prozessor, Arbeitsspeicher und Speicher, die dieselben Aufgaben erledigen. Ein Handy ist tatsächlich ein kleiner Computer.
+Dieselbe Grundidee skaliert über **Desktop, Laptop, Tablet, Handy** - jedes hat einen Prozessor, Arbeitsspeicher und Speicher, die dieselben Aufgaben erledigen. Ein Handy ist tatsächlich ein kleiner Computer.
 
 ---
 
 ## Wie Information gemessen wird
 
-Ganz unten ist alles — Text, Bilder, Ton — als Zahlen gespeichert, die aus dem **Bit** aufgebaut sind: ein einzelner An/Aus-Wert, wie ein Lichtschalter. Reiht man 8 Bit aneinander, ergeben sich 256 Muster — genug für einen Buchstaben oder einen Farbton. Diese Gruppe von 8 Bit ist ein **Byte**, die Grundeinheit.
+Ganz unten ist alles - Text, Bilder, Ton - als Zahlen gespeichert, die aus dem **Bit** aufgebaut sind: ein einzelner An/Aus-Wert, wie ein Lichtschalter. Reiht man 8 Bit aneinander, ergeben sich 256 Muster - genug für einen Buchstaben oder einen Farbton. Diese Gruppe von 8 Bit ist ein **Byte**, die Grundeinheit.
 
 | Einheit | Ungefähr | Anmerkung |
 |---|---|---|
@@ -49,24 +49,24 @@ Ganz unten ist alles — Text, Bilder, Ton — als Zahlen gespeichert, die aus d
 | **GB** (Gigabyte) | ~1.000 MB | Handy-Speicher, RAM |
 | **TB** (Terabyte) | ~1.000 GB | große Platten |
 
-Jeder Schritt ist etwa **×1000**. Aber Platten rechnen 1 GB oft als **1024 MB**, nicht 1000 — weil Computer in Zweierpotenzen zählen, und 1024 ist die Zweierpotenz, die einer Tausend am nächsten kommt. Deshalb zeigt eine Platte etwas weniger an als die Zahl auf der Verpackung. Nichts ist defekt.
+Jeder Schritt ist etwa **×1000**. Aber Platten rechnen 1 GB oft als **1024 MB**, nicht 1000 - weil Computer in Zweierpotenzen zählen, und 1024 ist die Zweierpotenz, die einer Tausend am nächsten kommt. Deshalb zeigt eine Platte etwas weniger an als die Zahl auf der Verpackung. Nichts ist defekt.
 
-<Aside type="caution" title="Die Alltagsfalle — MB vs. Mbit">
-Ein **Megabyte (MB)** und ein **Megabit (Mbit)** sind nicht dasselbe. Ein Byte hat 8 Bit, also **1 MB = 8 Mbit**. **Dateigrößen werden in Byte angegeben** (ein Foto ist „4 MB"); **Internetgeschwindigkeit wird in Bit angegeben** („50 Mbit/s") — auch, weil die Zahl größer aussieht. Eine „50-Megabit"-Leitung wird also eine „50-Megabyte"-Datei **nicht** in einer Sekunde übertragen. Unterschiedlich große Einheiten.
+<Aside type="caution" title="Die Alltagsfalle - MB vs. Mbit">
+Ein **Megabyte (MB)** und ein **Megabit (Mbit)** sind nicht dasselbe. Ein Byte hat 8 Bit, also **1 MB = 8 Mbit**. **Dateigrößen werden in Byte angegeben** (ein Foto ist „4 MB"); **Internetgeschwindigkeit wird in Bit angegeben** („50 Mbit/s") - auch, weil die Zahl größer aussieht. Eine „50-Megabit"-Leitung wird also eine „50-Megabyte"-Datei **nicht** in einer Sekunde übertragen. Unterschiedlich große Einheiten.
 </Aside>
 
 ---
 
 ## Das Betriebssystem
 
-Hardware allein tut nichts Brauchbares — irgendetwas muss sie organisieren und einem Menschen erlauben, sie zu steuern. Das ist das **Betriebssystem (OS)**: das Hauptprogramm, das die ganze Maschine verwaltet und zwischen mir und der Hardware sitzt. Ein Programm öffnen, eine Datei speichern, online gehen — alles läuft über das Betriebssystem. Windows, macOS, Linux sind Betriebssysteme; Android und iOS sind die für Handys.
+Hardware allein tut nichts Brauchbares - irgendetwas muss sie organisieren und einem Menschen erlauben, sie zu steuern. Das ist das **Betriebssystem (OS)**: das Hauptprogramm, das die ganze Maschine verwaltet und zwischen mir und der Hardware sitzt. Ein Programm öffnen, eine Datei speichern, online gehen - alles läuft über das Betriebssystem. Windows, macOS, Linux sind Betriebssysteme; Android und iOS sind die für Handys.
 
 Alltägliche Bedienelemente: der **Desktop** (Hintergrund mit **Symbolen**), eine **Taskleiste** (Windows) oder ein **Dock** (Mac) zum Starten und Wechseln, und vier Mausaktionen, die fast alles abdecken:
 
-- **Klick** — auswählen / einen Knopf drücken
-- **Doppelklick** — eine Datei oder ein Programm öffnen
-- **Rechtsklick** — „Was kann ich damit machen?" → Menü mit Optionen
-- **Ziehen** — etwas festhalten und bewegen
+- **Klick** - auswählen / einen Knopf drücken
+- **Doppelklick** - eine Datei oder ein Programm öffnen
+- **Rechtsklick** - „Was kann ich damit machen?" → Menü mit Optionen
+- **Ziehen** - etwas festhalten und bewegen
 
 Programme öffnen sich in **Fenstern**, die ich öffnen, schließen, minimieren, in der Größe ändern und zwischen denen ich wechseln kann. Zwischen Fenstern hin und her zu wechseln ist im Grunde, wie sich „einen Computer benutzen" den ganzen Tag anfühlt. (Der Rechtsklick ist die eine Gewohnheit, die Anfänger am schnellsten weiterbringt.)
 
@@ -85,9 +85,9 @@ report.pdf   →  "report"  = mein gewählter Name
 holiday.jpg  = Bild      budget.xlsx = Tabellenkalkulation
 ```
 
-Ein **Pfad** ist einfach *der Ort, an dem eine Datei liegt* im Baum — welcher Ordner, in welchem Ordner. (Dasselbe Konzept kommt später im Terminal wieder, von Hand getippt; nur die Verwendung ändert sich.)
+Ein **Pfad** ist einfach *der Ort, an dem eine Datei liegt* im Baum - welcher Ordner, in welchem Ordner. (Dasselbe Konzept kommt später im Terminal wieder, von Hand getippt; nur die Verwendung ändert sich.)
 
-Dateien verwalten = **erstellen, umbenennen, verschieben, kopieren, löschen**. Gelöschte Dinge verschwinden nicht sofort — sie warten im **Papierkorb** (Windows) / **Trash** (Mac), bis er geleert wird, sodass ein einzelnes versehentliches Löschen rückgängig gemacht werden kann. Ein paar klar benannte Ordner schlagen jedes Mal einen einzigen riesigen Haufen.
+Dateien verwalten = **erstellen, umbenennen, verschieben, kopieren, löschen**. Gelöschte Dinge verschwinden nicht sofort - sie warten im **Papierkorb** (Windows) / **Trash** (Mac), bis er geleert wird, sodass ein einzelnes versehentliches Löschen rückgängig gemacht werden kann. Ein paar klar benannte Ordner schlagen jedes Mal einen einzigen riesigen Haufen.
 
 ---
 
@@ -95,35 +95,35 @@ Dateien verwalten = **erstellen, umbenennen, verschieben, kopieren, löschen**. 
 
 | Werkzeug | Beispiele | Wofür |
 |---|---|---|
-| **Textverarbeitung** | Word, Google Docs | Schreiben — Briefe, Berichte, Notizen (meist Text) |
-| **Tabellenkalkulation** | Excel, Google Sheets | Zahlen, Listen, Tabellen — alles in Zeilen & Spalten |
+| **Textverarbeitung** | Word, Google Docs | Schreiben - Briefe, Berichte, Notizen (meist Text) |
+| **Tabellenkalkulation** | Excel, Google Sheets | Zahlen, Listen, Tabellen - alles in Zeilen & Spalten |
 | **Präsentation** | PowerPoint, Google Slides | Folien, um einem Publikum etwas zu zeigen |
 
-<Aside type="note" title="Speichern vs. Speichern unter — das, was Leute reinlegt">
-- **Speichern** — *diese* Datei mit den neuesten Änderungen aktualisieren (gleicher Name, gleicher Ort).
-- **Speichern unter** — eine *neue, separate Kopie* anlegen (anderer Name oder Ort); das Original bleibt unangetastet. Damit behält man „Entwurf 1", während man „Entwurf 2" beginnt.
-- **Als PDF exportieren** — eine feste, fertige Form, die überall identisch aussieht und sich nicht leicht bearbeiten lässt. Richtig für einen Lebenslauf, eine Rechnung oder ein offizielles Formular.
+<Aside type="note" title="Speichern vs. Speichern unter - das, was Leute reinlegt">
+- **Speichern** - *diese* Datei mit den neuesten Änderungen aktualisieren (gleicher Name, gleicher Ort).
+- **Speichern unter** - eine *neue, separate Kopie* anlegen (anderer Name oder Ort); das Original bleibt unangetastet. Damit behält man „Entwurf 1", während man „Entwurf 2" beginnt.
+- **Als PDF exportieren** - eine feste, fertige Form, die überall identisch aussieht und sich nicht leicht bearbeiten lässt. Richtig für einen Lebenslauf, eine Rechnung oder ein offizielles Formular.
 </Aside>
 
-Eine Tabellenkalkulation ist ein Raster aus **Zellen** in **Zeilen** (quer) und **Spalten** (runter), wobei jede Zelle einen Wert enthält. Dieses einfache Raster bewältigt ein Budget oder einen Zeitplan — und wächst später zu einem echten Datenwerkzeug heran.
+Eine Tabellenkalkulation ist ein Raster aus **Zellen** in **Zeilen** (quer) und **Spalten** (runter), wobei jede Zelle einen Wert enthält. Dieses einfache Raster bewältigt ein Budget oder einen Zeitplan - und wächst später zu einem echten Datenwerkzeug heran.
 
 ---
 
 ## Software installieren und sich aus der Klemme helfen
 
-**Installieren** = ein neues Programm hinzufügen: einen Installer herunterladen und ausführen, oder es aus einem offiziellen **Store** holen (Microsoft Store, Mac App Store, Handy-App-Store). Die Gewohnheit, auf die es am meisten ankommt, ist die Frage **woher** es kommt — bleib bei der eigenen Seite des Herstellers oder einem vertrauenswürdigen Store. Inoffizielle Download-Seiten sind einer der häufigsten Wege, wie sich Maschinen schädliche Software einfangen. Wenn ich zögere, ist dieses Zögern es wert, darauf zu hören.
+**Installieren** = ein neues Programm hinzufügen: einen Installer herunterladen und ausführen, oder es aus einem offiziellen **Store** holen (Microsoft Store, Mac App Store, Handy-App-Store). Die Gewohnheit, auf die es am meisten ankommt, ist die Frage **woher** es kommt - bleib bei der eigenen Seite des Herstellers oder einem vertrauenswürdigen Store. Inoffizielle Download-Seiten sind einer der häufigsten Wege, wie sich Maschinen schädliche Software einfangen. Wenn ich zögere, ist dieses Zögern es wert, darauf zu hören.
 
 Wenn etwas schiefgeht, arbeite die Methode **neu starten → lesen → suchen → fragen** durch:
 
 <Steps>
 
-1. **Neu starten** — das Programm (oder den Computer) neu starten und wieder öffnen — behebt einen großen Teil der Einfrierer.
+1. **Neu starten** - das Programm (oder den Computer) neu starten und wieder öffnen - behebt einen großen Teil der Einfrierer.
 
-2. **Lesen** — jede Meldung auf dem Bildschirm nach einem verständlichen Hinweis lesen.
+2. **Lesen** - jede Meldung auf dem Bildschirm nach einem verständlichen Hinweis lesen.
 
-3. **Suchen** — mit konkreten Wörtern: Programmname + was passiert ist („[Programm] friert beim Öffnen einer Datei ein").
+3. **Suchen** - mit konkreten Wörtern: Programmname + was passiert ist („[Programm] friert beim Öffnen einer Datei ein").
 
-4. **Fragen** — dabei beschreiben, was ich getan habe, was ich erwartet habe und was tatsächlich passiert ist.
+4. **Fragen** - dabei beschreiben, was ich getan habe, was ich erwartet habe und was tatsächlich passiert ist.
 
 </Steps>
 
@@ -137,28 +137,28 @@ Wenn etwas schiefgeht, arbeite die Methode **neu starten → lesen → suchen �
 
 Die einfachste Aufteilung in der Informatik: etwas läuft auf **meiner Maschine** (vor mir) oder auf **der Maschine von jemand anderem** (über das Internet erreicht). Alles andere ist eine Variation davon.
 
-Ein **Server** ist ein Computer, der gebaut ist, um *anderen zu dienen* — Dinge zu speichern und Anfragen von vielen Computern gleichzeitig zu beantworten, rund um die Uhr in gekühlten, gesicherten Gebäuden. Eine Website besuchen = meine Maschine bittet einen Server, die Seite zu senden. Und **„die Cloud" ist einfach der Computer von jemand anderem** — meine Dateien/Dienste liegen auf den Servern eines Unternehmens statt nur auf meinem Gerät.
+Ein **Server** ist ein Computer, der gebaut ist, um *anderen zu dienen* - Dinge zu speichern und Anfragen von vielen Computern gleichzeitig zu beantworten, rund um die Uhr in gekühlten, gesicherten Gebäuden. Eine Website besuchen = meine Maschine bittet einen Server, die Seite zu senden. Und **„die Cloud" ist einfach der Computer von jemand anderem** - meine Dateien/Dienste liegen auf den Servern eines Unternehmens statt nur auf meinem Gerät.
 
 <figure class="sc-fig">
 <div class="sc-flow">
-  <div class="sc-node green">Meine Maschine<span class="sub">lokal — gehört mir</span></div>
+  <div class="sc-node green">Meine Maschine<span class="sub">lokal - gehört mir</span></div>
   <span class="arrow">→</span>
   <div class="sc-node amber">Server<span class="sub">der von jemand anderem, über ein Netzwerk</span></div>
   <span class="arrow">→</span>
   <div class="sc-node violet">Die Cloud<span class="sub">Server in einem echten Gebäude = Miete</span></div>
 </div>
-<figcaption>Drei Ebenen — aber eigentlich eine Idee: mein Computer oder der von jemand anderem, über das Internet erreicht.</figcaption>
+<figcaption>Drei Ebenen - aber eigentlich eine Idee: mein Computer oder der von jemand anderem, über das Internet erreicht.</figcaption>
 </figure>
 
 <Aside type="caution" title="Die Cloud ist physisch">
-Wenn ein großer Cloud-Anbieter einen Ausfall hat, gehen erstaunlich viele voneinander unabhängige Apps auf einmal dunkel — Banking, Streaming, sogar smarte Türklingeln — weil sie still von *denselben wenigen Anbietern* mieten. Beweis, dass die Cloud nicht luftig ist: Es sind konkrete Gebäude voller Computer. Und Cloud-Speicher (mit **Synchronisierung** über Geräte hinweg) ist sicherer als ein einzelnes Gerät, aber **nicht unbesiegbar** — behalte mehr als eine Kopie von allem Wichtigen.
+Wenn ein großer Cloud-Anbieter einen Ausfall hat, gehen erstaunlich viele voneinander unabhängige Apps auf einmal dunkel - Banking, Streaming, sogar smarte Türklingeln - weil sie still von *denselben wenigen Anbietern* mieten. Beweis, dass die Cloud nicht luftig ist: Es sind konkrete Gebäude voller Computer. Und Cloud-Speicher (mit **Synchronisierung** über Geräte hinweg) ist sicherer als ein einzelnes Gerät, aber **nicht unbesiegbar** - behalte mehr als eine Kopie von allem Wichtigen.
 </Aside>
 
 ---
 
 ## Virtualisierung: ein Computer, der als viele agiert
 
-**Virtualisierung** bringt einen physischen Computer dazu, sich zu verhalten, als wäre er mehrere getrennte. Jeder vorgetäuschte Computer ist eine **virtuelle Maschine (VM)** — sie läuft mit ihrem eigenen Betriebssystem, abgeschottet von den anderen, im Glauben, sie sei eine ganze Maschine, obwohl sie nur Software auf einem physischen Host darunter ist.
+**Virtualisierung** bringt einen physischen Computer dazu, sich zu verhalten, als wäre er mehrere getrennte. Jeder vorgetäuschte Computer ist eine **virtuelle Maschine (VM)** - sie läuft mit ihrem eigenen Betriebssystem, abgeschottet von den anderen, im Glauben, sie sei eine ganze Maschine, obwohl sie nur Software auf einem physischen Host darunter ist.
 
 Deshalb ist **Windows, das auf einem Mac läuft**, oder **Linux innerhalb von Windows**, normal und nicht defekt: Die physische Maschine läuft mit ihrem üblichen Betriebssystem, und eine VM lässt ein *anderes* Betriebssystem in einem Fenster laufen. Man macht das, um ein Programm zu nutzen, das es nur woanders gibt, oder um sicher zu testen.
 
@@ -167,19 +167,19 @@ Deshalb ist **Windows, das auf einem Mac läuft**, oder **Linux innerhalb von Wi
 Emuliert einen **ganzen Computer einschließlich seines eigenen vollständigen Betriebssystems**. Schwerer, stark isoliert. Das ist es, was Windows-auf-einem-Mac und einen Großteil der Cloud betreibt.
 </TabItem>
 <TabItem label="Container">
-Ein **leichterer, effizienterer Verwandter** — teilt sich das Betriebssystem des Hosts und packt nur die App und das, was sie braucht. Wird in professioneller Softwarearbeit stark genutzt; schneller und kleiner als eine volle VM.
+Ein **leichterer, effizienterer Verwandter** - teilt sich das Betriebssystem des Hosts und packt nur die App und das, was sie braucht. Wird in professioneller Softwarearbeit stark genutzt; schneller und kleiner als eine volle VM.
 </TabItem>
 </Tabs>
 
 <Aside type="note" title="Zwei Formulierungen, die es zusammenbinden">
-**On-Premise vs. Cloud = besitzen vs. mieten.** Dinge auf Maschinen laufen lassen, die ich besitze und behalte = On-Premise; die Maschinen von jemand anderem über das Internet nutzen = Cloud. Und **Cloud-Gaming** belegt den Punkt: Ein anspruchsvolles Spiel läuft auf einer Maschine mit starker GPU in einem **Rechenzentrum**, und nur das *Video* wird auf meinen billigen Laptop gestreamt, während meine Tastendrücke zurückgehen — „der Computer von jemand anderem, auf Abruf".
+**On-Premise vs. Cloud = besitzen vs. mieten.** Dinge auf Maschinen laufen lassen, die ich besitze und behalte = On-Premise; die Maschinen von jemand anderem über das Internet nutzen = Cloud. Und **Cloud-Gaming** belegt den Punkt: Ein anspruchsvolles Spiel läuft auf einer Maschine mit starker GPU in einem **Rechenzentrum**, und nur das *Video* wird auf meinen billigen Laptop gestreamt, während meine Tastendrücke zurückgehen - „der Computer von jemand anderem, auf Abruf".
 </Aside>
 
 ---
 
 ## Internet vs. Web
 
-Nicht dasselbe. Das **Internet** ist das globale Netzwerk verbundener Computer — die Infrastruktur, die Maschinen den Austausch von Informationen ermöglicht. Das **Web** (World Wide Web) ist *ein Dienst, der darauf läuft*: Websites und Seiten, die ich in einem Browser besuche. E-Mail, Videoanrufe und Online-Spiele fahren ebenfalls über das Internet, sind aber **nicht** das Web. Internet = das Straßennetz; Web = eine Art Verkehr darauf.
+Nicht dasselbe. Das **Internet** ist das globale Netzwerk verbundener Computer - die Infrastruktur, die Maschinen den Austausch von Informationen ermöglicht. Das **Web** (World Wide Web) ist *ein Dienst, der darauf läuft*: Websites und Seiten, die ich in einem Browser besuche. E-Mail, Videoanrufe und Online-Spiele fahren ebenfalls über das Internet, sind aber **nicht** das Web. Internet = das Straßennetz; Web = eine Art Verkehr darauf.
 
 Jede Webadresse ist eine **URL**, und sie liest sich in Teilen:
 
@@ -191,7 +191,7 @@ Verbindung  (WER, mit dem       (welche Seite
 (das "s")    ich rede)           auf dieser Site)
 ```
 
-Die **Domain** ist der Teil, der immer einen Blick wert ist — sie sagt mir, mit wem ich wirklich verbunden bin (ein großer Sicherheitsgewinn später).
+Die **Domain** ist der Teil, der immer einen Blick wert ist - sie sagt mir, mit wem ich wirklich verbunden bin (ein großer Sicherheitsgewinn später).
 
 Jeder Besuch ist eine **Anfrage → Antwort** zwischen einem **Client** (mein Gerät, der Fragende) und einem **Server** (gebaut, um zu antworten):
 
@@ -205,7 +205,7 @@ Jeder Besuch ist eine **Anfrage → Antwort** zwischen einem **Client** (mein Ge
   <span class="arrow">→</span>
   <div class="sc-node violet">Server antwortet<span class="sub">Seite in kleinen Paketen zurückgeschickt</span></div>
   <span class="arrow">→</span>
-  <div class="sc-node green">Browser setzt zusammen<span class="sub">zeichnet die Seite — unter einer Sekunde</span></div>
+  <div class="sc-node green">Browser setzt zusammen<span class="sub">zeichnet die Seite - unter einer Sekunde</span></div>
 </div>
 <figcaption>Enter drücken: die Adresse finden (DNS), fragen (HTTP-Anfrage), die Seite in Paketen zurückbekommen, zusammensetzen und zeichnen. Ein Computer fragte, ein anderer antwortete.</figcaption>
 </figure>
@@ -222,26 +222,26 @@ Ein **Netzwerk** sind einfach Computer, die verbunden sind, damit sie Informatio
 
 | Typ | Steht für | Was es ist |
 |---|---|---|
-| **LAN** | Local Area Network | Klein & lokal — Zuhause oder ein Büro |
+| **LAN** | Local Area Network | Klein & lokal - Zuhause oder ein Büro |
 | **WAN** | Wide Area Network | Überbrückt Entfernungen; das Internet ist das größte WAN |
-| **Wi-Fi** | — | Drahtloser Weg in ein LAN (kein Kabel) |
+| **Wi-Fi** | - | Drahtloser Weg in ein LAN (kein Kabel) |
 | **Mobilfunk** | 4G / 5G | Mobile Daten von einem Anbieter, unterwegs |
 | **VPN** | Virtual Private Network | Verschlüsselter Tunnel in ein anderes Netzwerk über das öffentliche Internet |
-| **Router** | — | Die Box, die mein LAN mit dem Internet verbindet und den Verkehr lenkt |
+| **Router** | - | Die Box, die mein LAN mit dem Internet verbindet und den Verkehr lenkt |
 
 <Aside type="tip" title="Warum die Arbeit ein VPN verlangt">
-Unternehmen halten interne Systeme nur von *innerhalb* des Firmennetzwerks erreichbar. Wenn ich von zu Hause arbeite, verbinde ich mich zuerst über ein **VPN** — mein Laptop öffnet einen sicheren Tunnel in das Firmennetzwerk, dann erreiche ich interne Systeme, als säße ich im Büro, wobei der Verkehr unterwegs geschützt ist. Die „Verbinde dich mit dem VPN"-Aufforderung am ersten Tag = das Unternehmen dehnt sein sicheres internes Netzwerk zu mir hinaus. (Eine **IP-Adresse** identifiziert ein *Gerät* für die Zustellung, nicht den Personalausweis eines Menschen.)
+Unternehmen halten interne Systeme nur von *innerhalb* des Firmennetzwerks erreichbar. Wenn ich von zu Hause arbeite, verbinde ich mich zuerst über ein **VPN** - mein Laptop öffnet einen sicheren Tunnel in das Firmennetzwerk, dann erreiche ich interne Systeme, als säße ich im Büro, wobei der Verkehr unterwegs geschützt ist. Die „Verbinde dich mit dem VPN"-Aufforderung am ersten Tag = das Unternehmen dehnt sein sicheres internes Netzwerk zu mir hinaus. (Eine **IP-Adresse** identifiziert ein *Gerät* für die Zustellung, nicht den Personalausweis eines Menschen.)
 </Aside>
 
 ---
 
 ## Einen Browser benutzen und gut suchen
 
-Ein **Browser** (Chrome, Firefox, Edge, Safari) fordert Webseiten an und zeigt sie an. Seine alltäglichen Teile: **Tabs** (mehrere Seiten gleichzeitig offen), die **Adressleiste** (zeigt die URL und wo ich eintippe, wohin ich will), **Zurück / Vor** und **Aktualisieren** (fordert eine frische Kopie vom Server an — gut, wenn eine Seite festzuhängen scheint). Ein **Lesezeichen** speichert die Adresse einer Seite für die Rückkehr mit einem Klick; der **Verlauf** ist die automatische Aufzeichnung, wo ich gewesen bin. Downloads landen im Ordner **Downloads** — ein Download ist einfach eine neue Datei an einem bekannten Ort.
+Ein **Browser** (Chrome, Firefox, Edge, Safari) fordert Webseiten an und zeigt sie an. Seine alltäglichen Teile: **Tabs** (mehrere Seiten gleichzeitig offen), die **Adressleiste** (zeigt die URL und wo ich eintippe, wohin ich will), **Zurück / Vor** und **Aktualisieren** (fordert eine frische Kopie vom Server an - gut, wenn eine Seite festzuhängen scheint). Ein **Lesezeichen** speichert die Adresse einer Seite für die Rückkehr mit einem Klick; der **Verlauf** ist die automatische Aufzeichnung, wo ich gewesen bin. Downloads landen im Ordner **Downloads** - ein Download ist einfach eine neue Datei an einem bekannten Ort.
 
 <Steps>
 
-1. **Sei konkret.** „Laptop-Problem" liefert einen Ozean; „Laptop-Akku entlädt sich schnell, wenn zugeklappt" liefert Antworten. Nimm unterscheidende Wörter hinzu — Produktnamen, exakten Fehlertext.
+1. **Sei konkret.** „Laptop-Problem" liefert einen Ozean; „Laptop-Akku entlädt sich schnell, wenn zugeklappt" liefert Antworten. Nimm unterscheidende Wörter hinzu - Produktnamen, exakten Fehlertext.
 
 2. **Überflieg die Anzeigen.** Die ersten paar Ergebnisse sind oft bezahlt/gesponsert (gekennzeichnet). Das oberste echte Ergebnis ist einfach die beste Wortübereinstimmung, keine Garantie für Wahrheit.
 
@@ -256,20 +256,20 @@ Ein **Browser** (Chrome, Firefox, Edge, Safari) fordert Webseiten an und zeigt s
 | Kernpunkt | Kurz gemerkt |
 |---|---|
 | CPU / RAM / Speicher | CPU erledigt die Arbeit, RAM = Arbeitsplatz (mehr gleichzeitig tun), Speicher = Dinge behalten, wenn aus |
-| RAM- vs. Speicher-Upgrade | Mehr RAM = schnelleres Multitasking; mehr Speicher = mehr aufbewahren — nicht dieselbe Lösung |
-| GPU | Grafik und Video — und jetzt der Motor hinter KI-Training/-Ausführung |
+| RAM- vs. Speicher-Upgrade | Mehr RAM = schnelleres Multitasking; mehr Speicher = mehr aufbewahren - nicht dieselbe Lösung |
+| GPU | Grafik und Video - und jetzt der Motor hinter KI-Training/-Ausführung |
 | Bit vs. Byte | 8 Bit = 1 Byte; alles wird als An/Aus-Bits gespeichert |
 | Größenleiter | KB→MB→GB→TB, jeweils ~×1000; 1 GB oft 1024 MB (Computer zählen in Zweien) |
 | MB vs. Mbit | 1 MB = 8 Mbit; Dateien in Byte angegeben, Internetgeschwindigkeit in Bit |
 | Betriebssystem | Hauptprogramm zwischen mir und der Hardware (Windows, macOS, Linux, Android, iOS) |
-| Rechtsklick | „Was kann ich damit machen?" — die schnellste Gewohnheit, um weiterzukommen |
+| Rechtsklick | „Was kann ich damit machen?" - die schnellste Gewohnheit, um weiterzukommen |
 | Datei / Ordner / Pfad | Datei = benanntes Element, Ordner = Behälter, Pfad = wo es im Baum liegt |
 | Erweiterung | Der Teil nach dem Punkt = der Typ der Datei und welches Programm sie öffnet |
 | Speichern vs. Speichern unter | Speichern = diese Datei aktualisieren; Speichern unter = neue separate Kopie; PDF = feste, endgültige Form |
 | Sicher installieren | Nur von der Seite des Herstellers oder einem vertrauenswürdigen Store |
-| Hängengeblieben vs. kaputt | Hängengeblieben = Schritt noch nicht bekannt; kaputt = es ist ausgefallen — zuerst neu starten/lesen/suchen/fragen |
+| Hängengeblieben vs. kaputt | Hängengeblieben = Schritt noch nicht bekannt; kaputt = es ist ausgefallen - zuerst neu starten/lesen/suchen/fragen |
 | Server | Ein Computer, gebaut, um Anfragen vieler anderer zu beantworten, rund um die Uhr |
-| Die Cloud | Einfach der Computer von jemand anderem — echte Server in echten Gebäuden |
+| Die Cloud | Einfach der Computer von jemand anderem - echte Server in echten Gebäuden |
 | On-Premise vs. Cloud | Besitzen vs. mieten |
 | Virtualisierung | Eine physische Maschine, die als viele VMs agiert, jede mit ihrem eigenen Betriebssystem |
 | VM vs. Container | VM = ganzes Betriebssystem, schwer; Container = teilt sich das Host-Betriebssystem, leicht |
@@ -277,6 +277,6 @@ Ein **Browser** (Chrome, Firefox, Edge, Safari) fordert Webseiten an und zeigt s
 | URL-Teile | https (sicher) · Domain (wer) · Pfad (welche Seite) |
 | Client → Server | Jeder Besuch: DNS-Abfrage → HTTP-Anfrage → Seite zurück in Paketen → zusammengesetzt |
 | LAN vs. WAN | LAN = lokal; WAN = weit; das Internet ist das größte WAN |
-| VPN | Verschlüsselter Tunnel in ein anderes Netzwerk — wie Homeoffice-Arbeitende interne Systeme erreichen |
+| VPN | Verschlüsselter Tunnel in ein anderes Netzwerk - wie Homeoffice-Arbeitende interne Systeme erreichen |
 | Router | Die Tür zwischen meinem LAN und dem Internet |
 | Gut suchen | Konkrete Wörter, Anzeigen überfliegen, die Wörter ändern, wenn eine Suche danebengeht |

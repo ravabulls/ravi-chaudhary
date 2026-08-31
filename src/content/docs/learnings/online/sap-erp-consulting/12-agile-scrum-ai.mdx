@@ -1,6 +1,6 @@
 ---
 title: "Agile, Scrum & Working with AI"
-description: "How software teams actually work — Waterfall vs Agile and the Agile Manifesto, user stories and estimation, the Scrum framework (roles, artifacts, events), Kanban, everyday developer practices (good questions, reading docs, code review, task boards), and using AI/LLMs well and professionally."
+description: "How software teams actually work - Waterfall vs Agile and the Agile Manifesto, user stories and estimation, the Scrum framework (roles, artifacts, events), Kanban, everyday developer practices (good questions, reading docs, code review, task boards), and using AI/LLMs well and professionally."
 sidebar:
   label: "12 · Agile, Scrum & AI"
   order: 12
@@ -8,28 +8,28 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
+*SAP Implementation Consulting & ERP - Startupistan Germany · Block I · my own revision notes, rewritten in my words.*
 
 ---
 
 Until now I've mostly coded alone: my branch, my pace, my mess. Real software is built by *teams*, over *years*, for customers who *change their minds*. That creates two separate problems, and it helps to keep them apart:
 
-- **The code problem** — two people editing the same files. Solved by **version control** (branches, pull requests). I already know this.
-- **The coordination problem** — deciding *what* to build, *in what order*, and *how we know it's done*. Solved by a shared **working method**.
+- **The code problem** - two people editing the same files. Solved by **version control** (branches, pull requests). I already know this.
+- **The coordination problem** - deciding *what* to build, *in what order*, and *how we know it's done*. Solved by a shared **working method**.
 
 Git tells me *how* changes merge; it says nothing about *what* should exist or *when* it's finished. That second half is what this whole chapter is about.
 
-<Aside type="note" title="The SDLC — the loop every project runs">
-Every piece of software, tiny script or enterprise system, cycles through the **software development life cycle**: **Plan → Build → Test → Release → Maintain** — and then the arrow loops back, because releasing teaches you things planning never could. Software is never really *finished*. A **project management methodology** is just a named, shared answer to "how do we move through that loop together?" — so nobody re-negotiates the basics every week.
+<Aside type="note" title="The SDLC - the loop every project runs">
+Every piece of software, tiny script or enterprise system, cycles through the **software development life cycle**: **Plan → Build → Test → Release → Maintain** - and then the arrow loops back, because releasing teaches you things planning never could. Software is never really *finished*. A **project management methodology** is just a named, shared answer to "how do we move through that loop together?" - so nobody re-negotiates the basics every week.
 </Aside>
 
 ## 1 · Waterfall vs Agile
 
-Before agile, software was built like a bridge: plan everything, then execute. That's the **waterfall model** — fixed phases in strict sequence, each finished completely before the next starts (Requirements → Design → Implementation → Testing → Delivery). Water only flows one way; going back up is expensive and rare.
+Before agile, software was built like a bridge: plan everything, then execute. That's the **waterfall model** - fixed phases in strict sequence, each finished completely before the next starts (Requirements → Design → Implementation → Testing → Delivery). Water only flows one way; going back up is expensive and rare.
 
-It has one structural flaw *for software*: **real feedback arrives at the end, when change costs the most.** Requirements drift over a long project, and software is invisible until it runs — so a customer can't react to a half-built system the way they can walk through a half-built house. The misunderstanding survives until delivery.
+It has one structural flaw *for software*: **real feedback arrives at the end, when change costs the most.** Requirements drift over a long project, and software is invisible until it runs - so a customer can't react to a half-built system the way they can walk through a half-built house. The misunderstanding survives until delivery.
 
-**Agile** fixes this with the obvious move: make the loop *short*. Work in small **iterations** (typically 1–4 weeks), each ending in a piece of **working software** shown to real users, whose reactions shape the next iteration. Each small delivery is really an *experiment* — it tests whether the team understood the need, months before waterfall would find out.
+**Agile** fixes this with the obvious move: make the loop *short*. Work in small **iterations** (typically 1-4 weeks), each ending in a piece of **working software** shown to real users, whose reactions shape the next iteration. Each small delivery is really an *experiment* - it tests whether the team understood the need, months before waterfall would find out.
 
 | Axis | Waterfall | Agile |
 |---|---|---|
@@ -40,18 +40,18 @@ It has one structural flaw *for software*: **real feedback arrives at the end, w
 | The core bet | We'll get it right by *planning* | We'll get it right by *feedback* |
 
 <Aside type="caution" title="Three myths to kill early">
-- *"Agile means no planning."* False — agile plans *constantly*, in small portions, every iteration.
-- *"Agile means no documentation."* False — it documents what's worth documenting; it just refuses to let paperwork count as *progress*.
-- *"Agile is faster because people work faster."* False — the speed comes from feedback arriving early, so less time is wasted building the wrong thing.
+- *"Agile means no planning."* False - agile plans *constantly*, in small portions, every iteration.
+- *"Agile means no documentation."* False - it documents what's worth documenting; it just refuses to let paperwork count as *progress*.
+- *"Agile is faster because people work faster."* False - the speed comes from feedback arriving early, so less time is wasted building the wrong thing.
 </Aside>
 
-Waterfall isn't dead: where requirements are genuinely fixed and a defect costs lives — medical device firmware, aerospace control — waterfall-like process still fits. It's wrong for *most business software*, which is exactly where requirements never stop moving.
+Waterfall isn't dead: where requirements are genuinely fixed and a defect costs lives - medical device firmware, aerospace control - waterfall-like process still fits. It's wrong for *most business software*, which is exactly where requirements never stop moving.
 
 ## 2 · The Agile Manifesto
 
-Agile has an official birthplace: seventeen practitioners met in 2001 and wrote down what their competing methods had in common — **four values and twelve principles**. Unchanged since, it's still the definition of agile.
+Agile has an official birthplace: seventeen practitioners met in 2001 and wrote down what their competing methods had in common - **four values and twelve principles**. Unchanged since, it's still the definition of agile.
 
-The core is four "X **over** Y" comparisons. The most misread word is **over**: it does *not* mean *instead of*. The manifesto's own closing line settles it — there is value in the right-hand items; the left-hand ones are valued **more when the two conflict**.
+The core is four "X **over** Y" comparisons. The most misread word is **over**: it does *not* mean *instead of*. The manifesto's own closing line settles it - there is value in the right-hand items; the left-hand ones are valued **more when the two conflict**.
 
 | Valued more | over | Still valuable |
 |---|---|---|
@@ -61,7 +61,7 @@ The core is four "X **over** Y" comparisons. The most misread word is **over**: 
 | Responding to change | over | following a plan |
 
 <Aside type="tip" title="How to read a value pair">
-Think packing rules for a hike: *"water over snacks"* doesn't mean leave the snacks home — it means when the pack gets heavy and something must give, you already know which one stays. The values are **tie-breakers for hard moments**, not bans on the right side. Example: mid-project a customer asks for a change that contradicts the signed feature list. Value four says the default is to take it seriously and re-plan, not point at the contract.
+Think packing rules for a hike: *"water over snacks"* doesn't mean leave the snacks home - it means when the pack gets heavy and something must give, you already know which one stays. The values are **tie-breakers for hard moments**, not bans on the right side. Example: mid-project a customer asks for a change that contradicts the signed feature list. Value four says the default is to take it seriously and re-plan, not point at the contract.
 </Aside>
 
 The **twelve principles** turn those values into observable daily behaviour. Twelve is a lot to hold, so I group them into five themes:
@@ -69,16 +69,16 @@ The **twelve principles** turn those values into observable daily behaviour. Twe
 | Theme | What it asks of a team |
 |---|---|
 | Deliver early & often | Ship valuable working software frequently (weeks, not months); *working software is the primary measure of progress* |
-| Welcome change | Embrace changing requirements *even late* — a change is information, not an enemy |
+| Welcome change | Embrace changing requirements *even late* - a change is information, not an enemy |
 | People & trust | Build around motivated people, prefer face-to-face talk, business + devs work together daily |
 | Sustainable pace & quality | A pace you can hold forever, plus technical excellence and *simplicity* (maximise work **not** done) |
-| Reflect & adjust | At regular intervals the team tunes its own behaviour — the process improves by iteration too |
+| Reflect & adjust | At regular intervals the team tunes its own behaviour - the process improves by iteration too |
 
-Values are like a constitution (short, stable, abstract); principles are the laws that show what it means in daily situations. Neither is a checklist you pass or fail — they're *directions of travel*.
+Values are like a constitution (short, stable, abstract); principles are the laws that show what it means in daily situations. Neither is a checklist you pass or fail - they're *directions of travel*.
 
 ## 3 · User stories
 
-Waterfall captured requirements in long specs. Agile needed something one iteration can swallow, written from the point of view of the person the software serves. That's the **user story** — the most common work item on real teams. It's one sentence with three slots:
+Waterfall captured requirements in long specs. Agile needed something one iteration can swallow, written from the point of view of the person the software serves. That's the **user story** - the most common work item on real teams. It's one sentence with three slots:
 
 ```text
 As a  [role]        →  WHO wants this (a real kind of user, not "the system")
@@ -88,87 +88,87 @@ so that [benefit]   →  WHY it matters (the justification)
 
 **Example:** *As a **learner**, I want to **save my quiz score**, so that **I can see my progress over time**.* One sentence, and the team already knows who benefits, what to build, and how to judge design choices.
 
-The **so that** slot looks like decoration but is the most powerful of the three: if no honest benefit can be written, maybe the story isn't worth building; and knowing the *goal* lets the team propose a *better* solution (maybe a progress chart beats a raw score list). A story states a **need** — it deliberately doesn't lock in a design. It's "a placeholder for a conversation," not a mini spec.
+The **so that** slot looks like decoration but is the most powerful of the three: if no honest benefit can be written, maybe the story isn't worth building; and knowing the *goal* lets the team propose a *better* solution (maybe a progress chart beats a raw score list). A story states a **need** - it deliberately doesn't lock in a design. It's "a placeholder for a conversation," not a mini spec.
 
-The sentence says *why* and *what*, but not *when it's done*. That's the job of **acceptance criteria** — a short list of concrete, **binary** (true/false) statements that must all hold for the story to be accepted:
+The sentence says *why* and *what*, but not *when it's done*. That's the job of **acceptance criteria** - a short list of concrete, **binary** (true/false) statements that must all hold for the story to be accepted:
 
 - The score is stored after every completed quiz.
 - The latest score appears on the learner's profile page.
 - A failed save shows the learner an error message.
 
-Each is something a stranger could verify with a plain yes or no — that's what turns *"I think it's finished"* into a checklist. Acceptance criteria describe **observable behaviour**, never internal design.
+Each is something a stranger could verify with a plain yes or no - that's what turns *"I think it's finished"* into a checklist. Acceptance criteria describe **observable behaviour**, never internal design.
 
 ## 4 · Estimating work
 
-An iteration is a fixed box of time, so a team must judge how much fits. Humans are famously bad at predicting *hours* for creative work — but *very* good at comparing sizes. So agile teams stop estimating time and estimate **relative size** instead. (I can't tell you a shelter dog's weight, but I can reliably line ten dogs up lightest to heaviest.)
+An iteration is a fixed box of time, so a team must judge how much fits. Humans are famously bad at predicting *hours* for creative work - but *very* good at comparing sizes. So agile teams stop estimating time and estimate **relative size** instead. (I can't tell you a shelter dog's weight, but I can reliably line ten dogs up lightest to heaviest.)
 
-- **Story points** = a number for the *overall size* of a story — effort, complexity and uncertainty combined — on a shared team scale. Two rules: points are **relative** (an 8 is roughly 4× a 2; nothing maps to hours) and **team-local** (one team's 3 ≠ another's; comparing between teams is meaningless).
-- Over a few iterations a team learns how many points it *actually* completes per iteration. That observed number — a forecast, not a promise — is what makes the next plan realistic.
-- **Planning poker** = everyone privately picks an estimate card, then *all reveal at once*. The simultaneous reveal stops the first loud voice from anchoring everyone, and the disagreements it exposes are usually hidden assumptions — exactly the conversation worth having.
+- **Story points** = a number for the *overall size* of a story - effort, complexity and uncertainty combined - on a shared team scale. Two rules: points are **relative** (an 8 is roughly 4× a 2; nothing maps to hours) and **team-local** (one team's 3 ≠ another's; comparing between teams is meaningless).
+- Over a few iterations a team learns how many points it *actually* completes per iteration. That observed number - a forecast, not a promise - is what makes the next plan realistic.
+- **Planning poker** = everyone privately picks an estimate card, then *all reveal at once*. The simultaneous reveal stops the first loud voice from anchoring everyone, and the disagreements it exposes are usually hidden assumptions - exactly the conversation worth having.
 
 <Aside type="caution" title="The one that ruins estimation">
-Story points are **not** a productivity score. The moment they're used to compare people, or velocity becomes a target to hit, estimates inflate and the numbers stop meaning anything. Points exist to fit work into iterations — nothing else. And estimates are *forecasts*, not commitments.
+Story points are **not** a productivity score. The moment they're used to compare people, or velocity becomes a target to hit, estimates inflate and the numbers stop meaning anything. Points exist to fit work into iterations - nothing else. And estimates are *forecasts*, not commitments.
 </Aside>
 
 ## 5 · Scrum
 
-Scrum is the most widely used framework built *on* agile values — a **deliberately incomplete** one. It doesn't tell you how to design, code or test; it defines just enough structure to make agile operational: **3 accountabilities, 3 artifacts, 5 events**, all wrapped around one container, the **Sprint**. Everything else the team adds itself.
+Scrum is the most widely used framework built *on* agile values - a **deliberately incomplete** one. It doesn't tell you how to design, code or test; it defines just enough structure to make agile operational: **3 accountabilities, 3 artifacts, 5 events**, all wrapped around one container, the **Sprint**. Everything else the team adds itself.
 
-<Aside type="note" title="Empiricism — the idea underneath everything">
+<Aside type="note" title="Empiricism - the idea underneath everything">
 Scrum assumes that in complex work, knowledge comes from *experience*, so decisions follow what's **observed**, not what was predicted. It stands on three legs: **Transparency** (the real state of work is visible to all), **Inspection** (work and plan are examined often), **Adaptation** (when inspection shows a problem, the plan changes). The **artifacts create transparency; the events schedule inspection and adaptation.** When a Scrum rule seems odd, trace it back to these three words and the reason usually appears.
 </Aside>
 
 ### The three accountabilities (roles)
 
-One small team, usually ten people or fewer, no hierarchy among the three. (The 2020 guide renamed "roles" to "accountabilities" — same content; "accountability" names what you *answer for*, not a job title.)
+One small team, usually ten people or fewer, no hierarchy among the three. (The 2020 guide renamed "roles" to "accountabilities" - same content; "accountability" names what you *answer for*, not a job title.)
 
 | Accountability | Owns | In one line |
 |---|---|---|
-| **Product Owner** | The *what* & *why* | Maximises product value by owning and **ordering** the one Product Backlog — the hard part is saying *"not yet"* to most things |
-| **Scrum Master** | The *process* | Makes the team effective, coaches good Scrum, and removes **impediments** — holds *no* authority over people or priorities |
-| **Developers** | The *how* | Everyone building the Increment (coding, testing, design…); they **organise their own work** — nobody assigns them tasks |
+| **Product Owner** | The *what* & *why* | Maximises product value by owning and **ordering** the one Product Backlog - the hard part is saying *"not yet"* to most things |
+| **Scrum Master** | The *process* | Makes the team effective, coaches good Scrum, and removes **impediments** - holds *no* authority over people or priorities |
+| **Developers** | The *how* | Everyone building the Increment (coding, testing, design…); they **organise their own work** - nobody assigns them tasks |
 
 ### The three artifacts (+ Definition of Done)
 
 | Artifact | What it is | Owned by |
 |---|---|---|
 | **Product Backlog** | The single, *ordered*, never-finished list of everything the product might need (mostly user stories); top items small & clear, lower ones allowed to stay vague | Product Owner |
-| **Sprint Backlog** | The Developers' plan for *this* Sprint — the items they picked plus how they'll deliver them; a living picture updated daily | Developers |
-| **Increment** | The accumulated, **usable** result — product that *works*, whether or not it's released | Developers |
+| **Sprint Backlog** | The Developers' plan for *this* Sprint - the items they picked plus how they'll deliver them; a living picture updated daily | Developers |
+| **Increment** | The accumulated, **usable** result - product that *works*, whether or not it's released | Developers |
 
 The **Definition of Done** is the team's shared written quality checklist (e.g. *code reviewed, tests passing, docs updated*). Until an item meets *every* entry, it isn't done and doesn't join the Increment. Key distinction: **acceptance criteria** are per-story (*what this feature must do*); the **Definition of Done** applies to *all* work (*what quality every feature must meet*). A story must satisfy both.
 
 ### The five events
 
-The Sprint is itself the first event — the fixed time-box (one month or less, commonly two weeks) that contains the other four. Sprints run back-to-back, giving the team a steady heartbeat.
+The Sprint is itself the first event - the fixed time-box (one month or less, commonly two weeks) that contains the other four. Sprints run back-to-back, giving the team a steady heartbeat.
 
 | Event | Max length (2-wk Sprint) | Purpose |
 |---|---|---|
 | **Sprint** | The container | Turn selected backlog items into a done Increment |
 | **Sprint Planning** | ~half a day | Craft the **Sprint Goal**, pull items into the Sprint Backlog, sketch the plan (*why / what / how*) |
-| **Daily Scrum** | 15 min | Developers inspect progress toward the goal and re-plan the next 24h — *by them, for them* |
+| **Daily Scrum** | 15 min | Developers inspect progress toward the goal and re-plan the next 24h - *by them, for them* |
 | **Sprint Review** | ~2 hours | Demo the working Increment to stakeholders; the discussion re-orders the backlog |
-| **Sprint Retrospective** | ~1.5 hours | The team inspects *itself* — what to improve next Sprint |
+| **Sprint Retrospective** | ~1.5 hours | The team inspects *itself* - what to improve next Sprint |
 
-The Review inspects the **product**; the Retrospective inspects the **process and people**. None of these are status reports to a manager — they're the crew steering the ship.
+The Review inspects the **product**; the Retrospective inspects the **process and people**. None of these are status reports to a manager - they're the crew steering the ship.
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node green">Product Backlog<span class="sub">ordered wish list</span></div><span class="arrow">→</span><div class="sc-node slate">Sprint Planning<span class="sub">goal + selection</span></div><span class="arrow">→</span><div class="sc-node amber">Sprint<span class="sub">daily scrums</span></div><span class="arrow">→</span><div class="sc-node violet">Increment<span class="sub">done & usable</span></div><span class="arrow">→</span><div class="sc-node soft">Review + Retro<span class="sub">inspect & adapt</span></div></div>
-<figcaption>The Scrum loop — Review and Retrospective feed straight back into the Product Backlog, and the next Sprint starts the moment this one ends.</figcaption>
+<figcaption>The Scrum loop - Review and Retrospective feed straight back into the Product Backlog, and the next Sprint starts the moment this one ends.</figcaption>
 </figure>
 
 <Aside type="caution" title="Scrum myths to unlearn">
 - *"Scrum = agile."* Agile is the value system; Scrum is *one* framework built on it.
-- *"A Sprint means working faster."* No — it's a fixed window at a **sustainable pace**; sprinting athletically every two weeks is exactly what the principles forbid.
+- *"A Sprint means working faster."* No - it's a fixed window at a **sustainable pace**; sprinting athletically every two weeks is exactly what the principles forbid.
 - *"The Scrum Master is the boss."* No authority over people or priorities, ever.
 - *"The Daily Scrum is a report to the manager."* The moment devs speak *to authority* instead of *to each other*, the event has died.
 </Aside>
 
 ## 6 · Kanban vs Scrum
 
-Scrum isn't the only agile method. **Kanban** thinks in *continuous flow* instead of fixed time-boxes. A board makes work visible with **columns** (stages) and **cards** (work items) — minimally **To Do → In Progress → Done**, one card in exactly one place at a time.
+Scrum isn't the only agile method. **Kanban** thinks in *continuous flow* instead of fixed time-boxes. A board makes work visible with **columns** (stages) and **cards** (work items) - minimally **To Do → In Progress → Done**, one card in exactly one place at a time.
 
-Its sharp edge is the **work-in-progress (WIP) limit**: a hard cap on how many cards a column may hold. If "In Progress" is limited to two and both slots are full, nobody starts a third — the job becomes **finish something**, not start something. Why so strict? Five half-done tasks deliver *nothing*, and switching between them burns time; the limit converts that invisible waste into a visible constraint, and forces the question *"why is this card stuck?"* the moment it sticks.
+Its sharp edge is the **work-in-progress (WIP) limit**: a hard cap on how many cards a column may hold. If "In Progress" is limited to two and both slots are full, nobody starts a third - the job becomes **finish something**, not start something. Why so strict? Five half-done tasks deliver *nothing*, and switching between them burns time; the limit converts that invisible waste into a visible constraint, and forces the question *"why is this card stuck?"* the moment it sticks.
 
 | | Scrum | Kanban |
 |---|---|---|
@@ -177,20 +177,20 @@ Its sharp edge is the **work-in-progress (WIP) limit**: a hard cap on how many c
 | Change mid-cycle | Between Sprints | Any time capacity frees up |
 | Best fit | Goal-shaped **product development** | **Interrupt-driven** work: support, ops, maintenance |
 
-Useful first question on any team: does our work arrive as a *stream* (lean Kanban) or can it be shaped into *goals* (lean Scrum)? Many teams blend both ("Scrumban" — Sprints + WIP limits). Without WIP limits, Kanban is just a board with sticky notes; the limit is what makes it a method.
+Useful first question on any team: does our work arrive as a *stream* (lean Kanban) or can it be shaped into *goals* (lean Scrum)? Many teams blend both ("Scrumban" - Sprints + WIP limits). Without WIP limits, Kanban is just a board with sticky notes; the limit is what makes it a method.
 
 ## 7 · The life of a ticket
 
-Zooming all the way in: the single unit of work a developer holds is a **ticket** — one unit of work in a tracking tool, carrying a **title** (one line), a **description** (the *why* and context), and **acceptance criteria** (the checkable *done*). Before coding, I check: do I understand the *why*, and could I verify every criterion? If not, the right move is a *question to the author*, not a guess — guessed requirements are how wrong features get built with perfect code.
+Zooming all the way in: the single unit of work a developer holds is a **ticket** - one unit of work in a tracking tool, carrying a **title** (one line), a **description** (the *why* and context), and **acceptance criteria** (the checkable *done*). Before coding, I check: do I understand the *why*, and could I verify every criterion? If not, the right move is a *question to the author*, not a guess - guessed requirements are how wrong features get built with perfect code.
 
 The path from ticket to done is the same industry-standard flow I already used per-exercise in the JS course:
 
 <Steps>
 1. **Ticket picked up** → a **branch** is created for it, named after the ticket (one branch per task, however small).
-2. Work happens as small, described **commits** on that branch — safely away from `main`.
+2. Work happens as small, described **commits** on that branch - safely away from `main`.
 3. A **pull request** is opened: the formal request to merge, presenting all changes for inspection.
 4. A colleague **reviews** it; feedback flows back as *new commits on the same branch*.
-5. Approved work is **merged**, and the ticket moves to **Done** — meaning acceptance criteria pass *and* the Definition of Done is met.
+5. Approved work is **merged**, and the ticket moves to **Done** - meaning acceptance criteria pass *and* the Definition of Done is met.
 </Steps>
 
 <Aside type="caution" title="What 'Done' really means">
@@ -203,13 +203,13 @@ Done is **not** "it works on my machine." On a team, done is a *public claim wit
 
 Everyone gets stuck; what separates people is what happens next. A question someone can actually answer carries three things:
 
-1. **The goal** — what I'm trying to achieve, one level *above* the bug (the real problem, not the fix I imagined).
-2. **What I tried** — the steps and code, so nobody suggests what I already ruled out.
-3. **The exact error text** — *copied and pasted*, never paraphrased. "It says null pointer somewhere" destroys the single most diagnostic thing I own.
+1. **The goal** - what I'm trying to achieve, one level *above* the bug (the real problem, not the fix I imagined).
+2. **What I tried** - the steps and code, so nobody suggests what I already ruled out.
+3. **The exact error text** - *copied and pasted*, never paraphrased. "It says null pointer somewhere" destroys the single most diagnostic thing I own.
 
 Naming the goal first avoids the classic trap of asking about my *attempted solution* instead of my *actual problem*: ask "how do I parse this date string with regex?" and people debug my regex; say "I need the year from this date value" and someone hands me a one-line date method that erases the whole struggle.
 
-Most errors carry four readable parts — **type** (e.g. `TypeError`), **message** (read word by word — it means what it says), **location** (file + line), and **stack trace** (top line = where it broke, lines below = how it got there). The gold-standard attachment is a **minimal reproducible example**: the smallest complete code that still fails. Building one often *solves the problem itself* (the rubber-duck effect). Ask order: **docs → search the error → a teammate → a public forum** — and asking a teammate after ~15 minutes of honest effort is the *correct* professional move, not weakness.
+Most errors carry four readable parts - **type** (e.g. `TypeError`), **message** (read word by word - it means what it says), **location** (file + line), and **stack trace** (top line = where it broke, lines below = how it got there). The gold-standard attachment is a **minimal reproducible example**: the smallest complete code that still fails. Building one often *solves the problem itself* (the rubber-duck effect). Ask order: **docs → search the error → a teammate → a public forum** - and asking a teammate after ~15 minutes of honest effort is the *correct* professional move, not weakness.
 
 ### Reading documentation effectively
 
@@ -219,40 +219,40 @@ The trick is matching the *type* of document to the question:
 |---|---|---|
 | **Tutorial** | I'm new to the whole area | Start to finish, learning by doing |
 | **Guide** (how-to) | I have one concrete task, know the basics | Jump to the task |
-| **Reference** | I need exact behaviour of one function/option | Look up the piece — *never* read cover to cover |
+| **Reference** | I need exact behaviour of one function/option | Look up the piece - *never* read cover to cover |
 
-Most documentation frustration is a *mismatch* — a tutorial is maddening when I need one detail; a reference is impenetrable when I needed a path. When jargon appears, resolve it *immediately* (a personal glossary helps), and remember the senior habit: skim **changelogs / release notes** when something that worked yesterday breaks after an update.
+Most documentation frustration is a *mismatch* - a tutorial is maddening when I need one detail; a reference is impenetrable when I needed a path. When jargon appears, resolve it *immediately* (a personal glossary helps), and remember the senior habit: skim **changelogs / release notes** when something that worked yesterday breaks after an update.
 
 ### Code review fundamentals
 
 Review is the most frequent collaboration ritual in software. A reviewer reads a pull request with three questions, in this order:
 
-1. **Correctness** — does it do what the ticket claims, meet the criteria, handle edge cases (empty input, failed request)?
-2. **Clarity** — will the next person understand it in a year without the author? Clear names, small functions.
-3. **Consistency** — does it follow team conventions and the Definition of Done? (Formatting is automated away so reviews spend attention on what machines can't judge.)
+1. **Correctness** - does it do what the ticket claims, meet the criteria, handle edge cases (empty input, failed request)?
+2. **Clarity** - will the next person understand it in a year without the author? Clear names, small functions.
+3. **Consistency** - does it follow team conventions and the Definition of Done? (Formatting is automated away so reviews spend attention on what machines can't judge.)
 
 The whole craft of *giving* feedback: **comment on the code, never the coder.** *Ask*, don't command ("what happens here if the list is empty?" beats "this is wrong"); explain the *why*; say what's good; mark **must** vs **could**. *Receiving* it: read everything before replying, treat questions as questions, thank the catch (a bug found now is cheapest), and disagree openly and professionally when you do. A review with zero comments usually means a rushed reviewer, not flawless code.
 
 ### My personal task board
 
-Everything above is for teams — but the one project I'm guaranteed to manage is *my own learning*. Same tool, team of one: **To Do → In Progress → Done**, honest cards (a card is well-formed if I can say yes/no whether it's done). To Do ordered by value is my personal backlog; the **WIP limit** should be *brutal — two at most*. Both slots full and tempted by something new? Finish something first. The Done column is the motivation instrument on a hard day. GitHub Projects is the natural home since it lives where my work lives.
+Everything above is for teams - but the one project I'm guaranteed to manage is *my own learning*. Same tool, team of one: **To Do → In Progress → Done**, honest cards (a card is well-formed if I can say yes/no whether it's done). To Do ordered by value is my personal backlog; the **WIP limit** should be *brutal - two at most*. Both slots full and tempted by something new? Finish something first. The Done column is the motivation instrument on a hard day. GitHub Projects is the natural home since it lives where my work lives.
 
 ## 9 · Working with AI (LLMs)
 
 ### What a large language model actually is
 
-A **large language model (LLM)** — ChatGPT, Claude, Gemini and relatives — is a program trained on enormous amounts of text to do *one* thing: given some text, **predict what text plausibly comes next**. That's the whole trick, at colossal scale. Two consequences drive everything else:
+A **large language model (LLM)** - ChatGPT, Claude, Gemini and relatives - is a program trained on enormous amounts of text to do *one* thing: given some text, **predict what text plausibly comes next**. That's the whole trick, at colossal scale. Two consequences drive everything else:
 
 - It has **no database of facts it looks up.** It produces text that's *statistically plausible* given training. Plausible and true overlap heavily (that's why it's useful) but aren't the same.
 - It's genuinely excellent at **language-shaped work**: explaining, summarising, rephrasing, translating between levels, and generating structured text including code.
 
 <Aside type="note" title="Two edges + the golden rule">
-**Training** happened once, before I arrived (it read a huge frozen corpus and tuned itself); **inference** is what happens now (the frozen model answering me). Nothing I type retrains it mid-chat. It knows *common* things far better than *rare* ones, and it inherits the **biases** of its data. Two edges: a **knowledge cutoff** (recent releases/prices/news may be missing), and behaviour differs between versions/providers. The golden rule: **fluency is not authority** — a confident, polished tone is a property of the *text generator*, not evidence of correctness. It phrases its errors as beautifully as its truths.
+**Training** happened once, before I arrived (it read a huge frozen corpus and tuned itself); **inference** is what happens now (the frozen model answering me). Nothing I type retrains it mid-chat. It knows *common* things far better than *rare* ones, and it inherits the **biases** of its data. Two edges: a **knowledge cutoff** (recent releases/prices/news may be missing), and behaviour differs between versions/providers. The golden rule: **fluency is not authority** - a confident, polished tone is a property of the *text generator*, not evidence of correctness. It phrases its errors as beautifully as its truths.
 </Aside>
 
 ### Hallucinations
 
-A **hallucination** is generated content presented as fact but false or invented — and it's the *most important* habit in this whole topic. In code, the classic specimens: a method that doesn't exist but *sounds* right; config options no version accepts; a confident wrong explanation of why code fails; invented sources and version numbers. They aren't random noise — they're **maximally plausible falsehoods**, engineered by the very mechanism to sail past my defences.
+A **hallucination** is generated content presented as fact but false or invented - and it's the *most important* habit in this whole topic. In code, the classic specimens: a method that doesn't exist but *sounds* right; config options no version accepts; a confident wrong explanation of why code fails; invented sources and version numbers. They aren't random noise - they're **maximally plausible falsehoods**, engineered by the very mechanism to sail past my defences.
 
 The professional response fits in one sentence: **no claim from an assistant is trusted until verified against an authoritative source** (official docs, MDN, the tool's own site).
 
@@ -267,63 +267,63 @@ The reframe that makes this click: **verification *is* the learning.** The assis
 
 ### Prompting fundamentals
 
-The assistant can only respond to the text I give it — the **prompt** — and it's a learnable structure I already know from user stories and good questions. A strong prompt carries four parts:
+The assistant can only respond to the text I give it - the **prompt** - and it's a learnable structure I already know from user stories and good questions. A strong prompt carries four parts:
 
 <Steps>
-1. **Context** — who I am, what I already know, the situation. The assistant can't see me; this slot shows it my *level*, and an answer pitched at my level is the whole point.
-2. **Goal** — what I actually want produced, stated directly.
-3. **Constraints** — the shape of a good answer: length, format, what to include/avoid, which tech is in or out of bounds.
-4. **Example** — where format matters, one small sample of good output. Nothing communicates a format better than one instance.
+1. **Context** - who I am, what I already know, the situation. The assistant can't see me; this slot shows it my *level*, and an answer pitched at my level is the whole point.
+2. **Goal** - what I actually want produced, stated directly.
+3. **Constraints** - the shape of a good answer: length, format, what to include/avoid, which tech is in or out of bounds.
+4. **Example** - where format matters, one small sample of good output. Nothing communicates a format better than one instance.
 </Steps>
 
-Then **iterate, don't restart**: when an answer misses, *steer* ("too advanced — explain as if I'd never seen a loop"; "compress to five sentences"). Each correction narrows the next answer; restarting throws away everything the conversation established. The single highest-value constraint costs one sentence: **state what I know.** *"I know HTML/CSS but no JavaScript yet"* changes vocabulary, pace, and examples entirely. Prompts that land are worth saving into a **personal prompt library**.
+Then **iterate, don't restart**: when an answer misses, *steer* ("too advanced - explain as if I'd never seen a loop"; "compress to five sentences"). Each correction narrows the next answer; restarting throws away everything the conversation established. The single highest-value constraint costs one sentence: **state what I know.** *"I know HTML/CSS but no JavaScript yet"* changes vocabulary, pace, and examples entirely. Prompts that land are worth saving into a **personal prompt library**.
 
-### AI as a learning partner — and the copy trap
+### AI as a learning partner - and the copy trap
 
 Four workflows that actually build skill:
 
 | Workflow | The move |
 |---|---|
-| **Explainer** | "Explain this line by line at my level; I know X but not Y" — then push: *why this way? what breaks if line 3 moves?* |
-| **Exercise generator** | "Generate five exercises slightly harder than this" — solve them *myself*, then return for review |
-| **Debugging partner** | Goal + attempt + exact error — then *"explain the error and where to look; don't fix it yet"* |
+| **Explainer** | "Explain this line by line at my level; I know X but not Y" - then push: *why this way? what breaks if line 3 moves?* |
+| **Exercise generator** | "Generate five exercises slightly harder than this" - solve them *myself*, then return for review |
+| **Debugging partner** | Goal + attempt + exact error - then *"explain the error and where to look; don't fix it yet"* |
 | **Quizmaster** | "Quiz me, one question at a time, then tell me what my wrong answers reveal I misunderstood" (retrieval is elite study) |
 
-<Aside type="caution" title="The copy trap — the failure mode that eats beginners">
-The assistant will happily *do my exercises for me*, and the output will be clean and correct. Submitting it *feels* like progress — it's the opposite: the exercise existed to build something in me, and that something didn't get built. The rule that keeps the partnership honest: **the assistant explains, reviews, and hints; the attempt is mine.** Productive struggle isn't an obstacle to learning — it *is* the mechanism. Reading code builds recognition; only *writing* code builds the ability to write code.
+<Aside type="caution" title="The copy trap - the failure mode that eats beginners">
+The assistant will happily *do my exercises for me*, and the output will be clean and correct. Submitting it *feels* like progress - it's the opposite: the exercise existed to build something in me, and that something didn't get built. The rule that keeps the partnership honest: **the assistant explains, reviews, and hints; the attempt is mine.** Productive struggle isn't an obstacle to learning - it *is* the mechanism. Reading code builds recognition; only *writing* code builds the ability to write code.
 </Aside>
 
 ### Using AI professionally
 
-The moment I work for an employer, a fourth party enters every prompt: the company whose information I'm holding. What I type is sent to the provider's servers and may be stored or reviewed. Fine for a question about closures — a **serious professional failure** for three categories:
+The moment I work for an employer, a fourth party enters every prompt: the company whose information I'm holding. What I type is sent to the provider's servers and may be stored or reviewed. Fine for a question about closures - a **serious professional failure** for three categories:
 
 | Never paste without explicit permission | Example |
 |---|---|
 | **Secrets & credentials** | Passwords, access keys/tokens, connection strings, config files with keys inside |
-| **Personal data** | Names, emails, addresses, customer/employee records — *anything identifying a real person* |
+| **Personal data** | Names, emails, addresses, customer/employee records - *anything identifying a real person* |
 | **Company code & documents** | Source code, internal docs, strategy, unreleased plans |
 
 <Aside type="caution" title="GDPR makes this law, not preference">
-In the EU, personal data isn't just policy — the **GDPR** governs any *processing* of it, and sending a customer's details to an external AI service *is* processing the company answers for. The classic trap: debugging a failing import late on Friday, someone pastes the log file — which held 40 customers' names and emails — and Monday it's a GDPR incident. The five-second alternative (delete the rows first) would have gotten the same help. My two obligations: in week one, **ask** if an AI usage policy exists; then **follow it**, even when it's stricter than seems reasonable. Where none exists, the three categories above are the floor. This also covers **editor AI assistants** — they read the code around the cursor, which *is* the company-code category.
+In the EU, personal data isn't just policy - the **GDPR** governs any *processing* of it, and sending a customer's details to an external AI service *is* processing the company answers for. The classic trap: debugging a failing import late on Friday, someone pastes the log file - which held 40 customers' names and emails - and Monday it's a GDPR incident. The five-second alternative (delete the rows first) would have gotten the same help. My two obligations: in week one, **ask** if an AI usage policy exists; then **follow it**, even when it's stricter than seems reasonable. Where none exists, the three categories above are the floor. This also covers **editor AI assistants** - they read the code around the cursor, which *is* the company-code category.
 </Aside>
 
-One principle closes it: **whatever I submit is mine.** If an AI drafted the code I merge or the analysis I present, I *adopted* it — *"the AI wrote it"* is no defence in a review, an audit, or a legal dispute. The professional version of the copy trap: understand and verify before I adopt, with career-grade stakes. Employers increasingly *expect* fluent AI use — the skill being tested is using it **within the lines**.
+One principle closes it: **whatever I submit is mine.** If an AI drafted the code I merge or the analysis I present, I *adopted* it - *"the AI wrote it"* is no defence in a review, an audit, or a legal dispute. The professional version of the copy trap: understand and verify before I adopt, with career-grade stakes. Employers increasingly *expect* fluent AI use - the skill being tested is using it **within the lines**.
 
 ## Revision summary
 
 | Must-know | One-line recall |
 |---|---|
 | Two problems | Version control merges code; a *working method* coordinates who builds what, when |
-| SDLC | Plan → Build → Test → Release → Maintain, then loop — software is never finished |
+| SDLC | Plan → Build → Test → Release → Maintain, then loop - software is never finished |
 | Waterfall flaw | Feedback arrives at the end, when change costs most |
 | Agile core bet | Get it right by short iterations of *feedback*, not one big up-front *plan* |
-| Manifesto "over" | Valued *more when they conflict* — never *instead of* |
+| Manifesto "over" | Valued *more when they conflict* - never *instead of* |
 | 4 values | Individuals · working software · customer collaboration · responding to change |
-| User story | *As a [role], I want [capability], so that [benefit]* — the "so that" justifies it |
+| User story | *As a [role], I want [capability], so that [benefit]* - the "so that" justifies it |
 | Acceptance criteria | Binary, checkable statements that define *done* for one story |
-| Story points | Relative, team-local size — a forecast, never a productivity score |
+| Story points | Relative, team-local size - a forecast, never a productivity score |
 | Planning poker | Simultaneous reveal → no anchoring, surfaces hidden assumptions |
-| Empiricism | Transparency + Inspection + Adaptation — artifacts show, events adapt |
+| Empiricism | Transparency + Inspection + Adaptation - artifacts show, events adapt |
 | Scrum roles | PO = what/why · Scrum Master = process/impediments · Developers = how |
 | Scrum artifacts | Product Backlog · Sprint Backlog · Increment (+ Definition of Done) |
 | Acceptance vs DoD | Criteria = per-story behaviour; DoD = quality bar on *all* work |
@@ -332,14 +332,14 @@ One principle closes it: **whatever I submit is mine.** If an AI drafted the cod
 | Scrum vs Kanban | Goal-shaped product work vs continuous interrupt-driven flow |
 | Ticket → done | Ticket → branch → commits → PR → review → merge; *done* is public, defined |
 | Good question | Goal + what I tried + *exact* pasted error; name the real goal |
-| Read docs | Tutorial (learn) · Guide (task) · Reference (lookup) — match type to question |
+| Read docs | Tutorial (learn) · Guide (task) · Reference (lookup) - match type to question |
 | Code review | Correctness → Clarity → Consistency; on the code, never the coder |
 | Personal board | To Do / In Progress / Done, honest cards, brutal WIP limit of two |
-| LLM in one line | Predicts plausible next text — it does *not* look facts up |
+| LLM in one line | Predicts plausible next text - it does *not* look facts up |
 | Fluency ≠ truth | Confident tone is a style property, carries no info about correctness |
-| Hallucination | Plausible invented falsehood — verify every claim against official docs |
-| Verification | *Verification is the learning* — narrows an open search to one yes/no |
+| Hallucination | Plausible invented falsehood - verify every claim against official docs |
+| Verification | *Verification is the learning* - narrows an open search to one yes/no |
 | Prompt parts | Context + Goal + Constraints + Example; state my level; iterate, don't restart |
-| Copy trap | AI explains/reviews/hints — the *attempt* is mine; struggle is the mechanism |
-| AI bright line | Never paste secrets, personal data, or company code — GDPR makes it law |
+| Copy trap | AI explains/reviews/hints - the *attempt* is mine; struggle is the mechanism |
+| AI bright line | Never paste secrets, personal data, or company code - GDPR makes it law |
 | Own the output | Whatever I submit is mine; "the AI wrote it" is no defence |

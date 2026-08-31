@@ -1,6 +1,6 @@
 ---
-title: "JavaScript — Daten & das DOM"
-description: "Mit Daten und der Seite in JavaScript arbeiten — Arrays und Schleifen, die wichtigsten Array-Methoden, Objekte und this, Klassen und Vererbung, Referenzen vs. Kopien und Destructuring sowie das Manipulieren des DOM: Elemente auswählen, ändern und erzeugen, Events und Formulare behandeln."
+title: "JavaScript - Daten & das DOM"
+description: "Mit Daten und der Seite in JavaScript arbeiten - Arrays und Schleifen, die wichtigsten Array-Methoden, Objekte und this, Klassen und Vererbung, Referenzen vs. Kopien und Destructuring sowie das Manipulieren des DOM: Elemente auswählen, ändern und erzeugen, Events und Formulare behandeln."
 sidebar:
   label: "10 · JS: Daten & DOM"
   order: 10
@@ -8,24 +8,24 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*SAP Implementation Consulting & ERP — Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+*SAP Implementation Consulting & ERP - Startupistan Deutschland · Block I · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
 
 ---
 
-Bisher hielten meine Variablen immer nur *eine* Sache auf einmal — einen Namen, einen Preis, ein Ja/Nein. In diesem Kapitel geht es darum, *viele* Dinge und *strukturierte* Dinge zu halten: Listen (**Arrays**), beschriebene Dinge (**Objekte**) und Baupläne zum Erzeugen von Objekten (**Klassen**). Danach bringt es sie über das **DOM** auf eine echte Webseite. Der rote Faden der ganzen Woche: **Inhalt als Daten + eine wiederholbare Regel** schlägt jedes Von-Hand-Kopieren.
+Bisher hielten meine Variablen immer nur *eine* Sache auf einmal - einen Namen, einen Preis, ein Ja/Nein. In diesem Kapitel geht es darum, *viele* Dinge und *strukturierte* Dinge zu halten: Listen (**Arrays**), beschriebene Dinge (**Objekte**) und Baupläne zum Erzeugen von Objekten (**Klassen**). Danach bringt es sie über das **DOM** auf eine echte Webseite. Der rote Faden der ganzen Woche: **Inhalt als Daten + eine wiederholbare Regel** schlägt jedes Von-Hand-Kopieren.
 
-## Arrays — eine geordnete Liste in einer Variable
+## Arrays - eine geordnete Liste in einer Variable
 
-Ein **Array** ist eine geordnete Liste von Werten, die unter einem Namen gespeichert ist. Ich schreibe es mit eckigen Klammern (ein *Array-Literal*) und lese die Einträge über ihren **Index** zurück — eine Positionsnummer, die bei **0** beginnt, nicht bei 1.
+Ein **Array** ist eine geordnete Liste von Werten, die unter einem Namen gespeichert ist. Ich schreibe es mit eckigen Klammern (ein *Array-Literal*) und lese die Einträge über ihren **Index** zurück - eine Positionsnummer, die bei **0** beginnt, nicht bei 1.
 
 ```js
 'use strict';
 
 const flavors = ["rye", "spelt", "wheat"];
 
-console.log(flavors[0]);      // rye   — erster Eintrag
-console.log(flavors[2]);      // wheat — letzter von dreien
-console.log(flavors.length);  // 3     — wie viele Einträge
+console.log(flavors[0]);      // rye   - erster Eintrag
+console.log(flavors[2]);      // wheat - letzter von dreien
+console.log(flavors.length);  // 3     - wie viele Einträge
 flavors[1] = "sourdough";     // den zweiten Eintrag überschreiben
 ```
 
@@ -36,10 +36,10 @@ wheat
 ```
 
 <Aside type="caution" title="Der klassische Off-by-one-Bug">
-Der letzte Index ist `length - 1`, **nicht** `length`. Ein Array mit 3 Einträgen hat die Indizes 0, 1, 2. Über das Ende hinaus zu lesen (`flavors[99]`) stürzt nicht ab — es gibt still `undefined` zurück, und der eigentliche Fehler zeigt sich erst einen Schritt später, wenn ich dieses Nichts *verwenden* will.
+Der letzte Index ist `length - 1`, **nicht** `length`. Ein Array mit 3 Einträgen hat die Indizes 0, 1, 2. Über das Ende hinaus zu lesen (`flavors[99]`) stürzt nicht ab - es gibt still `undefined` zurück, und der eigentliche Fehler zeigt sich erst einen Schritt später, wenn ich dieses Nichts *verwenden* will.
 </Aside>
 
-### Array-Methoden — mutierend vs. nicht-mutierend
+### Array-Methoden - mutierend vs. nicht-mutierend
 
 Der wichtigste Unterschied überhaupt: Manche Methoden **verändern das Array direkt** (mutieren es), andere **lassen es unangetastet und geben einen neuen Wert zurück**. Diese zu verwechseln ist die Quelle böser Überraschungen.
 
@@ -55,25 +55,25 @@ Der wichtigste Unterschied überhaupt: Manche Methoden **verändern das Array di
 const flavors = ["rye", "spelt", "wheat"];
 
 flavors.push("olive");                 // jetzt 4 Einträge, direkt verändert
-console.log(flavors.pop());            // olive  — entfernt & zurückgegeben
+console.log(flavors.pop());            // olive  - entfernt & zurückgegeben
 console.log(flavors.includes("rye"));  // true
 console.log(flavors.indexOf("wheat")); // 2
-console.log(flavors.slice(0, 2));      // [ 'rye', 'spelt' ] — ein NEUES Array
+console.log(flavors.slice(0, 2));      // [ 'rye', 'spelt' ] - ein NEUES Array
 console.log(flavors.join(" and "));    // rye and spelt and wheat
 ```
 
 <Aside type="note" title="Faustregel">
-`push`/`pop`/`shift`/`unshift`/`splice`/`reverse`/`sort` **verändern** das Original. `slice`/`concat`/`join`/`map`/`filter` **geben etwas Neues zurück** und lassen das Original unangetastet — zu diesen greife ich, wenn das Original überleben muss.
+`push`/`pop`/`shift`/`unshift`/`splice`/`reverse`/`sort` **verändern** das Original. `slice`/`concat`/`join`/`map`/`filter` **geben etwas Neues zurück** und lassen das Original unangetastet - zu diesen greife ich, wenn das Original überleben muss.
 </Aside>
 
-## Schleifen — denselben Block viele Male ausführen
+## Schleifen - denselben Block viele Male ausführen
 
 Eine **Schleife** führt einen Codeblock wiederholt aus. So ehre ich **DRY** ("Don't Repeat Yourself") über Daten, statt fast identische Zeilen von Hand zu schreiben.
 
 <Tabs>
 <TabItem label="for...of (Standard für den Alltag)">
 
-Besucht jeden Eintrag direkt — kein Index-Buchhalten. Lies es als *"für jedes flavor der flavors"*.
+Besucht jeden Eintrag direkt - kein Index-Buchhalten. Lies es als *"für jedes flavor der flavors"*.
 
 ```js
 const flavors = ["rye", "spelt", "wheat"];
@@ -126,7 +126,7 @@ while (countdown > 0) {
 
 ### Ausgabe aus Daten mit einer Schleife aufbauen
 
-Hier ist der Lohn — dieselbe Regel auf jeden Eintrag angewandt, kein Copy-Paste:
+Hier ist der Lohn - dieselbe Regel auf jeden Eintrag angewandt, kein Copy-Paste:
 
 ```js
 const artists = ["Pinkfong", "Asake", "Johnny Cash"];
@@ -150,7 +150,7 @@ Füge dem Array einen vierten Künstler hinzu und eine vierte Karte erscheint gr
 
 ## Callback-Array-Methoden
 
-Diese Methoden nehmen einen **Callback** — eine Funktion, die ich übergebe und die die Methode einmal pro Eintrag ausführt. Die Arrow-Form (`(x) => ...`) hält jede davon auf einen lesbaren Einzeiler. Diese Tabelle über den Schreibtisch pinnen:
+Diese Methoden nehmen einen **Callback** - eine Funktion, die ich übergebe und die die Methode einmal pro Eintrag ausführt. Die Arrow-Form (`(x) => ...`) hält jede davon auf einen lesbaren Einzeiler. Diese Tabelle über den Schreibtisch pinnen:
 
 | Methode | Rückgabe | Verwendung |
 |---|---|---|
@@ -174,12 +174,12 @@ const allBig   = prices.every((p) => p > 10);        // false
 ```
 
 <Aside type="caution" title="Die berühmte forEach-Falle">
-`forEach` gibt **immer** `undefined` zurück. Sein Ergebnis zu speichern und sich zu fragen, wo das Array geblieben ist, ist ein Ritus der Initiation — wenn ich Ergebnisse zurückwill, war die gesuchte Methode `map`. Außerdem: `map` und `filter` verändern das Original **nicht**; das Ergebnis steckt im Rückgabewert.
+`forEach` gibt **immer** `undefined` zurück. Sein Ergebnis zu speichern und sich zu fragen, wo das Array geblieben ist, ist ein Ritus der Initiation - wenn ich Ergebnisse zurückwill, war die gesuchte Methode `map`. Außerdem: `map` und `filter` verändern das Original **nicht**; das Ergebnis steckt im Rückgabewert.
 </Aside>
 
 ## Kopien vs. geteilte Referenzen
 
-Arrays und Objekte sind **Referenztypen**. Eine Variable hält nicht die Liste selbst — sie hält einen *Pfeil* (eine Referenz), der auf die eine Liste im Speicher zeigt. Eine schlichte Zuweisung kopiert also den *Pfeil*, nicht die Liste:
+Arrays und Objekte sind **Referenztypen**. Eine Variable hält nicht die Liste selbst - sie hält einen *Pfeil* (eine Referenz), der auf die eine Liste im Speicher zeigt. Eine schlichte Zuweisung kopiert also den *Pfeil*, nicht die Liste:
 
 ```js
 const original = ["rye", "spelt"];
@@ -189,7 +189,7 @@ copy.push("wheat");
 console.log(original);   // [ 'rye', 'spelt', 'wheat' ]  ← das "Original" hat sich auch geändert
 ```
 
-Zwei Namen, eine geteilte Liste — schreibe über den einen und beide sehen es. Der bewusste Weg, ein *wirklich neues* Array zu erzeugen, ist **Spread-Syntax** — drei Punkte innerhalb eines neuen Literals:
+Zwei Namen, eine geteilte Liste - schreibe über den einen und beide sehen es. Der bewusste Weg, ein *wirklich neues* Array zu erzeugen, ist **Spread-Syntax** - drei Punkte innerhalb eines neuen Literals:
 
 ```js
 const original = ["rye", "spelt"];
@@ -200,13 +200,13 @@ console.log(realCopy.length);   // 3
 console.log(original.length);   // 2  ← unangetastet
 ```
 
-<Aside type="note" title="Flache Kopie — das ehrliche Etikett">
+<Aside type="note" title="Flache Kopie - das ehrliche Etikett">
 Spread erzeugt ein neues Array nur auf der **obersten Ebene**. Sind Einträge selbst Arrays/Objekte, bleiben deren innere Referenzen weiterhin geteilt. Für flache Listen ist das schlicht "eine Kopie"; für verschachtelte Daten macht `structuredClone(value)` eine vollständig unabhängige tiefe Kopie.
 </Aside>
 
-## Objekte — ein beschriebenes Ding
+## Objekte - ein beschriebenes Ding
 
-Ein Array beantwortet *"welche Einträge, in welcher Reihenfolge?"*. Ein **Objekt** beantwortet *"was weiß ich über dieses eine Ding?"*. Es ist eine Sammlung benannter Werte, geschrieben mit geschweiften Klammern (ein *Objekt-Literal*). Jedes Paar ist eine **Eigenschaft**: der **Key** links, der **Wert** rechts (jeder Typ — String, Zahl, Boolean, sogar ein weiteres Array oder Objekt).
+Ein Array beantwortet *"welche Einträge, in welcher Reihenfolge?"*. Ein **Objekt** beantwortet *"was weiß ich über dieses eine Ding?"*. Es ist eine Sammlung benannter Werte, geschrieben mit geschweiften Klammern (ein *Objekt-Literal*). Jedes Paar ist eine **Eigenschaft**: der **Key** links, der **Wert** rechts (jeder Typ - String, Zahl, Boolean, sogar ein weiteres Array oder Objekt).
 
 ```js
 const croissant = {
@@ -215,17 +215,17 @@ const croissant = {
   vegetarian: true,
 };
 
-console.log(croissant.name);        // Butter Croissant  — Punktnotation
+console.log(croissant.name);        // Butter Croissant  - Punktnotation
 const field = "price";
-console.log(croissant[field]);      // 2.8  — Klammernotation, Key aus einer Variable
+console.log(croissant[field]);      // 2.8  - Klammernotation, Key aus einer Variable
 croissant.price = 3.0;              // eine Eigenschaft ändern
 ```
 
-Arbeitsregel: **Punkte wenn ich kann, Klammern wenn der Key in einer Variable liegt** (oder Zeichen enthält, die ein einfacher Name nicht haben kann). Einen nicht existierenden Key zu lesen gibt still `undefined` zurück — ein vertippter Key ist der übliche Übeltäter.
+Arbeitsregel: **Punkte wenn ich kann, Klammern wenn der Key in einer Variable liegt** (oder Zeichen enthält, die ein einfacher Name nicht haben kann). Einen nicht existierenden Key zu lesen gibt still `undefined` zurück - ein vertippter Key ist der übliche Übeltäter.
 
 ### Methoden und `this`
 
-Eine **Methode** ist einfach eine Eigenschaft, deren Wert eine Funktion ist. Innerhalb einer Methode verweist das Schlüsselwort **`this`** auf das Objekt, auf dem die Methode aufgerufen wurde — so liest eine Methode ihre eigenen Geschwister-Eigenschaften.
+Eine **Methode** ist einfach eine Eigenschaft, deren Wert eine Funktion ist. Innerhalb einer Methode verweist das Schlüsselwort **`this`** auf das Objekt, auf dem die Methode aufgerufen wurde - so liest eine Methode ihre eigenen Geschwister-Eigenschaften.
 
 ```js
 const croissant = {
@@ -240,7 +240,7 @@ console.log(croissant.describe()); // Butter Croissant costs 2.8 euros
 ```
 
 <Aside type="tip" title="Warum hier keine Arrow-Funktion?">
-Methoden, die `this` verwenden, schreibt man mit der `function`-Form (oder der später gezeigten Klassen-Kurzschreibweise), **nicht** als Arrow-Funktionen — Arrows behandeln `this` anders und zeigen nicht auf das Objekt. Jeder eingebaute Aufruf wie `"maison".toUpperCase()` war die ganze Zeit genau dieses Muster.
+Methoden, die `this` verwenden, schreibt man mit der `function`-Form (oder der später gezeigten Klassen-Kurzschreibweise), **nicht** als Arrow-Funktionen - Arrows behandeln `this` anders und zeigen nicht auf das Objekt. Jeder eingebaute Aufruf wie `"maison".toUpperCase()` war die ganze Zeit genau dieses Muster.
 </Aside>
 
 ### Arrays von Objekten
@@ -264,7 +264,7 @@ console.log(popActs.length); // 1
 
 ### Über die Eigenschaften eines Objekts iterieren
 
-Ein Objekt hat keine Einträge, über die man loopen könnte — es hat Eigenschaften. Drei eingebaute Funktionen verwandeln seinen Inhalt in Arrays, und dann greift jedes Array-Werkzeug:
+Ein Objekt hat keine Einträge, über die man loopen könnte - es hat Eigenschaften. Drei eingebaute Funktionen verwandeln seinen Inhalt in Arrays, und dann greift jedes Array-Werkzeug:
 
 | Helfer | Rückgabe |
 |---|---|
@@ -299,17 +299,17 @@ const [first, second] = flavors;            // über die Position
 console.log(first, second);                 // rye spelt
 ```
 
-Dieses `[day, time]` in der entries-Schleife oben war Array-Destructuring auf jedem Paar. Destructuring ist in modernen Frameworks überall — es lohnt sich, es jetzt flüssig lesen zu können. (Achte auf die Groß-/Kleinschreibung: `const { Name }` findet nichts und gibt `undefined` zurück.)
+Dieses `[day, time]` in der entries-Schleife oben war Array-Destructuring auf jedem Paar. Destructuring ist in modernen Frameworks überall - es lohnt sich, es jetzt flüssig lesen zu können. (Achte auf die Groß-/Kleinschreibung: `const { Name }` findet nichts und gibt `undefined` zurück.)
 
-## OOP — Klassen als Baupläne
+## OOP - Klassen als Baupläne
 
 Wenn jedes Künstler-Objekt dieselben Keys und dieselbe `describe`-Methode trägt, wird das Kopieren dieser Struktur von Hand albern. **Objektorientierte Programmierung (OOP)** löst das: Beschreibe die *Form* einmal als **Klasse** (den Bauplan), fertige dann so viele **Instanzen** (konkrete Objekte), wie die Daten brauchen.
 
 <Aside type="tip" title="Warum das für den SAP-Weg zählt">
-ABAP — SAPs eigene Sprache — ist objektorientiert. ABAP Objects baut auf Klassen, Methoden, Instanzen und Vererbung auf, sodass genau dieses Vokabular (`class`, `constructor`, `instance`, `extends`) direkt in den Zertifizierungsweg übergeht.
+ABAP - SAPs eigene Sprache - ist objektorientiert. ABAP Objects baut auf Klassen, Methoden, Instanzen und Vererbung auf, sodass genau dieses Vokabular (`class`, `constructor`, `instance`, `extends`) direkt in den Zertifizierungsweg übergeht.
 </Aside>
 
-Das kompakte Beispiel zeigt das ganze Werkzeug — `class`, `constructor`, `new`, eine Methode, plus `extends` und `super` für Vererbung:
+Das kompakte Beispiel zeigt das ganze Werkzeug - `class`, `constructor`, `new`, eine Methode, plus `extends` und `super` für Vererbung:
 
 ```js
 'use strict';
@@ -320,7 +320,7 @@ class Artist {
     this.genre = genre;
     this.total = total;
   }
-  describe() {                        // Klassenmethode — Kurzform, kein `function`
+  describe() {                        // Klassenmethode - Kurzform, kein `function`
     return `${this.name}, ${this.genre}, ${this.total} of music`;
   }
 }
@@ -330,7 +330,7 @@ class FeaturedArtist extends Artist {  // Subklasse erbt alles von Artist
     super(name, genre, total);         // ZUERST den Eltern-Konstruktor ausführen
     this.blurb = blurb;                // dann meine eigene Eigenschaft hinzufügen
   }
-  describe() {                         // Override — auf der Elternversion aufbauen
+  describe() {                         // Override - auf der Elternversion aufbauen
     return `${super.describe()}. Featured: ${this.blurb}`;
   }
 }
@@ -359,9 +359,9 @@ Asake, Afrobeats, 14:08 of music. Featured: Loudest new voice out of Lagos
 Vor 2015 wurde dieselbe Aufgabe mit einer schlichten `function Artist(...)` erledigt, die mit `new` verwendet wurde, und Methoden wurden an `Artist.prototype` gehängt. Die `class`-Syntax ist nur eine klarere Notation über **derselben Maschinerie** (weshalb `typeof Artist` immer noch `"function"` sagt). Ich **lese und übersetze** die alte Form; ich **schreibe** Klassen. `new` vor einer Klasse zu vergessen wirft einen klaren `TypeError`; `super()` in einem Subklassen-Konstruktor zu vergessen wirft, bevor `this` bereit ist.
 </Aside>
 
-## Das DOM — Daten auf die Seite bringen
+## Das DOM - Daten auf die Seite bringen
 
-Wenn der Browser eine HTML-Datei liest, behält er nicht den Text — er baut das **DOM (Document Object Model)**: einen lebendigen **Baum aus Knoten-Objekten** im Speicher, einen pro Element, exakt so verschachtelt, wie das HTML verschachtelt. Die gerenderte Seite wird aus diesem Baum gezeichnet, deshalb der eine Satz, auf dem alles ruht: **ändere den Baum, und die Seite ändert sich sofort auf dem Bildschirm.**
+Wenn der Browser eine HTML-Datei liest, behält er nicht den Text - er baut das **DOM (Document Object Model)**: einen lebendigen **Baum aus Knoten-Objekten** im Speicher, einen pro Element, exakt so verschachtelt, wie das HTML verschachtelt. Die gerenderte Seite wird aus diesem Baum gezeichnet, deshalb der eine Satz, auf dem alles ruht: **ändere den Baum, und die Seite ändert sich sofort auf dem Bildschirm.**
 
 <figure class="sc-fig">
 <div class="sc-flow">
@@ -383,12 +383,12 @@ Zuerst das Script mit der Seite verbinden. Diese Zeile kommt in den `<head>`; **
 ```
 
 <Aside type="caution" title="Wenn eine Auswahl null ist, prüfe zuerst defer">
-Ein Script ohne `defer`, das nach Elementen greift, läuft *bevor* sie existieren und findet `null` — der Absturz kommt eine Zeile später. `defer` ist die standardmäßige, langweilige, korrekte Lösung. (Außerdem: Der Browser hat kein Node — `require`, `process` und Konsorten existieren hier nicht.)
+Ein Script ohne `defer`, das nach Elementen greift, läuft *bevor* sie existieren und findet `null` - der Absturz kommt eine Zeile später. `defer` ist die standardmäßige, langweilige, korrekte Lösung. (Außerdem: Der Browser hat kein Node - `require`, `process` und Konsorten existieren hier nicht.)
 </Aside>
 
 ### Elemente auswählen und ändern
 
-`document` ist der Einstiegspunkt des Baums. **`querySelector(cssSelector)`** gibt das **erste** Element zurück, das auf einen CSS-Selektor passt (dieselben Selektoren wie in CSS — `.class`, `#id`, `tag`); **`querySelectorAll`** gibt **alle** Treffer als Liste zurück, über die ich loopen kann.
+`document` ist der Einstiegspunkt des Baums. **`querySelector(cssSelector)`** gibt das **erste** Element zurück, das auf einen CSS-Selektor passt (dieselben Selektoren wie in CSS - `.class`, `#id`, `tag`); **`querySelectorAll`** gibt **alle** Treffer als Liste zurück, über die ich loopen kann.
 
 | Aufgabe | Wie |
 |---|---|
@@ -406,7 +406,7 @@ heading.textContent = "Startupistan Records";  // Baum ändert sich → Bildschi
 heading.classList.add("highlight");            // CSS legt das Aussehen fest; JS entscheidet wann
 ```
 
-Die Arbeitsteilung: **CSS besitzt das Aussehen**, **JavaScript entscheidet wann** ein Element eine Klasse trägt. Ein Selektor, der auf nichts passt, gibt still `null` zurück — denk an den Punkt für Klassen und die Raute für IDs.
+Die Arbeitsteilung: **CSS besitzt das Aussehen**, **JavaScript entscheidet wann** ein Element eine Klasse trägt. Ein Selektor, der auf nichts passt, gibt still `null` zurück - denk an den Punkt für Klassen und die Raute für IDs.
 
 ### Elemente aus Daten erzeugen
 
@@ -434,18 +434,18 @@ for (const artist of artists) {
 Lies den Schleifenkörper als Fließband: **bauen → aus Daten füllen → zusammensetzen → einhängen**. Füge dem Array einen dritten Künstler hinzu, lade neu, und eine dritte Karte erscheint. Dieses Daten-zu-Elementen-Muster ist das schlagende Herz jedes Frameworks, dem ich später begegnen werde.
 
 <Aside type="caution" title="Der klassische stille Fehlgriff">
-Ein erzeugtes Element ist losgelöst, bis ein `append` es platziert. Vergiss das abschließende `append` und es gibt **keinen Fehler und kein Element** — einfach nichts auf dem Bildschirm.
+Ein erzeugtes Element ist losgelöst, bis ein `append` es platziert. Vergiss das abschließende `append` und es gibt **keinen Fehler und kein Element** - einfach nichts auf dem Bildschirm.
 </Aside>
 
-### Events und Formulare — ein durchgearbeitetes Beispiel
+### Events und Formulare - ein durchgearbeitetes Beispiel
 
-Alles bisher läuft einmal beim Laden. **`addEventListener(eventName, callback)`** registriert eine Funktion, die **jedes Mal** läuft, wenn ein benanntes Event passiert. Übergib den Callback **ungelaufen** (keine Klammern) — `()` zu schreiben führt ihn einmal beim Laden aus und nie wieder.
+Alles bisher läuft einmal beim Laden. **`addEventListener(eventName, callback)`** registriert eine Funktion, die **jedes Mal** läuft, wenn ein benanntes Event passiert. Übergib den Callback **ungelaufen** (keine Klammern) - `()` zu schreiben führt ihn einmal beim Laden aus und nie wieder.
 
 Für Formulare zwei weitere Teile: Die **`value`**-Eigenschaft eines Inputs hält, was der Besucher getippt hat, und das **`submit`**-Event feuert, wenn er das Formular absendet. Ein absendendes Formular navigiert standardmäßig weg, also rufe ich **`event.preventDefault()`** auf dem Event-Objekt auf, um das zu stoppen und es an Ort und Stelle zu behandeln.
 
 <Steps>
 
-1. **Die Elemente greifen** — einmal, ganz oben.
+1. **Die Elemente greifen** - einmal, ganz oben.
 
 2. **Auf `submit` hören** und die Standard-Navigation mit `preventDefault()` stoppen.
 
@@ -472,8 +472,8 @@ form.addEventListener("submit", (event) => {  // Callback UNGELAUFEN übergeben
 });
 ```
 
-<Aside type="note" title="Wo dieser Kurs endet — und der nächste beginnt">
-Alle Daten hier lebten innerhalb meiner eigenen Datei. Echte Apps laden Daten von *anderswo* — Dateien, Servern, anderen Diensten — was `fetch`, JSON, HTTP und asynchronen Code ins Spiel bringt. Genau da setzt der Kurs System Design Fundamentals an, aufbauend auf allem in diesem Kapitel.
+<Aside type="note" title="Wo dieser Kurs endet - und der nächste beginnt">
+Alle Daten hier lebten innerhalb meiner eigenen Datei. Echte Apps laden Daten von *anderswo* - Dateien, Servern, anderen Diensten - was `fetch`, JSON, HTTP und asynchronen Code ins Spiel bringt. Genau da setzt der Kurs System Design Fundamentals an, aufbauend auf allem in diesem Kapitel.
 </Aside>
 
 ## Wiederholungs-Zusammenfassung
@@ -486,7 +486,7 @@ Alle Daten hier lebten innerhalb meiner eigenen Datei. Echte Apps laden Daten vo
 | DRY | Inhalt als Daten + eine Schleife ersetzt jede von Hand kopierte Zeile |
 | forEach vs. map | `forEach` gibt `undefined` zurück (handelt); `map` gibt ein neues Array zurück (transformiert) |
 | filter / find / reduce | viele behalten / ersten Treffer holen / auf einen Wert eindampfen |
-| Referenztypen | Ein Array/Objekt zuzuweisen kopiert den *Pfeil*, nicht das Ding — nutze Spread `[...x]` / `{...x}` zum Kopieren |
+| Referenztypen | Ein Array/Objekt zuzuweisen kopiert den *Pfeil*, nicht das Ding - nutze Spread `[...x]` / `{...x}` zum Kopieren |
 | Flache Kopie | Spread kopiert nur die oberste Ebene; verschachtelte Referenzen bleiben geteilt (`structuredClone` für tief) |
 | Objekt | Benannte Werte (key: value); `.` wenn der Key literal ist, `[var]` wenn der Key in einer Variable steckt |
 | Methode & this | Methode = Eigenschaft, die eine Funktion hält; `this` = das Objekt vor dem Punkt (keine Arrow) |
@@ -497,6 +497,6 @@ Alle Daten hier lebten innerhalb meiner eigenen Datei. Echte Apps laden Daten vo
 | DOM | Lebendiger Baum aus Knoten-Objekten; ändere den Baum → Seite aktualisiert sich sofort |
 | defer | Führt das Script aus, nachdem das Dokument geparst ist, damit Auswahlen nicht `null` sind |
 | Auswählen / ändern | `querySelector` (erster) / `querySelectorAll` (alle); `textContent`, `classList`, `style` |
-| Erzeugen / append | `createElement` baut losgelöst; `append` hängt es ein — append vergessen = stilles Nichts |
+| Erzeugen / append | `createElement` baut losgelöst; `append` hängt es ein - append vergessen = stilles Nichts |
 | Events | `addEventListener("click", cb)` führt `cb` jedes Mal aus; übergib den Callback ungelaufen |
 | Formulare | Lies `input.value`; `event.preventDefault()` stoppt das Wegnavigieren beim Absenden |

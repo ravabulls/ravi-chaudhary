@@ -7,26 +7,26 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Modellleistungsmessung — MSE auf Testdaten (300 Beobachtungen)
-- Können wir den MSE reduzieren? — Auswirkung einer zunehmenden Baumtiefe
-- Overfitting (Überanpassung) — Simulation von Trainings- vs. Test-MSE über die Tiefen 2–12
+- Modellleistungsmessung - MSE auf Testdaten (300 Beobachtungen)
+- Können wir den MSE reduzieren? - Auswirkung einer zunehmenden Baumtiefe
+- Overfitting (Überanpassung) - Simulation von Trainings- vs. Test-MSE über die Tiefen 2-12
 - Optimale Baumtiefe = 5
-- Random Forest — Konzept, Bootstrap-Sampling, Merkmalsrandomisierung
-- Random Forest vs. einzelner Regressionsbaum — MSE-Vergleich
-- Fehlermetriken — MSE, MAD, MAPE, Bias, Tracking Signal
-- Rahmenwerk zur Modellauswahl — 7-Schritte-Prozess
+- Random Forest - Konzept, Bootstrap-Sampling, Merkmalsrandomisierung
+- Random Forest vs. einzelner Regressionsbaum - MSE-Vergleich
+- Fehlermetriken - MSE, MAD, MAPE, Bias, Tracking Signal
+- Rahmenwerk zur Modellauswahl - 7-Schritte-Prozess
 </Aside>
 
 ---
 
-## Schritt 1 — Modellleistung auf Testdaten messen
+## Schritt 1 - Modellleistung auf Testdaten messen
 
 **Testdaten:** 300 zurückgehaltene Beobachtungen aus dem Datensatz mit 1000 Einzelhändlern. Wurden NIEMALS beim Training verwendet.
 Für jeden der 300 Einzelhändler: `yᵢ` = tatsächliche Bestellmenge | `ŷᵢ` = vom Regressionsbaum prognostiziert
@@ -36,7 +36,7 @@ Für jeden der 300 Einzelhändler: `yᵢ` = tatsächliche Bestellmenge | `ŷᵢ`
 - **Ergebnis bei Tiefe = 2 (Training):** MSE (Training) = 5.996.464
 
 <Aside type="note">
-**★** Evaluieren Sie das Modell IMMER anhand von TESTDATEN — nicht anhand von Trainingsdaten. Der Trainings-MSE wird immer sinken, je komplexer das Modell wird. Der Test-MSE zeigt, wie das Modell bei NEUEN, ungesehenen Einzelhändlern abschneidet.
+**★** Evaluieren Sie das Modell IMMER anhand von TESTDATEN - nicht anhand von Trainingsdaten. Der Trainings-MSE wird immer sinken, je komplexer das Modell wird. Der Test-MSE zeigt, wie das Modell bei NEUEN, ungesehenen Einzelhändlern abschneidet.
 </Aside>
 
 ### Python-Code für Test-Vorhersage und MSE
@@ -54,20 +54,20 @@ print("Test MSE:", mse_test)
 
 ---
 
-## Overfitting — Simulation von Trainings- vs. Test-MSE
+## Overfitting - Simulation von Trainings- vs. Test-MSE
 
 **Hypothese:** Wenn wir Knoten öfter aufteilen (tieferer Baum) → verfeinerte Segmente → niedrigerer MSE.
-- **Bei TRAININGSDATEN:** Ja — der MSE sinkt immer mit zunehmender Tiefe.
+- **Bei TRAININGSDATEN:** Ja - der MSE sinkt immer mit zunehmender Tiefe.
 - **Bei TESTDATEN:** Sinkt zunächst → steigt dann wieder. Das Modell beginnt, die Trainingsdaten auswendig zu lernen, anstatt allgemeine Muster zu erkennen → scheitert bei neuen Einzelhändlern. Das nennt man **Overfitting** (Überanpassung).
 
 ### MSE-Werte bei jeder Tiefe
 | Baumtiefe | Trainings-MSE | Test-MSE | Interpretation |
 |---|---|---|---|
 | **2 (Basis)** | 5.996.464 | 5.662.511 | Startpunkt. Test-MSE etwas niedriger als Training. |
-| **3, 4** | ↓ Reduziert | ↓ Reduziert | Beide verbessern sich — mehr Splits helfen. |
+| **3, 4** | ↓ Reduziert | ↓ Reduziert | Beide verbessern sich - mehr Splits helfen. |
 | **5 ← Optimal** | ↓ Reduziert | **Minimum ★** | Beste Testleistung. Optimale Baumtiefe = 5. |
 | **6** | ↓ Sinkt weiter | ↑ Beginnt zu steigen | OVERFITTING BEGINNT. Testleistung verschlechtert sich. |
-| **7–12** | ↓ → 0 (auswendig lernen) | ↑ Steigt weiter | Schweres Overfitting. Test-Vorhersage unbrauchbar. |
+| **7-12** | ↓ → 0 (auswendig lernen) | ↑ Steigt weiter | Schweres Overfitting. Test-Vorhersage unbrauchbar. |
 
 <Aside type="tip">
 **★ Prüfungstipp:** Overfitting wird immer gefragt. Definieren Sie es → zeigen Sie das Muster von Trainings- vs. Test-MSE → erklären Sie, dass die Lösung in Stoppkriterien (max. Tiefe, min. Beobachtungen) ODER dem Wechsel zu einer Ensemble-Methode wie Random Forest besteht.
@@ -75,10 +75,10 @@ print("Test MSE:", mse_test)
 
 ---
 
-## Random Forest Algorithmus — Die Lösung für Overfitting
+## Random Forest Algorithmus - Die Lösung für Overfitting
 
 <figure class="sc-fig">
-  <svg viewBox="0 0 560 370" role="img" aria-label="Der Trainings-MSE sinkt mit der Baumtiefe weiter, während der Test-MSE bei Tiefe 5 sein Minimum erreicht und dann steigt — Overfitting" style="width:100%;max-width:600px;font-family:inherit">
+  <svg viewBox="0 0 560 370" role="img" aria-label="Der Trainings-MSE sinkt mit der Baumtiefe weiter, während der Test-MSE bei Tiefe 5 sein Minimum erreicht und dann steigt - Overfitting" style="width:100%;max-width:600px;font-family:inherit">
     <g stroke="var(--sl-color-gray-3)" stroke-width="1.5"><line x1="55" y1="20" x2="55" y2="320"/><line x1="55" y1="320" x2="520" y2="320"/></g>
     <line x1="194.5" y1="20" x2="194.5" y2="320" stroke="var(--sc-green)" stroke-width="1" stroke-dasharray="3 3"/>
     <polyline fill="none" stroke="var(--sc-blue)" stroke-width="2.5" stroke-dasharray="7 5" points="55,127 101.5,149 148,165 194.5,186 241,213 287.5,227 334,248 427,279 520,309"/>
@@ -91,7 +91,7 @@ print("Test MSE:", mse_test)
     <text x="360" y="120" fill="var(--sc-amber)" font-size="11" font-weight="700">Test-MSE (U-Form)</text>
     <text x="150" y="205" fill="var(--sc-green)" font-size="10" font-weight="700">Optimum ≈ Tiefe 5</text>
   </svg>
-  <figcaption>Overfitting sichtbar gemacht — mit wachsender Tiefe sinkt der Trainingsfehler gegen null (der Baum merkt sich die Daten), doch der Testfehler erreicht um Tiefe 5 sein Minimum und steigt danach. Random Forest mittelt viele Bäume, um diese Einzelbaum-Grenze zu überwinden.</figcaption>
+  <figcaption>Overfitting sichtbar gemacht - mit wachsender Tiefe sinkt der Trainingsfehler gegen null (der Baum merkt sich die Daten), doch der Testfehler erreicht um Tiefe 5 sein Minimum und steigt danach. Random Forest mittelt viele Bäume, um diese Einzelbaum-Grenze zu überwinden.</figcaption>
 </figure>
 
 *Zugrunde liegender MSE nach Baumtiefe:*
@@ -127,7 +127,7 @@ print("Test MSE:", mse_test)
 **★** Random Forest vs. einzelner Entscheidungsbaum: Einzelner Baum = leicht zu interpretieren, aber anfällig für Overfitting. Random Forest = schwerer zu interpretieren (20+ Bäume), aber viel genauer und robuster bei neuen Daten.
 </Aside>
 
-### Ergebnisse — Random Forest vs. einzelner Regressionsbaum
+### Ergebnisse - Random Forest vs. einzelner Regressionsbaum
 | Modell | Max. Tiefe | Test-MSE | Besser? |
 |---|---|---|---|
 | **Einzelner Regressionsbaum** (Tiefe 2) | 2 | 5.662.511 | Referenz |
@@ -136,7 +136,7 @@ print("Test MSE:", mse_test)
 
 ---
 
-## Fehlermetriken für Nachfrageprognosen — Alle 5 Maße
+## Fehlermetriken für Nachfrageprognosen - Alle 5 Maße
 
 **Fehlerterm:** `eₜ = Fₜ − Dₜ` (wobei Fₜ = Prognose, Dₜ = Tatsächlich)
 
@@ -154,7 +154,7 @@ print("Test MSE:", mse_test)
 
 ---
 
-## Rahmenwerk zur Modellauswahl — 7-Schritte-Prozess
+## Rahmenwerk zur Modellauswahl - 7-Schritte-Prozess
 
 | # | Schritt | Beispiel aus diesem Kurs |
 |---|---|---|
@@ -162,13 +162,13 @@ print("Test MSE:", mse_test)
 | **2** | **Evaluierungsmetrik wählen** | MSE gewählt. MAPE besser fürs Management-Reporting. |
 | **3** | **Daten aufteilen** | 70% Training \| 30% Test. Testdaten NUR für finale Evaluierung nutzen. |
 | **4** | **Mit mehreren Algorithmen experimentieren** | Regressionsbaum vs. Random Forest getestet. RF gewinnt. |
-| **5** | **Hyperparameter-Tuning** | Tiefen 2–12 getestet, um optimale Tiefe=5 zu finden. |
+| **5** | **Hyperparameter-Tuning** | Tiefen 2-12 getestet, um optimale Tiefe=5 zu finden. |
 | **6** | **Interpretierbarkeit berücksichtigen** | Einzelner Baum: sehr interpretierbar. Random Forest: schwerer zu erklären, aber genauer. |
 | **7** | **Ressourcenbeschränkungen prüfen** | 20-Baum Random Forest ist machbar. 1000+ Baum XGBoost braucht evtl. Cloud. |
 
 ---
 
-## Modul 3 — Komplette Zusammenfassung
+## Modul 3 - Komplette Zusammenfassung
 
 - **Analytics + Big Data:** Daten → Modell → Entscheidung → Wert. Big Data 6 Vs.
 - **Arten von Analytics:** Deskriptiv → Diagnostisch → Prädiktiv → Präskriptiv.

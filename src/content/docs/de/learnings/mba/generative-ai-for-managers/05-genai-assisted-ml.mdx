@@ -1,6 +1,6 @@
 ---
-title: "Tag 5 — GenAI-gestütztes Machine Learning"
-description: "Ein Leitfaden für Managerinnen und Manager zum klassischen prädiktiven Machine Learning — Churn- und Wertmodellierung — und wie GenAI und AutoML dabei helfen, Modelle zu bauen, zu interpretieren und zu kommunizieren, ohne Data Scientist zu sein."
+title: "Tag 5 - GenAI-gestütztes Machine Learning"
+description: "Ein Leitfaden für Managerinnen und Manager zum klassischen prädiktiven Machine Learning - Churn- und Wertmodellierung - und wie GenAI und AutoML dabei helfen, Modelle zu bauen, zu interpretieren und zu kommunizieren, ohne Data Scientist zu sein."
 sidebar:
   label: "5 · GenAI-gestütztes ML"
   order: 5
@@ -8,13 +8,13 @@ sidebar:
 
 import { Aside, Steps, Badge, Tabs, TabItem } from '@astrojs/starlight/components';
 
-*Generative AI for Managers — TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+*Generative AI for Managers - TUHH Institute of Entrepreneurship · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
 
 ---
 
-Die Tage 1 bis 4 drehten sich um **Text**: LLMs verstehen, sie mit Prompts steuern, sie in Dokumenten verankern (RAG) und sie handeln lassen (Agenten). Tag 5 ist ein anderes Kaliber. Hier geht es um **Vorhersage aus Tabellen voller Zahlen** — genau die Art von Frage, die eine Tabelle voller Kundinnen und Kunden aufwirft: *Wer von diesen Menschen kündigt im nächsten Quartal? Wie viel ist jede und jeder wert? Wo sollten wir unsere begrenzte Aufmerksamkeit investieren?*
+Die Tage 1 bis 4 drehten sich um **Text**: LLMs verstehen, sie mit Prompts steuern, sie in Dokumenten verankern (RAG) und sie handeln lassen (Agenten). Tag 5 ist ein anderes Kaliber. Hier geht es um **Vorhersage aus Tabellen voller Zahlen** - genau die Art von Frage, die eine Tabelle voller Kundinnen und Kunden aufwirft: *Wer von diesen Menschen kündigt im nächsten Quartal? Wie viel ist jede und jeder wert? Wo sollten wir unsere begrenzte Aufmerksamkeit investieren?*
 
-Diese Aufgabe gehört ins **Machine Learning (ML)**, nicht zu einem Chatbot. Doch hier kommt der Kniff, der daraus einen *GenAI*-Kurs macht: GenAI übernimmt nicht das Vorhersagen — es macht den gesamten ML-Prozess **auch für Nicht-Programmierende zugänglich**. Es hilft, das Problem zu formulieren, die Daten zu bereinigen, den Code zu schreiben, die Ergebnisse zu lesen und sie der Chefin oder dem Chef zu erklären. Das gedankliche Modell für den ganzen Tag lautet also:
+Diese Aufgabe gehört ins **Machine Learning (ML)**, nicht zu einem Chatbot. Doch hier kommt der Kniff, der daraus einen *GenAI*-Kurs macht: GenAI übernimmt nicht das Vorhersagen - es macht den gesamten ML-Prozess **auch für Nicht-Programmierende zugänglich**. Es hilft, das Problem zu formulieren, die Daten zu bereinigen, den Code zu schreiben, die Ergebnisse zu lesen und sie der Chefin oder dem Chef zu erklären. Das gedankliche Modell für den ganzen Tag lautet also:
 
 > **Mensch (Managerin/Manager) + ML-Modell + GenAI-Copilot.** Das ML-Modell erzeugt die Zahl. GenAI hilft dabei zu entscheiden, *welche* Zahl zu berechnen ist, *wie* man sie berechnet und *wie man sie erklärt*.
 
@@ -35,9 +35,9 @@ Die nützlichste Idee zum Einstieg: **GenAI und prädiktives ML lösen unterschi
 | "Entscheide etwas anhand einer Datentabelle" | **Supervised ML** | Eine Zahl: eine Wahrscheinlichkeit oder eine Vorhersage |
 | "Reihe Tausende Kundinnen und Kunden, ziel auf die besten" | **ML + Entscheidungsregeln** | Eine Rangliste + wer angesprochen wird |
 
-GenAI ist brillant bei **unstrukturierter** Arbeit (Sprache). Prädiktives ML ist brillant bei **strukturierten** Entscheidungen (Zeilen und Spalten — Zahlen, Kategorien, Daten): Ranking, Targeting, Prognosen, Risikobewertung. Sie sind Teamkollegen, keine Rivalen.
+GenAI ist brillant bei **unstrukturierter** Arbeit (Sprache). Prädiktives ML ist brillant bei **strukturierten** Entscheidungen (Zeilen und Spalten - Zahlen, Kategorien, Daten): Ranking, Targeting, Prognosen, Risikobewertung. Sie sind Teamkollegen, keine Rivalen.
 
-**Warum das gerade jetzt wichtig ist:** ML war traditionell hinter Data Scientists verschlossen — teuer einzustellen, langsam in der Iteration, und ihre Ergebnisse müssen erst übersetzt werden, bevor eine Managerin oder ein Manager handeln kann. GenAI + **AutoML** (dazu später mehr) senkt diese Mauer, sodass Menschen wie ich sinnvoll an einem ML-Projekt teilnehmen können, statt am Ende nur eine Folie zu erhalten.
+**Warum das gerade jetzt wichtig ist:** ML war traditionell hinter Data Scientists verschlossen - teuer einzustellen, langsam in der Iteration, und ihre Ergebnisse müssen erst übersetzt werden, bevor eine Managerin oder ein Manager handeln kann. GenAI + **AutoML** (dazu später mehr) senkt diese Mauer, sodass Menschen wie ich sinnvoll an einem ML-Projekt teilnehmen können, statt am Ende nur eine Folie zu erhalten.
 
 ---
 
@@ -57,12 +57,12 @@ Für das Business zählen vor allem zwei Familien:
 | **Supervised** | Aus **gelabelten** Beispielen lernen (wir kennen die Antwort bereits) | Churn-Vorhersage, Betrugserkennung, Prognosen | "Diese Kundin hat eine 78%ige Chance zu kündigen" |
 | **Unsupervised** | Muster in **ungelabelten** Daten finden | Kundensegmentierung, Anomalieerkennung | "Diese 5 Gruppen verhalten sich unterschiedlich" |
 
-Heute geht es fast ausschließlich um **Supervised** Learning, das sich selbst in zwei Zweige teilt — und wir nutzen beide:
+Heute geht es fast ausschließlich um **Supervised** Learning, das sich selbst in zwei Zweige teilt - und wir nutzen beide:
 
 <Tabs>
 <TabItem label="Classification (Klassifikation)">
 **Frage: welche Kategorie?** Die Antwort ist eine Klasse, meist als Wahrscheinlichkeit geliefert.
-*Unser Beispiel:* Wird diese Kundin kündigen — ja oder nein? → `p(churn)`, z. B. 0,78.
+*Unser Beispiel:* Wird diese Kundin kündigen - ja oder nein? → `p(churn)`, z. B. 0,78.
 </TabItem>
 <TabItem label="Regression">
 **Frage: welche Zahl?** Die Antwort ist eine Größe.
@@ -73,7 +73,7 @@ Heute geht es fast ausschließlich um **Supervised** Learning, das sich selbst i
 <Aside type="note" title="Fachbegriffe, einmal erklärt">
 - **Feature** = eine Eingabespalte, aus der das Modell lernt (Vertragsdauer, Vertragsart, monatliche Rechnung).
 - **Label / Target** = die Antwortspalte, die wir vorhersagen wollen (hat die Person gekündigt? wie hoch ist die Rechnung?).
-- **Supervised** bedeutet schlicht "die Trainingsbeispiele kommen *mit* ihren korrekten Labels" — wie ein Lehrbuch mit den Lösungen im Anhang.
+- **Supervised** bedeutet schlicht "die Trainingsbeispiele kommen *mit* ihren korrekten Labels" - wie ein Lehrbuch mit den Lösungen im Anhang.
 </Aside>
 
 ---
@@ -82,24 +82,24 @@ Heute geht es fast ausschließlich um **Supervised** Learning, das sich selbst i
 
 Unser durchgehendes Beispiel für den ganzen Tag ist **Kundenabwanderung** (**Churn** = eine Kundin/ein Kunde, die/der geht bzw. kündigt) bei einem Telekommunikationsunternehmen. Aber hier kommt der entscheidende Management-Punkt:
 
-> Ein Churn-Modell ist nur nützlich, wenn es mit einer **Handlung** verbunden ist — einen Rabatt anbieten, anrufen, den Service verbessern oder nichts tun. Vorhersage ohne Entscheidung ist Trivia.
+> Ein Churn-Modell ist nur nützlich, wenn es mit einer **Handlung** verbunden ist - einen Rabatt anbieten, anrufen, den Service verbessern oder nichts tun. Vorhersage ohne Entscheidung ist Trivia.
 
 Und um gut zu entscheiden, reicht eine einzige Zahl nicht. Eine Kundin mit hohem Risiko ist vielleicht günstig zu verlieren; eine Kundin mit mittlerem Risiko ist vielleicht der wertvollste Account. Deshalb kombinieren wir zwei Vorhersagen:
 
 <figure class="sc-fig">
-<div class="sc-flow"><div class="sc-node violet">Risiko<span class="sub">p(churn) — Classification</span></div><span class="arrow">×</span><div class="sc-node green">Wert<span class="sub">monatliche Gebühren — Regression</span></div><span class="arrow">=</span><div class="sc-node amber">Gefährdeter Umsatz<span class="sub">wen priorisieren</span></div></div>
-<figcaption>Gefährdeter Umsatz = p(churn) × vorhergesagter monatlicher Wert. Diese eine Formel ist die Brücke zwischen dem Classification-Modell und dem Regression-Modell — und genau das, was Managerinnen und Manager wirklich interessiert: wo das Geld liegt, nicht nur wer nervös ist.</figcaption>
+<div class="sc-flow"><div class="sc-node violet">Risiko<span class="sub">p(churn) - Classification</span></div><span class="arrow">×</span><div class="sc-node green">Wert<span class="sub">monatliche Gebühren - Regression</span></div><span class="arrow">=</span><div class="sc-node amber">Gefährdeter Umsatz<span class="sub">wen priorisieren</span></div></div>
+<figcaption>Gefährdeter Umsatz = p(churn) × vorhergesagter monatlicher Wert. Diese eine Formel ist die Brücke zwischen dem Classification-Modell und dem Regression-Modell - und genau das, was Managerinnen und Manager wirklich interessiert: wo das Geld liegt, nicht nur wer nervös ist.</figcaption>
 </figure>
 
 **Eine winzige Übung zur Entscheidungsregel**, die zeigt, warum die Wahrscheinlichkeit allein zum Handeln führt. Nehmen wir an, ein Bindungsangebot kostet **10 €**, und einen Abwanderer zu verlieren kostet **150 €**. Es lohnt sich, das Angebot zu machen, wenn der erwartete vermiedene Verlust die Kosten übersteigt:
 
 > Angebot machen, wenn `p(churn) × 150 > 10`, also wenn `p(churn) > 10/150 ≈ 0,067`.
 
-Also rechtfertigt hier schon eine **Churn-Wahrscheinlichkeit von 7 %** ein 10-€-Angebot. Der "richtige" Schwellenwert ist eine *betriebswirtschaftliche* Zahl (Kosten und Kapazität), kein technischer Standardwert — ein Thema, auf das wir immer wieder zurückkommen.
+Also rechtfertigt hier schon eine **Churn-Wahrscheinlichkeit von 7 %** ein 10-€-Angebot. Der "richtige" Schwellenwert ist eine *betriebswirtschaftliche* Zahl (Kosten und Kapazität), kein technischer Standardwert - ein Thema, auf das wir immer wieder zurückkommen.
 
 ---
 
-## Die Daten — und die Fallen, die eine Managerin kennen muss
+## Die Daten - und die Fallen, die eine Managerin kennen muss
 
 Der Telco-Datensatz umfasst rund 7.000 Kundinnen und Kunden und Spalten wie: Demografie (Senior, Partner), Dienste (Internet, Streaming, Telefon), Vertrag & Abrechnung (Vertragsart, Zahlungsmethode), ein Alters-Proxy (**tenure** = Monate als Kunde), Geld (**MonthlyCharges**, **TotalCharges**) und das Target (**Churn**: Yes/No).
 
@@ -107,51 +107,51 @@ Echte Daten sind chaotisch, und du solltest diese Probleme *erwarten*:
 
 - **Fehlende Werte** (z. B. `TotalCharges` leer bei brandneuen Kundinnen und Kunden).
 - **Gemischte Typen** (Text und Zahlen zusammen).
-- **Klassenungleichgewicht (Class Imbalance)** — meist deutlich weniger Abwanderer als Bleibende (hier ~27 % Churn). Das untergräbt leise die naive Genauigkeit (unten erklärt).
-- **Leakage** — die einzige gefährlichste Falle.
+- **Klassenungleichgewicht (Class Imbalance)** - meist deutlich weniger Abwanderer als Bleibende (hier ~27 % Churn). Das untergräbt leise die naive Genauigkeit (unten erklärt).
+- **Leakage** - die einzige gefährlichste Falle.
 
 <Aside type="danger" title="Data Leakage = Schummeln (und es ist Aufgabe des Managers, es zu entlarven)">
-**Leakage** liegt vor, wenn das Modell mit Informationen gefüttert wird, die es zum realen Zeitpunkt der Entscheidung *nicht* hätte. Klassisches Beispiel: eine Spalte "Kündigungsdatum" — natürlich sagt sie Churn perfekt vorher, sie *ist* Churn. Ein Modell mit Leakage sieht im Test glänzend aus und **bricht dann im Produktivbetrieb zusammen**. In diesem Datensatz entspricht `TotalCharges` ungefähr `MonthlyCharges × tenure`, sodass die Aufnahme aller drei dem Modell "gratis" Antworten liefert. Frage unerbittlich: *Wüssten wir das wirklich zu dem Zeitpunkt, an dem wir die Entscheidung treffen?*
+**Leakage** liegt vor, wenn das Modell mit Informationen gefüttert wird, die es zum realen Zeitpunkt der Entscheidung *nicht* hätte. Klassisches Beispiel: eine Spalte "Kündigungsdatum" - natürlich sagt sie Churn perfekt vorher, sie *ist* Churn. Ein Modell mit Leakage sieht im Test glänzend aus und **bricht dann im Produktivbetrieb zusammen**. In diesem Datensatz entspricht `TotalCharges` ungefähr `MonthlyCharges × tenure`, sodass die Aufnahme aller drei dem Modell "gratis" Antworten liefert. Frage unerbittlich: *Wüssten wir das wirklich zu dem Zeitpunkt, an dem wir die Entscheidung treffen?*
 </Aside>
 
 ---
 
 ## Der Supervised-Learning-Workflow
 
-Jedes ML-Projekt — Churn, Nachfrage, Betrug — folgt ungefähr denselben sechs Schritten:
+Jedes ML-Projekt - Churn, Nachfrage, Betrug - folgt ungefähr denselben sechs Schritten:
 
 <figure class="sc-fig">
 <div class="sc-flow"><div class="sc-node amber">Problem definieren<span class="sub">Business-Frage → ML-Aufgabe</span></div><span class="arrow">→</span><div class="sc-node amber">Sammeln &amp; bereinigen<span class="sub">korrigieren, zusammenführen, imputieren</span></div><span class="arrow">→</span><div class="sc-node slate">Features bauen<span class="sub">Prädiktoren erzeugen</span></div><span class="arrow">→</span><div class="sc-node green">Trainieren &amp; tunen<span class="sub">das Modell anpassen</span></div><span class="arrow">→</span><div class="sc-node violet">Bewerten<span class="sub">auf zurückgehaltenen Daten</span></div><span class="arrow">→</span><div class="sc-node soft">Deployen &amp; überwachen<span class="sub">auf Drift achten</span></div></div>
-<figcaption>Der ML-Workflow. GenAI kann bei jedem einzelnen dieser Schritte unterstützen — und AutoML automatisiert den Trainieren-und-Tunen-Teil in der Mitte.</figcaption>
+<figcaption>Der ML-Workflow. GenAI kann bei jedem einzelnen dieser Schritte unterstützen - und AutoML automatisiert den Trainieren-und-Tunen-Teil in der Mitte.</figcaption>
 </figure>
 
 <Aside type="tip" title="Die 80/20-Regel des ML (überraschend und wichtig fürs Budget)">
-Rund **80 % des Aufwands sind Daten** — das Problem definieren, sammeln, bereinigen und Features bauen (Schritte 1–3). Nur ~20 % sind der glamouröse "Machine Learning"-Teil (Schritte 4–6). Wenn also jemand sagt "lass uns einfach ein Modell trainieren", denk daran, dass die meiste echte Arbeit *vor* jedem Modell passiert. Praktischerweise hilft GenAI am meisten bei diesen schweren 80 %, und AutoML erledigt viel von den 20 %.
+Rund **80 % des Aufwands sind Daten** - das Problem definieren, sammeln, bereinigen und Features bauen (Schritte 1-3). Nur ~20 % sind der glamouröse "Machine Learning"-Teil (Schritte 4-6). Wenn also jemand sagt "lass uns einfach ein Modell trainieren", denk daran, dass die meiste echte Arbeit *vor* jedem Modell passiert. Praktischerweise hilft GenAI am meisten bei diesen schweren 80 %, und AutoML erledigt viel von den 20 %.
 </Aside>
 
 ### Training/Test Split und Over- vs. Underfitting
 
 Wir müssen wissen, ob ein Modell auf *neue* Kundinnen und Kunden **generalisiert** und nicht nur die auswendig gelernt hat, die es kannte. Also teilen wir die Daten auf:
 
-- **Training Set** — verwendet, um das Modell anzupassen.
-- **Test Set** — bis ganz zum Schluss weggeschlossen, dann einmalig als realistisches Zeugnis genutzt.
+- **Training Set** - verwendet, um das Modell anzupassen.
+- **Test Set** - bis ganz zum Schluss weggeschlossen, dann einmalig als realistisches Zeugnis genutzt.
 
 <Aside type="caution" title="Die Prüfungs-Analogie (das ist die ganze Idee)">
-Das Test Set ist wie eine Prüfung. Lass das Modell nicht "die Prüfungsfragen büffeln". Wenn es **99 % auf den Trainingsdaten, aber 65 % auf neuen Daten** erreicht, hat es nicht gelernt — es hat auswendig gelernt. Diese Lücke ist das verräterische Zeichen.
+Das Test Set ist wie eine Prüfung. Lass das Modell nicht "die Prüfungsfragen büffeln". Wenn es **99 % auf den Trainingsdaten, aber 65 % auf neuen Daten** erreicht, hat es nicht gelernt - es hat auswendig gelernt. Diese Lücke ist das verräterische Zeichen.
 </Aside>
 
 Jedes Modell lebt in einer Spannung zwischen zwei Fehlermodi:
 
 | Fehler | Spitzname | Wie er aussieht |
 |---|---|---|
-| **Underfitting** (hoher Bias) | Zu einfach | Schlecht auf *beiden*, Trainings- und Testdaten — z. B. für alle dasselbe Churn-Risiko vorhersagen |
-| **Overfitting** (hohe Varianz) | Zu komplex | Großartig im Training, schlecht im Test — hat das Rauschen auswendig gelernt |
+| **Underfitting** (hoher Bias) | Zu einfach | Schlecht auf *beiden*, Trainings- und Testdaten - z. B. für alle dasselbe Churn-Risiko vorhersagen |
+| **Overfitting** (hohe Varianz) | Zu komplex | Großartig im Training, schlecht im Test - hat das Rauschen auswendig gelernt |
 
 Das Ziel ist der Sweet Spot: komplex genug, um echte Muster zu erfassen, einfach genug, um übertragbar zu sein. Genau deshalb bauen wir Modelle in einer **Leiter von einfach zu komplex** (siehe unten) und fügen Komplexität nur hinzu, wenn das Test Set beweist, dass sie hilft.
 
 ### Pipelines: ein sauberer, leakage-sicherer Prozess
 
-Ein zuverlässiges ML-System ist nicht "ein Modell" — es ist eine **Pipeline**, die immer dieselben Schritte in derselben Reihenfolge ausführt: fehlende Werte füllen → Kategorien in Zahlen kodieren → (bei Bedarf skalieren) → vorhersagen. Das alles in ein Objekt zu bündeln, ist es, was *Leakage* aus dem Test Set *verhindert* und Ergebnisse reproduzierbar macht.
+Ein zuverlässiges ML-System ist nicht "ein Modell" - es ist eine **Pipeline**, die immer dieselben Schritte in derselben Reihenfolge ausführt: fehlende Werte füllen → Kategorien in Zahlen kodieren → (bei Bedarf skalieren) → vorhersagen. Das alles in ein Objekt zu bündeln, ist es, was *Leakage* aus dem Test Set *verhindert* und Ergebnisse reproduzierbar macht.
 
 ```python
 # A minimal scikit-learn pipeline: preprocessing + model in one object
@@ -174,17 +174,17 @@ model = Pipeline([("prep", preprocess),
 ```
 
 <Aside type="note" title="Was 'One-Hot-Encoding' bedeutet">
-Modelle fressen nur Zahlen, also wird eine Textspalte wie `contract` mit den Werten *Month-to-month, One year, Two year* in separate 0/1-Spalten verwandelt — eine pro Option. Das ist **One-Hot-Encoding**. GenAI schreibt dir diesen Boilerplate-Code gern.
+Modelle fressen nur Zahlen, also wird eine Textspalte wie `contract` mit den Werten *Month-to-month, One year, Two year* in separate 0/1-Spalten verwandelt - eine pro Option. Das ist **One-Hot-Encoding**. GenAI schreibt dir diesen Boilerplate-Code gern.
 </Aside>
 
 ---
 
 ## GenAI trifft ML: zwei Motoren, die zusammenarbeiten
 
-Das ist das Herzstück von Tag 5. GenAI **ersetzt das Modell nicht** — es beseitigt die Reibung bei jedem Schritt. Stell dir zwei Motoren vor:
+Das ist das Herzstück von Tag 5. GenAI **ersetzt das Modell nicht** - es beseitigt die Reibung bei jedem Schritt. Stell dir zwei Motoren vor:
 
-- **AutoML** übernimmt die *mechanische* Komplexität — Algorithmen ausprobieren, Einstellungen tunen, Modelle vergleichen.
-- **GenAI** übernimmt die *kognitive* Komplexität — die Daten verstehen, Features vorschlagen, Ergebnisse in verständlichem Deutsch erklären.
+- **AutoML** übernimmt die *mechanische* Komplexität - Algorithmen ausprobieren, Einstellungen tunen, Modelle vergleichen.
+- **GenAI** übernimmt die *kognitive* Komplexität - die Daten verstehen, Features vorschlagen, Ergebnisse in verständlichem Deutsch erklären.
 
 | Workflow-Schritt | Der alte Weg | Mit einem GenAI-Copiloten |
 |---|---|---|
@@ -197,9 +197,9 @@ Das ist das Herzstück von Tag 5. GenAI **ersetzt das Modell nicht** — es bese
 
 ### GenAI für das Verstehen von Daten und das Erfinden von Features
 
-Bevor du irgendetwas baust, *beschreibst du dem LLM deinen Datensatz* — Spaltennamen, Typen, ein paar Beispielzeilen — und fragst, was ihm auffällt. Oft bemerkt es, dass `TotalCharges` bei neuen Kundinnen und Kunden leer sein kann, dass eine breite Spanne bei `MonthlyCharges` auf Service-Stufen hindeutet, oder dass zu viel Class Imbalance bedeutet, dass "für alle kein Churn vorhersagen" trügerisch genau aussehen wird.
+Bevor du irgendetwas baust, *beschreibst du dem LLM deinen Datensatz* - Spaltennamen, Typen, ein paar Beispielzeilen - und fragst, was ihm auffällt. Oft bemerkt es, dass `TotalCharges` bei neuen Kundinnen und Kunden leer sein kann, dass eine breite Spanne bei `MonthlyCharges` auf Service-Stufen hindeutet, oder dass zu viel Class Imbalance bedeutet, dass "für alle kein Churn vorhersagen" trügerisch genau aussehen wird.
 
-**Feature Engineering** — bessere Prädiktor-Spalten aus den rohen Spalten erfinden — ist traditionell der schwierigste, kreativste Teil des ML. Es ist zugleich der Bereich, in dem ein LLM glänzt, weil es Millionen von Business-Dokumenten "gelesen" hat. Du fragst nach Ideen als **strukturiertes JSON** (ein direkter Rückgriff auf Tag 2), damit du sie programmatisch nutzen kannst:
+**Feature Engineering** - bessere Prädiktor-Spalten aus den rohen Spalten erfinden - ist traditionell der schwierigste, kreativste Teil des ML. Es ist zugleich der Bereich, in dem ein LLM glänzt, weil es Millionen von Business-Dokumenten "gelesen" hat. Du fragst nach Ideen als **strukturiertes JSON** (ein direkter Rückgriff auf Tag 2), damit du sie programmatisch nutzen kannst:
 
 ```python
 # Ask the model for derived-feature ideas, returned as clean JSON
@@ -213,33 +213,33 @@ resp = client.models.generate_content(
 )
 ```
 
-Typische Vorschläge: `is_new_customer` (Vertragsdauer unter 6 Monaten — neue Kundinnen und Kunden churnen häufiger), `support_ticket_rate` (Tickets ÷ Vertragsdauer) oder `is_month_to_month` (keine Bindung = leicht zu gehen).
+Typische Vorschläge: `is_new_customer` (Vertragsdauer unter 6 Monaten - neue Kundinnen und Kunden churnen häufiger), `support_ticket_rate` (Tickets ÷ Vertragsdauer) oder `is_month_to_month` (keine Bindung = leicht zu gehen).
 
 <Aside type="caution" title="Behandle das LLM als Brainstorming-Kollegen, nicht als Orakel">
-Du übernimmst nicht jedes Feature, das es vorschlägt. Es ist wie Brainstorming mit jemandem, der jedes Analytics-Lehrbuch gelesen hat, aber nichts über *dein* Business weiß. Kombiniere seine Kreativität mit deinem Domänen-Gespür — **und validiere jede Idee mit echten Zahlen im Notebook.** Ein LLM schlägt dir auch fröhlich ein Feature mit Leakage vor.
+Du übernimmst nicht jedes Feature, das es vorschlägt. Es ist wie Brainstorming mit jemandem, der jedes Analytics-Lehrbuch gelesen hat, aber nichts über *dein* Business weiß. Kombiniere seine Kreativität mit deinem Domänen-Gespür - **und validiere jede Idee mit echten Zahlen im Notebook.** Ein LLM schlägt dir auch fröhlich ein Feature mit Leakage vor.
 </Aside>
 
 ---
 
 ## Die Modell-Leiter: einfach → stark → am besten
 
-Ein zentrales Management-Prinzip: **transparent beginnen, Komplexität nur hinzufügen, wenn sie sich lohnt.** Für Churn (Classification) klettern wir eine dreistufige Leiter hinauf. Zuerst schlägt man immer eine dumme **Baseline** (z. B. "immer keinen Churn vorhersagen" oder "Month-to-month = Churn") — wenn ein ausgefallenes Modell eine naive Regel nicht schlagen kann, sollte es nicht in Produktion gehen.
+Ein zentrales Management-Prinzip: **transparent beginnen, Komplexität nur hinzufügen, wenn sie sich lohnt.** Für Churn (Classification) klettern wir eine dreistufige Leiter hinauf. Zuerst schlägt man immer eine dumme **Baseline** (z. B. "immer keinen Churn vorhersagen" oder "Month-to-month = Churn") - wenn ein ausgefallenes Modell eine naive Regel nicht schlagen kann, sollte es nicht in Produktion gehen.
 
 | Modell | Wie es funktioniert (verständlich erklärt) | Interpretierbarkeit | Typische Leistung | Worauf achten |
 |---|---|---|---|---|
-| **Logistic Regression** | Gewichtete Summe der Features → in eine 0–1-Wahrscheinlichkeit gepresst | **Hoch** — jedes Feature-Gewicht ablesbar | Gute Baseline | Findet nur einfache Muster |
+| **Logistic Regression** | Gewichtete Summe der Features → in eine 0-1-Wahrscheinlichkeit gepresst | **Hoch** - jedes Feature-Gewicht ablesbar | Gute Baseline | Findet nur einfache Muster |
 | **Random Forest** | Hunderte Entscheidungsbäume auf zufälligen Datenausschnitten, **gemittelt** | Mittel | Stark direkt ab Werk | Wenig Tuning nötig |
 | **Gradient Boosting** | Bäume **nacheinander** gebaut, jeder korrigiert die Fehler des vorherigen | Mittel (SHAP nutzen) | **Oft das beste** bei Tabellen | Braucht Tuning; kann overfitten |
 
 Ein paar Intuitionen, die es sich mitzunehmen lohnt:
 
 - **Logistic Regression** gibt jedem Feature einen ablesbaren Koeffizienten: "Ein Month-to-month-Vertrag addiert +1,2 zum Churn-Score; ein Zweijahresvertrag zieht 0,8 ab." Diese Transparenz ist der Grund, warum es der natürliche Ausgangspunkt ist.
-- Ein einzelner **Entscheidungsbaum** ist bloß ein Flussdiagramm aus Ja/Nein-Fragen ("Ist der Vertrag Month-to-month?" → "Ist die Vertragsdauer kurz?"). Intuitiv, aber ein einzelner Baum ist instabil — stupse die Daten an, und du bekommst einen völlig anderen Baum.
+- Ein einzelner **Entscheidungsbaum** ist bloß ein Flussdiagramm aus Ja/Nein-Fragen ("Ist der Vertrag Month-to-month?" → "Ist die Vertragsdauer kurz?"). Intuitiv, aber ein einzelner Baum ist instabil - stupse die Daten an, und du bekommst einen völlig anderen Baum.
 - Ein **Random Forest** behebt diese Instabilität, indem er viele vielfältige Bäume baut und mittelt, sodass sich ihre einzelnen Fehler ausgleichen (dieser Mittelungs-Trick heißt *Bagging*).
-- **Gradient Boosting** ist noch cleverer: Jeder neue Baum wird auf den **verbleibenden Fehlern** aller vorherigen Bäume trainiert, sodass das Modell immer weiter seine eigenen Schwachstellen ausbessert. Es gewinnt bei tabellarischen Daten meist — auf Kosten sorgfältigen Tunings.
+- **Gradient Boosting** ist noch cleverer: Jeder neue Baum wird auf den **verbleibenden Fehlern** aller vorherigen Bäume trainiert, sodass das Modell immer weiter seine eigenen Schwachstellen ausbessert. Es gewinnt bei tabellarischen Daten meist - auf Kosten sorgfältigen Tunings.
 
 <Aside type="caution" title="Eine Korrelation-vs-Kausalität-Falle, die man laut aussprechen sollte">
-Das Gewicht eines Features zeigt **einen für die Vorhersage nützlichen Zusammenhang** — *nicht*, was passiert, wenn man eingreift. "Ein Month-to-month-Vertrag sagt Churn vorher" beweist **nicht** "Menschen in Jahresverträge zu überführen stoppt Churn." Das zu beweisen braucht ein Experiment (A/B-Test), kein Modell.
+Das Gewicht eines Features zeigt **einen für die Vorhersage nützlichen Zusammenhang** - *nicht*, was passiert, wenn man eingreift. "Ein Month-to-month-Vertrag sagt Churn vorher" beweist **nicht** "Menschen in Jahresverträge zu überführen stoppt Churn." Das zu beweisen braucht ein Experiment (A/B-Test), kein Modell.
 </Aside>
 
 Genau dieselbe Leiter funktioniert auf der **Regression**-Seite (Vorhersage von MonthlyCharges): Lineare Regression → Random-Forest-Regressor → Gradient-Boosting-Regressor.
@@ -248,7 +248,7 @@ Genau dieselbe Leiter funktioniert auf der **Regression**-Seite (Vorhersage von 
 
 ## Modelle so bewerten, wie es eine Managerin tun sollte
 
-Dieser Abschnitt ist der, in dem Managerinnen und Manager den größten Mehrwert liefern — denn **die naheliegende Metrik ist meist die falsche.**
+Dieser Abschnitt ist der, in dem Managerinnen und Manager den größten Mehrwert liefern - denn **die naheliegende Metrik ist meist die falsche.**
 
 ### Die Confusion Matrix (vier Kästchen)
 
@@ -264,7 +264,7 @@ In Management-Sprache: Ein **False Positive** bedeutet, dass du Aufwand in jeman
 ### Warum Genauigkeit lügt
 
 <Aside type="danger" title="Die Genauigkeits-Falle">
-Wenn nur 27 % der Kundinnen und Kunden churnen, ist ein Modell, das "**niemand wird kündigen**" vorhersagt, zu **73 % genau** — und völlig nutzlos, weil es keinen einzigen Abwanderer erwischt. Hohe Genauigkeit bei unausgewogenen Daten ist ein Warnsignal, keine Trophäe.
+Wenn nur 27 % der Kundinnen und Kunden churnen, ist ein Modell, das "**niemand wird kündigen**" vorhersagt, zu **73 % genau** - und völlig nutzlos, weil es keinen einzigen Abwanderer erwischt. Hohe Genauigkeit bei unausgewogenen Daten ist ein Warnsignal, keine Trophäe.
 </Aside>
 
 Also nutzen wir Metriken, die das Ziel tatsächlich widerspiegeln:
@@ -277,23 +277,23 @@ Also nutzen wir Metriken, die das Ziel tatsächlich widerspiegeln:
 | **ROC-AUC** | "Chance, dass das Modell einen zufälligen Abwanderer über einen zufälligen Bleibenden reiht" (1,0 = perfekt, 0,5 = Münzwurf) | Modelle breit vergleichen; ausgewogene Klassen |
 | **PR-AUC** | Gesamt-Ranking-Qualität mit Fokus auf die **seltene** Positiv-Klasse | Die ehrliche Wahl bei Churn/Betrug (unausgewogen) |
 
-**Warum F1 einen "harmonischen Mittelwert" statt eines einfachen Durchschnitts nutzt:** Stell dir 95 % Precision, aber nur 10 % Recall vor (super wählerisch, erwischt fast niemanden). Ein einfacher Durchschnitt sagt 52,5 % — klingt in Ordnung. F1 meldet korrekt ~18 % und legt offen, dass das Modell zum tatsächlichen Finden von Abwanderern nahezu nutzlos ist. F1 lässt sich von einer einzigen guten Zahl nicht täuschen.
+**Warum F1 einen "harmonischen Mittelwert" statt eines einfachen Durchschnitts nutzt:** Stell dir 95 % Precision, aber nur 10 % Recall vor (super wählerisch, erwischt fast niemanden). Ein einfacher Durchschnitt sagt 52,5 % - klingt in Ordnung. F1 meldet korrekt ~18 % und legt offen, dass das Modell zum tatsächlichen Finden von Abwanderern nahezu nutzlos ist. F1 lässt sich von einer einzigen guten Zahl nicht täuschen.
 
-**Warum ROC zu rosig aussehen kann und PR bei Churn ehrlicher ist:** Die False-Positive-Rate von ROC wird durch die riesige Menge der Bleibenden verwässert, sodass eine moderate Anzahl Fehlalarme sie kaum bewegt — dasselbe Modell könnte ROC-AUC 0,87 (sieht großartig aus) aber PR-AUC 0,68 (nüchterner) zeigen. PR betrachtet nur die Kundinnen und Kunden, die du tatsächlich markiert hast, sodass jeder Fehlalarm wehtut. **Berichte beide; entscheide bei unausgewogenen Problemen anhand von PR-AUC.**
+**Warum ROC zu rosig aussehen kann und PR bei Churn ehrlicher ist:** Die False-Positive-Rate von ROC wird durch die riesige Menge der Bleibenden verwässert, sodass eine moderate Anzahl Fehlalarme sie kaum bewegt - dasselbe Modell könnte ROC-AUC 0,87 (sieht großartig aus) aber PR-AUC 0,68 (nüchterner) zeigen. PR betrachtet nur die Kundinnen und Kunden, die du tatsächlich markiert hast, sodass jeder Fehlalarm wehtut. **Berichte beide; entscheide bei unausgewogenen Problemen anhand von PR-AUC.**
 
 ### Schwellenwerte sind eine betriebswirtschaftliche Entscheidung
 
-Das Modell gibt eine Wahrscheinlichkeit aus; **du** wählst den Grenzwert, der daraus ein Ja/Nein macht. Der Standard von 0,5 ist willkürlich. Senke den Schwellenwert, und du markierst mehr Menschen — fängst mehr Abwanderer (höherer Recall), aber mit mehr Fehlalarmen (niedrigere Precision). Gleiches Modell, anderer Schwellenwert → eine völlig andere Anrufliste. Wähle ihn anhand von **Kosten und Kapazität**, nicht anhand eines Lehrbuch-Standards.
+Das Modell gibt eine Wahrscheinlichkeit aus; **du** wählst den Grenzwert, der daraus ein Ja/Nein macht. Der Standard von 0,5 ist willkürlich. Senke den Schwellenwert, und du markierst mehr Menschen - fängst mehr Abwanderer (höherer Recall), aber mit mehr Fehlalarmen (niedrigere Precision). Gleiches Modell, anderer Schwellenwert → eine völlig andere Anrufliste. Wähle ihn anhand von **Kosten und Kapazität**, nicht anhand eines Lehrbuch-Standards.
 
-### Lift und Dezile — die managerfreundlichste Sicht
+### Lift und Dezile - die managerfreundlichste Sicht
 
-AUC-Werte dienen dem Vergleich von Modellen. Aber die eigentliche Frage einer Managerin ist konkret: *"Ich kann diese Woche nur 500 Kundinnen und Kunden anrufen — wie viele Abwanderer erwische ich?"* Genau das beantwortet **Lift**.
+AUC-Werte dienen dem Vergleich von Modellen. Aber die eigentliche Frage einer Managerin ist konkret: *"Ich kann diese Woche nur 500 Kundinnen und Kunden anrufen - wie viele Abwanderer erwische ich?"* Genau das beantwortet **Lift**.
 
 Reihe alle nach vorhergesagtem Risiko, teile sie in zehn gleich große Gruppen (Dezile) und vergleiche mit zufälligem Anrufen:
 
 - Kontaktiere die **obersten 10 %** → das Modell erfasst, sagen wir, **52 %** aller Abwanderer (zufällig wären es 10 %). Das ist ein **Lift von ~5,2×**.
 - Kontaktiere die obersten 30 % → erfasse ~88 % der Abwanderer.
-- Ab Dezil 4 fällt der Lift unter 1,0 — diese Kundinnen und Kunden churnen *seltener* als der Durchschnitt, sie anzurufen verschwendet also Aufwand.
+- Ab Dezil 4 fällt der Lift unter 1,0 - diese Kundinnen und Kunden churnen *seltener* als der Durchschnitt, sie anzurufen verschwendet also Aufwand.
 
 Lift bildet sich direkt auf die operative Kapazität ab, weshalb Führungskräfte ihn lieben: Er sagt dir, ob deine begrenzten 500 Anrufe 5× mehr Abwanderer finden als der Zufall oder einen Münzwurf kaum schlagen.
 
@@ -301,13 +301,13 @@ Lift bildet sich direkt auf die operative Kapazität ab, weshalb Führungskräft
 
 | Metrik | Übersetzung für Managerinnen und Manager | Am besten für |
 |---|---|---|
-| **MAE** (mittlerer absoluter Fehler) | "Im Schnitt liegen wir um 8,50 € daneben" | Kommunikation mit Stakeholdern — am intuitivsten |
+| **MAE** (mittlerer absoluter Fehler) | "Im Schnitt liegen wir um 8,50 € daneben" | Kommunikation mit Stakeholdern - am intuitivsten |
 | **RMSE** (Wurzel des mittleren quadratischen Fehlers) | "Typischer Fehler, bestraft aber große Ausreißer" | Gelegentliche wilde Vorhersagen aufdecken |
 | **R²** | "Das Modell erklärt 75 % der Variation" | Modelle vergleichen (für Nicht-Fachleute weniger intuitiv) |
 
 ### Lass GenAI die Zahlen übersetzen
 
-Statt einer Führungskraft eine Tabelle voller Metriken hinzulegen, kannst du das LLM bitten, sie zu erklären — aber erst, *nachdem* du sie tatsächlich berechnet hast:
+Statt einer Führungskraft eine Tabelle voller Metriken hinzulegen, kannst du das LLM bitten, sie zu erklären - aber erst, *nachdem* du sie tatsächlich berechnet hast:
 
 ```python
 # Feed REAL metrics; ask for a plain-language, cost-aware explanation
@@ -323,7 +323,7 @@ resp = client.models.generate_content(
 
 ## Vorhersagen mit SHAP erklären
 
-Ein Modell, das Churn vorhersagt, ist nützlich. Ein Modell, das erklärt, **warum**, ist weit wertvoller — denn es sagt dir, *was zu tun ist*, und es erlaubt dir, die Entscheidung zu verteidigen (entscheidend in regulierten Umfeldern).
+Ein Modell, das Churn vorhersagt, ist nützlich. Ein Modell, das erklärt, **warum**, ist weit wertvoller - denn es sagt dir, *was zu tun ist*, und es erlaubt dir, die Entscheidung zu verteidigen (entscheidend in regulierten Umfeldern).
 
 **SHAP** (SHapley Additive exPlanations) borgt eine Idee der fairen Anteilszuweisung aus der Spieltheorie: Wenn ein Team ein Ergebnis erzielt, wie teilt man den Beitrag fair unter den Spielern auf? SHAP behandelt jedes **Feature als Spieler** und die **Vorhersage als Ergebnis des Teams** und errechnet, wie stark jedes Feature *diese spezifische Vorhersage* vom Durchschnitt weggeschoben hat.
 
@@ -331,7 +331,7 @@ Für eine einzelne Kundin wird die Vorhersage additiv aus der Basislinie aufgeba
 
 > `prediction = average prediction + contribution₁ + contribution₂ + … + contributionₙ`
 
-Jeder Beitrag ist eine vorzeichenbehaftete Zahl — positiv schiebt Richtung Churn, negativ zieht Richtung Bleiben.
+Jeder Beitrag ist eine vorzeichenbehaftete Zahl - positiv schiebt Richtung Churn, negativ zieht Richtung Bleiben.
 
 <Tabs>
 <TabItem label="Global (was treibt Churn insgesamt?)">
@@ -339,7 +339,7 @@ Aggregiere SHAP über alle Kundinnen und Kunden, und du erhältst ein gereihtes 
 
 <div class="sc-chips"><span class="sc-chip">Month-to-month-Vertrag · 0,18</span><span class="sc-chip">Vertragsdauer · 0,15</span><span class="sc-chip">Support-Tickets · 0,12</span><span class="sc-chip">monatliche Gebühren · 0,09</span></div>
 
-Es beantwortet: "Was treibt das Churn-Risiko in unseren Daten — und sind diese Treiber sinnvoll?"
+Es beantwortet: "Was treibt das Churn-Risiko in unseren Daten - und sind diese Treiber sinnvoll?"
 </TabItem>
 <TabItem label="Local (warum DIESE Kundin?)">
 Für Kundin Nr. 123 liest sich die Geschichte von oben nach unten: Basisrisiko 0,27; Month-to-month-Vertrag **+0,18**; kurze Vertragsdauer **+0,15**; Support-Tickets **+0,12**; hat einen Partner **−0,07** → final **0,78**.
@@ -352,13 +352,13 @@ Das ist die Brücke vom Modell zur Handlung: Die Gründe für das Risiko legen d
 Hohe Wichtigkeit bedeutet **nicht** "ändere dieses Feature". Manche Treiber sind **nicht handlungsfähig** (man kann die Vertragsdauer von jemandem nicht zurücksetzen) oder sind **Proxies** für etwas Tieferliegendes (Glasfaser steht vielleicht wirklich für eine Preisstufe, nicht für die Technologie). Und wie immer gilt: Wichtigkeit ≠ Kausalität.
 </Aside>
 
-Dann verwandelt GenAI SHAP in Worte — globale Treiber in eine empfohlene Strategie, oder die Beiträge einer einzelnen Kundin in eine zweizeilige Notiz für die Kundenbetreuung: *"Markiert wegen eines Month-to-month-Vertrags, sehr kurzer Vertragsdauer und vier kürzlichen Support-Tickets; vorgeschlagene Maßnahme: einen vergünstigten Jahresplan anbieten."*
+Dann verwandelt GenAI SHAP in Worte - globale Treiber in eine empfohlene Strategie, oder die Beiträge einer einzelnen Kundin in eine zweizeilige Notiz für die Kundenbetreuung: *"Markiert wegen eines Month-to-month-Vertrags, sehr kurzer Vertragsdauer und vier kürzlichen Support-Tickets; vorgeschlagene Maßnahme: einen vergünstigten Jahresplan anbieten."*
 
 ---
 
 ## AutoML: Autopilot für die Modellauswahl
 
-**AutoML** automatisiert die mechanischen Teile — mehrere Algorithmen ausprobieren, ihre Einstellungen tunen und sie kombinieren —, um *schnell* ein starkes Modell zu bekommen. In den Labs kannst du es mit einem winzigen Zeitbudget laufen lassen und mit deiner handgebauten Pipeline vergleichen:
+**AutoML** automatisiert die mechanischen Teile - mehrere Algorithmen ausprobieren, ihre Einstellungen tunen und sie kombinieren -, um *schnell* ein starkes Modell zu bekommen. In den Labs kannst du es mit einem winzigen Zeitbudget laufen lassen und mit deiner handgebauten Pipeline vergleichen:
 
 ```python
 from flaml import AutoML
@@ -368,19 +368,19 @@ automl.fit(X_train, y_train, task="classification",
            time_budget=60)      # give it 60 seconds
 ```
 
-<Aside type="danger" title="Was AutoML NICHT löst — die Checkliste des Managers">
+<Aside type="danger" title="Was AutoML NICHT löst - die Checkliste des Managers">
 AutoML wählt ein Modell; es liefert **kein** Urteilsvermögen. Bevor du irgendeinem Leaderboard-"Sieger" vertraust, prüfe:
-1. **Entscheidung & Kosten** — für welche Handlung ist das gedacht; was kosten ein False Positive und ein False Negative jeweils?
-2. **Validierung** — gibt es ein echtes, zurückgehaltenes Test Set, das die Realität widerspiegelt?
-3. **Leakage-Scan** — kodiert irgendein Feature Zukunftswissen?
-4. **Metrikwahl** — PR-AUC / Lift für unausgewogenen Churn, nicht rohe Genauigkeit.
-5. **Erklärbarkeit** — ergeben die SHAP-Treiber Sinn?
-6. **Stabilität & Monitoring** — hält es über Segmente hinweg; was löst ein Neutrainieren aus?
+1. **Entscheidung & Kosten** - für welche Handlung ist das gedacht; was kosten ein False Positive und ein False Negative jeweils?
+2. **Validierung** - gibt es ein echtes, zurückgehaltenes Test Set, das die Realität widerspiegelt?
+3. **Leakage-Scan** - kodiert irgendein Feature Zukunftswissen?
+4. **Metrikwahl** - PR-AUC / Lift für unausgewogenen Churn, nicht rohe Genauigkeit.
+5. **Erklärbarkeit** - ergeben die SHAP-Treiber Sinn?
+6. **Stabilität & Monitoring** - hält es über Segmente hinweg; was löst ein Neutrainieren aus?
 
 Das übliche Versagen: Teams bringen den AutoML-Sieger in Produktion, dann bricht die Leistung im Produktivbetrieb wegen Leakage, Drift oder der falschen Metrik zusammen.
 </Aside>
 
-**Faustregel des Kurses:** Nutze AutoML als *Benchmark*, nachdem du eine transparente Baseline (Logistic/Linear) und ein starkes manuelles Modell (Forest/Boosting) gebaut hast — nicht als Ersatz für das Denken.
+**Faustregel des Kurses:** Nutze AutoML als *Benchmark*, nachdem du eine transparente Baseline (Logistic/Linear) und ein starkes manuelles Modell (Forest/Boosting) gebaut hast - nicht als Ersatz für das Denken.
 
 ---
 
@@ -389,11 +389,11 @@ Das übliche Versagen: Teams bringen den AutoML-Sieger in Produktion, dann brich
 Ein Modell verdient sein Geld erst, wenn es verändert, was das Business tut. Ein einfaches Retention-Playbook:
 
 <Steps>
-1. **Alle scoren** — `p(churn)` für alle Kundinnen und Kunden berechnen.
-2. **Alle bewerten** — den monatlichen Wert vorhersagen (Regression).
+1. **Alle scoren** - `p(churn)` für alle Kundinnen und Kunden berechnen.
+2. **Alle bewerten** - den monatlichen Wert vorhersagen (Regression).
 3. **Nach gefährdetem Umsatz reihen** = `p(churn) × MonthlyCharges`.
-4. **Reale Einschränkungen anwenden** — Kontaktkapazität (z. B. 500 Anrufe/Woche), Berechtigungsregeln (keine Rabatte an Kundinnen und Kunden, die bereits in einer Promo sind).
-5. **Ein Experiment durchführen** — den Retention-Angebot per A/B-Test prüfen und die *inkrementelle* Rettung messen, denn das Modell zeigt, wer gefährdet ist, nicht, was hilft.
+4. **Reale Einschränkungen anwenden** - Kontaktkapazität (z. B. 500 Anrufe/Woche), Berechtigungsregeln (keine Rabatte an Kundinnen und Kunden, die bereits in einer Promo sind).
+5. **Ein Experiment durchführen** - den Retention-Angebot per A/B-Test prüfen und die *inkrementelle* Rettung messen, denn das Modell zeigt, wer gefährdet ist, nicht, was hilft.
 </Steps>
 
 ### Monitoring: Modelle verrotten leise
@@ -413,7 +413,7 @@ Die übliche Abhilfe, wenn Drift auftritt: auf jüngeren Daten neu trainieren.
 
 ## Die letzte Meile: Ergebnisse kommunizieren
 
-Du hast das Modell gebaut, die SHAP-Werte ergeben Sinn — aber jetzt stehst du der VP, dem CFO oder dem Vorstand gegenüber. **Sie interessieren sich nicht für F1-Werte; sie interessieren sich für Umsatz und dafür, was zu tun ist.** Hier schließt GenAI den Kreis und verwandelt Ausgaben in eine vorstandsreife Geschichte. Was Führungskräfte wirklich fragen:
+Du hast das Modell gebaut, die SHAP-Werte ergeben Sinn - aber jetzt stehst du der VP, dem CFO oder dem Vorstand gegenüber. **Sie interessieren sich nicht für F1-Werte; sie interessieren sich für Umsatz und dafür, was zu tun ist.** Hier schließt GenAI den Kreis und verwandelt Ausgaben in eine vorstandsreife Geschichte. Was Führungskräfte wirklich fragen:
 
 | Sie fragen… | Du gibst ihnen… |
 |---|---|
@@ -423,71 +423,71 @@ Du hast das Modell gebaut, die SHAP-Werte ergeben Sinn — aber jetzt stehst du 
 | "Wie sicher seid ihr?" | "Hoch für die obersten 50 Kundinnen und Kunden, moderat für die nächsten 100." |
 | "Was könnte schiefgehen?" | "Trainiert auf 2024er-Daten; eine große Preisänderung könnte die Genauigkeit senken." |
 
-Dieses Memo kannst du mit GenAI entwerfen — du fütterst es mit deinen **echten** Zahlen und bittest um einen strukturierten One-Pager (Kernbefund → Business-Auswirkung → empfohlene Maßnahmen → Sicherheit & Grenzen → nächste Schritte), ausgerichtet auf eine nicht-technische Leserschaft.
+Dieses Memo kannst du mit GenAI entwerfen - du fütterst es mit deinen **echten** Zahlen und bittest um einen strukturierten One-Pager (Kernbefund → Business-Auswirkung → empfohlene Maßnahmen → Sicherheit & Grenzen → nächste Schritte), ausgerichtet auf eine nicht-technische Leserschaft.
 
 ---
 
 ## Die eigentliche Aufgabe des Managers (und die Grenzen von GenAI)
 
-Wenn wir den ganzen Tag zusammenziehen: Der Mensch wird nicht wegautomatisiert — der Mensch stellt die Fragen und wacht über die Qualität.
+Wenn wir den ganzen Tag zusammenziehen: Der Mensch wird nicht wegautomatisiert - der Mensch stellt die Fragen und wacht über die Qualität.
 
 <Aside type="tip" title="Wo GenAI wirklich hilft">
-- **Rahmen setzen** — ein vages Business-Ziel in eine Vorhersageaufgabe und die richtige Metrik verwandeln.
-- **Bauen** — Pipelines entwerfen, Fehlermeldungen debuggen, Notebooks refaktorieren.
-- **Entscheiden** — Schwellenwert-Strategien empfehlen, erklären, *warum* PR-AUC/Lift zu Churn passen.
-- **Kommunizieren** — SHAP in Business-Sprache übersetzen und das Management-Memo entwerfen.
+- **Rahmen setzen** - ein vages Business-Ziel in eine Vorhersageaufgabe und die richtige Metrik verwandeln.
+- **Bauen** - Pipelines entwerfen, Fehlermeldungen debuggen, Notebooks refaktorieren.
+- **Entscheiden** - Schwellenwert-Strategien empfehlen, erklären, *warum* PR-AUC/Lift zu Churn passen.
+- **Kommunizieren** - SHAP in Business-Sprache übersetzen und das Management-Memo entwerfen.
 </Aside>
 
-<Aside type="danger" title="Wo GenAI dich in die Irre führt — bleib skeptisch">
-- **Erfundene Ergebnisse** — es könnte "AUC = 0,92" behaupten, ohne dass irgendetwas berechnet wurde. *Wenn es nicht im Notebook lief, ist es nicht real.*
-- **Stilles Leakage** — Features vorschlagen, die zum Entscheidungszeitpunkt nicht existieren.
-- **Falsche Metrik** — Genauigkeit bei einem unausgewogenen Problem optimieren.
-- **Übertrieben selbstsichere Geschichten** — Erzählungen, die nicht durch die tatsächlichen Plots/Metriken gestützt sind.
+<Aside type="danger" title="Wo GenAI dich in die Irre führt - bleib skeptisch">
+- **Erfundene Ergebnisse** - es könnte "AUC = 0,92" behaupten, ohne dass irgendetwas berechnet wurde. *Wenn es nicht im Notebook lief, ist es nicht real.*
+- **Stilles Leakage** - Features vorschlagen, die zum Entscheidungszeitpunkt nicht existieren.
+- **Falsche Metrik** - Genauigkeit bei einem unausgewogenen Problem optimieren.
+- **Übertrieben selbstsichere Geschichten** - Erzählungen, die nicht durch die tatsächlichen Plots/Metriken gestützt sind.
 
-**Nicht verhandelbare Regel:** Alles, was GenAI vorschlägt, muss **in deinem Notebook mit echten Ausgaben validiert werden** — Metriken, Plots, gespeicherte Dateien. Daher das geforderte **Copilot Log** in den Labs: Notiere für jeden Prompt, was du gefragt, was du geändert und was du von Hand verifiziert hast. Anerkennung gibt es für *validierte Verbesserungen*, nicht für die Anzahl der Prompts.
+**Nicht verhandelbare Regel:** Alles, was GenAI vorschlägt, muss **in deinem Notebook mit echten Ausgaben validiert werden** - Metriken, Plots, gespeicherte Dateien. Daher das geforderte **Copilot Log** in den Labs: Notiere für jeden Prompt, was du gefragt, was du geändert und was du von Hand verifiziert hast. Anerkennung gibt es für *validierte Verbesserungen*, nicht für die Anzahl der Prompts.
 </Aside>
 
 ---
 
 ## Praxis: Labs & Aufgabe
 
-Die Theorie sitzt erst, wenn du sie auf echten Daten laufen lässt. Alle drei Übungen nutzen den Telco-Churn-Datensatz in Google Colab, mit GenAI als Copilot fürs Coden, Debuggen und Interpretieren — nie zum Erfinden von Ergebnissen.
+Die Theorie sitzt erst, wenn du sie auf echten Daten laufen lässt. Alle drei Übungen nutzen den Telco-Churn-Datensatz in Google Colab, mit GenAI als Copilot fürs Coden, Debuggen und Interpretieren - nie zum Erfinden von Ergebnissen.
 
 <Badge text="Guided Lab" variant="tip" /> **Churn- + Wertmodellierung mit erklärbarem ML.** Lade und bereinige die Telco-Daten, baue eine leakage-sichere Preprocessing-Pipeline, trainiere und vergleiche alle drei Churn-Modelle mit managerfreundlichen Metriken (Lift + PR-AUC), füge ein MonthlyCharges-Regressionsmodell hinzu, erzeuge globale und lokale SHAP-Erklärungen und produziere eine gereihte Anrufliste nach gefährdetem Umsatz.
 
-<Badge text="Independent Lab" variant="note" /> **Von Vorhersagen zu Entscheidungen.** Wähle eine Vertiefungsspur und treibe sie weiter: **(A)** Kosten- & Kapazitäts-Targeting (einen Schwellenwert nach Erwartungswert wählen), **(B)** Kalibrierung & Wahrscheinlichkeitsqualität (Kalibrierungskurve + Brier Score), **(C)** ein AutoML-Benchmark gegen deine manuellen Modelle, oder **(D)** ein Segment-Stresstest (hält das Modell über Vertragsarten und Vertragsdauer-Bänder?). Liefere verbesserte Berichte, eine finale Anrufliste und eine kurze Management-Empfehlung — plus ein Copilot Log.
+<Badge text="Independent Lab" variant="note" /> **Von Vorhersagen zu Entscheidungen.** Wähle eine Vertiefungsspur und treibe sie weiter: **(A)** Kosten- & Kapazitäts-Targeting (einen Schwellenwert nach Erwartungswert wählen), **(B)** Kalibrierung & Wahrscheinlichkeitsqualität (Kalibrierungskurve + Brier Score), **(C)** ein AutoML-Benchmark gegen deine manuellen Modelle, oder **(D)** ein Segment-Stresstest (hält das Modell über Vertragsarten und Vertragsdauer-Bänder?). Liefere verbesserte Berichte, eine finale Anrufliste und eine kurze Management-Empfehlung - plus ein Copilot Log.
 
 <Badge text="Assignment 5" variant="caution" /> **Model Card + Management-Empfehlung.** Das benotete Ergebnis, das deine gewählte Spur fortführt: ein belastbarer Workflow mit explizitem Leakage-Scan, 5-facher Cross-Validation über alle Modelle, businessorientierter Bewertung (Lift, Schwellenwert gewählt per **Kostenkurve**, Kapazitätsplan), SHAP global + drei lokale Geschichten, eine Anrufliste nach gefährdetem Umsatz mit Begründungscodes und einem Monitoring-/Risikoplan. Reiche ein Notebook, eine Anruflisten-CSV, ein Metriken-JSON und ein einseitiges Management-Memo in verständlicher Business-Sprache ein.
 
 **Notebooks herunterladen** (in Google Colab öffnen):
 
-- [Guided Lab — Tag 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab1-guided.ipynb)
-- [Independent Lab — Tag 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab2-independent.ipynb)
-- [Assignment — Tag 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-assignment.ipynb)
+- [Guided Lab - Tag 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab1-guided.ipynb)
+- [Independent Lab - Tag 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-lab2-independent.ipynb)
+- [Assignment - Tag 5](/learnings/mba/generative-ai-for-managers/notebooks/day5-assignment.ipynb)
 
 ---
 
-**Meine eingereichte Lösung:** [Aufgabe 5 — mein gelöstes Notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day5-assignment-solution.ipynb) — meine eigene Arbeit aus dem Kurs.
+**Meine eingereichte Lösung:** [Aufgabe 5 - mein gelöstes Notebook (.ipynb)](/learnings/mba/generative-ai-for-managers/submissions/day5-assignment-solution.ipynb) - meine eigene Arbeit aus dem Kurs.
 
 ## Wiederholungs-Zusammenfassung
 
 | Kernpunkt | Kurz gemerkt |
 |---|---|
-| Zwei KI-Aufgaben | GenAI übernimmt unstrukturierten Text; prädiktives ML übernimmt strukturierte Entscheidungen — Teamkollegen, keine Rivalen |
+| Zwei KI-Aufgaben | GenAI übernimmt unstrukturierten Text; prädiktives ML übernimmt strukturierte Entscheidungen - Teamkollegen, keine Rivalen |
 | Supervised Learning | Aus gelabelten Beispielen lernen: **Classification** (welche Kategorie) oder **Regression** (welche Zahl) |
 | Features vs. Label | Features sind die Eingabespalten; das Label ist die Antwort, die wir vorhersagen |
-| Gefährdeter Umsatz | `p(churn) × vorhergesagter Wert` — die Formel, die die beiden Modelle verbindet und das Targeting steuert |
+| Gefährdeter Umsatz | `p(churn) × vorhergesagter Wert` - die Formel, die die beiden Modelle verbindet und das Targeting steuert |
 | Leakage | Ein Feature, das das Modell zum Entscheidungszeitpunkt nicht hätte; sieht großartig aus, versagt dann in Produktion |
-| Die 80/20-Regel | ~80 % des ML-Aufwands sind Datenarbeit (Schritte 1–3), nur ~20 % ist Modellierung |
+| Die 80/20-Regel | ~80 % des ML-Aufwands sind Datenarbeit (Schritte 1-3), nur ~20 % ist Modellierung |
 | Training/Test Split | Test Set = eine verschlossene Prüfung; eine große Lücke Training vs. Test bedeutet Overfitting |
 | Over-/Underfitting | Overfit = Rauschen auswendig gelernt (super Training, schlechter Test); Underfit = zu einfach (schlecht auf beiden) |
 | Modell-Leiter | Logistic (transparent) → Random Forest (starker Standard) → Gradient Boosting (oft am besten) |
-| Genauigkeits-Falle | Bei unausgewogenen Daten schneidet "keinen Churn vorhersagen" hoch ab und ist nutzlos — nutze Precision/Recall/PR-AUC |
+| Genauigkeits-Falle | Bei unausgewogenen Daten schneidet "keinen Churn vorhersagen" hoch ab und ist nutzlos - nutze Precision/Recall/PR-AUC |
 | Precision vs. Recall | Precision = richtig, wenn wir markieren; Recall = Anteil erwischter Abwanderer; F1 balanciert beide |
-| Schwellenwert | Eine betriebswirtschaftliche Wahl aus Kosten/Kapazität — gleiches Modell, anderer Schwellenwert, andere Anrufliste |
-| Lift | "Wie viele Male besser als der Zufall" für dein oberstes Dezil — bildet sich auf die Anrufkapazität ab |
+| Schwellenwert | Eine betriebswirtschaftliche Wahl aus Kosten/Kapazität - gleiches Modell, anderer Schwellenwert, andere Anrufliste |
+| Lift | "Wie viele Male besser als der Zufall" für dein oberstes Dezil - bildet sich auf die Anrufkapazität ab |
 | SHAP | Teilt eine Vorhersage fair in Beiträge je Feature auf; global (Treiber) + lokal (diese Kundin) |
-| AutoML | Automatisiert Modellsuche & Tuning — ein schneller Benchmark, nie ein Ersatz für Urteilsvermögen |
+| AutoML | Automatisiert Modellsuche & Tuning - ein schneller Benchmark, nie ein Ersatz für Urteilsvermögen |
 | Drift | Modelle verfallen, während sich die Welt verschiebt; fordere vor dem Deployment einen Monitoring- & Retraining-Plan |
-| Korrelation ≠ Kausalität | Ein Modell sagt, *wer gefährdet ist*, nicht *was hilft* — beweise die Wirkung mit einem Experiment |
-| GenAI ist Copilot, nicht Pilot | Es setzt Rahmen, codet, interpretiert und kommuniziert — aber jede Behauptung muss mit echten Ausgaben validiert werden |
+| Korrelation ≠ Kausalität | Ein Modell sagt, *wer gefährdet ist*, nicht *was hilft* - beweise die Wirkung mit einem Experiment |
+| GenAI ist Copilot, nicht Pilot | Es setzt Rahmen, codet, interpretiert und kommuniziert - aber jede Behauptung muss mit echten Ausgaben validiert werden |

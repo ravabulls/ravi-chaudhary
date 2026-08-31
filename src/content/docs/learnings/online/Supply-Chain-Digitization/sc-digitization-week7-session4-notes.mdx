@@ -1,5 +1,5 @@
 ---
-title: "Week 7 | Session 4: Regression Tree in Python — Dummy Variables & Full Implementation"
+title: "Week 7 | Session 4: Regression Tree in Python - Dummy Variables & Full Implementation"
 description: "A comprehensive guide on implementing a regression tree in Python, highlighting the crucial step of dummy variable encoding for categorical data."
 sidebar:
   order: 35
@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
@@ -15,11 +15,11 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 <Aside type="note">
 - Why categorical variables need special treatment before model building
-- Dummy variable encoding — rule, formula, base category
-- How dummy variables are read — worked examples
+- Dummy variable encoding - rule, formula, base category
+- How dummy variables are read - worked examples
 - Variable count: before (7 features) vs. after encoding (10 features)
-- Full Python code — Step by step (import → encode → split → build → print)
-- Output verification — Python output matches theory tree exactly
+- Full Python code - Step by step (import → encode → split → build → print)
+- Output verification - Python output matches theory tree exactly
 - Next session: validate model on test data + error metrics
 </Aside>
 
@@ -27,9 +27,9 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ## Why Categorical Variables Need Encoding
 
-**Problem:** Region has values "South", "East", "West", "North" — these are TEXT, not numbers. ML models (decision tree, random forest, logistic regression, etc.) cannot perform mathematical operations on text directly.
+**Problem:** Region has values "South", "East", "West", "North" - these are TEXT, not numbers. ML models (decision tree, random forest, logistic regression, etc.) cannot perform mathematical operations on text directly.
 
-**Solution:** Convert categorical text into binary (0/1) numerical dummy variables — one column per category (minus one base category).
+**Solution:** Convert categorical text into binary (0/1) numerical dummy variables - one column per category (minus one base category).
 
 - **Rule:** If a categorical variable has `m` categories → create `(m − 1)` dummy variables. One category is left out as the "base category".
 - **Why (m − 1)?** The mth category is implied when all (m − 1) dummy variables = 0. Including all m would create perfect multicollinearity (dummy variable trap).
@@ -41,14 +41,14 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Dummy Variables Created — Region and Location
+## Dummy Variables Created - Region and Location
 
 | Variable | Categories (m) | Dummy Variables Created (m − 1) | Base Category (not created) | Interpretation Rule |
 |---|---|---|---|---|
 | **Region** | 4 (N, S, E, W) | `region_north`, `region_south`, `region_west` | **East** (all three dummies = 0) | If `region_south = 1` → South. If all three = 0 → East (base). |
 | **Location** | 3 (Rural, Semi-Urban, Urban) | `location_semi_urban`, `location_urban` | **Rural** (both dummies = 0) | If `location_urban = 1` → Urban. If both = 0 → Rural (base). |
 
-### How to Read Dummy Variables — Worked Examples
+### How to Read Dummy Variables - Worked Examples
 
 | Obs. | Actual Region | `region_north` | `region_south` | `region_west` | Actual Location | `location_semi_urban` |
 |---|---|---|---|---|---|---|
@@ -61,7 +61,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 **★ Key:** A retailer is in the base category when ALL dummy variables for that group = 0. No need for a separate column for the base category.
 </Aside>
 
-### Variable Count — Before vs. After Encoding
+### Variable Count - Before vs. After Encoding
 
 | Variable | Before Encoding | After Encoding |
 |---|---|---|
@@ -72,7 +72,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Full Python Code — 6 Steps
+## Full Python Code - 6 Steps
 
 ```python
 # ── STEP 1: Import Data ───────────────────────────────────────────
@@ -117,7 +117,7 @@ plt.show()
 
 ---
 
-## Output Verification — Python Matches Theory Exactly
+## Output Verification - Python Matches Theory Exactly
 
 | Node | Condition | Python Output (ȳ, Obs, MSE) | Theory Output (Session 7.2) | Match? |
 |---|---|---|---|---|
@@ -139,11 +139,11 @@ plt.show()
 |---|---|---|
 | **sklearn import** | `DecisionTreeClassifier` | `DecisionTreeRegressor` |
 | **Splitting criterion** | `criterion="gini"` | Default: `squared_error` (MSE) |
-| **Dummy variable encoding** | Not needed | **REQUIRED** — Region and Location are categorical |
+| **Dummy variable encoding** | Not needed | **REQUIRED** - Region and Location are categorical |
 | **Target variable type** | Categorical (0/1) | Continuous (units ordered) |
 
 <Aside type="tip">
-**★ Exam tip:** Dummy variable encoding is a MANDATORY data preprocessing step for any ML model with categorical variables. In code — use `pd.get_dummies(X_df, drop_first=True)`. In theory — m categories → (m−1) dummies, base category = all zeros.
+**★ Exam tip:** Dummy variable encoding is a MANDATORY data preprocessing step for any ML model with categorical variables. In code - use `pd.get_dummies(X_df, drop_first=True)`. In theory - m categories → (m−1) dummies, base category = all zeros.
 </Aside>
 
 ---

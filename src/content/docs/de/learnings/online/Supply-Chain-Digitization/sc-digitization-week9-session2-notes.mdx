@@ -1,5 +1,5 @@
 ---
-title: "Woche 9 | Session 2: K-means Clustering — Algorithmus, WCSS & Elbow-Methode"
+title: "Woche 9 | Session 2: K-means Clustering - Algorithmus, WCSS & Elbow-Methode"
 description: "Ein tiefer Einblick in die Funktionsweise des K-means-Algorithmus, das Verständnis der Fehlerquadratsumme innerhalb von Clustern (WCSS) und die Nutzung der Elbow-Methode, um die optimale Anzahl von Clustern zu finden."
 sidebar:
   order: 43
@@ -7,24 +7,24 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Rückblick — Session 1
-- K-means Clustering — 5-Schritte-Algorithmus
-- Wichtige Formeln — Euklidische Distanz & Zentroid
+- Rückblick - Session 1
+- K-means Clustering - 5-Schritte-Algorithmus
+- Wichtige Formeln - Euklidische Distanz & Zentroid
 - Fehlerquadratsumme innerhalb von Clustern (WCSS)
-- Elbow-Methode — Bestimmung des optimalen K
+- Elbow-Methode - Bestimmung des optimalen K
 - K-means Output → Input für Optimierungsmodell
 </Aside>
 
 ---
 
-## 1. K-means Clustering — 5-Schritte-Algorithmus
+## 1. K-means Clustering - 5-Schritte-Algorithmus
 
 <figure class="sc-fig">
   <svg viewBox="0 0 500 300" role="img" aria-label="Elbow-Diagramm: die Summe der quadrierten Fehler fällt stark und flacht dann ab, mit dem Ellenbogen bei etwa drei Clustern" style="width:100%;max-width:540px;font-family:inherit">
@@ -38,7 +38,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
     <text x="265" y="294" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle">Anzahl der Cluster</text>
     <text x="16" y="140" fill="var(--sl-color-text-accent)" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90 16 140)">Summe der quadrierten Fehler</text>
   </svg>
-  <figcaption>Die Elbow-Methode — die Summe der quadrierten Fehler fällt bis etwa drei Cluster steil und flacht dann ab. Der „Ellenbogen" markiert den Punkt abnehmenden Grenznutzens und liefert die praktische Wahl von K.</figcaption>
+  <figcaption>Die Elbow-Methode - die Summe der quadrierten Fehler fällt bis etwa drei Cluster steil und flacht dann ab. Der „Ellenbogen" markiert den Punkt abnehmenden Grenznutzens und liefert die praktische Wahl von K.</figcaption>
 </figure>
 
 Angenommen, `K` steht bereits fest (z.B. K = 3 bedeutet, wir wollen 3 DCs).
@@ -59,11 +59,11 @@ Angenommen, `K` steht bereits fest (z.B. K = 3 bedeutet, wir wollen 3 DCs).
 
 ## 2. Wichtige Formeln
 
-### Euklidische Distanz — Schritt 2
+### Euklidische Distanz - Schritt 2
 Distanz vom Kunden `(xi, yi)` zum Zentroid `k` `(μk, ηk)`:
 `d(i → k) = √ [ (xi − μk)² + (yi − ηk)² ]`
 
-### Zentroid-Neuberechnung — Schritt 4
+### Zentroid-Neuberechnung - Schritt 4
 Nach der Clusterbildung wird jeder Zentroid als Mittelwert seiner Mitglieder neu berechnet:
 `Neuer Zentroid = ( Σxi / n , Σyi / n )`
 *(x-Koordinate = Durchschnitt aller xi im Cluster; y-Koordinate = Durchschnitt aller yi im Cluster)*
@@ -77,7 +77,7 @@ Nach der Clusterbildung wird jeder Zentroid als Mittelwert seiner Mitglieder neu
 - Niedrigerer WCSS = Kunden sind näher an ihrem DC = bessere Reaktionsfähigkeit.
 
 ### Wie sich der WCSS mit K verändert
-Wenn K steigt, sinkt der WCSS immer — mehr Cluster bedeuten engere Gruppierungen.
+Wenn K steigt, sinkt der WCSS immer - mehr Cluster bedeuten engere Gruppierungen.
 - **K = 1:** Alle 811 in einem Cluster → WCSS ist maximal.
 - **K = 811:** Jeder Kunde ist sein eigener Cluster → WCSS = 0 (nicht machbar).
 
@@ -85,7 +85,7 @@ Kein Extrem ist praktisch → den optimalen Mittelweg findet man mit der Elbow-M
 
 ---
 
-## 4. Elbow-Methode — Bestimmung des optimalen K
+## 4. Elbow-Methode - Bestimmung des optimalen K
 
 ### Konzept
 Tragen Sie den WCSS (y-Achse) gegen K (x-Achse) auf. Die Kurve fällt anfangs steil ab und flacht dann ab. Der Knick = **Elbow** (Ellenbogen).
@@ -123,7 +123,7 @@ K-means liefert Cluster-Zentroide (vorgeschlagene DC-Koordinaten) und Kunden-DC-
 
 ## Zusammenfassung der Session
 
-- **K-means Algorithmus:** 5 Schritte — zufällige Zentroide → Distanz berechnen → zuweisen → Zentroid neu berechnen → wiederholen bis Konvergenz.
+- **K-means Algorithmus:** 5 Schritte - zufällige Zentroide → Distanz berechnen → zuweisen → Zentroid neu berechnen → wiederholen bis Konvergenz.
 - **Euklidische Distanz:** `d = √[(xi−μk)² + (yi−ηk)²]`
 - **Zentroid-Formel:** `(Σxi/n, Σyi/n)`
 - **WCSS:** Σ quadrierte Distanzen von jedem Punkt zu seinem Zentroid. Niedriger = engere Cluster.

@@ -1,5 +1,5 @@
 ---
-title: "Week 6 | Session 4: Building a Classification Tree — Gini Index, Splitting & Stopping"
+title: "Week 6 | Session 4: Building a Classification Tree - Gini Index, Splitting & Stopping"
 description: "A deep dive into the algorithm behind classification trees, explaining impurity measures (Gini Index, Entropy), node splitting logic, and stopping criteria to prevent overfitting."
 sidebar:
   order: 30
@@ -7,40 +7,40 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Recap — what the model does (from Session 3); now: HOW it was built
-- Step 1 — Root node: baseline accuracy without any features
-- Impurity measures — Gini Index and Entropy: formulas, examples, graph
-- Step 2 — Splitting logic: choose variable + cutoff that maximises reduction in impurity
-- Step 3 — Trace all node splits with Gini values and impurity reduction
-- Stopping criteria — when to stop splitting
-- Overfitting — why stopping is necessary
-- Summary — 4-step algorithm for building a classification tree
-- Next session: Python hands-on — build this exact model in code
+- Recap - what the model does (from Session 3); now: HOW it was built
+- Step 1 - Root node: baseline accuracy without any features
+- Impurity measures - Gini Index and Entropy: formulas, examples, graph
+- Step 2 - Splitting logic: choose variable + cutoff that maximises reduction in impurity
+- Step 3 - Trace all node splits with Gini values and impurity reduction
+- Stopping criteria - when to stop splitting
+- Overfitting - why stopping is necessary
+- Summary - 4-step algorithm for building a classification tree
+- Next session: Python hands-on - build this exact model in code
 </Aside>
 
 ---
 
-## Recap — Session 3 vs. Session 4
+## Recap - Session 3 vs. Session 4
 
-- **Session 3:** Showed the OUTPUT of the classification tree — 4 leaf node rules, predictions, how to use on shop floor
-- **Session 4:** Explains HOW the tree was built — the algorithm behind it
+- **Session 3:** Showed the OUTPUT of the classification tree - 4 leaf node rules, predictions, how to use on shop floor
+- **Session 4:** Explains HOW the tree was built - the algorithm behind it
 - **Core algorithm logic:** Repeatedly split nodes by choosing the variable and cutoff that maximally reduces impurity → until a stopping criterion is met
 
 ---
 
-## Step 1 — Start with Root Node (Node 0)
+## Step 1 - Start with Root Node (Node 0)
 
-- **Training data:** 700 instances (note: model uses 700, full dataset has 1000 — 700 used for training)
+- **Training data:** 700 instances (note: model uses 700, full dataset has 1000 - 700 used for training)
 - **At root (no feature information):** 447 machines failed (Yes) | 253 did not fail (No)
 - **Baseline probability:** 447/700 = 64% chance any randomly picked machine will fail
-- **Problem with baseline:** 64% regardless of age, utilisation, oil contamination etc. — ignores all useful information
+- **Problem with baseline:** 64% regardless of age, utilisation, oil contamination etc. - ignores all useful information
 - **Goal of the tree:** Incorporate features to improve accuracy beyond the 64% baseline
 - **Gini at Node 0:** 1 − (0.64² + 0.36²) = 1 − (0.41 + 0.13) = 0.46 (close to maximum of 0.5 → highly impure data → room to improve)
 
@@ -50,7 +50,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Impurity Measures — Gini Index & Entropy
+## Impurity Measures - Gini Index & Entropy
 
 <figure class="sc-fig">
   <div class="sc-formula">
@@ -74,9 +74,9 @@ Goal at every split: choose the variable + cutoff that reduces impurity the most
 ### Formulas
 - **Gini Index Formula:** `Gini(t) = 1 − Σᵢ [ P(class i | node t) ]²`
   - For binary (k=2): `Gini(t) = 1 − (p₁² + p₂²)`
-  - Range: 0 (perfectly pure) to 0.5 (50-50 split — maximum impurity)
+  - Range: 0 (perfectly pure) to 0.5 (50-50 split - maximum impurity)
 - **Entropy Formula:** `Entropy(t) = − Σᵢ P(class i | node t) × log₂[ P(class i | node t) ]`
-  - Range: 0 (perfectly pure) to 1 (50-50 split — maximum impurity)
+  - Range: 0 (perfectly pure) to 1 (50-50 split - maximum impurity)
 
 ### Gini and Entropy values for key scenarios
 
@@ -85,7 +85,7 @@ Goal at every split: choose the variable + cutoff that reduces impurity the most
 | **All in Class 1** | 100% | 0% | 1 − (1² + 0²) = 0 | −(1·log₂1 + 0·log₂0) = 0 | Zero ✓ (Pure) |
 | **All in Class 2** | 0% | 100% | 1 − (0² + 1²) = 0 | −(0·log₂0 + 1·log₂1) = 0 | Zero ✓ (Pure) |
 | **50-50 Split** | 50% | 50% | 1 − (0.5² + 0.5²) = 0.5 | −(0.5·log₂0.5 + 0.5·log₂0.5) = 1 | Maximum ✗ |
-| **Node 0 (Root)** | 64% | 36% | 1 − (0.64² + 0.36²) = 0.46 | — | High (near max) |
+| **Node 0 (Root)** | 64% | 36% | 1 − (0.64² + 0.36²) = 0.46 | - | High (near max) |
 
 ### Key Insight from Impurity Graph
 
@@ -101,10 +101,10 @@ Goal at every split: choose the variable + cutoff that reduces impurity the most
     <text x="130" y="46" fill="var(--sc-blue)" font-size="12" font-weight="700">Entropy (max 1.0)</text>
     <text x="150" y="240" fill="var(--sc-amber)" font-size="12" font-weight="700">Gini (max 0.5)</text>
   </svg>
-  <figcaption>Both impurity measures form an inverted U — zero when a node is pure (p = 0 or 1) and maximal at the 50-50 split (p = 0.5). Splitting aims to move nodes away from 0.5 toward the ends.</figcaption>
+  <figcaption>Both impurity measures form an inverted U - zero when a node is pure (p = 0 or 1) and maximal at the 50-50 split (p = 0.5). Splitting aims to move nodes away from 0.5 toward the ends.</figcaption>
 </figure>
 
-- **Shape:** Inverted U — symmetric around 0.5
+- **Shape:** Inverted U - symmetric around 0.5
 - Both Gini and Entropy start at 0 (all in one class) → rise to maximum at 0.5 (50-50 split) → fall back to 0 (all in other class)
 - **Implication:** When splitting a node, we want to move observations AWAY from 0.5 towards either end (0 or 1) → reduce impurity → improve accuracy
 
@@ -114,7 +114,7 @@ Goal at every split: choose the variable + cutoff that reduces impurity the most
 
 ---
 
-## Splitting Logic — How to Choose Variable and Cutoff
+## Splitting Logic - How to Choose Variable and Cutoff
 
 <figure class="sc-fig">
   <div class="sc-flow col">
@@ -144,7 +144,7 @@ At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL pos
 
 ---
 
-## Node-by-Node Splitting Trace — Full Tree
+## Node-by-Node Splitting Trace - Full Tree
 
 <figure class="sc-fig">
   <div class="sc-flow col">
@@ -155,22 +155,22 @@ At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL pos
       <div class="sc-node">Node 2 · Oil &gt; 5.5<span class="sub">559 obs · 72% / 28% · Gini 0.40</span></div>
     </div>
   </div>
-  <figcaption>Step 1–2: start with all training data in the root, then split on the predictor (Oil Contamination) that gives the maximum reduction in impurity.</figcaption>
+  <figcaption>Step 1-2: start with all training data in the root, then split on the predictor (Oil Contamination) that gives the maximum reduction in impurity.</figcaption>
 </figure>
 
-### All nodes — observations, Gini, splitting variable, cutoff, impurity reduction
+### All nodes - observations, Gini, splitting variable, cutoff, impurity reduction
 
 | Node | Obs. Count | Yes% / No% | Gini | Split Variable | Cut-off | Reduction in Impurity | Child Nodes |
 |---|---|---|---|---|---|---|---|
 | **0 (Root)** | 700 total (447 Yes, 253 No) | 64% / 36% | 0.46 | Oil Contamination | 5.5 | 0.052 (Maximum) | → Node 1, Node 2 |
 | **1** | 141 total | Oil ≤ 5.5 | 0.44 | Utilisation | 92.05% | 0.38 (Max at Node 1) | → Node 3, Node 4 |
 | **2** | 559 total (72% Yes) | Oil > 5.5 | 0.40 | MTBF | 23.95 | 0.11 (Max at Node 2) | → Node 5, Node 6 |
-| **3 (Leaf)** | 109 obs. | 17% / 83% | 0.28 | STOP | — | — | Predict: NOT FAIL |
-| **4 (Leaf)** | ~35 obs. | 88% / 12% | 0.21 | STOP | — | — | Predict: FAIL |
-| **5 (Leaf)** | 493 obs. | 77% / 23% | 0.35 | STOP | — | — | Predict: FAIL |
-| **6 (Leaf)** | 66 obs. | 29% / 71% | 0.41 | STOP | — | — | Predict: NOT FAIL |
+| **3 (Leaf)** | 109 obs. | 17% / 83% | 0.28 | STOP | - | - | Predict: NOT FAIL |
+| **4 (Leaf)** | ~35 obs. | 88% / 12% | 0.21 | STOP | - | - | Predict: FAIL |
+| **5 (Leaf)** | 493 obs. | 77% / 23% | 0.35 | STOP | - | - | Predict: FAIL |
+| **6 (Leaf)** | 66 obs. | 29% / 71% | 0.41 | STOP | - | - | Predict: NOT FAIL |
 
-### Accuracy Progression — How Each Split Improves Prediction
+### Accuracy Progression - How Each Split Improves Prediction
 
 <figure class="sc-fig">
   <div class="sc-flow">
@@ -180,17 +180,17 @@ At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL pos
     <span class="arrow">→</span>
     <div class="sc-node">+ MTBF ≤ 23.95<span class="sub">77% (+5)</span></div>
     <span class="arrow">→</span>
-    <div class="sc-node green">Node 4 · best leaf<span class="sub">88% — Oil ≤ 5.5 &amp; Util &gt; 92.05</span></div>
+    <div class="sc-node green">Node 4 · best leaf<span class="sub">88% - Oil ≤ 5.5 &amp; Util &gt; 92.05</span></div>
   </div>
-  <figcaption>Each split adds information and lifts accuracy above the 64% baseline — but each additional split adds less than the last (diminishing returns), which is why the tree eventually stops.</figcaption>
+  <figcaption>Each split adds information and lifts accuracy above the 64% baseline - but each additional split adds less than the last (diminishing returns), which is why the tree eventually stops.</figcaption>
 </figure>
 
 | Stage | Information Available | Best Prediction Accuracy | Interpretation |
 |---|---|---|---|
-| **Node 0 (No info)** | None — just know the machine exists | 64% (baseline) | 64% chance it will fail based solely on history. |
+| **Node 0 (No info)** | None - just know the machine exists | 64% (baseline) | 64% chance it will fail based solely on history. |
 | **After Split 1 (Node 2)** | Oil Contamination > 5.5 | 72% (+8%) | Knowing oil is high contamination improves accuracy. |
 | **After Split 2 (Node 5)** | Oil > 5.5 AND MTBF ≤ 23.95 | 77% (+5%) | Adding MTBF info pushes accuracy further to 77%. |
-| **Node 4 (Best leaf)** | Oil ≤ 5.5 AND Utilisation > 92.05% | 88% (+24%) | Highest accuracy leaf — overutilised machines very likely to fail. |
+| **Node 4 (Best leaf)** | Oil ≤ 5.5 AND Utilisation > 92.05% | 88% (+24%) | Highest accuracy leaf - overutilised machines very likely to fail. |
 
 **Key takeaway:** Each split adds information → accuracy increases. Each additional split adds less accuracy improvement than the previous one (diminishing returns) → reason to stop.
 
@@ -198,7 +198,7 @@ At each node, try ALL variables (age, utilisation, MTBF, oil, etc.) with ALL pos
 
 ## Stopping Criteria & Overfitting
 
-**Why Stopping is Critical — Overfitting:**
+**Why Stopping is Critical - Overfitting:**
 If no stopping: Tree keeps splitting → eventually each leaf has just 1 observation → 100% accuracy on training data.
 - **Problem:** Model "memorised" training data instead of learning patterns → poor accuracy on new test data (Overfitting).
 - **Fix:** Apply stopping criteria to produce a simpler, more general model.
@@ -217,7 +217,7 @@ If no stopping: Tree keeps splitting → eventually each leaf has just 1 observa
 
 ---
 
-## 4-Step Algorithm — How to Build a Classification Tree
+## 4-Step Algorithm - How to Build a Classification Tree
 
 <Steps>
 1. **Start at root:** Place all training data in the root node (Node 0). Calculate initial Gini (or entropy).
@@ -230,10 +230,10 @@ If no stopping: Tree keeps splitting → eventually each leaf has just 1 observa
 
 ## Session Summary
 
-- **Root node baseline:** 700 obs | 64% failure rate | Gini = 0.46 — high impurity, needs improvement
+- **Root node baseline:** 700 obs | 64% failure rate | Gini = 0.46 - high impurity, needs improvement
 - **Impurity measures:** Gini Index = 1 − Σp² | Entropy = −Σp·log₂(p). Both = 0 for pure nodes, maximum at 50-50 split.
 - **Splitting criterion:** Choose (variable, cutoff) with maximum ΔImpurity
 - **Accuracy progression:** 64% (baseline) → 72% (after oil split) → 77%/88% (after 2nd split)
 - **Stopping criteria:** Max depth | Min observations per node | Min ΔImpurity
 - **Overfitting:** No stopping → 100% training accuracy but poor test accuracy. Stopping = essential for generalisation.
-- **Next session:** Python hands-on — implement this exact model in code, reproduce the same output
+- **Next session:** Python hands-on - implement this exact model in code, reproduce the same output

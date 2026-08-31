@@ -1,5 +1,5 @@
 ---
-title: "Week 9 | Session 1: Intelligent Decision Tools — DC Location Problem & K-means Clustering (Intro)"
+title: "Week 9 | Session 1: Intelligent Decision Tools - DC Location Problem & K-means Clustering (Intro)"
 description: "An introduction to using intelligent decision tools like K-means Clustering to solve complex Distribution Center (DC) location and customer segmentation problems."
 sidebar:
   order: 42
@@ -7,24 +7,24 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Module 3 — Topics Covered So Far
-- Case Study — Pharma Company Expansion
+- Module 3 - Topics Covered So Far
+- Case Study - Pharma Company Expansion
 - The DC Count Tradeoff
-- K-means Clustering — Introduction
+- K-means Clustering - Introduction
 - Why is Centroid the Best DC Location?
 - How K-means Answers Both Decisions
 </Aside>
 
 ---
 
-## 1. Case Study — Pharma Company Expansion
+## 1. Case Study - Pharma Company Expansion
 
 **Background:** A pharmaceutical company wants to expand into a new region and has collected location data (latitude & longitude) for 811 prospective customers.
 
@@ -41,7 +41,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
     <text x="160" y="232" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle">Latitude →</text>
     <text x="16" y="115" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle" transform="rotate(-90 16 115)">Longitude</text>
   </svg>
-  <figcaption>The 811 prospective customers, plotted by latitude and longitude. <i>(Illustrative sample — the shape of the point cloud, not the exact coordinates.)</i></figcaption>
+  <figcaption>The 811 prospective customers, plotted by latitude and longitude. <i>(Illustrative sample - the shape of the point cloud, not the exact coordinates.)</i></figcaption>
 </figure>
 
 ### The Core Problem
@@ -50,7 +50,7 @@ Need to decide: where to open Distribution Centers (DCs) to serve these 811 cust
 2. **Decision 2:** Which customers served by which DC? (How to segment?)
 
 <Aside type="note">
-**★** This is a LOCATION + SEGMENTATION problem — both must be solved together. K-means clustering solves both simultaneously.
+**★** This is a LOCATION + SEGMENTATION problem - both must be solved together. K-means clustering solves both simultaneously.
 </Aside>
 
 ---
@@ -62,13 +62,13 @@ As the number of DCs increases, customers per DC decreases → faster service �
 | No. of DCs | Customers per DC | Responsiveness | Total Cost |
 |---|---|---|---|
 | **1** | All 811 | Low ↓ | Low ↓ (cheapest) |
-| **3–4** | ~200 each | ↑↑ | ↑↑ |
+| **3-4** | ~200 each | ↑↑ | ↑↑ |
 | **6** | ~135 each | High ↑↑↑ | High ↑↑↑ (expensive) |
 
 Need to find the **optimal K** (number of clusters) that balances responsiveness with cost.
 
 <figure class="sc-fig">
-  <svg viewBox="0 0 460 280" role="img" aria-label="Total cost versus number of distribution centres — facility cost rises, transport cost falls, total cost is U-shaped with a minimum" style="width:100%;max-width:500px;font-family:inherit">
+  <svg viewBox="0 0 460 280" role="img" aria-label="Total cost versus number of distribution centres - facility cost rises, transport cost falls, total cost is U-shaped with a minimum" style="width:100%;max-width:500px;font-family:inherit">
     <g stroke="var(--sl-color-gray-3)" stroke-width="1.5"><line x1="50" y1="20" x2="50" y2="240"/><line x1="50" y1="240" x2="430" y2="240"/></g>
     <line x1="50" y1="225" x2="420" y2="70" stroke="var(--sc-amber)" stroke-width="2"/>
     <line x1="50" y1="80" x2="420" y2="215" stroke="var(--sc-slate)" stroke-width="2" stroke-dasharray="6 4"/>
@@ -83,12 +83,12 @@ Need to find the **optimal K** (number of clusters) that balances responsiveness
     <text x="120" y="150" fill="var(--sc-blue)" font-size="10" font-weight="700">Total</text>
     <text x="205" y="100" fill="var(--sc-green)" font-size="10" font-weight="700">optimal K</text>
   </svg>
-  <figcaption>The DC-count tradeoff: adding DCs raises facility cost but lowers transport cost (better responsiveness). Total cost is U-shaped — the optimal number of DCs sits at its minimum.</figcaption>
+  <figcaption>The DC-count tradeoff: adding DCs raises facility cost but lowers transport cost (better responsiveness). Total cost is U-shaped - the optimal number of DCs sits at its minimum.</figcaption>
 </figure>
 
 ---
 
-## 3. K-means Clustering — Introduction
+## 3. K-means Clustering - Introduction
 
 <figure class="sc-fig">
   <svg viewBox="0 0 300 240" role="img" aria-label="Customers split into two clusters, each with a distribution-centre centroid" style="width:100%;max-width:360px;font-family:inherit">
@@ -99,7 +99,7 @@ Need to find the **optimal K** (number of clusters) that balances responsiveness
     <text x="164" y="72" fill="var(--sl-color-text)" font-size="10" font-weight="700">DC1</text><text x="164" y="162" fill="var(--sl-color-text)" font-size="10" font-weight="700">DC2</text>
     <text x="160" y="232" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle">Latitude →</text>
   </svg>
-  <figcaption>K-means with K = 2 — every customer is assigned to the nearest of two clusters, and each cluster's centroid (★) becomes the proposed DC location. <i>(Illustrative.)</i></figcaption>
+  <figcaption>K-means with K = 2 - every customer is assigned to the nearest of two clusters, and each cluster's centroid (★) becomes the proposed DC location. <i>(Illustrative.)</i></figcaption>
 </figure>
 
 **What is K-means Clustering?** An unsupervised machine learning technique for grouping data points into `K` clusters.
@@ -111,8 +111,8 @@ Need to find the **optimal K** (number of clusters) that balances responsiveness
 | Concept | Explanation |
 |---|---|
 | **K (input)** | Number of clusters = number of DCs to open. User defines K. |
-| **Output 1 — Segmentation** | Each of 811 customers assigned to exactly 1 cluster. |
-| **Output 2 — Centroid** | Center point of each cluster = proposed DC location (lat, long). |
+| **Output 1 - Segmentation** | Each of 811 customers assigned to exactly 1 cluster. |
+| **Output 2 - Centroid** | Center point of each cluster = proposed DC location (lat, long). |
 
 ---
 
@@ -129,8 +129,8 @@ Distance from centroid to each cluster member is minimized on average. Placing t
 
 ## 5. How K-means Answers Both Decisions
 
-- **Decision 1 — Customer Segmentation:** K-means automatically assigns each of 811 customers to exactly 1 cluster based on spatial proximity.
-- **Decision 2 — DC Location:** The centroid of each cluster gives the latitude and longitude of the proposed DC.
+- **Decision 1 - Customer Segmentation:** K-means automatically assigns each of 811 customers to exactly 1 cluster based on spatial proximity.
+- **Decision 2 - DC Location:** The centroid of each cluster gives the latitude and longitude of the proposed DC.
 
 <figure class="sc-fig">
   <svg viewBox="0 0 300 240" role="img" aria-label="Customers split into four clusters, each with a distribution-centre centroid" style="width:100%;max-width:360px;font-family:inherit">
@@ -143,19 +143,19 @@ Distance from centroid to each cluster member is minimized on average. Placing t
     <g fill="var(--sl-color-text)" font-size="9" font-weight="700"><text x="102" y="66">DC1</text><text x="222" y="73">DC3</text><text x="102" y="163">DC4</text><text x="217" y="159">DC2</text></g>
     <text x="160" y="232" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle">Latitude →</text>
   </svg>
-  <figcaption>With K = 4, the customers split into four tighter clusters, each served by its own centroid DC — cutting average travel distance further, at the cost of a fourth facility. <i>(Illustrative.)</i></figcaption>
+  <figcaption>With K = 4, the customers split into four tighter clusters, each served by its own centroid DC - cutting average travel distance further, at the cost of a fourth facility. <i>(Illustrative.)</i></figcaption>
 </figure>
 
 ### Remaining Open Question
-K-means solves BOTH decisions for a given K — but what is the right K? Is K = 1, 3, 4, 5, or 6 optimal? This is answered using the **Elbow Method** (covered in the next session).
+K-means solves BOTH decisions for a given K - but what is the right K? Is K = 1, 3, 4, 5, or 6 optimal? This is answered using the **Elbow Method** (covered in the next session).
 
 ---
 
 ## Session Summary
 
-- **Problem:** 811 customer locations (lat/long) — where to open DCs, how to assign customers.
+- **Problem:** 811 customer locations (lat/long) - where to open DCs, how to assign customers.
 - **Tradeoff:** More DCs → better responsiveness, higher cost.
-- **K-means Clustering:** unsupervised ML technique — groups customers into K clusters.
+- **K-means Clustering:** unsupervised ML technique - groups customers into K clusters.
 - **Output 1:** Segmentation (customer assigned to 1 DC).
 - **Output 2:** Centroid (proposed DC location).
 - **Why centroid?** Minimizes average distance from DC to all customers in that cluster.

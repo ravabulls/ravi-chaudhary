@@ -1,5 +1,5 @@
 ---
-title: "Woche 9 | Session 1: Intelligente Entscheidungstools — Problem der DC-Standortwahl & K-means Clustering (Intro)"
+title: "Woche 9 | Session 1: Intelligente Entscheidungstools - Problem der DC-Standortwahl & K-means Clustering (Intro)"
 description: "Eine Einführung in die Nutzung intelligenter Entscheidungstools wie K-means Clustering zur Lösung komplexer Probleme der Standortwahl von Distributionszentren (DC) und der Kundensegmentierung."
 sidebar:
   order: 42
@@ -7,24 +7,24 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Kurs: Supply Chain Digitalisierung — Modul 3: Analytics im SCM*
+*Kurs: Supply Chain Digitalisierung - Modul 3: Analytics im SCM*
 
 ---
 
 ## Session-Agenda
 
 <Aside type="note">
-- Modul 3 — Bisher behandelte Themen
-- Fallstudie — Expansion eines Pharmaunternehmens
+- Modul 3 - Bisher behandelte Themen
+- Fallstudie - Expansion eines Pharmaunternehmens
 - Der Zielkonflikt bei der Anzahl der DCs
-- K-means Clustering — Einführung
+- K-means Clustering - Einführung
 - Warum ist der Zentroid der beste DC-Standort?
 - Wie K-means beide Entscheidungen beantwortet
 </Aside>
 
 ---
 
-## 1. Fallstudie — Expansion eines Pharmaunternehmens
+## 1. Fallstudie - Expansion eines Pharmaunternehmens
 
 **Hintergrund:** Ein Pharmaunternehmen möchte in eine neue Region expandieren und hat Standortdaten (Breiten- & Längengrade) von 811 potenziellen Kunden gesammelt.
 
@@ -41,7 +41,7 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
     <text x="160" y="232" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle">Breitengrad →</text>
     <text x="16" y="115" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle" transform="rotate(-90 16 115)">Längengrad</text>
   </svg>
-  <figcaption>Die 811 potenziellen Kunden, aufgetragen nach Breiten- und Längengrad. <i>(Illustratives Beispiel — die Form der Punktwolke, nicht die exakten Koordinaten.)</i></figcaption>
+  <figcaption>Die 811 potenziellen Kunden, aufgetragen nach Breiten- und Längengrad. <i>(Illustratives Beispiel - die Form der Punktwolke, nicht die exakten Koordinaten.)</i></figcaption>
 </figure>
 
 ### Das Kernproblem
@@ -50,7 +50,7 @@ Es muss entschieden werden: Wo sollen Distributionszentren (DCs) eröffnet werde
 2. **Entscheidung 2:** Welche Kunden werden von welchem DC bedient? (Wie segmentieren?)
 
 <Aside type="note">
-**★** Dies ist ein STANDORT- + SEGMENTIERUNGSPROBLEM — beides muss zusammen gelöst werden. K-means Clustering löst beides gleichzeitig.
+**★** Dies ist ein STANDORT- + SEGMENTIERUNGSPROBLEM - beides muss zusammen gelöst werden. K-means Clustering löst beides gleichzeitig.
 </Aside>
 
 ---
@@ -62,13 +62,13 @@ Mit zunehmender Anzahl von DCs sinkt die Kundenanzahl pro DC → schnellerer Ser
 | Anz. der DCs | Kunden pro DC | Reaktionsfähigkeit | Gesamtkosten |
 |---|---|---|---|
 | **1** | Alle 811 | Gering ↓ | Niedrig ↓ (am günstigsten) |
-| **3–4** | ~200 pro DC | ↑↑ | ↑↑ |
+| **3-4** | ~200 pro DC | ↑↑ | ↑↑ |
 | **6** | ~135 pro DC | Hoch ↑↑↑ | Hoch ↑↑↑ (teuer) |
 
 Es muss das **optimale K** (Anzahl der Cluster) gefunden werden, das Reaktionsfähigkeit und Kosten ausbalanciert.
 
 <figure class="sc-fig">
-  <svg viewBox="0 0 460 280" role="img" aria-label="Gesamtkosten gegen Anzahl der Verteilzentren — Anlagenkosten steigen, Transportkosten fallen, Gesamtkosten U-förmig mit Minimum" style="width:100%;max-width:500px;font-family:inherit">
+  <svg viewBox="0 0 460 280" role="img" aria-label="Gesamtkosten gegen Anzahl der Verteilzentren - Anlagenkosten steigen, Transportkosten fallen, Gesamtkosten U-förmig mit Minimum" style="width:100%;max-width:500px;font-family:inherit">
     <g stroke="var(--sl-color-gray-3)" stroke-width="1.5"><line x1="50" y1="20" x2="50" y2="240"/><line x1="50" y1="240" x2="430" y2="240"/></g>
     <line x1="50" y1="225" x2="420" y2="70" stroke="var(--sc-amber)" stroke-width="2"/>
     <line x1="50" y1="80" x2="420" y2="215" stroke="var(--sc-slate)" stroke-width="2" stroke-dasharray="6 4"/>
@@ -83,12 +83,12 @@ Es muss das **optimale K** (Anzahl der Cluster) gefunden werden, das Reaktionsf�
     <text x="120" y="150" fill="var(--sc-blue)" font-size="10" font-weight="700">Gesamt</text>
     <text x="205" y="100" fill="var(--sc-green)" font-size="10" font-weight="700">optimales K</text>
   </svg>
-  <figcaption>Der DC-Anzahl-Kompromiss: mehr DCs erhöhen die Anlagenkosten, senken aber die Transportkosten (bessere Reaktionsfähigkeit). Die Gesamtkosten sind U-förmig — die optimale Anzahl liegt im Minimum.</figcaption>
+  <figcaption>Der DC-Anzahl-Kompromiss: mehr DCs erhöhen die Anlagenkosten, senken aber die Transportkosten (bessere Reaktionsfähigkeit). Die Gesamtkosten sind U-förmig - die optimale Anzahl liegt im Minimum.</figcaption>
 </figure>
 
 ---
 
-## 3. K-means Clustering — Einführung
+## 3. K-means Clustering - Einführung
 
 <figure class="sc-fig">
   <svg viewBox="0 0 300 240" role="img" aria-label="Kunden in zwei Cluster aufgeteilt, jeder mit einem Verteilzentrums-Schwerpunkt" style="width:100%;max-width:360px;font-family:inherit">
@@ -99,7 +99,7 @@ Es muss das **optimale K** (Anzahl der Cluster) gefunden werden, das Reaktionsf�
     <text x="164" y="72" fill="var(--sl-color-text)" font-size="10" font-weight="700">DC1</text><text x="164" y="162" fill="var(--sl-color-text)" font-size="10" font-weight="700">DC2</text>
     <text x="160" y="232" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle">Breitengrad →</text>
   </svg>
-  <figcaption>K-means mit K = 2 — jeder Kunde wird dem nächstgelegenen der zwei Cluster zugeordnet, und der Schwerpunkt (★) jedes Clusters wird zum vorgeschlagenen DC-Standort. <i>(Illustrativ.)</i></figcaption>
+  <figcaption>K-means mit K = 2 - jeder Kunde wird dem nächstgelegenen der zwei Cluster zugeordnet, und der Schwerpunkt (★) jedes Clusters wird zum vorgeschlagenen DC-Standort. <i>(Illustrativ.)</i></figcaption>
 </figure>
 
 **Was ist K-means Clustering?** Eine unüberwachte (unsupervised) Machine-Learning-Technik zur Gruppierung von Datenpunkten in `K` Cluster.
@@ -111,8 +111,8 @@ Es muss das **optimale K** (Anzahl der Cluster) gefunden werden, das Reaktionsf�
 | Konzept | Erklärung |
 |---|---|
 | **K (Input)** | Anzahl der Cluster = Anzahl der zu öffnenden DCs. Nutzer definiert K. |
-| **Output 1 — Segmentierung** | Jeder der 811 Kunden wird genau 1 Cluster zugewiesen. |
-| **Output 2 — Zentroid** | Mittelpunkt jedes Clusters = vorgeschlagener DC-Standort (Lat, Long). |
+| **Output 1 - Segmentierung** | Jeder der 811 Kunden wird genau 1 Cluster zugewiesen. |
+| **Output 2 - Zentroid** | Mittelpunkt jedes Clusters = vorgeschlagener DC-Standort (Lat, Long). |
 
 ---
 
@@ -129,8 +129,8 @@ Die Distanz vom Zentroid zu jedem Clustermitglied ist im Durchschnitt minimiert.
 
 ## 5. Wie K-means beide Entscheidungen beantwortet
 
-- **Entscheidung 1 — Kundensegmentierung:** K-means weist automatisch jeden der 811 Kunden genau 1 Cluster zu, basierend auf räumlicher Nähe.
-- **Entscheidung 2 — DC-Standort:** Der Zentroid jedes Clusters liefert den Breiten- und Längengrad des vorgeschlagenen DC.
+- **Entscheidung 1 - Kundensegmentierung:** K-means weist automatisch jeden der 811 Kunden genau 1 Cluster zu, basierend auf räumlicher Nähe.
+- **Entscheidung 2 - DC-Standort:** Der Zentroid jedes Clusters liefert den Breiten- und Längengrad des vorgeschlagenen DC.
 
 <figure class="sc-fig">
   <svg viewBox="0 0 300 240" role="img" aria-label="Kunden in vier Cluster aufgeteilt, jeder mit einem Verteilzentrums-Schwerpunkt" style="width:100%;max-width:360px;font-family:inherit">
@@ -143,19 +143,19 @@ Die Distanz vom Zentroid zu jedem Clustermitglied ist im Durchschnitt minimiert.
     <g fill="var(--sl-color-text)" font-size="9" font-weight="700"><text x="102" y="66">DC1</text><text x="222" y="73">DC3</text><text x="102" y="163">DC4</text><text x="217" y="159">DC2</text></g>
     <text x="160" y="232" fill="var(--sl-color-text-accent)" font-size="11" font-weight="600" text-anchor="middle">Breitengrad →</text>
   </svg>
-  <figcaption>Mit K = 4 teilen sich die Kunden in vier engere Cluster, jeder von seinem eigenen Schwerpunkt-DC bedient — das senkt die durchschnittliche Fahrstrecke weiter, zum Preis einer vierten Anlage. <i>(Illustrativ.)</i></figcaption>
+  <figcaption>Mit K = 4 teilen sich die Kunden in vier engere Cluster, jeder von seinem eigenen Schwerpunkt-DC bedient - das senkt die durchschnittliche Fahrstrecke weiter, zum Preis einer vierten Anlage. <i>(Illustrativ.)</i></figcaption>
 </figure>
 
 ### Verbleibende offene Frage
-K-means löst BEIDE Entscheidungen für ein gegebenes K — aber was ist das richtige K? Ist K = 1, 3, 4, 5 oder 6 optimal? Dies wird mit der **Elbow-Methode** (in der nächsten Session behandelt) beantwortet.
+K-means löst BEIDE Entscheidungen für ein gegebenes K - aber was ist das richtige K? Ist K = 1, 3, 4, 5 oder 6 optimal? Dies wird mit der **Elbow-Methode** (in der nächsten Session behandelt) beantwortet.
 
 ---
 
 ## Zusammenfassung der Session
 
-- **Problem:** 811 Kundenstandorte (Lat/Long) — wo DCs eröffnen, wie Kunden zuweisen.
+- **Problem:** 811 Kundenstandorte (Lat/Long) - wo DCs eröffnen, wie Kunden zuweisen.
 - **Zielkonflikt:** Mehr DCs → bessere Reaktionsfähigkeit, höhere Kosten.
-- **K-means Clustering:** unüberwachte ML-Technik — gruppiert Kunden in K Cluster.
+- **K-means Clustering:** unüberwachte ML-Technik - gruppiert Kunden in K Cluster.
 - **Output 1:** Segmentierung (Kunde wird 1 DC zugewiesen).
 - **Output 2:** Zentroid (vorgeschlagener DC-Standort).
 - **Warum Zentroid?** Minimiert die durchschnittliche Distanz vom DC zu allen Kunden in diesem Cluster.

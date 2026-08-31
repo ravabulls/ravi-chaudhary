@@ -1,5 +1,5 @@
 ---
-title: "Week 6 | Session 5: Classification Tree in Python — Full Hands-On Code"
+title: "Week 6 | Session 5: Classification Tree in Python - Full Hands-On Code"
 description: "A step-by-step guide to building and evaluating a classification tree for predictive maintenance using Python, pandas, and scikit-learn."
 sidebar:
   order: 31
@@ -7,14 +7,14 @@ sidebar:
 
 import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-*Course: Supply Chain Digitization — Module 3: Analytics in SCM*
+*Course: Supply Chain Digitization - Module 3: Analytics in SCM*
 
 ---
 
 ## Session Agenda
 
 <Aside type="note">
-- Libraries used — pandas, sklearn, matplotlib
+- Libraries used - pandas, sklearn, matplotlib
 - Step 1: Import data (maintenance.csv → DataFrame)
 - Step 2: List variables, define X (features) and Y (target)
 - Step 3: Split into training (70%) and test (30%) data
@@ -26,12 +26,12 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Session Context — Theory to Code
+## Session Context - Theory to Code
 
 - **Sessions 3 & 4:** Showed the output of the model and explained HOW it is built (Gini, node splitting, stopping criteria)
-- **Session 5:** Reproduce the EXACT same output using Python code — closes the loop from theory to implementation
-- **Platform:** Google Colab — browser-based Python environment, no local installation needed
-- **Data file:** `maintenance.csv` — 1000 rows, 8 columns (same dataset used in Sessions 3 & 4)
+- **Session 5:** Reproduce the EXACT same output using Python code - closes the loop from theory to implementation
+- **Platform:** Google Colab - browser-based Python environment, no local installation needed
+- **Data file:** `maintenance.csv` - 1000 rows, 8 columns (same dataset used in Sessions 3 & 4)
 - **Expected output:** Same decision tree structure, same Gini values, same node counts as shown in theory slides
 
 ---
@@ -46,25 +46,25 @@ import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
 ---
 
-## Complete Code Reference — All Steps Together
+## Complete Code Reference - All Steps Together
 
 <figure class="sc-fig">
   <div class="sc-tree">
-    <div class="node"><b>Oil_Contamination ≤ 5.5</b> — gini 0.462 · samples 700 · value [253, 447] · class = <b>Machine Failed</b></div>
+    <div class="node"><b>Oil_Contamination ≤ 5.5</b> - gini 0.462 · samples 700 · value [253, 447] · class = <b>Machine Failed</b></div>
     <div class="branch">
-      <div class="node"><b>Utilization ≤ 92.05</b> — gini 0.444 · samples 141 · value [94, 47] · class = Machine Not Failed</div>
+      <div class="node"><b>Utilization ≤ 92.05</b> - gini 0.444 · samples 141 · value [94, 47] · class = Machine Not Failed</div>
       <div class="branch">
         <div class="node">gini 0.288 · samples 109 · value [90, 19] · class = <b>Machine Not Failed</b></div>
         <div class="node">gini 0.219 · samples 32 · value [4, 28] · class = <b>Machine Failed</b></div>
       </div>
-      <div class="node"><b>MTBF ≤ 23.95</b> — gini 0.407 · samples 559 · value [159, 400] · class = Machine Failed</div>
+      <div class="node"><b>MTBF ≤ 23.95</b> - gini 0.407 · samples 559 · value [159, 400] · class = Machine Failed</div>
       <div class="branch">
         <div class="node">gini 0.351 · samples 493 · value [112, 381] · class = <b>Machine Failed</b></div>
         <div class="node">gini 0.41 · samples 66 · value [47, 19] · class = <b>Machine Not Failed</b></div>
       </div>
     </div>
   </div>
-  <figcaption>Python output — the <code>scikit-learn</code> decision tree reproduces the same structure by hand: each node reports its gini impurity, sample count, class value split, and predicted class.</figcaption>
+  <figcaption>Python output - the <code>scikit-learn</code> decision tree reproduces the same structure by hand: each node reports its gini impurity, sample count, class value split, and predicted class.</figcaption>
 </figure>
 
 ```python
@@ -112,15 +112,15 @@ print("Accuracy:", acc)
 
 ## Step-by-Step Breakdown
 
-### Step 1 — Import Data
-- `pd.read_csv()`: Reads the CSV file and stores it as a DataFrame (`df`) — a table with labelled rows and columns.
+### Step 1 - Import Data
+- `pd.read_csv()`: Reads the CSV file and stores it as a DataFrame (`df`) - a table with labelled rows and columns.
 - After this step: `df` has 1000 rows and 8 columns including the target (`machine_failure`).
 
-### Step 2 — Define X (Features) and Y (Target)
-- `X`: 7 independent variables (all columns except `machine_failure`) — used to predict Y.
-- `Y`: `machine_failure` column — what the model must predict (0 = not failed, 1 = failed).
+### Step 2 - Define X (Features) and Y (Target)
+- `X`: 7 independent variables (all columns except `machine_failure`) - used to predict Y.
+- `Y`: `machine_failure` column - what the model must predict (0 = not failed, 1 = failed).
 
-### Step 3 — Train-Test Split (70/30)
+### Step 3 - Train-Test Split (70/30)
 - **Why split?** If the model is trained and tested on the same data → artificially inflated accuracy (overfitting). Test data must be held out and NEVER used during training.
 - `test_size=0.30`: 30% = 300 observations for testing. 70% = 700 for training.
 
@@ -128,19 +128,19 @@ print("Accuracy:", acc)
 **★ Exam tip:** Always explain WHY train-test split is needed (to avoid overfitting and get an unbiased estimate of model accuracy on new data). Mention 70/30 and that test data is never seen by the model during training.
 </Aside>
 
-### Step 4 — Build the Classification Tree
+### Step 4 - Build the Classification Tree
 - `criterion="gini"`: Use Gini impurity index to decide which variable and cutoff to split each node.
 - `max_depth=2`: Stop splitting after reaching 2 levels from the root. Prevents overfitting. Produces 4 leaf nodes.
-- `clf.fit(X_train, Y_train)`: Trains the model — the algorithm finds the best splits using 700 training observations.
+- `clf.fit(X_train, Y_train)`: Trains the model - the algorithm finds the best splits using 700 training observations.
 
-### Step 5 — Visualise the Decision Tree
+### Step 5 - Visualise the Decision Tree
 - Output matches Session 3 diagram exactly: Same splits (oil contamination → MTBF / utilisation), same Gini values, same sample counts.
 - **Node 0 (root):** 700 samples | Gini = 0.462 | Split: `oil_contamination ≤ 5.5`
 
-### Step 6 — Predict on Test Data and Evaluate Model
+### Step 6 - Predict on Test Data and Evaluate Model
 
 #### 6a. Generate Predictions
-- `clf.predict(X_test)`: Applies the trained model to the 300 test observations — produces predicted Y values.
+- `clf.predict(X_test)`: Applies the trained model to the 300 test observations - produces predicted Y values.
 
 #### 6b. Confusion Matrix
 
@@ -149,10 +149,10 @@ print("Accuracy:", acc)
 | **Actual: NOT FAIL (0)** | 57 ✓ True Negative | 65 ✗ False Positive |
 | **Actual: FAIL (1)** | 16 ✗ False Negative | 162 ✓ True Positive |
 
-- **True Negative (57):** Model correctly predicted machine did NOT fail — actual also not failed
-- **True Positive (162):** Model correctly predicted machine FAILED — actual also failed
-- **False Positive (65):** Model predicted FAIL — actual did NOT fail (over-alarm)
-- **False Negative (16):** Model predicted NOT FAIL — actual DID fail (missed failure — more dangerous in practice)
+- **True Negative (57):** Model correctly predicted machine did NOT fail - actual also not failed
+- **True Positive (162):** Model correctly predicted machine FAILED - actual also failed
+- **False Positive (65):** Model predicted FAIL - actual did NOT fail (over-alarm)
+- **False Negative (16):** Model predicted NOT FAIL - actual DID fail (missed failure - more dangerous in practice)
 
 #### 6c. Accuracy Score
 - **Accuracy = 73%:** 73 out of every 100 test instances are predicted correctly. `(57 + 162) / 300 = 0.73`.
@@ -173,14 +173,14 @@ print("Accuracy:", acc)
 5. Decision tree diagram rendered in the output area. Confusion matrix and accuracy printed below.
 
 <Aside type="tip">
-**★ Exam tip:** Be able to write the 6-step code outline (import → define X/Y → split → build → print → evaluate) from memory. Know what each step does. Know confusion matrix layout — TP, TN, FP, FN.
+**★ Exam tip:** Be able to write the 6-step code outline (import → define X/Y → split → build → print → evaluate) from memory. Know what each step does. Know confusion matrix layout - TP, TN, FP, FN.
 </Aside>
 
 ---
 
 ## Session Summary
 
-- **Session 3:** Case study setup + decision tree OUTPUT — 4 leaf nodes, business rules, 2 worked predictions
-- **Session 4:** HOW the tree is built — Gini index, entropy, node splitting logic, stopping criteria, overfitting
-- **Session 5 (this session):** Python implementation — 6-step code, exact same output verified, confusion matrix, 73% test accuracy
-- **Next module:** AI/ML for demand forecasting — further predictive analytics applications in SCM
+- **Session 3:** Case study setup + decision tree OUTPUT - 4 leaf nodes, business rules, 2 worked predictions
+- **Session 4:** HOW the tree is built - Gini index, entropy, node splitting logic, stopping criteria, overfitting
+- **Session 5 (this session):** Python implementation - 6-step code, exact same output verified, confusion matrix, 73% test accuracy
+- **Next module:** AI/ML for demand forecasting - further predictive analytics applications in SCM
