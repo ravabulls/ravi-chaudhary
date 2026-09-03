@@ -1,4 +1,4 @@
-# Ravi Chaudhary — Personal Portfolio Site
+# Ravi Chaudhary - Personal Portfolio Site
 
 A professional portfolio and learning journal built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build). Documents my professional background, MBA journey, and lifelong learning.
 
@@ -6,15 +6,15 @@ A professional portfolio and learning journal built with [Astro](https://astro.b
 
 ### Resume
 A structured, interactive resume built with Starlight components:
-- **Overview** — Professional summary, skills (tabbed by category with colour-coded badges), and key achievements (card grid)
-- **Experience** — Full career timeline (2015–present) using the Steps component, with quantified bullet points for each of 8 roles
-- **Education & Certifications** — Three academic degrees and 20+ professional certifications, organised by category
+- **Overview** - Professional summary, skills (tabbed by category with colour-coded badges), and key achievements (card grid)
+- **Experience** - Full career timeline (2015-present) using the Steps component, with quantified bullet points for each of 8 roles
+- **Education & Certifications** - Three academic degrees and 20+ professional certifications, organised by category
 
 ### Learnings
 A growing knowledge base of notes from formal and informal learning:
-- **MBA Subjects** — Notes from the Technology Management MBA at TUHH / NIT Hamburg (modules include Generative AI for Managers, Digital Transformation, Supply Chain Digitization, Sustainable Innovation, and more)
-- **Non-Fiction Books** — Key takeaways from books on leadership, strategy, and decision-making
-- **Online Courses** — Structured notes from certifications in data science, AI, finance, and project management
+- **MBA Subjects** - Notes from the Technology Management MBA at TUHH / NIT Hamburg (modules include Generative AI for Managers, Digital Transformation, Supply Chain Digitization, Sustainable Innovation, and more)
+- **Non-Fiction Books** - Key takeaways from books on leadership, strategy, and decision-making
+- **Online Courses** - Structured notes from certifications in data science, AI, finance, and project management
 
 ## Tech Stack
 
@@ -39,7 +39,7 @@ ravi-chaudhary/
 │   │   └── docs/
 │   │       ├── index.mdx        # Home landing page (splash template)
 │   │       ├── resume/
-│   │       │   ├── index.mdx    # Resume overview — summary, skills, achievements
+│   │       │   ├── index.mdx    # Resume overview - summary, skills, achievements
 │   │       │   ├── experience.mdx  # Career timeline (Steps component)
 │   │       │   └── education.mdx   # Degrees + certifications
 │   │       └── learnings/
@@ -57,8 +57,8 @@ ravi-chaudhary/
 ## Why `.md` vs `.mdx`
 
 Starlight supports both formats:
-- **`.md`** — standard Markdown, processed by remark. Supports Starlight asides (`:::note`, `:::tip`, `:::caution`). Used for all learnings/notes content.
-- **`.mdx`** — MDX (Markdown + JSX). Required for Starlight UI components like `<Steps>`, `<Badge>`, `<Card>`, `<CardGrid>`, and `<Tabs>`. Used for all resume and home pages.
+- **`.md`** - standard Markdown, processed by remark. Supports Starlight asides (`:::note`, `:::tip`, `:::caution`). Used for all learnings/notes content.
+- **`.mdx`** - MDX (Markdown + JSX). Required for Starlight UI components like `<Steps>`, `<Badge>`, `<Card>`, `<CardGrid>`, and `<Tabs>`. Used for all resume and home pages.
 
 ## Local Development
 

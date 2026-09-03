@@ -1,0 +1,386 @@
+---
+title: "Conjoint-Analyse"
+description: "Welche Produktmerkmale erzeugen welchen Wert für die Kundschaft - warum die direkte Frage nach der Wichtigkeit schmeichelhaften Unsinn produziert, wie Interaktionen einfache Bewertungen zerlegen, die Dekompositionslogik hinter CONsidered JOINTly, das additive Nutzenmodell und seine Notation, die Schätzung von Teilnutzenwerten aus ganzheitlichen Rangfolgen, die Berechnung der relativen Wichtigkeit als Spannweite der Teilnutzenwerte und wie man eine Studie plant, durchführt und validiert."
+sidebar:
+  label: "8 · Conjoint-Analyse"
+  order: 8
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Innovation & New Business Proposal - TUHH Institute of Entrepreneurship & Institute of Innovation Marketing, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Kano hat mir gesagt, *welche Art* von Zufriedenheit jedes Merkmal erzeugt. Die Conjoint-Analyse beantwortet die nächste Frage, und zwar eine quantitative: **welche Produktmerkmale erzeugen welchen Wert für die Kundschaft?** Nicht „ist dieses Merkmal nett“, sondern „wie viele Präferenzeinheiten ist diese Ausprägung dieses Merkmals wert, verglichen mit jener Ausprägung jenes anderen Merkmals“. Es ist das Werkzeug, das den Abwägungen, die eine Kundin im Kopf vornimmt, endlich Zahlen gibt.
+
+Die Vorlesungsnotizen beschreiben Conjoint-Analysen als Werkzeuge, die die Wichtigkeit von Produktmerkmalen **ganzheitlich** messen, und hängen vier Ziele daran. Welche Merkmale sind wie wichtig? Welche Merkmalsausprägungen stiften der Kundschaft welchen Nutzen? Gibt es **Anomalien** - Sprünge in der Nutzenkurve, Knock-out-Kriterien, Mindestausprägungen, unterhalb derer gar nichts akzeptabel ist? Und welche **Trade-offs** bestehen zwischen den verschiedenen Merkmalen? Das letzte Ziel ist eigentlich der Kern der ganzen Methode: Jede Produktentscheidung ist ein Tausch, und dies ist das einzige Marktforschungswerkzeug im Modul, das den Wechselkurs misst.
+
+Was sich anders anfühlt als bei einer Umfrage: Die Befragten werden überhaupt nie nach Merkmalen gefragt. Man zeigt ihnen ganze Produkte und fragt, welches sie bevorzugen. Die Wichtigkeitswerte werden anschließend *rückwärts* aus diesen Urteilen herausgerechnet. Diese Umkehrung ist der ganze Trick, und sie ist der Grund, warum die Technik das Problem übersteht, das ich in Abschnitt 2 beschreibe.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Frage eine Kundin nie, wie wichtig ihr ein Merkmal ist. Bitte sie, **zwischen ganzen Produkten zu wählen**, von denen jedes in manchen Dingen gut und in anderen schlecht ist, und **zerlege** ihre Entscheidungen anschließend mathematisch in den Wert jeder einzelnen Merkmalsausprägung. Eine genannte Wichtigkeit ist eine Meinung; eine Wahl zwischen zwei unvollkommenen Produkten ist ein echter Verzicht, und nur ein Verzicht zeigt, was etwas wirklich wert ist.
+</Aside>
+
+## 1 · Die zugrunde liegende Frage und die vier Ziele
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Welche Merkmale sind wie wichtig?<span class="sub">das relative Gewicht, das jedes Merkmal in der Entscheidung trägt</span></div>
+    <div class="sc-node amber">Welche Ausprägungen stiften welchen Nutzen?<span class="sub">nicht nur, dass Reichweite zählt, sondern wie deutlich 80 km die 50 km schlägt</span></div>
+    <div class="sc-node amber">Gibt es Anomalien?<span class="sub">Sprünge in der Kurve, Knock-out-Kriterien, Mindestausprägungen</span></div>
+    <div class="sc-node amber">Welche Trade-offs bestehen zwischen den Merkmalen?<span class="sub">wie viel von einem Merkmal wie viel von einem anderen kauft</span></div>
+  </div>
+  <figcaption>Die vier in den Notizen genannten Ziele. Das vierte ist dasjenige, das die Conjoint-Analyse von jedem anderen Werkzeug im Modul trennt.</figcaption>
+</div>
+
+Die Vorlesung macht das vierte Ziel mit vier Fragen konkret, die jede Produktmanagerin wiedererkennt. Wie viel stärker würde die Kundschaft ein Produkt bevorzugen, wenn ein Fernseher eine **UHD- statt einer HD-Auflösung** böte, ein **E-Bike 20 kg statt 25 kg** wöge, ein **Elektroauto 500 km Reichweite pro Ladung statt 300 km** hätte oder ein **Online-Meeting-Werkzeug eine Breakout-Session-Funktion hätte statt keiner**? Jede davon ist ein „wie viel mehr“, kein „ja oder nein“. Nur eine Methode, die Präferenz auf einer Skala misst, kann sie beantworten.
+
+## 2 · Warum die direkte Frage nicht funktioniert
+
+Der Aufbau in der Sitzung läuft über ein Ferienhotel, und er lohnt die Wiedergabe, weil das Scheitern in zwei Stufen passiert.
+
+**Stufe eins: die Wichtigkeit bewerten.** Wie wichtig sind Ihnen persönlich die folgenden Merkmale eines Ferienhotels - die Gehzeit vom Hotel zum Strand, die Größe Ihres Zimmers, die Häufigkeit der Zimmerreinigung, die Geschwindigkeit der WLAN-Verbindung und das Angebot an Freizeit- und Sportaktivitäten? Alle antworten bereitwillig, und fast alle sagen, das meiste davon sei ziemlich wichtig. Es wurde nichts aufgegeben, also wurde nichts offenbart. Die Antworten sind schmeichelhaft statt informativ.
+
+**Stufe zwei: 100 Punkte verteilen.** Also wird die Frage verschärft: Bitte verteilen Sie genau 100 Punkte auf dieselben fünf Merkmale, sodass die Punkte abbilden, wie wichtig Ihnen jedes einzelne ist. Das ist besser, weil das Budget etwas Disziplin erzwingt. Trotzdem scheitert es, und zwar aus einem Grund, den man präzise formulieren sollte: Die befragte Person soll über abstrakte Kategorien nachdenken, nicht eine Entscheidung treffen. Niemand hat je auf einer Hotel-Buchungsseite zwischen „Zimmergröße“ und „Reinigungshäufigkeit“ als solchen gewählt. Man wählt zwischen **Hotels**, von denen jedes eine bestimmte Ausprägung jedes Merkmals zu einem bestimmten Preis bündelt.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Direkte Befragung <small>Bewertung oder 100 Punkte</small></div>
+      <ul>
+        <li>Fragt nach <strong>Merkmalen im Abstrakten</strong>, losgelöst von jedem Produkt</li>
+        <li>Es ist kein echter Verzicht im Spiel, also fallen die Antworten <strong>höflich und überhöht</strong> aus</li>
+        <li>Menschen sind schlecht darin, ihre eigenen Gewichtungen zu durchschauen</li>
+        <li>Kann <strong>Ausprägungen</strong> nicht erfassen - nur dass ein Merkmal zählt, nicht wie deutlich 80 km die 50 km schlägt</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Conjoint-Befragung <small>ganze Produkte, ganzheitlich beurteilt</small></div>
+      <ul>
+        <li>Bittet die befragte Person, <strong>vollständige Produkte zu ordnen, zu bewerten oder zu wählen</strong></li>
+        <li>Jedes Produkt ist in manchen Dingen gut und in anderen schwach, also wird ein <strong>echter Trade-off</strong> erzwungen</li>
+        <li>Die Interviewsituation ist natürlich und nah daran, wie sich Kaufen wirklich anfühlt</li>
+        <li>Die Wichtigkeit wird <strong>hinterher abgeleitet</strong>, aus dem Muster der Urteile, und nie erfragt</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Dieselbe Information, auf zwei Wegen gewonnen. Die linke Spalte verlangt von der befragten Person, die Analyse selbst zu leisten; die rechte Spalte verlangt von ihr nur eine Präferenz und erledigt die Analyse hinterher.</figcaption>
+</div>
+
+## 3 · Die zweite Falle: Interaktionen
+
+Es gibt ein weiteres Problem, das keine noch so sorgfältige Formulierung behebt. Die Sitzung veranschaulicht es mit einer einzigen, dreimal gestellten Frage: Wie wichtig ist die **Größe des Fensters** in einem Hotelzimmer? Dann: Wie wichtig ist sie *in diesem Zimmer*? Und *in diesem hier*? Die Antwort ändert sich vollständig, je nachdem, wie der Rest des Zimmers aussieht. Ein großes Fenster zählt enorm viel in einem kleinen, dunklen Zimmer und fast nichts in einem hellen, großzügig geschnittenen.
+
+Das in den Notizen formulierte Prinzip lautet, dass **die Wichtigkeit oder Präferenz eines Merkmals von einem anderen Merkmal abhängen kann**. Genau das ist eine Interaktion: Eine **Interaktion liegt vor, wenn die kombinierte Wirkung zweier Merkmale von der Summe ihrer beiden separaten Haupteffekt-Nutzen abweicht**. Isoliert gestellt hat die Fensterfrage keine einzig richtige Antwort, weil Wichtigkeit keine Eigenschaft des Merkmals allein ist.
+
+<Aside type="caution">
+**Warum das für das Modell zählt.** Das Grundmodell der Conjoint-Analyse unterstellt, dass Merkmale **unabhängig** sind, die Vorlesung nennt das die Annahme des modularen Produkts, sodass der Gesamtnutzen einfach eine Summe von Teilen ist. Diese Annahme hält die Arithmetik einfach, und meist ist sie eine vertretbare Näherung. Wird sie klar verletzt, besteht die Abhilfe im begleitenden Fachtext darin, der Nutzengleichung einen expliziten **Interaktionsterm** hinzuzufügen, ein Produkt der beiden Merkmalsvariablen. Zu den aufgeführten Vorteilen der Conjoint-Analyse gehört genau diese Fähigkeit, Interaktionseffekte aufzudecken - das genannte Beispiel ist, dass die Farbe Rot speziell auf einem Ferrari beliebt ist, was eine Interaktion zwischen Marke und Farbe ist und keine Vorliebe für Rot als solches.
+</Aside>
+
+## 4 · Die im Namen versteckte Idee
+
+Der Name ist eine Zusammenziehung, und ihn auseinanderzunehmen ist der schnellste Weg, sich zu merken, was die Methode tut. Produkte und Dienstleistungen werden **CONsidered JOINTly**, also gemeinsam betrachtet - die befragte Person sieht das ganze Bündel, nie die Einzelteile - und die Analyse behandelt dieses Bündel anschließend als Aggregation einzelner Komponenten, der **Teilnutzenwerte**.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Produkt oder Dienstleistung<span class="sub">beschrieben als Bündel von Merkmalsausprägungen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Messung der Präferenzen<span class="sub">die befragte Person ordnet, bewertet oder wählt ganze Produkte</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Dekomposition<span class="sub">1. relative Wichtigkeit der Merkmale<br/>2. Teilnutzenwerte der Merkmalsausprägungen</span></div>
+  </div>
+  <figcaption>Die Fließrichtung. Hinein gehen ganzheitliche Präferenzurteile über vollständige Produkte; heraus kommen zwei getrennte Ergebnisse - wie viel jedes Merkmal zählt und was jede einzelne Ausprägung wert ist.</figcaption>
+</div>
+
+Deshalb heißt die Conjoint-Analyse ein **dekompositionelles** Verfahren, im Gegensatz zur kompositionellen Logik einer Punkteverteilungs-Umfrage. Ein kompositionelles Verfahren fragt nach den Gewichten und baut den Produktwert daraus auf. Ein dekompositionelles Verfahren nimmt den Produktwert als gegeben und zieht die Gewichte daraus heraus.
+
+## 5 · Das additive Nutzenmodell
+
+Dem Modell hinter einer Conjoint-Analyse liegt eine **additive Nutzenfunktion** zugrunde. Der Gesamtnutzen eines Produkts ist die Summe der Teilnutzenwerte der Ausprägungen, die es gerade hat, plus ein Fehlerterm, der alles aufnimmt, was das Modell nicht erfasst.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Additiver Nutzen</span>
+    <code>y(k) = SUM over j of SUM over m of [ b(jm) · x(jm) ] + Error</code>
+  </div>
+</div>
+
+| Symbol | Bedeutung in der in der Vorlesung verwendeten Notation |
+|---|---|
+| y(k) | die Präferenz für Produkt oder Dienstleistung k, also dessen Gesamtnutzen |
+| j | die Merkmale, zum Beispiel Gewicht, Reichweite, Preis |
+| m | die Ausprägungen innerhalb jedes Merkmals, zum Beispiel 20 kg und 25 kg |
+| x(jm) | eine Indikatorvariable, die 1 ist, wenn das Produkt bei Merkmal j die Ausprägung m hat, und sonst 0 |
+| b(jm) | der Teilnutzenwert der Ausprägung m des Merkmals j - die Unbekannte, nach der die Analyse auflöst |
+| Error | alles an der genannten Präferenz, was das additive Modell nicht erklärt |
+
+Die Indikatorvariable ist das mechanische Herzstück. Jedes Produktprofil schaltet genau eine Ausprägung je Merkmal ein, sodass die Summe zu „ein Teilnutzenwert aus jedem Merkmal, zusammenaddiert“ zusammenfällt. Im begleitenden Fachtext werden diese Indikatoren als **Dummy-Variablen** in einer Regression geführt, mit einer nützlichen Sparsamkeit: Ein Merkmal mit drei Ausprägungen braucht nur **zwei** Dummys, weil die dritte Ausprägung automatisch identifiziert ist, wenn beide Dummys null sind. Diese dritte Ausprägung wird zur Basis, und ihr Teilnutzenwert geht im Achsenabschnitt auf.
+
+## 6 · Das kleinstmögliche Beispiel: Form und Farbe
+
+Die Sitzung führt die Mechanik an einem bewusst trivialen Fall vor: **zwei Merkmale** (Form und Farbe), **je zwei Ausprägungen**. Ausmultipliziert ergibt das vier Produktprofile, und die befragte Person wird um eine einzige einfache Sache gebeten - bitte bringen Sie die vier Produkte in eine Rangfolge Ihrer Präferenzen, welches würden Sie zuerst wählen, welches als zweites, drittes und viertes?
+
+Vier ganzheitliche Urteile, und daraus kommen vier Teilnutzenwerte. Schreibt man das additive Modell für jedes Profil aus, sieht man, womit es die Schätzung zu tun hat:
+
+| Profil | Formausprägung | Farbausprägung | Präferenzgleichung |
+|---|---|---|---|
+| 1 | Form Ausprägung 1 | Farbe Ausprägung 1 | y1 = b(Form 1) + b(Farbe 1) + Error |
+| 2 | Form Ausprägung 2 | Farbe Ausprägung 2 | y2 = b(Form 2) + b(Farbe 2) + Error |
+| 3 | Form Ausprägung 2 | Farbe Ausprägung 1 | y3 = b(Form 2) + b(Farbe 1) + Error |
+| 4 | Form Ausprägung 1 | Farbe Ausprägung 2 | y4 = b(Form 1) + b(Farbe 2) + Error |
+
+Vier Gleichungen, vier unbekannte Teilnutzenwerte, ein gemeinsamer Satz genannter Ränge. Die befragte Person hat kein Wort über Form oder Farbe verloren, und trotzdem enthält das System jetzt alles, was nötig ist, um beide zu bepreisen.
+
+## 7 · Wie die Teilnutzenwerte geschätzt werden
+
+Die Schätzregel steht in den Notizen in einem Satz, und es lohnt sich, sie in dieser Form zu lernen. **Die statistische Schätzung bestimmt die Werte der Teilnutzenwerte so, dass die berechneten Präferenzwerte, die geschätzten y-Werte, den tatsächlich von der Kundschaft genannten Präferenzen, den echten y-Werten, so ähnlich wie möglich sind.**
+
+Mehr ist es nicht: die Zahlen so wählen, dass die vom Modell prognostizierte Rangfolge der beobachteten Rangfolge so nahe wie möglich kommt. Im begleitenden Fachtext geschieht das mit einer **Kleinste-Quadrate-Regression** der genannten Bewertungen auf die Dummy-Variablen - die geschätzte Gleichung für ein Beispiel zum öffentlichen Nahverkehr mit Fahrpreis und Wartezeit ergab einen Achsenabschnitt von 49.8 plus 26.7 und 14.0 für die beiden Fahrpreis-Dummys sowie 25.7 und 20.0 für die beiden Wartezeit-Dummys und reproduzierte die neun genannten Bewertungen nahezu exakt.
+
+<Aside type="note">
+**Anomalien aus den Teilnutzenwerten herauslesen.** Weil jede Ausprägung ihre eigene Zahl bekommt, muss die entstehende Kurve keine Gerade sein, und genau dort tauchen die Anomalien aus den Notizen auf. Im Nahverkehrsbeispiel ist der Nutzenverlust, wenn man 20 statt 10 Minuten wartet, klein, während der Verlust von 20 auf 30 Minuten groß ist - ein **Sprung**, und ein starker Hinweis darauf, dass 30 Minuten jenseits der Toleranzschwelle von jemandem liegen. Der Fahrpreis dagegen verlor über seine ganze Spanne gleichmäßig an Nutzen. Ein Teilnutzenwert, der zwischen zwei benachbarten Ausprägungen einbricht, ist die Art, wie sich ein **Knock-out-Kriterium** oder eine **minimale akzeptable Ausprägung** in den Daten ankündigt.
+</Aside>
+
+Eine zweite Bequemlichkeit aus dem Fachtext ist die **Normierung**: alle Teilnutzenwerte so umskalieren, dass der kleinste der ganzen Studie zu 0 und der größte zu 1 wird, mit v = (u - a) / (b - a), wobei a und b der kleinste und der größte Rohwert sind. Das ändert nichts an den inneren Verhältnissen, macht die Zahlen aber innerhalb eines Merkmals und über Merkmale hinweg vergleichbar.
+
+## 8 · Relative Wichtigkeit eines Merkmals
+
+Sobald jede Ausprägung einen Teilnutzenwert hat, folgt die Wichtigkeit des Merkmals, zu dem sie gehören, unmittelbar. Ein Merkmal zählt in dem Maß, in dem **der Wechsel von seiner schlechtesten zu seiner besten Ausprägung den Gesamtnutzen stark bewegt**. Wichtigkeit ist also eine **Spannweite**.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Spannweite eines Merkmals</span>
+    <code>Range(j) = highest part-worth of j MINUS lowest part-worth of j (absolute value)</code>
+  </div>
+  <div>
+    <span class="name">Relative Wichtigkeit</span>
+    <code>Importance(j) = Range(j) / [ Range(1) + Range(2) + ... + Range(J) ]</code>
+  </div>
+  <div>
+    <span class="name">Eigenschaft</span>
+    die Wichtigkeiten aller Merkmale summieren sich zu 1, also zu 100 Prozent
+  </div>
+</div>
+
+In Worten, genau so wie es die Folien formulieren: Die relative Wichtigkeit eines Merkmals ist die **absolute Differenz zwischen seinem höchsten und seinem niedrigsten Teilnutzenwert, geteilt durch die Summe aller solchen Differenzen**. Der begleitende Fachtext nennt das das Maß der relativen Wichtigkeit und berechnet es für den Nahverkehrsfall als 26.7 geteilt durch (26.7 plus 25.7), was 51 Prozent für den Fahrpreis und damit 49 Prozent für die Wartezeit ergibt.
+
+Zwei Folgerungen, die man in einer Prüfung leicht falsch macht. Erstens ist Wichtigkeit **eine Eigenschaft der Ausprägungen, die du getestet hast, nicht des Merkmals in der Welt**. Erweitere die Preisspanne in der Studie, und der Preis wirkt wichtiger, rein konstruktionsbedingt. Zweitens hat ein Merkmal, dessen Ausprägungen alle ungefähr gleich gut gefallen, eine **Spannweite nahe null und damit eine Wichtigkeit nahe null**, ganz gleich wie laut die Befragten beteuert hätten, es sei wichtig, wenn man sie direkt gefragt hätte.
+
+## 9 · Eine Studie planen und durchführen
+
+Die Vorlesung legt sieben Schritte dar und arbeitet sie an einem E-Scooter-Sharing-System durch.
+
+| # | Schritt | Was tatsächlich passiert |
+|:-:|---|---|
+| 1 | Produkt- oder Dienstleistungsmerkmale sammeln | Auflisten, was die Wahl plausibel treiben könnte |
+| 2 | Merkmalsausprägungen festlegen | Realistische Werte je Merkmal fixieren und die volle Permutation zählen |
+| 3 | Modell und Software wählen | Choicebasiert, Rangordnung oder adaptiv; Sawtooth ist das Standardwerkzeug |
+| 4 | Stimuli gestalten | Die volle Permutation der Kombinationen auf einen handhabbaren Satz Profile reduzieren |
+| 5 | Daten erheben | Szenariokonstruktion plus Hintergrundfragen |
+| 6 | Analysieren | Analyse auf Durchschnittsebene **und** auf Individualebene sind beide möglich |
+| 7 | Interpretieren und simulieren | Relative Wichtigkeiten, Nutzen der Ausprägungen und der Nutzen neuer Kombinationen |
+
+Schritt 4 ist der Punkt, an dem die meisten Studiendesigns stehen oder fallen.
+
+**Die E-Scooter-Merkmale und -Ausprägungen.** Höchstgeschwindigkeit der Scooter mit 15, 20, 25, 30 oder 35 km pro Stunde. Durchschnittliche Gehzeit zum nächsten verfügbaren Scooter mit 1, 2.5 oder 4 Minuten. Preisgestaltung entweder als 1 Euro Freischaltgebühr plus 30 Cent pro Minute oder ohne Freischaltgebühr plus 50 Cent pro Minute. Reservierung möglich oder nicht möglich. Smartphone-Halterung vorhanden oder nicht vorhanden.
+
+**Warum es Schritt 4 gibt.** Die volle Permutation ist 5 mal 3 mal 2 mal 2 mal 2, also **120 Kombinationen**. Keine befragte Person beurteilt 120 Profile. Also wird das vollständige faktorielle Design reduziert - im Beispiel der Vorlesung auf **30 Profile, präsentiert als 10 Vergleiche von je 3 Profilen**, gestützt auf die Annahme, dass die Merkmale unabhängig sind. Der begleitende Fachtext macht dasselbe in größerem Maßstab für eine Smartphone-Studie mit fünf Merkmalen zu je vier Ausprägungen, bei der die volle Menge über tausend Profile hinausläuft und ein **teilfaktorielles Design** sie auf 32 Profile eindampft, die auf einer Skala von null bis 100 bewertet werden.
+
+<Aside type="caution">
+**Vollprofil gegen reduziertes Design.** Ein **Vollprofil**-Design zeigt jede mögliche Kombination, was nur bei sehr kleinen Studien machbar ist, etwa dem Form-und-Farbe-Fall mit vier Profilen. Alles Realistische nutzt ein **reduziertes** Design, das so gewählt ist, dass die Merkmale über die verbleibenden Profile hinweg unkorreliert bleiben - genau das erlaubt es der Schätzung, ihre Effekte weiterhin zu trennen. Der Preis dafür ist, dass Interaktionen schwer oder gar nicht mehr schätzbar sind, und das ist der Preis der Unabhängigkeitsannahme.
+</Aside>
+
+**Die Frageform wählen.** Die alternativen Wege, Präferenz zu messen, die alle als Conjoint-Input taugen:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Rating - inwieweit entspricht dieses Produkt Ihren Präferenzen, von sehr stark bis überhaupt nicht</span>
+  <span class="sc-chip green">Choice - welches dieser Produkte würden Sie wählen</span>
+  <span class="sc-chip amber">Ranking - bringen Sie diese Produkte in eine Rangfolge, das bevorzugte zuerst</span>
+  <span class="sc-chip">Abgestufter Paarvergleich - wie stark bevorzugen Sie eines dieser beiden, von klar A über indifferent bis klar B</span>
+</div>
+
+**Software und Datenerhebung.** Die Vorlesung nennt Sawtooth Software als weltweit führenden Anbieter, kostenlos für Masterarbeiten über das Förderprogramm, und erwähnt eine webbasierte, choicebasierte Umsetzung. Die Datenerhebung besteht nicht nur aus den Profilen: Dazu gehören auch die **Szenariokonstruktion**, damit die befragte Person in einer definierten Situation urteilt, und **zusätzliche Fragen** wie Alter, Geschlecht, Wohnort und allgemeine Mobilitätspräferenzen.
+
+**Analyse und Segmentierung.** Sowohl die **Analyse auf Durchschnitts- als auch auf Individualebene** ist möglich, was ungewöhnlich und wertvoll ist - die Conjoint-Analyse gibt jeder einzelnen befragten Person ihren eigenen Satz Teilnutzenwerte. Das eröffnet einen Segmentierungsweg, den die Vorlesung vorführt: eine **Clusteranalyse über die Vektoren der relativen Wichtigkeit** rechnen, mit dem Ward-Algorithmus und quadrierten euklidischen Distanzen, und die E-Scooter-Befragten fallen in **drei Cluster** von Menschen, die Geschwindigkeit, Gehzeit und Preis sichtbar unterschiedlich gegeneinander abwägen. Der begleitende Fachtext macht denselben Punkt: Cluster von Personen mit ähnlichen Wichtigkeiten sind faktisch Marktsegmente.
+
+## 10 · Prognose, Simulation und Validität
+
+Der letzte Schritt ist derjenige, der der Studie ihr Budget verdient. Weil das Modell additiv ist, kann es **jede** Kombination von Ausprägungen bewerten, auch Kombinationen, die nie jemandem gezeigt wurden. Das ist die Bedeutung von Schritt 7, den Nutzen neuer Produktkombinationen zu simulieren.
+
+Der begleitende Fachtext buchstabiert drei Dinge aus, wie man das verantwortungsvoll tut:
+
+- **Interpolation zwischen Ausprägungen ist zulässig.** Ein Wert zwischen zwei getesteten Ausprägungen lässt sich bewerten, indem man die Teilnutzenfunktion über diese Lücke als linear annimmt - ein Fahrpreis genau zwischen zwei getesteten Fahrpreisen nimmt den Mittelwert ihrer beiden Teilnutzenwerte.
+- **Extrapolation über die getestete Spanne hinaus ist es nicht.** Eine Ausprägung außerhalb der getesteten Spanne zu bewerten kann übel in die Irre führen, und die Abhilfe besteht darin, die Merkmalswerte schon beim Entwurf der Profile vernünftig zu wählen, damit der interessante Bereich innerhalb der Spanne liegt.
+- **Die geschätzten Nutzenfunktionen validieren.** Die beiden genannten Wege sind die **prognostische Validierung an einer Holdout-Stichprobe** von Profilen, die aus der Schätzung herausgehalten wurden, und die Validierung am **tatsächlichen oder beabsichtigten Marktverhalten**, etwa Erstwahlen, Absatz oder Marktanteil.
+
+Der Fachtext fasst die Technik außerdem in fünf Rollen zusammen, eine kompakte Wiederholungsliste: Sie ist eine **Mess**technik zur Quantifizierung der Trade-offs von Käuferinnen und Käufern, eine **Analyse**technik zur Prognose von Reaktionen auf neue Produkte, eine **Segmentierungs**technik zur Gruppierung von Käufern mit ähnlichen Trade-offs, eine **Simulations**technik zur Bewertung neuer Produktideen gegen Wettbewerber und eine **Optimierungs**technik, um das Profil zu finden, das Anteil oder Rendite maximiert.
+
+**Speziell die choicebasierte Conjoint-Analyse.** Die zwei gängigen Varianten sind **ratingbasiert** und **choicebasiert**, und der Umsetzungspfad gabelt sich früh: Zweck festlegen, Ansatz festlegen, Merkmale und Ausprägungen bestimmen, dann entweder Profile gestalten und mit Regression analysieren oder **Choice-Sets** gestalten und mit einem **Logit**-Modell analysieren. Beide laufen auf dieselben Ergebnisse hinaus. In der choicebasierten Version der Nahverkehrsstudie im Fachtext wurden 42 Choice-Sets der **Größe drei** erzeugt, und jede befragte Person sagte einfach, welches der drei sie nehmen würde; die Antworten wurden mit einem **konditionalen Logit-Modell** per Maximum-Likelihood geschätzt, und das Muster der Teilnutzenwerte stimmte mit dem ratingbasierten Ergebnis überein. Ein Designdetail, das man klauen sollte: Die Sets mischten bewusst **dominierte Optionen** - eine Alternative, die bei jedem Merkmal besser ist und als Plausibilitätsprüfung für die befragte Person dient - mit Sets, in denen ein echter Trade-off unvermeidlich ist.
+
+## 11 · Stärken und Grenzen
+
+| Stärken | Grenzen |
+|---|---|
+| Die Interviewsituation ist **natürlich und realistisch** - Menschen vergleichen Produkte, und genau das tun sie ohnehin | Die Befragten müssen in jeder Wahlaufgabe **viel Information** verarbeiten |
+| Liefert den **Nutzen jeder Merkmalsausprägung**, nicht nur den des Merkmals, zum Beispiel Preis bei 5, 10 und 15 Euro | Die Aufgabe ist **ermüdend**, und Ermüdung verschlechtert die späteren Antworten |
+| Liefert die **relative Wichtigkeit der Merkmale**, zum Beispiel dass der Preis beim Fernsehkauf das Energielabel überwiegt | Praktisch lassen sich höchstens rund **10 Merkmale** zeigen |
+| Kann **Interaktionseffekte** aufdecken, etwa dass Rot speziell auf einem Ferrari beliebt ist | Reduzierte Designs unterstellen meist **unabhängige** Merkmale, sodass die meisten Interaktionen ungemessen bleiben |
+| **Flexibel** über Industriegüter, Konsumgüter und Dienstleistungen hinweg | Die Wichtigkeit hängt von den **gewählten Ausprägungsspannen** ab, eine schlecht geplante Studie liefert also selbstbewusst falsche Gewichte |
+
+## Durchgerechnetes Beispiel
+
+Eine kleine Conjoint-Analyse zu einem **kompakten Pendler-E-Bike**. Drei Merkmale, je zwei Ausprägungen, die volle Permutation ist also 2 mal 2 mal 2 = 8 Profile, klein genug, um alle zu zeigen.
+
+| Merkmal | Ausprägung A | Ausprägung B |
+|---|---|---|
+| Gewicht | 20 kg | 25 kg |
+| Reichweite pro Ladung | 80 km | 50 km |
+| Preis | 1800 Euro | 2400 Euro |
+
+Eine befragte Person bringt alle acht in eine Rangfolge von 1 (am meisten bevorzugt) bis 8 (am wenigsten bevorzugt). Um Ränge in einen Präferenzwert zu verwandeln, drehe ich sie um, also Wert = 9 minus Rang, und das beste Profil erreicht 8.
+
+| Profil | Gewicht | Reichweite | Preis | Rang | Wert y |
+|:-:|---|---|---|:-:|--:|
+| P1 | 20 kg | 80 km | 1800 | 1 | 8 |
+| P2 | 20 kg | 80 km | 2400 | 3 | 6 |
+| P3 | 20 kg | 50 km | 1800 | 4 | 5 |
+| P4 | 20 kg | 50 km | 2400 | 7 | 2 |
+| P5 | 25 kg | 80 km | 1800 | 2 | 7 |
+| P6 | 25 kg | 80 km | 2400 | 5 | 4 |
+| P7 | 25 kg | 50 km | 1800 | 6 | 3 |
+| P8 | 25 kg | 50 km | 2400 | 8 | 1 |
+
+**Schritt 1 - das Gesamtmittel.** Die acht Werte sind 8, 6, 5, 2, 7, 4, 3, 1, sie summieren sich zu 36, das Gesamtmittel ist also 36 / 8 = **4.5**.
+
+**Schritt 2 - der Durchschnittswert jeder Ausprägung.** Weil das Design balanciert ist, kommt jede Ausprägung in genau vier Profilen vor, der Durchschnitt der Ausprägung ist also eine faire Schätzung dessen, was sie beiträgt.
+
+| Merkmal | Ausprägung | Profile, die sie enthalten | Summe der Werte | Durchschnitt der Ausprägung | Teilnutzenwert (Durchschnitt minus 4.5) |
+|---|---|---|--:|--:|--:|
+| Gewicht | 20 kg | P1, P2, P3, P4 | 8+6+5+2 = 21 | 5.25 | **+0.75** |
+| Gewicht | 25 kg | P5, P6, P7, P8 | 7+4+3+1 = 15 | 3.75 | **-0.75** |
+| Reichweite | 80 km | P1, P2, P5, P6 | 8+6+7+4 = 25 | 6.25 | **+1.75** |
+| Reichweite | 50 km | P3, P4, P7, P8 | 5+2+3+1 = 11 | 2.75 | **-1.75** |
+| Preis | 1800 | P1, P3, P5, P7 | 8+5+7+3 = 23 | 5.75 | **+1.25** |
+| Preis | 2400 | P2, P4, P6, P8 | 6+2+4+1 = 13 | 3.25 | **-1.25** |
+
+**Schritt 3 - prüfen, ob das Modell die Rangfolge reproduziert.** Prognostizierter Wert = 4.5 plus die drei Teilnutzenwerte dieses Profils.
+
+| Profil | Rechnung | Prognose | Genannt | Fehler |
+|:-:|---|--:|--:|--:|
+| P1 | 4.5 + 0.75 + 1.75 + 1.25 | 8.25 | 8 | +0.25 |
+| P5 | 4.5 - 0.75 + 1.75 + 1.25 | 6.75 | 7 | -0.25 |
+| P2 | 4.5 + 0.75 + 1.75 - 1.25 | 5.75 | 6 | -0.25 |
+| P3 | 4.5 + 0.75 - 1.75 + 1.25 | 4.75 | 5 | -0.25 |
+| P6 | 4.5 - 0.75 + 1.75 - 1.25 | 4.25 | 4 | +0.25 |
+| P7 | 4.5 - 0.75 - 1.75 + 1.25 | 3.25 | 3 | +0.25 |
+| P4 | 4.5 + 0.75 - 1.75 - 1.25 | 2.25 | 2 | +0.25 |
+| P8 | 4.5 - 0.75 - 1.75 - 1.25 | 0.75 | 1 | -0.25 |
+
+Jeder Fehler beträgt einen Viertelpunkt, und die prognostizierte Reihenfolge ist P1, P5, P2, P3, P6, P7, P4, P8 - genau die genannte Rangfolge. Das additive Modell passt für diese befragte Person gut, und das ist die Lizenz, es für Prognosen zu nutzen.
+
+**Schritt 4 - relative Wichtigkeit.** Die Spannweite jedes Merkmals ist der Abstand zwischen seinem besten und seinem schlechtesten Teilnutzenwert.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Spannweiten</span>
+    <code>Weight = 0.75 - (-0.75) = 1.50 · Range = 1.75 - (-1.75) = 3.50 · Price = 1.25 - (-1.25) = 2.50 · Sum = 7.50</code>
+  </div>
+  <div>
+    <span class="name">Relative Wichtigkeit</span>
+    <code>Weight = 1.50 / 7.50 = 20.0% · Range = 3.50 / 7.50 = 46.7% · Price = 2.50 / 7.50 = 33.3%</code>
+  </div>
+</div>
+
+<p><Badge text="Reichweite 46.7%" variant="success" /> <Badge text="Preis 33.3%" variant="caution" /> <Badge text="Gewicht 20.0%" variant="note" /></p>
+
+Die Reichweite der Batterie ist dieser befragten Person ungefähr **doppelt** so wichtig wie das Gewicht, und der Preis liegt dazwischen. Zu beachten: Gesagt hat das niemand, es wurde aus acht Rangplätzen herausgezogen.
+
+**Schritt 5 - der Trade-off in Geld.** Der Teilnutzenwert des Preises spannt 2.50 Nutzenpunkte über eine Lücke von 600 Euro, ein Nutzenpunkt ist dieser Person also etwa 600 / 2.50 = **240 Euro** wert. Der Schritt von 50 km auf 80 km Reichweite (wert 3.50 Punkte) ist damit etwa 3.50 mal 240 = **840 Euro** wert, und 5 kg abzuspecken (wert 1.50 Punkte) etwa **360 Euro**. Das ist ein direkt verwendbarer Input für die Preisgestaltung.
+
+**Schritt 6 - zwischen zwei neuen Konfigurationen prognostizieren.** Die Fertigung sagt, ein Preispunkt von **2100 Euro** sei erreichbar, eine Ausprägung, die nie getestet wurde. Linear interpoliert ist ihr Teilnutzenwert der Mittelwert der beiden getesteten Preis-Teilnutzenwerte: (1.25 + (-1.25)) / 2 = **0.00**. Zwei Kandidaten-Ausführungen zu diesem Preis:
+
+| Kandidat | Gewicht | Reichweite | Preis | Gesamtnutzen | Ergebnis |
+|---|---|---|---|--:|---|
+| Konfiguration A - die leichte | 20 kg | 50 km | 2100 | 4.5 + 0.75 - 1.75 + 0.00 = **3.50** | unterliegt |
+| Konfiguration B - die reichweitenstarke | 25 kg | 80 km | 2100 | 4.5 - 0.75 + 1.75 + 0.00 = **5.50** | **bevorzugt** |
+
+**Konfiguration B gewinnt um 2.00 Nutzenpunkte.** Die Begründung liegt offen: Die zusätzlichen 30 km bringen +3.50, die zusätzlichen 5 kg kosten -1.50, und der Nettogewinn von +2.00 ist der Grund, warum die Reichweite geschützt und das Gewicht zugestanden werden sollte. Das entspricht 2.00 mal 240 = etwa 480 Euro Zahlungsbereitschaft. Und der ehrliche Vorbehalt aus Abschnitt 10 gilt: 2100 Euro liegen sicher **zwischen** zwei getesteten Ausprägungen, Interpolieren ist also in Ordnung. Für ein Modell zu 3500 Euro zu prognostizieren wäre Extrapolation, und dem sollte man nicht trauen.
+
+## Auf dein Projekt anwenden
+
+<Steps>
+
+1. **Schreibe auf, welche Entscheidung die Studie stützen soll.** Bei welchen zwei oder drei Spezifikationsentscheidungen bist du wirklich hin- und hergerissen, und was würdest du je nach Antwort anders machen? Eine Conjoint-Analyse, die keine Entscheidung verändern kann, ist die Ermüdung der Befragten nicht wert.
+
+2. **Wähle höchstens fünf Merkmale und begründe die Liste.** Nimm die, von denen du glaubst, dass sie die Wahl tatsächlich treiben, und sei in der Lage zu sagen, warum diese und nicht andere. Zehn Merkmale sind die praktische Obergrenze, und fünf ist für ein Studienprojekt eine weitaus angenehmere Zahl.
+
+3. **Definiere Ausprägungen, die realistisch sind und deine echten Optionen einklammern.** Zwei bis vier Ausprägungen je Merkmal, die abdecken, was du tatsächlich bauen könntest und was Wettbewerber schon anbieten. Denk daran, dass Wichtigkeit relativ zu den gewählten Spannen ist und dass du nur innerhalb dieser Spannen gefahrlos interpolieren kannst, also lege deine Kandidatenspezifikationen in die Spanne hinein.
+
+4. **Zähle die volle Permutation.** Multipliziere die Zahlen der Ausprägungen miteinander. Liegt das Ergebnis über etwa zehn, brauchst du ein reduziertes Design, präsentiert entweder als Profile zum Ordnen oder Bewerten oder als Choice-Sets mit zwei oder drei Optionen.
+
+5. **Entscheide, wie du fragst, und stelle die Szene.** Ranking lässt sich bei einem kleinen Design leicht von Hand auswerten; eine Ratingskala liefert mehr Information je Profil; eine Wahlaufgabe ist am realistischsten. Versetze die befragte Person vor dem ersten Profil in ein konkretes Szenario, streue gelegentlich eine dominierte Option als Aufmerksamkeitsprüfung ein und erhebe die Hintergrundvariablen, nach denen du später segmentieren willst.
+
+6. **Erhebe die Daten und halte ein paar Profile als Holdout zurück.** Nutze nicht jedes Profil für die Schätzung. Halte zwei oder drei zurück, damit du testen kannst, ob die geschätzten Teilnutzenwerte Urteile vorhersagen, die das Modell noch nicht gesehen hat.
+
+7. **Schätze die Teilnutzenwerte und die Wichtigkeiten.** Bei einem kleinen balancierten Design genügen die Durchschnitte der Ausprägungen minus dem Gesamtmittel für eine Tabellenkalkulation; für alles Größere nimm eine Dummy-Variablen-Regression oder ein Logit-Modell, wenn die Daten Wahlen sind. Berechne dann jede Wichtigkeit als ihre Spannweite geteilt durch die Summe der Spannweiten und trage die Teilnutzenwerte über die Ausprägungen auf, um Anomalien zu erkennen - Sprünge, Plateaus oder eine Ausprägung, die so schlecht ist, dass sie als Knock-out wirkt.
+
+8. **Simuliere deine Kandidatenkonfigurationen und prüfe auf Segmente.** Bewerte jede realistische Spezifikation, rechne die Unterschiede über den Preis-Teilnutzenwert in Geld um und clustere die individuellen Wichtigkeitsvektoren, um zu sehen, ob du es mit einem Markt zu tun hast oder mit dreien.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Conjoint-Analyse | Ein Verfahren, das Menschen ganze Produkte zeigt, festhält, welche sie bevorzugen, und rückwärts auf den Wert jeder Merkmalsausprägung schließt |
+| Merkmal | Eine Dimension des Produkts, die variiert werden kann, etwa Gewicht, Reichweite oder Preis |
+| Merkmalsausprägung | Ein konkreter Wert, den das Merkmal annehmen kann, etwa 20 kg oder 1800 Euro |
+| Profil (Stimulus) | Ein vollständiges hypothetisches Produkt, zusammengesetzt aus genau einer Ausprägung je Merkmal |
+| Teilnutzenwert | Der Präferenzwert, den eine bestimmte Merkmalsausprägung beisteuert - die Zahl, für die es die Analyse überhaupt gibt |
+| Additives Nutzenmodell | Die Annahme, dass der Gesamtnutzen eines Produkts die Summe der Teilnutzenwerte seiner Ausprägungen ist, plus ein Fehlerterm |
+| Relative Wichtigkeit | Die Spannweite der Teilnutzenwerte eines Merkmals, geteilt durch die Summe aller Merkmalsspannweiten, sodass sich alle Wichtigkeiten zu 100 Prozent addieren |
+| Spannweite eines Merkmals | Der absolute Abstand zwischen seinem höchsten und seinem niedrigsten Teilnutzenwert - das Maß dafür, wie stark es den Gesamtnutzen bewegt |
+| Interaktion | Wenn die gemeinsame Wirkung zweier Merkmale von der Summe ihrer separaten Haupteffekte abweicht, sodass die Wichtigkeit des einen Merkmals vom anderen abhängt |
+| Volle Permutation | Jede mögliche Kombination von Ausprägungen - das Produkt der Ausprägungszahlen, das schnell explodiert |
+| Reduziertes (teilfaktorielles) Design | Eine sorgfältig gewählte Teilmenge von Profilen, die die Merkmale unkorreliert hält, damit ihre Effekte weiterhin trennbar sind |
+| Choicebasierte Conjoint-Analyse | Die Variante, bei der die Befragten eine Option aus einem kleinen Choice-Set wählen, ausgewertet mit einem Logit-Modell |
+| Holdout-Stichprobe | Profile, die bewusst aus der Schätzung herausgehalten und hinterher genutzt werden, um zu testen, ob das Modell gut prognostiziert |
+| Simulation | Produktkonfigurationen bewerten, die nie jemandem gezeigt wurden, um Kandidatendesigns vor dem Bau zu vergleichen |
+
+## Teste dich selbst
+
+1. Nenne die zugrunde liegende Frage der Conjoint-Analyse und die vier Ziele, die die Notizen daran hängen.
+2. Warum scheitert es immer noch, wenn man die Befragten bittet, 100 Punkte auf Hotelmerkmale zu verteilen, obwohl das Punktebudget eine Entscheidung erzwingt?
+3. Erkläre eine Interaktion in eigenen Worten am Beispiel des Hotelfensters und sage, was das Standardmodell der Conjoint-Analyse stattdessen unterstellt.
+4. Worauf verweist der Name Conjoint, und welche zwei Ergebnisse liefert die Dekomposition?
+5. **Rechnung.** Eine Studie mit zwei Merkmalen zu einem Laptop ergibt Teilnutzenwerte von +1.2 und -1.2 für die Bildschirmgröße sowie +0.4 und -0.4 für die Tastaturbeleuchtung. Berechne die Spannweite jedes Merkmals und seine relative Wichtigkeit. Berechne dann, bei einem Basisnutzen von 5.0, den Gesamtnutzen eines Laptops mit dem guten Bildschirm und ohne Beleuchtung.
+6. Dein geschätztes Modell verwendet Preisausprägungen von 200 und 400 Euro. Ein Kollege bittet dich, die Nachfrage bei 900 Euro zu prognostizieren. Was sagst du, und warum?
+
+<Aside type="note" title="Lösungen">
+1. Die zugrunde liegende Frage lautet, welche Produktmerkmale welchen Wert für die Kundschaft erzeugen. Die vier Ziele sind: welche Merkmale wie wichtig sind; welche Merkmalsausprägungen welchen Nutzen stiften; ob es Anomalien gibt wie Sprünge, Knock-out-Kriterien oder Mindestausprägungen; und welche Trade-offs zwischen den verschiedenen Merkmalen bestehen.
+2. Weil die befragte Person immer noch über **abstrakte Merkmale** nachdenken soll, statt eine Produktentscheidung zu treffen. Niemand wählt je zwischen „Zimmergröße“ und „Reinigungshäufigkeit“ als solchen - man wählt zwischen ganzen Hotels, die Ausprägungen von beidem bündeln. Ohne einen konkreten Verzicht zwischen vollständigen Alternativen bleiben die Antworten schmeichelhaft und unzuverlässig.
+3. Ein großes Fenster zählt enorm viel in einem kleinen, dunklen Zimmer und fast nichts in einem großen, hellen, also **hängt** die Wichtigkeit der Fenstergröße **von den anderen Merkmalen ab**. Formal liegt eine Interaktion vor, wenn die kombinierte Wirkung zweier Merkmale von der Summe ihrer beiden separaten Haupteffekt-Nutzen abweicht. Das Standardmodell unterstellt das Gegenteil, nämlich dass die Merkmale unabhängig oder modular sind, sodass der Gesamtnutzen eine einfache Summe ist; Interaktionen müssen bewusst als zusätzlicher Produktterm ergänzt werden.
+4. Er verweist darauf, dass Produkte **CONsidered JOINTly** werden, also als ganze Bündel beurteilt werden und nicht Merkmal für Merkmal. Die Dekomposition liefert (a) die relative Wichtigkeit der Merkmale und (b) die Teilnutzenwerte der einzelnen Merkmalsausprägungen.
+5. Spannweite Bildschirm = 1.2 - (-1.2) = **2.4**. Spannweite Beleuchtung = 0.4 - (-0.4) = **0.8**. Summe der Spannweiten = 3.2. Wichtigkeit Bildschirm = 2.4 / 3.2 = **75 Prozent**; Wichtigkeit Beleuchtung = 0.8 / 3.2 = **25 Prozent**. Gesamtnutzen = 5.0 + 1.2 - 0.4 = **5.8**.
+6. Ablehnen oder sehr deutlich mit einem Warnhinweis versehen. 900 Euro liegen weit **außerhalb** der getesteten Spanne von 200 bis 400 Euro, und eine Teilnutzenfunktion über die tatsächlich gezeigten Ausprägungen hinaus zu extrapolieren kann ernsthaft in die Irre führen. Auf, sagen wir, 300 Euro zu interpolieren ist vertretbar; die Abhilfe für 900 Euro ist, die Studie mit Preisausprägungen neu zu planen, die den interessierenden Bereich einklammern.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Zugrunde liegende Frage: **welche Produktmerkmale welchen Wert für die Kundschaft erzeugen.** Ziele: welche Merkmale wie wichtig sind, welche Ausprägungen welchen Nutzen stiften, ob es **Anomalien** gibt (Sprünge, Knock-out-Kriterien, Mindestausprägungen) und welche **Trade-offs** bestehen.
+- **Die direkte Befragung scheitert.** Wichtigkeit zu bewerten oder auch 100 Punkte auf Hotelmerkmale zu verteilen erzeugt schmeichelhafte Antworten, weil kein echter Verzicht stattfindet. **Interaktionen** machen es schlimmer: Die Wichtigkeit der Fenstergröße hängt vom Zimmer ab, und eine Interaktion bedeutet, dass die kombinierte Wirkung zweier Merkmale von der Summe ihrer separaten Haupteffekt-Nutzen abweicht.
+- Der Name sagt, was die Methode tut: Produkte werden **CONsidered JOINTly**, also als ganze Bündel beurteilt, und die Analyse **zerlegt** diese ganzheitlichen Urteile in (1) die relative Wichtigkeit der Merkmale und (2) die Teilnutzenwerte der Ausprägungen.
+- Das Modell ist eine **additive Nutzenfunktion**: y(k), die Präferenz für Produkt k, ist die Summe über die Merkmale j und die Ausprägungen m aus dem Teilnutzenwert b(jm) mal einer Indikatorvariablen x(jm), die 1 ist, wenn das Produkt bei Merkmal j die Ausprägung m hat, und sonst 0, plus ein Fehlerterm.
+- Der kleinste Fall ist **zwei Merkmale, zwei Ausprägungen, vier Profile, geordnet von eins bis vier**. Die Schätzung wählt die Teilnutzenwerte so, dass die **berechneten Präferenzen den genannten Präferenzen so nahe wie möglich kommen**, typischerweise über eine Dummy-Variablen-Regression.
+- **Relative Wichtigkeit = die Spannweite der Teilnutzenwerte eines Merkmals (höchster minus niedrigster, im Absolutbetrag), geteilt durch die Summe aller Merkmalsspannweiten.** Die Wichtigkeiten summieren sich zu 100 Prozent, und sie hängen von den Ausprägungsspannen ab, die du getestet hast.
+- Design: Merkmale sammeln, Ausprägungen festlegen, Modell und Software wählen, **die volle Permutation reduzieren** (120 E-Scooter-Kombinationen wurden zu 30 Profilen in 10 Vergleichen von je 3), Daten mit Szenario plus Hintergrundfragen erheben, auf Durchschnitts- **und** Individualebene analysieren, dann interpretieren und neue Kombinationen **simulieren**.
+- Fragen über **Rating, Choice, Ranking oder abgestuften Paarvergleich**. Choicebasierte Studien nutzen kleine Choice-Sets, ausgewertet mit einem Logit-Modell. Individuelle Teilnutzenwerte erlauben eine **clusterbasierte Segmentierung** der Befragten.
+- **Innerhalb der getesteten Spanne interpolieren, niemals darüber hinaus extrapolieren**, und an einer **Holdout-Stichprobe** sowie am echten Marktverhalten validieren.
+- Pro: natürliche Interviewsituation, Nutzen je Ausprägung, Wichtigkeit je Merkmal, Interaktionseffekte, flexibel über Produkte und Dienstleistungen hinweg. Contra: hohe Informationslast, ermüdend für die Befragten, rund **10 Merkmale maximal**.
+</Aside>
+
+*Weiter: [House of Quality →](/de/learnings/mba/innovation-and-new-business-proposal/09-house-of-quality/) - das, was Kundinnen und Kunden wollen, in das übersetzen, was Ingenieurinnen und Ingenieure bauen.*

@@ -1,0 +1,354 @@
+---
+title: "House of Quality (Quality Function Deployment)"
+description: "Wie Quality Function Deployment Kundenanforderungen in technische Anforderungen übersetzt - die Kette verketteter Planungsmatrizen, die Räume des Hauses (Kundenbedürfnisse und ihre Gewichte, technische Parameter, die Beziehungsmatrix mit Bewertungen von fünf bis eins, das Dach der Wechselwirkungen, der Wettbewerbsvergleich und die Zielwerte), das Autotür-Beispiel und die ehrlichen Vor- und Nachteile der Methode."
+sidebar:
+  label: "9 · House of Quality"
+  order: 9
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Proposal - TUHH Institute of Entrepreneurship & Institute of Innovation Marketing, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Alles aus den vorangegangenen Kapiteln hat Aussagen von Kunden hervorgebracht: Pains und Gains aus der Arbeit am Wertversprechen, Schmerzpunkte aus der Customer Journey, Attributkategorien aus Kano, Teilnutzenwerte aus der Conjoint-Analyse. All das ist in Kundensprache geschrieben. Nichts davon kann man einem Ingenieur so übergeben, wie es dasteht, denn *bleibt am Hang offen stehen* lässt sich nirgends fertigen. Quality Function Deployment, meist zu QFD abgekürzt, existiert genau dazu, diese Lücke zu schließen. Sein erklärtes Ziel ist leicht gesagt und schwer getan: **Kundenanforderungen in technische Anforderungen übersetzen**.
+
+Das House of Quality ist das Arbeitswerkzeug von QFD. Es ist ein einziges großes Schaubild, ungefähr in Form eines Hauses, auf dem Marketing und Entwicklung ihre beiden Vokabulare nebeneinanderlegen und öffentlich darüber streiten, welche technischen Entscheidungen tatsächlich welchen Kundenbedürfnissen dienen. Der Wert liegt weniger im fertigen Schaubild als in dem Gespräch, das es erzwingt, denn es bringt Menschen, die sonst aneinander vorbeireden, dazu, auf dasselbe Raster zu zeigen.
+
+Der Name lohnt es, wörtlich genommen zu werden. Das Schaubild hat eine linke Wand, eine Decke, einen Körper, ein Dach, eine rechte Wand und einen Keller, und jeder dieser Räume enthält eine ganz bestimmte Art von Information. Sobald man weiß, was in welchen Raum gehört, reduziert sich die ganze Methode darauf, sie in der richtigen Reihenfolge auszufüllen.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Das Haus ist ein **Übersetzungswerkzeug mit einer Laufrichtung**: Was der Kunde will, geht links hinein, wie das Produkt verändert werden kann, läuft oben quer darüber, und die Zellen dazwischen halten fest, *wie stark jedes Wie jedem Was dient*. Alles andere im Schaubild - die Gewichte, das Dach, der Wettbewerbsvergleich, die Zielwerte - existiert, damit das Team entscheiden kann, für welche der Wies tatsächlich Geld ausgegeben wird.
+</Aside>
+
+## 1 · Das Ziel: von der Stimme des Kunden zur Stimme des Ingenieurs
+
+QFD geht von einer Überzeugung aus und nicht von einer Technik: Ein Produkt sollte so gestaltet werden, dass es widerspiegelt, was Kunden tatsächlich wollen, und das heißt, dass die Leute, die mit Kunden sprechen, und die Leute, die das Ding bauen, vom ersten Moment der Produktidee an zusammenarbeiten müssen, statt die Arbeit nacheinander über eine Mauer zu reichen.
+
+Die beiden Vokabulare bekommen auf dem Schaubild feste Namen, und die Namen sind eine gute Gedächtnisstütze.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Stimme des Kunden<span class="sub">Kundenanforderungen in den eigenen Worten des Kunden - von außen leicht zu schließen, lässt bei Regen kein Wasser durch</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node soft">Das Haus<span class="sub">hier findet die Übersetzung statt, Zelle für Zelle</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Stimme des Ingenieurs<span class="sub">technische Parameter, die messbar sind und auf einen Zielwert gesetzt werden können - Energie zum Schließen der Tür in Foot-Pounds</span></div>
+  </div>
+  <figcaption>Die Marketingseite sagt, was zu tun ist, die Entwicklungsseite sagt, wie es zu tun ist. Das Haus ist der Ort, an dem beide übereinandergelegt werden, sodass sich jedes Wie durch ein Was rechtfertigen lässt.</figcaption>
+</div>
+
+Daraus folgt eine nützliche Disziplin: Kundenanforderungen werden in der **eigenen Formulierung des Kunden** aufbewahrt, selbst wenn die Formulierung vage ist, denn dieselbe Zeile wird von Produktplanern, Konstrukteuren, Fertigungsingenieuren und Vertriebsleuten gelesen, und jeder von ihnen würde sonst stillschweigend seine eigene Deutung einsetzen. Der Preis dafür, die Originalworte zu behalten, ist Mehrdeutigkeit darüber, was *leise* oder *leicht* wirklich bedeutet. Der Preis dafür, sie nicht zu behalten, ist schlimmer: Das Team löst am Ende Probleme, die der Kunde nie hatte.
+
+Ebenfalls erinnernswert: Nicht jede Anforderung kommt von einem Endnutzer. Regulierungsbehörden steuern Anforderungen bei (bei einem Seitenaufprall sicher zu sein), Händler steuern Anforderungen bei (leicht zu präsentieren zu sein), und Lieferanten sowie Serviceorganisationen bringen ihre eigenen ein. Sie alle gehören an die linke Wand.
+
+## 2 · QFD ist eine Kette von Matrizen, kein einzelnes Schaubild
+
+Das ist der Teil, den die meisten übersehen, wenn sie nur das Bild des Hauses kennenlernen. QFD ist eine **hierarchisch strukturierte Analyse aus mehreren verketteten Planungsmatrizen**. Das Haus ist nur die erste davon. Der Kniff, der sie verbindet, ist, dass die **Ergebnisse der einen Matrix zu den Eingangsgrößen der nächsten werden**: Die Wies der einen Stufe werden links als die Was der folgenden Stufe eingetragen.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Matrix 1 - das House of Quality<span class="sub">hinein: Kundenanforderungen · heraus: technische Parameter mit Zielgrößen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Matrix 2 - Teileplanung<span class="sub">hinein: technische Parameter · heraus: Merkmale von Bauteilen mit Zielgrößen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Matrix 3 - Prozessplanung<span class="sub">hinein: Merkmale von Bauteilen · heraus: Produktionsprozesse mit Zielgrößen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Matrix 4 - Produktionsplanung<span class="sub">hinein: Produktionsprozesse · heraus: Ressourcen mit Zielgrößen</span></div>
+  </div>
+  <figcaption>Vier verkettete Häuser. Jedes reicht seine Spalten nach unten weiter, wo sie zu den Zeilen des nächsten werden, und so erreicht ein Kundensatz irgendwann eine Einstellung an einer Maschine.</figcaption>
+</div>
+
+Das Autotür-Beispiel aus dem klassischen Aufsatz macht die Kette greifbar. Der Kunde möchte eine Tür, die leicht zu schließen ist. Daraus wird der technische Parameter *Energie zum Schließen der Tür* mit einem Zielwert. Im Teilehaus wird dieser Parameter zu einer Zeile, und die Dicke der Türdichtung wird zu einer Spalte. Im Prozesshaus wird die Dichtungsdicke zu einer Zeile, und die Geschwindigkeit des Extruders, der die Dichtung herstellt, wird zu einer Spalte. Im Produktionshaus wird die Extrudergeschwindigkeit zu einer Zeile, und die Reglerstellung, die Schulung der Bedienperson sowie der Wartungsplan werden zu den Spalten. Eine Reglerstellung in der Fertigungshalle ist jetzt Glied für Glied bis zu einem Satz zurückverfolgbar, den ein Kunde in einem Interview gesagt hat.
+
+Diese Rückverfolgbarkeit ist der ganze Sinn der Sache. Sie ist auch der Grund, warum die Methode schwer ist, worüber Abschnitt 10 ehrlich Auskunft gibt.
+
+## 3 · Die Räume des Hauses
+
+Sechs Informationsblöcke, jeder an seinem eigenen Platz. Die Dachform lässt sich hier nicht zeichnen, deshalb benennen die Ebenen unten die Räume, und die Tabelle danach zeigt, wie sie zueinander liegen.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Dach<span class="n">Korrelationsmatrix</span></div>
+      <div class="sc-node violet">Wechselwirkungen zwischen technischen Parametern<span class="sub">unterstützen sich zwei Parameter gegenseitig oder gehen sie zulasten des jeweils anderen</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Decke<span class="n">die Spalten</span></div>
+      <div class="sc-node violet">Technische Parameter, die Stimme des Ingenieurs<span class="sub">messbar, jeder mit dem Vermerk erhöhen, senken oder keine Richtung</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Linke Wand<span class="n">die Zeilen</span></div>
+      <div class="sc-node amber">Kundenanforderungen samt ihrer relativen Wichtigkeit<span class="sub">die Stimme des Kunden, gewichtet</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Körper<span class="n">das zentrale Raster</span></div>
+      <div class="sc-node soft">Beziehungen zwischen Anforderungen und Parametern<span class="sub">bewertet von hoch bis niedrig</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Rechte Wand<span class="n">der Marktblick</span></div>
+      <div class="sc-node green">Wettbewerbsposition bei jeder Kundenanforderung<span class="sub">wie gut wir sie heute im Vergleich zu Konkurrenten erfüllen</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Keller<span class="n">die unteren Zeilen</span></div>
+      <div class="sc-node slate">Messung der Parameter und die Zielwerte<span class="sub">Einheiten, unser aktueller Wert, die Werte der Konkurrenten, die Zahl, auf die wir uns festlegen</span></div>
+    </div>
+  </div>
+  <figcaption>Die sechs Räume des House of Quality. Eine sinnvolle Reihenfolge beim Aufbau: linke Wand, rechte Wand, Decke, Körper, Dach, Keller.</figcaption>
+</div>
+
+Und hier dasselbe als Grundriss, so wie es auf dem Schaubild tatsächlich aussieht:
+
+| Ebene | Linker Block | Mittlerer Block | Rechter Block |
+|---|---|---|---|
+| **Dach** | - | Korrelationsmatrix: wie die technischen Parameter einander beeinflussen | - |
+| **Decke** | - | Technische Parameter, mit der Verbesserungsrichtung | - |
+| **Körper** | Kundenanforderungen + relative Wichtigkeit | Beziehungsmatrix: Anforderung mal Parameter | Wettbewerbsvergleich je Anforderung |
+| **Keller** | - | Maßeinheiten, unser Wert, Werte der Konkurrenten, **Zielwerte** | - |
+
+## 4 · Die linke Wand: Kundenanforderungen und ihre Gewichte
+
+Die Anforderungen selbst stammen aus den Methoden der früheren Kapitel, und QFD ersetzt keine davon - es verbraucht ihre Ergebnisse. In der Praxis heißt das: qualitative Interviews mit Zielkunden, Fokusgruppen, das Beobachten von Menschen bei der tatsächlichen Nutzung des Produkts (manche Unternehmen stellen das Produkt schlicht an einen öffentlichen Ort und hören zu, was Passanten darüber sagen), die Customer Journey und ihre Schmerzpunkte, die Kano-Befragung sowie die Conjoint-Analyse für die Abwägungen und ihre Gewichte.
+
+Zwei strukturelle Punkte sind wichtiger als die Liste der Methoden.
+
+**Anforderungen werden als Hierarchie von Bedürfnissen organisiert**, üblicherweise auf **zwei oder drei Ebenen**: primäre Bedürfnisse oben, aufgeteilt in sekundäre Bedürfnisse, manchmal noch einmal aufgeteilt in tertiäre Bedürfnisse. Im Autotür-Beispiel enthält ein primäres Bedürfnis wie *gute Bedienung und Nutzung* ein Bündel namens *Tür leicht zu öffnen und zu schließen*, das wiederum die einzelnen Zeilen *von außen leicht zu schließen*, *bleibt am Hang offen stehen* und so weiter enthält. Die im Unterricht verwendete Variante mit der elektrischen Zahnbürste funktioniert genauso: Ein primäres Bedürfnis wie *sich sauber und frisch fühlen* enthält sekundäre Bedürfnisse wie *ein sauberes Gefühl im Mund*, *den ganzen Tag frischer Atem* und *angenehmer Geschmack und angenehme Textur*, und jedes davon entfaltet sich in tertiäre Aussagen wie *meine Zähne fühlen sich glatt an, wenn ich mit der Zunge darübergleite* oder *ich wache auf, ohne das Gefühl von Morgenmundgeruch zu haben*. Die Hierarchie ist das, was eine Liste von hundert Kundenaussagen navigierbar hält.
+
+**Jede Anforderung trägt eine relative Wichtigkeit.** Die Gewichte stammen aus der direkten Erfahrung des Teams mit Kunden oder, besser, aus einer Befragung, und sie werden meist als Prozentwerte geschrieben, die sich zu 100 addieren. Die Übung im Unterricht nutzt eine einfachere Skala von 1 für überhaupt nicht wichtig bis 10 für sehr wichtig, was für einen ersten Durchgang völlig genügt. Im Autotür-Schaubild sehen die Gewichte so aus: *von außen leicht zu schließen* 7, *bleibt am Hang offen stehen* 5, *von außen leicht zu öffnen* 3, *schlägt nicht zurück* 3, *lässt bei Regen kein Wasser durch* 3, *kein Fahrgeräusch* 2. Diese kleinen Zahlen entscheiden später darüber, welcher technische Parameter das Budget bekommt.
+
+## 5 · Die rechte Wand: den Wettbewerbsvergleich in das Haus einfalten
+
+Das Haus dreht sich nicht nur um das eigene Produkt. Man kann eine Wettbewerbsanalyse direkt hineinnehmen, indem man Anforderung für Anforderung bewertet, **wie gut das eigene Angebot diese Anforderung im Vergleich zu den Konkurrenten erfüllt**. Auf dem Schaubild sitzt das rechts, gegenüber den Anforderungen, typischerweise als Skala von 1 bis 5 mit einer Linie für unser Produkt und einer Linie je Wettbewerber.
+
+Das Ablesen ist unkompliziert und sofort strategisch.
+
+| Was die rechte Wand zeigt | Was es bedeutet | Illustration an der Autotür |
+|---|---|---|
+| Alle schneiden bei einer stark gewichteten Anforderung schlecht ab | Eine offene Chance, einen anspruchsvollen Zielwert wert | Kein Auto bleibt am Hang offen stehen |
+| Wir schneiden bereits besser ab als die Konkurrenten | Ein Vorteil, den man verteidigt, statt ihn weiter auszubauen, also den aktuellen Wert halten und das Geld woanders ausgeben | Kein Fahrgeräusch |
+
+Wenn verschiedene Segmente das Produkt unterschiedlich bewerten, erhebt man lieber je Segment eine eigene Einschätzung, statt sie zu einer einzigen Linie zu verrühren. Marketingleute werden die rechte Wand als verkappte Wahrnehmungskarte wiedererkennen, was zugleich die Brücke zum nächsten Kapitel ist.
+
+## 6 · Die Decke: technische Parameter und das Problem der Lösungsneutralität
+
+Oben quer stehen die technischen Parameter, manchmal auch Konstruktionsmerkmale oder Qualitätselemente genannt. Drei Regeln bestimmen, was dorthin gehört:
+
+- Ein Parameter muss **messbar** und in Einheiten ausgedrückt sein, denn der Keller wird später eine Zahl dafür verlangen.
+- Er muss **etwas beeinflussen, das der Kunde wahrnimmt**. Das Gewicht einer Tür spürt der Kunde, also qualifiziert es sich. Die Dicke des Blechs ist ein Bauteilmerkmal, das der Kunde nie direkt bemerkt; es erreicht ihn nur über seinen Einfluss auf das Türgewicht, gehört also in das *nächste* Haus, nicht in dieses.
+- Jeder Parameter bekommt eine **Verbesserungsrichtung**: erhöhen, senken oder keine Richtung. Die Energie zum Schließen der Tür trägt ein Minus, denn weniger davon ist besser.
+
+Zwei Gegenproben fallen gratis aus dem Raster heraus. Wenn ein technischer Parameter **keine** einzige Kundenanforderung beeinflusst, gehört er entweder nicht auf das Schaubild, oder das Team hat eine Kundenanforderung vergessen. Wenn eine Kundenanforderung von **keinem** technischen Parameter berührt wird, hat das Team derzeit keine Möglichkeit, sie zu erfüllen, und muss eine erfinden, und genau daraus entstehen neue Produkteigenschaften.
+
+<Aside type="caution">
+**Die ehrliche Einschränkung zur Lösungsneutralität.** Im Prinzip sollten die technischen Parameter beschreiben, *was* erreicht werden muss, und nicht, *welche* Lösung es erreicht, damit der Gestaltungsraum offen bleibt. In der Praxis ist es, wenn der Lösungsraum bewusst breit definiert wird, wirklich schwierig, technische Anforderungen zu formulieren, die von einer bestimmten technischen Lösung unabhängig sind. In dem Moment, in dem man einen Parameter aufschreibt, hat man meist schon einen Mechanismus unterstellt. Lösungsneutralität ist ein Ziel und keine Garantie, und es lohnt sich, jeden Parameter auf eingeschmuggelte Annahmen zu prüfen, bevor die Matrix gefüllt wird.
+</Aside>
+
+## 7 · Der Körper: die Beziehungsmatrix
+
+Jetzt füllt das Team das zentrale Raster, Zelle für Zelle, und stellt jedes Mal eine Frage: **Wie stark beeinflusst dieser technische Parameter diese Kundenanforderung?** Die Einschätzungen werden gemeinsam getroffen, gestützt auf Ingenieurerfahrung, Kundenrückmeldungen, Statistiken oder kontrollierte Experimente, und das Team muss sich bei jeder Zelle auf einen Konsens einigen, und genau dort findet das meiste nützliche Streiten statt.
+
+Die Skala aus dem Unterricht ist numerisch und kurz:
+
+<div class="sc-chips">
+  <span class="sc-chip green">5 · starke Beziehung (hoch)</span>
+  <span class="sc-chip amber">3 · mittlere Beziehung</span>
+  <span class="sc-chip violet">1 · schwache Beziehung (niedrig)</span>
+  <span class="sc-chip">0 · keine Beziehung</span>
+</div>
+
+Das klassische Schaubild verwendet statt Zahlen Symbole und ergänzt ein Vorzeichen: ein Häkchen für eine positive Beziehung und ein Kreuz für eine negative, sodass eine starke *negative* Verbindung als solche sichtbar wird. Jeder Satz von Symbolen funktioniert, solange sich das Team darauf einigt; manche Teams verwenden sogar unterschiedliche Zeichen für experimentell nachgewiesene Beziehungen und für Beziehungen, die auf Einschätzung beruhen, was eine elegante Art ist zu zeigen, wie viel des Schaubilds tatsächlich Evidenz ist.
+
+Hier das Autotür-Fragment, mit den qualitativen Zeichen des Aufsatzes übersetzt in die Zahlenskala aus dem Unterricht:
+
+| Kundenanforderung | Gewicht | Energie zum Schließen der Tür | Haltekraft in der Ebene | Widerstand der Türdichtung | Schallübertragung des Fensters |
+|---|--:|:-:|:-:|:-:|:-:|
+| Von außen leicht zu schließen | 7 | **5** | 0 | 3 (wirkt dagegen) | 0 |
+| Bleibt am Hang offen stehen | 5 | 0 | **5** | 0 | 0 |
+| Lässt bei Regen kein Wasser durch | 3 | 0 | 0 | **5** | 0 |
+| Kein Fahrgeräusch | 2 | 0 | 0 | 3 | 1 |
+
+Zwei Dinge fallen auf. Erstens kann ein Parameter mehreren Anforderungen dienen: **der Widerstand der Türdichtung berührt drei dieser vier Zeilen**, und genau deshalb lässt er sich nicht isoliert einstellen. Zweitens läuft seine Verbindung zu *von außen leicht zu schließen* in die falsche Richtung, denn mehr Dichtungswiderstand dichtet besser ab, macht die Tür aber schwerer zu schließen, und eine Matrix, die nur die Stärke ohne Vorzeichen festhält, würde diesen Konflikt vollständig verbergen.
+
+## 8 · Das Dach: Wechselwirkungen zwischen technischen Parametern
+
+Das Dach ist die dreieckige Matrix, die auf den Spalten sitzt, und es beantwortet eine Frage, die der Körper nicht beantworten kann: **Wenn ich einen technischen Parameter verändere, was passiert dann mit den anderen?** Jedes Parameterpaar bekommt ein Zeichen:
+
+<div class="sc-chips">
+  <span class="sc-chip green">+ · positiv, die beiden unterstützen einander</span>
+  <span class="sc-chip amber">- · negativ, die beiden gehen zulasten des jeweils anderen</span>
+  <span class="sc-chip">0 · keine Wechselwirkung</span>
+</div>
+
+Wieder die Autotür. Die zum Schließen der Tür nötige Energie zu senken steht in **positiver** Beziehung zur Energie, die zum Öffnen nötig ist, und zur maximalen Schließkraft, diese verbessern sich also gemeinsam. Sie steht aber in **negativer** Beziehung zum Widerstand der Türdichtung und zur Reduktion des Fahrgeräuschs, denn eine weichere, weniger widerstandsfähige Dichtung lässt sich leichter zudrücken und lässt zugleich mehr Wasser und mehr Lärm herein. Noch ein klassisches Paar an derselben Tür: Ändert man die Getriebeübersetzung des Fenstermotors, wird der Motor kleiner, das Fenster fährt aber langsamer hoch; verstärkt man stattdessen den Mechanismus, wird die Tür schwerer, lässt sich schlechter öffnen und bleibt am Hang seltener offen stehen.
+
+Für Ingenieure ist das oft der wertvollste Raum im Haus, denn hier werden die unvermeidlichen Abwägungen sichtbar, bevor irgendjemand Metall geschnitten hat. Er bringt außerdem eine schroffe Entscheidungsregel mit: Wenn die Verbesserung eines Parameters so viele andere beschädigt, dass die Bilanz klar negativ ist, lässt das Team diesen Parameter in Ruhe und sucht einen anderen Weg zu derselben Kundenanforderung.
+
+## 9 · Der Keller: Messgrößen, Zielwerte und die Entscheidung
+
+Unter den Spalten schreibt das Team die **objektiven Messgrößen** auf: die Maßeinheit, unseren aktuellen Wert und den gemessenen Wert für das Produkt jedes Wettbewerbers. Aus alldem legt es dann einen **Zielwert** für jeden Parameter im neu gestalteten Produkt fest.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node soft">Die rechte Wand lesen<span class="sub">wo verlieren wir gegen die Konkurrenz bei einer Anforderung, die Kunden hoch gewichten</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node soft">Den Körper lesen<span class="sub">welche technischen Parameter treiben diese Anforderung tatsächlich</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node soft">Das Dach lesen<span class="sub">was bewegt sich sonst noch, wenn wir diese Parameter drücken, und wie schlimm</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Den Zielwert setzen<span class="sub">eine konkrete Zahl je Parameter, in den Keller geschrieben</span></div>
+  </div>
+  <figcaption>Der Weg durch das Haus, der eine Entscheidung erzeugt. Marketing, Entwicklung und Management treffen sie gemeinsam; das Haus nimmt die schwierige Wahl nicht ab, es legt nur die Belege dafür auf ein einziges Blatt.</figcaption>
+</div>
+
+Die Autotür-Entscheidung verläuft genau entlang dieses Wegs. Unsere Tür misst 11 Foot-Pounds Schließenergie gegenüber 9 und 9,5 bei den beiden Konkurrenztüren, wir sind also klar die Schlechtesten bei einer Anforderung, die Kunden mit 7 gewichten. Der Körper sagt, dass diese Anforderung von Schließenergie, maximaler Schließkraft und Dichtungswiderstand getrieben wird. Das Dach warnt, dass ein Drücken der Schließenergie die Haltekräfte, die Dichtungen und die Geräuschreduktion mit sich zieht. Nach Abwägung von Kosten und technischer Schwierigkeit hält das Team den Nutzen für den Aufwand wert und setzt einen Zielwert von **7,5 Foot-Pounds**, womit die Tür im Vergleich die am leichtesten zu schließende wäre.
+
+Die gegenteilige Entscheidung ist genauso lehrreich. Bei *kein Fahrgeräusch* ist die Anforderung nur mit 2 gewichtet, ihre Verbindung zur Schallübertragung des Fensters ist schwach, diese Übertragung zu senken würde das Fenster schwerer machen, und das Mehrgewicht würde Parametern schaden, die Anforderungen dienen, an denen Kunden weit mehr liegt. Obendrein sagt die rechte Wand, dass wir beim Fahrgeräusch bereits beide Konkurrenten schlagen. Also wird der Zielwert **gleich dem aktuellen Wert** gesetzt: bewusst keine Änderung.
+
+<Aside type="note">
+**Einen Punkt setzen, keinen Bereich.** Zielwerte sollten als einzelner Wert der Kundenzufriedenheit geschrieben werden, zum Beispiel 7,5 Foot-Pounds, und nicht als Toleranzband wie irgendwo zwischen 6 und 8. Ein Band lädt alle stillschweigend dazu ein, zum billigsten Ende zu driften, und danach belohnt nichts mehr eine Konstruktion, die tatsächlich den Wert trifft, den der Kunde bemerken würde.
+
+Teams ergänzen im Keller außerdem häufig weitere Zeilen: die **technische Schwierigkeit** jeder Änderung, eine **abgeleitete Wichtigkeit** je Parameter und die **geschätzten Kosten**. Die abgeleitete Wichtigkeit eines Parameters gegen seine Kosten zu halten, ist der Weg, auf dem Kostensenkungsentscheidungen getroffen werden, ohne blind etwas zu streichen, das Kunden schätzen.
+</Aside>
+
+## 10 · Was die Methode bringt und was sie kostet
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Vorteile <small>warum Teams den Aufwand auf sich nehmen</small></div>
+      <ul>
+        <li>Produkte <strong>treffen Kundenbedürfnisse besser</strong>, weil jede Entwicklungsentscheidung auf eine gewichtete Anforderung zurückführbar ist</li>
+        <li><strong>Konflikte und negative Wechselwirkungen</strong> zwischen Qualitätselementen werden transparent, statt spät als teure Überraschungen aufzutauchen</li>
+        <li><strong>Bessere Kommunikation zwischen F&amp;E, Produktion und Marketing</strong> - das Schaubild ist eine gemeinsame Sprache und eine gemeinsame Auseinandersetzung</li>
+        <li><strong>Einfache und verständliche Dokumentation</strong>: die Begründung hinter der Spezifikation ist auf einem Blatt sichtbar</li>
+        <li><strong>Ressourcen konzentrieren sich</strong> auf die Kundenanforderungen, die am meisten zählen, statt gleichmäßig verteilt zu werden</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Nachteile <small>und sie sind real</small></div>
+      <ul>
+        <li><strong>Deutlich höherer Aufwand am Anfang</strong> des Entwicklungsprozesses, bevor irgendetwas Sichtbares existiert</li>
+        <li><strong>Hohe Komplexität</strong> des QFD-Prozesses selbst, der Moderation und Disziplin braucht, um zu laufen</li>
+        <li><strong>Matrizen und Tabellen werden schnell unhandhabbar</strong> - reale Anwendungen kamen auf mehr als 100 Kundenanforderungen und mehr als 130 Konstruktionsmerkmale</li>
+        <li><strong>Keine Berücksichtigung von Preisen und Kosten</strong>: Das Haus sagt, was für den Kunden lohnend ist, nie, was es wert ist, dafür zu zahlen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Der letzte Nachteil ist derjenige mit einem benannten Gegenmittel. Weil das House of Quality Geld vollständig ignoriert, wird es normalerweise mit Target Costing kombiniert, das beim Preis ansetzt, den der Markt trägt, und rückwärts ermittelt, was jedes Bauteil kosten darf.</figcaption>
+</div>
+
+## Durchgerechnetes Beispiel
+
+Ein kleines Haus für eine **elektrische Zahnbürste**, das Produkt aus der Übung im Unterricht. Fünf Kundenanforderungen mit Wichtigkeitsgewichten auf der Skala von 1 bis 10, vier technische Parameter und die Richtung, in die sich jeder Parameter bewegen sollte.
+
+| Technischer Parameter | Einheit | Verbesserungsrichtung |
+|---|---|---|
+| **A** Schwingfrequenz des Bürstenkopfs | Bewegungen pro Minute | erhöhen |
+| **B** Schwelle der Andruckabschaltung | Newton | senken |
+| **C** Akkukapazität | Milliamperestunden | erhöhen |
+| **D** Masse des Handstücks | Gramm | senken |
+
+Nun die Beziehungsmatrix, bewertet mit 5 für stark, 3 für mittel, 1 für schwach und 0 für keine:
+
+| Kundenanforderung | Gewicht | A Frequenz | B Andruckabschaltung | C Akku | D Masse des Handstücks |
+|---|--:|:-:|:-:|:-:|:-:|
+| Mein Mund fühlt sich danach wirklich sauber an | 9 | 5 | 1 | 0 | 1 |
+| Kein Schmerz und keine Empfindlichkeit beim Putzen | 8 | 3 | 5 | 0 | 1 |
+| Ich kann sie leicht im Mund herumführen | 7 | 0 | 0 | 1 | 5 |
+| Ich muss sie nicht oft laden | 6 | 3 | 0 | 5 | 1 |
+| Die Bürste ist leise | 4 | 3 | 0 | 0 | 1 |
+| **Gewichtete Spaltensumme** | | **99** | **49** | **37** | **62** |
+
+Jede Summe ist schlicht jede Zelle der Spalte multipliziert mit dem Gewicht ihrer Zeile und aufsummiert. Für A: 9 mal 5, plus 8 mal 3, plus 7 mal 0, plus 6 mal 3, plus 4 mal 3, was 45 + 24 + 0 + 18 + 12 = 99 ergibt.
+
+**Das Dach**, für zwei der Paare:
+
+- **Positiv, unterstützend.** Die Masse des Handstücks (D) zu senken und die Schwelle der Andruckabschaltung (B) zu senken ziehen in dieselbe Richtung. Ein leichteres Handstück macht es körperlich einfacher, unter einer sanften Andruckgrenze zu bleiben, beide Änderungen dienen also der Anforderung ohne Schmerz.
+- **Negativ, Zielkonflikt.** Die Akkukapazität (C) zu erhöhen und die Masse des Handstücks (D) zu senken bekämpfen sich direkt, denn eine größere Zelle ist eine schwerere Zelle. Die Laufzeit hochzudrücken kostet deshalb Handhabbarkeit. Ein zweiter Zielkonflikt sitzt zwischen A und C: Eine höhere Schwingfrequenz leert den Akku schneller, sie frisst also genau die Laufzeit auf, die die größere Zelle erkaufen sollte.
+
+**Das Haus lesen.** Die Schwingfrequenz ist mit 99 mit Abstand der wertvollste Parameter, weil sie der Haupttreiber der am höchsten gewichteten Anforderung ist und außerdem zu zwei weiteren beiträgt; sie bekommt das Entwicklungsbudget und einen anspruchsvollen Zielwert. Die Masse des Handstücks kommt mit 62 an zweiter Stelle und ist doppelt attraktiv, denn das Dach sagt, dass ein leichteres Handstück auch der Andruckanforderung hilft, und das ist der seltene Fall, in dem eine Änderung zwei Kundennutzen erkauft. Die Akkukapazität schneidet mit 37 am schlechtesten ab und sitzt auf der falschen Seite eines Zielkonflikts mit dem Parameter darüber, das Jagen nach Milliamperestunden würde also mehr an Handhabbarkeit kosten, als es an Zufriedenheit zurückgibt; der vernünftige Zug ist, die Kapazität ungefähr dort zu halten, wo sie ist, und die Laufzeit stattdessen über Effizienz zurückzuholen. Die Schwelle der Andruckabschaltung mit 49 ist es wert, ordentlich eingestellt zu werden, ist aber kein Schlachtfeld, denn sie dient im Wesentlichen einer einzigen Anforderung.
+
+Wenn die rechte Wand dann zeigen würde, dass ein Wettbewerber bereits mit deutlich höherer Frequenz putzt, würde das die Priorität bestätigen statt sie zu ändern: Der wertvollste Parameter wäre zugleich derjenige, bei dem wir sichtbar hinterherhinken.
+
+## Auf dein Projekt anwenden
+
+<Steps>
+
+1. **Sammle die Kundenanforderungen, die du schon hast.** Zieh sie aus den Interviews, den Schmerzpunkten der Customer Journey und der Kano-Liste. Schreibe jede in den Worten des Kunden auf, nicht in deiner eigenen technischen Umschreibung.
+
+2. **Sortiere sie in eine Hierarchie von zwei oder drei Ebenen.** Gruppiere die einzelnen Aussagen zu Bündeln und die Bündel zu einer Handvoll primärer Bedürfnisse. Ziel ist etwas, das man noch auf einer Seite lesen kann; ein erstes Haus mit drei bis sechs Anforderungen ist ein weit besseres Lernobjekt als eines mit sechzig.
+
+3. **Gewichte sie.** Entweder verteilst du Prozentwerte, die sich zu 100 addieren, oder du bewertest jede Anforderung von 1 bis 10. Nutze Conjoint-Ergebnisse oder Befragungsdaten, wenn du sie hast, und halte fest, woher jedes Gewicht stammt, damit es später hinterfragt werden kann.
+
+4. **Ergänze rechts den Wettbewerbsvergleich.** Bewerte für jede Anforderung auf einer Skala von 1 bis 5, wie gut dein Konzept sie erfüllt und wie gut jeder ernsthafte Wettbewerber das tut. Mach es je Segment, wenn deine Segmente unterschiedlicher Meinung sind.
+
+5. **Liste die technischen Parameter oben quer auf.** Messbar, in Einheiten und etwas, dessen Wirkung der Kunde tatsächlich wahrnehmen kann. Markiere für jeden die Verbesserungsrichtung: erhöhen, senken oder keine. Prüfe jeden auf versteckte Annahmen über die Lösung.
+
+6. **Fülle die Beziehungsmatrix.** Diskutiere jede Zelle als Team aus und bewerte sie mit 5, 3, 1 oder 0. Vermerke ein Vorzeichen überall dort, wo ein Parameter *gegen* eine Anforderung arbeitet. Such danach nach leeren Zeilen und leeren Spalten und behebe, was sie offenlegen.
+
+7. **Fülle das Dach.** Markiere für jedes Paar technischer Parameter Plus, Minus oder Null. Die Minus-Zellen verdienen die längste Diskussion, denn sie sind die Zielkonflikte, die dich sonst mitten in der Entwicklung überfallen.
+
+8. **Berechne die gewichteten Spaltensummen** und bring die Parameter in eine Rangfolge. Behandle die Rangfolge als Diskussionsanlass, nicht als Antwort: Ein hoch bewerteter Parameter, den das Dach als zerstörerisch ausweist, kann trotzdem gegen einen niedriger bewerteten verlieren.
+
+9. **Setze je Parameter einen konkreten Zielwert** in den Keller und nutze die Messwerte der Wettbewerber als Bezugspunkt. Ziele hoch, wo die Anforderung stark gewichtet ist und derzeit alle schwach sind; halte bewusst still, wo du bereits führst.
+
+10. **Bring die Geldfrage woanders unter.** Das Haus hat nichts über Kosten gesagt, gib die Zielwerte also an eine Target-Costing-Übung weiter, bevor du die Spezifikation einfrierst.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Quality Function Deployment (QFD) | Eine strukturierte Methode, um Kundenanforderungen in technische Anforderungen zu übersetzen, durchlaufen über eine Kette verketteter Planungsmatrizen |
+| House of Quality | Die erste und bekannteste QFD-Matrix, in Form eines Hauses, die Kundenbedürfnisse, technische Parameter und die Verbindungen dazwischen enthält |
+| Stimme des Kunden | Die Kundenanforderungen an der linken Wand, in der eigenen Formulierung des Kunden bewahrt |
+| Stimme des Ingenieurs | Die technischen Parameter oben quer, messbar und in Einheiten angegeben |
+| Hierarchie von Bedürfnissen | Kundenanforderungen, organisiert auf zwei oder drei Ebenen, von primären Bedürfnissen hinunter zu sekundären und tertiären Aussagen |
+| Relative Wichtigkeit | Das Gewicht, das jeder Kundenanforderung zugeordnet ist, als Prozentwerte mit der Summe 100 oder auf einer Skala von 1 bis 10 |
+| Beziehungsmatrix | Der Körper des Hauses: wie stark jeder technische Parameter jede Kundenanforderung beeinflusst, bewertet von 5 für stark bis hinunter zu 1 für schwach |
+| Dach / Korrelationsmatrix | Das Dreieck obenauf: ob zwei technische Parameter einander unterstützen (Plus) oder zulasten des jeweils anderen gehen (Minus) |
+| Wettbewerbsvergleich | Die rechte Wand: wie gut unser Produkt und jeder Wettbewerber jede Kundenanforderung heute erfüllen |
+| Objektive Messgrößen | Die Kellerzeilen mit der Einheit, unserem aktuellen Wert und dem gemessenen Wert jedes Wettbewerbers für jeden Parameter |
+| Zielwert | Die eine Zahl, auf die man sich für einen technischen Parameter im neu gestalteten Produkt festlegt, als Punkt geschrieben und nicht als Toleranzband |
+| Verbesserungsrichtung | Die Markierung an jedem technischen Parameter, die sagt, ob besser erhöhen, senken oder keine Änderung bedeutet |
+| Verkettete Häuser | Die Kette, in der die Wies der einen Matrix zu den Was der nächsten werden, vom Produkt über Bauteile und Prozesse bis zu den Ressourcen |
+| Lösungsneutralität | Das Ziel, technische Parameter so zu formulieren, dass sie keine bestimmte technische Lösung voraussetzen, was bei einem breiten Lösungsraum schwer zu halten ist |
+| Target Costing | Die Begleitmethode, die liefert, was QFD auslässt: Sie arbeitet von einem erreichbaren Marktpreis rückwärts zu dem, was jedes Bauteil kosten darf |
+
+## Teste dich selbst
+
+1. Nenne das Ziel von QFD in einem Satz und erkläre, was QFD zu einer Kette und nicht zu einem einzelnen Schaubild macht.
+2. Nenne die sechs Räume des House of Quality und sage, welche Information in jeden gehört.
+3. Warum ist das Gewicht einer Autotür ein legitimer technischer Parameter, die Dicke des Blechs aber nicht, und wohin gehört die Blechdicke stattdessen?
+4. **Berechnung der gewichteten Priorität.** Drei Kundenanforderungen tragen die Gewichte 9, 6 und 2. Der technische Parameter P steht zu ihnen mit den Bewertungen 5, 3 und 1 in Beziehung; der technische Parameter Q mit 1, 5 und 5. Berechne beide gewichteten Spaltensummen, sage, welcher Parameter priorisiert werden sollte, und nenne, was dich diese Antwort überdenken ließe.
+5. Im Autotür-Beispiel setzte das Team einen ehrgeizigen neuen Zielwert für die Schließenergie, ließ die Schallübertragung des Fensters aber bewusst unverändert. Gib die Begründung für jede der beiden Entscheidungen an.
+6. Nenne drei Vorteile und drei Nachteile von QFD und benenne die Methode, die herangezogen wird, um die größte Lücke zu schließen.
+
+<Aside type="note" title="Lösungen">
+1. Das Ziel ist, Kundenanforderungen in technische Anforderungen zu übersetzen, damit das, was entwickelt wird, von dem getrieben ist, was Kunden tatsächlich wollen. Es ist eine Kette, weil QFD eine hierarchisch strukturierte Analyse aus mehreren verketteten Planungsmatrizen ist: Kundenanforderungen erzeugen technische Parameter mit Zielgrößen, diese werden zu den Eingangsgrößen einer Teilematrix, deren Ergebnisse eine Produktionsprozessmatrix speisen, deren Ergebnisse wiederum eine Ressourcenmatrix speisen.
+2. Linke Wand: Kundenanforderungen samt ihrer relativen Wichtigkeit. Decke: technische Parameter mit einer Verbesserungsrichtung. Körper: die Beziehungsmatrix, die Anforderungen mit Parametern verknüpft. Dach: die Korrelationsmatrix der Wechselwirkungen zwischen den technischen Parametern. Rechte Wand: die Wettbewerbsposition bei jeder Kundenanforderung. Keller: die Messung jedes technischen Parameters, unser Wert, die Werte der Konkurrenten und die Zielwerte.
+3. Das Türgewicht wird vom Kunden direkt wahrgenommen, es gehört also an die Decke dieses Hauses. Die Blechdicke ist ein Bauteilmerkmal, das der Kunde nie direkt wahrnimmt; es erreicht ihn nur über seinen Einfluss auf das Türgewicht und ähnliche Parameter, es gehört also als Spalte in das nächste Haus der Kette, die Teileplanungsmatrix.
+4. P erreicht 9 mal 5 plus 6 mal 3 plus 2 mal 1 = 45 + 18 + 2 = **65**. Q erreicht 9 mal 1 plus 6 mal 5 plus 2 mal 5 = 9 + 30 + 10 = **49**. P hat die höhere Priorität. Ein Überdenken lohnte sich, wenn das Dach zeigte, dass eine Verbesserung von P mehrere andere Parameter beschädigt, die stark gewichteten Anforderungen dienen, oder wenn die rechte Wand zeigte, dass wir bei der Anforderung, die P hauptsächlich treibt, bereits den Markt anführen, während wir bei derjenigen, die Q treibt, weit zurückliegen.
+5. Schließenergie: Unsere Tür war die schlechteste der drei gemessenen, die Anforderung, der sie dient, trägt ein hohes Gewicht, und der Körper wies sie als starken Treiber dieser Anforderung aus, also hielt das Team trotz der negativen Dacheinträge den Nutzen für die Kosten wert und setzte einen anspruchsvollen Zielwert von 7,5 Foot-Pounds. Schallübertragung: Die Anforderung Fahrgeräusch ist nur schwach gewichtet, ihre Verbindung zum Fenster ist schwach, eine geringere Übertragung würde Gewicht hinzufügen und damit Parametern schaden, die wichtigeren Anforderungen dienen, und der Wettbewerbsvergleich zeigte, dass wir bereits vorne lagen, also wurde der Zielwert gleich dem aktuellen Wert belassen.
+6. Vorteile (drei beliebige): Produkte treffen Kundenbedürfnisse besser; Konflikte und negative Wechselwirkungen werden transparent; die Kommunikation zwischen F und E, Produktion und Marketing verbessert sich; die Dokumentation ist einfach und verständlich; Ressourcen konzentrieren sich auf die wichtigsten Kundenanforderungen. Nachteile (drei beliebige): deutlich höherer Aufwand am Anfang der Entwicklung; hohe Prozesskomplexität; Matrizen und Tabellen werden schnell unhandhabbar; keine Berücksichtigung von Preisen und Kosten. Die Lücke bei Preisen und Kosten wird durch **Target Costing** geschlossen.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Ziel von QFD:** **Kundenanforderungen in technische Anforderungen übersetzen**, damit die technische Spezifikation von dem getrieben wird, was Kunden tatsächlich wollen.
+- QFD ist eine **hierarchisch strukturierte Analyse aus mehreren verketteten Planungsmatrizen**, in der die Ergebnisse der einen zu den Eingangsgrößen der nächsten werden: von Kundenanforderungen zu technischen Parametern mit Zielgrößen, dann zu Merkmalen von Bauteilen, dann zu Produktionsprozessen, dann zu Ressourcen.
+- Das **House of Quality** ist die erste Matrix. Seine Räume: **linke Wand** = Kundenanforderungen samt relativer Wichtigkeit (Stimme des Kunden); **Decke** = technische Parameter mit einer Verbesserungsrichtung (Stimme des Ingenieurs); **Körper** = die Beziehungsmatrix; **Dach** = Wechselwirkungen zwischen technischen Parametern; **rechte Wand** = Wettbewerbsposition bei jeder Anforderung; **Keller** = Messung der Parameter und die **Zielwerte**.
+- Die Anforderungen stammen aus den früheren Methoden (Interviews, Beobachtung, Customer Journey, Kano, Conjoint), werden in den eigenen Worten des Kunden bewahrt und als **Hierarchie über zwei oder drei Ebenen** strukturiert. Jede trägt ein Gewicht, als Prozentwerte mit der Summe 100 oder auf einer Skala von 1 bis 10.
+- Der **Körper** wird von **5 für eine starke Verbindung bis hinunter zu 1 für eine schwache** bewertet, mit einem Vorzeichen überall dort, wo der Parameter gegen die Anforderung arbeitet. Autotür: Die Schließenergie dient stark dem *leichten Schließen*, während der Widerstand der Türdichtung drei Anforderungen zugleich berührt und gegen die Schließanforderung kämpft.
+- Das **Dach** markiert jedes Paar technischer Parameter mit **Plus** (unterstützend) oder **Minus** (Zielkonflikt). Autotür: Die Schließenergie ist positiv zur Öffnungsenergie und zur maximalen Schließkraft, negativ zum Dichtungswiderstand und zur Reduktion des Fahrgeräuschs.
+- Entscheidungen entstehen, indem man die rechte Wand liest, dann den Körper, dann das Dach, und anschließend **einen konkreten Zielwert** schreibt, niemals einen Toleranzbereich. Kräftig drücken, wo alle schwach sind und das Gewicht hoch ist; still halten, wo man bereits führt.
+- Einschränkung: Bei einem **breit definierten Lösungsraum** ist es schwer, technische Parameter zu formulieren, die von einer bestimmten technischen Lösung unabhängig sind, **Lösungsneutralität ist also nicht immer leicht zu wahren**.
+- **Vorteile:** bessere Passung zu Kundenbedürfnissen, Transparenz von Konflikten und negativen Wechselwirkungen, bessere Kommunikation zwischen F und E, Produktion und Marketing, einfache Dokumentation, auf die wichtigsten Anforderungen konzentrierte Ressourcen. **Nachteile:** weit höherer Aufwand am Anfang, hohe Prozesskomplexität, Matrizen, die unhandhabbar werden, und **keine Berücksichtigung von Preisen und Kosten**, was das Stichwort für **Target Costing** ist.
+</Aside>
+
+*Weiter: [Wettbewerbsanalyse & Wahrnehmungskarten →](/de/learnings/mba/innovation-and-new-business-proposal/10-competitor-analysis-and-perceptual-maps/) - wer sonst noch da draußen ist und wo du im Vergleich dazu stehst.*

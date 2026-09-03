@@ -1,0 +1,403 @@
+---
+title: "Die Customer Journey & Service Blueprinting"
+description: "Warum ein Kunde eine Abfolge von Phasen und Kontaktpunkten vor, während und nach der Nutzung erlebt und nicht ein Produkt für sich allein; was eine Journey Map festhält - Aufgaben, Phasen, Bedürfnisse, Kanäle, Denken und Fühlen; warum Maps, die aus internen Meinungen entstehen, systematisch falsch sind und wie Kundenforschung sie repariert; und Service Blueprinting - Kundenaktionen, Onstage, Backstage und Unterstützungsprozesse, die Linien der Interaktion, der Sichtbarkeit und der internen Interaktion, und wie man einen Blueprint auf Fehlerpunkte, Wartezeiten und Übergaberisiken hin liest."
+sidebar:
+  label: "6 · Customer Journey & Blueprinting"
+  order: 6
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Innovation & New Business Proposal - TUHH Institute of Entrepreneurship & Institute of Innovation Marketing, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Im vorigen Kapitel ging es darum, ein Wertversprechen zu validieren: Will der Kunde die Sache, die wir bauen wollen, überhaupt? Dieses Kapitel wechselt die Analyseeinheit. Statt zu fragen *ist das Produkt gut*, fragen wir *wie fühlt sich die gesamte Episode an, vom Moment, in dem das Bedürfnis auftaucht, bis lange nach dem Kauf*. Diese Episode ist die **Customer Journey**, und sie zu zeichnen ist das erste Marktforschungswerkzeug im Werkzeugkasten des kundenorientierten Designs.
+
+Der Grund für den Wechsel ist einfach. Niemand kauft ein Produkt im luftleeren Raum. Jemand bemerkt ein Problem, fragt Freunde, sucht online, betritt ein Geschäft, wartet, unterschreibt etwas, wartet erneut, nutzt die Sache und empfiehlt sie danach weiter oder beschwert sich. Zufriedenheit wird entlang dieser ganzen Kette aufgebaut und zerstört, und sehr oft hat der Moment, der das Erlebnis ruiniert, mit dem Kernprodukt überhaupt nichts zu tun. Eine völlig einwandfreie Küche kann durch zwei Wochen Staub und fremde Menschen in der Wohnung verdorben werden; ein völlig gelungener Urlaub kann verdorben werden, indem man Einkäufe eine steile Böschung hinunterschleppt, noch bevor er überhaupt begonnen hat.
+
+Das Kapitel hat also zwei Hälften. Zuerst die **Customer Journey Map**: ein Bild der Abfolge aus Sicht des Kunden, mit Aufgaben, Kontaktpunkten, Gedanken und Gefühlen daneben notiert. Dann der **Service Blueprint**: dieselbe Abfolge, nach unten in die Organisation hinein verlängert, sodass auch die unsichtbare Maschinerie hinter jedem sichtbaren Moment gestaltbar wird.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Eine Dienstleistung ist kein Gegenstand, sie ist ein **über die Zeit erlebter Prozess**. Das bedeutet, sie lässt sich nur verbessern, indem man die *gesamte Abfolge* von der Kundenseite her betrachtet und dann jeden sichtbaren Moment *nach unten* in die Organisation verfolgt, die ihn produziert. Die Journey Map zeigt die Abfolge; der Blueprint zeigt, was darunter wahr sein muss. Keines von beiden ist viel wert, wenn es aus dem gezeichnet wird, was Manager sich vorstellen, statt aus dem, was Kunden tatsächlich tun.
+</Aside>
+
+## 1 · Warum die Journey und nicht das Produkt die Analyseeinheit ist
+
+Eine Customer Journey Map ist eine **grafische Darstellung einer Produktnutzung oder eines Serviceablaufs**. Sie zeigt, wie Prozesse, Technologie, Menschen und Kontaktpunkte über die Zeit hinweg orchestriert werden, und sie hält sowohl fest, was der Kunde tut, als auch, was der Anbieter tut, zusammen mit den greifbaren Belegen der Leistungserbringung. Die entscheidende Regel lautet, dass das gesamte Bild **aus Sicht des Kunden** gezeichnet wird, mit dem Fokus auf dessen Bedürfnissen, Gedanken und Gefühlen und nicht auf dem Organigramm.
+
+Diese Regel leistet bereits den größten Teil der Arbeit. Sobald man gezwungen ist, die Abfolge so aufzuschreiben, wie der Kunde sie erlebt, entdeckt man Schritte, für die im Unternehmen niemand zuständig ist, Lücken zwischen Abteilungen und lange Wartestrecken, die in keinem internen Prozessdokument auftauchen.
+
+Eine Journey muss außerdem breiter gezeichnet werden als die Transaktion. Die Kernleistung oder die Kernnutzung ist nur die Mitte. Davor liegt eine Phase und danach liegt eine Phase, und beide können den Gesamteindruck dominieren:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Vor der Leistung / vor der Nutzung<span class="sub">das Bedürfnis entsteht, Informationen werden gesammelt, Optionen verglichen, die Entscheidung getroffen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Leistung / Nutzung<span class="sub">die Kernbegegnung: der Kauf, die Lieferung, die tatsächliche Nutzung des Produkts</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Nach der Leistung / nach der Nutzung<span class="sub">Support, wiederholte Nutzung, Empfehlung, Beschwerde, Rückgabe, Wiederkauf</span></div>
+  </div>
+  <figcaption>Die drei Phasen, die jede Journey Map umspannen sollte. Im Autokauf-Beispiel aus der Vorlesung sind die Phasen vor und nach der Leistung zusammen weit länger als der Moment der Vertragsunterschrift, und sie tragen den größten Teil der Loyalität.</figcaption>
+</div>
+
+Journey Maps werden in zwei Richtungen eingesetzt, und es lohnt sich, ausdrücklich zu benennen, welche man gerade verfolgt:
+
+- **Ist-Zustand.** Abbilden, wie Kunden ihre Aufgabe *heute* erledigen, mit welcher Lösung auch immer es sie gibt, und dann nach den Brüchen und Schmerzpunkten in diesem bestehenden Erlebnis suchen.
+- **Soll-Zustand.** Dieselbe Struktur nutzen, um eine **neue oder verbesserte Dienstleistung** zu definieren, sodass das Design diskutiert, prototypisiert und umgesetzt werden kann, bevor irgendetwas gebaut wird.
+
+Die Verbindung zwischen beiden ist der Teil, auf den es für ein Geschäftskonzept ankommt: Die in der Ist-Map gefundenen Schmerzpunkte werden **in konkrete Merkmale, Funktionalitäten, Leistungsniveaus und Qualitätsdimensionen** der Innovation übersetzt. So hört eine Journey Map auf, ein hübsches Poster zu sein, und wird zum Input für eine Spezifikation.
+
+## 2 · Phasen, Kontaktpunkte und die Anatomie einer Journey Map
+
+Ein **Kontaktpunkt (Touchpoint)** ist jeder Moment des Kontakts zwischen dem Kunden und dem Angebot: eine von der Autobahn aus gesehene Werbetafel, eine Website, eine Parkschranke, ein Verkaufsgespräch, eine Rechnung, ein Support-Anruf, ein Social-Media-Beitrag nach dem Kauf. Journey Maps ordnen Kontaktpunkte **horizontal entlang einer Zeitachse** an, gruppiert in die drei Phasen von oben.
+
+Unter jeder Phase hält die Map sechs Dinge fest, die man sich am leichtesten als Fragen merkt:
+
+| Zeile | Frage | Was hineingehört |
+|---|---|---|
+| **Aufgabe** | Was tut der Kunde? | Die Aktivitäten und Aufgaben, die die Kunden-Swimlane bilden, das Rückgrat der Map |
+| **Phase** | Wann geschieht es? | Zu welcher Phase der Abfolge die Aufgabe gehört |
+| **Bedürfnis** | Warum tut er es? | Das zugrunde liegende Bedürfnis, das bedient wird, nicht der geäußerte Wunsch an der Oberfläche |
+| **Kontaktpunkt** | Über welchen Kanal? | Laden, Telefon, App, E-Mail, ein anderer Mensch, dazu die Systeme und die Software hinter diesem Kanal |
+| **Denken** | Was geht ihm durch den Kopf? | Der Gedanke in genau diesem Moment, in seinen eigenen Worten |
+| **Fühlen** | Wie fühlt er sich? | Begeistert, verwirrt, misstrauisch, erleichtert, verärgert |
+
+Legt man diese Zeilen nebeneinander über die Zeitachse, schreibt sich eine siebte von selbst: **Chancen**. Überall dort, wo die Gemütslage ins Negative kippt, gibt es einen Kandidaten für ein Redesign, und überall dort, wo sie schon positiv ist, gibt es etwas, das es zu schützen lohnt.
+
+Das Küchenbeispiel aus der Vorlesung zeigt, wie wenig nötig ist, damit das nützlich wird. Jemand kauft sein erstes Haus und ist begeistert. Man spricht mit Freunden und schaut Kataloge an, und der Traum beginnt sich möglich anzufühlen. Man sucht nach Küchenstudios in der Nähe und findet das Ganze unmöglich kompliziert. Man besucht einen Ausstellungsraum und ist entzückt, wie gut alles aussieht. Man spricht mit einer Verkaufsberatung und ist über den Preis schockiert. Man fährt nach Hause, schaut noch einmal, kommt zurück, bekommt ein Angebot, das ins Budget passt, und kauft. Dann beginnen die Bauarbeiten, und das vorherrschende Gefühl ist nicht Freude, sondern *all diese Fremden in meiner Wohnung, und der Dreck*. Erst ganz am Ende, beim ersten in der neuen Küche gekochten Abendessen, wird das Gefühl wieder positiv.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Aufmerksamkeit<span class="sub">begeistert, der Traum wird möglich</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Abwägung<span class="sub">Freunde, Kataloge, Studiosuche, Besuch im Ausstellungsraum, Preisschock</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Kauf<span class="sub">ein zweites Gespräch, ein machbares Angebot, die Entscheidung</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Nach dem Kauf<span class="sub">Montage, Dreck und Störung, dann das erste Abendessen</span></div>
+  </div>
+  <figcaption>Eine einfache Küchenkauf-Journey. Man beachte, dass der emotionale Tiefpunkt in der Phase nach dem Kauf liegt, inmitten eines Montageprozesses, den der Händler üblicherweise als Backoffice-Angelegenheit behandelt statt als Teil des Produkts.</figcaption>
+</div>
+
+Diese eine Beobachtung ist das gesamte Argument für Journey Mapping. Denkt man über die Küche als Produkt nach, ist die Montage Logistik. Denkt man über die Küche als Journey nach, ist die Montage der Ort, an dem das Erlebnis gewonnen oder verloren wird.
+
+## 3 · Die Map realistisch machen - Belege statt Meinungen
+
+Die horizontale Achse einer Journey Map ist leicht zu zeichnen und ebenso leicht schlecht zu zeichnen. Die Arbeit über realistische Journey Maps argumentiert, dass die meisten kursierenden Maps **grundlegend fehlerhaft** sind, und zwar aus zwei zusammenhängenden Gründen:
+
+- Sie unterstellen, dass **jeder Kunde jeden Kontaktpunkt durchläuft**, und
+- sie unterstellen, dass **alle Kontaktpunkte gleich wichtig sind**.
+
+Beide Annahmen kommen aus derselben Quelle. Die Map wurde in einem Besprechungsraum aus dem gebaut, was Manager für wahr halten, und sie wurde nie an Kunden überprüft.
+
+Die Studie hinter dieser Aussage arbeitete mit dem Managementteam eines der größten überdachten Einkaufszentren der Welt. Gemeinsam listeten sie jeden Kontaktpunkt auf, dem ein Besucher begegnen könnte, gruppiert in vor, während und nach dem Besuch. Die Liste umfasste **60 Kontaktpunkte** - 37 vor dem Besuch, 14 währenddessen und 9 danach. Statt dort aufzuhören, führten sie anschließend eine kurze Befragung mit 100 Besuchern im Zentrum durch und fragten für jeden Kontaktpunkt schlicht, ob er an diesem Tag stattgefunden hatte.
+
+Die Ergebnisse zerlegten die Map. Von den 60 vom Management erfundenen Kontaktpunkten wurden **50 von weniger als der Hälfte der Besucher erlebt**. Selbst innerhalb der überlebenden Top Ten war die Spannweite riesig: 95 Prozent hatten vor, jemandem ein Geschäft weiterzuempfehlen, während nur 46 Prozent irgendeinen Kommentar von den Menschen erhalten hatten, mit denen sie einkaufen waren. Eine Map, die diese beiden als gleich wichtig behandelt, lenkt die Aufmerksamkeit des Managements auf die falschen Stellen.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Map aus internen Meinungen gebaut <small>das übliche Scheitern</small></div>
+      <ul>
+        <li>Jeder Kontaktpunkt, der dem Management einfällt, kommt hinein, also wird die Map riesig</li>
+        <li>Alles wirkt gleich kritisch, also wird nichts priorisiert und die Manager hören still auf, sie zu benutzen</li>
+        <li>Sie zeigt, was das Unternehmen sich vorstellt, dass Kunden tun</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Map aus Kundenforschung gebaut <small>das Ziel</small></div>
+      <ul>
+        <li>Kunden werden direkt gefragt, welche Kontaktpunkte sie tatsächlich erlebt haben</li>
+        <li>Der Anteil der Kunden je Kontaktpunkt trennt die kritischen von den marginalen</li>
+        <li>Sie zeigt, was Kunden wirklich tun - kürzer, wahrer und deshalb tatsächlich genutzt</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Die Kernempfehlung der Einkaufszentrum-Studie: vorne die zusätzliche Zeit und das zusätzliche Geld für die Erhebung von Kundendaten aufwenden und dafür eine Map zurückbekommen, die kleiner, wahrer und benutzbar ist.</figcaption>
+</div>
+
+Die zweite Hälfte des Arguments betrifft die **vertikale Achse**, und dort scheitern die meisten Maps still. Ist die vertikale Achse nur eine Reihe von Emoji-Gesichtern, ist die Map zu einer Empathieübung geworden - nützlich, aber unfähig, irgendjemandem zu sagen, was zu ändern ist. Ist die vertikale Achse ein unstrukturierter Haufen aus Designideen, Markenwünschen und Mitarbeiteraufgaben, wächst die Map, bis sie unlesbar ist. Die Empfehlung lautet, die vertikale Achse als **die Schlüsselkomponenten des Dienstleistungssystems an jedem Kontaktpunkt** zu behandeln, wobei jede Zeile einer Funktion gehört, sodass Marketing, Personal, Operations und IT jeweils sehen können, was sie liefern müssen:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Kundenanforderungen an diesem Kontaktpunkt - Marketing</span>
+  <span class="sc-chip violet">Mitarbeiterhandlungen, die nötig sind, um sie zu erfüllen - Personal</span>
+  <span class="sc-chip green">Unterstützung der Mitarbeitenden: Schulung, Werkzeuge, Systeme, Zertifizierung - Personal und Operations</span>
+  <span class="sc-chip">Umgebung und Gestaltung: was der Kunde wahrnehmen soll und was nicht</span>
+  <span class="sc-chip amber">Service-Innovation: was alle Funktionen hier gemeinsam tun könnten</span>
+</div>
+
+So gebaut, hört die Journey Map auf, ein Bild zu sein, und wird zu einem **bereichsübergreifenden Planungswerkzeug**, und sie geht ganz natürlich in den Blueprint der zweiten Hälfte dieses Kapitels über.
+
+## 4 · Pains, Gains, Emotionen und Momente der Wahrheit
+
+Sobald Phasen, Kontaktpunkte und Gefühle auf der Map stehen, machen vier Annotationen daraus ein Innovationsinstrument:
+
+| Annotation | Was du markierst | Warum es zählt |
+|---|---|---|
+| **Schmerzpunkt (Pain Point)** | Ein Schritt, an dem der Kunde frustriert, verwirrt, verzögert oder zur Arbeit gezwungen wird | Jeder Schmerzpunkt wird zu einem Kandidaten für ein Merkmal, eine Qualitätsdimension oder ein Leistungsziel des neuen Angebots |
+| **Gewinn (Gain)** | Ein Schritt, den der Kunde wirklich genießt oder schätzt | Sagt dir, was ein Redesign überleben muss und was es wert ist, beworben zu werden |
+| **Emotionskurve** | Das Auf und Ab des Gefühls über die gesamte Abfolge | Zeigt, wo das Erlebnis zusammenbricht, und das ist selten dort, wo das Unternehmen es vermutet |
+| **Moment der Wahrheit** | Ein Schritt, an dem sich Kunde und Anbieter tatsächlich begegnen | Das sind die Punkte, an denen Qualität beurteilt wird, sie verdienen also die meiste Gestaltungsaufmerksamkeit |
+
+Ein **Moment der Wahrheit** ist hier keine Metapher. Er hat eine präzise Definition, sobald wir beim Blueprint angekommen sind: Es ist jeder Punkt, an dem der Kunde hinübertritt und mit einem Kontaktmitarbeitenden oder mit der Selbstbedienungstechnologie des Unternehmens interagiert. An diesen Übergängen entsteht die wahrgenommene Qualität, und es gibt üblicherweise weit weniger davon, als man erwartet. Eine der Erkenntnisse aus dem Speditionsfall weiter unten in diesem Kapitel war genau das: Nur eine kleine Zahl von Kontaktpunkten war für die Kunden wirklich von Bedeutung.
+
+Der praktische Schritt ist immer derselbe. Nimm die Schmerzpunkte aus der Ist-Map und schreibe sie als Anforderungen um. *Wir haben elf Tage auf ein Ersatzteil gewartet* wird zu einem Leistungsniveau. *Niemand hat uns gesagt, was als Nächstes passiert* wird zu einem Kommunikationsmerkmal. *Der Techniker hatte das Teil nicht im Wagen* wird zu einem Redesign eines Unterstützungsprozesses. Diese Übersetzung ist die Brücke zu den nächsten Kapiteln, in denen diese Kandidatenmerkmale danach sortiert werden, wie viel sie tatsächlich bedeuten.
+
+## 5 · Service Blueprinting - das operative Gegenstück
+
+Eine Journey Map sagt dir, *was der Kunde erlebt*. Sie sagt dir nicht, *was im Unternehmen geschehen muss*, damit dieses Erlebnis zustande kommt. Das ist die Aufgabe des **Service Blueprints**.
+
+Die Motivation ist das Problem der Immaterialität. Dienstleistungen sind fließend, dynamisch und werden in Echtzeit gemeinsam mit dem Kunden erzeugt, und sie haben meist sehr wenige statische physische Eigenschaften. Weil es nichts gibt, das man hochhalten und auf das man zeigen könnte, greifen die Beteiligten darauf zurück, Dienstleistungen **allein in Worten** zu beschreiben, was zu vereinfachten, unvollständigen und verzerrten Spezifikationen führt, und jeder im Raum geht mit einem anderen inneren Bild hinaus. Blueprinting behebt das, indem es die Dienstleistung **auf einer Seite sichtbar** macht, präzise genug, um darüber zu streiten, und flexibel genug, um Raum für Kreativität zu lassen.
+
+Blueprinting begann als Technik der Prozesssteuerung, deren Verkaufsargumente waren, dass es präziser ist als eine verbale Definition, dass es Probleme lösen kann, bevor sie eintreten, und dass es **Fehlerpunkte** in einem Ablauf identifizieren kann. Es entwickelte sich dann zu einem kundenorientierten Werkzeug, indem es den Kundenprozess gegen die Struktur der Organisation aufträgt und **Onstage-** von **Backstage-**Arbeit trennt. Verglichen mit formalen Sprachen der Prozessmodellierung ist es bewusst einfach, sodass Kunden, Frontline-Mitarbeitende und Manager es alle lesen, nutzen und verändern können. In einem Zug verwandelt es etwas, das nur als Worte und Gewohnheiten existierte, in ein Objekt, das eine bereichsübergreifende Gruppe gemeinsam prüfen und neu gestalten kann.
+
+## 6 · Die Ebenen und die drei Linien
+
+Ein Blueprint hat fünf Komponenten, vom Kunden abwärts gestapelt, und drei horizontale Linien, die sie trennen. Sowohl die Komponenten als auch die Linien sind prüfungsrelevant, also lernt man sie als Stapel:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node soft">Physische Belege<span class="sub">jedes Greifbare, dem der Kunde bei jedem Schritt begegnet: der Laden, die Website, das Fahrzeug, die Uniform, die Rechnung</span></div>
+    <div class="sc-node amber">Kundenaktionen<span class="sub">jeder Schritt, den der Kunde unternimmt, der Reihe nach - ZUERST gezeichnet, weil alles andere existiert, um sie zu stützen</span></div>
+    <span class="arrow">- - - - -<small>Linie der Interaktion - jede Überquerung ist ein Moment der Wahrheit</small></span>
+    <div class="sc-node violet">Onstage / sichtbare Handlungen der Kontaktmitarbeitenden<span class="sub">was der Kunde die Mitarbeitenden oder eine Selbstbedienungstechnologie tun sehen kann</span></div>
+    <span class="arrow">- - - - -<small>Linie der Sichtbarkeit - darüber sieht der Kunde, darunter sieht er nicht</small></span>
+    <div class="sc-node slate">Backstage / unsichtbare Handlungen der Kontaktmitarbeitenden<span class="sub">dieselben Kontaktmitarbeitenden beim Vorbereiten, Telefonieren, Organisieren, Dokumentieren - außer Sichtweite</span></div>
+    <span class="arrow">- - - - -<small>Linie der internen Interaktion - trennt die Kontaktmitarbeitenden vom Rest des Unternehmens</small></span>
+    <div class="sc-node green">Unterstützungsprozesse<span class="sub">Einheiten, Systeme und Kolleginnen und Kollegen, die den Kunden nie treffen, ohne die die Leistung aber nicht zustande kommt</span></div>
+  </div>
+  <figcaption>Die Anatomie eines Service Blueprints. Die physischen Belege laufen ganz oben durch, an jede Kundenaktion gebunden; die drei Linien darunter teilen die Organisation in das, was der Kunde berührt, das, was der Kunde sieht, und das, was alles still trägt.</figcaption>
+</div>
+
+Jede Linie legt etwas anderes offen, deshalb gibt es drei davon und nicht eine:
+
+| Linie | Trennt | Was sie offenlegt |
+|---|---|---|
+| **Linie der Interaktion** | Kundenaktionen von Onstage-Handlungen der Mitarbeitenden | Wo der Kunde **in den Prozess integriert** ist und die Leistung mit erzeugt. Jede Überquerung ist ein **Moment der Wahrheit**, an dem Qualität beurteilt wird |
+| **Linie der Sichtbarkeit** | Onstage- von Backstage-Handlungen | Wie viel von der Dienstleistung der Kunde tatsächlich **beobachten** kann. Arbeit über diese Linie zu verschieben ist eine Gestaltungsentscheidung, kein Zufall |
+| **Linie der internen Interaktion** | Kontaktmitarbeitende von Unterstützungsprozessen | Die **bereichsübergreifenden Abhängigkeiten**: welche internen Einheiten und Systeme funktionieren müssen, damit ein Frontline-Moment gelingt |
+
+Die Linie der Sichtbarkeit verdient einen zweiten Blick, denn zu entscheiden, was oberhalb von ihr liegt, ist eine echte strategische Wahl. In einem Hotel ist es in Ordnung, das Bett vor den Augen des Gastes aufzuschlagen, während es nicht in Ordnung ist, vor ihm die Wäscherei zu betreiben. In einem Restaurant hingegen ist es zu einem Premiumprodukt geworden, Gäste an einem Chef's Table mitten in der Küche zu platzieren - traditionell dem am stärksten backstage gelegenen Ort im Haus. Blueprinting macht diese Abwägung explizit, statt sie der Gewohnheit zu überlassen.
+
+<Aside type="caution">
+**Die Zeilen anpassen, wenn die Dienstleistung digital ist.** Bei einem Online- oder Kiosk-Service gibt es vielleicht gar keine Onstage-Mitarbeitenden. In diesem Fall tauscht man die Zeile der Onstage-Kontaktmitarbeitenden gegen eine **Onstage-Technologiezeile**, die festhält, wie der Kunde mit der Oberfläche interagiert. Manche Dienstleistungen brauchen beide Zeilen zugleich, etwa eine Fluggesellschaft, bei der ein Teil der Passagiere am Automaten und ein anderer Teil am Schalter eincheckt. Anpassungsfähigkeit ist eine der echten Stärken der Technik, solange der Kunde oben bleibt.
+</Aside>
+
+## 7 · Einen Blueprint lesen - Fehlerpunkte, Wartezeiten, Redundanzen und Übergaben
+
+Ein fertiger Blueprint ist ein Diagnoseinstrument. Man liest ihn, indem man nach unten und zur Seite scannt und vier Fragen stellt:
+
+<div class="sc-quad">
+  <div class="q amber">
+    <div class="qh">Fehlerpunkte <small>wo es brechen kann</small></div>
+    <ul>
+      <li>Schritte, an denen ein falsches Ergebnis plausibel ist und der Kunde es sofort spürt</li>
+      <li>Meist ein zu spät herangezogener Unterstützungsprozess oder ein Schritt ohne klare Zuständigkeit. Mit einem eigenen Symbol markieren - dafür wurde Blueprinting erfunden</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Wartepunkte <small>wo Zeit verloren geht</small></div>
+    <ul>
+      <li>Lücken in der Kundenzeile, während Backstage- oder Unterstützungsarbeit läuft</li>
+      <li>Zeitschätzungen je Schritt ergänzen, und die Warteschlangen treten hervor. Warten ist intern unsichtbar und von der Kundenseite aus riesig</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Redundanzen <small>Arbeit, die nichts beiträgt</small></div>
+    <ul>
+      <li>Dieselbe Information zweimal von verschiedenen Funktionen erhoben; Freigaben, die an keinem Ergebnis mehr etwas ändern</li>
+      <li>Außerdem fragen: Wie hart muss der Kunde für das arbeiten, wofür er bezahlt hat</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Übergaberisiken <small>wo die Verantwortung wechselt</small></div>
+    <ul>
+      <li>Jede vertikale Verbindung, die die interne Interaktionslinie kreuzt, ist eine Übergabe, und an Abteilungsgrenzen häufen sich die für Kunden sichtbaren Fehler</li>
+      <li>Uneinigkeit darüber, wie ein Schritt wirklich abläuft, signalisiert ein echtes Problemfeld</li>
+    </ul>
+  </div>
+</div>
+
+Die Redundanzfrage hat eine der meistzitierten Erkenntnisse der Blueprinting-Literatur hervorgebracht. Ein Betreiber von Parks und Ferienanlagen verlor bei einem Hausboot-Resort an einem See Stammkundschaft und konnte sich nicht erklären, warum. Die Gästeerfahrung visuell zu blueprinten, mit Fotos und Video, machte schmerzhaft deutlich, dass **von den Kunden verlangt wurde, für ihren Urlaub außerordentlich hart zu arbeiten**: lange Einkaufslisten schreiben, sich durch überfüllte Geschäfte im Ort kämpfen, alles einen steilen Hang hinunter zum Boot tragen, dann jeden Abend ein großes Schiff vor Anker legen und es ohne Ausbildung navigieren. Nichts davon tauchte in irgendeinem internen Prozessdokument auf, weil nichts davon Arbeit war, die das Unternehmen verrichtete. Sobald es sichtbar war, lautete die Antwort: eine Leiter neuer Dienstleistungen - Wagen bis zum Steg, Lebensmitteleinkauf, Köche an Bord, gebuchte Kapitäne - plus Renovierungen und neue Servicestandards. Das Ergebnis waren **50 Prozent weniger Beschwerden und 12 Prozent mehr Wiederholungsgeschäft**.
+
+## 8 · Was Blueprinting für die Organisation leistet
+
+Über das Finden von Fehlern in einem einzelnen Prozess hinaus liefert Blueprinting organisationale Vorteile, die erklären, warum Unternehmen es immer wieder einsetzen:
+
+- **Eine gemeinsame Plattform für Innovation.** Kunden, Mitarbeitende und Manager lesen alle dasselbe Bild, sodass eine neue Dienstleistung oder eine Verbesserung einen gemeinsamen Diskussionspunkt hat statt fünf verbaler Versionen davon.
+- **Rollen und wechselseitige Abhängigkeiten werden sichtbar.** Mitarbeitende sehen, wie ihre eigene Arbeit ins integrierte Ganze passt. Ein großes Speditionsunternehmen entdeckte durch Blueprinting, dass seine Tausenden Fahrerinnen und Fahrer das eigentliche Gesicht der Marke waren, was Investitionen in Fahrertechnologie, Schulung und Ausrüstung umlenkte.
+- **Es funktioniert strategisch und taktisch, und es speichert Wissen.** Dieselbe Technik bildet ein ganzes mehrjähriges Dienstleistungssystem ab oder verfeinert einen einzelnen Schritt, und die fertigen Blueprints können ausgehängt, gemeinsam bearbeitet, aus der Ferne beackert und dem nächsten Team als Roadmap übergeben werden.
+- **Momente der Wahrheit werden gestaltet statt geerbt.** Was sichtbar ist, wer anwesend ist und sogar was an jedem Kontaktpunkt gesagt wird, wird zu einer bewussten Entscheidung.
+- **Die Wettbewerbspositionierung wird klarer.** Bildet man die eigene Dienstleistung, eine ideale Dienstleistung und die eines Wettbewerbers in derselben Notation ab, springen die Qualitätslücken ins Auge. Genau über diesen Vergleich hat ein Unternehmen sein garantiertes Express-Lieferprodukt entworfen, das zu seiner profitabelsten Dienstleistung wurde.
+
+<Aside type="note">
+**Der Prozess ist oft mehr wert als das Dokument.** Teams, die ihre eigene Dienstleistung regelmäßig blueprinten, haben ihre besten Einsichten *während des Zeichnens*, bevor das Dokument fertig ist. Und wo Menschen uneinig darüber sind, wie die Dienstleistung tatsächlich funktioniert, deutet diese Uneinigkeit meist auf ein echtes Problem hin - also aufschreiben, statt sie wegzudiskutieren.
+</Aside>
+
+## 9 · Wie man einen baut
+
+Die Reihenfolge des Aufbaus ist nicht willkürlich. In dieser Abfolge vorzugehen hält den Kunden im Zentrum; in jeder anderen Reihenfolge entsteht ein internes Prozessdiagramm, an das der Kunde nachträglich angeschraubt wurde.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Abgrenzung<span class="sub">welche Dienstleistung und welches Segment</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Kundenaktionen<span class="sub">immer zuerst</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Onstage<span class="sub">danach Backstage der Kontaktmitarbeitenden</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Unterstützungsprozesse<span class="sub">dann die vertikalen Verbindungen zeichnen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Physische Belege<span class="sub">zuletzt ergänzt, quer über den Kopf</span></div>
+  </div>
+  <figcaption>Die Aufbaureihenfolge. Abgrenzung, dann der Kunde, dann die Menschen, denen der Kunde begegnet, dann die Maschinerie dahinter, und erst am Ende die greifbaren Dinge.</figcaption>
+</div>
+
+Ein paar praktische Regeln gehören zu dieser Abfolge:
+
+- **Das Kundensegment benennen.** Dasselbe Unternehmen bedient Segmente oft über verschiedene Prozesse - ein Vielflieger und ein Economy-Passagier teilen sich keinen Check-in -, deshalb brauchen verschiedene Segmente verschiedene Blueprints.
+- **Darüber streiten, wo die Dienstleistung beginnt und endet.** Das aus Kundensicht zu klären erzeugt mehr Diskussion als alles andere in der Übung, und die Diskussion selbst ist wertvoll.
+- **Abbilden, was meistens passiert.** Die exotischen Ausnahmen im ersten Durchgang ignorieren und den typischen Prozess erst danach gegen ein Ideal oder einen Wettbewerber halten.
+- **Ein bereichsübergreifendes Team nutzen und Kunden einbeziehen, wo möglich.** Alle, die an Gestaltung, Erbringung oder Unterstützung der Dienstleistung beteiligt sind, sollten im Raum sein.
+- **Den Detailgrad dem Zweck anpassen, dann validieren und pflegen.** Ein *Konzept-Blueprint* aus einer Handvoll Kästen ist früh richtig; ein Rollen- und Verantwortungs-Blueprint, der sich um einen ganzen Raum zieht, ist bei der Umsetzung richtig, und jeder einzelne Kasten lässt sich später in einen eigenen Unter-Blueprint aufklappen. Die fertige Version denen zeigen, die die Arbeit wirklich machen, sie korrigieren und aktualisieren, wenn sich die Dienstleistung ändert - ein veralteter Blueprint ist schlimmer als gar keiner, weil ihm geglaubt wird.
+
+## Durchgerechnetes Beispiel
+
+### (a) Die Journey: ein defekter Kühlschrank
+
+Ein Hausgerätehersteller verkauft Kühlschränke und betreibt auch den Reparaturservice. Das Kundensegment ist ein Privathaushalt mit einem Gerät außerhalb der Garantie. Hier die Ist-Journey, annotiert wie in Abschnitt 4:
+
+| Phase | Kontaktpunkt | Was der Kunde tut | Was er fühlt | Pain | Chance |
+|---|---|---|---|---|---|
+| Vor der Leistung | Websuche, Bewertungsseiten | Merkt, dass der Kühlschrank warm wird, sucht, wer ihn repariert | Alarmiert, die Lebensmittel verderben | Keine Ahnung, ob die Marke ältere Modelle überhaupt betreut | Modellbasierte Prüfung der Betreuung schon im ersten Suchergebnis |
+| Vor der Leistung | Buchungsseite oder Hotline | Beschreibt den Fehler, fragt, was es kosten wird | Misstrauisch beim Preis | Überhaupt keine Preisangabe, bevor ein Techniker da war | Veröffentlichte Diagnosepauschale und eine typische Preisspanne für die Reparatur |
+| Vor der Leistung | Bestätigungs-E-Mail | Akzeptiert ein vierstündiges Ankunftsfenster in neun Tagen | Resigniert | Lange Wartezeit, breites Zeitfenster, ein halber Arbeitstag verloren | Zweistündiges Fenster, Termine am Folgetag, Live-Verfolgung des Technikers |
+| Leistung | Die Haustür | Wartet zu Hause, lässt den Techniker herein | Erleichtert, leicht angespannt | Keine Vorwarnung, wenn die Route in Verzug gerät | Automatische Nachricht, wenn der vorherige Auftrag überzieht |
+| Leistung | Techniker und Gerät | Schaut bei der Diagnose zu, beantwortet Fragen | Interessiert, dann ernüchtert | Das benötigte Teil ist nicht im Wagen, also wird ein zweiter Besuch gebucht | Das wahrscheinliche Teil bei der Buchung aus dem Fehlercode vorhersagen und einladen |
+| Leistung | Rechnung und Kartenterminal | Bestätigt den Preis und zahlt | Widerwillig | Zahlt eine Anfahrtspauschale für einen Besuch, der nichts repariert hat | Die zweite Anfahrtspauschale erlassen oder einen Komplettpreis für die Reparatur nennen |
+| Nach der Leistung | Nachfass-E-Mail, Bewertungsanfrage | Bewertet den Besuch, oder auch nicht | Gleichgültig, ins Negative kippend | Wird um eine Bewertung gebeten, bevor der Kühlschrank tatsächlich funktioniert | Die Anfrage zurückstellen, bis die Reparatur abgeschlossen und bestätigt ist |
+
+Die Emotionskurve erreicht ihren Höhepunkt, wenn der Techniker eintrifft, und bricht bei der Diagnose zusammen, und sowohl der Schmerz als auch der Zusammenbruch werden durch etwas verursacht, das der Kunde nie sieht: wie Ersatzteile in den Wagen gelangen.
+
+### (b) Der Blueprint: eine Phase in Ebenen zerlegen
+
+Nimm die Leistungsphase - den Reparaturbesuch - und setze sie nach unten fort. Jede Ebene durchläuft dieselben vier Schritte, lies das Diagramm also Zeile für Zeile über die Spalten:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Physische Belege<span class="n">was dem Kunden begegnet</span></div>
+      <div class="sc-node soft">1 · Buchungsmaske, Bestätigungs-E-Mail</div>
+      <div class="sc-node soft">2 · Wagen, Arbeitskleidung, Dienstausweis</div>
+      <div class="sc-node soft">3 · Werkzeug, das geöffnete Gerät, das Ersatzteil</div>
+      <div class="sc-node soft">4 · Rechnung, Kartenterminal, Feedback-Link</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Kundenaktionen<span class="n">zuerst gezeichnet</span></div>
+      <div class="sc-node amber">1 · Bucht einen Termin und beschreibt den Fehler</div>
+      <div class="sc-node amber">2 · Wartet zu Hause, lässt den Techniker herein</div>
+      <div class="sc-node amber">3 · Schaut bei der Diagnose zu, beantwortet Fragen</div>
+      <div class="sc-node amber">4 · Bestätigt den Preis, zahlt, bewertet den Besuch</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Onstage-Mitarbeitende<span class="n">über der Linie der Sichtbarkeit</span></div>
+      <div class="sc-node violet">1 · Mitarbeiter bestätigt den Termin per Telefon oder Chat</div>
+      <div class="sc-node violet">2 · Techniker trifft ein, begrüßt, erklärt den Plan</div>
+      <div class="sc-node violet">3 · Techniker diagnostiziert und erklärt die Reparatur</div>
+      <div class="sc-node violet">4 · Techniker testet und stellt die Rechnung aus</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Backstage-Mitarbeitende<span class="n">unter der Linie der Sichtbarkeit</span></div>
+      <div class="sc-node slate">1 · Mitarbeiter codiert den Fehler in ein Auftragsticket</div>
+      <div class="sc-node slate">2 · Disponent baut die Route für den Tag</div>
+      <div class="sc-node slate">3 · Techniker prüft den Wagenbestand auf das Teil</div>
+      <div class="sc-node slate">4 · Techniker schließt den Auftrag in der App ab</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Unterstützungsprozesse<span class="n">unter der internen Linie</span></div>
+      <div class="sc-node green">1 · Buchungssystem und Regeln zur Terminverfügbarkeit</div>
+      <div class="sc-node green">2 · Software für Einsatzplanung und Routing</div>
+      <div class="sc-node green">3 · Ersatzteillager und Bestückung der Wagen</div>
+      <div class="sc-node green">4 · Fakturierung, Zahlungen, Servicehistorie im CRM</div>
+    </div>
+  </div>
+  <figcaption>Eine Phase des Reparaturservice als Blueprint. Eine Zeile quer gelesen ergibt einen einzelnen Schritt in der Zeit; eine Spalte nach unten gelesen ergibt eine Ebene der Organisation. Die Momente der Wahrheit sind die Schritte 2, 3 und 4, wo sich die Kundenzeile und die Onstage-Zeile berühren.</figcaption>
+</div>
+
+<Badge text="Fehlerpunkt" variant="danger" /> **Schritt 3, Backstage.** Der Wagenbestand wird erst *nach* der Diagnose geprüft, während man in der Küche des Kunden steht. Der Unterstützungsprozess Ersatzteile ist viel zu spät in den Blueprint eingebunden, sodass der gesamte Besuch vor den Augen des Kunden scheitert, wenn das Teil fehlt. Das Redesign liegt auf der Hand, sobald es gezeichnet ist: das Ersatzteillager an **Schritt 1** anbinden, das wahrscheinliche Teil aus dem codierten Fehler vorhersagen und den Wagen am Vorabend bestücken.
+
+<Badge text="Wartepunkt" variant="caution" /> **Schritt 2, Kundenaktionen.** Der Kunde sitzt vier Stunden lang untätig zu Hause, während die einzige Aktivität in dieser Zeile des Blueprints ein Routing-Lauf des Disponenten ist, den er nicht sehen kann. Das Warten ist intern unsichtbar, weil während dieser Zeit niemand im Unternehmen untätig ist. Das Fenster zu verkleinern oder einfach die Live-Position des Technikers offenzulegen verwandelt tote Wartezeit in etwas Erträgliches.
+
+## Auf dein Projekt anwenden
+
+<Steps>
+
+1. **Journey und Segment auswählen.** Benenne einen konkreten Kundentyp und eine konkrete zu erledigende Aufgabe. Wenn zwei Segmente deine Dienstleistung unterschiedlich erleben, brauchst du zwei Maps und nicht einen vermischten Durchschnitt.
+
+2. **Die Phasen zuerst aus dem Gedächtnis skizzieren.** Lege die Phasen vor, während und nach der Leistung sowie die Aufgaben in jeder aus. Behandle diesen Entwurf als Hypothese, nicht als Befund - er ist genau die intern erfundene Map, vor der die Forschung warnt.
+
+3. **Sie mit echten Kunden überprüfen.** Frage eine angemessene Zahl von Menschen für jeden Kontaktpunkt deines Entwurfs, ob sie ihn tatsächlich erlebt haben. Alles, was nur eine Minderheit trifft, fällt von der Map, und die Überlebenden werden danach geordnet, wie viele Menschen sie erreichen.
+
+4. **Die Gemütslage ergänzen, dann annotieren.** Schreibe unter jede überlebende Phase, was der Kunde denkt und fühlt, in seinen eigenen Worten aus den Interviews. Kreise dann jeden Schmerz, jeden Gewinn und jeden Moment der Wahrheit ein, an dem er auf einen Menschen oder eine Oberfläche von dir trifft.
+
+5. **Die Schmerzen in Anforderungen übersetzen.** Schreibe jeden als Merkmal, Funktionalität, Leistungsniveau oder Qualitätsdimension um. Diese Liste ist der Input für die folgenden Kapitel zur Priorisierung von Merkmalen.
+
+6. **Die schlimmste Phase blueprinten.** Nimm den Schritt mit dem größten Schmerz und baue die fünf Ebenen darunter: Kundenaktionen, dann Onstage, dann Backstage, dann Unterstützungsprozesse, mit den physischen Belegen zuletzt quer über den Kopf. Zeichne die vertikalen Verbindungen von jedem sichtbaren Schritt hinunter zu den Systemen, die ihn möglich machen.
+
+7. **Fehlerpunkte, Wartezeiten, Redundanzen und Übergaben jagen, dann validieren.** Markiere jedes mit einem eigenen Symbol und ergänze grobe Zeiten je Schritt, wenn Warten Teil der Beschwerde ist. Zeige das Ergebnis denen, die die Dienstleistung tatsächlich erbringen würden, und lass sie es korrigieren - wo sie untereinander uneins sind, hast du vermutlich das echte Problem gefunden.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Customer Journey | Die gesamte Abfolge, die ein Kunde vor, während und nach der Nutzung eines Angebots durchlebt, nicht nur der Kauf |
+| Kontaktpunkt (Touchpoint) | Jeder einzelne Kontaktpunkt zwischen Kunde und Angebot: eine Anzeige, eine Website, ein Tresen, ein Telefonat, eine Rechnung |
+| Customer Journey Map | Eine visuelle Zeitachse der Kontaktpunkte aus Kundensicht, die Aufgaben, Phasen, Bedürfnisse, Kanäle, Denken und Fühlen trägt, mit den Zeilen darunter, die sagen, was jede Funktion liefern muss |
+| Moment der Wahrheit | Ein Punkt, an dem der Kunde hinübertritt und mit einem Kontaktmitarbeitenden oder einer Selbstbedienungstechnologie interagiert und dabei Qualität beurteilt |
+| Schmerzpunkt (Pain Point) | Ein Schritt, an dem der Kunde frustriert, verzögert, verwirrt oder zur Arbeit gezwungen wird, und damit ein Kandidat für ein Redesign |
+| Service Blueprint | Ein geschichtetes Bild einer Dienstleistung, das den Kundenprozess gegen die Organisation aufträgt, die ihn erzeugt |
+| Kundenaktionen | Die chronologischen Schritte, die der Kunde unternimmt; die Fundamentzeile eines Blueprints, immer zuerst gezeichnet |
+| Onstage-Handlungen der Kontaktmitarbeitenden | Was der Kunde die Mitarbeitenden oder eine Oberfläche während der Begegnung tun sehen kann |
+| Backstage-Handlungen der Kontaktmitarbeitenden | Vorbereitung, Anrufe und Verwaltung, erledigt von denselben Kontaktmitarbeitenden dort, wo der Kunde es nicht sehen kann |
+| Unterstützungsprozesse | Die internen Einheiten, Systeme und Kolleginnen und Kollegen, die den Kunden nie treffen, die Leistungserbringung aber möglich machen |
+| Physische Belege | Jedes Greifbare, dem der Kunde ausgesetzt ist und das seine Qualitätswahrnehmung prägt: Räumlichkeiten, Fahrzeuge, Websites, Dokumente |
+| Linie der Interaktion | Die Grenze zwischen Kundenaktionen und Onstage-Handlungen; jede Überquerung ist ein Moment der Wahrheit |
+| Linie der Sichtbarkeit | Die Grenze zwischen dem, was der Kunde sehen kann, und dem, was verborgen bleibt; wo Arbeit relativ dazu liegt, ist eine Gestaltungsentscheidung |
+| Linie der internen Interaktion | Die Grenze zwischen den Kontaktmitarbeitenden und dem unterstützenden Rest des Unternehmens; sie legt bereichsübergreifende Abhängigkeiten offen |
+
+## Teste dich selbst
+
+1. Warum wird eine Customer Journey über eine Phase vor, während und nach der Leistung gezeichnet und nicht nur um die Transaktion herum? Nenne ein Beispiel für eine Journey, deren emotionaler Tiefpunkt außerhalb der Kernleistung liegt.
+2. Nenne die sechs Dinge, die eine Journey Map unter jeder Phase festhält, und sage, wozu die siebte Spalte dient, die man daraus ableitet.
+3. Welche zwei Annahmen machen die meisten Journey Maps unrealistisch, und wie hat die Einkaufszentrum-Studie gezeigt, dass beide falsch sind?
+4. Zähle die fünf Komponenten eines Service Blueprints in der Reihenfolge von oben auf, dazu die drei Linien, die sie trennen. Was legt jede Linie offen?
+5. Im Kühlschrank-Blueprint wird der Wagenbestand erst geprüft, nachdem der Techniker den Fehler in der Küche des Kunden diagnostiziert hat. Warum ist das ein Fehlerpunkt und nicht nur eine Unannehmlichkeit, und was schlägt der Blueprint als Lösung vor?
+6. Nenne drei Gründe, warum ein Unternehmen eine Dienstleistung blueprinten würde, die bereits einwandfrei läuft, außer um Fehler darin zu finden.
+
+<Aside type="note" title="Lösungen">
+1. Weil Wert und Frustration über die gesamte Abfolge hinweg entstehen und die Phasen vor und nach der Kernbegegnung meist länger sind und oft über die Loyalität entscheiden. Im Küchenbeispiel liegt der Tiefpunkt bei der staubigen, störenden Montage, die nach dem Verkauf stattfindet und die der Händler gern als reine Logistik behandelt.
+2. Aufgabe (was der Kunde tut), Phase (wann), Bedürfnisse (warum), Kontaktpunkte (welcher Kanal), Denken und Fühlen. Die abgeleitete Spalte sind die Chancen: Überall dort, wo die Gemütslage ins Negative kippt, gibt es einen Kandidaten für ein Redesign, und die dort gefundenen Schmerzen werden in Merkmale, Funktionalitäten, Leistungsniveaus und Qualitätsdimensionen übersetzt.
+3. Dass jeder Kunde jeden Kontaktpunkt erlebt und dass alle Kontaktpunkte gleich wichtig sind. Das Management des Einkaufszentrums listete 60 Kontaktpunkte auf; eine Befragung von 100 Besuchern zeigte, dass 50 davon von weniger als der Hälfte der Besucher erlebt wurden, und selbst innerhalb der Top Ten reichte der Anteil von 95 Prozent bis hinunter auf 46 Prozent.
+4. Physische Belege, Kundenaktionen, Onstage-Handlungen der Kontaktmitarbeitenden, Backstage-Handlungen der Kontaktmitarbeitenden, Unterstützungsprozesse. Die **Linie der Interaktion** liegt zwischen Kunde und Onstage und markiert die Momente der Wahrheit, an denen der Kunde in den Prozess integriert ist. Die **Linie der Sichtbarkeit** liegt zwischen Onstage und Backstage und zeigt, wie viel von der Dienstleistung der Kunde beobachten kann. Die **Linie der internen Interaktion** liegt zwischen den Kontaktmitarbeitenden und der Unterstützung und legt offen, von welchen internen Einheiten und Systemen die Frontline abhängt.
+5. Weil das Scheitern vor den Augen des Kunden passiert und den gesamten Besuch ruiniert: Er verliert einen halben Tag, zahlt eine Anfahrtspauschale und hat immer noch keinen funktionierenden Kühlschrank. Es ist ein struktureller Fehler im Blueprint und kein Pech, weil der Unterstützungsprozess Ersatzteile an den falschen Schritt gebunden ist. Die Lösung ist, das Ersatzteillager an Schritt 1 anzubinden, das Teil bei der Buchung aus dem codierten Fehler vorherzusagen und den Wagen vorab zu bestücken.
+6. Drei beliebige aus: Es schafft eine gemeinsame Plattform und Sprache, sodass Kunden, Mitarbeitende und Manager über dasselbe Bild sprechen; es zeigt Mitarbeitenden, wie ihre Rolle ins Ganze passt, und legt bereichsübergreifende Abhängigkeiten offen; es erlaubt dem Unternehmen, Momente der Wahrheit bewusst zu gestalten und zu entscheiden, was sichtbar bleibt; es speichert Wissen und gibt es an künftige Teams weiter; und es klärt die Wettbewerbspositionierung, indem es die eigene Dienstleistung gegen ein Ideal oder einen Wettbewerber in derselben Notation abbildet.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Eine **Customer Journey** ist die Abfolge von Phasen und **Kontaktpunkten**, die ein Kunde **vor, während und nach** der Nutzung durchlebt. Wert und Frustration entstehen über die gesamte Abfolge hinweg, also ist die Journey und nicht das Produkt die Analyseeinheit, und sie wird immer **aus Sicht des Kunden** gezeichnet.
+- Eine **Journey Map** hält je Phase fest: **Aufgabe, Phase, Bedürfnis, Kontaktpunkt, Denken, Fühlen**, und daraus leitet man **Chancen** ab. Sie dient sowohl dem **Ist-Zustand** (Brüche und Schmerzpunkte finden) als auch dem **Soll-Zustand** (eine neue oder verbesserte Dienstleistung definieren).
+- Die meisten Maps sind **fehlerhaft**, weil sie unterstellen, dass jeder jeden Kontaktpunkt trifft und dass alle Kontaktpunkte gleich wichtig sind. Behebe das mit **Kundenforschung**: echte Kunden fragen, welche Kontaktpunkte sie tatsächlich erlebt haben, die wichtigen behalten, den Rest streichen. In der Einkaufszentrum-Studie wurden 50 von 60 erfundenen Kontaktpunkten von weniger als der Hälfte der Besucher erlebt.
+- Die **vertikale Achse** sollte bereichsübergreifende Zeilen tragen - Kundenanforderungen, Mitarbeiterhandlungen, Unterstützung der Mitarbeitenden, Gestaltung der Umgebung, Service-Innovation -, damit die Map zu einem Planungswerkzeug wird statt zu einem Empathieposter.
+- Ein **Service Blueprint** macht eine immaterielle Dienstleistung sichtbar und gestaltbar. Fünf Ebenen: **physische Belege, Kundenaktionen, Onstage, Backstage, Unterstützungsprozesse**. Drei Linien: **Interaktion** (Momente der Wahrheit), **Sichtbarkeit** (was der Kunde sehen kann), **interne Interaktion** (bereichsübergreifende Abhängigkeiten).
+- Lies einen Blueprint auf **Fehlerpunkte, Wartepunkte, Redundanzen und Übergaberisiken** hin. Redundanz schließt ein, wie hart der *Kunde* arbeiten muss - der Hausboot-Fall brachte 50 Prozent weniger Beschwerden und 12 Prozent mehr Wiederholungsgeschäft, sobald das sichtbar wurde.
+- Aufbaureihenfolge: **Dienstleistung und Segment abgrenzen → Kundenaktionen → Onstage und Backstage → Unterstützungsprozesse → physische Belege**, dann mit den Menschen validieren, die die Arbeit wirklich machen, und aktuell halten. Abbilden, was **meistens** passiert, ein bereichsübergreifendes Team einsetzen und die Zeilen anpassen (eine Onstage-Technologiezeile), wenn die Dienstleistung digital ist.
+</Aside>
+
+*Weiter: [Das Kano-Modell →](/de/learnings/mba/innovation-and-new-business-proposal/07-the-kano-model/) - welche Merkmale erwartet werden, welche verkaufen und welche begeistern.*
