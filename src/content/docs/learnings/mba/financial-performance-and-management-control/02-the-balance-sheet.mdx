@@ -1,0 +1,384 @@
+---
+title: "The Balance Sheet"
+description: "A snapshot of financial position at one date - assets on the left (the resources a business controls), liabilities and owner's equity on the right (who holds claims on them), why A = L + E can never fail, how to build a balance sheet from an inventory list, and how every transaction moves at least two accounts while keeping the equation in balance."
+sidebar:
+  label: "2 · The Balance Sheet"
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Chapter 1 set the scene: financial accounting is the standardised language a business uses to tell outsiders how it is doing. This chapter opens the first of the statements written in that language, the **balance sheet**. If the whole course is about measuring financial performance, the balance sheet is the starting photo: what the business *has* and who has a *claim* on it, frozen at one date.
+
+The chapter answers four questions. What are the main characteristics of a balance sheet? What kind of information does it give? What is the basic accounting equation, and what follows from it? And how do transactions get recorded, first directly on the balance sheet, then (as an outlook) through proper bookkeeping in accounts. After the Monopoly session those questions feel concrete: what to record, what to leave out, and how to turn properties, houses, chips and a mortgage into one statement.
+
+<Aside type="tip">
+**The one idea to carry through.** A balance sheet is two lists of the *same money* seen from two sides. The left side lists **where the money is sitting** (assets: cash, inventory, equipment); the right side lists **where the money came from** (liabilities from creditors, equity from owners). Because both lists describe the same pool of resources, **assets = liabilities + owner's equity** is not a coincidence that happens to work out, it is a definition that *must* hold. Every transaction changes at least two accounts precisely so that it keeps holding.
+</Aside>
+
+## 1 · What the balance sheet reports
+
+A balance sheet reports the **financial position** of an accounting entity **at a particular date**. Financial position means two things at once:
+
+- the **stock of resources the business controls** - these are the **assets**, and
+- the **claims against those resources** - these are the **liabilities** (claims of creditors) and the **owner's equity** (the owners' claim, which is whatever is left).
+
+The word *stock* matters. The balance sheet is a level, not a flow: it says "on 31 December we controlled this much and owed this much", not "during the year we earned this much". The flows belong to the income statement and cash-flow statement (next chapter). The balance sheet is the photograph; the other statements are the film between two photographs.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Left side - Assets <small>list of resources</small></div>
+      <ul>
+        <li>What the entity <strong>controls</strong>: cash, receivables, inventory, equipment, buildings, patents</li>
+        <li>Reads as the <strong>applications of funds</strong>: where the money was <em>invested</em></li>
+        <li>Adds up to <strong>total assets</strong></li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Right side - Liabilities &amp; owner's equity <small>list of sources</small></div>
+      <ul>
+        <li><strong>Liabilities</strong>: the claims of outsiders (creditors) - the "real" debts</li>
+        <li><strong>Owner's equity</strong>: the owners' residual claim - the balancing item</li>
+        <li>Reads as the <strong>sources of funds</strong>: where the money <em>came from</em></li>
+        <li>Adds up to <strong>total liabilities and equity</strong>, always equal to total assets</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The two faces of a balance sheet. Left: resources and how funds were applied (investments). Right: who provided those funds (funding / sourcing). Same money, two views, so the totals must agree.</figcaption>
+</div>
+
+## 2 · The basic accounting equation
+
+The entire structure rests on one line:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Basic equation</span>
+    <code>Assets = Liabilities + Owner's equity</code>
+  </div>
+  <div>
+    <span class="name">Rearranged</span>
+    <code>Owner's equity = Assets - Liabilities</code> (equity is the residual, also called capital or net assets)
+  </div>
+  <div>
+    <span class="name">Consequence</span>
+    total assets = total liabilities and equity, on every balance sheet, at every date
+  </div>
+</div>
+
+The lecture calls this an **analytical truth**: it holds by construction, not by luck. Assets are the resources; liabilities and equity are simply a complete list of who has claims on those resources. Since every unit of resource must have come from somewhere, the claims exhaust the assets exactly. Owner's equity is defined as the leftover, which is why the two sides can never disagree.
+
+<Aside type="caution">
+**A balance sheet that does not balance is not "bad news", it is a mistake.** If your totals differ, you have not discovered a loss or a hidden profit. You have mis-classified something, forgotten an account, or recorded one side of a transaction and not the other. Go back and find it. The equation is a check on your bookkeeping, never a result of the business.
+</Aside>
+
+Two implications follow straight from the equation and both come back later in the course:
+
+1. **Every transaction must affect at least two accounts** (section 7). A change on one side alone would break the equality.
+2. **Equity moves when assets or liabilities move without an offsetting partner.** Profit, losses and owner withdrawals all show up as changes in equity. That is the bridge to the income statement in the next chapter.
+
+## 3 · Assets - what the entity controls
+
+**Assets** are economic resources that the company **owns or controls**, arising from **past transactions or events**, that are **expected to generate future benefits**. Three tests are packed into that sentence, and an item has to pass all of them:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Control<span class="sub">the entity owns or controls it (not just uses it)</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Past event<span class="sub">it came from something that already happened</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Future benefit<span class="sub">it is expected to help earn money later</span></div>
+  </div>
+  <figcaption>The three tests for an asset. A signed intention to buy a machine next year fails the past-event test; a machine that is fully worn out fails the future-benefit test.</figcaption>
+</div>
+
+The balance sheet does not list assets one item at a time. It groups them into **accounts**, which are subdivisions of the element "assets". The main split is by how quickly the item turns back into cash:
+
+| Group | Account | What sits in it (plain words) |
+|---|---|---|
+| **Current assets** | Cash and cash equivalents | Money in the bank and in the till, plus things that are as good as cash |
+| | Accounts receivable | Customers bought from us on credit and still owe us the money |
+| | Inventories | Goods held to be sold (merchandise), supplies, and in some businesses works of art or similar stock |
+| | Prepaid expenses | Bills we have already paid for a future period, e.g. taxes, utilities or insurance paid in advance |
+| **Long-term assets** | Intangible assets | Rights without physical form, e.g. patents and licences |
+| | Property | Land |
+| | Plant | Buildings and production facilities |
+| | Equipment | Machines, vehicles, store fittings and the like |
+
+Current assets are expected to become cash (or be used up) within the normal operating cycle, typically a year. Long-term assets are held to be *used* over many years, not sold.
+
+### The terminology muddle
+
+The lecture makes a point of warning that **the names differ between standards and countries**, and it illustrates this with the published balance sheet of a large chemicals group (BASF). The same economic thing can appear under different labels depending on whether the statement follows IFRS, US GAAP or the German HGB, and whether it was translated. Typical synonyms you will run into:
+
+<div class="sc-chips">
+  <span class="sc-chip blue">long-term assets = non-current assets = fixed assets</span>
+  <span class="sc-chip green">accounts receivable = trade receivables = debtors</span>
+  <span class="sc-chip violet">inventories = stocks</span>
+  <span class="sc-chip amber">owner's equity = shareholders' equity = capital = net assets</span>
+</div>
+
+The lesson: do not memorise labels, memorise the *logic* (control, past event, future benefit, and how fast it turns to cash). Then you can read any balance sheet no matter what vocabulary it uses.
+
+## 4 · Liabilities - what the entity owes outsiders
+
+**Liabilities** are the **legal and economic obligations** of the organisation **to outsiders**, arising from **past transactions or events**, that it **expects to settle in the future**. Again the same three-part shape as assets, just mirrored: an outsider, a past event, a future outflow.
+
+The typical accounts:
+
+| Account | What it means in plain words |
+|---|---|
+| Accounts payable | *We* bought something on credit and have not paid the supplier yet (the mirror image of accounts receivable) |
+| Notes payable | A more formal debt backed by a written promise, typically a bank loan |
+| Provisions | Obligations we know we have but whose exact amount or timing is still uncertain, so we set aside a best estimate |
+| Long-term debt | Borrowings that fall due later than one year, e.g. bonds or long bank loans |
+
+<Aside type="caution">
+**Receivable vs payable - keep the direction straight.** *Receivable* means money will flow *to us* (an asset). *Payable* means money will flow *from us* (a liability). "Accounts receivable" is our customers' credit; "accounts payable" is the credit our suppliers gave us. Same word root, opposite sides of the balance sheet.
+</Aside>
+
+## 5 · Owner's equity - the residual claim
+
+**Owner's equity** is the owners' claim on the organisation's assets. There is no independent way to measure it: it is simply **assets minus liabilities**. If the business sold everything at book value and paid every creditor, equity is what would be left for the owners.
+
+How equity is *presented* depends on the legal form of the entity:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Sole proprietorship<span class="n">one owner</span></div>
+      <div class="sc-node amber">Owner, Capital<span class="sub">one line, e.g. Lopez, Capital</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Partnership<span class="n">several owners</span></div>
+      <div class="sc-node amber">Partner A, Capital · Partner B, Capital<span class="sub">one capital line per partner</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Corporation<span class="n">shareholders</span></div>
+      <div class="sc-node violet">Common (capital) stock<span class="sub">recorded at par / stated value</span></div>
+      <div class="sc-node violet">Paid-in capital in excess of par<span class="sub">what investors paid above the par value</span></div>
+      <div class="sc-node soft">Retained earnings<span class="sub">profits kept in the business (see the Monopoly case)</span></div>
+    </div>
+  </div>
+  <figcaption>Owner's equity by legal form. The total is always assets minus liabilities; only the way it is split into lines changes with the legal form.</figcaption>
+</div>
+
+### The par value example
+
+For a corporation the slides give a small example that is worth remembering exactly. **Par (or stated) value** is the nominal amount printed on the share certificate. It has nothing to do with what investors actually pay. Suppose one share carries a par value of $5 and an investor buys it from the company for $20:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Common stock</span>
+    <code>1 share × $5 par = $5</code> (recorded at par)
+  </div>
+  <div>
+    <span class="name">Paid-in capital in excess of par</span>
+    <code>1 share × ($20 - $5) = $15</code> (the premium above par)
+  </div>
+  <div>
+    <span class="name">Total contributed</span>
+    <code>$5 + $15 = $20</code> = the cash that actually came in, so assets and equity both rise by $20
+  </div>
+</div>
+
+## 6 · Deriving a balance sheet from an inventory list
+
+In practice, and in the Monopoly game, you start with a messy list of everything you have and everything you owe. Turning that into a balance sheet is a three-step routine:
+
+<Steps>
+
+1. **Classify.** Take every item on the inventory list and decide which balance sheet account it belongs to: is it cash, a receivable, inventory, equipment, a payable, a note, capital?
+
+2. **Aggregate.** Merge items that belong to the same account into one figure. The slide's example: machine 1 at $10,000 and machine 2 at $20,000 become one equipment line of $30,000.
+
+3. **Order and present.** Lay out the accounts in a consistent order by **liquidity**, i.e. how quickly the item becomes cash. Both directions are used in practice: US-style statements run from most liquid to least liquid (cash first, buildings last), while many continental European statements run the other way (long-term items first, cash last). Pick one and stick to it, and mirror it on the liabilities side (short-term debts near cash, long-term debts near long-term assets).
+
+</Steps>
+
+Then add the totals, and check that total assets equal total liabilities plus equity. If the owner's capital is not given directly, it *is* the balancing figure: assets minus liabilities. The Biwheels example in the worked section below does exactly this.
+
+## 7 · Balance-sheet transactions
+
+Now the balance sheet starts to move. Three definitions frame this:
+
+- **Entity concept.** An **entity** is an organisation that stands apart from other organisations and from individuals as a separate economic unit, and it is *that unit* for which the balance sheet is prepared. The owner's private car is not on the business's balance sheet, and the business's bank loan is not the owner's personal debt in the accounts. This is the same accounting-entity idea from chapter 1.
+- **Transaction.** A **transaction** is any event that **affects the financial position** of the entity **and can be reliably recorded in money terms**. Both halves are needed. Hiring a great manager affects your prospects but cannot be reliably priced, so it is not a transaction. Buying inventory on credit is.
+- **Two accounts minimum.** Every transaction affects the accounting equation, and **at least two accounts** are touched by every entry. An entry that touches **more than two** accounts is called a **compound entry**.
+
+Because the equation must survive every transaction, there are only a handful of shapes a transaction can take:
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Asset swap <small>left side only</small></div>
+    <ul>
+      <li>One asset up, another asset down by the same amount</li>
+      <li>Total assets unchanged, equation untouched</li>
+      <li>Monopoly: buy Oxford Street for 300 cash - land up, cash down</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Both sides grow <small>asset up, claim up</small></div>
+    <ul>
+      <li>An asset comes in and a liability or equity claim rises with it</li>
+      <li>Monopoly: mortgage Kings Cross for 100 - cash up, mortgage payable up</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Both sides shrink <small>asset down, claim down</small></div>
+    <ul>
+      <li>An asset leaves and a claim is extinguished</li>
+      <li>Paying off a loan: cash down, note payable down</li>
+      <li>Paying rent of 25 in Monopoly: cash down, and equity down (an expense)</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Claim swap <small>right side only</small></div>
+    <ul>
+      <li>One claim replaces another, assets untouched</li>
+      <li>e.g. a short-term payable refinanced into a long-term loan</li>
+    </ul>
+  </div>
+</div>
+
+Whatever the shape, the totals on the two sides stay equal after every step. That is the whole discipline: **record both effects, or record nothing**.
+
+## 8 · Bookkeeping - the outlook
+
+Walk a few transactions directly through the balance sheet (as in the worked example below) and the problem is obvious: rewriting the whole statement after every sale, purchase and payment is **slow and error-prone**. The answer is to keep a separate running record for each balance sheet line, an **account**, post transactions there as they happen, and assemble the balance sheet from the account balances only at the statement date. Because every transaction touches at least two accounts, this is **double-entry bookkeeping**. The mechanics (debits, credits, journals, ledgers) are left to the textbook's appendix; the logic is what matters here.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Transaction<span class="sub">an event that changes financial position, priced in money</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Accounts<span class="sub">one running record per balance sheet line, at least two touched per entry</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Balance sheet<span class="sub">assembled from account balances at the statement date</span></div>
+  </div>
+  <figcaption>From transaction to statement. The balance sheet is not rewritten after every event; it is produced from the accounts at the reporting date.</figcaption>
+</div>
+
+## Worked example
+
+### (a) Building the Biwheels balance sheet
+
+Biwheels Company is owned by Mr Lopez, who invested $400,000 to start it. At the reporting date the inventory list shows: cash 352,000; store equipment 14,000; merchandise inventory 159,200; a note payable of 100,000; accounts payable of 25,200. Applying the three steps of section 6 (classify, aggregate, order by decreasing liquidity):
+
+| Assets | $ | Liabilities and owner's equity | $ |
+|---|---:|---|---:|
+| Cash | 352,000 | Accounts payable | 25,200 |
+| Merchandise inventory | 159,200 | Note payable | 100,000 |
+| Store equipment | 14,000 | **Total liabilities** | **125,200** |
+| | | Lopez, Capital | 400,000 |
+| **Total assets** | **525,200** | **Total liabilities and owner's equity** | **525,200** |
+
+Check the arithmetic both ways: 352,000 + 159,200 + 14,000 = 525,200 on the left; 25,200 + 100,000 + 400,000 = 525,200 on the right. The equation holds, so the classification is at least internally consistent. Notice the ordering: cash (most liquid) first, then inventory, then equipment; on the right the supplier credit (due soonest) sits above the bank note.
+
+If the capital figure had *not* been given, we would have computed it: 525,200 of assets minus 125,200 of liabilities = 400,000 of equity.
+
+### (b) Walking the first transactions through the equation
+
+The slides also replay how Biwheels *got started*, one transaction at a time, with the equation checked after each step:
+
+| Step | Cash | Store equipment | = | Note payable | Lopez, Capital | Check |
+|---|---:|---:|:-:|---:|---:|---|
+| (1) Lopez invests 400,000 cash | +400,000 | | = | | +400,000 | 400,000 = 400,000 |
+| (2) Bank loan of 100,000 | +100,000 | | = | +100,000 | | |
+| Balance after (2) | 500,000 | | = | 100,000 | 400,000 | 500,000 = 500,000 |
+| (3) Buy store equipment for cash, 15,000 | -15,000 | +15,000 | = | | | |
+| Balance after (3) | 485,000 | 15,000 | = | 100,000 | 400,000 | 500,000 = 500,000 |
+
+Read each row against the four shapes from section 7. Transaction 1 is *both sides grow* (asset up, equity up). Transaction 2 is again *both sides grow*, but the claim is a liability this time: the bank's money is real cash in the till, and a real obligation on the right. Transaction 3 is a pure *asset swap*: total assets stay at 500,000, only their composition changes from all-cash to cash plus equipment. Nothing on the right side moves at all.
+
+**A fourth typical transaction, in words.** Biwheels needs bicycles to sell, so it buys **merchandise inventory on credit** from a supplier. Inventory (an asset) goes up; accounts payable (a liability) goes up by the same amount; cash does not move because nothing has been paid yet. Both sides of the equation grow, the totals still agree, and two accounts have been touched. The 25,200 of accounts payable in the inventory list in part (a) is exactly this kind of item: goods received, invoice not yet settled. When the supplier is eventually paid, cash and accounts payable both fall (*both sides shrink*), and the equation balances again.
+
+<Aside type="caution">
+**Two separate illustrations, two sets of numbers.** The inventory-list example shows store equipment at 14,000; the transaction walk-through buys equipment for 15,000. They are different snapshots from the slides, not a contradiction to be reconciled. Do not lose exam time trying to force them to match.
+</Aside>
+
+## Case corner
+
+### The Monopoly closing balance sheet
+
+The Monopoly game from the previous session ends with exactly the task of section 6: turn what your team holds into a balance sheet. The opening balance sheet was trivial: cash 1,500 = common stock 1,500 (the bank's starting money is treated as the shareholders' contribution). The closing example from the accounting template looks like this:
+
+| Assets | | Liabilities and equity | |
+|---|---:|---|---:|
+| Cash | 345 | Mortgage payable (Kings Cross Station) | 100 |
+| Land (Park Lane 350, Mayfair 400, Bond Street 320, Oxford Street 300) | 1,370 | Interest payable | 10 |
+| Receivables | 0 | Taxes payable | - |
+| Investments - Railroads (Kings Cross Station) | 200 | **Total liabilities** | **110** |
+| Investments - Utilities (Water Works) | 150 | Common stock | 1,500 |
+| Buildings - Houses (2 houses at 200 each, less 20 depreciation each) | 360 | Retained earnings | 815 |
+| Buildings - Hotels | 0 | **Total equity** | **2,315** |
+| Other assets | - | | |
+| **Total assets** | **2,425** | **Total liabilities and equity** | **2,425** |
+
+What the case teaches, line by line:
+
+- **Land, railroad and utility deeds are assets** at what was paid for them: controlled, from a past purchase, expected to earn rent. Kings Cross Station stays on the asset side at its full 200 even though it is mortgaged. Mortgaging does not remove the asset; it creates a **liability** (mortgage payable 100) with cash received in exchange.
+- **Houses are shown net of depreciation.** Each house cost 200 and is carried at 180, i.e. after 20 of wear. Two houses give 360. Depreciation is the first hint that assets are consumed over time, a theme of later chapters.
+- **Interest payable of 10** is a liability the team has incurred on the mortgage but not yet paid: an obligation from a past event, settled later, so it belongs on the balance sheet even though no cash has moved.
+- **Equity splits into common stock and retained earnings.** Common stock is the 1,500 the game started with. Retained earnings of 815 is the profit earned during the game and kept in the business; it is what makes the closing equity (2,315) larger than the opening equity (1,500). Where the 815 comes from is the subject of the next chapter.
+- **The "get out of jail free" card is not recognised as an asset.** It might save the team money one day, but that benefit cannot be reliably measured in money terms and there is no purchase price behind it. It fails the "reliably recorded in money" test, so the accounting template deliberately leaves the Other Assets line empty.
+
+The arithmetic check: 345 + 1,370 + 200 + 150 + 360 = 2,425; and 100 + 10 + 1,500 + 815 = 2,425. The game's balance sheet balances, which is the minimum condition for it to be a balance sheet at all.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Balance sheet | A statement of financial position at one date: what the entity controls and who has claims on it |
+| Basic accounting equation | Assets = Liabilities + Owner's equity; true by definition on every balance sheet |
+| Asset | An economic resource owned or controlled from a past event that is expected to bring future benefits |
+| Current asset | An asset expected to turn into cash or be used up within the operating cycle: cash, receivables, inventories, prepaid expenses |
+| Long-term asset | An asset held for use over many years: intangibles, property, plant, equipment |
+| Liability | A legal or economic obligation to an outsider from a past event, to be settled in the future |
+| Provision | A liability whose amount or timing is uncertain, recorded at a best estimate |
+| Owner's equity | The owners' residual claim: assets minus liabilities (also capital, net assets) |
+| Par (stated) value | The nominal value printed on a share; common stock is recorded at par, the rest of the price goes to paid-in capital in excess of par |
+| Account | A subdivision of a balance sheet element (e.g. cash, accounts payable) with its own running record |
+| Entity | The separate economic unit for which the balance sheet is prepared, kept apart from its owners and other organisations |
+| Transaction | An event that changes the entity's financial position and can be reliably recorded in money |
+| Compound entry | A transaction entry that touches more than two accounts |
+| Double-entry bookkeeping | Recording every transaction in at least two accounts so the equation always holds |
+
+## Test yourself
+
+1. In one sentence each: what does the balance sheet report, and why must it be dated?
+2. Biwheels shows cash 352,000, merchandise inventory 159,200, store equipment 14,000, a note payable of 100,000 and accounts payable of 25,200. Compute total assets, total liabilities and owner's equity, and state which figure is the "balancing" one.
+3. A corporation sells one share with a $5 par value to an investor for $20. Which equity accounts change and by how much? By how much do total assets change?
+4. Which of the following are transactions in the accounting sense, and why: (a) the firm signs a letter of intent to hire a new sales director next quarter; (b) the firm buys merchandise on credit from a supplier; (c) a newspaper publishes a glowing article about the firm; (d) the firm draws down a bank loan?
+5. Biwheels buys store equipment for 15,000 in cash. What happens to total assets, total liabilities and owner's equity? Which of the four transaction shapes is this?
+6. In the Monopoly closing balance sheet, total assets are 2,425, mortgage payable is 100, interest payable is 10 and common stock is 1,500. What are retained earnings, and why is the "get out of jail free" card left off the balance sheet?
+
+<Aside type="note" title="Answers">
+1. It reports the financial position of an entity, i.e. the stock of resources it controls (assets) and the claims on them (liabilities and owner's equity). It is a snapshot of a *stock*, so it only makes sense at a specific date; a day later the numbers may differ.
+2. Total assets 352,000 + 159,200 + 14,000 = 525,200. Total liabilities 100,000 + 25,200 = 125,200. Owner's equity = 525,200 - 125,200 = 400,000. Equity is the balancing figure; it is defined as assets minus liabilities.
+3. Common stock rises by $5 (one share at par); paid-in capital in excess of par rises by $15 (the $20 price minus $5 par). Total equity and total assets (cash) both rise by $20.
+4. Only (b) and (d) are transactions: both change financial position (inventory and accounts payable up; cash and note payable up) and can be reliably measured in money. (a) is only an intention, nothing has happened yet; (c) may affect prospects but cannot be reliably priced.
+5. Total assets, total liabilities and owner's equity are all unchanged. Cash falls by 15,000 and store equipment rises by 15,000, so it is an asset swap within the left side; two accounts are touched, the right side is untouched.
+6. Total liabilities are 110, so equity is 2,425 - 110 = 2,315; retained earnings = 2,315 - 1,500 = 815. The card is not recognised because its future benefit cannot be reliably measured in money terms (no price, no certain use), so it fails the recognition test even though it might one day save cash.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- The **balance sheet** reports **financial position at a date**: the **stock of resources controlled (assets)** and the **claims on them (liabilities + owner's equity)**. Left side = resources / applications of funds; right side = sources / funding.
+- **Assets = Liabilities + Owner's equity** is an **analytical truth**: equity is defined as the residual, so the equation must always hold. If it does not, you made an error.
+- **Assets**: owned or controlled, from a past event, expected to bring future benefit. Grouped into **accounts**: current (cash, receivables, inventories, prepaid expenses) vs long-term (intangibles, property, plant, equipment). Beware the **terminology muddle** across IFRS, US GAAP and HGB.
+- **Liabilities**: obligations to outsiders from past events, settled in the future: accounts payable, notes payable, provisions, long-term debt.
+- **Owner's equity** = assets minus liabilities, presented by legal form: owner capital (sole proprietor), one capital line per partner, or for corporations **common stock at par + paid-in capital in excess of par** ($5 par sold for $20 gives $5 + $15).
+- **Deriving a balance sheet**: classify each item, aggregate similar items, order by liquidity, total both sides and check.
+- **Transactions**: an event that changes financial position and can be reliably measured in money; every one affects the equation and **at least two accounts** (compound entry = more than two). The **entity** is kept separate from its owners.
+- Rewriting the balance sheet per transaction is slow and error-prone, so real firms use **accounts and double-entry bookkeeping** and assemble the statement at the reporting date.
+</Aside>
+
+*Next: [The Income Statement, Cash & Accruals →](/learnings/mba/financial-performance-and-management-control/03-income-statement-cash-and-accruals/) - how profit is measured, and why it is not the same as cash.*

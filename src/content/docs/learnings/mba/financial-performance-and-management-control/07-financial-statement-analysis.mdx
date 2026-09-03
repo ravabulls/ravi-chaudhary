@@ -1,0 +1,503 @@
+---
+title: "Financial Statement Analysis"
+description: "How to read a set of accounts like an analyst - common-size statements, the financial-analysis ratios (gearing, equity-to-assets, cash, current and interest coverage), the profitability ratios (ROA, ROE, asset turnover, profit margin, ROCE), the spread against WACC and value added, the turnover-times-margin decomposition, and what four anonymous car makers and Borussia Dortmund reveal."
+sidebar:
+  label: "7 · Financial Statement Analysis"
+  order: 7
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The chapters so far built the statements: the balance sheet, the income statement, the IFRS rules that shape them and the awkward items like PPE and inventories. This chapter turns the tables. Instead of *producing* the numbers we now stand outside the company, as an investor, a bank or a competitor, and ask what the numbers are *telling* us.
+
+The tool for that is **ratio analysis**. A figure like "operating income 4,050 million" says almost nothing on its own; divided by sales, by total assets or by the capital tied up in the business it becomes a statement about how the company really works. The chapter runs one long example: **four anonymous companies from the same year and the same industry**, pushed through the same set of ratios until a clear picture of winners and losers appears - and only *then* are the names revealed.
+
+<Aside type="tip">
+**The one idea to carry through.** A ratio is a question in disguise. Every ratio in this chapter answers one of two questions - *how is the company financed?* (financial analysis) or *is the company profitable?* (profitability analysis) - and you only reach a verdict by asking **both** and reading the answers **in context**: same industry, same year, same definitions. On its own, a number is just a number.
+</Aside>
+
+## 1 · Why bother reading statements at all?
+
+The course opens with a famous investor who, asked how he became so successful, answered that his firm reads **hundreds and hundreds of annual reports every year**. His other line is the one to remember: **accounting numbers are the beginning of valuing a business, not the end.** They are the raw material, not the answer.
+
+The payoff for us is the same. If you learn to read and interpret financial statements, you get a deep feel for how real companies operate and make (or lose) money - what the course calls the **"economics of a company"**. Four questions frame the chapter:
+
+- What does a typical financial statement analysis look like?
+- What are the main ratios, and what does each one mean?
+- Why combine a *financial* analysis with a *profitability* analysis?
+- How do you build one overall picture out of a dozen separate ratios?
+
+## 2 · The introductory example - four anonymous companies
+
+Four sets of accounts, same industry, same year (2006), all in millions of euros. No names yet. The whole chapter is about reading these tables until they talk.
+
+| Line (m euros, 2006) | Co. 1 | Co. 2 | Co. 3 | Co. 4 |
+|---|---:|---:|---:|---:|
+| Intangibles | 5,312 | 2,448 | 250 | 7,193 |
+| Property, plant and equipment | 11,285 | 34,021 | 1,178 | 20,340 |
+| Investments | 14,103 | 42,959 | 4,966 | 41,775 |
+| Inventories | 6,794 | 17,750 | 594 | 12,463 |
+| Receivables | 36,576 | 59,693 | 1,889 | 28,475 |
+| Cash and equivalents | 1,336 | 13,121 | 4,038 | 14,458 |
+| Deferred taxes / other | 3,651 | 20,030 | 1,715 | 11,899 |
+| **Total assets** | **79,057** | **190,022** | **14,630** | **136,603** |
+| Equity | 19,126 | 34,155 | 5,373 | 26,904 |
+| Minorities | 4 | 663 | 4 | 55 |
+| Provisions | 10,553 | 46,261 | 2,300 | 23,536 |
+| Long-term borrowing | 18,800 | 78,518 | 3,534 | 30,469 |
+| Short-term payables | 21,393 | 21,509 | 1,709 | 38,213 |
+| Deferred taxes / other | 9,181 | 8,916 | 1,710 | 17,426 |
+| Sales | 49,226 | 151,589 | 7,123 | 104,875 |
+| Cost of sales | -45,176 | -148,212 | -5,291 | -102,866 |
+| Operating income | 4,050 | 3,377 | 1,832 | 2,009 |
+| Interest expense | -857 | -913 | -199 | -1,586 |
+| Net income | 2,874 | 3,227 | 1,393 | 2,750 |
+| WACC (from analyst reports) | 7.4% | 8.0% | 7.2% | 6.8% |
+
+### Step one: standardise ("common-size" statements)
+
+The raw figures are hard to compare because the companies are wildly different in size - total assets run from about 15 billion to 190 billion. The fix is to **standardise**: express every balance-sheet line as a **percentage of total assets** and every P&L line as a **percentage of sales**. The result is a **common-size statement**, and suddenly structure jumps out that absolute numbers hide.
+
+| Common-size line | Co. 1 | Co. 2 | Co. 3 | Co. 4 |
+|---|---:|---:|---:|---:|
+| Receivables (% of assets) | 46 | 31 | 13 | 21 |
+| Cash (% of assets) | 2 | 7 | 28 | 11 |
+| Investments (% of assets) | 18 | 23 | 34 | 31 |
+| Equity (% of assets) | 24 | 18 | 37 | 20 |
+| Provisions (% of assets) | 13 | 24 | 16 | 17 |
+| Long-term borrowing (% of assets) | 24 | 41 | 24 | 22 |
+| Short-term payables (% of assets) | 27 | 11 | 12 | 28 |
+| Cost of sales (% of sales) | -92 | -98 | -74 | -98 |
+| Operating income (% of sales) | 8 | 2 | 26 | 2 |
+| Net income (% of sales) | 6 | 2 | 20 | 3 |
+
+Already the story is forming: company 3 sits on a cash pile (28% of assets), funds 37% of itself with equity and keeps **26 cents of every sales euro as operating profit**; companies 2 and 4 keep about 2 cents. Company 1 has almost no cash and nearly half its assets tied up in receivables. Ratios simply sharpen what common-size statements first show.
+
+## 3 · What the analysis is for, and the two families of ratios
+
+The purpose is to help **external users** (investors, lenders, analysts) reach a **judgement about the company's profitability and its future prospects**. There is **no single standardised procedure** - different analysts pick different ratios - but there is a widely shared set of suggested ratios, and they fall into two families.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Financial analysis <small>how is the company financed?</small></div>
+    <ul>
+      <li><strong>Debt-to-equity</strong> (gearing) and <strong>equity-to-assets</strong> - the capital structure</li>
+      <li><strong>Cash ratio</strong> and <strong>current ratio</strong> - short-run liquidity</li>
+      <li><strong>Interest coverage</strong> - can operating profit carry the interest bill?</li>
+      <li>Tells you about <strong>risk</strong> and survival</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Profitability analysis <small>is the company profitable?</small></div>
+    <ul>
+      <li><strong>Return on assets</strong> and <strong>return on equity</strong></li>
+      <li><strong>Asset turnover</strong> and <strong>profit margin</strong> - the two engines of return</li>
+      <li><strong>ROCE</strong> against <strong>WACC</strong> - is value created or destroyed?</li>
+      <li>Tells you about <strong>reward</strong></li>
+    </ul>
+  </div>
+</div>
+
+**Why combine them?** Because each family alone can mislead. A company with excellent margins but financed on a knife edge can still be sunk by one bad year of interest payments; a rock-solid, equity-rich company that earns less than its cost of capital quietly destroys its owners' wealth. Financial analysis tells you whether the company will *be there*; profitability analysis tells you whether it is *worth being there*. The rest of the chapter runs both families over the four companies.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Statements<span class="sub">balance sheet + P&amp;L</span></div>
+    <div class="arrow">→<small>standardise</small></div>
+    <div class="sc-node slate">Common-size<span class="sub">% of assets, % of sales</span></div>
+    <div class="arrow">→<small>ask "how financed?"</small></div>
+    <div class="sc-node amber">Financial analysis<span class="sub">gearing, liquidity, coverage</span></div>
+    <div class="arrow">→<small>ask "is it profitable?"</small></div>
+    <div class="sc-node violet">Profitability analysis<span class="sub">ROA, ROE, ROCE vs WACC</span></div>
+    <div class="arrow">→<small>combine + context</small></div>
+    <div class="sc-node green">Verdict<span class="sub">invest, lend, avoid?</span></div>
+  </div>
+  <figcaption>The general procedure of a financial statement analysis. No fixed recipe exists, but this sequence - standardise, check the financing, check the returns, then judge in context - is what the course walks through.</figcaption>
+</div>
+
+## 4 · Financial analysis - how is the company financed?
+
+### Capital structure: gearing and equity-to-assets
+
+**Debt-to-equity (gearing)** measures how far the company leans on borrowed money. Note the definition used here: the "debt" is **all long-term borrowings *including provisions*** (pension provisions are a big, long-lived source of financing for German industrial groups), and the equity **excludes minorities**. **Equity-to-assets** is the mirror image: what share of everything the company owns is funded by its owners.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Debt-to-equity (gearing)</span>
+    <code>(long-term borrowings + provisions) ÷ equity excl. minorities  →  Co. 1: (18,800 + 10,553) ÷ 19,126 = 153%</code>
+  </div>
+  <div>
+    <span class="name">Equity-to-assets</span>
+    <code>equity excl. minorities ÷ total assets  →  Co. 1: 19,126 ÷ 79,057 = 24%</code>
+  </div>
+</div>
+
+### Liquidity: cash ratio and current ratio
+
+Both ask the same kind of question - **how many times over can I pay what falls due soon?** - with a narrower or wider definition of what I can pay it with. The **cash ratio** uses cash alone. The **current ratio** uses all current assets (here defined as cash + receivables + inventories).
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Cash ratio</span>
+    <code>cash ÷ short-term liabilities  →  Co. 1: 1,336 ÷ 21,393 = 0.06</code>
+  </div>
+  <div>
+    <span class="name">Current ratio</span>
+    <code>(cash + receivables + inventories) ÷ short-term liabilities  →  Co. 1: (1,336 + 36,576 + 6,794) ÷ 21,393 = 2.09</code>
+  </div>
+</div>
+
+<Aside type="caution">
+**A definitional trap.** In the example the borrowings are *not* split into short-term and long-term parts, so the short-term liabilities contain only the trade payables. Normally you must split borrowings, put the short-term slice into the denominator, and then the cash and current ratios come out **much lower**. Always check what a ratio's denominator actually contains before you compare it with anything.
+</Aside>
+
+### Interest coverage
+
+**How many times does operating profit cover the interest bill?** A ratio close to 1 means almost every euro of operating profit is eaten by interest - one weak year and the company cannot service its debt.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Interest coverage</span>
+    <code>operating profit ÷ interest charges  →  Co. 1: 4,050 ÷ 857 = 4.73</code>
+  </div>
+</div>
+
+### The financial-analysis scorecard
+
+| Ratio | Question it answers | Co. 1 | Co. 2 | Co. 3 | Co. 4 |
+|---|---|---:|---:|---:|---:|
+| Debt-to-equity (gearing) | how much long-term debt per euro of equity? | 153% | 365% | 109% | 201% |
+| Equity-to-assets | what share of the assets do the owners fund? | 24% | 18% | 37% | 20% |
+| Cash ratio | how often does cash alone cover short-term liabilities? | 0.06 | 0.61 | 2.36 | 0.38 |
+| Current ratio | how often do current assets cover short-term liabilities? | 2.09 | 4.21 | 3.82 | 1.45 |
+| Interest coverage | how often does operating profit cover interest? | 4.73 | 3.70 | 9.21 | 1.27 |
+
+**Verdict on financing.** Companies **1 and 3 are well financed**: relatively less debt than 2 and 4, and they carry their interest charges comfortably (4.7 and 9.2 times). Company 2 is the most heavily geared of all (365%). **Company 4 struggles to cover its interest** - operating profit is only 1.27 times the interest bill, which is uncomfortably thin. On liquidity, **all four can meet their short-term liabilities** from cash or other current assets, so no short-run liquidity problem is visible in any of them.
+
+## 5 · Profitability analysis - is the company profitable?
+
+### Return on assets and return on equity
+
+**Return on assets (ROA)** asks what *all* the capital in the business earns, so it uses **operating income** (before interest, so that the way of financing does not distort the answer). **Return on equity (ROE)** asks what the *owners* earn, so it uses **net income** (after interest and tax) over equity only.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Return on assets</span>
+    <code>operating income ÷ (average) total assets  →  Co. 1: 4,050 ÷ 79,057 = 5.12%</code>
+  </div>
+  <div>
+    <span class="name">Return on equity</span>
+    <code>net income ÷ (average) equity  →  Co. 1: 2,874 ÷ 19,126 = 15.03%</code>
+  </div>
+</div>
+
+Strictly the denominator should be the **average** assets or equity over the year, because the income was earned continuously across the year, not only with the capital that happened to be on the books on 31 December. The course uses **year-end values** as a deliberate simplification - not correct, but necessary for a one-year example.
+
+### Asset turnover and profit margin
+
+These two are the *engines* behind the return. **Asset turnover** asks how many euros of sales each euro of assets generates per year (a measure of how hard the assets work). **Profit margin** asks how much operating profit one more euro of sales brings in (a measure of pricing power and cost control). Turnover ratios can be built with *any* asset class - fixed assets, inventory, receivables, payables - not only with total assets.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Asset turnover</span>
+    <code>sales ÷ total assets  →  Co. 1: 49,226 ÷ 79,057 = 0.62</code>
+  </div>
+  <div>
+    <span class="name">Profit margin</span>
+    <code>operating income ÷ sales  →  Co. 1: 4,050 ÷ 49,226 = 8.23%</code>
+  </div>
+</div>
+
+### ROCE and WACC - the return earned versus the return required
+
+**Return on capital employed (ROCE)** narrows the denominator to the **long-term capital actually invested**: equity plus minorities plus provisions plus long-term borrowings. The numerator is income *before* interest on that long-term debt - in practice **EBIT**. It answers: what does the money the long-term investors put in actually earn?
+
+The **weighted average cost of capital (WACC)** is the other side of the coin: the **return those investors require** for handing over their money - the cost of equity weighted by the equity share plus the cost of debt weighted by the debt share. In the course the WACCs were **not calculated** but taken from an investment bank's equity research reports.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">ROCE</span>
+    <code>EBIT ÷ capital employed (= equity + minorities + provisions + long-term borrowings)  →  Co. 1: 4,050 ÷ (19,126 + 4 + 10,553 + 18,800) = 4,050 ÷ 48,483 = 8.35%</code>
+  </div>
+  <div>
+    <span class="name">WACC</span>
+    <code>(equity share × cost of equity) + (debt share × cost of debt)  →  given: 7.4% / 8.0% / 7.2% / 6.8%</code>
+  </div>
+</div>
+
+### The profitability scorecard
+
+| Ratio | Question it answers | Co. 1 | Co. 2 | Co. 3 | Co. 4 |
+|---|---|---:|---:|---:|---:|
+| Return on assets | what does all the capital earn? | 5.12% | 1.78% | 12.52% | 1.47% |
+| Return on equity | what do the owners earn? | 15.03% | 9.45% | 25.93% | 10.22% |
+| Asset turnover | euros of sales per euro of assets per year | 0.62 | 0.80 | 0.49 | 0.77 |
+| Profit margin | operating profit per euro of sales | 8.23% | 2.23% | 25.72% | 1.92% |
+| ROCE | what does the long-term capital earn? | 8.35% | 2.12% | 16.34% | 2.48% |
+| WACC | what do the investors require? | 7.4% | 8.0% | 7.2% | 6.8% |
+
+## 6 · Spread and value added - does the company create value?
+
+Put ROCE and WACC side by side and the most important number of the chapter falls out. The **spread** is the actual return minus the required return; multiply it by the capital employed and you get the **value added** - the euros of wealth created (or destroyed) in the year on top of what investors demanded.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">ROCE<span class="sub">return actually earned</span></div>
+    <div class="arrow">→<small>minus</small></div>
+    <div class="sc-node amber">WACC<span class="sub">return investors require</span></div>
+    <div class="arrow">→<small>equals</small></div>
+    <div class="sc-node slate">Spread<span class="sub">positive = beating the bar</span></div>
+    <div class="arrow">→<small>× capital employed</small></div>
+    <div class="sc-node green">Value added<span class="sub">wealth created in the year</span></div>
+  </div>
+  <figcaption>Value creation in one line: (ROCE - WACC) × capital employed. A negative spread means the business earns less than its capital costs - it is destroying value even if it reports a profit.</figcaption>
+</div>
+
+For company 1: (8.35% - 7.4%) × 48,483 = **462m euros** of value added.
+
+| | Co. 1 | Co. 2 | Co. 3 | Co. 4 |
+|---|---:|---:|---:|---:|
+| Spread (ROCE - WACC) | 1.0% | -5.9% | 9.1% | -4.3% |
+| Value added (m euros) | 462 | -9,391 | 1,025 | -3,497 |
+
+Two of the four companies **destroyed** billions of euros of value in the year even though every one of them reported a positive net income. That is exactly why a profit figure alone is not enough.
+
+### Segment example: a diversified steel and technology group
+
+Value added works below group level too. The course shows the 2005/06 figures (unaudited) of ThyssenKrupp, a diversified German steel and technology group, per segment. The group earned an EBIT of 3,044m on 17,056m of capital employed, a ROCE of 17.9% against a 9.0% WACC:
+
+| Segment (m euros) | Capital employed | ROCE | WACC | Spread | Value added |
+|---|---:|---:|---:|---:|---:|
+| **Group** | 17,056 | 17.9% | 9.0% | 8.9% | **1,510** |
+| Steel | 5,937 | 24.9% | 9.5% | 15.4% | 913 |
+| Stainless | 3,048 | 16.0% | 9.5% | 6.5% | 199 |
+| Automotive | 2,938 | -1.8% | 9.5% | -11.3% | -331 |
+| Technologies | 1,427 | 31.6% | 9.5% | 22.1% | 316 |
+| Elevator | 1,876 | 22.6% | 8.5% | 14.1% | 264 |
+| Services | 2,884 | 19.2% | 9.0% | 10.2% | 294 |
+
+The lesson: a healthy group total (1,510m created) can hide a segment that is actively **destroying** value - automotive lost 331m on its 2,938m of capital - while steel alone contributed 913m. Segment-level spreads tell management *where* to invest and where to fix or exit. Note also that each segment gets its **own WACC** (elevator 8.5%, steel 9.5%) because the risk differs.
+
+## 7 · Turnover × margin - where does the return come from?
+
+The single most useful decomposition in the chapter: a return is always the product of **how hard the capital works** and **how much each euro of sales keeps**. Multiply asset turnover by profit margin and the sales cancel out, leaving operating profit over assets.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Decomposition</span>
+    <code>(sales ÷ capital) × (operating profit ÷ sales) = operating profit ÷ capital</code>
+  </div>
+  <div>
+    <span class="name">With total assets</span>
+    asset turnover × profit margin = return on assets
+  </div>
+  <div>
+    <span class="name">With capital employed</span>
+    turnover on capital employed × profit margin = ROCE
+  </div>
+</div>
+
+| Company | Asset turnover | × Profit margin | = Return on assets |
+|---|---:|---:|---:|
+| 1 | 0.62 | 8.23% | 5.12% |
+| 2 | 0.80 | 2.23% | 1.78% |
+| 3 | 0.49 | 25.72% | 12.52% |
+| 4 | 0.77 | 1.92% | 1.47% |
+
+Plot turnover on one axis and margin on the other and every level of ROCE becomes a curve (an **iso-ROCE curve**, like an isoquant): all the combinations of turnover and margin that give the same return. A company can reach a given ROCE either by turning its capital over fast on thin margins (a supermarket) or slowly on fat margins (a luxury brand).
+
+The insight for the four companies: their **turnover ratios are similar** (0.49 to 0.80), so they all **utilise their assets about equally well**. The huge differences in ROCE do **not** come from asset utilisation or overcapacity - they come almost entirely from the **profit margin**, i.e. from **price and cost advantages**: company 3 keeps 26 cents of each sales euro, companies 2 and 4 keep 2 cents. They apparently produce at higher cost relative to the prices their market allows.
+
+## 8 · The verdict, and the reveal
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Company 1 <small>solid, but not yet creating value</small></div>
+    <ul>
+      <li>Well financed, interest covered 4.7 times</li>
+      <li>ROCE 8.35% barely clears WACC 7.4% - spread 1.0%, value added 462m</li>
+      <li>Decent margin (8%), the runner-up</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Company 2 <small>large, geared, value-destroying</small></div>
+    <ul>
+      <li>Highest gearing (365%), thin coverage (3.7)</li>
+      <li>Margin 2%, ROA 1.8%, ROCE 2.1% against WACC 8.0%</li>
+      <li>Destroyed 9,391m of value in one year</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Company 4 <small>the weakest of the four</small></div>
+    <ul>
+      <li>Interest coverage only 1.27 - real debt-service strain</li>
+      <li>Margin 1.9%, ROCE 2.5% against WACC 6.8%</li>
+      <li>Destroyed 3,497m of value</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Company 3 <small>the star</small></div>
+    <ul>
+      <li>Least debt (109%), 37% equity, cash covers payables 2.4 times, coverage 9.2</li>
+      <li>Margin 26%, ROA 12.5%, ROE 25.9%, ROCE 16.3% against WACC 7.2%</li>
+      <li>Spread 9.1%, value added 1,025m - on a business a tenth the size of company 2</li>
+    </ul>
+  </div>
+</div>
+
+**Profitability verdict.** As in the financial analysis, **companies 2 and 4 come out worst**: neither creates value, and their ROA and ROE are unacceptably low. **Company 1 does better but still does not create much value**. The poor results are **not** caused by overcapacity - the asset turnover is in line with the others - but by low profitability, presumably higher costs than the prices their markets allow. **Company 3** wins on every single ratio. Asked "which company would you invest in?", the answer from both families is the same.
+
+**The reveal.** All four are **German car manufacturers**, accounts of the year 2006 - one of them the then **Daimler-Chrysler** group. The course does not name the others and neither will I; the point is that the ratios told the whole story before any badge was attached.
+
+## 9 · Lessons learned
+
+- **Ratios need context.** Never interpret one ratio alone: read it next to the other numbers, the industry, the year and the definition used. A cash ratio of 0.06 means something different for a car maker with a captive finance arm than for a corner shop.
+- **Combine the two families.** Which ratios are used varies from analyst to analyst, but a *combination* of financial and profitability analysis is always recommended - risk and reward together.
+- **Leverage cuts both ways.** Borrowing raises return on equity (company 1: ROA 5% but ROE 15%) - and raises risk at the same time, because interest has to be paid whether or not profits show up (company 4's coverage of 1.27).
+- **Statements describe the past.** Every ratio is built from accounts of a year already gone; the judgement you want is about the future.
+- **Averages versus year-end.** Return ratios should use *average* capital over the year; using year-end values, as here, is a simplification you should name when you present a result.
+
+<div class="sc-chips">
+  <span class="sc-chip blue">standardise first</span>
+  <span class="sc-chip amber">how is it financed?</span>
+  <span class="sc-chip violet">is it profitable?</span>
+  <span class="sc-chip green">ROCE minus WACC = the verdict</span>
+</div>
+
+## Worked example
+
+**Borussia Dortmund, financial year 2015/16 (simplified, all figures in thousand euros).** The listed football club is a nice contrast to the car makers - a completely different balance sheet, same toolkit. WACC taken from a financial data website: **3.27%**.
+
+| Assets (k euros) | | Financing and P&L (k euros) | |
+|---|---:|---|---:|
+| Intangibles | 65,278 | Equity | 309,542 |
+| Property, plant and equipment | 188,423 | Provisions | 1,372 |
+| Investments / other | 49,064 | Long-term borrowing | 36,192 |
+| Inventories | 10,158 | Payables (short-term) | 14,635 |
+| Receivables | 51,072 | Other current liabilities | 62,804 |
+| Cash and equivalents | 51,722 | **Total liabilities** | **424,545** |
+| Other current assets | 8,828 | Sales | 379,767 |
+| **Total assets** | **424,545** | Cost of sales | 343,337 |
+| | | Operating income | 36,430 |
+| | | Interest expense | 2,226 |
+| | | Net income | 29,436 |
+
+<Steps>
+
+1. **Capital structure.** Debt-to-equity = (36,192 + 1,372) ÷ 309,542 = 37,564 ÷ 309,542 ≈ **0.12** (12%). Equity-to-assets = 309,542 ÷ 424,545 ≈ **0.73**. Almost three quarters of the club is owner-funded.
+
+2. **Liquidity.** The solution uses the trade payables (14,635) as the short-term liabilities. Cash ratio = 51,722 ÷ 14,635 ≈ **3.53**. Quick ratio = (51,722 + 51,072) ÷ 14,635 = 102,794 ÷ 14,635 ≈ **7.02**. Current ratio = (51,722 + 51,072 + 10,158) ÷ 14,635 = 112,952 ÷ 14,635 ≈ **7.72**.
+
+3. **Interest coverage.** 36,430 ÷ 2,226 ≈ **16.4** - operating profit covers the interest bill more than sixteen times over. (For the actual interest *paid* you would look at the cash flow statement.)
+
+4. **Returns.** ROA = 36,430 ÷ 424,545 ≈ **8.6%**. ROE = 29,436 ÷ 309,542 ≈ **9.5%**.
+
+5. **The two engines.** Asset turnover = 379,767 ÷ 424,545 ≈ **0.89**. Profit margin = 36,430 ÷ 379,767 ≈ **9.6%**. Check: 0.89 × 9.6% ≈ 8.6% = ROA.
+
+6. **ROCE, spread, value added.** Capital employed = 309,542 + 1,372 + 36,192 = 347,106. ROCE = 36,430 ÷ 347,106 ≈ **10.5%**. Spread = 10.5% - 3.27% ≈ **7.2 percentage points**. Value added ≈ 7.2% × 347,106 ≈ **25,000 thousand euros**, roughly 25 million euros created in the year.
+
+</Steps>
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Gearing</span>
+    <code>(36,192 + 1,372) ÷ 309,542 ≈ 0.12</code>
+  </div>
+  <div>
+    <span class="name">Cash ratio</span>
+    <code>51,722 ÷ 14,635 ≈ 3.53</code>
+  </div>
+  <div>
+    <span class="name">ROCE → spread</span>
+    <code>36,430 ÷ (309,542 + 1,372 + 36,192) ≈ 10.5%  →  10.5% - 3.27% ≈ 7.2%</code>
+  </div>
+</div>
+
+| Ratio | BVB 2016 | Reading |
+|---|---:|---|
+| Debt-to-equity | 0.12 | very little long-term debt |
+| Equity-to-assets | 0.73 | equity-heavy |
+| Cash ratio | 3.53 | cash alone pays the payables three and a half times |
+| Quick ratio | 7.02 | cash + receivables, seven times |
+| Current ratio | 7.72 | extremely liquid |
+| Interest coverage | 16.4 | interest is not a worry |
+| Return on assets | 8.6% | healthy operating return |
+| Return on equity | 9.5% | only slightly above ROA - see below |
+| Asset turnover | 0.89 | about 0.9 euros of sales per euro of assets |
+| Profit margin | 9.6% | keeps just under 10 cents per sales euro |
+| ROCE | 10.5% | well above the 3.27% WACC |
+| Spread | 7.2% | clearly value-creating |
+
+**Interpretation.** The club is **equity-heavy** (73% equity, gearing 12%), **extremely liquid** (cash alone covers the payables 3.5 times) and comfortably able to pay its interest. Its ROCE of 10.5% sits far above a very low WACC of 3.27%, so it **creates value** - about 25 million euros in the year on 347 million of capital employed.
+
+**The leverage question.** Why is ROE (9.5%) only a whisker above ROA (8.6%), when company 1 in the car example had an ROE three times its ROA? Because the **leverage effect needs debt to work**. ROE rises above ROA when a company earns more on borrowed money than the interest it pays, and the gap grows with the amount borrowed. With only 12% gearing there is almost nothing to lever: equity is nearly the whole balance sheet, so the return to owners is nearly the return on all assets, minus the small bite of interest and tax that separates net income from operating income. Low leverage means a small ROE boost - and also very little financial risk.
+
+<Aside type="caution">
+**Definitions drive the result.** The solution counts only the trade payables (14,635) as short-term liabilities. Add the 62,804 of other current liabilities and the cash ratio falls to about 0.67 and the current ratio to about 1.46 - still healthy, but a completely different picture. Whenever you quote a liquidity ratio, say what you put in the denominator.
+</Aside>
+
+## Case corner
+
+**The four car makers.** Before any name was attached, the ratios had already sorted them. Financial analysis said: 1 and 3 are prudently financed and cover their interest easily; 2 is the most heavily geared; 4 barely covers its interest; none has a liquidity problem. Profitability analysis said: 3 earns a 26% margin and 16% ROCE and creates 1,025m of value; 1 clears its cost of capital by a hair; 2 and 4 earn 2% margins and destroy 9,391m and 3,497m respectively. The decomposition explained *why*: similar turnover, so it is not about capacity, it is about price and cost. The reveal (German car makers, 2006, one of them Daimler-Chrysler) only confirmed that a ratio sheet can describe a business you have never seen.
+
+**The football club.** Borussia Dortmund's ratios look nothing like a manufacturer's, and that is the point of the exercise. The **intangibles** line (65m) is mainly the registrations of players the club bought - a football club's key "assets" walk around on the pitch. The **cash** pile of 52m is large relative to a mere 15m of payables, so liquidity ratios explode to 3.5 and 7.7. **Long-term debt** is tiny (36m against 310m of equity), so gearing is 12% and the leverage effect barely exists. And the WACC (3.27%) is far below a car maker's 7 to 8%, so even a modest 10.5% ROCE translates into a wide spread. Same ratios, different industry, different reading - lesson one of the chapter in action.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Common-size statement | A statement where every line is a percentage of total assets (balance sheet) or of sales (P&L), so companies of different sizes can be compared |
+| Financial analysis vs profitability analysis | The two families of ratios: "how is the company financed?" (risk) and "is it profitable?" (reward); use both |
+| Debt-to-equity (gearing) | Long-term borrowings including provisions, divided by equity excluding minorities; how much debt per euro of owners' money |
+| Equity-to-assets | Equity divided by total assets; the share of the company the owners fund |
+| Liquidity ratios (cash, quick, current) | How many times cash alone, cash plus receivables, or all current assets cover the short-term liabilities |
+| Interest coverage | Operating profit divided by interest charges; how many times the interest bill is earned |
+| Return on assets (ROA) | Operating income divided by (average) total assets; what all the capital earns before financing effects |
+| Return on equity (ROE) | Net income divided by (average) equity; what the owners earn after interest and tax |
+| Asset turnover | Sales divided by assets; euros of sales generated per euro of assets in a year, i.e. how hard the assets work |
+| Profit margin | Operating income divided by sales; cents of profit kept per euro of sales |
+| ROCE | EBIT divided by capital employed (equity + minorities + provisions + long-term borrowings); the return on the long-term money invested |
+| WACC | The weighted average return that lenders and shareholders require on the capital employed; the hurdle a company must beat |
+| Spread and value added | Spread = ROCE minus WACC; value added = spread times capital employed, the wealth created or destroyed in a year |
+| Leverage effect | Borrowing lifts ROE above ROA when the return on assets beats the interest rate, but makes profits and survival riskier |
+
+## Test yourself
+
+1. Company 1 shows long-term borrowing of 18,800, provisions of 10,553, equity of 19,126, minorities of 4 and total assets of 79,057 (m euros). Calculate the debt-to-equity ratio and the equity-to-assets ratio and say what each tells you.
+2. Company 4 has operating income of 2,009, interest expense of 1,586, cash of 14,458 and short-term payables of 38,213. Compute interest coverage and cash ratio. Does the company have a liquidity problem, a debt-service problem, or both?
+3. Company 3 reports equity 5,373, minorities 4, provisions 2,300, long-term borrowing 3,534 and operating income 1,832, with a WACC of 7.2%. Calculate capital employed, ROCE, the spread and the value added.
+4. The four car makers have similar asset turnover but very different margins. What does that tell you about where the difference in returns comes from, and which explanation does it rule out?
+5. Why does the course insist on combining financial analysis with profitability analysis? Give one situation where each family on its own would mislead you.
+6. Borussia Dortmund's ROE (9.5%) is only slightly above its ROA (8.6%), while company 1's ROE (15.0%) is almost three times its ROA (5.1%). Explain this with the leverage effect, and name the price that comes with it.
+
+<Aside type="note" title="Answers">
+1. Gearing = (18,800 + 10,553) ÷ 19,126 = 153%: the company carries about 1.5 euros of long-term debt (including provisions) for every euro of equity. Equity-to-assets = 19,126 ÷ 79,057 = 24%: owners fund roughly a quarter of the assets, the rest is debt, provisions and payables.
+2. Interest coverage = 2,009 ÷ 1,586 = 1.27; cash ratio = 14,458 ÷ 38,213 = 0.38. No acute liquidity problem (cash plus receivables and inventories cover current liabilities 1.45 times), but a real debt-service problem: nearly all operating profit goes on interest, so one weak year would leave it unable to pay.
+3. Capital employed = 5,373 + 4 + 2,300 + 3,534 = 11,211. ROCE = 1,832 ÷ 11,211 = 16.3%. Spread = 16.3% - 7.2% = 9.1%. Value added = 9.1% × 11,211 ≈ 1,025m euros.
+4. Because ROCE = turnover × margin and the turnovers are alike, the gap in returns comes from the margin, i.e. from price and cost advantages. It rules out asset utilisation or overcapacity as the explanation: the weak companies use their assets as intensively as the strong one, they just earn far less on each euro of sales.
+5. Financial analysis shows risk (financing, liquidity, interest burden); profitability analysis shows reward (returns versus cost of capital). A highly profitable but over-geared company can be sunk by interest in one bad year; a safely financed company earning less than its WACC steadily destroys owner wealth. Only together do they answer "is it worth investing, and will it survive?".
+6. Leverage lifts ROE above ROA when borrowed money earns more than it costs, and the lift grows with the amount of debt. Company 1 is geared 153%, so a 5% return on all assets becomes 15% on the owners' slice; Dortmund is geared only 12%, so there is almost nothing to lever and ROE stays close to ROA. The price is risk: interest must be paid regardless of profits, so higher gearing means larger swings in ROE and a thinner interest coverage.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Motivation**: accounting numbers are the *beginning* of valuation, not the end; reading statements teaches the **economics of a company**.
+- **Standardise first**: **common-size statements** (% of assets, % of sales) make companies of different sizes comparable.
+- **Two families, always combined**: **financial analysis** ("how is it financed?" - gearing, equity-to-assets, cash and current ratio, interest coverage) and **profitability analysis** ("is it profitable?" - ROA, ROE, asset turnover, profit margin, ROCE).
+- **Gearing** = (long-term borrowings + provisions) ÷ equity excl. minorities; **equity-to-assets** = equity ÷ assets; **cash ratio** = cash ÷ short-term liabilities; **current ratio** = (cash + receivables + inventories) ÷ short-term liabilities; **interest coverage** = operating profit ÷ interest.
+- **ROA** = operating income ÷ assets; **ROE** = net income ÷ equity; **turnover** = sales ÷ assets; **margin** = operating income ÷ sales; **ROCE** = EBIT ÷ (equity + minorities + provisions + long-term borrowings). Averages are correct, year-end values are the simplification.
+- **Value creation**: spread = **ROCE - WACC**; **value added = spread × capital employed**. Company 3: 9.1% spread, 1,025m created; company 2: -5.9%, 9,391m destroyed. Segments of a group can create and destroy value at the same time.
+- **ROCE = turnover × margin**: the four car makers had similar turnover, so the difference was all **margin** - price and cost, not asset use.
+- **Verdict**: 3 the star, 1 solid but barely value-creating, 2 and 4 value-destroying; 4 can barely pay its interest. All four: German car makers, 2006.
+- **Lessons**: ratios need context; combine both families; leverage raises ROE *and* risk; statements describe the past.
+- **Borussia Dortmund 2016**: gearing 0.12, equity-to-assets 0.73, cash ratio 3.5, current ratio 7.7, coverage 16, ROA 8.6%, ROE 9.5%, ROCE 10.5% vs WACC 3.27%, spread 7.2% - equity-heavy, extremely liquid, value-creating, tiny leverage effect.
+</Aside>
+
+*Next: [Management Accounting & Cost Concepts →](/learnings/mba/financial-performance-and-management-control/08-management-accounting-and-cost-concepts/) - switching from reporting to the outside world to steering from the inside.*

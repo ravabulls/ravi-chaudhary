@@ -1,0 +1,409 @@
+---
+title: "Kosten-Volumen-Gewinn-Analyse & Break-even"
+description: "Wie sich Erlöse, Kosten und Betriebsergebnis bewegen, wenn Menge, Preis oder Kostenstruktur sich ändern - die CVP-Annahmen, die drei Break-even-Methoden (Gleichung, Deckungsbeitrag, Grafik), Zielgewinn, Sensitivitätsanalyse über fixe und variable Gebührenmodelle, Operating Leverage, die Grenzen des Modells und das Denken in relevanten Kosten bei Schließungs- und Zusatzauftragsentscheidungen."
+sidebar:
+  label: "9 · CVP & Break-even"
+  order: 9
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Kapitel 8 hat die Kosten in **fixe** und **variable** Blöcke sortiert. Dieses Kapitel setzt diese Blöcke ein. Die **Kosten-Volumen-Gewinn-Analyse (CVP)**, die die meisten Leute einfach **Break-even-Analyse** nennen, ist das Planungsinstrument, das mir sagt, wie viele Einheiten ich verkaufen muss, bevor ein Projekt aufhört, Geld zu verlieren, wie der Gewinn reagiert, wenn sich die Menge bewegt, und welche Kostenstruktur ich wählen sollte, wenn mir jemand eine Pauschalgebühr gegenüber einer Prozentbeteiligung anbietet.
+
+Die Mathematik ist bewusst einfach - ein Preis, eine variable Kostengröße je Einheit, ein Block an Fixkosten. Genau diese Einfachheit ist der Punkt: Es ist ein *erster Wurf*, der aus einer vagen Geschäftsidee (ein Internetcafé in Kingston, ein Software-Stand auf einer Messe) eine einzige Zahl macht, über die ich streiten kann. Die zweite Hälfte des Kapitels zeigt dieselbe Logik „nur die Kosten, die sich ändern, zählen" angewendet auf zwei klassische Entscheidungen: die Schließung einer verlustbringenden Sparte und die Annahme eines Zusatzauftrags unterhalb der Vollkosten.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Jede verkaufte Einheit erwirtschaftet einen **Stückdeckungsbeitrag** (Preis minus variable Kosten). Diese Deckungsbeiträge zahlen zuerst die **Fixkosten** ab; erst wenn diese gedeckt sind, erzeugt die nächste Einheit Gewinn. Break-even ist also schlicht **Fixkosten ÷ Stückdeckungsbeitrag**, und jede andere Frage in diesem Kapitel (Zielgewinn, welche Gebührenvariante, wie riskant) ist eine Variation dieser einen Division.
+</Aside>
+
+## 1 · Was die CVP-Analyse betrachtet
+
+CVP untersucht, wie sich drei **Gesamtgrößen** verhalten - **Gesamterlöse**, **Gesamtkosten** und **Betriebsergebnis** -, wenn ich an einem von drei **Hebeln** drehe: der **Ausbringungsmenge** (wie viele Einheiten), dem **Verkaufspreis** oder der **Kostenstruktur** (variable und fixe Kosten). Weil sie die Hebel über eine Formel mit den Gesamtgrößen verknüpft, kann sie **Was-wäre-wenn-Fragen** sofort beantworten: Was passiert mit Erlösen und Kosten, wenn wir mehr produzieren? Was, wenn wir den Preis senken? Was, wenn der Vermieter eine feste Miete gegen einen Umsatzanteil tauscht?
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">An einem Hebel drehen<span class="sub">verkaufte Einheiten, Verkaufspreis, variable oder fixe Kosten</span></div>
+    <div class="arrow">→<small>lineare Formel</small></div>
+    <div class="sc-node violet">Die Gesamtgrößen reagieren<span class="sub">Gesamterlöse und Gesamtkosten</span></div>
+    <div class="arrow">→<small>die Differenz</small></div>
+    <div class="sc-node green">Betriebsergebnis<span class="sub">null am Break-even-Punkt</span></div>
+  </div>
+  <figcaption>CVP in einer Zeile: einen Input verändern, die neuen Erlöse und Kosten ablesen und sehen, was als Betriebsergebnis übrig bleibt. Der Break-even-Punkt ist die Menge, bei der dieser Rest genau null ist.</figcaption>
+</div>
+
+Der Kurs rahmt sie als wichtiges **Planungsinstrument**: Bevor ich Geld binde, will ich die Menge kennen, bei der die Erlöse die Gesamtkosten endlich decken - jenseits dieses Punktes ist jede zusätzliche Einheit Gewinn.
+
+## 2 · Die Annahmen - und der Spezialfall, den sie beschreiben
+
+Das Modell ist nur so ehrlich wie seine Vereinfachungen. Die Standard-CVP ruht auf fünf davon:
+
+- **Die Gesamtkosten zerfallen in einen fixen und einen variablen Teil** - nichts dazwischen.
+- **Erlöse und Kosten verhalten sich linear** - eine gerade Linie je Einheit, keine Mengenrabatte, keine Sprungkosten.
+- **Ein einzelnes Produkt** (oder ein konstanter Absatzmix) wird analysiert.
+- **Der Zeitwert des Geldes wird ignoriert** - ein Euro im nächsten Jahr zählt wie ein Euro heute.
+- **Produktion gleich Absatz** - kein Aufbau und kein Abbau von Beständen.
+
+Diese Annahmen beschreiben einen **Spezialfall** der CVP. Der Kurs sagt ausdrücklich, dass der **allgemeine Fall** anspruchsvollere Mathematik braucht:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Spezialfall <small>was dieses Kapitel löst</small></div>
+    <ul>
+      <li><strong>Ein Erlöstreiber</strong>: Ausbringungseinheiten</li>
+      <li><strong>Ein Kostentreiber</strong>: Ausbringungseinheiten</li>
+      <li><strong>Kurzfristige Entscheidungen</strong> - ein Zeitraum, typischerweise unter einem Jahr, in dem die Fixkosten innerhalb des <strong>relevanten Bereichs</strong> fix bleiben</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Allgemeiner Fall <small>braucht schwereres Werkzeug</small></div>
+    <ul>
+      <li><strong>Viele Erlöstreiber</strong> (Mix, Kanäle, Kundengruppen)</li>
+      <li><strong>Viele Kostentreiber</strong> (Lose, Rüstvorgänge, Komplexität)</li>
+      <li><strong>Verschiedene Zeiträume</strong>: kurze Frist, lange Frist, ganze Produktlebenszyklen</li>
+    </ul>
+  </div>
+</div>
+
+Die Idee des **relevanten Bereichs** aus dem letzten Kapitel im Kopf behalten: Fixkosten sind nur zwischen den Mengen „fix", für die das Geschäft ausgelegt wurde. Tritt man aus diesem Band heraus, verschiebt sich die ganze Linie.
+
+## 3 · Das Vokabular und die zentralen Formeln
+
+Die Abkürzungen tauchen in jeder Übung auf, deshalb sollen sie automatisch sitzen:
+
+| Symbol | Steht für | In einfachen Worten |
+|---|---|---|
+| **USP** | unit selling price, Stückverkaufspreis | wofür eine Einheit verkauft wird |
+| **UVC** | unit variable cost, variable Stückkosten | was eine zusätzliche Einheit in Herstellung und Vertrieb kostet |
+| **UCM** | unit contribution margin, Stückdeckungsbeitrag | USP minus UVC - was eine Einheit zu Fixkosten und Gewinn beiträgt |
+| **FC** | fixed costs, Fixkosten | der Block, der sich nicht mit der Menge bewegt (direkt oder indirekt) |
+| **Q** | quantity, Menge | verkaufte Einheiten (annahmegemäß gleich den produzierten Einheiten) |
+| **TOP** | target operating profit, angestrebtes Betriebsergebnis | der Gewinn, den ich einplanen will |
+| **NP** | net profit, Nettogewinn | was nach nicht-betrieblichen Posten und Steuern übrig bleibt |
+
+Darunter liegen zwei Rechnungslegungsidentitäten. **Gesamtkosten** sind variable plus fixe Kosten (die jeweils direkt oder indirekt sein können). Das **Betriebsergebnis** sind die Gesamterlöse aus dem operativen Geschäft minus die Gesamtkosten aus dem operativen Geschäft. Der **Nettogewinn** nimmt das Betriebsergebnis, addiert nicht-betriebliche Erlöse, zieht nicht-betriebliche Kosten und dann die Ertragsteuer ab - in diesem Kapitel werden die nicht-betrieblichen Posten aber als null angenommen, sodass das Betriebsergebnis die Zahl ist, der wir nachjagen.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Betriebsergebnis</span>
+    <code>OP = (USP × Q) - (UVC × Q) - FC</code>
+  </div>
+  <div>
+    <span class="name">Stückdeckungsbeitrag</span>
+    <code>UCM = USP - UVC</code>
+  </div>
+  <div>
+    <span class="name">Einheiten für einen beliebigen Zielgewinn</span>
+    <code>Q = (FC + TOP) / UCM</code>
+  </div>
+  <div>
+    <span class="name">Break-even (TOP = 0)</span>
+    <code>Q = FC / UCM</code>
+  </div>
+</div>
+
+Der **Deckungsbeitrag** ist Erlöse minus variable Kosten - die Ein-Zeilen-Botschaft des Kurses. Er ist *kein* Gewinn; er ist das, was zur Deckung der Fixkosten zur Verfügung steht, und erst der Überschuss darüber wird zu Gewinn.
+
+## 4 · Den Break-even-Punkt auf drei Wegen finden
+
+Der **Break-even-Punkt** (die Gewinnschwelle) ist die Ausbringungsmenge, bei der die Gesamterlöse den Gesamtkosten entsprechen, das Betriebsergebnis also null ist. Der Kurs gibt drei Wege dorthin - alle landen bei derselben Antwort, also nimmt man den, den die Aufgabe am leichtesten macht.
+
+**Das durchgehende Beispiel.** Eine Verkäuferin plant, auf einer zweitägigen Computermesse ein Softwarepaket anzubieten. Sie kann jedes Paket bei einem Großhändler für 120 kaufen, mit dem Recht, **jede unverkaufte Einheit gegen volle Erstattung von 120 zurückzugeben**, sodass die Einkaufskosten rein variabel sind. Sie verkauft zu 200. Für den Stand hat sie bereits **2,000** bezahlt. Keine weiteren Kosten. Wie viele Einheiten bis zum Break-even?
+
+<Steps>
+
+1. **Gleichungsmethode.** Das Betriebsergebnis vollständig hinschreiben und auf null setzen: 200 × Q - 120 × Q - 2,000 = 0. Das ergibt 80 × Q = 2,000, also **Q = 25 Einheiten**.
+
+2. **Deckungsbeitragsmethode.** Zuerst den UCM berechnen: 200 - 120 = **80** je Paket. Dann die Fixkosten dadurch teilen: 2,000 / 80 = **25 Einheiten**. Dieselbe Antwort, eine Zeile.
+
+3. **Grafische Methode.** Einheiten auf der waagerechten Achse abtragen, Geld auf der senkrechten. Weil alles linear ist, genügen zwei Punkte je Linie. Die **Gesamtkostenlinie** startet beim Fixkostenpunkt (0 Einheiten, 2,000) und ihr zweiter Punkt ist FC plus Einheiten × UVC. Die **Gesamterlöslinie** startet im Ursprung (0, 0) und ihr zweiter Punkt ist Einheiten × USP. Wo sich die beiden Linien schneiden, liegt der Break-even-Punkt - hier bei 25 Einheiten und 5,000 an Erlös.
+
+</Steps>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Gesamtkostenlinie<span class="sub">startet bei FC, Steigung = UVC</span></div>
+    <div class="arrow">→<small>schneidet</small></div>
+    <div class="sc-node amber">Break-even-Punkt<span class="sub">Erlöse = Gesamtkosten, OP = 0</span></div>
+    <div class="arrow">←<small>schneidet</small></div>
+    <div class="sc-node green">Gesamterlöslinie<span class="sub">startet im Ursprung, Steigung = USP</span></div>
+  </div>
+  <figcaption>Die grafische Methode. Links vom Schnittpunkt liegt die Kostenlinie über der Erlöslinie (ein Verlust); rechts davon liegt die Erlöslinie höher (ein Gewinn). Der senkrechte Abstand zwischen den Linien bei einer beliebigen Menge ist das Betriebsergebnis beziehungsweise der Betriebsverlust.</figcaption>
+</div>
+
+**Der Zielgewinn ist derselbe Trick.** Will die Verkäuferin aus der Messe etwa ein Betriebsergebnis von 1,200 erzielen, braucht sie (2,000 + 1,200) / 80 = **40 Einheiten**. Die Formel `Q = (FC + TOP) / UCM` behandelt das Gewinnziel so, als wäre es ein weiterer zu deckender Fixkostenblock.
+
+<Aside type="caution">
+**Den Deckungsbeitrag nicht mit dem Gewinn verwechseln.** Der Verkauf von 25 Einheiten zu 200 bringt 5,000 an Erlös und 2,000 an Deckungsbeitrag - und 2,000 Deckungsbeitrag entsprechen genau der Standgebühr, weshalb der Gewinn null ist. Studierende bleiben oft bei „der Deckungsbeitrag ist positiv, also sind wir profitabel" stehen. Ein positiver Deckungsbeitrag heißt nur, dass jede Einheit *hilft*; der Gewinn beginnt bei Einheit 26.
+</Aside>
+
+## 5 · Sensitivitätsanalyse - alternative Kostenstrukturen
+
+CVP glänzt, wenn die Frage lautet „welche Kostenstruktur?". Sensitivitätsanalyse heißt, einen Input nach dem anderen zu verändern und zuzusehen, wie sich Break-even und Gewinn bewegen. Der Messeveranstalter bietet der Verkäuferin drei Standverträge an:
+
+- **Option 1**: eine **feste Gebühr von 2,000**.
+- **Option 2**: eine **feste Gebühr von 1,400 plus 5% des Erlöses** aus den Softwareverkäufen.
+- **Option 3**: **keine feste Gebühr**, dafür **20% des Erlöses**.
+
+Ein Prozentsatz vom Erlös ist eine verkleidete *variable Kostengröße je Einheit*: 5% eines Preises von 200 sind 10 je Einheit, 20% sind 40 je Einheit. Die Optionen sind also in Wahrheit drei verschiedene (FC, UVC)-Paare:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Option 1<span class="n">ganz fix</span></div>
+      <div class="sc-node amber">FC 2,000 · UVC 120<span class="sub">UCM = 80</span></div>
+      <div class="sc-node soft">Break-even 25 Einheiten<span class="sub">2,000 / 80</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Option 2<span class="n">gemischt</span></div>
+      <div class="sc-node violet">FC 1,400 · UVC 130<span class="sub">UCM = 70</span></div>
+      <div class="sc-node soft">Break-even 20 Einheiten<span class="sub">1,400 / 70</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Option 3<span class="n">ganz variabel</span></div>
+      <div class="sc-node green">FC 0 · UVC 160<span class="sub">UCM = 40</span></div>
+      <div class="sc-node soft">Break-even 0 Einheiten<span class="sub">verliert nie Geld</span></div>
+    </div>
+  </div>
+  <figcaption>Die drei Standverträge als CVP-Strukturen. Von links nach rechts schrumpft der Fixkostenblock, der Break-even sinkt und das Abwärtsrisiko verschwindet - aber ebenso das Aufwärtspotenzial, weil jede Einheit nun weniger beiträgt.</figcaption>
+</div>
+
+Der Zielkonflikt ist die ganze Lektion: **Niedrigere Fixkosten bedeuten einen niedrigeren Break-even und weniger Risiko, aber eine dünnere Marge je Einheit, sobald man darüber hinaus ist.** Meine eigene Rechnung dazu, wo die Optionen die Plätze tauschen: Option 1 schlägt Option 2 erst oberhalb von 60 Einheiten (80Q - 2,000 = 70Q - 1,400), Option 2 schlägt Option 3 oberhalb von etwa 47 Einheiten (70Q - 1,400 = 40Q), und Option 1 schlägt Option 3 oberhalb von 50 Einheiten. Eine pessimistische Verkäuferin will also Option 3, eine zuversichtliche Option 1, und Option 2 gewinnt in einem schmalen mittleren Band. Die Empfehlung hängt vollständig davon ab, wie viele Einheiten sie zu verkaufen glaubt - und genau dafür ist die Sensitivitätsanalyse da.
+
+## 6 · Operating Leverage - wie stark der Gewinn ausschlägt
+
+**Operating Leverage** (die Hebelwirkung der Fixkosten) beschreibt die Wirkung, die Fixkosten auf das Betriebsergebnis haben, wenn sich die verkauften Einheiten und damit der Deckungsbeitrag ändern. Bei einer **gegebenen Menge**:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Grad des Operating Leverage</span>
+    <code>DOL = contribution margin / operating profit</code>
+  </div>
+</div>
+
+Der Kurs bewertet die drei Optionen bei **40 Einheiten**:
+
+| Bei 40 Einheiten | Option 1 | Option 2 | Option 3 |
+|---|---|---|---|
+| Deckungsbeitrag je Einheit | 80 | 70 | 40 |
+| Deckungsbeitrag (40 Einheiten) | 3,200 | 2,800 | 1,600 |
+| Betriebsergebnis (40 Einheiten) | 1,200 | 1,400 | 1,600 |
+| **Grad des Operating Leverage** | **2.67** | **2.0** | **1.0** |
+
+Den Hebel als Multiplikator lesen: Bei einem DOL von 2.67 verschiebt eine Mengenänderung von 10% das Betriebsergebnis um rund 26.7% (von 40 auf 44 Einheiten steigt das OP von 1,200 auf 1,520). Bei Option 3 gibt es keine Fixkosten, der Gewinn bewegt sich also exakt im Gleichschritt mit der Menge - ein DOL von 1. **Hohe Fixkosten bedeuten hohen Hebel**: Kleine Absatzänderungen verursachen große Änderungen des Betriebsergebnisses, in beide Richtungen. Deshalb sagt mir der Hebel etwas über das *Gewinnpotenzial jenseits des Break-even* und ebenso über den Schmerz unterhalb davon.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">hohe Fixkosten = hoher Hebel</span>
+  <span class="sc-chip violet">hoher Hebel = große Ausschläge</span>
+  <span class="sc-chip green">keine Fixkosten = DOL von 1</span>
+  <span class="sc-chip blue">der Hebel gilt nur für eine bestimmte Menge</span>
+</div>
+
+## 7 · Nutzen und Missbrauch der CVP
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Wo CVP wirklich nützlich ist</div>
+    <ul>
+      <li>Umfelder, in denen <strong>Kosten tatsächlich eine Funktion der Menge sind</strong> - Massenproduktionssysteme</li>
+      <li><strong>Sonderprojekte mit abgrenzbaren, zusätzlichen Fixkosten</strong>: ein neues Produkt aufnehmen, eine einmalige Marketingkampagne fahren</li>
+      <li>Als <strong>Input für die Festlegung eines Verkaufspreises</strong></li>
+      <li>Um <strong>die Wirkung von Alternativen zu vergleichen</strong> - die drei Standverträge, die drei Rednerhonorare weiter unten</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Wo sie in die Irre führt</div>
+    <ul>
+      <li>Der <strong>relevante Bereich</strong> begrenzt das Modell - Kosten sind nur über ein schmales Mengenband linear</li>
+      <li><strong>Verkaufspreise variieren</strong> je nach Kunde oder Marktsegment; ein einziger USP ist eine Fiktion</li>
+      <li>Sie kann die Haltung nähren, dass <strong>Fixkosten nicht steuerbar sind</strong> - sie sind es, nur nicht über die Menge</li>
+      <li>Sie als <strong>endgültiges Entscheidungsmodell</strong> statt als <strong>ersten Wurf</strong> zu behandeln</li>
+    </ul>
+  </div>
+</div>
+
+## 8 · Denken in relevanten Kosten - nur die Kosten, die sich ändern, zählen
+
+Die Break-even-Logik lässt sich ganz natürlich auf Ja/Nein-Entscheidungen ausweiten. Die Regel: Beim Vergleich zweier Handlungsalternativen schaut man **nur auf Erlöse und Kosten, die sich zwischen ihnen unterscheiden**. Umgelegte Gemeinkosten, die ohnehin weiterlaufen, und bereits gebundene Fixkosten sind Rauschen.
+
+### Die Schließungsfalle bei Sparten
+
+Ein Unternehmen hat zwei Sparten und überlegt, das nördliche Vertriebsbüro zu schließen. Die Spartenfixkosten würden mit der Sparte verschwinden; **umgelegte Konzernkosten liefen weiter**.
+
+| | Nord | Süd | Gesamt |
+|---|---|---|---|
+| Umsatz | 550,000 | 500,000 | 1,050,000 |
+| Variable Kosten | 275,000 | 200,000 | 475,000 |
+| Spartenfixkosten | 180,000 | 150,000 | 330,000 |
+| **Beitrag zu den Konzernkosten** | **95,000** | **150,000** | **245,000** |
+| Umgelegte Konzernkosten | 170,000 | 135,000 | 305,000 |
+| Betriebsergebnis | -75,000 | 15,000 | -60,000 |
+
+Nord „verliert" auf dem Papier 75,000, die Schließung wirkt also verlockend. Aber nach der Schließung müssen die vollen 305,000 an Konzernkosten weiterhin bezahlt werden, nun von Süd allein: 150,000 Deckungsbeitrag minus 305,000 Konzernkosten = **-155,000**. Das Konzernergebnis *verschlechtert* sich von -60,000 auf -155,000, weil Nord still und leise 95,000 zu den Konzernkosten beigetragen hat. **Nicht schließen.** Ein Segment mit positivem Deckungsbeitrag oberhalb seiner eigenen vermeidbaren Fixkosten hilft, so hässlich seine Zeile mit den umgelegten Kosten auch aussieht.
+
+### Der einmalige Zusatzauftrag
+
+Eine Konservenfabrik verkauft monatlich 1,000 Kisten Pfirsiche zu je 10. Die Kosten werden als Fertigungs- oder Marketingkosten klassifiziert, jeweils mit einem fixen und einem variablen Teil:
+
+| Monatlich | Fix | Variabel | Je Kiste (bei 1,000 Kisten) |
+|---|---|---|---|
+| Fertigung | 2,000 | 4,000 | 4.00 variabel + 2.00 fix = 6.00 Vollkosten |
+| Marketing | 1,600 | 1,400 | 1.40 variabel |
+
+Die Gewinn- und Verlustrechnung liest sich also so: Umsatz 10,000, gesamte variable Kosten 5,400, **Deckungsbeitrag 4,600**, Fixkosten 3,600, Betriebsergebnis 1,000. Der normale Aufschlag beträgt 4,000 / 6,000 = 66.7% auf die Vollkosten oder 4,600 / 5,400 = **85.2% auf die gesamten variablen Kosten**.
+
+Ein neuer Kunde will **200 Kisten zu 5.50**, braucht **kein zusätzliches Marketing**, verlangt aber eine **Spezialverpackung für 200**. Der Kunde stellt sein Geschäft in sechs Wochen ein, es ist also ein echter Einmalfall. Das Management will ablehnen, weil 5.50 unterhalb der Vollkosten von 6.00 liegt. Ist das richtig?
+
+- **Relevante Kosten** sind die, die dieser Auftrag verursacht: 200 × 4 = 800 an variablen Fertigungskosten plus 200 Verpackung = 1,000, also **5.00 je Kiste**.
+- Jeder Preis über 5.00 erhöht den Deckungsbeitrag; bei 5.50 fügt der Auftrag 200 × 0.50 = **100** zum Betriebsergebnis hinzu.
+- Die Vollkostenzahl von 6.00 schmuggelt **2.00 je Kiste an fixen Fertigungskosten** hinein, die ohnehin bezahlt werden - hier irrelevant.
+- Die Kapazität liegt bei 1,500 Kisten und der **relevante Bereich** für die fixen Fertigungskosten reicht von 500 bis 1,500; der Auftrag hebt die Ausbringung von 1,000 auf 1,200, die Fixkosten bleiben also tatsächlich fix.
+
+**Annehmen.** Aber wenn der Kunde dann beschließt, *im Geschäft zu bleiben*, ist die streng kurzfristige Brille nicht mehr angemessen: Andere Kunden könnten vom Preis von 5.50 erfahren und ihn ebenfalls verlangen, und ein dauerhafter Niedrigpreiskunde ist eine Preisentscheidung, keine Entscheidung über freie Kapazität.
+
+<Aside type="caution">
+**Vollkosten sind keine Untergrenze für Einmalpreise.** Die vollen Stückkosten enthalten ein Stück Fixkosten, das anfällt, ob der Auftrag angenommen wird oder nicht. Für eine kurzfristige Entscheidung über freie Kapazität ist die Untergrenze die *inkrementelle* Kostengröße. Für die langfristige Preisgestaltung muss allerdings jedes Produkt am Ende seinen Anteil an den Fixkosten tragen - und das ist das Thema des nächsten Kapitels.
+</Aside>
+
+## Durchgerechnetes Beispiel
+
+### (a) Caribbean Internet Café - ist das Vorhaben tragfähig?
+
+Ein heimkehrender MBA-Absolvent plant ein Internetcafé in New Kingston, Jamaika (alle Zahlen in **jamaikanischen Dollar**). Er hat 500,000 an Ersparnissen; die Telekommunikationsgesellschaft bietet an, weitere 500,000 für einen **50%-Anteil** zu investieren und **1,250,000 zu 10%** zu verleihen. Die Ausrüstung kostet 1,426,000. Die Gruppenlösung baut das CVP-Modell aus den Falldaten auf:
+
+| Fixkostenposition (pro Jahr) | JA$ | Woher sie kommt |
+|---|---|---|
+| Löhne der studentischen Aushilfen | 374,400 | 2 im Dienst × 90 Stunden pro Woche × 40 pro Stunde × 52 Wochen |
+| Geschäftsführer | 480,000 | 40,000 pro Monat |
+| Miete | 360,000 | 30,000 pro Monat |
+| Telefon und Nebenkosten | 180,000 | 15,000 pro Monat |
+| Internetanbindung | 120,000 | 10,000 pro Monat |
+| Versicherung | 120,000 | 10,000 pro Monat |
+| Werbung | 120,000 | 10,000 pro Monat |
+| Sonstige Verwaltung und Instandhaltung | 600,000 | 50,000 pro Monat |
+| Zinsen auf das Darlehen | 125,000 | 10% von 1,250,000 |
+| Abschreibung der Ausrüstung | 475,333 | 1,426,000 linear über 3 Jahre |
+| **Gesamte Fixkosten** | **2,954,733** | |
+
+Hinzu kommen **einmalige Anlaufkosten von 147,000** (Kaution für Nebenkosten 7,000, Werbung vor der Eröffnung 20,000, Rechtsberatung, Lizenzen und Ausstattung 120,000).
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Erlös je Besuch <small>248</small></div>
+    <ul>
+      <li>Computerzeit 48 - nur 40% der Besucher zahlen den Stundensatz von 120</li>
+      <li>Essen 60</li>
+      <li>Getränke 140</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Variable Kosten je Besuch <small>104</small></div>
+    <ul>
+      <li>Internet 24 - 40% der Besucher × 60 je Computerstunde an den Anbieter</li>
+      <li>Essen 30</li>
+      <li>Getränke 50</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Stückdeckungsbeitrag <small>144</small></div>
+    <ul>
+      <li>248 - 104 = 144 je Besuch</li>
+      <li>Jeder Besuch zahlt 144 auf den Fixkostenblock ein</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Besuche bis zum Break-even</div>
+    <ul>
+      <li>Jahr eins: (2,954,733 + 147,000) / 144 ≈ <strong>21,540 Besuche</strong>, etwa 64 Kunden pro Tag</li>
+      <li>Jahr zwei (ohne Anlaufkosten): 2,954,733 / 144 ≈ <strong>20,519 Besuche</strong>, etwa 61 pro Tag</li>
+    </ul>
+  </div>
+</div>
+
+Eine hübsche Nebenrechnung aus der Gruppe: Der **erste Kunde** kostet effektiv rund 3.1 Millionen (alle Fixkosten plus Anlaufkosten plus 104) - eine anschauliche Art, den Fixkostenblock zu spüren.
+
+**Szenarien.** Die Marktstudie einigt sich auf ein Zielsegment von **20,000** Personen und liefert drei Nutzungsschätzungen:
+
+| Szenario | Anteil am Segment | Besuche je Person | Besuche pro Jahr | Betriebsergebnis Jahr 1 | Betriebsergebnis Jahr 2 |
+|---|---|---|---|---|---|
+| Bester Fall | 50% | 5 | 50,000 | etwa +4.10m (4,098,267) | etwa +4.25m |
+| Durchschnitt | 40% | 3 | 24,000 | etwa +0.35m (354,267) | etwa +0.50m |
+| Schlechtester Fall | 30% | 2 | 12,000 | etwa -1.37m (-1,373,733) | etwa -1.23m |
+
+Der Durchschnittsfall überschreitet den Break-even nur knapp (24,000 Besuche gegenüber 21,540 benötigten); der schlechteste Fall ist ein schwerer Verlust. Mittelt man die drei Ergebnisse gleichgewichtet, ergibt sich ein „wahrscheinliches" Betriebsergebnis von rund 1.03m im ersten Jahr, wovon der 50%-Anteil des Gründers etwa 0.51m ausmacht - der Fall nennt aber keine Wahrscheinlichkeiten, dieser Durchschnitt ist also geraten. Das Fazit der Gruppe: **Die Tragfähigkeit hängt davon ab, wie risikoscheu der Gründer ist**, plus qualitative Faktoren (siehe die Fallecke).
+
+### (b) Der Motivationsredner - welches Honorarmodell?
+
+Ein Anwaltsverband sucht einen Redner für ein ganztägiges Seminar und bekommt drei Honorarvereinbarungen angeboten: **Modell 1** pauschal 8,000; **Modell 2** 2,000 fix plus 20 je Person; **Modell 3** 50 je Person. Jeder Teilnehmende zahlt 200.
+
+| Teilnehmende | Modell 1 (8,000 pauschal) | Modell 2 (2,000 + 20 je Person) | Modell 3 (50 je Person) | Am günstigsten |
+|---|---|---|---|---|
+| 50 | 8,000 gesamt · **160** je Kopf | 3,000 · **60** | 2,500 · **50** | Modell 3 |
+| 200 | 8,000 · **40** | 6,000 · **30** | 10,000 · **50** | Modell 2 |
+| 500 | 8,000 · **16** | 12,000 · **24** | 25,000 · **50** | Modell 1 |
+
+Das Muster ist wieder die Stand-Geschichte. Das rein fixe Modell hat fallende Stückkosten (160 → 40 → 16) und gewinnt, wenn der Saal voll ist; das rein variable Modell hat konstante 50 je Kopf und gewinnt, wenn die Teilnehmerzahl klein und unsicher ist; das gemischte Modell gewinnt dazwischen. Meine eigene Schnittpunktrechnung: Modell 2 überholt Modell 3 oberhalb von etwa 67 Teilnehmenden, und Modell 1 überholt Modell 2 oberhalb von 300. Weil jede teilnehmende Person 200 zahlt, ist jedes Modell bei jeder gezeigten Größe gedeckt - die Wahl dreht sich darum, wie viel Risiko der Verband tragen will, falls die Beteiligung enttäuscht.
+
+## Fallecke
+
+**Caribbean Internet Café.** Der Fall ist eine vollständige Machbarkeitsstudie, durch die CVP gerechnet. Der Break-even von rund 21,500 Besuchen im Jahr (etwa 64 pro Tag auf einer Fläche mit 50 Plätzen) ist der Anker; die drei Marktszenarien zeigen dann, dass das Vorhaben komfortabel profitabel ist, wenn die Hälfte des Segments fünfmal im Jahr kommt, im realistischen Fall grenzwertig und verlustbringend, wenn nur 30% zweimal auftauchen. Der **50%-Partner** verändert das Bild: Die Telekommunikationsgesellschaft steckt 500,000 an Eigenkapital und 1,250,000 an Fremdkapital hinein, der Gründer teilt also sowohl den Gewinn als auch das Risiko, und der Partner verdient zusätzlich 125,000 Zinsen pro Jahr plus die Internetgebühren, unabhängig vom Ergebnis des Cafés. Die qualitativen Punkte, die die Gruppe markiert hat, liegen außerhalb des Modells: eine **IT- und Internetblase** (der Fall spielt 1996 bis 1997), der Zustand des **Telekommunikationszugangs** in Jamaika (knappe Telefonleitungen in Teilen Kingstons, hohe Anbietertarife, mindestens drei Jahre lang erwartete geringe private Nutzung) und die Frage, ob **Jamaikas Wirtschaft im Aufschwung** ist. Ebenfalls erwähnenswert: Kein Wettbewerber bot Internetzugang an, und Kaffee war kein traditionelles Getränk - beides zugleich Chance und Nachfragerisiko.
+
+**Die Schließungsfalle bei Sparten.** Wann immer ein Segment *nach* umgelegten Konzernkosten einen Verlust ausweist, sollte man fragen, was tatsächlich verschwinden würde, wenn man es schließt. Übersteigt sein Deckungsbeitrag seine eigenen vermeidbaren Fixkosten, macht die Schließung das Unternehmen ärmer - die umgelegten Kosten landen einfach bei denen, die übrig bleiben.
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| CVP-Analyse | Planungsinstrument, das zeigt, wie Erlöse, Kosten und Betriebsergebnis auf Änderungen von Menge, Preis oder Kostenstruktur reagieren |
+| Break-even-Punkt (Gewinnschwelle) | Die Menge, bei der die Gesamterlöse den Gesamtkosten entsprechen und das Betriebsergebnis null ist |
+| Stückverkaufspreis (USP) | Der Preis, zu dem eine Einheit verkauft wird |
+| Variable Stückkosten (UVC) | Die Kosten, eine weitere Einheit herzustellen und zu verkaufen |
+| Stückdeckungsbeitrag (UCM) | USP minus UVC - was jede Einheit zu Fixkosten und Gewinn beisteuert |
+| Deckungsbeitrag | Gesamterlöse minus gesamte variable Kosten |
+| Fixkosten (FC) | Kosten, die sich innerhalb des relevanten Bereichs nicht mit der Menge ändern |
+| Relevanter Bereich | Das Mengenband, in dem die Annahmen über fixe und variable Kosten gelten |
+| Angestrebtes Betriebsergebnis (TOP) | Der geplante Gewinn; benötigte Einheiten = (FC + TOP) / UCM |
+| Betriebsergebnis vs. Nettogewinn | Das Betriebsergebnis sind Erlöse minus Kosten aus dem operativen Geschäft; der Nettogewinn zieht zusätzlich nicht-betriebliche Posten und Steuern ab |
+| Sensitivitätsanalyse | Einen Input nach dem anderen verändern, um zu sehen, wie sich Break-even und Gewinn bewegen |
+| Operating Leverage | Deckungsbeitrag geteilt durch Betriebsergebnis bei einer gegebenen Menge - wie stark der Gewinn auf die Menge reagiert |
+| Relevante Kosten | Kosten, die sich zwischen den verglichenen Alternativen unterscheiden |
+| Vollkosten (Absorption Cost) | Volle Stückkosten inklusive eines Anteils an fixen Fertigungskosten - ein schlechter Wegweiser für Einmalaufträge |
+
+## Teste dich selbst
+
+1. Eine Verkäuferin kauft Pakete zu 120 mit vollem Rückgaberecht, verkauft sie zu 200 und hat 2,000 für einen Stand bezahlt. Bestimme die Break-even-Menge mit der Deckungsbeitragsmethode und gib den Break-even-Erlös an.
+2. Wie viele Einheiten muss sie bei derselben Vereinbarung verkaufen, um ein Betriebsergebnis von 1,200 zu erzielen? Und unter Option 2 (1,400 fix plus 5% des Erlöses)?
+3. Berechne bei 40 Einheiten unter Option 1 den Grad des Operating Leverage und schätze damit das Betriebsergebnis, wenn der Absatz um 10% steigt.
+4. Die Sparte Nord weist nach umgelegten Konzernkosten von 170,000 einen Betriebsverlust von 75,000 aus. Erkläre in Zahlen, warum eine Schließung dem Unternehmen schaden würde.
+5. Der Konservenfabrik werden 200 Kisten zu 5.50 angeboten, während ihre Vollkosten 6.00 je Kiste betragen. Soll sie annehmen? Gib die relevanten Kosten je Kiste und die Veränderung des Betriebsergebnisses an.
+6. Das Internetcafé hat Fixkosten von 2,954,733, Anlaufkosten von 147,000 und einen UCM von 144 je Besuch. Wie hoch ist der Break-even im ersten Jahr, und warum sinkt er im zweiten Jahr?
+
+<Aside type="note" title="Lösungen">
+1. UCM = 200 - 120 = 80; Q = 2,000 / 80 = 25 Einheiten; Break-even-Erlös = 25 × 200 = 5,000.
+2. Option 1: (2,000 + 1,200) / 80 = 40 Einheiten. Option 2: UVC wird 130, UCM 70, also (1,400 + 1,200) / 70 ≈ 37.1, das heißt 38 ganze Einheiten.
+3. DB = 40 × 80 = 3,200; OP = 3,200 - 2,000 = 1,200; DOL = 3,200 / 1,200 = 2.67. Ein Mengenanstieg von 10% hebt das OP um etwa 26.7% auf rund 1,520 (Probe: 44 × 80 - 2,000 = 1,520).
+4. Nord trägt 550,000 - 275,000 - 180,000 = 95,000 zu den Konzernkosten bei. Diese 305,000 an Konzernkosten laufen nach der Schließung weiter, sodass Süd allein 150,000 - 305,000 = -155,000 ausweist gegenüber heute kombinierten -60,000. Offen lassen.
+5. Ja. Relevante Kosten = 4.00 variable Fertigungskosten + 1.00 Verpackung (200 / 200) = 5.00 je Kiste; bei 5.50 fügt der Auftrag 200 × 0.50 = 100 zum Betriebsergebnis hinzu. Der Fixkostenanteil von 2.00 in den Vollkosten von 6.00 ist irrelevant, und 1,200 Kisten bleiben innerhalb des relevanten Bereichs von 500 bis 1,500.
+6. Jahr eins: (2,954,733 + 147,000) / 144 ≈ 21,540 Besuche (etwa 64 pro Tag). Im zweiten Jahr fallen die einmaligen Anlaufkosten weg, also 2,954,733 / 144 ≈ 20,519 Besuche.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Die **CVP- oder Break-even-Analyse** zeigt, wie **Gesamterlöse, Gesamtkosten und Betriebsergebnis** auf Änderungen von **Menge, Preis und variablen oder fixen Kosten** reagieren, und beantwortet Was-wäre-wenn-Fragen. Ein Planungsinstrument, ein **erster Wurf**.
+- **Annahmen**: Kosten teilen sich in fix und variabel, **lineares** Verhalten, **ein einzelnes Produkt**, **kein Zeitwert des Geldes**, **Produktion gleich Absatz**. Das ist der **Spezialfall** (ein Erlöstreiber, ein Kostentreiber, kurze Frist innerhalb des relevanten Bereichs); der **allgemeine Fall** braucht mehr.
+- **UCM = USP - UVC**; **Deckungsbeitrag = Erlöse minus variable Kosten**. **OP = USP × Q - UVC × Q - FC**.
+- **Break-even auf drei Wegen**: Gleichung (OP auf null setzen), Deckungsbeitrag (**Q = FC / UCM**), Grafik (Kostenlinie ab FC, Erlöslinie ab dem Ursprung, Schnittpunkt). Zielgewinn: **Q = (FC + TOP) / UCM**. Software-Stand: UCM 80, Break-even **25 Einheiten**.
+- **Sensitivitätsanalyse**: 2,000 fix → BE 25; 1,400 + 5% → UCM 70, BE 20; nur 20% → UCM 40, BE 0. Weniger Fixkosten = niedrigerer Break-even, weniger Risiko, dünnere Marge.
+- **Operating Leverage = DB / OP** bei einer Menge: bei 40 Einheiten **2.67 / 2.0 / 1.0**. Hohe Fixkosten = der Gewinn schlägt mit der Menge stärker aus.
+- **Nutze** sie dort, wo Kosten der Menge folgen, für abgrenzbare Projekte, als Input für die Preisfindung und zum Vergleich von Alternativen; **Vorsicht** beim relevanten Bereich, bei variierenden Preisen, bei der Haltung „Fixkosten sind nicht steuerbar" und davor, sie als letztes Wort zu behandeln.
+- **Relevante Kosten**: Nur was sich ändert, zählt. Eine Sparte, die ihre eigenen Fixkosten deckt, nicht schließen (Nord trägt 95,000 bei; die Schließung macht aus -60,000 ein -155,000). Einen Einmalauftrag oberhalb der inkrementellen Kosten annehmen (5.00, nicht die Vollkosten von 6.00) - es sei denn, der Kunde wird dauerhaft.
+- **Caribbean Internet Café**: fix rund 2.95m plus 147,000 Anlaufkosten, UCM 144, Break-even etwa **21,540 Besuche** (64 pro Tag); bester Fall +4.1m, Durchschnitt +0.35m, schlechtester Fall -1.37m; die Antwort hängt von der Risikoneigung und von qualitativen Faktoren ab.
+</Aside>
+
+*Weiter: [Kostenrechnung & Preisgestaltung →](/de/learnings/mba/financial-performance-and-management-control/10-costing-and-pricing/) - von dem, was ein Produkt kostet, zu dem, wofür es verkauft werden sollte.*

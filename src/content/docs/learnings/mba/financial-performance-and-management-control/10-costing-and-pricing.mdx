@@ -1,0 +1,483 @@
+---
+title: "Costing & Pricing"
+description: "Three forces pull on a price (customers, competitors, costs) and the time horizon decides which costs count - variable costs and the contribution margin in the short run, every cost plus a profit margin in the long run. Cost-plus pricing from a full-cost base and a target return on investment, why one flight's cost is mostly allocation, the two-step costing system, hidden complexity costs, target costing that works backwards from the market price to an allowable cost, and the non-cost levers of price discrimination and peak-load pricing."
+sidebar:
+  label: "10 · Costing & Pricing"
+  order: 10
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+So far the management-accounting half of the course has sorted costs into fixed and variable and used contribution margins to judge short-run decisions. This chapter turns to the question every firm eventually has to answer out loud: **what do we charge?** Right behind it sits a quieter, harder one: **what does this product actually cost us?** The two are inseparable. You cannot price on cost until you have decided which costs belong to the product, and for anything more complicated than a lemonade stand that decision is a chain of judgement calls.
+
+The lecture runs the argument in two directions. **Cost-plus** goes forwards: build up the full cost, add a mark-up, arrive at a price. **Target costing** goes backwards: start from the price the market will pay, subtract the profit you need, and treat what is left as the cost you are *allowed* to have. Both directions pass through the same machinery - a costing system that traces direct costs and allocates indirect ones - and the chapter is honest that this machinery gets creakier as products multiply and direct costs shrink.
+
+<Aside type="tip">
+**The one idea to carry through.** A price is pulled by three forces - what customers value, what competitors charge and what the product costs - and the **time horizon** decides which costs count: only variable costs and the contribution margin in the short run, *every* cost plus a profit margin in the long run. **Cost-plus** starts from your cost and adds a margin; **target costing** starts from the market price and works back to an allowable cost. Whichever direction you run, the answer is only as good as the allocation of indirect costs underneath it.
+</Aside>
+
+## 1 · What pulls on a price - three forces and a clock
+
+Ask a manager what sets a price and the reflex answer is "our costs". That is a third of the truth. The lecture names **three influences** that always act together, and then adds a dimension that is easy to forget: **how long the price has to last**.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Customers<span class="n">the value ceiling</span></div>
+      <div class="sc-node violet">What is it worth to them?<span class="sub">price above perceived value and they walk</span></div>
+      <div class="sc-node soft">Read through market research<span class="sub">who buys, and how price-sensitive they are</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Competitors<span class="n">the reference point</span></div>
+      <div class="sc-node amber">What do the alternatives cost?<span class="sub">rivals cap what you can ask</span></div>
+      <div class="sc-node soft">Substitutes count too<span class="sub">not only look-alike products</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Costs<span class="n">the long-run floor</span></div>
+      <div class="sc-node green">What does it cost us?<span class="sub">below this, every sale loses money over time</span></div>
+      <div class="sc-node soft">Which costs? Depends on the horizon<span class="sub">see the two panels below</span></div>
+    </div>
+  </div>
+  <figcaption>The three influences on a pricing decision. Customers and competitors set the ceiling, costs set the floor, and the room in between is where the pricing decision lives.</figcaption>
+</div>
+
+The **time horizon** decides *which* costs belong in the calculation:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Short-term pricing <small>a one-off order, spare capacity</small></div>
+    <ul>
+      <li>Focus on <strong>variable costs</strong> only - the fixed costs are there whether or not you take the order</li>
+      <li>Decision tool: <strong>contribution margin analysis</strong> - does the price beat the variable cost per unit?</li>
+      <li>Any price above variable cost adds to profit <em>this</em> period</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Long-term pricing <small>the regular price list</small></div>
+    <ul>
+      <li><strong>All costs</strong>, variable and fixed, must be recovered - plus a <strong>profit margin</strong></li>
+      <li>Two routes: the <strong>cost-based approach (cost-plus)</strong> and the <strong>market-based approach (target costing)</strong></li>
+      <li>The rest of this chapter is about these two routes</li>
+    </ul>
+  </div>
+</div>
+
+## 2 · What does one flight cost? - why costing is mostly allocation
+
+The lecture opens product costing with a deceptively simple question about a low-cost airline (the slides use its 2011 accounts): **what does one specific flight cost - say, one departure from Hahn to Gothenburg?** Here is everything the airline spent that year:
+
+| 2011 income statement, in million € | |
+|---|---|
+| **Revenues** | **5,147.7** |
+| Staff costs | 535.4 |
+| Depreciation | 401.5 |
+| Fuel and oil | 1,739.9 |
+| Maintenance | 133.8 |
+| Marketing and sales | 236.8 |
+| Aircraft rentals | 139.0 |
+| Route charges | 581.7 |
+| Airport charges | 654.9 |
+| Others | 100.8 |
+| **Total operating expenses** | **4,563.9** |
+| **Operating income** | **583.8** |
+
+Now try to pin those lines to a single flight. Fuel burned on that leg, the route charge for that airspace and the landing fees at those two airports can be attached to the flight with reasonable confidence. Everything else is shared: crews are rostered across the network, aircraft depreciate whichever route they fly, maintenance follows flying hours, marketing sells the brand, and rentals cover planes that serve dozens of destinations. For a single flight as the cost object, **most of the cost base is indirect**, and indirect costs cannot be traced - they have to be **allocated** by some rule. The cost of a flight is therefore not a fact you look up; it is the output of a costing system and of the allocation choices baked into it.
+
+The slides contrast this with a small fashion label that does the opposite of hiding its costing: it **publishes the complete cost-plus build-up** of each garment, the cost components and the mark-up on top, so the customer sees exactly how the price was constructed. Cost-plus used as a transparency promise rather than an internal calculation.
+
+## 3 · The two-step costing system - trace what you can, allocate the rest
+
+A costing system answers the flight question in two moves. **Step one** sorts every euro of cost by its *type* and asks whether it is direct or indirect. **Step two** sends direct costs straight to the product and routes indirect costs through cost centres before they land on a product.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Material costs<span class="n">mostly direct</span></div>
+      <div class="sc-node green">Raw materials, supplies, components<span class="sub">a component list says which product used them</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Staff costs<span class="n">mostly indirect</span></div>
+      <div class="sc-node amber">Manufacturing labour, admin labour<span class="sub">people serve many products and departments</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Machine costs<span class="n">mostly indirect</span></div>
+      <div class="sc-node amber">Depreciation, maintenance<span class="sub">a machine runs whatever is scheduled on it</span></div>
+    </div>
+  </div>
+  <figcaption>Step one, cost-type accounting: the total cost pool is split into common cost types, and each type is tagged direct or indirect. Materials are the one block that is usually traceable.</figcaption>
+</div>
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Direct costs → trace <small>step two, part 1</small></div>
+    <ul>
+      <li>Direct material and direct labour go <strong>straight to the product</strong></li>
+      <li>Basis: <strong>production plans and component lists</strong> - documents that already say which product consumed what</li>
+      <li>No judgement needed, so no distortion</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Indirect costs → allocate <small>step two, part 2</small></div>
+    <ul>
+      <li>Collected first in <strong>cost centres</strong> - procurement, production, sales, administration</li>
+      <li>Then pushed from the cost centres onto <strong>cost objects</strong> (product 1 to product n) using an allocation key</li>
+      <li>Every key is a choice - and a different key gives a different product cost</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sc-chips">
+  <span class="sc-chip green">cost object = the thing you want the cost of</span>
+  <span class="sc-chip blue">cost centre = where indirect costs collect</span>
+  <span class="sc-chip amber">trace = follow a document</span>
+  <span class="sc-chip violet">allocate = apply a rule</span>
+</div>
+
+## 4 · Full costing - building the cost base
+
+Put the two steps together and you get a **full product cost**: every cost the product picks up on its way from raw material to a serviced customer. The lecture's example is a firm making **200,000 units** a year. Read it top to bottom - the first block is what it costs to *make* the unit, the second block is what it costs to *develop, sell and support* it.
+
+| Cost line | Per unit (€) | Total for 200,000 units (€) |
+|---|---|---|
+| Direct materials | 385 | 77,000,000 |
+| Direct manufacturing labour | 53 | 10,600,000 |
+| Direct machining | 57 | 11,400,000 |
+| Manufacturing overhead | 45 | 9,000,000 |
+| **= Cost of goods sold** | **540** | **108,000,000** |
+| R&D | 20 | 4,000,000 |
+| Design of products and processes | 30 | 6,000,000 |
+| Marketing | 90 | 18,000,000 |
+| Distribution | 25 | 5,000,000 |
+| Customer service | 15 | 3,000,000 |
+| **= Operating costs** | **180** | **36,000,000** |
+| **= Full product cost** | **720** | **144,000,000** |
+
+Two things to notice. First, the **720** already contains allocated money: manufacturing overhead, R&D, design and the rest were never traced to this unit, they were spread over it. Second, the per-unit figures only hold **at 200,000 units** - halve the volume and the fixed part of every allocated line doubles per unit. Keep that in mind for the worked examples.
+
+## 5 · Cost-plus - add a mark-up to the cost base
+
+The **cost-based approach to long-term pricing** is exactly what its name says: take a cost base, add a mark-up, and that is your price. Because it is a *long-run* price, the cost base is the **full cost** - in the long run revenues have to cover everything, fixed and variable alike.
+
+<Steps>
+
+1. **Cost base per unit** - the full product cost (720 in the example).
+
+2. **Add the mark-up component** - a percentage of the cost base that is meant to deliver the profit.
+
+3. **= Prospective selling price before VAT** - the net price the firm actually keeps.
+
+4. **Add value added tax** - the state's share, passed through to the customer.
+
+5. **= Prospective selling price including VAT** - the list price the customer sees.
+
+</Steps>
+
+Where does the mark-up percentage come from? It is a management choice, and the lecture shows one disciplined way to make it: **derive it from a target return on the capital invested**.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Target profit</span>
+    <code>invested capital 45,000,000 × target ROI 15% = 6,750,000</code>
+  </div>
+  <div>
+    <span class="name">Per unit</span>
+    <code>6,750,000 ÷ 200,000 units = 33.75 per unit</code>
+  </div>
+  <div>
+    <span class="name">Mark-up %</span>
+    <code>33.75 ÷ 720 cost base = 4.6875%</code>
+  </div>
+  <div>
+    <span class="name">Price before VAT</span>
+    <code>720 + 33.75 = 753.75</code>
+  </div>
+</div>
+
+The mark-up looks tiny (under 5%) because it sits on a *full* cost that already contains every overhead. Had the firm simply picked a round **12%** instead, the same cost base gives 720 + 86.40 = **806.40** - a price more than 50 higher, with no change in the product or its costs. That is the first quiet weakness of cost-plus: the mark-up is a decision dressed up as a calculation.
+
+<Aside type="caution">
+**Cost-plus is circular.** The cost base per unit depends on the volume you assumed (200,000 units spread the fixed costs), the price depends on the cost base, and the volume you actually sell depends on the price. Assume a smaller volume and the unit cost rises, so the price rises, so fewer people buy - which is the smaller volume you started with. Worked example (b) below shows the loop with numbers, and why only market research breaks it.
+</Aside>
+
+## 6 · Why cost-plus is getting harder - allocation, variety and hidden complexity costs
+
+The 4.6875% example is clean because the numbers were handed to us. In real plants the cost base is under pressure from two directions at once.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Direct costs shrink<span class="sub">less of the total is traceable</span></div>
+    <div class="arrow">→<small>so a bigger share is indirect</small></div>
+    <div class="sc-node violet">More allocation, less tracing<span class="sub">more of the unit cost rests on a rule</span></div>
+    <div class="arrow">→<small>while at the same time</small></div>
+    <div class="sc-node amber">More products, more variants<span class="sub">each with a different demand pattern</span></div>
+    <div class="arrow">→<small>which</small></div>
+    <div class="sc-node slate">Consume indirect costs unevenly<span class="sub">a simple key spreads them evenly anyway</span></div>
+  </div>
+  <figcaption>The two pressures on the cost-plus cost base. Less of the cost is traceable, and the untraceable part is consumed very differently by different products - so an allocation rule that was harmless with three products becomes misleading with thirty.</figcaption>
+</div>
+
+The nastiest piece is what the lecture calls **variety-induced complexity costs**. Every extra variant drags a tail of small indirect costs behind it, none of which shows up on a component list:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">extra supplier search and selection</span>
+  <span class="sc-chip amber">long delivery times</span>
+  <span class="sc-chip amber">additional tests</span>
+  <span class="sc-chip amber">extensive documentation and maintenance</span>
+  <span class="sc-chip amber">more order transactions</span>
+  <span class="sc-chip amber">high stock levels</span>
+  <span class="sc-chip amber">complex logistics</span>
+  <span class="sc-chip amber">higher error rate in production</span>
+</div>
+
+These costs are **hidden**: they sit inside the overhead pool, blended with everything else, and a costing system cannot easily pull them apart and pin them on the variant that caused them. Even **activity-based costing**, which was invented to allocate overhead by the activities products actually consume, gives only limited guidance here, and so do the traditional cost-estimation methods. The lecture flags current research on a **simulation-based approach** to estimating complexity costs - the point for us is not the method but the admission: the more complex the product range, the less you should trust a cost-plus price built on simple allocation.
+
+## 7 · Target costing - start from the market and work backwards
+
+Cost-plus asks *what does it cost, so what must we charge?* **Target costing** turns the question upside down: *what will the market pay, so what may it cost?* The lecture lines the two philosophies up side by side.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Cost-based: cost-plus <small>inside-out</small></div>
+    <ul>
+      <li>Starting point: a <strong>given product, process and capacity</strong></li>
+      <li>Job: analyse and value the <strong>consumption of production factors</strong></li>
+      <li>Used for monthly reporting, planning and control, product cost and price calculation</li>
+      <li>Aim: keep pushing product costs down</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Market-based: target costing <small>outside-in</small></div>
+    <ul>
+      <li>Starting point: <strong>customer preferences</strong> and the <strong>allowable market price</strong></li>
+      <li>Job: derive the <strong>allowable product cost</strong> - and derive the <strong>product features</strong> from what customers value</li>
+      <li>Makes sure products are designed <em>and</em> priced to what customers want</li>
+      <li>Aim: the same permanent cost reduction, but driven by the market</li>
+    </ul>
+  </div>
+</div>
+
+The procedure has three stages, and the sequence is worth memorising because exam questions follow it:
+
+<Steps>
+
+1. **Target cost determination.** Market research gives the **target price** - what the customer segment will pay. Strip out **VAT** first (the state's slice was never yours), then subtract the **target profit**. What remains is the **allowable cost**, also called the target cost.
+
+2. **Target cost breakdown.** Split the allowable cost across the **product components** - how much may each part of the product cost, in proportion to what customers value in it.
+
+3. **Target cost monitoring.** Compare each component's target with its **standard cost** in the current design and adjust. Where the standard is higher, that gap is the **cost-cutting potential**, attacked through **value engineering**: sort activities into value-adding and non-value-adding, and cut or redesign the latter.
+
+</Steps>
+
+The lecture's number example is an airfare from Cologne/Bonn to Barcelona for private travellers only, no business segment:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Target price</span>
+    <code>60.00 (what the private traveller will pay, VAT included)</code>
+  </div>
+  <div>
+    <span class="name">minus VAT 16%</span>
+    <code>60.00 - 9.60 = 50.40 net price</code>
+  </div>
+  <div>
+    <span class="name">minus target profit</span>
+    <code>20% return on sales × 50.40 = 10.08</code>
+  </div>
+  <div>
+    <span class="name">= Target cost</span>
+    <code>40.32 allowable cost per seat</code>
+  </div>
+</div>
+
+Return on sales means profit divided by revenue, and revenue is the **net** price, so the 20% is taken on 50.40, not on 60.00. Everything the airline does - crew, fuel, aircraft, ground handling - has to fit inside 40.32, or the seat is not worth selling at that price.
+
+### Target costing in action: the 2,500-dollar car
+
+The best-known industrial example is the **people's car** an Indian carmaker set out to build in 2003. Despite the country's growth, cars were priced far above what most Indians could afford, so the chairman gave his developers three conditions: meet the regulations, hit set targets for fuel efficiency and acceleration, and sell for a **target price of only 2,500 dollars**. The car launched in 2008 at that price, doing 50 miles per gallon, reaching 65 mph and meeting Indian safety and pollution standards. The price was hit exactly the way the target-costing logic predicts:
+
+- **Cost reduction through competition** - instead of long-term supplier relationships, parts were sourced through **internet-based auctions**.
+- **Eliminating components** - no radio, no power steering, no power windows, no air conditioning, and **one windscreen wiper instead of two**.
+- **Engineering innovations** - a **hollowed-out steering shaft**, a smaller-diameter drive shaft, a boot sized for a briefcase, and a small **rear-mounted engine** not much stronger than a top-end ride-on lawnmower.
+
+Notice the order: the price came first, and the product was designed backwards from it. That is target costing.
+
+## 8 · Beyond costs - pricing on behaviour
+
+Whether you build the price up or work it back, costs are only one input. The lecture closes with two **non-cost considerations**, both grounded in **market research into consumer behaviour**:
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Price discrimination <small>different customers, different prices</small></div>
+    <ul>
+      <li>Charge some customers more because their <strong>price elasticity</strong> is lower - they will pay anyway</li>
+      <li>Classic case: <strong>business travellers</strong> (must travel, employer pays) versus <strong>leisure travellers</strong> (will switch or stay home)</li>
+      <li>Same seat, same cost, two prices</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Peak-load pricing <small>different times, different prices</small></div>
+    <ul>
+      <li>Charge according to <strong>capacity utilisation</strong> - high when the capacity is scarce, low when it sits idle</li>
+      <li>Classic case: <strong>hotel rooms while a trade fair is in town</strong> cost far more than the same room the week after</li>
+      <li>The cost of the room did not change; the demand did</li>
+    </ul>
+  </div>
+</div>
+
+Both are reminders that the first influence on price, the customer, is not one person but many segments and many moments - and a single cost-plus price leaves money on the table.
+
+## Worked example
+
+Three exercises from the course, worked through with the correct answers.
+
+### (a) A consultancy's cost-plus hourly rate <Badge text="Exercise 6" variant="note" />
+
+A logistics consultancy prices its hours cost-plus and wants a **25% return on 750,000 invested**. Labour costs 25 per hour, other variable costs 4 per hour, fixed overheads are 250,000 a year, and it expects to bill **20,000 hours**. What hourly rate delivers the target?
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Variable per hour</span>
+    <code>labour 25 + other variable 4 = 29.00</code>
+  </div>
+  <div>
+    <span class="name">Fixed per hour</span>
+    <code>250,000 ÷ 20,000 hours = 12.50</code>
+  </div>
+  <div>
+    <span class="name">Target return per hour</span>
+    <code>750,000 × 25% = 187,500 ÷ 20,000 hours = 9.375</code>
+  </div>
+  <div>
+    <span class="name">Target rate</span>
+    <code>25 + 4 + 12.50 + 9.375 = 50.875 per hour</code>
+  </div>
+</div>
+
+Same recipe as section 5: full cost per unit of output (here an hour) plus a target profit per unit derived from the return on invested capital. And the same weakness - the 12.50 and the 9.375 only hold if 20,000 hours really get billed.
+
+### (b) One product, three volumes, one demand curve <Badge text="Exercise 9" variant="note" />
+
+A firm makes one product with **fixed costs of 200,000** and a **variable cost of 10 per unit**; the cost function holds between 10,000 and 30,000 units. It applies a **33.3% mark-up** on full unit cost.
+
+**Part a - cost-plus at three volume forecasts:**
+
+| Sales forecast | Fixed per unit | Variable per unit | Full unit cost | + 33.3% mark-up | Cost-plus price |
+|---|---|---|---|---|---|
+| 10,000 units | 20.00 | 10 | 30.00 | 10.00 | **40.00** |
+| 20,000 units | 10.00 | 10 | 20.00 | 6.67 | **26.67** |
+| 30,000 units | 6.67 | 10 | 16.67 | 5.56 | **22.22** |
+
+Three prices for one product, and nothing changed except the volume the accountant assumed. That is the circularity from section 5 in plain sight: price depends on unit cost, unit cost depends on volume, volume depends on price.
+
+**Part b - let the market decide.** Market research shows how many units sell at each price. Profit is (price - 10) × units - 200,000:
+
+| Price | Volume | Contribution margin per unit | Total contribution | Profit |
+|---|---|---|---|---|
+| 40 | 10,000 | 30 | 300,000 | 100,000 |
+| 35 | 15,000 | 25 | 375,000 | 175,000 |
+| 30 | 20,000 | 20 | 400,000 | **200,000** |
+| 25 | 25,000 | 15 | 375,000 | 175,000 |
+| 20 | 30,000 | 10 | 300,000 | 100,000 |
+
+The **profit-maximising price is 30**, selling 20,000 units. None of the three cost-plus prices from part a hits it. The demand curve, not the mark-up, is what breaks the circle - which is the whole argument for the market-based approach.
+
+### (c) The restaurant complex and the tempting rental <Badge text="Exercise 8" variant="note" />
+
+A restaurant complex has three departments. Sales, direct costs and the resulting **department income** are known; **indirect costs of 52,000** a month are so far known only in total.
+
+**Part a - allocate the indirect costs by floor area.** Total area is 1,200 + 840 + 960 = 3,000 sq ft, so 52,000 ÷ 3,000 = **17.33 per sq ft**.
+
+| | Dining room | Coffee shop | Lounge | Total |
+|---|---|---|---|---|
+| Sales | 184,800 | 135,600 | 152,900 | 473,300 |
+| Direct costs | (154,600) | (129,000) | (127,600) | (411,200) |
+| **Department income** | **30,200** | **6,600** | **25,300** | **62,100** |
+| Floor area (sq ft) | 1,200 | 840 | 960 | 3,000 |
+| Indirect costs at 17.33 per sq ft | (20,800) | (14,560) | (16,640) | (52,000) |
+| **Operating income** | **9,400** | **-7,960** | **8,660** | **10,100** |
+
+**Part b - the offer.** A souvenir-store operator will rent the coffee-shop space for **8,000 a month**. At first glance it is obvious: 8,000 of rent beats a loss of 7,960. But look again - the coffee shop earns a *positive* department income of 6,600; the loss only appears after 14,560 of indirect cost was parked on it by the square-footage key. Before advising, you need to know which indirect costs would actually disappear, and what happens to the other two departments.
+
+**Part c - the relevant-cost test.** The owner estimates that with the coffee shop rented out, indirect costs would fall from 52,000 to **46,600** (admin, advertising, utilities, repairs, insurance and depreciation all drop a little; interest stays at 5,400). Lounge revenue would fall by **13,600** and lounge direct costs by **10,200**; the dining room is unaffected.
+
+| | Dining room | Lounge | Rental | Total |
+|---|---|---|---|---|
+| Sales | 184,800 | 139,300 | 8,000 | 332,100 |
+| Direct costs | (154,600) | (117,400) | 0 | (272,000) |
+| **Department income** | **30,200** | **21,900** | **8,000** | **60,100** |
+| Indirect costs | | | | (46,600) |
+| **Operating income** | | | | **13,500** |
+
+Total operating income rises from **10,100 to 13,500**, so the owner should **accept the rental** - but for a reason that has nothing to do with the -7,960. The shortcut confirms it: + 8,000 rent, - 6,600 lost coffee-shop income, - 3,400 lost lounge contribution (13,600 - 10,200), + 5,400 saved indirect costs = **+ 3,400**.
+
+<Aside type="caution">
+**Allocated costs can mislead.** The square-footage allocation made the coffee shop look like a loser and, by luck, pointed the same way as the right decision - but the number it produced (7,960) played no part in the correct analysis. The right test is always relevant costs and revenues: what actually changes if we do this? A department's allocated share of costs that continue anyway is never a reason to close it.
+</Aside>
+
+## Case corner
+
+**The airline and the cost of one flight.** The 2011 accounts show 4,563.9m of operating expenses against 5,147.7m of revenue, but almost none of it is labelled with a route. Fuel for the leg, the route charge and the airport charges can be attached to a flight; staff, depreciation, maintenance, marketing, rentals and the rest are shared across the network and reach the flight only through allocation keys. Lesson: the cost of a single cost object in a shared-capacity business is mostly a *construction*, so every cost-plus price on that route inherits the allocation assumptions - and a route that loses money on full cost may still be covering its variable costs comfortably.
+
+**The transparent fashion label.** A small label publishes the complete cost-plus breakdown of every garment - what went in and what was added on top. Lesson: cost-plus is not only an internal pricing method, it can be a marketing promise. Transparency only convinces, though, if the cost side is clean; the more allocated overhead sits in the number, the less the breakdown really tells the customer.
+
+**The people's car.** A target price of 2,500 dollars was fixed in 2003, five years before the car existed, and every design and sourcing decision was disciplined by it: supplier auctions instead of relationships, a component list stripped to the essentials (one wiper, no radio, no power steering), and engineering that was clever rather than lavish (hollow steering shaft, small rear engine). Lesson: target costing is a design method as much as an accounting one - the allowable cost is broken down to components, and value engineering removes whatever the customer would not pay for.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Cost-plus pricing | Build up the full cost of a unit, add a mark-up percentage, and that is the price before VAT. |
+| Target costing | Start from the price the market will pay, deduct VAT and the profit you need, and treat the rest as the maximum cost the product may have (the allowable cost). |
+| Mark-up component | The percentage or amount added on top of the cost base to create profit; one disciplined way to set it is from a target return on investment. |
+| Target rate of return | The profit management wants as a percentage of the capital invested; spread over the units sold it gives the profit needed per unit. |
+| Full product cost | Cost of goods sold (direct materials, direct labour, direct machining, manufacturing overhead) plus operating costs (R&D, design, marketing, distribution, customer service). |
+| Cost object | Anything you want to know the cost of - a product, a flight, a customer, a department. |
+| Cost-type accounting | The first step of the costing system: sort all costs by type (material, staff, machine) and tag each as direct or indirect. |
+| Cost centre | A department or area (procurement, production, sales, administration) where indirect costs are collected before being allocated onwards. |
+| Tracing vs allocating | Tracing follows a document (component list, production plan) to a product; allocating spreads indirect costs with a chosen key. |
+| Complexity costs | Hidden indirect costs caused by product variety (extra tests, documentation, stock, logistics, errors) that ordinary costing systems cannot separate. |
+| Value engineering | Sorting activities into value-adding and non-value-adding and cutting the latter to close the gap between standard cost and target cost. |
+| Price discrimination | Charging different customer groups different prices for the same thing because their price elasticity differs. |
+| Peak-load pricing | Charging more when capacity is scarce and less when it is idle. |
+| Relevant costs | The costs and revenues that actually change with a decision; allocated costs that continue regardless are not relevant. |
+
+## Test yourself
+
+1. Name the three influences on a pricing decision, and explain which costs count in a short-term versus a long-term pricing decision.
+2. A product has a full cost of 720 per unit. Invested capital is 45,000,000, the target return on investment is 15% and 200,000 units will be sold. Derive the mark-up percentage and the selling price before VAT. What would the price be with a flat 12% mark-up instead?
+3. A private-traveller fare is set at 60 including 16% VAT, and the airline wants a 20% return on sales. Compute the target cost per seat and explain why the 20% is not taken on the 60.
+4. Why is the cost of one specific flight mostly allocation rather than tracing? Name two cost lines you could attach to a single flight and three you could not.
+5. In the restaurant case the coffee shop shows an operating loss of 7,960 after allocating indirect costs. Explain why that figure should not drive the rental decision, and state the correct test with numbers.
+6. Explain the circularity in cost-plus pricing using the one-product firm (fixed costs 200,000, variable cost 10, mark-up 33.3%), and say how market research resolves it.
+
+<Aside type="note" title="Answers">
+1. Customers (the value they see), competitors (the alternatives) and costs. Short term: only variable costs, judged by contribution margin analysis. Long term: all costs, fixed and variable, plus a profit margin - reached either by cost-plus or by target costing.
+2. 45,000,000 × 15% = 6,750,000 target profit; ÷ 200,000 = 33.75 per unit; 33.75 ÷ 720 = 4.6875% mark-up; price 720 + 33.75 = 753.75. With 12%: 720 + 86.40 = 806.40.
+3. 60.00 - 9.60 VAT = 50.40 net; 20% × 50.40 = 10.08 target profit; target cost 40.32. Return on sales is profit over revenue, and revenue is the net price - the VAT was never the airline's money.
+4. Only a few lines belong to one leg (fuel burned on it, the route charge, the airport charges); staff, depreciation, maintenance, marketing, aircraft rentals and others are shared across the whole network and reach the flight only through an allocation key. The cost object is tiny relative to the shared capacity.
+5. The 7,960 contains 14,560 of indirect cost spread by floor area, and most of that continues whether or not the coffee shop exists; its own department income is + 6,600. Relevant test: what changes? + 8,000 rent, - 6,600 department income, - 3,400 lost lounge contribution (13,600 - 10,200), + 5,400 indirect costs saved = + 3,400, so total operating income goes from 10,100 to 13,500. Accept.
+6. Unit cost = 10 + 200,000 ÷ volume, so at 10,000 / 20,000 / 30,000 units it is 30 / 20 / 16.67 and the cost-plus price 40 / 26.67 / 22.22. The price rests on a volume guess, but the volume depends on the price. The demand table gives profit (price - 10) × units - 200,000 = 100,000 / 175,000 / 200,000 / 175,000 / 100,000, so the best price is 30 - which none of the cost-plus prices found.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- A price is pulled by **customers, competitors and costs**; the **time horizon** decides which costs count - **variable costs and contribution margin** in the short run, **all costs plus a profit margin** in the long run.
+- Long-run pricing has two routes: **cost-based (cost-plus)** and **market-based (target costing)**.
+- One flight of a low-cost airline: fuel, route and airport charges can be traced; staff, depreciation, maintenance, marketing, rentals and the rest are **allocated**. The cost of a flight is a construction, not a fact.
+- The **two-step costing system**: cost-type accounting first (material mostly direct, staff and machine costs mostly indirect), then **trace** direct costs from production plans and component lists and **allocate** indirect costs via cost centres (procurement, production, sales, administration) to cost objects.
+- **Full costing** example: cost of goods sold 540 + operating costs 180 = **720 per unit**, 144m for 200,000 units.
+- **Cost-plus**: cost base + mark-up = price before VAT; + VAT = list price. Mark-up from a target ROI: 45m × 15% = 6.75m, ÷ 200,000 = 33.75, = 4.6875% → **753.75**; a 12% mark-up would give **806.40**.
+- Challenges: **shrinking direct costs** mean more allocation; **more variants** consume indirect costs unevenly; **variety-induced complexity costs** stay hidden and even ABC captures them only partly.
+- **Target costing**: target price - VAT - target profit = **allowable cost** → break down to components → compare with standard costs → **value engineering**. Airfare: 60 - 9.60 - 10.08 = **40.32**. The 2,500-dollar car: supplier auctions, dropped components, clever engineering.
+- **Non-cost pricing**: price discrimination (business vs leisure) and peak-load pricing (hotel during a fair).
+- Exercises: consultancy rate **50.875** per hour; the one-product firm shows cost-plus circularity (40 / 26.67 / 22.22) and the market says **30**; the restaurant shows **allocated costs mislead** - relevant costs say rent the coffee shop (10,100 → 13,500).
+</Aside>
+
+*Next: [Performance Measurement & the Control Problem →](/learnings/mba/financial-performance-and-management-control/11-performance-measurement-and-control/) - measuring people and units, and why the measure changes their behaviour.*

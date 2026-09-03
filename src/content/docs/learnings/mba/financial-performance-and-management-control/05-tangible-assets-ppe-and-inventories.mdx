@@ -1,0 +1,341 @@
+---
+title: "Tangible Assets: PPE & Inventories"
+description: "How machines and stock get onto the balance sheet and what happens to them afterwards - acquisition and production cost, straight-line versus declining-balance versus units-of-production depreciation, impairment against discounted cash flows, FIFO and weighted average, the lower of cost or net realisable value, and why BlackBerry's Z10 and Q10 inventory had to be written down."
+sidebar:
+  label: "5 · PPE & Inventories"
+  order: 5
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The earlier chapters gave me the skeleton: a balance sheet that lists what the company controls, an income statement that explains how equity moved, and IFRS as the rulebook that decides what may be shown and at what number. This chapter is where the rulebook meets the shop floor. Machines, buildings, vehicles and the goods in the warehouse are the most solid things a company owns, and yet the numbers they carry are anything but obvious.
+
+Two questions run through everything. **What number goes on the balance sheet on day one?** That is initial measurement, and the answer is always some version of "cost". **How may that number change afterwards?** That is subsequent measurement. For property, plant and equipment (PPE) it is answered by depreciation plus, occasionally, impairment; for inventories by a cost formula plus the lower-of-cost-or-net-realisable-value rule. The chapter ends with the BlackBerry case, which is the whole topic in one picture: a mountain of unsold smartphones carried at cost while the market had already decided they were worth a fraction of that.
+
+<Aside type="tip">
+**The one idea to carry through.** A tangible asset enters the books at **cost** - everything it took to get it ready for use or sale - and is then carried at **no more than it is still worth to the business**. Depreciation drips that cost into expense year by year according to a plan; impairment is the emergency correction when reality drops below the plan; the lower-of-cost-or-NRV test is the same emergency correction for inventories. Every write-down hits **assets, equity and profit by the same amount at the same moment**, and never touches cash.
+</Aside>
+
+## 1 · What counts as a tangible asset
+
+Two families of physical assets, two standards. The split matters because they lose value in completely different ways.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Property, plant &amp; equipment <small>IAS 16</small></div>
+    <ul>
+      <li><strong>Physical</strong> items you can touch: buildings, machinery, vehicles, IT hardware</li>
+      <li>Held to be <strong>used</strong> in producing or supplying goods and services, not to be sold, and expected to serve for <strong>more than one period</strong>, so they sit in non-current assets</li>
+      <li>Lose value by <strong>being used</strong> and getting old</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Inventories <small>IAS 2</small></div>
+    <ul>
+      <li><strong>Current assets</strong> held for <strong>sale</strong> in the normal course of business (finished goods)</li>
+      <li>Or still <strong>in production</strong> for such a sale (work in progress), or bought as <strong>materials</strong> to be consumed in production or resold</li>
+      <li>Lose value by <strong>not selling</strong>, or selling for less than hoped</li>
+    </ul>
+  </div>
+</div>
+
+| Stage | PPE | Inventories |
+|---|---|---|
+| **Initial measurement** | Acquisition cost or production cost | Acquisition cost or production cost |
+| **Subsequent measurement** | Planned depreciation, plus impairment if value collapses (or the revaluation model) | A cost formula (weighted average or FIFO) to decide which cost leaves the warehouse, plus the lower of cost or net realisable value |
+
+The one-sentence version: PPE gets a **planned** value loss spread over years, inventory gets a **comparison** against what it can still fetch.
+
+## 2 · Recognition and initial measurement - what goes into cost
+
+An item is **recognised** (put on the balance sheet at all) when two things hold: it is **probable that future economic benefit** will flow to the company from it, and its **cost can be measured reliably**. Once in, it is measured **at cost**, and cost comes in two flavours depending on whether the asset was bought or made.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Acquisition cost</span>
+    <code>purchase price + costs of getting the asset ready for use or sale (transport, insurance, installation, test runs) - rebates and discounts</code>
+  </div>
+  <div>
+    <span class="name">Production cost</span>
+    <code>direct materials + direct labour + overhead of the production area</code>
+  </div>
+  <div>
+    <span class="name">PPE extra</span>
+    plus the estimated cost of dismantling, removing or restoring the site at the end of the asset's life (as a present value)
+  </div>
+  <div>
+    <span class="name">Never included</span>
+    VAT (it is recovered, so it is not a cost) and general administration or selling overhead (expensed in the period)
+  </div>
+</div>
+
+**Machine example.** Purchase price 100,000, transport 1,000, insurance 500, test runs 5,000, and a trade rebate of 10,000. Everything that gets the machine working is added, the rebate is subtracted: 100,000 + 1,000 + 500 + 5,000 - 10,000 = **96,500**. That is the number capitalised, and the number depreciation will later be based on.
+
+**Nuclear plant example.** The plant costs 100m all-in, but there is a legal obligation to recultivate the site after 20 years, estimated at 10m. That future outflow belongs to the plant from day one, so its **present value** is added to cost. At 10% over 20 years, 10m discounted is roughly 1.5m (10m divided by 1.1 to the power of 20). Acquisition cost is therefore **101.5m**, and a **provision of 1.5m** appears on the other side of the balance sheet for the obligation.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Plant<span class="sub">100m, everything included</span></div>
+    <div class="arrow">→<small>add the removal obligation</small></div>
+    <div class="sc-node amber">PV of recultivation<span class="sub">10m in 20 years at 10% ≈ 1.5m</span></div>
+    <div class="arrow">→<small>capitalise</small></div>
+    <div class="sc-node green">Asset 101.5m<span class="sub">depreciated over the plant's life</span></div>
+    <div class="arrow">→<small>and mirror it</small></div>
+    <div class="sc-node slate">Provision 1.5m<span class="sub">the obligation, as a liability</span></div>
+  </div>
+  <figcaption>Dismantling costs are not a nasty surprise in year 20. They are part of the price of having the plant, so they enter cost now and trickle into expense through depreciation.</figcaption>
+</div>
+
+**Car example (production cost).** A car maker has one finished car left in stock at 31 December. Direct material 20,000, direct labour 10,000, production overhead 5,000, general management overhead 1,000. Production cost is 20,000 + 10,000 + 5,000 = **35,000**. The 1,000 of admin overhead does not attach to the car: head office would cost the same whether or not this car had been built, so it goes straight to the income statement.
+
+<Aside type="caution">
+**Three traps in the cost figure.** (1) VAT never goes in. (2) Rebates come off, even if shown separately on the invoice. (3) Only overhead of the production area goes into production cost, never admin overhead. If an exam question lists a general management cost, it is there to be excluded.
+</Aside>
+
+## 3 · Depreciation - spreading the cost over the useful life
+
+**Depreciation** is the systematic allocation of the **depreciable amount** (initial cost minus expected residual value) over the asset's **useful life**, in a pattern that mirrors how its economic value is used up. It is a **matching** device under the accrual convention: the cost of the machine is pushed into the periods that benefit from its output. It helps to be equally clear about what depreciation is **not**:
+
+- not **saving up cash** for a replacement machine, no money moves anywhere;
+- not merely a **tax matter**, it is financial reporting first;
+- not an attempt to track the asset's **market price** year by year, that is what impairment and revaluation are for.
+
+| Method | Annual charge | Fits assets that |
+|---|---|---|
+| **Straight-line (linear)** <Badge text="the regular case" variant="success" /> | depreciable amount / useful life in years | wear out evenly over time |
+| **Declining (reducing) balance** <Badge text="exception" variant="caution" /> | constant percentage × the depreciable balance still open, so the charge shrinks every year | lose most value early (technology, vehicles) |
+| **Units of production (usage)** <Badge text="exception" variant="caution" /> | depreciable amount × units this period / expected total units | wear according to output, not the calendar |
+
+Straight-line is the default under IFRS and in almost every real policy note. The rule for choosing is simple to state and hard to apply: pick the method that **reflects the pattern in which the asset's economic benefits are consumed**. The worked example below shows how differently the three treat the very same machine.
+
+## 4 · Impairment and revaluation - when the cost figure stops being true
+
+Depreciation runs on a plan made at the start. **Impairment** is the exceptional write-down for when events overtake the plan. At each balance sheet date the company asks whether the **current (recoverable) value** has fallen below the **carrying amount** (cost less accumulated depreciation). If it has, the asset is written down to that lower value, on top of the normal depreciation charge. Under **IAS 36** the recoverable value is measured by comparing the carrying amount with the **discounted cash flows** the asset is still expected to generate. If the reasons for the write-down later disappear, it is **written back**, but never above the (depreciated) original cost. If the current value is higher than the carrying amount, nothing happens: the cost model never lifts an asset above cost.
+
+- **The revaluation model** is the alternative: carry the asset at a fresh **current value independent of historical cost**, up or down. The course calls it the "neutral" version because it lacks the one-way downward bias of cost-plus-impairment.
+- **The practical difficulties** are the same under every model: someone has to **estimate current values, residual values, useful lives and expected outputs**. None are facts, all are judgements, and every judgement is a place where relevance and reliability pull apart (the theme of the next chapter).
+
+| | Depreciation | Impairment |
+|---|---|---|
+| **When** | Every period, according to plan | Only when current value drops below carrying amount |
+| **Driver** | Time passing, usage | Events: demand collapse, damage, technology leap |
+| **Measured against** | Cost and the estimates made at the start | Current value, usually discounted cash flows |
+| **Reversible** | No | Yes, if the reasons disappear, capped at cost |
+
+### What a real accounting policy note looks like
+
+The deck reproduces the PPE policy from a large chemicals and pharmaceuticals group's 2006 annual report (Bayer AG). In plain words it says:
+
+- PPE is carried at **acquisition or construction cost** and, where it wears out, **depreciated straight-line** over its estimated useful life, or **written down** if its value falls below the net carrying amount.
+- Cost includes the price, **ancillary costs** and later additions, **less price reductions**. Where there is an obligation to dismantle, remove or restore a site, the estimated cost is **added to the asset with a matching provision**, exactly the nuclear plant logic. Self-built assets are costed at **direct materials, direct manufacturing expenses and an appropriate share of material and manufacturing overhead**, exactly the car logic.
+- **Repairs and ongoing maintenance are expensed**; spending is capitalised only if it brings future economic benefit.
+- Useful lives are set **by asset class**: buildings 20 to 50 years, outdoor infrastructure 10 to 20, plant installations 6 to 20, machinery and equipment 6 to 12, laboratory and research facilities 3 to 5, storage tanks and pipelines 10 to 20, vehicles 4 to 8, computer equipment 3 to 5, furniture and fixtures 4 to 10.
+- Impairment follows **IAS 36**: carrying amounts are compared with **discounted cash flows**; write-downs are **reversed** if the reasons no longer apply, but never above acquisition cost.
+
+Worth memorising as a template: cost, what goes in, straight-line by class, repairs expensed, impairment against discounted cash flows, reversal capped at cost.
+
+## 5 · Inventories - which cost leaves the warehouse?
+
+With a machine you know exactly what it cost. With inventory you often have thousands of identical items bought at different prices on different days, and tracking each unit individually is impractical. **Cost formulas** solve this by assuming which cost flows out when a unit is used or sold. IAS 2 allows two: **weighted average**, where one average cost per unit over everything available is used both for the units consumed (expense) and for the units left (stock); and **FIFO, first-in-first-out**, where the oldest costs go out first and the remaining stock carries the most recent prices. A third assumption, **LIFO (last-in-first-out)**, newest costs out first, is useful for understanding but is **not one of the IAS 2 options**.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">FIFO<span class="n">the silo</span></div>
+      <div class="sc-node green">In at the top, out at the bottom<span class="sub">the oldest grain leaves first</span></div>
+      <div class="sc-node soft">Stock = newest prices<span class="sub">expense = oldest prices</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">LIFO<span class="n">the sandbox</span></div>
+      <div class="sc-node amber">Last tipped on the pile, first scooped off<span class="sub">the newest sand leaves first</span></div>
+      <div class="sc-node soft">Not allowed under IAS 2<span class="sub">shown for understanding only</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Weighted average<span class="n">the drugstore</span></div>
+      <div class="sc-node violet">Items pulled from the shelf at random<span class="sub">usage cannot be foreseen</span></div>
+      <div class="sc-node soft">One blended cost<span class="sub">for expense and stock alike</span></div>
+    </div>
+  </div>
+  <figcaption>Three flow assumptions. The physical flow does not have to match the cost flow: the formula is an accounting convention, not a description of which box the forklift picked up.</figcaption>
+</div>
+
+One special case: products with a **liquid spot market**, such as gold or copper, may be valued at **selling price** rather than cost, because the price is observable and selling is a formality. This does not extend to financial instruments, which follow their own rules.
+
+## 6 · Inventories - lower of cost or net realisable value
+
+Cost is only the starting point. At every balance sheet date inventory is carried at the **lower of cost and net realisable value (NRV)**, where **NRV = estimated selling price less estimated costs to complete less estimated costs needed to make the sale**. Two details decide exam marks: the selling price comes from the **sales market** (what customers will pay), never the supply market (what it would cost to buy again); and if NRV **recovers** in a later period, the write-down is **reversed**, up to the original cost. The procedure:
+
+1. establish **cost** for the line of inventory (via the cost formula);
+2. estimate the **selling price** on the sales market as things stand at the balance sheet date, and deduct the **costs still to be incurred** to finish and sell the item (final assembly, packaging, transport), giving NRV;
+3. **carry the lower** of the two; if NRV is lower, the difference goes into cost of sales as a write-down;
+4. **re-test** next period, and write back if NRV has risen, never above cost.
+
+The deck's three-product example shows the mechanics, and plants a trap:
+
+| | Product A | Product B | Product C |
+|---|---|---|---|
+| Selling price | 400 | 450 | 600 |
+| less final assembly | 40 | 40 | 50 |
+| less packaging | 15 | 15 | 20 |
+| less transport | 8 | 10 | 15 |
+| **= Net realisable value** | **337** | **385** | **515** |
+| Acquisition or production cost | 380 | 380 | 410 |
+| **Balance sheet value (the lower)** | **337** (NRV) | **380** (cost) | **410** (cost) |
+| Reproduction cost on the supply market (ignore) | 370 | 300 | 420 |
+
+Product A is written down by 43 because it can no longer fetch its cost net of selling costs. B and C stay at cost because they still sell at a margin.
+
+<Aside type="caution">
+**The replacement-cost trap.** The table also lists what it would cost to buy or make each product again today (370, 300, 420). Under IFRS that number is irrelevant, because NRV is about the **sales** market. Product B's replacement cost of 300 looks alarming, but B still sells for 385 net, so it stays at 380. Only if a question explicitly asks about the older US GAAP "lower of cost or market" rule does replacement cost enter the picture.
+</Aside>
+
+## 7 · The BlackBerry question - is an impairment needed?
+
+The deck applies the NRV logic to BlackBerry's fiscal 2014 balance sheet (year ending 1 March 2014) and answers with three facts that only make sense together:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Inventory tripled<span class="sub">603m (2013) → 1,836m (2014)</span></div>
+    <div class="arrow">+<small>while</small></div>
+    <div class="sc-node amber">Hardware revenue halved<span class="sub">6,902m → 3,880m</span></div>
+    <div class="arrow">+<small>and</small></div>
+    <div class="sc-node amber">Carriers slashed prices<span class="sub">to move the devices at all</span></div>
+    <div class="arrow">→<small>so</small></div>
+    <div class="sc-node slate">Yes, impair<span class="sub">NRV is far below cost</span></div>
+  </div>
+  <figcaption>More stock, less demand, lower prices. Any one of these might be explained away; all three at once mean the inventory cannot be sold for what it cost.</figcaption>
+</div>
+
+The deck's follow-up questions are the magnitude of the adjustment and its effect on assets, liabilities and the income statement. The mechanics are the same as for Product A above, only with more zeros:
+
+| Where | Effect of the inventory write-down |
+|---|---|
+| **Assets** | Inventories fall by the write-down, so current assets and total assets fall by the same amount |
+| **Liabilities** | Nothing owed to anyone changes; the whole hit lands in **equity** (retained earnings), apart from any tax effect |
+| **Income statement** | The charge goes into **cost of sales** for hardware, so gross margin and net income fall by the same amount |
+| **Cash flow** | **None.** No cash leaves the company; the charge is added back in operating cash flow, like depreciation |
+
+## Worked example
+
+### (a) One machine, three depreciation methods, one impairment
+
+A machine costs **11m**, has an expected residual value of **1m** (depreciable amount 10m), a useful life of **5 years** and an expected total output of **5,000 units**. Actual output is 800, 600, 2,000, 800 and 800 units in years 1 to 5. The declining-balance rate is **40%**.
+
+| Year | Straight-line | Book value | Units of production | Book value | Declining balance | Book value |
+|---|---|---|---|---|---|---|
+| 0 | - | 11.0m | - | 11.0m | - | 11.0m |
+| 1 | 2.0m | 9.0m | 1.6m | 9.4m | 4.0m | 7.0m |
+| 2 | 2.0m | 7.0m | 1.2m | 8.2m | 2.4m | 4.6m |
+| 3 | 2.0m | 5.0m | 4.0m | 4.2m | 1.44m | 3.16m |
+| 4 | 2.0m | 3.0m | 1.6m | 2.6m | 1.08m | 2.08m |
+| 5 | 2.0m | 1.0m | 1.6m | 1.0m | 1.08m | 1.0m |
+| **Total** | **10.0m** | | **10.0m** | | **10.0m** | |
+
+- **Straight-line:** 10m divided by 5 years = 2.0m every year; the book value walks down in equal steps to the residual.
+- **Units of production:** 10m × (units this year / 5,000). Year 1: 10m × 800/5,000 = 1.6m; year 2: 600/5,000 gives 1.2m; year 3: 2,000/5,000 gives 4.0m; years 4 and 5: 1.6m each. The charge jumps around with output, but the sum is still 10m and the book value still ends at 1m.
+- **Declining balance:** 40% of the depreciable balance still open. Year 1: 40% × 10m = 4.0m; year 2: 40% × 6m = 2.4m; year 3: 40% × 3.6m = 1.44m. A pure 40% would continue with 0.864m and about 0.52m and leave the book value near 1.78m, above the 1m residual: a constant percentage **never lands cleanly on the residual** by itself. The deck's solution therefore spreads the remaining 2.16m straight-line over the last two years, 1.08m each, the usual practical fix.
+
+**The impairment check.** After year 2 the recoverable value of the machine is calculated at **6m**. Compare that with each book value at the end of year 2:
+
+- Straight-line: 7m carrying amount against 6m recoverable → **write down 1m**. The machine is now carried at 6m, and the remaining 5m above residual is spread over the last three years (about 1.67m a year instead of 2m).
+- Units of production: 8.2m against 6m → write down 2.2m.
+- Declining balance: 4.6m is already below 6m → no impairment, and no write-up either, because the cost model never lifts an asset above its depreciated cost.
+
+So the "correct" year-end value depends on the method, and the impairment test then pulls the front-loaded and back-loaded methods closer together. Whether that is a good thing is the deck's discussion question:
+
+| Impairment: advantages | Impairment: drawbacks |
+|---|---|
+| The balance sheet reflects **current economic reality**, so the number is more **relevant** to investors and lenders | Needs an **estimate of current value**: discounted cash flows rest on forecasts and a discount rate, so **reliability** suffers |
+| Stops assets and equity being **overstated** after bad news (prudence), and forces management to **confront** a failed investment instead of depreciating it quietly for years | Leaves room for **discretion** in timing and size, which invites earnings management, and makes reported profit **lumpy**: nothing for years, then a big one-off charge |
+| Write-backs are allowed, so a temporary dip can be corrected later | One-directional under the cost model: the upside never appears, only the downside |
+
+### (b) FIFO versus weighted average
+
+Opening stock is **10 units at 27** each. During the period the company buys **10 units at 20** and then **25 units at 18**, and uses **15 units**. What is the expense, and what is the closing stock?
+
+<Steps>
+
+1. **Total what is available.** 10 × 27 = 270, plus 10 × 20 = 200, plus 25 × 18 = 450. That is **45 units costing 920** in total. Whatever formula is used, expense plus closing stock must add back up to 920.
+
+2. **FIFO.** The 15 units used are the oldest ones: all 10 at 27 (270) and 5 of the 20s (100). Expense = **370**. Closing stock is the 30 newest units: 5 at 20 (100) plus 25 at 18 (450) = **550**. Check: 370 + 550 = 920.
+
+3. **Weighted average.** One blended cost: 920 / 45 = **20.44 per unit**. Expense = 15 × 20.44 = **306.67**. Closing stock = 30 × 20.44 = **613.33**. Check: 306.67 + 613.33 = 920.
+
+4. **Read the difference.** Prices were falling (27, then 20, then 18), so FIFO pushes the expensive old units into expense first: higher expense, lower stock, lower profit. Weighted average smooths it. For understanding only, LIFO would expense 15 × 18 = 270 and leave stock at 650, the mirror image. With rising prices the order flips.
+
+</Steps>
+
+| | FIFO | Weighted average | LIFO (not IAS 2) |
+|---|---|---|---|
+| Expense (15 units) | 370 | 306.67 | 270 |
+| Closing stock (30 units) | 550 | 613.33 | 650 |
+| Check: total | 920 | 920 | 920 |
+
+## Case corner
+
+**BlackBerry Z10 and Q10 - the analyst's dilemma.** In April 2014 an investment analyst at a Toronto pension fund is asked whether BlackBerry is worth buying, and specifically whether the smartphones piling up in its accounts are carried at a sensible number. The company had launched the BlackBerry 10 operating system with the all-touchscreen Z10 and the keyboard Q10 on 30 January 2013, almost six years after the first iPhone. Reviews were good, sales were not: consumers cited missing apps (about 130,000 in BlackBerry World against more than 1.2 million in the Apple and Google stores), weak battery life and thin enterprise support. Global market share had gone from a peak of 20.1% in 2009 to 0.6% by the end of 2013, and hardware sales in the notes to the accounts had slid from 13.8bn (2012) to 6.6bn (2013) to 3.8bn (2014).
+
+**Why the inventory number could not be trusted.** Inventory was carried **at cost, on FIFO**, and had swollen to over 1.8bn at year end before any charge. The company had already announced a **934m inventory write-down in its second quarter**, mostly on Z10 and Q10, so the question was whether a **second** charge was needed at year end. The three warning signs are the deck's three factors: inventory roughly tripled year on year, hardware revenue roughly halved, and wireless carriers, the channel that actually reaches end customers, were cutting prices hard just to shift the devices. Put together they say the stock will not sell for what it cost, which is exactly the trigger for the lower-of-cost-or-NRV rule.
+
+**Sizing it, NRV style.** Units and unit costs were not public, so the analyst estimated them from industry contacts: about 1.629bn of finished goods, roughly 2,664,500 devices, split into about 1,350,600 Z10s, 1,303,900 Q10s and 10,000 older BlackBerry 7 units (the last group still sold at full price). A finished Z10 cost the company around 595 to 615, a Q10 around 610 to 630, plus about 12 per unit to complete the sale. Consumers were only willing to pay roughly 160 to 170 for a Z10 and 265 to 275 for a Q10. NRV per unit is the price less the 12, so a Z10 was worth roughly 153 against a cost of about 605, and a Q10 roughly 258 against about 620. My own rough midpoint arithmetic puts the write-down near 0.6bn on the Z10 line and 0.47bn on the Q10 line, so around **1.1bn in total**, about two-thirds of the finished-goods balance. The case leaves the exact figure to the reader; the point is the method and the order of magnitude.
+
+**What the charge does, and why the share price cares.** Inventories drop by the write-down, so current assets and total assets fall; no liability moves; retained earnings absorb the loss, before any tax effect. Cost of sales rises by the same amount, so gross margin and the already large fiscal 2014 net loss get worse, and earnings per share fall (with about 525 million shares outstanding, a charge of that size is roughly two dollars per share). The working capital ratio falls because current assets shrink while current liabilities do not; the debt-to-equity ratio rises because equity shrinks while the 1,627m of long-term debt does not; operating cash flow is untouched because no cash leaves. The charge is a paper entry, yet it reshapes reported profit, equity and every ratio built on them, and it signals that the flagship product failed. If the market had not yet priced that in, the fund would be buying on inflated numbers. One side note from the case: IFRS uses lower of cost and NRV, while the US rule at the time used lower of cost or market, with market meaning replacement cost capped at NRV and floored at NRV less a normal margin; the analyst treated the two as close enough for a first estimate.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| **Property, plant and equipment (PPE)** | Physical assets held to be used in the business, not sold, for more than one period (IAS 16) |
+| **Inventories** | Goods held for sale, being made for sale, or materials to be used up in production (IAS 2) |
+| **Recognition** | Putting an item on the balance sheet at all: future benefit probable and cost reliably measurable |
+| **Acquisition cost** | Purchase price plus everything needed to get the asset ready, less rebates, without VAT; for PPE plus estimated dismantling costs |
+| **Production cost** | Direct material and labour plus production overhead, never general admin overhead |
+| **Depreciable amount** | Initial cost minus expected residual value, the total that will ever be depreciated |
+| **Depreciation** | Planned, systematic allocation of the depreciable amount over the useful life, following the pattern of value loss |
+| **Straight-line / declining balance / units of production** | Equal charge each year / constant percentage of the balance still open / charge proportional to output |
+| **Impairment** | Exceptional write-down to a lower current value, measured under IAS 36 with discounted cash flows; reversible up to cost |
+| **Revaluation model** | Carrying an asset at a fresh current value independent of historical cost, up or down |
+| **Weighted average / FIFO** | The two cost formulas IAS 2 allows for deciding which cost flows out of stock |
+| **Net realisable value (NRV)** | Estimated selling price less costs to complete and costs to sell, based on the sales market |
+| **Lower of cost or NRV** | The inventory rule: carry the smaller of the two, reverse the write-down if NRV recovers |
+| **Provision** | A liability of uncertain timing or amount, such as the present value of a site restoration obligation |
+
+## Test yourself
+
+1. A machine is bought for 250,000 before a 5% trade discount. Delivery costs 4,000, installation 6,000, and the invoice shows VAT of 47,500. What is the acquisition cost?
+2. Explain the difference between depreciation and impairment in three sentences, including what each is measured against and whether it can be reversed.
+3. An asset costs 8m with a residual value of 2m and a five-year life. Calculate year 2 depreciation and the book value at the end of year 2 under straight-line, and under declining balance at 30% of the open depreciable balance.
+4. Opening stock 20 units at 10; purchases of 30 units at 12 and 50 units at 14; 60 units are sold. Compute cost of sales and closing stock under FIFO and under weighted average, and check the total.
+5. A product cost 500 to make, sells for 560, and still needs 30 of finishing, 10 of packaging and 25 of freight. Its replacement cost is 480. At what value is it carried, and why is 480 irrelevant?
+6. Name the three facts that together showed BlackBerry needed an inventory impairment, and state the effect of the charge on total assets, equity, net income and operating cash flow.
+
+<Aside type="note" title="Answers">
+1. 250,000 less the 12,500 discount = 237,500, plus delivery 4,000 and installation 6,000 = **247,500**. VAT is excluded.
+2. Depreciation is the planned allocation of the depreciable amount over the useful life, measured against cost and the initial estimates, and is not reversed. Impairment is an exceptional write-down when the current (recoverable) value, usually discounted cash flows under IAS 36, drops below the carrying amount. It can be reversed if the reasons disappear, but never above cost.
+3. Depreciable amount 6m. Straight-line: 1.2m in year 2, book value 8m - 2.4m = **5.6m**. Declining balance at 30%: year 1 is 30% × 6m = 1.8m, year 2 is 30% × 4.2m = 1.26m, book value 8m - 3.06m = **4.94m**.
+4. Available: 200 + 360 + 700 = 1,260 for 100 units. FIFO: cost of sales 20 × 10 + 30 × 12 + 10 × 14 = **700**, closing stock 40 × 14 = **560**. Weighted average: 12.60 per unit, cost of sales 60 × 12.60 = **756**, closing stock 40 × 12.60 = **504**. Both pairs add to 1,260.
+5. NRV = 560 - 30 - 10 - 25 = 495, which is lower than cost 500, so the product is carried at **495** and 5 is written off. The 480 replacement cost belongs to the supply market; IFRS measures NRV on the sales market.
+6. Inventory roughly tripled (603m to 1,836m), hardware revenue roughly halved (6,902m to 3,880m), and carriers had to cut prices heavily to sell the devices. The charge reduces total assets, equity and net income by the same amount; operating cash flow is unchanged because it is a non-cash charge.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **PPE (IAS 16)**: tangible, held for use, more than one period. **Inventories (IAS 2)**: held for sale, in production for sale, or materials.
+- **Recognise** when future benefit is probable and cost is reliably measurable; measure **at cost**.
+- **Acquisition cost** = price + costs to make it usable or saleable - rebates, no VAT, plus dismantling costs for PPE (machine 96,500; nuclear plant 101.5m with a 1.5m provision). **Production cost** = direct costs + production overhead, no admin (car 35,000).
+- **Depreciation** = systematic allocation of cost minus residual over useful life; matching, not saving, not just tax. **Straight-line** is the norm; **declining balance** and **units of production** are the exceptions; choose by the pattern of value loss.
+- **Impairment** = exceptional write-down when recoverable value (discounted cash flows, IAS 36) is below carrying amount; reversible up to cost. **Revaluation** is the neutral alternative. Every method rests on **estimates** of value, residual, life and output.
+- **Inventories**: cost formulas **weighted average** or **FIFO** (LIFO only for understanding); commodities with liquid markets may sit at selling price; carry at the **lower of cost or NRV**, NRV = selling price less costs to complete and sell, sales market not supply market, reversals allowed.
+- **Machine example**: 2.0m a year straight-line; 1.6 / 1.2 / 4.0 / 1.6 / 1.6 by usage; 4.0 / 2.4 / 1.44 then straight-line by declining balance; after year 2, 7m against 6m means a 1m impairment.
+- **FIFO example**: expense 370 and stock 550; weighted average 306.67 and 613.33; both total 920.
+- **BlackBerry**: inventory tripled, hardware revenue halved, carriers cut prices, so impair. Assets, equity and profit fall together; cash does not move; the share price should already reflect it.
+</Aside>
+
+*Next: [Intangibles, Provisions & the Relevance-Reliability Trade-off →](/learnings/mba/financial-performance-and-management-control/06-intangibles-provisions-relevance-vs-reliability/) - the assets you cannot touch, and the obligations you cannot yet size.*

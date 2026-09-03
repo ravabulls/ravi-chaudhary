@@ -18,6 +18,7 @@ Modules include: Generative AI for Managers, Digital Transformation, Coding, Inn
 - [Economics & Law](/learnings/mba/economics-and-law/) - the economic way of thinking and its business relevance: demand and supply, efficiency, game theory, market failure, international trade, political economy, and what makes a good investment climate.
 - [Foundations of Business Development](/learnings/mba/foundations-of-business-development/) - how new businesses get built: spotting and evaluating opportunities, creating customer value and researching the market, and the entrepreneurial-strategy framework of four choices and four go-to-market strategies.
 - [Managing Sustainable Innovations](/learnings/mba/managing-sustainable-innovations/) - what sustainability really means, the three sustainability strategies, making innovation and business models sustainable, leading sustainable change, leadership and purpose, and sustainability reporting.
+- [Financial Performance & Management Control](/learnings/mba/financial-performance-and-management-control/) - reading the balance sheet and income statement, why profit is not cash, how IFRS decides what is recognised and how it is measured, financial statement analysis with ratios - and then costs, break-even, pricing, performance measurement and the Balanced Scorecard as the tools managers use to steer a business.
 
 :::note
 Notes for individual modules are being added progressively as the programme continues. Check back as content is published.

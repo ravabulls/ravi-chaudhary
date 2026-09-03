@@ -1,0 +1,409 @@
+---
+title: "Cost-Volume-Profit & Break-Even"
+description: "How revenues, costs and operating profit move when volume, price or the cost structure changes - the CVP assumptions, the three break-even methods (equation, contribution margin, graph), target profit, sensitivity analysis across fixed and variable fee structures, operating leverage, the limits of the model, and relevant-cost thinking for closure and special-order decisions."
+sidebar:
+  label: "9 · CVP & Break-Even"
+  order: 9
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Chapter 8 sorted costs into **fixed** and **variable** buckets. This chapter puts those buckets to work. **Cost-volume-profit analysis (CVP)**, which most people just call **break-even analysis**, is the planning tool that tells me how many units I must sell before a project stops losing money, how profit reacts when volume moves, and which cost structure I should choose when someone offers me a flat fee versus a percentage deal.
+
+The maths is deliberately simple - one price, one variable cost per unit, one block of fixed costs. That simplicity is the point: it is a *first cut* that turns a vague business idea (an internet café in Kingston, a software booth at a convention) into a single number I can argue about. The second half of the chapter shows the same "only the costs that change matter" logic applied to two classic decisions: closing a loss-making division and accepting a below-cost special order.
+
+<Aside type="tip">
+**The one idea to carry through.** Every unit sold earns a **unit contribution margin** (price minus variable cost). Those contributions first pay off the **fixed costs**; only once they are covered does the next unit create profit. So break-even is simply **fixed costs ÷ unit contribution margin**, and every other question in this chapter (target profit, which fee option, how risky) is a variation on that one division.
+</Aside>
+
+## 1 · What CVP analysis looks at
+
+CVP studies how three **totals** behave - **total revenues**, **total costs** and **operating profit** - when I push on one of three **levers**: the **output level** (how many units), the **selling price**, or the **cost structure** (variable and fixed costs). Because it links the levers to the totals with a formula, it can answer **what-if questions** instantly: what happens to revenues and costs if we produce more? What if we drop the price? What if the landlord swaps a fixed rent for a share of sales?
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Move a lever<span class="sub">units sold, selling price, variable or fixed costs</span></div>
+    <div class="arrow">→<small>linear formula</small></div>
+    <div class="sc-node violet">Totals respond<span class="sub">total revenues and total costs</span></div>
+    <div class="arrow">→<small>the difference</small></div>
+    <div class="sc-node green">Operating profit<span class="sub">zero at the break-even point</span></div>
+  </div>
+  <figcaption>CVP in one line: change an input, read off the new revenues and costs, and see what is left as operating profit. The break-even point is the output where that leftover is exactly zero.</figcaption>
+</div>
+
+The course frames it as an important **planning** tool: before committing money, I want to know the volume at which revenues finally cover total costs - beyond that point every extra unit is profit.
+
+## 2 · The assumptions - and the special case they describe
+
+The model is only as honest as its simplifications. The standard CVP rests on five:
+
+- **Total costs split into a fixed and a variable part** - nothing in between.
+- **Revenues and costs behave linearly** - a straight line per unit, no volume discounts, no step costs.
+- **A single product** (or a constant sales mix) is analysed.
+- **The time value of money is ignored** - a euro next year counts like a euro today.
+- **Production equals sales** - no inventory building up or being run down.
+
+Those assumptions describe a **special case** of CVP. The course is explicit that the **general case** needs more sophisticated maths:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Special case <small>what this chapter solves</small></div>
+    <ul>
+      <li><strong>One revenue driver</strong>: output units</li>
+      <li><strong>One cost driver</strong>: output units</li>
+      <li><strong>Short-run decisions</strong> - a time span, typically under a year, in which fixed costs stay fixed inside the <strong>relevant range</strong></li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">General case <small>needs heavier tools</small></div>
+    <ul>
+      <li><strong>Many revenue drivers</strong> (mix, channels, customer groups)</li>
+      <li><strong>Many cost drivers</strong> (batches, set-ups, complexity)</li>
+      <li><strong>Various time spans</strong>: short run, long run, whole product life cycles</li>
+    </ul>
+  </div>
+</div>
+
+Keep the **relevant range** idea from the last chapter in mind: fixed costs are only "fixed" between the volumes the business was set up for. Step outside that band and the whole line shifts.
+
+## 3 · The vocabulary and the core formulas
+
+The abbreviations show up in every exercise, so I want them automatic:
+
+| Symbol | Stands for | In plain words |
+|---|---|---|
+| **USP** | unit selling price | what one unit sells for |
+| **UVC** | unit variable cost | what one extra unit costs to make and sell |
+| **UCM** | unit contribution margin | USP minus UVC - what one unit contributes to fixed costs and profit |
+| **FC** | fixed costs | the block that does not move with volume (direct or indirect) |
+| **Q** | quantity | units sold (equals units made, by assumption) |
+| **TOP** | target operating profit | the profit I want to plan for |
+| **NP** | net profit | what is left after non-operating items and tax |
+
+Two accounting identities sit underneath. **Total costs** are variable plus fixed costs (each of which can be direct or indirect). **Operating profit** is total revenues from operations minus total costs from operations. **Net profit** takes operating profit, adds non-operating revenues, subtracts non-operating costs and then income tax - but in this chapter the non-operating items are assumed to be zero, so OP is the number we chase.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Operating profit</span>
+    <code>OP = (USP × Q) - (UVC × Q) - FC</code>
+  </div>
+  <div>
+    <span class="name">Unit contribution margin</span>
+    <code>UCM = USP - UVC</code>
+  </div>
+  <div>
+    <span class="name">Units for any target profit</span>
+    <code>Q = (FC + TOP) / UCM</code>
+  </div>
+  <div>
+    <span class="name">Break-even (TOP = 0)</span>
+    <code>Q = FC / UCM</code>
+  </div>
+</div>
+
+The **contribution margin** is revenues minus variable costs - the course's one-line takeaway. It is *not* profit; it is what is available to cover fixed costs, and only the excess becomes profit.
+
+## 4 · Finding the break-even point three ways
+
+The **break-even point** is the output quantity at which total revenues equal total costs, so operating profit is zero. The course gives three routes to it - all land on the same answer, so pick whichever the question makes easiest.
+
+**The running example.** A seller plans to offer a software package at a two-day computer convention. She can buy each package from a wholesaler for 120 with the right to **return every unsold unit for a full 120 refund**, so the purchase cost is purely variable. She sells at 200. She has already paid **2,000** for the booth. No other costs. How many units to break even?
+
+<Steps>
+
+1. **Equation method.** Write operating profit in full and set it to zero: 200 × Q - 120 × Q - 2,000 = 0. That gives 80 × Q = 2,000, so **Q = 25 units**.
+
+2. **Contribution-margin method.** Compute UCM first: 200 - 120 = **80** per package. Then divide the fixed costs by it: 2,000 / 80 = **25 units**. Same answer, one line.
+
+3. **Graph method.** Plot units on the horizontal axis and money on the vertical. Because everything is linear, two points per line are enough. The **total cost line** starts at the fixed-cost point (0 units, 2,000) and its second point is FC plus units × UVC. The **total revenue line** starts at the origin (0, 0) and its second point is units × USP. Where the two lines cross is the break-even point - here at 25 units and 5,000 of revenue.
+
+</Steps>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Total cost line<span class="sub">starts at FC, slope = UVC</span></div>
+    <div class="arrow">→<small>crosses</small></div>
+    <div class="sc-node amber">Break-even point<span class="sub">revenues = total costs, OP = 0</span></div>
+    <div class="arrow">←<small>crosses</small></div>
+    <div class="sc-node green">Total revenue line<span class="sub">starts at the origin, slope = USP</span></div>
+  </div>
+  <figcaption>The graph method. Left of the intersection the cost line sits above the revenue line (a loss); right of it the revenue line is higher (a profit). The vertical gap between the lines at any volume is the operating profit or loss.</figcaption>
+</div>
+
+**Target profit is the same trick.** If the seller wants an operating profit of, say, 1,200 from the convention, she needs (2,000 + 1,200) / 80 = **40 units**. The formula `Q = (FC + TOP) / UCM` treats the profit target as if it were one more fixed cost to be covered.
+
+<Aside type="caution">
+**Do not confuse the margin with the profit.** Selling 25 units at 200 brings in 5,000 of revenue and 2,000 of contribution margin - and 2,000 of contribution exactly equals the booth fee, which is why profit is zero. Students often stop at "contribution margin is positive, so we are profitable". Positive contribution only means each unit *helps*; profit begins at unit 26.
+</Aside>
+
+## 5 · Sensitivity analysis - alternative cost structures
+
+CVP shines when the question is "which cost structure?". Sensitivity analysis means changing one input at a time and watching the break-even and the profit move. The convention organiser offers the seller three booth deals:
+
+- **Option 1**: a **2,000 fixed fee**.
+- **Option 2**: a **1,400 fixed fee plus 5% of revenue** from the software sales.
+- **Option 3**: **no fixed fee**, but **20% of revenue**.
+
+A percentage of revenue is a *variable cost per unit* in disguise: 5% of a 200 price is 10 per unit, 20% is 40 per unit. So the options are really three different (FC, UVC) pairs:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Option 1<span class="n">all fixed</span></div>
+      <div class="sc-node amber">FC 2,000 · UVC 120<span class="sub">UCM = 80</span></div>
+      <div class="sc-node soft">Break-even 25 units<span class="sub">2,000 / 80</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Option 2<span class="n">mixed</span></div>
+      <div class="sc-node violet">FC 1,400 · UVC 130<span class="sub">UCM = 70</span></div>
+      <div class="sc-node soft">Break-even 20 units<span class="sub">1,400 / 70</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Option 3<span class="n">all variable</span></div>
+      <div class="sc-node green">FC 0 · UVC 160<span class="sub">UCM = 40</span></div>
+      <div class="sc-node soft">Break-even 0 units<span class="sub">never loses money</span></div>
+    </div>
+  </div>
+  <figcaption>The three booth deals as CVP structures. Moving from left to right the fixed block shrinks, the break-even falls, and the downside risk vanishes - but so does the upside, because each unit now contributes less.</figcaption>
+</div>
+
+The trade-off is the whole lesson: **lower fixed costs mean a lower break-even and less risk, but a thinner margin per unit once you are past it.** My own working on where the options swap places: option 1 beats option 2 only above 60 units (80Q - 2,000 = 70Q - 1,400), option 2 beats option 3 above about 47 units (70Q - 1,400 = 40Q), and option 1 beats option 3 above 50 units. So a pessimistic seller wants option 3, a confident one option 1, and option 2 wins in a narrow middle band. The recommendation depends entirely on how many units she believes she will sell - which is exactly what sensitivity analysis is for.
+
+## 6 · Operating leverage - how hard profit swings
+
+**Operating leverage** describes the effect fixed costs have on operating profit when units sold (and therefore the contribution margin) change. At a **given volume**:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Degree of operating leverage</span>
+    <code>DOL = contribution margin / operating profit</code>
+  </div>
+</div>
+
+The course evaluates the three options at **40 units**:
+
+| At 40 units | Option 1 | Option 2 | Option 3 |
+|---|---|---|---|
+| Contribution margin per unit | 80 | 70 | 40 |
+| Contribution margin (40 units) | 3,200 | 2,800 | 1,600 |
+| Operating profit (40 units) | 1,200 | 1,400 | 1,600 |
+| **Degree of operating leverage** | **2.67** | **2.0** | **1.0** |
+
+Read the leverage as a multiplier: with a DOL of 2.67, a 10% change in units moves operating profit by roughly 26.7% (from 40 to 44 units, OP goes from 1,200 to 1,520). With option 3 there are no fixed costs, so profit moves exactly in step with volume - a DOL of 1. **High fixed costs mean high leverage**: small changes in sales cause large changes in operating profit, in both directions. That is why the leverage tells me about the *profit potential beyond break-even* and, equally, about the pain below it.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">high fixed costs = high leverage</span>
+  <span class="sc-chip violet">high leverage = big swings</span>
+  <span class="sc-chip green">no fixed costs = DOL of 1</span>
+  <span class="sc-chip blue">leverage is volume-specific</span>
+</div>
+
+## 7 · Use and misuse of CVP
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Where CVP is genuinely useful</div>
+    <ul>
+      <li>Environments where <strong>costs really are a function of volume</strong> - mass production systems</li>
+      <li><strong>Special projects with separable, incremental fixed costs</strong>: adding a new product, running a one-off marketing campaign</li>
+      <li>As an <strong>input into setting a selling price</strong></li>
+      <li>To <strong>compare the effect of alternatives</strong> - the three booth deals, the three speaker fees below</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Where it misleads</div>
+    <ul>
+      <li>The <strong>relevant range</strong> limits the model - costs are linear only over a narrow band of volumes</li>
+      <li><strong>Selling prices vary</strong> by customer or market group; one USP is a fiction</li>
+      <li>It can breed the mindset that <strong>fixed costs cannot be managed</strong> - they can, just not by volume</li>
+      <li>Treating it as the <strong>final decision model</strong> rather than a <strong>first cut</strong></li>
+    </ul>
+  </div>
+</div>
+
+## 8 · Relevant-cost thinking - only the costs that change matter
+
+The break-even logic extends naturally to yes/no decisions. The rule: when comparing two courses of action, look **only at revenues and costs that differ between them**. Allocated overheads that carry on regardless, and fixed costs already committed, are noise.
+
+### The division-closure trap
+
+A company has two divisions and is thinking of shutting the Northern sales office. Divisional fixed costs would disappear with the division; **allocated corporate costs would continue**.
+
+| | Northern | Southern | Total |
+|---|---|---|---|
+| Sales | 550,000 | 500,000 | 1,050,000 |
+| Variable costs | 275,000 | 200,000 | 475,000 |
+| Divisional fixed costs | 180,000 | 150,000 | 330,000 |
+| **Contribution to corporate costs** | **95,000** | **150,000** | **245,000** |
+| Allocated corporate costs | 170,000 | 135,000 | 305,000 |
+| Operating profit | -75,000 | 15,000 | -60,000 |
+
+Northern "loses" 75,000 on paper, so closing it looks tempting. But after closure the full 305,000 of corporate costs still has to be paid, now by Southern alone: 150,000 contribution minus 305,000 corporate costs = **-155,000**. The group result *worsens* from -60,000 to -155,000, because Northern was quietly contributing 95,000 towards corporate costs. **Do not close it.** A segment with positive contribution above its own avoidable fixed costs is helping, however ugly its allocated-cost line looks.
+
+### The one-off special order
+
+A canner sells 1,000 crates of peaches a month at 10 each. Costs are classed as manufacturing or marketing, each with a fixed and a variable part:
+
+| Monthly | Fixed | Variable | Per crate (at 1,000 crates) |
+|---|---|---|---|
+| Manufacturing | 2,000 | 4,000 | 4.00 variable + 2.00 fixed = 6.00 absorption cost |
+| Marketing | 1,600 | 1,400 | 1.40 variable |
+
+So the income statement reads: sales 10,000, total variable costs 5,400, **contribution margin 4,600**, fixed costs 3,600, operating profit 1,000. The normal mark-up is 4,000 / 6,000 = 66.7% on absorption cost, or 4,600 / 5,400 = **85.2% on total variable cost**.
+
+A new customer wants **200 crates at 5.50**, needs **no extra marketing**, but requires **200 of special packaging**. The customer is winding down in six weeks, so it is a genuine one-off. Management wants to refuse because 5.50 is below the 6.00 absorption cost. Is that right?
+
+- **Relevant costs** are the ones this order creates: 200 × 4 = 800 of variable manufacturing plus 200 of packaging = 1,000, i.e. **5.00 per crate**.
+- Any price above 5.00 adds contribution; at 5.50 the order adds 200 × 0.50 = **100** to operating profit.
+- The 6.00 absorption figure smuggles in **2.00 per crate of fixed manufacturing cost** that is paid anyway - irrelevant here.
+- Capacity is 1,500 crates and the **relevant range** for fixed manufacturing cost is 500 to 1,500; the order lifts output from 1,000 to 1,200, so fixed costs really do stay fixed.
+
+**Accept.** But if the customer then decides to *stay in business*, the strictly short-run lens stops being appropriate: other customers may learn about the 5.50 price and demand it, and a permanent low-price customer is a pricing decision, not a spare-capacity decision.
+
+<Aside type="caution">
+**Absorption cost is not a floor for one-off prices.** Full unit cost includes a slice of fixed cost that exists whether or not the order is taken. For a short-run, spare-capacity decision the floor is the *incremental* cost. For long-run pricing, though, every product must eventually carry its share of fixed costs - which is the subject of the next chapter.
+</Aside>
+
+## Worked example
+
+### (a) Caribbean Internet Café - is the venture feasible?
+
+A returning MBA graduate plans an internet café in New Kingston, Jamaica (all figures in **Jamaican dollars**). He has 500,000 of savings; the telecom company offers to invest a further 500,000 for a **50% share** and lend **1,250,000 at 10%**. Equipment costs 1,426,000. The group solution builds the CVP model from the case data:
+
+| Fixed cost item (per year) | JA$ | Where it comes from |
+|---|---|---|
+| Student staff wages | 374,400 | 2 on duty × 90 hours a week × 40 an hour × 52 weeks |
+| Manager | 480,000 | 40,000 a month |
+| Lease | 360,000 | 30,000 a month |
+| Telephone and utilities | 180,000 | 15,000 a month |
+| Internet link | 120,000 | 10,000 a month |
+| Insurance | 120,000 | 10,000 a month |
+| Advertising | 120,000 | 10,000 a month |
+| Miscellaneous admin and maintenance | 600,000 | 50,000 a month |
+| Interest on the loan | 125,000 | 10% of 1,250,000 |
+| Depreciation of equipment | 475,333 | 1,426,000 straight-line over 3 years |
+| **Total fixed costs** | **2,954,733** | |
+
+On top come **one-off start-up costs of 147,000** (utility deposit 7,000, pre-opening advertising 20,000, legal, licences and decorating 120,000).
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Revenue per visit <small>248</small></div>
+    <ul>
+      <li>Computer time 48 - only 40% of visitors pay the 120 hourly rate</li>
+      <li>Food 60</li>
+      <li>Drinks 140</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Variable cost per visit <small>104</small></div>
+    <ul>
+      <li>Internet 24 - 40% of visitors × 60 per computer-hour paid to the provider</li>
+      <li>Food 30</li>
+      <li>Drinks 50</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Unit contribution margin <small>144</small></div>
+    <ul>
+      <li>248 - 104 = 144 per visit</li>
+      <li>Every visit pays 144 towards the fixed block</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Break-even visits</div>
+    <ul>
+      <li>Year one: (2,954,733 + 147,000) / 144 ≈ <strong>21,540 visits</strong>, about 64 customers a day</li>
+      <li>Year two (no start-up costs): 2,954,733 / 144 ≈ <strong>20,519 visits</strong>, about 61 a day</li>
+    </ul>
+  </div>
+</div>
+
+A neat side-calculation from the group: the **first customer** effectively costs about 3.1 million (all fixed costs plus start-up plus 104) - a vivid way to feel the fixed block.
+
+**Scenarios.** The market study agrees on a target segment of **20,000** people and offers three usage estimates:
+
+| Scenario | Share of segment | Visits per person | Visits per year | Year-1 operating profit | Year-2 operating profit |
+|---|---|---|---|---|---|
+| Best | 50% | 5 | 50,000 | about +4.10m (4,098,267) | about +4.25m |
+| Average | 40% | 3 | 24,000 | about +0.35m (354,267) | about +0.50m |
+| Worst | 30% | 2 | 12,000 | about -1.37m (-1,373,733) | about -1.23m |
+
+The average case only just clears break-even (24,000 visits against 21,540 needed); the worst case is a heavy loss. Averaging the three outcomes with equal weights gives a "probable" operating profit of roughly 1.03m in year one, of which the founder's 50% share is about 0.51m - but the case gives no probabilities, so that average is a guess. The group's conclusion: **feasibility depends on how risk-averse the founder is**, plus qualitative factors (see the case corner).
+
+### (b) The motivational speaker - which fee schedule?
+
+A law association wants a speaker for an all-day seminar and is offered three fee arrangements: **Schedule 1** a flat 8,000; **Schedule 2** 2,000 fixed plus 20 per person; **Schedule 3** 50 per person. Attendees each pay 200.
+
+| Attendees | Schedule 1 (8,000 flat) | Schedule 2 (2,000 + 20 each) | Schedule 3 (50 each) | Cheapest |
+|---|---|---|---|---|
+| 50 | 8,000 total · **160** per head | 3,000 · **60** | 2,500 · **50** | Schedule 3 |
+| 200 | 8,000 · **40** | 6,000 · **30** | 10,000 · **50** | Schedule 2 |
+| 500 | 8,000 · **16** | 12,000 · **24** | 25,000 · **50** | Schedule 1 |
+
+The pattern is the booth story again. The all-fixed schedule has a falling unit cost (160 → 40 → 16) and wins when the room is full; the all-variable schedule has a constant 50 per head and wins when attendance is small and uncertain; the mixed schedule wins in between. My own crossover arithmetic: Schedule 2 overtakes Schedule 3 above about 67 attendees, and Schedule 1 overtakes Schedule 2 above 300. Because each attendee pays 200, every schedule is covered at every size shown - the choice is about how much risk the association wants to carry if turnout disappoints.
+
+## Case corner
+
+**Caribbean Internet Café.** The case is a full feasibility study run through CVP. The break-even of roughly 21,500 visits a year (about 64 a day on a 50-seat floor) is the anchor; the three market scenarios then show that the venture is comfortably profitable if half the segment visits five times a year, marginal in the realistic case, and loss-making if only 30% turn up twice. The **50% partner** changes the picture: the telecom company puts in 500,000 of equity and 1,250,000 of debt, so the founder shares both the profit and the risk, and the partner also earns 125,000 of interest a year plus the internet charges regardless of the café's result. The qualitative issues the group flagged sit outside the model: an **IT and internet bubble** (the case is set in 1996 to 1997), the state of Jamaica's **telecom access** (scarce phone lines in parts of Kingston, high provider rates, low private usage expected for at least three years), and whether **Jamaica's economy is on the rise**. Also worth noting: no competitor offered internet access, and coffee was not a traditional drink - both an opportunity and a demand risk.
+
+**The division-closure trap.** Whenever a segment shows a loss *after* allocated corporate costs, ask what would actually disappear if it were closed. If its contribution exceeds its own avoidable fixed costs, closing it makes the company poorer - the allocated costs simply land on whoever is left.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| CVP analysis | Planning tool showing how revenues, costs and operating profit respond to changes in volume, price or cost structure |
+| Break-even point | The output where total revenues equal total costs and operating profit is zero |
+| Unit selling price (USP) | The price one unit sells for |
+| Unit variable cost (UVC) | The cost of making and selling one more unit |
+| Unit contribution margin (UCM) | USP minus UVC - what each unit gives towards fixed costs and profit |
+| Contribution margin | Total revenues minus total variable costs |
+| Fixed costs (FC) | Costs that do not change with volume inside the relevant range |
+| Relevant range | The band of volumes within which the fixed and variable cost assumptions hold |
+| Target operating profit (TOP) | The planned profit; units needed = (FC + TOP) / UCM |
+| Operating vs net profit | Operating profit is revenues minus costs from operations; net profit also deducts non-operating items and tax |
+| Sensitivity analysis | Changing one input at a time to see how break-even and profit move |
+| Operating leverage | Contribution margin divided by operating profit at a given volume - how strongly profit reacts to volume |
+| Relevant cost | A cost that differs between the alternatives being compared |
+| Absorption cost | Full unit cost including a share of fixed manufacturing cost - a poor guide for one-off orders |
+
+## Test yourself
+
+1. A seller buys packages at 120 with full return rights, sells them at 200 and has paid 2,000 for a booth. Find the break-even quantity using the contribution-margin method, and state the break-even revenue.
+2. Under the same deal, how many units must she sell to earn an operating profit of 1,200? And under Option 2 (1,400 fixed plus 5% of revenue)?
+3. At 40 units under Option 1, compute the degree of operating leverage and use it to estimate the operating profit if sales rise by 10%.
+4. Northern division shows an operating loss of 75,000 after allocated corporate costs of 170,000. Explain in numbers why closing it would hurt the company.
+5. The canner is offered 200 crates at 5.50 when its absorption cost is 6.00 per crate. Should it accept? Give the relevant cost per crate and the change in operating profit.
+6. The internet café has fixed costs of 2,954,733, start-up costs of 147,000 and a UCM of 144 per visit. What is the break-even in year one, and why does it fall in year two?
+
+<Aside type="note" title="Answers">
+1. UCM = 200 - 120 = 80; Q = 2,000 / 80 = 25 units; break-even revenue = 25 × 200 = 5,000.
+2. Option 1: (2,000 + 1,200) / 80 = 40 units. Option 2: UVC becomes 130, UCM 70, so (1,400 + 1,200) / 70 ≈ 37.1, i.e. 38 whole units.
+3. CM = 40 × 80 = 3,200; OP = 3,200 - 2,000 = 1,200; DOL = 3,200 / 1,200 = 2.67. A 10% rise in units lifts OP by about 26.7%, to roughly 1,520 (check: 44 × 80 - 2,000 = 1,520).
+4. Northern contributes 550,000 - 275,000 - 180,000 = 95,000 towards corporate costs. Those 305,000 of corporate costs continue after closure, so Southern alone shows 150,000 - 305,000 = -155,000 against a combined -60,000 today. Keep it open.
+5. Yes. Relevant cost = 4.00 variable manufacturing + 1.00 packaging (200 / 200) = 5.00 per crate; at 5.50 the order adds 200 × 0.50 = 100 to operating profit. The 2.00 fixed share in the 6.00 absorption cost is irrelevant, and 1,200 crates stays inside the 500 to 1,500 relevant range.
+6. Year one: (2,954,733 + 147,000) / 144 ≈ 21,540 visits (about 64 a day). Year two the one-off start-up costs are gone, so 2,954,733 / 144 ≈ 20,519 visits.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **CVP (break-even) analysis** shows how **total revenues, total costs and operating profit** react to changes in **volume, price and variable or fixed costs**, and answers what-if questions. A planning tool, a **first cut**.
+- **Assumptions**: costs split into fixed and variable, **linear** behaviour, **single product**, **no time value of money**, **production equals sales**. That is the **special case** (one revenue driver, one cost driver, short run inside the relevant range); the **general case** needs more.
+- **UCM = USP - UVC**; **contribution margin = revenues minus variable costs**. **OP = USP × Q - UVC × Q - FC**.
+- **Break-even three ways**: equation (set OP to zero), contribution margin (**Q = FC / UCM**), graph (cost line from FC, revenue line from the origin, intersection). Target profit: **Q = (FC + TOP) / UCM**. Software booth: UCM 80, break-even **25 units**.
+- **Sensitivity analysis**: 2,000 fixed → BE 25; 1,400 + 5% → UCM 70, BE 20; 20% only → UCM 40, BE 0. Less fixed cost = lower break-even, less risk, thinner margin.
+- **Operating leverage = CM / OP** at a volume: at 40 units **2.67 / 2.0 / 1.0**. High fixed costs = profit swings harder with volume.
+- **Use** it where costs follow volume, for separable projects, pricing input and comparing alternatives; **beware** the relevant range, varying prices, the "fixed costs cannot be managed" mindset, and treating it as the final word.
+- **Relevant costs**: only what changes matters. Do not close a division that covers its own fixed costs (Northern contributes 95,000; closing turns -60,000 into -155,000). Accept a one-off order above incremental cost (5.00, not the 6.00 absorption cost) - unless the customer becomes permanent.
+- **Caribbean Internet Café**: fixed about 2.95m plus 147,000 start-up, UCM 144, break-even about **21,540 visits** (64 a day); best +4.1m, average +0.35m, worst -1.37m; the answer depends on risk appetite and qualitative factors.
+</Aside>
+
+*Next: [Costing & Pricing →](/learnings/mba/financial-performance-and-management-control/10-costing-and-pricing/) - from what a product costs to what it should sell for.*

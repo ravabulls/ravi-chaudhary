@@ -1,0 +1,408 @@
+---
+title: "Performance Measurement & the Control Problem"
+description: "What a performance measure is (a number that condenses a messy reality so it can be reported fast), the four ways to classify one (local or global, leading or lagging, relative or absolute, financial or non-financial), why decentralisation forces a firm to build control systems, the real-estate-agent exercise and the principal-agent model behind it, input versus decision versus output control, the ROI bonus trap that makes a manager underinvest, the classic return ratios and example measures for every area of the firm."
+sidebar:
+  label: "11 · Performance Measurement"
+  order: 11
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Chapter 10 closed the costing block: how costs are built up, how a price sits on top of them, and why the time horizon changes the answer. Chapter 11 turns the camera round. Instead of asking "what does this product cost?", it asks "how do I know whether the people running my divisions are doing a good job, and how do I make them *want* to do a good job?". That is **performance measurement**, and the awkward thing hiding underneath it is the **control problem**.
+
+Four questions carry the chapter. What is a performance measure, and what types exist? What does decentralisation give a firm, and what does it cost? How can the control problem be described and tackled? And which measures fit which area of the organisation, including the non-financial ones?
+
+The slides are few but the ideas are heavy. Two exercises in particular, the real-estate agent and the ROI bonus puzzle, are the ones I expect to meet again in the exam, because they show that a badly chosen measure does not just fail to inform, it actively steers people the wrong way.
+
+<Aside type="tip">
+**The one idea to carry through.** A performance measure is never only a number on a report. The moment pay or promotion hangs on it, it becomes a **steering signal**: people will do whatever moves *that* number, whether or not it moves the value of the firm. So every measure has to pass two tests. Does it **inform**, condensing reality honestly? And does it **align**, making the manager's best choice the same as the owner's best choice? The ROI trap in section 7 passes the first test and fails the second one spectacularly.
+</Aside>
+
+## 1 · What a performance measure is
+
+In my own words: a **performance measure** is a piece of **quantitative information**, a number, that boils a complicated reality down to something compact, so that the reader learns about the firm's situation in those aspects that *can* be expressed numerically. The key verb is **condense**. A division has thousands of transactions, machines, customers and employees; "ROI 12 percent" throws almost all of that detail away on purpose and keeps one signal.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Complex reality<span class="sub">thousands of transactions, machines, people</span></div>
+    <div class="arrow">→<small>condense</small></div>
+    <div class="sc-node violet">One number<span class="sub">ROI, error rate, market share</span></div>
+    <div class="arrow">→<small>report fast &amp; concisely</small></div>
+    <div class="sc-node green">A decision<span class="sub">the reader acts without a full analysis</span></div>
+  </div>
+  <figcaption>What a performance measure does: it trades detail for speed. The loss of detail is deliberate, which is exactly why the choice of measure matters so much.</figcaption>
+</div>
+
+**Where the numbers come from (the basis).** Measures are built on the firm's economic base systems: mainly **accounting data** (the financial and cost accounts), then **process-oriented systems** such as operating or production data systems (machine times, rejects, throughput), and only **exceptionally on case-based data**, a one-off study or survey done for a specific question.
+
+**Why bother (the purpose).** A measure should report **quickly and concisely** about an economic aspect that has so many details that nobody could analyse it fully under normal **time and resource constraints**. Managers do not have the hours to read every invoice; the measure is the summary they can act on.
+
+## 2 · Four ways to classify a measure
+
+Measures can be sorted along four independent dichotomies. Any single measure sits somewhere on all four at once.
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Local vs global <small>how wide is the view?</small></div>
+    <ul>
+      <li><strong>Local</strong> = describes one unit, machine or process: the error rate of one production line</li>
+      <li><strong>Global</strong> = describes the whole organisation: group return on assets</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Leading vs lagging <small>does it look forward or back?</small></div>
+    <ul>
+      <li><strong>Leading</strong> = an early signal of future results: the employee suggestion rate or new-customer rate today hints at tomorrow's turnover</li>
+      <li><strong>Lagging</strong> = reports what has already happened: last year's profit or ROI</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Relative vs absolute <small>a ratio or a raw amount?</small></div>
+    <ul>
+      <li><strong>Relative</strong> = one figure divided by another, usually a percentage: ROI as profit over investment</li>
+      <li><strong>Absolute</strong> = a plain amount in euros or units: profit of 600,000 euros, headcount of 250</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Financial vs non-financial <small>money or something else?</small></div>
+    <ul>
+      <li><strong>Financial</strong> = expressed in monetary terms or built from accounting figures: return on equity</li>
+      <li><strong>Non-financial</strong> = counts, times, rates of things that are not money: sickness rate, capacity utilisation</li>
+    </ul>
+  </div>
+</div>
+
+Try it on one measure: a division's **ROI** is local (one division), lagging (last period's profit), relative (a ratio) and financial (accounting data). A plant's **capacity utilisation** is local, roughly leading (idle capacity now warns of missed output later), relative and non-financial. This four-way sorting comes back in chapter 12, where a balanced scorecard deliberately mixes leading with lagging and financial with non-financial.
+
+## 3 · Decentralisation and why it creates the control problem
+
+The organisation structure decides how much of the firm's decision-making sits at the top and how much is pushed down.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Decentralisation <small>freedom at the bottom</small></div>
+    <ul>
+      <li><strong>Total decentralisation</strong> = <strong>minimum constraints and maximum freedom</strong> for managers at the lowest levels to make decisions</li>
+      <li>Decisions are taken by the people closest to customers, machines and local information; top management is freed for the big picture</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Centralisation <small>control at the top</small></div>
+    <ul>
+      <li><strong>Total centralisation</strong> = <strong>maximum constraints and minimum freedom</strong> for lower-level managers</li>
+      <li>Head office decides everything; consistent, but slow, and it ignores the knowledge that sits at the front line</li>
+    </ul>
+  </div>
+</div>
+
+Real firms sit between the two poles, but the moment you move away from total centralisation you buy a problem with your benefit. Freedom to decide is valuable *because* the local manager knows things head office does not. But that same information gap means head office can no longer see whether the manager uses the freedom for the firm or for himself. This is the chapter's first lesson in one sentence: **because of decentralisation, a firm needs control systems that align managerial behaviour with the firm's goals.** Performance measures and incentives are the main tool for doing that.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Decentralise<span class="sub">give lower-level managers freedom</span></div>
+    <div class="arrow">→<small>information gap</small></div>
+    <div class="sc-node slate">Behaviour may drift<span class="sub">own interest, hidden effort</span></div>
+    <div class="arrow">→<small>therefore</small></div>
+    <div class="sc-node green">Control system<span class="sub">measures + incentives to re-align</span></div>
+  </div>
+  <figcaption>The logic chain behind the whole chapter. Decentralisation is worth having, but it must be paid for with a control system.</figcaption>
+</div>
+
+## 4 · The fundamental control problem - the real-estate agent
+
+The lecture makes the control problem concrete with an exercise that has nothing to do with divisions or ROI. **You own a house and hire an agent to sell it.** What does a control system look like in essence? How would you write a performance contract for the agent? And what can a firm learn, and *not* learn, from that contract?
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">You, the owner<span class="sub">want the highest net price, cannot watch the agent</span></div>
+    <div class="arrow">→<small>hire &amp; write a contract</small></div>
+    <div class="sc-node violet">The agent<span class="sub">wants high pay for low effort</span></div>
+    <div class="arrow">→<small>effort is unobservable</small></div>
+    <div class="sc-node slate">Sale price<span class="sub">effort plus market luck</span></div>
+  </div>
+  <figcaption>The essence of every control problem: a principal who cannot see effort, an agent with his own interests, and an outcome that mixes effort with noise.</figcaption>
+</div>
+
+Think through the contract options. A **fixed fee** gives the agent no reason to work hard at all. A **commission**, a percentage of the sale price, looks like the obvious fix: the higher the price, the more the agent earns, so interests seem aligned. But they are aligned **only partly**. An extra 10,000 euros of price is a lot of money to you and only a few hundred euros of commission to the agent, while the extra viewings and negotiation it takes are weeks of *his* effort. So a rational agent pushes for a **quick sale** at a slightly lower price and moves on to the next house. You cannot punish that, because you never observe effort, only the price, and the price also depends on how the market happens to be that month. That mix of unobservable effort, partly aligned incentives and noisy outcomes *is* the control problem, and section 5 gives it a formal name. The Case corner below works through what does and does not transfer to a firm.
+
+## 5 · The agency model - the control problem made formal
+
+The **agency model** (also principal-agent model, developed in the economics literature by Ross in 1973 and Holmström in 1979) is a formal version of exactly the house-sale story. A **principal** (owner, head office) hires an **agent** (manager) whose effort it cannot observe, and writes an **incentive contract** that pays on observable outcomes. The model's central result is a **trade-off between optimal incentives and efficient risk allocation**:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Strong incentives <small>pay on outcomes</small></div>
+    <ul>
+      <li>Tie pay tightly to results and the agent works hard, because effort now pays</li>
+      <li>But results contain <strong>noise</strong> the agent cannot control (the market, the weather, a supplier failing)</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Efficient risk allocation <small>who should carry the noise?</small></div>
+    <ul>
+      <li>A risk-averse agent dislikes pay that swings with luck and demands a premium for carrying it</li>
+      <li>The principal, usually diversified, could carry that risk more cheaply, but a fixed salary kills the incentive</li>
+    </ul>
+  </div>
+</div>
+
+The optimal contract sits between the two: enough outcome-based pay to motivate, not so much that the agent is paid mostly for bearing risk. Around that core result the model gives a set of design principles. In plain words:
+
+| Principle | What it says in plain words | What it means for a contract |
+|---|---|---|
+| **Informativeness** | Use every signal that tells you something about the agent's effort, and strip out signals that only reflect luck | Benchmark against peers or the market, so that a good result in a bad year still counts |
+| **Incentive intensity** | Make pay-for-performance stronger when results can be measured well and the agent can really influence them | Sales staff on commission, a research chemist mostly on salary |
+| **Monitoring intensity** | Where incentives are strong, monitor and measure more carefully; the two are complements, not substitutes | High bonus potential goes with tight, audited measurement |
+| **Equal compensation** | If the agent has several tasks you care about, reward them equally, or the unrewarded ones get neglected | Pay only on sales volume and service quality quietly dies |
+| **Ratchet effect** | If targets are raised after good results, agents learn to hold back today so that tomorrow's target stays reachable | Do not turn this year's outperformance automatically into next year's minimum |
+
+<Aside type="caution">
+**The ratchet effect is a trap the principal sets for himself.** It feels natural to say "you made 120, so next year the target is 120". But the agent hears "every extra unit I deliver now makes my life harder next year", and the rational response is to deliver just enough. The measure still looks fine; the behaviour behind it has quietly changed.
+</Aside>
+
+## 6 · Broadening the scope - three forms of control
+
+Output control, measuring and rewarding results, is only one of three ways a firm can steer behaviour. The slides broaden the scope like this:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Input control<span class="n">employ the right people</span></div>
+      <div class="sc-node violet">Who comes in<span class="sub">recruiting, training, culture, values</span></div>
+      <div class="sc-node soft">Works before any decision is taken</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Decision control<span class="n">make them take the right decisions</span></div>
+      <div class="sc-node amber">How decisions are made<span class="sub">approval rules, budgets, committees</span></div>
+      <div class="sc-node soft">Works during the decision</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Output control<span class="n">measure &amp; reward the right results</span></div>
+      <div class="sc-node green">What comes out<span class="sub">performance measures + incentives</span></div>
+      <div class="sc-node soft">Works after the fact, via consequences</div>
+    </div>
+  </div>
+  <figcaption>Three forms of control. Performance measures belong to the third tier, but a sensible firm uses all three and leans on output control less where results are hard to measure.</figcaption>
+</div>
+
+**Output control** in detail means two jobs: **formulating objectives** (the desired results) and **designing incentive structures** that influence managerial behaviour and lift performance. In short: define the measures, then attach the incentives. The goals chosen should respect two things at once, the **principles of motivation** (people must be able to influence them and care about them) and **organisational relevance** (they must matter to the firm). Designing an output control comes down to three choices:
+
+<Steps>
+
+1. <Badge text="Choice 1" variant="tip" /> **Which performance measures** serve as the output goals (ROI? residual income? market share? a mix?).
+
+2. <Badge text="Choice 2" variant="tip" /> **What target level** those measures must reach (a stretch target, last year plus a bit, a peer benchmark?).
+
+3. <Badge text="Choice 3" variant="tip" /> **How rewards are linked** to reaching the target (linear bonus, threshold, cap, relative ranking?).
+
+</Steps>
+
+The next section shows how badly choice 1 can go wrong even when choices 2 and 3 look harmless.
+
+## 7 · The ROI trap - a measure that steers the wrong way
+
+The exercise. A **division manager** decides on investments. Capital costs the firm a **WACC of 15 percent**. His pay is a **fixed salary of 100,000 euros** plus a **bonus of 50,000 euros multiplied by the average ROI** of his division. Four projects are on his desk:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Pay scheme</span>
+    <code>Pay = 100,000 + 50,000 × average ROI</code>
+  </div>
+  <div>
+    <span class="name">Projects</span>
+    200,000 at 50% · 800,000 at 40% · 400,000 at 30% · 300,000 at 20%
+  </div>
+  <div>
+    <span class="name">Hurdle</span>
+    <code>WACC = 15%</code> - every project clears it
+  </div>
+</div>
+
+From the **firm's** point of view the answer is obvious: all four projects earn more than the 15 percent the capital costs, so all four create value and all four should be taken. From the **manager's** point of view it looks different. His bonus depends on the *average* ROI, so every project with a return below the current average pulls the average down and shrinks his bonus. The best thing he can do for his own wallet is to take **only the 50 percent project**: average ROI 50 percent, bonus 25,000 euros, total pay 125,000 euros. Adding the 800,000 euro project at 40 percent drops the capital-weighted average to **42 percent** and the bonus to 21,000 euros. Each further project makes it worse. So a rational manager rejects 1.5 million euros of value-creating investment.
+
+The lesson the slide states outright: **using ROI as a remuneration basis leads to underinvestment.** The measure is informative (it correctly says project 1 has the highest return) but it is not goal-congruent (it makes the agent's optimum differ from the principal's). The Worked example below has the full numbers and the fix.
+
+## 8 · The traditional financial measures
+
+Practice leans on a handful of return ratios, all built from **financial accounting data**. Their definitions are worth knowing by heart, especially which ones add interest back and which do not.
+
+| Measure | How it is computed | What it tells you |
+|---|---|---|
+| **Return on sales (ROS)** | (profit after interest and tax + interest costs) / turnover | The operating profit margin: how much of every euro of sales is left as operating profit |
+| **Return on equity (ROE)** | profit after interest and tax / equity | How efficiently the firm turns each unit of shareholders' equity (net assets, i.e. assets minus liabilities) into profit |
+| **Return on assets (ROA)** | (profit after interest and tax + interest costs) / assets | How many euros of earnings the firm gets from each euro of assets it controls; also called **return on capital** |
+| **Return on capital employed (ROCE)** | EBIT / capital employed | A development of return on capital: earnings before interest and tax over the capital actually employed |
+| **Return on investment (ROI)** | profit after interest and tax / investment | The money gained or lost on an investment, realised or not, relative to the amount invested |
+
+Two things to notice. ROS and ROA **add interest back** because they want the return generated by the operations or the assets *before* the question of how they were financed; ROE deliberately does not, because it measures what is left for the owners after the lenders have been paid. And ROCE, with EBIT on top, is the same idea taken one step further: a pre-financing, pre-tax return on the capital that is really at work.
+
+## 9 · Measures for every area of the organisation
+
+Performance measures are not only a finance thing. Every organisational area can be given its own, and the slides list examples for five of them:
+
+| Area | Measure | How it is computed |
+|---|---|---|
+| **Financial** | Return on investment [%] | profit / investment × 100 |
+| | Capital turnover | turnover / capital invested |
+| **Market and customer** | Market share [%] | turnover / market turnover × 100 |
+| | Customer acquisition rate [%] | number of new customers / number of old customers × 100 |
+| **Process** | Error rate [%] | rejects of the period / production of the period × 100 |
+| | Capacity utilisation [%] | actual machine time / possible machine time × 100 |
+| **Employee** | Sickness rate [%] | working days lost to illness / yearly working days × 100 |
+| | Staff turnover [%] | employees who left in the period / average headcount × 100 |
+| | Employee productivity [EUR] | profit / average headcount |
+| **Innovation** | Innovation rate [%] | turnover with new products / total turnover × 100 |
+| | Research intensity [%] | R&D costs / turnover × 100 |
+| | Employee suggestion rate | number of employee suggestions / average headcount |
+
+Map them back onto section 2 and the pattern is clear: the financial row is financial and lagging; the market, process, employee and innovation rows are mostly **non-financial** and often **leading**. Innovation rate and suggestion rate say something about turnover two years from now; ROI says something about the year that has just ended.
+
+## 10 · Lessons learned
+
+<div class="sc-chips">
+  <span class="sc-chip violet">measures = fast, concise overview</span>
+  <span class="sc-chip amber">decentralisation needs control</span>
+  <span class="sc-chip green">agency theory judges incentives</span>
+  <span class="sc-chip blue">financial dominates, non-financial grows</span>
+</div>
+
+- Performance measures let their users get a **fast and concise picture** of where the organisation stands.
+- Because firms **decentralise**, they need **control systems** that pull managerial behaviour back into line with the firm's goals.
+- **Agency theory** gives a formal model for judging the incentive effects of those control systems, above all of **output controls**.
+- In practice **financial measures dominate**, but they are being **complemented more and more by non-financial ones**, such as customer- or employee-oriented measures. That is the bridge to chapter 12 and the balanced scorecard.
+
+## Worked example
+
+**The ROI trap in numbers.** The manager takes projects in order of ROI, highest first. The average ROI is weighted by invested capital (total profit divided by total investment), which is why two projects at 50 and 40 percent average 42 percent and not 45.
+
+| Project | Investment (EUR) | ROI | Profit (EUR) | Cumulative investment (EUR) | Average ROI if taken so far | Manager's bonus (50,000 × average ROI) |
+|---|---|---|---|---|---|---|
+| 1 | 200,000 | 50% | 100,000 | 200,000 | 50.0% | 25,000 |
+| 2 | 800,000 | 40% | 320,000 | 1,000,000 | 42.0% | 21,000 |
+| 3 | 400,000 | 30% | 120,000 | 1,400,000 | 38.6% | about 19,300 |
+| 4 | 300,000 | 20% | 60,000 | 1,700,000 | 35.3% | about 17,600 |
+
+- **Bonus-maximising choice:** project 1 only. Pay = 100,000 + 25,000 = **125,000 euros**. Every further project lowers the average and the bonus.
+- **Firm-value-maximising choice:** all four, because each ROI (50, 40, 30, 20 percent) is above the 15 percent WACC. Total profit 600,000 euros on 1.7 million invested, against a capital charge of 255,000 euros.
+- The gap between the two choices is the **goal-congruence failure** of ROI as a bonus base.
+
+**The fix: pay on residual income instead.** Residual income charges each project for the capital it uses and keeps only the surplus. Per project it is (ROI minus WACC) multiplied by the investment:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Residual income</span>
+    <code>RI = Profit - WACC × Investment = (ROI - WACC) × Investment</code>
+  </div>
+  <div>
+    <span class="name">Decision rule</span>
+    Take a project if its RI is positive, i.e. if ROI is above WACC
+  </div>
+</div>
+
+<Steps>
+
+1. Project 1: 200,000 × (50% - 15%) = 200,000 × 35% = **70,000**
+
+2. Project 2: 800,000 × (40% - 15%) = 800,000 × 25% = **200,000**
+
+3. Project 3: 400,000 × (30% - 15%) = 400,000 × 15% = **60,000**
+
+4. Project 4: 300,000 × (20% - 15%) = 300,000 × 5% = **15,000**
+
+</Steps>
+
+All four residual incomes are **positive**, so a bonus that is a share of *total* residual income (345,000 euros for all four) grows with every project the manager accepts. Now the manager's wallet and the firm's value point the same way: he wants all four. Note how project 2, the one the ROI scheme made him reject, is the biggest value creator of all.
+
+<Aside type="caution">
+**Goal congruence is the test, not accuracy.** ROI was not wrong; it ranked the projects perfectly. It failed because it was attached to a bonus in a way that made the manager's optimum different from the firm's. Before adopting any measure for incentive purposes, ask: if a clever person maximises *this* number, do they end up doing what the firm wants? Residual income passes here, but it is an absolute figure, so it favours large divisions and is harder to compare across units of different size; no single measure is free of side effects.
+</Aside>
+
+## Case corner
+
+**The real-estate agent, worked through.** You want the highest net price for your house. You hire an agent whose effort (how many buyers he calls, how hard he negotiates) you never see. The agent wants the highest pay for the least effort. How do you write the contract?
+
+- **Fixed fee.** Zero risk for the agent, zero incentive. He does the minimum.
+- **Pure commission (a fixed percentage of the price).** Interests are aligned in direction but not in strength. The agent gains a few hundred euros from an extra 10,000 on the price, while the extra weeks of effort cost him a lot. So he prefers a **quick sale** at a slightly lower price. From his side the contract also carries **risk**: if the market turns, his pay collapses through no fault of his own, so he will only sign if the expected commission compensates him for that risk.
+- **Better designs suggested by the principles.** Use informative signals: compare the achieved price with recent sales of similar houses, so that market luck is netted out. Strengthen the incentive above a **threshold price** (a higher percentage on everything above your reservation price), so that the marginal euro that matters to you also matters to him. Monitor a little (ask for the viewing log) where the incentive is strong.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">What a firm can copy <small>transfers</small></div>
+    <ul>
+      <li>The <strong>structure</strong> itself: owner or head office as principal, manager as agent, effort unobservable, pay on outcomes</li>
+      <li>The <strong>trade-off</strong>: stronger incentives buy effort but load risk onto the agent</li>
+      <li><strong>Informativeness</strong>: benchmark results against peers or the market to filter out luck</li>
+      <li><strong>Incentive intensity</strong>: pay more on performance where the result is measurable and controllable</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">What a firm cannot copy <small>does not transfer</small></div>
+    <ul>
+      <li>The agent has <strong>one task with one clear outcome</strong> (the price); a manager juggles many tasks, so the equal-compensation principle bites</li>
+      <li>The house sale is a <strong>one-off</strong>; a manager stays for years, so targets get renegotiated and the ratchet effect appears</li>
+      <li>The house price is <strong>observable at once</strong>; divisional results arrive late, depend on colleagues and can be gamed through the accounting</li>
+      <li>A manager's decisions (investments, hiring) have <strong>long-term effects</strong> that a single-period measure such as ROI does not capture</li>
+    </ul>
+  </div>
+</div>
+
+The exercise is a clean model of the control problem precisely *because* it strips away everything that makes a firm messy. The messy bits, many tasks, many periods, noisy and delayed measures, are the reason a firm cannot get away with a single commission-style bonus and needs the fuller toolkit of chapters 11 and 12.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| **Performance measure** | A number that condenses a complex reality so that one aspect of the firm's situation can be reported fast and concisely |
+| **Local vs global measure** | Describes one unit or process, versus the whole organisation |
+| **Leading vs lagging measure** | Signals future results early, versus reports results that have already happened |
+| **Relative vs absolute measure** | A ratio (usually a percentage), versus a raw amount in euros or units |
+| **Decentralisation** | Minimum constraints and maximum decision freedom for managers at the lowest levels; total centralisation is the opposite |
+| **Control problem** | The principal cannot observe the agent's effort, only a noisy outcome, so it must design incentives that make the agent choose what the principal wants |
+| **Agency (principal-agent) model** | The formal model of that relationship; shows the trade-off between strong incentives and efficient risk allocation |
+| **Informativeness principle** | Put every signal that reveals effort into the contract and filter out pure luck |
+| **Incentive-intensity principle** | Pay more on performance when results are measurable and the agent can influence them |
+| **Monitoring-intensity principle** | Where incentives are strong, measure and monitor more carefully |
+| **Equal-compensation principle** | Reward all the tasks you want done equally, or the unrewarded ones are neglected |
+| **Ratchet effect** | Raising targets after good results teaches people to hold back |
+| **Input, decision, output control** | Employ the right people; make them take the right decisions; measure and reward the right results |
+| **Residual income** | Profit minus a capital charge (WACC times investment); positive whenever ROI beats WACC |
+
+## Test yourself
+
+1. Define a performance measure in one sentence and name its three possible data bases and its purpose.
+2. Sort these into the four dichotomies: a division's ROI, a plant's error rate, the group's research intensity, the number of employee suggestions this quarter.
+3. Explain why decentralisation creates the need for a control system, and name the three forms of control a firm can use.
+4. A manager can raise capital at a WACC of 15 percent and is paid 100,000 euros fixed plus 50,000 euros times the average ROI. Projects: 200,000 at 50 percent, 800,000 at 40 percent, 400,000 at 30 percent, 300,000 at 20 percent. Compute his total pay if he takes project 1 only and if he takes projects 1 and 2. Then compute the residual income of each project. Which scheme makes him invest correctly?
+5. State the five design principles of the agency model and give one practical consequence of each.
+6. Write down the formulas for ROS, ROE, ROA, ROCE and ROI, and explain why two of them add interest back.
+
+<Aside type="note" title="Answers">
+1. Quantitative information that condenses a complex reality to inform about aspects of the firm expressible in numbers. Basis: accounting data, process or operating data systems, exceptionally case-based data. Purpose: report fast and concisely on something too detailed to analyse fully under time and resource constraints.
+2. Divisional ROI: local, lagging, relative, financial. Error rate: local, mostly leading (warns of cost and customer problems), relative, non-financial. Group research intensity: global, leading, relative, financial in construction (cost over turnover) but used as an innovation measure. Suggestions this quarter: local or global depending on scope, leading, absolute, non-financial.
+3. Decentralisation gives lower-level managers freedom because they hold local knowledge, but head office can then no longer observe how the freedom is used, so behaviour may drift from the firm's goals; a control system re-aligns it. Forms: input control (right people), decision control (right decisions), output control (right results, measured and rewarded).
+4. Project 1 only: average ROI 50 percent, bonus 25,000, pay 125,000. Projects 1 and 2: average ROI 420,000 / 1,000,000 = 42 percent, bonus 21,000, pay 121,000, so the ROI scheme makes him stop after project 1. Residual incomes: 70,000; 200,000; 60,000; 15,000, all positive, so a bonus on residual income makes him take all four, which is what the firm wants since every ROI beats 15 percent.
+5. Informativeness: benchmark against peers to filter luck. Incentive intensity: strong variable pay only where results are measurable and controllable. Monitoring intensity: audit and measure more where bonuses are big. Equal compensation: reward every task you care about, or the unrewarded one dies. Ratchet effect: do not automatically raise next year's target after a good year, or people hold back.
+6. ROS = (profit after interest and tax + interest) / turnover; ROE = profit after interest and tax / equity; ROA = (profit after interest and tax + interest) / assets, also called return on capital; ROCE = EBIT / capital employed; ROI = profit after interest and tax / investment. ROS and ROA add interest back to show the return of the operations or assets before the financing decision; ROE leaves it out because it measures what is left for the owners after lenders are paid.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- A **performance measure** is a number that **condenses complex reality** so that one aspect of the firm can be **reported fast and concisely**. Basis: accounting data, process or operating data systems, exceptionally case data.
+- Four ways to classify: **local vs global**, **leading vs lagging**, **relative vs absolute**, **financial vs non-financial**. A divisional ROI is local, lagging, relative, financial.
+- **Decentralisation** = maximum freedom for lower-level managers; **centralisation** = maximum constraints. Freedom brings an information gap, so decentralisation **needs control systems** that align behaviour.
+- The **control problem** in one picture: the real-estate agent. Effort unobservable, a commission aligns only partly (quick-sale bias), outcome pay loads risk onto the agent.
+- The **agency model** formalises it: trade-off between **strong incentives** and **efficient risk allocation**. Principles: **informativeness**, **incentive intensity**, **monitoring intensity**, **equal compensation**, **ratchet effect**.
+- Three forms of control: **input** (right people), **decision** (right decisions), **output** (right results). Output control = objectives + incentives, with three choices: **which measures, what target level, how rewards link**.
+- **ROI trap**: bonus of 50,000 × average ROI makes the manager take only the 50 percent project (bonus 25,000) although all four beat the 15 percent WACC; adding project 2 drops the average to 42 percent. **ROI-based pay causes underinvestment**; residual income (ROI minus WACC) × investment is positive for all four and fixes it.
+- Return ratios: **ROS**, **ROE**, **ROA** (return on capital), **ROCE** (EBIT / capital employed), **ROI**. Example measures exist for finance, market and customer, process, employee and innovation.
+- Practice is **dominated by financial measures**, but **non-financial** ones are increasingly added, which is where the balanced scorecard comes in.
+</Aside>
+
+*Next: [Performance Measurement Systems & the Balanced Scorecard →](/learnings/mba/financial-performance-and-management-control/12-performance-systems-and-balanced-scorecard/) - putting single measures together into a system that tells a strategy.*

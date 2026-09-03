@@ -1,0 +1,363 @@
+---
+title: "Rechnungswesen als Sprache der Wirtschaft"
+description: "Warum es das Rechnungswesen gibt und wem es dient - die Wertschöpfungsketten-Sicht auf ein Unternehmen, externes gegenüber internem Rechnungswesen, die drei Zwecke von Rechnungslegungsinformationen (Information, Dokumentation, Ausschüttung), Rechnungslegungseinheit, Periode und GAAP, das System der Finanzberichterstattung, die Abschlussprüfung nach 1929 und das Spiel Accounting Monopoly, das Würfelwürfe in eine Bilanz, eine Gewinn- und Verlustrechnung und eine Cashflow-Aufteilung verwandelt."
+sidebar:
+  label: "1 · Die Sprache der Wirtschaft"
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Jedes andere Modul in diesem MBA landet irgendwann bei einer Zahl: einer Marge, einem Budget, einer Kapitalrendite. In diesem Modul geht es darum, woher diese Zahlen kommen. Das erklärte Ziel ist, dass wir die Konzepte und die *Sprache* von Financial Performance und Management Control so gut verstehen, dass wir sie als praktisches Werkzeug für Kommunikation, Überwachung und Ressourcenallokation einsetzen können. Der Leitsatz, an dem der ganze Kurs hängt, lautet **Rechnungswesen als Sprache der Wirtschaft** - und wie jede Sprache hat es Vokabeln (Gewinn, Eigenkapital, Abschreibung, Rückstellungen, EBIT und EBITDA, ROCE), eine Grammatik (die Bilanzgleichung) und regionale Dialekte (HGB, IFRS, US-GAAP).
+
+Das Modul hat drei Teile. **Teil I, externes Rechnungswesen**: Grundlagen, die Bilanz, die Gewinn- und Verlustrechnung, IFRS, die Bilanzierung einzelner Posten wie Sachanlagen oder Vorräte sowie die Jahresabschlussanalyse. **Teil II, internes Rechnungswesen und Controlling**: Kostenbegriffe, Kalkulation und Preisbildung, Kosten-Volumen-Gewinn-Analyse, Leistungsmessung und die Balanced Scorecard. **Teil III, Finanzierung und Simulation**: Zeitwert des Geldes, Cashflow- und Projektanalyse, Kapitalwert (NPV), interner Zinsfuß (IRR) und Amortisation, WACC, der Leverage-Effekt und ein Simulationslabor. Die Bewertung setzt sich zusammen aus 30% Fallstudien und Reflexion, 30% Aufgaben und 40% Open-Book-Abschlussklausur; das Lehrbuch ist Horngren's Accounting (die Kapitel zum externen Rechnungswesen), für diese Sitzung Kapitel 1.
+
+Dieses erste Kapitel stellt vier Fragen: was externes Rechnungswesen ist (im Unterschied zum internen Rechnungswesen), warum es überhaupt existiert, wer die Informationen nutzt und wofür, und ob das Rechnungswesen von Geschichte und gesellschaftlichem Kontext geprägt ist. Danach hören wir auf zu theoretisieren und spielen Monopoly - mit einer Wendung: Jeder Wurf wird zu einem Geschäftsvorfall, und am Ende muss jedes Team eine Bilanz und eine Gewinn- und Verlustrechnung vorlegen.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Rechnungswesen ist ein *standardisiertes Informationssystem*, und seine Gestalt wird von seinem **Zweck** und seinen **Nutzern** bestimmt. Außenstehende können nicht in das Unternehmen hineinsehen, deshalb existiert das externe Rechnungswesen, um diese Informationslücke zu verkleinern. Aber verschiedene Außenstehende wollen Verschiedenes - Investoren wollen entscheidungsnützliche Wahrheit, Gläubiger wollen Vorsicht, das Finanzamt will eine Besteuerungsgrundlage - und so wird ein und dasselbe Zahlenwerk in verschiedene Richtungen gezogen. Immer wenn eine Rechnungslegungsvorschrift seltsam wirkt, frage: *Wem dient diese Regel?*
+</Aside>
+
+## 1 · Was ein Unternehmen tatsächlich tut - die Sicht der Wertschöpfungskette
+
+Bevor wir Leistung messen können, brauchen wir ein Bild von dem, was gemessen wird. Der Kurs beginnt mit einer schlichten Wertschöpfungsketten-Skizze einer Organisation. Links steht der **Beschaffungsmarkt** (der Faktormarkt, auf dem die Lieferanten sitzen); rechts steht der **Absatzmarkt** (der Nachfragemarkt, auf dem die Kunden sitzen). Dazwischen **beschafft** das Unternehmen Ressourcen, **transformiert** sie und **vermarktet** das Ergebnis.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Beschaffungsmarkt<span class="sub">Faktormarkt · Lieferanten</span></div>
+    <div class="arrow">→<small>Beschaffung</small></div>
+    <div class="sc-node amber">Eingesetzte Ressourcen<span class="sub">Arbeit, Maschinen, Gebäude, Materialien, Rechte</span></div>
+    <div class="arrow">→<small>Transformation</small></div>
+    <div class="sc-node violet">Erzeugte Leistungen<span class="sub">Güter, Dienstleistungen, Rechte</span></div>
+    <div class="arrow">→<small>Vermarktung</small></div>
+    <div class="sc-node slate">Absatzmarkt<span class="sub">Nachfragemarkt · Kunden</span></div>
+  </div>
+  <figcaption>Die Wertschöpfungsketten-Perspektive auf ein Unternehmen. Um die Kernkette herum liegen die Unterstützungsfunktionen und über allem die Unternehmensführung. Das Unternehmen kauft Inputs auf dem einen Markt und verkauft Outputs auf dem anderen; alles Interessante passiert in der Transformation dazwischen.</figcaption>
+</div>
+
+Was bedeutet in diesem Bild also **Leistung**? Ein Unternehmen ist eine Maschine, die auf einem Markt gekaufte Ressourcen in Leistungen verwandelt, die auf einem anderen verkauft werden. Leistung ist schlicht, wie gut diese Maschine arbeitet: Ist das, was herauskommt, *mehr* wert als das, was hineinging, und *wächst* oder *schrumpft* der Bestand an Ressourcen, den das Unternehmen kontrolliert? Genau diese beiden Fragen sollen die Gewinn- und Verlustrechnung (eine Stromgröße über eine Periode) und die Bilanz (eine Bestandsgröße zu einem Stichtag) beantworten. Das Rechnungswesen ist das Messgerät, das an die Wertschöpfungskette angeschraubt wird.
+
+## 2 · Zwei Arten von Rechnungswesen, eine Sprache
+
+Das Wort "Rechnungswesen" umfasst zwei Systeme, die sich Daten teilen, aber unterschiedlichen Herren dienen.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Externes Rechnungswesen <small>nach außen gerichtet</small></div>
+    <ul>
+      <li>Erzeugt <strong>standardisierte finanzielle Informationen</strong> über ein Unternehmen oder einen Konzern</li>
+      <li>Zielt auf <strong>externe Berichterstattung</strong> - Menschen außerhalb des Unternehmens</li>
+      <li><strong>Durch verbindliche Vorgaben gesteuert</strong> (Gesetze und Standards) - man kann sich das Format nicht aussuchen</li>
+      <li>Von Natur aus rückwärtsgewandt: Es berichtet, was in der Periode geschehen ist</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Internes Rechnungswesen <small>nach innen gerichtet</small></div>
+    <ul>
+      <li>Misst und berichtet <strong>finanzielle und nichtfinanzielle</strong> Informationen (Stückzahlen, Stunden, Fehlerquoten, Kundendaten)</li>
+      <li>Soll vor allem <strong>Managern helfen, die Ziele der Organisation zu erreichen</strong></li>
+      <li>Kein externes Regelwerk - das Format, das eine Entscheidung unterstützt, ist das richtige Format</li>
+      <li>Oft zukunftsgerichtet: Budgets, Prognosen, Was-wäre-wenn-Analysen</li>
+    </ul>
+  </div>
+</div>
+
+**Die Kostenrechnung ist die Brücke** zwischen beiden. Sie geht von denselben erfassten Geschäftsvorfällen aus wie das externe Rechnungswesen, sortiert die Aufwendungen aber nach Produkt, Abteilung oder Prozess um, damit Manager damit steuern können (Teil II des Kurses); manche ihrer Ergebnisse fließen auch in den Jahresabschluss zurück, etwa wenn selbst erstellte Vorräte bewertet werden müssen.
+
+Noch eine Unterscheidung: **Finanzberichterstattung** ist der weitere Begriff. Sie baut auf den Informationen des externen Rechnungswesens auf, legt aber stärkeren Nachdruck auf die **Offenlegung** - die Informationen zu denen zu bringen, die sie brauchen. Ihre Kernaufgabe ist es, die **Informationsasymmetrie** zwischen gut informierten Insidern (allen voran den Managern) und den externen Vertragspartnern des Unternehmens zu **reduzieren**.
+
+## 3 · Wer die Zahlen liest - Insider, Außenstehende und die Informationslücke
+
+Innerhalb des Unternehmens wissen Manager und Mitarbeitende, was vor sich geht. Außerhalb hat eine ganze Schar von Parteien Geld, Arbeitsplätze oder Ansprüche im Spiel, ohne hineinsehen zu können. Die Finanzberichterstattung ist die Leitung, die vertrauenswürdige Informationen von der ersten Gruppe zur zweiten trägt.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">Insider<span class="sub">Manager, Mitarbeitende - bedient vom internen Rechnungswesen</span></div>
+    <div class="arrow">→<small>Finanzberichterstattung verkleinert die Lücke</small></div>
+    <div class="sc-node amber">Außenstehende<span class="sub">Investoren, Gläubiger, Finanzbehörden, Kunden, Lieferanten, die Öffentlichkeit, Gewerkschaften</span></div>
+  </div>
+  <figcaption>Informationsasymmetrie: Insider wissen, Außenstehende müssen vertrauen. Standardisierte, regelgebundene Finanzberichterstattung macht dieses Vertrauen erst vernünftig.</figcaption>
+</div>
+
+<div class="sc-chips">
+  <span class="sc-chip violet">intern: Manager</span>
+  <span class="sc-chip violet">intern: Mitarbeitende</span>
+  <span class="sc-chip amber">Investoren</span>
+  <span class="sc-chip amber">Gläubiger</span>
+  <span class="sc-chip amber">Finanzbehörden</span>
+  <span class="sc-chip amber">Kunden</span>
+  <span class="sc-chip amber">Lieferanten</span>
+  <span class="sc-chip amber">die Öffentlichkeit</span>
+  <span class="sc-chip amber">Gewerkschaften</span>
+</div>
+
+Man beachte, wie unterschiedlich die Außenstehenden sind. Eine Bank, die über einen Kredit entscheidet, ein Finanzamt, das eine Steuererklärung prüft, eine Gewerkschaft, die eine Tarifrunde vorbereitet, und ein Lieferant, der sich fragt, ob er bezahlt wird, lesen alle *denselben* Geschäftsbericht - und jeder von ihnen will etwas leicht anderes daraus. Diese Vielfalt ist die Wurzel der meisten Spannungen im Rechnungswesen.
+
+## 4 · Wofür die Informationen da sind - drei Zwecke
+
+Die Folien fassen es sauber: Informationen für externe Nutzer sind entweder **Selbstzweck** (jemand will es einfach wissen) oder **Grundlage weiterer rechtlicher oder vertraglicher Folgen** (durch die Zahl wird etwas ausgelöst). Daraus ergeben sich drei Zwecke.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Information<span class="n">Selbstzweck</span></div>
+      <div class="sc-node violet">Investoren<span class="sub">Entscheidungsnützlichkeit - investieren, halten oder verkaufen?</span></div>
+      <div class="sc-node violet">Management<span class="sub">Rechenschaft - Auskunft darüber, wie mit den Ressourcen der Eigentümer umgegangen wurde</span></div>
+      <div class="sc-node soft">Andere Parteien<span class="sub">Kunden, Lieferanten, Mitarbeitende - Selbstinformation: Ist dieser Partner solide?</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Dokumentation<span class="n">Beweissicherung</span></div>
+      <div class="sc-node amber">Insolvenz<span class="sub">Was war da, und wann ist es verschwunden?</span></div>
+      <div class="sc-node amber">Konflikt<span class="sub">Streitigkeiten zwischen Eigentümern, Partnern, Gerichten</span></div>
+      <div class="sc-node amber">Besteuerung<span class="sub">Nachweis hinter der Steuererklärung</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Ausschüttung<span class="n">der Zahl folgen Konsequenzen</span></div>
+      <div class="sc-node green">Dividenden<span class="sub">Gläubigerseite: Mindestausschüttung (Gläubigerschutz) gegenüber Aktionärsseite: Höchstausschüttung (Aktionärsschutz)</span></div>
+      <div class="sc-node green">Besteuerung<span class="sub">Einkommensteuer, Körperschaftsteuer, Gewerbesteuer - über das Maßgeblichkeitsprinzip</span></div>
+    </div>
+  </div>
+  <figcaption>Drei Zwecke von Rechnungslegungsinformationen. Nur der erste ist reine Information; die anderen beiden verwandeln die Zahlen in Beweise oder in Geld, das den Besitzer wechselt.</figcaption>
+</div>
+
+**Information.** Für Investoren lautet das Schlüsselwort **Entscheidungsnützlichkeit**: Hilft mir der Bericht bei der Entscheidung, ob ich Geld hineinstecke? Für das Management lautet das Schlüsselwort **Rechenschaft (Stewardship)**: Der Bericht ist die Rechenschaft des Managements gegenüber den Eigentümern darüber, wie es mit deren Ressourcen umgegangen ist. Für Kunden, Lieferanten und Mitarbeitende ist es **Selbstinformation** - sie prüfen selbst, ob das Unternehmen ein sicherer Partner ist, an den man verkauft, von dem man kauft oder für den man arbeitet.
+
+**Dokumentation.** Das Rechnungswesen sichert auch Beweise. Wenn ein Unternehmen insolvent wird, wenn Eigentümer sich zerstreiten oder wenn das Finanzamt Fragen stellt, sind die Bücher die Aufzeichnung darüber, was da war und was damit geschehen ist.
+
+**Ausschüttung und Besteuerung.** Hier hat die Zahl Zähne. Die Gewinngröße entscheidet darüber, was das Unternehmen als Dividende verlassen darf. Gläubiger wollen Ausschüttungen auf einem *Minimum* halten, damit das Vermögenspolster hinter ihren Ansprüchen im Unternehmen bleibt (Gläubigerschutz); Aktionäre wollen das *Maximum* ausgeschüttet bekommen oder wenigstens eine Garantie, dass das Management nicht alles horten kann (Aktionärsschutz). Und in Deutschland ist die Handelsbilanz Ausgangspunkt der Steuerbilanz - das **Maßgeblichkeitsprinzip** - sodass dieselbe Gewinngröße Einkommensteuer, Körperschaftsteuer und Gewerbesteuer speist.
+
+### Rechenschaft gegenüber Entscheidungsnützlichkeit
+
+Diese beiden sollte man im Kopf trennen, weil sie die Regeln in verschiedene Richtungen ziehen. **Rechenschaft** blickt zurück: Ist das Management ordentlich mit dem Geld der Eigentümer umgegangen? Sie belohnt Vorsicht und Nachprüfbarkeit. **Entscheidungsnützlichkeit** blickt nach vorn: Was wird das Unternehmen wert sein, soll ich investieren? Sie belohnt Relevanz und aktuelle Werte, selbst um den Preis von Schätzungen. Ein Regelwerk, das für Rechenschaft gebaut ist, sieht anders aus als eines, das für Investorenentscheidungen gebaut ist - und das ist der Keim des Gegensatzes von HGB und IFRS später im Kurs.
+
+<Aside type="caution">
+**Das HGB jongliert mehrere Zielsetzungen gleichzeitig.** Vom deutschen Handelsbilanzrecht wird verlangt, Investoren zu informieren, das Ausschüttbare zum Schutz der Gläubiger zu begrenzen, den Aktionären einen fairen Anteil zu garantieren und zugleich als Steuerbemessungsgrundlage zu dienen. Eine Gewinngröße, vier Aufgaben. Deshalb neigt die HGB-Rechnungslegung zum *Vorsichtsprinzip* - im Zweifel den niedrigeren Vermögenswert und die höhere Verbindlichkeit ansetzen - und deshalb kann ihr Gewinn für ein und dasselbe Unternehmen von einem IFRS-Gewinn abweichen, ohne dass jemand lügt.
+</Aside>
+
+## 5 · Drei Konzepte unter jedem Abschluss
+
+Welches Regelwerk auch gilt, drei Ideen liegen unter jedem Rechenwerk.
+
+| Konzept | Was es festlegt | Detail |
+|---|---|---|
+| **Rechnungslegungseinheit** (berichtende Einheit, Geschäftseinheit) | *Über wen* die Rechnungslegung informiert | Entweder eine **rechtliche Einheit** (eine AG, GmbH oder Corp.), was zum **Einzelabschluss** führt, oder eine **wirtschaftliche Einheit** (ein Konzern, etwa ein Automobilhersteller mit allen Tochtergesellschaften), was zum **Konzernabschluss** führt |
+| **Rechnungslegungsperiode** | *Für welchen Zeitraum* die Einheit beobachtet wird | Normalerweise ein **Geschäftsjahr** (der Jahresabschluss); börsennotierte Unternehmen berichten zusätzlich je **Quartal** (der Quartalsabschluss) |
+| **Generally Accepted Accounting Principles (GAAP)** | *Nach welchen Regeln* die Zahlen entstehen | Ein gemeinsames Set von Standards, damit die Informationen vergleichbar und standardisiert sind |
+
+Der Ursprung der GAAP unterscheidet sich je nach Rechtstradition. In **Common-Law-Ländern** (angelsächsisch) werden die Standards von **privaten Standardsetzern** gesetzt; in **Code-Law-Ländern** sind sie **im Gesetz kodifiziert**. So oder so ist das Ergebnis dasselbe: Rechnungswesen wird zu einem *standardisierten* Informationsinstrument, und genau das brauchen Außenstehende.
+
+<div class="sc-chips">
+  <span class="sc-chip blue">IFRS - International Financial Reporting Standards, herausgegeben vom IASB (der Bound Volume)</span>
+  <span class="sc-chip amber">HGB - Handelsgesetzbuch, deutsches Handelsrecht (kodifiziertes Recht)</span>
+  <span class="sc-chip green">US-GAAP - herausgegeben vom FASB (Original Pronouncements)</span>
+</div>
+
+Alle drei Regelwerke sind frei herunterladbar, und der Kurs wird in Kapitel 4 die IFRS als Hauptbrille verwenden.
+
+## 6 · Das System der Finanzberichterstattung
+
+Das externe Rechnungswesen ist ein Teil eines umfassenderen **Systems der Finanzberichterstattung** - all der finanziellen Informationen, die ein Unternehmen offenlegt, sei es über das Einreichungssystem einer Aufsichtsbehörde (die EDGAR-Datenbank der US-SEC) oder über die eigenen Investor-Relations-Seiten. Es hat vier Ebenen.
+
+| Ebene | Was sie enthält | Deutschland | US-SEC |
+|---|---|---|---|
+| **Geschäftsbericht** | Ein ungeprüfter freier Teil, der Einzel- und/oder Konzernabschluss, der Lagebericht (Management Discussion and Analysis, MD&amp;A), der Bestätigungsvermerk des Abschlussprüfers | Vorgeschrieben durch HGB, AktG, BörsG, BörsZulV | Form 10-K (inländisch), Form 20-F (ausländische Emittenten) |
+| **Zwischenberichterstattung** | Berichte über drei oder sechs Monate mit verkürztem Abschluss | § 44b BörsG | Form 10-Q, Form 6-K |
+| **Zeitnahe Offenlegung wesentlicher Ereignisse** | Ad-hoc-Mitteilungen über Ereignisse, die den Aktienkurs erheblich bewegen könnten | § 15 WpHG | Form 8-K, Form 6-K |
+| **Sonstiges** | Pressemitteilungen, Unternehmensberichte, Präsentationen | - | - |
+
+Die Ebenen tauschen Tiefe gegen Geschwindigkeit: Der Geschäftsbericht ist vollständig und geprüft, aber langsam; Zwischenberichte sind schlanker und schneller; die Ad-hoc-Offenlegung ist sofort, deckt aber nur einzelne Ereignisse ab. Zusammen verhindern sie, dass sich die Informationslücke zwischen den Geschäftsberichten wieder öffnet.
+
+## 7 · Abschlussprüfung - warum jemand die Zahlen kontrolliert
+
+Eine **Abschlussprüfung** ist eine Untersuchung der Geschäftsvorfälle eines Unternehmens und des daraus entstehenden Jahresabschlusses. Warum sie zur Pflicht wurde, ist eine Geschichte, und die Geschichte ist der Punkt dieses Abschnitts.
+
+Vor dem **Börsenkrach von 1929** wurden leitende Manager teilweise auf Grundlage dessen vergütet, was der Jahresabschluss zeigte - und dieselben Manager *erstellten* den Abschluss. Eingebautes Verzerrungspotenzial. Nach dem Krach verlangte der **SEC Act von 1934**, dass börsennotierte Unternehmen ihre Abschlüsse von **unabhängigen externen Prüfern, die CPAs sind** (Certified Public Accountants), prüfen lassen und die Ergebnisse bei der SEC einreichen. Für Aktionäre ist der Nutzen einfach: Ein Prüfungsbericht verleiht den Abschlüssen, auf die sie ihre Entscheidungen stützen, **Glaubwürdigkeit**.
+
+<Steps>
+1. **Einleitung** - was genau geprüft wurde (welche Abschlüsse, welche Einheit, welche Periode).
+2. **Umfang** - wie die Prüfung durchgeführt wurde, also die Standards und Verfahren, denen der Prüfer gefolgt ist.
+3. **Prüfungsurteil** - zwei Beurteilungen: Sind die Abschlüsse **sachgerecht** dargestellt, und in welchem Maß wurden die **GAAP** befolgt?
+4. **Sonstige Themen** - zum Beispiel Änderungen von Bilanzierungsgrundsätzen oder die Angemessenheit der Prüfung des internen Kontrollsystems durch das Management.
+</Steps>
+
+Diese vier Elemente bilden den **Standardprüfungsbericht**. Der Markt für große Prüfungen wird von den **Big Four** beherrscht: Deloitte Touche Tohmatsu, Ernst &amp; Young, KPMG International und PricewaterhouseCoopers. Rund **97%** der an der New York Stock Exchange gelisteten Unternehmen sind Mandanten einer dieser vier - eine Konzentration, an die man sich erinnern sollte, wenn wir über die Unabhängigkeit der Prüfer sprechen.
+
+## 8 · Rechnungswesen ist von Geschichte und gesellschaftlichem Kontext geprägt
+
+Die Lessons-Learned-Folie fasst das Kapitel in vier Zeilen zusammen, die ich hier umformuliere, weil sie klausurreif sind:
+
+- Das externe Rechnungswesen wendet sich an **externe Nutzer**; das interne Rechnungswesen versorgt das **Management**.
+- Das externe Rechnungswesen erzeugt **standardisierte** finanzielle Informationen über ein Unternehmen und existiert, um die **Informationsasymmetrie** zwischen Insidern und externen Vertragspartnern zu **reduzieren**.
+- Rechnungslegungsinformationen dienen **verschiedenen Zwecken, und die Zwecke bestimmen die Ausgestaltung**. Ein System, das für Gläubigerschutz und Besteuerung gebaut ist, fällt **vorsichtig** aus (die HGB-Tradition); ein System, das für Kapitalmarktinvestoren gebaut ist, zielt auf ein **den tatsächlichen Verhältnissen entsprechendes Bild (true and fair view)** (die IFRS- und US-Tradition).
+- Die **Abschlussprüfung** zeigt, dass Rechnungswesen ein Produkt **gesellschaftlicher Entwicklung** ist: Ein Börsenkrach brachte ein Gesetz hervor, das Gesetz brachte einen Berufsstand hervor, und der Berufsstand veränderte, was ein Jahresabschluss bedeutet.
+
+Die Antwort auf die vierte Eingangsfrage lautet also ja: Rechnungswesen ist kein neutraler Spiegel. Es ist ein Satz von Konventionen, der aus konkreten Krisen, Rechtstraditionen und Machtverhältnissen zwischen Eigentümern, Kreditgebern und dem Staat gewachsen ist. Zwei Regelwerke können für ein Unternehmen zwei verschiedene Gewinne ausweisen, und beide können nach ihrem eigenen Zweck "richtig" sein.
+
+## 9 · Simulieren wir ein Unternehmen - Accounting Monopoly
+
+Die Theorie bleibt abstrakt, bis man versucht, ein Geschäft selbst aufzuzeichnen, und genau dafür ist das Spiel der Sitzung da.
+
+**Aufbau.** Gruppen zu siebt: drei Teams, jedes mit einem **Würfler** (dem CEO, der spielt) und einem **Aufzeichner** (dem CFO, der alles mitschreibt), dazu ein **Bankier**, der die Bank führt und Regelstreitigkeiten entscheidet. Spielen, und dabei eine **Erzählung jedes Wurfs und jedes Zugs führen, nach Runden nummeriert**. Die Folien geben den Stil vor:
+
+- Runde 1: auf Oxford Street landen und sie kaufen (Preis 300).
+- Runde 2: auf Liverpool Station landen und 25 Miete zahlen.
+- Runde 3: Kings Cross Station mit einer Hypothek belasten (Hypothekenwert 100).
+
+Die Anweisung lautet, **jedes "Ding", das dem Team passiert, so klar wie möglich zu beschreiben**. Wenn das Stoppsignal kommt, hat jedes Team zehn Minuten, um sein Endergebnis festzuhalten. Die Lehrunterlagen geben einen **Kontenplan** aus, in den das Durcheinander sortiert wird:
+
+| Bilanzkonten | GuV-Konten |
+|---|---|
+| **Vermögenswerte**: Zahlungsmittel, Grundstücke, Forderungen, Beteiligungen an Bahnhöfen, Beteiligungen an Versorgungsbetrieben, Gebäude (Häuser) und deren kumulierte Abschreibungen, Gebäude (Hotels) und deren kumulierte Abschreibungen, sonstige Vermögenswerte | **Erträge**: Mieterträge aus Grundstücken, Mieterträge aus Häusern und Hotels, Gehaltserträge, Beteiligungserträge aus Versorgungsbetrieben, Beteiligungserträge aus Bahnhöfen, Zinserträge, sonstige Erträge |
+| **Verbindlichkeiten**: Hypothekenverbindlichkeiten, Zinsverbindlichkeiten, Steuerverbindlichkeiten | **Aufwendungen**: Mietaufwand, Steueraufwand, Buß- und Strafgelder, Reparaturen und Instandhaltung, Zinsen, Abschreibungen, Sonstiges |
+| **Eigenkapital**: gezeichnetes Kapital, Gewinnrücklagen | **Gewinne und Verluste**: Gewinne oder Verluste aus dem Verkauf von Grundbesitz, sonstige Gewinne und Verluste |
+
+**Diskussionsfragen** im Anschluss - das sind eigentlich die Fragen des gesamten Teils I:
+
+1. Wie war es, Geschäftsvorfälle und Ergebnisse aufzuzeichnen, und was hat es schwer gemacht?
+2. Was sollte aufgezeichnet werden und was nicht?
+3. Wie bildet man den *Status quo* ab und wie misst man *Leistung*?
+4. Welches Team war erfolgreicher - und auf welcher Grundlage lässt sich dieses Urteil objektivieren?
+
+## Durchgerechnetes Beispiel
+
+Das Arbeitsheft führt das Spiel eines Teams bis zu vollständigen Abschlüssen durch. Ich gebe es Schritt für Schritt wieder, weil es das sauberste kleine Beispiel für das Zusammenspiel der drei Abschlüsse ist, das mir begegnet ist.
+
+<Steps>
+1. **Eröffnungsbilanz.** Jedes Team startet mit 1,500 an Zahlungsmitteln, eingelegt von den "Eigentümern". Vermögenswerte: Zahlungsmittel 1,500. Eigenkapital: gezeichnetes Kapital 1,500. Summe 1,500 auf beiden Seiten.
+2. **Die Ereignisse der Periode** (die Beispieldaten). Kauf von Oxford Street 300, Bond Street 320, Park Lane 350, Kings Cross Station 200, Water Works 150 und Mayfair 400. Zahlung von 25 Miete an Liverpool Station und 100 am Trafalgar Square. Bau je eines Hauses auf Mayfair und Park Lane (je 200). Zweimal Miete kassiert auf Oxford Street (je 26), einmal auf Bond Street (28), einmal auf Park Lane mit dessen Haus (350), zweimal auf Kings Cross (je 25) und einmal auf Water Works mit einem Würfelwurf von zehn (4 × 10 = 40). Abschreibung jedes Hauses um 20. Hypothek auf Kings Cross über 100. Landen auf dem Einkommensteuerfeld (200). Erhalt einer Gefängnis-frei-Karte. Zahlung von Straßenreparaturen (40 je Haus = 80) und einer Schulgebühr von 50. Viermal über Los gegangen (je 200 = 800).
+3. **Bestandsaufnahme beim Stoppsignal.** Zahlungsmittel 345; die vier Straßen; der Bahnhof und der Versorgungsbetrieb; zwei Häuser zu 200 abzüglich je 20; eine Hypothek von 100 auf Kings Cross; die Karte.
+4. **Einsortieren in den Kontenplan**, dann Aufstellen der Schlussbilanz, der Gewinn- und Verlustrechnung und schließlich einer Cashflow-Aufteilung.
+</Steps>
+
+**Schlussbilanz**
+
+| Vermögenswerte | | Verbindlichkeiten und Eigenkapital | |
+|---|---:|---|---:|
+| Zahlungsmittel | 345 | Hypothekenverbindlichkeit (Kings Cross Station) | 100 |
+| Grundstücke (Park Lane 350, Mayfair 400, Bond Street 320, Oxford Street 300) | 1,370 | Zinsverbindlichkeit (auf die Hypothek abgegrenzt) | 10 |
+| Beteiligungen an Bahnhöfen (Kings Cross Station) | 200 | **Summe Verbindlichkeiten** | **110** |
+| Beteiligungen an Versorgungsbetrieben (Water Works) | 150 | Gezeichnetes Kapital | 1,500 |
+| Gebäude, Häuser (2 × 200 abzüglich 2 × 20 Abschreibung) | 360 | Gewinnrücklagen | 815 |
+| Sonstige Vermögenswerte (Gefängnis-frei-Karte: nicht angesetzt) | 0 | **Summe Eigenkapital** | **2,315** |
+| **Summe Vermögenswerte** | **2,425** | **Summe Verbindlichkeiten und Eigenkapital** | **2,425** |
+
+**Gewinn- und Verlustrechnung für die Periode**
+
+| Erträge | | Aufwendungen | |
+|---|---:|---|---:|
+| Mieterträge, Grundstücke (Oxford Street 2 × 26 = 52, Bond Street 28) | 80 | Mietaufwand (Liverpool Station 25, Trafalgar Square 100) | 125 |
+| Mieterträge, Häuser (Park Lane mit einem Haus) | 350 | Steueraufwand (Einkommensteuerfeld) | 200 |
+| Gehaltserträge (viermal über Los, 4 × 200) | 800 | Reparaturen und Instandhaltung (Straßenreparaturen, 2 Häuser × 40) | 80 |
+| Beteiligungserträge, Versorgungsbetriebe (Water Works, 4 × 10) | 40 | Abschreibungsaufwand (2 Häuser × 20) | 40 |
+| Beteiligungserträge, Bahnhöfe (Kings Cross 2 × 25) | 50 | Sonstiger Aufwand (Schulgebühr 50 zuzüglich der 10 abgegrenzten Hypothekenzinsen) | 60 |
+| **Summe Erträge** | **1,320** | **Summe Aufwendungen** | **505** |
+
+Gewinne und Verluste aus Grundbesitzverkäufen: keine (es wurde nichts verkauft). **Gewinn = 1,320 - 505 = 815.**
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Gewinn</span>
+    <code>Erträge 1,320 - Aufwendungen 505 = 815</code>
+  </div>
+  <div>
+    <span class="name">Gewinnrücklagen</span>
+    <code>Anfangsbestand 0 + Gewinn 815 - Dividenden 0 = 815</code>
+  </div>
+  <div>
+    <span class="name">Eigenkapital</span>
+    <code>gezeichnetes Kapital 1,500 + Gewinnrücklagen 815 = 2,315</code>
+  </div>
+  <div>
+    <span class="name">Bilanzgleichung</span>
+    <code>Vermögenswerte 2,425 = Verbindlichkeiten 110 + Eigenkapital 2,315</code>
+  </div>
+</div>
+
+Zwei Dinge sind hier zu sehen. Erstens **ist** der Saldo der Gewinn- und Verlustrechnung die Gewinnrücklage der Bilanz: Der Gewinn der Periode ist das Wachstum des Anspruchs der Eigentümer. Zweitens geht die Gleichung auf, *weil* jedes Ereignis auf beiden Seiten erfasst wurde - das ist kein Glück, sondern die Struktur der doppelten Buchführung (Kapitel 2).
+
+**Wo ist das Geld hin?** Das Team hat 815 Gewinn gemacht, und doch *fielen* seine Zahlungsmittel von 1,500 auf 345. Die Cashflow-Aufteilung erklärt es:
+
+| Cashflow | Betrag | Was darin steckt |
+|---|---:|---|
+| Operative Tätigkeit (CFO) | +865 | Alle 1,320 an Erträgen waren zahlungswirksam; zahlungswirksame Aufwendungen waren Miete 125, Steuer 200, Reparaturen 80 und Schulgebühr 50 = 455; Abschreibungen (40) und die abgegrenzten Zinsen (10) kosteten kein Geld |
+| Investitionstätigkeit (CFI) | -2,120 | Grundstücke 1,370 + Bahnhof 200 + Versorgungsbetrieb 150 + zwei Häuser 400 |
+| Finanzierungstätigkeit (CFF) | +100 | Die auf Kings Cross aufgenommene Hypothek |
+| **Nettoveränderung der Zahlungsmittel** | **-1,155** | 1,500 Anfangsbestand - 1,155 = 345 Endbestand |
+
+<div class="sc-formula">
+  <div>
+    <span class="name">CFO aus dem Gewinn</span>
+    <code>Gewinn 815 + Abschreibungen 40 + abgegrenzte, aber nicht gezahlte Zinsen 10 = 865</code>
+  </div>
+  <div>
+    <span class="name">Kassenprobe</span>
+    <code>865 - 2,120 + 100 = -1,155 → 1,500 - 1,155 = 345</code>
+  </div>
+</div>
+
+**Gewinn ist nicht Cash.** Das Team ist nach der Rechnungslegungsgröße 815 reicher und an Zahlungsmitteln 1,155 ärmer, und beide Abschlüsse sind richtig. Der Unterschied liegt darin, dass das Geld in *Vermögenswerte geflossen ist, die noch da sind* (Grundstücke, Bahnhof, Versorgungsbetrieb, Häuser) - eine Investition, kein Aufwand - während eine Hypothek Geld hereinbrachte, ohne das Team reicher zu machen. Genau dieses eine Beispiel ist der Grund, warum Unternehmen drei Abschlüsse veröffentlichen und nicht einen.
+
+## Fallecke
+
+**Warum das Aufzeichnen schwerer ist, als es aussieht.** In dem Moment, in dem man beginnt, eine Monopoly-Partie als Geschäftsvorfälle aufzuschreiben, beißen drei Fragen. *Was zählt?* Das Würfeln ist kein Geschäftsvorfall; auf Los zu landen und 200 zu kassieren schon. Der Kauf einer Straße verändert die Bilanz, nicht aber den Gewinn; Miete zu zahlen verändert beides. *Wann?* Die Abschreibung der Häuser ist ein Geschäftsvorfall, obwohl kein Geld geflossen ist; die 10% Zinsen, die auf die Kings-Cross-Hypothek fällig werden, werden jetzt als Zinsverbindlichkeit abgegrenzt, obwohl noch nichts gezahlt wurde. *Zu welchem Wert?* Grundstücke gehen zum gezahlten Preis hinein (Anschaffungskosten), Häuser zu Anschaffungskosten abzüglich Abschreibung; ein hypothekarisch belastetes Grundstück bleibt auf der Aktivseite mit seinen vollen Anschaffungskosten stehen, wobei die Hypothek getrennt als Verbindlichkeit gezeigt und nicht saldiert wird. Jede einzelne dieser Ermessensentscheidungen ist eine getarnte echte Rechnungslegungsregel, und jedes Team trifft sie ein wenig anders, bis ein gemeinsamer Kontenplan Konsistenz erzwingt - das sind GAAP im Kleinformat.
+
+**Warum die Gefängnis-frei-Karte nicht angesetzt wird.** Sie hat eindeutig *einen gewissen* wirtschaftlichen Wert - eines Tages wird sie eine Strafe ersparen. Aber sie hat nichts gekostet, sie kann im Spiel nicht verkauft werden, und es gibt keine verlässliche Möglichkeit, ihr einen Geldbetrag zuzuordnen. Ein Posten, der nicht verlässlich in Geld bewertet werden kann, bleibt außerhalb der Bilanz, deshalb bleibt die Zeile "sonstige Vermögenswerte" leer. Dieselbe Logik erklärt später, warum eine selbst geschaffene Marke oder eine motivierte Belegschaft nicht in der Bilanz eines Unternehmens steht.
+
+**Wie man beurteilt, welches Team gewonnen hat.** Zahlungsmittel sind der falsche Maßstab: Ein Team, das nichts gekauft hat, hätte am Ende das meiste Geld und die schwächste Position. Zwei bessere Maßgrößen folgen aus den Abschlüssen. Die **Bilanz** zeigt den Status quo - Eigenkapital von 2,315 gegenüber 1,500 zu Beginn; die **Gewinn- und Verlustrechnung** zeigt die Leistung - ein Gewinn von 815 für die Periode. Da nichts ausgeschüttet wurde, stimmen beide überein: Sieger ist das Team, dessen **Eigenkapital am stärksten gewachsen** ist, also mit dem höchsten Gewinn. Und weil jedes Team dieselben Ansatz- und Bewertungsregeln anwendet, ist dieser Vergleich *objektiv* in genau dem Sinn, nach dem die Diskussionsfrage fragt. Standardisierte Regeln sind das, was aus "wir fühlen uns reicher" eine Zahl macht, über die zwei Teams streiten können.
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Wertschöpfungskette | Das Unternehmen gesehen als beschaffen, transformieren, vermarkten: Auf dem Beschaffungsmarkt gekaufte Ressourcen werden zu Leistungen, die auf dem Absatzmarkt verkauft werden |
+| Externes Rechnungswesen | Standardisierte finanzielle Informationen über ein Unternehmen oder einen Konzern, nach verbindlichen Regeln für Menschen außerhalb des Unternehmens erstellt |
+| Internes Rechnungswesen | Finanzielle und nichtfinanzielle Informationen, in der jeweils hilfreichen Form für Manager innerhalb des Unternehmens erstellt |
+| Kostenrechnung | Die Brücke: sortiert erfasste Aufwendungen nach Produkt, Abteilung oder Prozess um, damit Manager steuern können |
+| Finanzberichterstattung | Die Offenlegungsseite des Rechnungswesens; ihre Aufgabe ist es, die Informationsasymmetrie zwischen Insidern und externen Vertragspartnern zu reduzieren |
+| Informationsasymmetrie | Insider wissen mehr als Außenstehende; die Berichterstattung verkleinert die Lücke, damit Außenstehende zu fairen Bedingungen mit dem Unternehmen umgehen können |
+| Entscheidungsnützlichkeit | Informationen, die einem Investor bei der Entscheidung über eine Investition helfen - der investorenorientierte Zweck |
+| Rechenschaft (Stewardship) | Die Rechenschaft des Managements gegenüber den Eigentümern über den Umgang mit deren Ressourcen - der verantwortungsorientierte Zweck |
+| Maßgeblichkeitsprinzip | In Deutschland ist die Handelsbilanz (HGB) Ausgangspunkt der Steuerbilanz |
+| Rechnungslegungseinheit | Die Einheit, die die Rechnungslegung beschreibt: eine rechtliche Einheit (Einzelabschluss) oder ein wirtschaftlicher Konzern (Konzernabschluss) |
+| Rechnungslegungsperiode | Der beobachtete Zeitraum: normalerweise ein Geschäftsjahr oder ein Quartal für Zwischenberichte |
+| GAAP | Allgemein anerkannte Rechnungslegungsgrundsätze: das gemeinsame Regelwerk, in Common-Law-Ländern privat gesetzt, in Code-Law-Ländern kodifiziert |
+| Abschlussprüfung | Unabhängige Untersuchung von Geschäftsvorfällen und Abschlüssen durch externe CPAs, für börsennotierte US-Unternehmen seit dem SEC Act von 1934 verpflichtend |
+| Gewinnrücklagen | Im Unternehmen belassene Gewinne; die Verbindung zwischen Gewinn- und Verlustrechnung und Bilanz |
+
+## Teste dich selbst
+
+1. Erkläre anhand des Wertschöpfungsketten-Bildes, was die "Leistung" eines Unternehmens bedeutet und warum ein Messsystem nötig ist, um sie zu beurteilen.
+2. Stelle externes und internes Rechnungswesen in drei Dimensionen gegenüber: Nutzer, Regeln und Art der berichteten Informationen. Wo steht die Kostenrechnung?
+3. Nenne die drei Zwecke von Informationen des externen Rechnungswesens und gib je ein konkretes Beispiel. Welcher davon ist Selbstzweck?
+4. Definiere Rechnungslegungseinheit, Rechnungslegungsperiode und GAAP. Wie unterscheidet sich der Ursprung der GAAP zwischen Common-Law- und Code-Law-Ländern, und welcher Standard gehört zu welcher Tradition?
+5. Warum begannen die Vereinigten Staaten, unabhängige Abschlussprüfungen vorzuschreiben, und welche vier Elemente enthält ein Standardprüfungsbericht?
+6. Ein Monopoly-Team startet mit 1,500 Zahlungsmitteln. Am Ende hält es Zahlungsmittel 345, Grundstücke 1,370, Beteiligungen 350 und Häuser mit 360 netto und schuldet eine Hypothek von 100 zuzüglich 10 Zinsen. Berechne die Summe der Vermögenswerte, die Summe der Verbindlichkeiten, das Eigenkapital, die Gewinnrücklagen und den Gewinn der Periode. Erkläre dann in einem Satz, warum der Rückgang der Zahlungsmittel um 1,155 kein Verlust ist.
+
+<Aside type="note" title="Lösungen">
+1. Das Unternehmen kauft auf dem Beschaffungsmarkt Ressourcen (Arbeit, Maschinen, Gebäude, Materialien, Rechte), transformiert sie und verkauft Leistungen (Güter, Dienstleistungen, Rechte) auf dem Absatzmarkt. Leistung ist, wie gut das funktioniert: ob die Outputs mehr wert sind als die Inputs und ob die kontrollierten Ressourcen wachsen. Beides ist nicht direkt sichtbar, deshalb misst das Rechnungswesen den Strom (Gewinn- und Verlustrechnung) und den Bestand (Bilanz).
+2. Externes Rechnungswesen: externe Nutzer, durch verbindliche Vorgaben gesteuert, standardisierte finanzielle Informationen. Internes Rechnungswesen: Manager, kein externes Regelwerk, finanzielle und nichtfinanzielle Informationen, die zur Entscheidungsunterstützung ausgewählt werden. Die Kostenrechnung überbrückt beide, indem sie dieselben Vorfalldaten nach Produkt, Prozess oder Abteilung umsortiert.
+3. Information (Entscheidungsnützlichkeit für Investoren, Rechenschaft des Managements, Selbstinformation für Kunden, Lieferanten und Mitarbeitende) - diese ist Selbstzweck. Dokumentation (Beweissicherung für Insolvenz, Konflikte, Steuern). Ausschüttung und Besteuerung (Dividenden zwischen Gläubigerschutz und Aktionärsschutz; die Steuerbemessungsgrundlage über das Maßgeblichkeitsprinzip).
+4. Einheit: über wen - eine rechtliche Einheit führt zum Einzelabschluss, ein wirtschaftlicher Konzern zum Konzernabschluss. Periode: Geschäftsjahr oder Quartal. GAAP: das gemeinsame Regelwerk. Common-Law-Länder nutzen private Standardsetzer (IFRS vom IASB, US-GAAP vom FASB); Code-Law-Länder kodifizieren es (das deutsche HGB).
+5. Nach dem Krach von 1929 war klar, dass Manager, die nach den Zahlen vergütet wurden, dieselben Zahlen auch erstellten, deshalb verlangte der SEC Act von 1934 unabhängige CPA-Prüfungen, die bei der SEC eingereicht werden, um Aktionären glaubwürdige Abschlüsse zu geben. Der Bericht enthält eine Einleitung (was geprüft wurde), den Umfang (wie), ein Prüfungsurteil (sachgerechte Darstellung und GAAP-Konformität) und sonstige Themen (Änderungen von Grundsätzen, Prüfung des internen Kontrollsystems).
+6. Summe Vermögenswerte 345 + 1,370 + 350 + 360 = 2,425; Verbindlichkeiten 100 + 10 = 110; Eigenkapital 2,425 - 110 = 2,315; Gewinnrücklagen 2,315 - 1,500 = 815; ohne Dividenden ist der Gewinn = 815. Die Zahlungsmittel fielen, weil 2,120 in Vermögenswerte flossen, die noch in der Bilanz stehen (eine Investition, kein Aufwand), während nur 100 aus der Finanzierung hereinkamen; die operative Tätigkeit erzeugte tatsächlich 865 an Zahlungsmitteln.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Ein Unternehmen **beschafft, transformiert und vermarktet**: Ressourcen vom Beschaffungsmarkt werden zu Leistungen auf dem Absatzmarkt. **Leistung** ist, wie gut diese Transformation funktioniert, und das Rechnungswesen ist ihr Messgerät.
+- Das **externe Rechnungswesen** ist extern, standardisiert und regelgesteuert; das **interne Rechnungswesen** ist intern, managementunterstützend und formfrei; die **Kostenrechnung** überbrückt beide. Die **Finanzberichterstattung** existiert, um die **Informationsasymmetrie** zwischen Insidern (Manager, Mitarbeitende) und Außenstehenden (Investoren, Gläubiger, Finanzbehörden, Kunden, Lieferanten, Öffentlichkeit, Gewerkschaften) zu **reduzieren**.
+- Drei Zwecke: **Information** (Entscheidungsnützlichkeit für Investoren, Rechenschaft für das Management, Selbstinformation für andere), **Dokumentation** (Beweise für Insolvenz, Konflikt, Steuern) und **Ausschüttung und Besteuerung** (Dividenden zwischen Gläubigerschutz und Aktionärsschutz; die Steuerbemessungsgrundlage über das Maßgeblichkeitsprinzip). Das HGB dient **mehreren Zielsetzungen** gleichzeitig, deshalb ist es vorsichtig.
+- Drei zugrunde liegende Konzepte: **Rechnungslegungseinheit** (rechtliche Einheit → Einzelabschluss; wirtschaftliche Einheit → Konzernabschluss), **Rechnungslegungsperiode** (Jahr, Quartal), **GAAP** (private Standardsetzer in Common-Law-Ländern, kodifiziert in Code-Law-Ländern: IFRS, US-GAAP, HGB).
+- Das **System der Finanzberichterstattung** hat vier Ebenen: Geschäftsbericht (geprüfte Abschlüsse plus MD&amp;A; 10-K, 20-F), Zwischenberichte (10-Q, 6-K), Ad-hoc-Offenlegung kursrelevanter Ereignisse (8-K, 6-K; § 15 WpHG) und alles Übrige.
+- Die **Abschlussprüfung** entstand aus dem Krach von 1929 und dem SEC Act von 1934; der Standardbericht hat Einleitung, Umfang, Prüfungsurteil (sachgerechte Darstellung, GAAP) und sonstige Themen; die Big Four prüfen rund 97% der NYSE-Unternehmen. Lehre: Rechnungswesen ist **von Geschichte und gesellschaftlichem Kontext geprägt** - konservative HGB-Sicht gegenüber dem True-and-fair-view.
+- **Accounting Monopoly**: jeden Zug aufzeichnen, in einen Kontenplan einsortieren, die Abschlüsse aufstellen. Anfangsbestand Zahlungsmittel 1,500 = gezeichnetes Kapital 1,500; Schlussbestand Vermögenswerte 2,425 = Verbindlichkeiten 110 + Eigenkapital 2,315; Gewinn 815 = Gewinnrücklagen; die Zahlungsmittel fielen um 1,155 (CFO +865, CFI -2,120, CFF +100). **Gewinn ist nicht Cash**, die Gefängnis-frei-Karte ist kein Vermögenswert, und Sieger ist das Team, dessen **Eigenkapital** am stärksten gewachsen ist.
+</Aside>
+
+*Weiter: [Die Bilanz →](/de/learnings/mba/financial-performance-and-management-control/02-the-balance-sheet/) - die Momentaufnahme dessen, was ein Unternehmen besitzt und schuldet.*

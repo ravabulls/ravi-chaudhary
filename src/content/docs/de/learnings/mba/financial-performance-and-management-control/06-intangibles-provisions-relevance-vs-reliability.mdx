@@ -1,0 +1,330 @@
+---
+title: "Immaterielle Vermögenswerte, Rückstellungen und der Zielkonflikt zwischen Relevanz und Verlässlichkeit"
+description: "Warum Märkte 300 bis 1.000 Prozent des Buchwerts zahlen (der Rang-Kontrast zwischen Old Economy und Software), der IAS-38-Test für immaterielle Vermögenswerte, Forschung als Aufwand versus aktivierte Entwicklung, Anschaffungskosten- versus Neubewertungsmodell, der IAS-37-Rückstellungstest mit seiner Wahrscheinlichkeitsmatrix und der Bewertung zum Erwartungswert, die Fragen zum Fußballclub, und warum das alles ein einziger Kompromiss zwischen Relevanz und Verlässlichkeit ist."
+sidebar:
+  label: "6 · Immaterielle Werte & Rückstellungen"
+  order: 6
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Das letzte Kapitel behandelte die Vermögenswerte, gegen die man treten kann: Anlagen, Maschinen, Vorräte und die Abschreibungs- und Wertminderungsmechanik darum herum. Dieses Kapitel geht in die unbequemen Ecken der Bilanz. Erstens die Dinge, die ein Unternehmen besitzt, aber nicht anfassen kann - Software, Patente, Marken, die Registrierung eines Fußballspielers. Zweitens die Dinge, die es schuldet, für die es aber noch keinen festen Termin und keinen festen Betrag nennen kann - Rechtsstreitigkeiten, Restrukturierungen, Gewährleistungsansprüche. Beides zwingt die Rechnungslegung dazu, dieselbe unangenehme Frage zu beantworten: Wie sehr vertrauen wir einer Schätzung, bevor wir sie in den Abschluss lassen?
+
+IFRS antwortet mit einem Kompromiss. Der Abschluss soll **relevant** sein (zeigen, was den Wert tatsächlich treibt) und **verlässlich** (nur zeigen, was mit Sicherheit bewertet werden kann). Für immaterielle Vermögenswerte ergibt das eine strenge Hürde, die den größten Teil des selbst geschaffenen Werts *draußen* hält; für Rückstellungen ergibt es eine Erwartungswert-Logik, die unsichere Verpflichtungen *hereinlässt*, solange sie wahrscheinlich und schätzbar sind. Behalte diese Spannung im Kopf, und jede Regel weiter unten hört auf, willkürlich zu wirken.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Etwas kommt nur dann in die Bilanz, wenn der künftige Nutzen (oder Abfluss) **wahrscheinlich** und der Betrag **verlässlich bewertbar** ist. Dieser eine Test erklärt, warum ein gekaufter Spieler ein Vermögenswert ist, ein selbst ausgebildeter aber nicht, warum Forschung als Aufwand erfasst wird, während qualifizierte Entwicklung aktiviert wird, warum eine selbst geschaffene Marke unsichtbar bleibt und warum ein wahrscheinlicher Rechtsstreit zur Rückstellung wird, ein lediglich möglicher dagegen zur Anhangangabe. Relevanz ist der Gewinn; Verlässlichkeit ist der Eintrittspreis.
+</Aside>
+
+## 1 · Warum immaterielle Vermögenswerte wichtig sind - der Markt sieht, was die Bilanz übersieht
+
+Beginnen wir mit einem Rätsel aus dem Fortune-500-Ranking von 1999. Zwei Unternehmen, gemessen an fünf Größen. Das eine ist ein klassischer Autobauer, das andere ein Softwarehaus.
+
+| Rang (Fortune 500, 1999) | Autobauer der Old Economy (GM) | Softwarehaus (Microsoft) |
+|---|---|---|
+| Umsatz | 1 | 109 |
+| Vermögenswerte | 12 | 126 |
+| Nettovermögen | 28 | 24 |
+| Gewinne | 29 | 11 |
+| **Marktwert** | **42** | **1** |
+
+Der Autobauer ist beim Umsatz die Nummer eins und sitzt auf einem Berg von Vermögenswerten, doch der Aktienmarkt setzt ihn nur auf Rang 42. Das Softwarehaus liegt beim Umsatz auf Rang 109 und beim Vermögen auf Rang 126, und trotzdem bewertet der Markt es höher als jedes andere Unternehmen. Wofür der Markt zahlt - Code, Know-how, Netzwerkeffekte, Menschen - taucht in den Büchern kaum auf.
+
+Dieselbe Lücke zeigt sich immer dann, wenn ein Unternehmen ein anderes kauft. Vergleiche den gezahlten Preis mit dem Buchwert des erworbenen Eigenkapitals:
+
+| Übernahme (Ende der 1990er, in DM) | Kaufpreis | Buchwert des Eigenkapitals | Marktwert-Buchwert-Verhältnis |
+|---|---|---|---|
+| Telekommunikationskonzern kauft einen US-Mobilfunkanbieter (Telekom / Voicestream) | 106 Mrd. | 10 Mrd. | rund 1.000 % |
+| Mobilfunk-Übernahme (Vodafone / Mannesmann) | 350 Mrd. | 46 Mrd. | rund 760 % |
+| Fusion von Autobauern (Daimler-Benz / Chrysler) | 190 Mrd. | 51 Mrd. | rund 370 % |
+| Stahlfusion (Thyssen / Krupp-Hoesch) | 36 Mrd. | 12 Mrd. | rund 300 % |
+
+Käufer zahlten das Drei- bis Zehnfache dessen, was die Bücher als Wert des Eigenkapitals auswiesen. Die Schlussfolgerung der Folien ist deutlich: Die Rechnungslegung ist immer noch um materielle Vermögenswerte herum gebaut, obwohl die immateriellen - Marken, Know-how, Kunden, Lizenzen, Talente - das zu sein scheinen, was der Markt tatsächlich als wertrelevant ansieht. Der Rest dieses Kapitels erklärt, warum die Regeln trotzdem so vorsichtig sind.
+
+## 2 · Was als immaterieller Vermögenswert zählt - die Definition nach IAS 38
+
+Nach **IAS 38** ist ein immaterieller Vermögenswert ein **identifizierbarer, nicht monetärer Vermögenswert ohne physische Substanz**. Alle drei Merkmale haben Gewicht:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">identifizierbar = separierbar oder aus einem Vertrag oder Rechtsanspruch entstanden</span>
+  <span class="sc-chip amber">nicht monetär = weder Zahlungsmittel noch Anspruch auf einen festen Betrag</span>
+  <span class="sc-chip green">keine physische Substanz = der Wert liegt im Recht, nicht im Gegenstand</span>
+</div>
+
+Viele „nicht greifbare" Dinge werden bewusst von anderen Standards behandelt, IAS 38 erfasst sie also *nicht*: für Kunden hergestellte immaterielle Güter (das sind Vorräte, IAS 2), Leasingverhältnisse (IAS 17), monetäre und finanzielle Vermögenswerte (IAS 39), der **Geschäfts- oder Firmenwert** (IFRS 3) und Explorationsrechte (IFRS 6). Wenn dir der Geschäfts- oder Firmenwert später in diesem Kapitel begegnet, denk daran, dass er außerhalb von IAS 38 lebt.
+
+## 3 · Ansatz - gekauft versus selbst geschaffen, Forschung versus Entwicklung
+
+Der allgemeine Eintrittstest ist der aus dem Hinweiskasten: Das Unternehmen muss **wahrscheinlich** aus dem Posten Nutzen ziehen, und seine **Kosten müssen verlässlich bewertbar** sein. Für einen *gekauften* immateriellen Vermögenswert (eine Lizenz, ein Patent, eine Spielerregistrierung) ist das leicht - es gibt eine Rechnung. Die Schwierigkeiten beginnen bei **selbst geschaffenen** immateriellen Werten, und hier teilt IAS 38 das Leben einer Idee in zwei Phasen:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Idee</div>
+    <div class="arrow">→</div>
+    <div class="sc-node amber">Forschungsphase<span class="sub">eigenständige, planmäßige Suche nach neuen wissenschaftlichen oder technischen Erkenntnissen</span></div>
+    <div class="arrow">→<small>immer als Aufwand erfasst</small></div>
+    <div class="sc-node green">Entwicklungsphase<span class="sub">Anwendung dieser Erkenntnisse auf einen Plan oder Entwurf vor der kommerziellen Produktion oder Nutzung</span></div>
+    <div class="arrow">→<small>nur aktiviert, wenn die Tests nach IAS 38.57 bestanden werden</small></div>
+    <div class="sc-node slate">Markt<span class="sub">Produktion &amp; Vertrieb</span></div>
+  </div>
+  <figcaption>Die Grenze zwischen Forschung und Entwicklung entscheidet bei selbst geschaffenen immateriellen Vermögenswerten alles. Forschungsausgaben treffen sofort die GuV; Entwicklungsausgaben können zu einem Vermögenswert werden, aber erst, wenn das Projekt eine Reihe anspruchsvoller Hürden genommen hat.</figcaption>
+</div>
+
+Die Hürden in **IAS 38.57** laufen auf drei Fragen hinaus, die das Unternehmen mit Belegen beantworten können muss:
+
+<Steps>
+1. **Können wir es bauen?** Die technische Realisierbarkeit der Fertigstellung des immateriellen Vermögenswerts muss nachweisbar sein.
+2. **Werden wir es fertigstellen?** Es muss die Absicht *und* die finanziellen und sonstigen Ressourcen geben, ihn fertigzustellen und dann zu nutzen oder zu verkaufen.
+3. **Will das überhaupt jemand haben?** Ein Markt für das Ergebnis oder dessen interne Nützlichkeit muss nachweisbar sein, damit der künftige Nutzen wahrscheinlich ist.
+</Steps>
+
+Fällt eines davon durch, werden die Entwicklungsausgaben wie Forschung als Aufwand erfasst. Und einige selbst geschaffene Posten sind **rundheraus verboten**, wie wertvoll sie auch sein mögen: **selbst geschaffene Marken, Kundenlisten, Ausbildungsaufwendungen und ein selbst geschaffener Geschäfts- oder Firmenwert** werden niemals zu Vermögenswerten. Die Begründung ist Verlässlichkeit, nicht Relevanz - niemand bezweifelt, dass eine starke Marke etwas wert ist, aber niemand kann die Kosten ihres Aufbaus so messen, dass ein Wirtschaftsprüfer es nachprüfen könnte.
+
+<Aside type="caution">
+**Die klassische Falle.** Studierende schreiben „F&amp;E wird nach IFRS aktiviert". Wird sie nicht. *Forschung* wird immer als Aufwand erfasst. *Entwicklung* wird nur aktiviert, wenn jedes Kriterium erfüllt ist, und Unternehmen in regulierten Branchen geben zu, dass das vor der Zulassung selten passiert. In der Praxis ist der aktivierte Anteil an F&amp;E klein.
+</Aside>
+
+## 4 · Nach dem Ansatz - Anschaffungskostenmodell oder Neubewertungsmodell
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Anschaffungskostenmodell <small>der Normalfall</small></div>
+    <ul>
+      <li>Ansatz zu Anschaffungskosten abzüglich <strong>planmäßiger Abschreibung</strong> über die Nutzungsdauer, abzüglich etwaiger <strong>Wertminderungen</strong></li>
+      <li>Unbestimmte Nutzungsdauer (kein absehbares Ende des Nutzens) bedeutet <strong>keine planmäßige Abschreibung, nur Werthaltigkeitstest</strong></li>
+      <li>Dieselbe Mechanik wie bei den materiellen Vermögenswerten in Kapitel 5</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Neubewertungsmodell <small>der seltene Fall</small></div>
+    <ul>
+      <li>Zulässig <strong>nur dort, wo ein aktiver Markt existiert</strong> für den immateriellen Vermögenswert (IAS 38.72 ff.), was ungewöhnlich ist</li>
+      <li>Ansatz zum beizulegenden Zeitwert; die Wertsteigerung geht in eine <strong>Neubewertungsrücklage im Eigenkapital</strong>, nicht durch die GuV - die „neutrale" Variante</li>
+      <li>Wird weiterhin planmäßig abgeschrieben und ausgehend vom neubewerteten Betrag auf Wertminderung getestet</li>
+    </ul>
+  </div>
+</div>
+
+## 5 · Eine echte Bilanzierungsangabe - wie ein Pharmakonzern IAS 38 anwendet
+
+Der Anhang zum Konzernabschluss 2006 von Bayer zeigt, wie die Regeln in der Praxis aussehen, und die Offenheit ist lehrreich:
+
+- **Forschung** = Kosten laufender oder geplanter Untersuchungen, die auf neue wissenschaftliche oder technische Erkenntnisse zielen. **Wird nie aktiviert.** **Entwicklung** = Kosten der Anwendung von Forschungsergebnissen oder Spezialwissen auf Produktion, Prozesse, Dienstleistungen oder Güter, bevor die kommerzielle Produktion beginnt. **Wird aktiviert, wenn und nur wenn** eng definierte Bedingungen erfüllt sind, im Kern die, dass der künftige wirtschaftliche Nutzen hinreichend sicher ist, um die Entwicklungskosten zu decken.
+- Die Pointe: Weil Entwicklungsprojekte von der **behördlichen Zulassung** und anderen Unsicherheiten abhängen, sind die Bedingungen **normalerweise nicht erfüllt, bevor die Zulassung vorliegt**. Also wird auch fast die gesamte pharmazeutische Entwicklung als Aufwand erfasst.
+- Was als F&amp;E-Aufwand zählt: direkte Personal- und Materialkosten plus zugehörige Gemeinkosten der Labore und Technikabteilungen, Versuchs- und Pilotanlagen (einschließlich der Abschreibung der genutzten Gebäude), klinische Forschung, laufende Gebühren für die Nutzung fremder Patente, Steuern auf Forschungseinrichtungen und Anmeldegebühren für selbst geschaffene Patente, die nicht aktiviert werden.
+- Ein Bereich *wird* aktiviert: die **Anwendungsentwicklungsphase selbst erstellter Software**, abgeschrieben über die Nutzungsdauer der Software ab dem Zeitpunkt der Inbetriebnahme.
+
+## 6 · Diskussionsfälle - ein Spieler, ein Protein und eine Marke
+
+Drei kurze Fälle aus den Folien prüfen, ob die Ansatzlogik sitzt:
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Ein Fußballclub kauft einen Spieler für 40 Mio. <small>Dreijahresvertrag</small></div>
+    <ul>
+      <li>Nicht die Person - der Club kauft das <strong>Registrierungsrecht</strong>, ein vertragliches, identifizierbares, nicht monetäres Recht</li>
+      <li>Die Kosten sind verlässlich (die Ablösesumme), der Nutzen wahrscheinlich → <strong>immaterieller Vermögenswert</strong></li>
+      <li><strong>Abgeschrieben über die dreijährige Vertragslaufzeit</strong>, ein Drittel pro Jahr; wertgemindert, wenn Verletzung oder Formverlust den Wert zerstören</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Forschung für 500.000 identifiziert ein vielversprechendes Protein <small>Durchbruch in der Krebstherapie</small></div>
+    <ul>
+      <li>Die Wissenschaftler sind überzeugt, dass es wichtig ist, aber weitere Grundlagenforschung und Entwicklung sind nötig, bevor es überhaupt ein Medikament gibt</li>
+      <li>Das ist die <strong>Forschungsphase</strong> → <strong>Aufwand, kein Vermögenswert</strong></li>
+      <li>Hochrelevant, hoffnungslos unverlässlich - die Verlässlichkeit gewinnt</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Unternehmen A kauft B für 20 Mio. <small>materielles Nettovermögen 10 Mio., Marke 6 Mio. wert</small></div>
+    <ul>
+      <li>Weil die Marke in einem Unternehmenszusammenschluss <strong>gekauft</strong> wurde, kann sie bewertet werden → <strong>Ansatz mit 6 Mio.</strong>, obwohl B selbst sie nie hätte zeigen können</li>
+      <li>Die unerklärten <strong>4 Mio. sind der Geschäfts- oder Firmenwert</strong> (IFRS 3): nur auf Wertminderung getestet, nicht planmäßig abgeschrieben</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Die Diskussionsfragen <small>Relevanz, Verlässlichkeit, Ermessen</small></div>
+    <ul>
+      <li>Die Regeln tauschen Relevanz gegen Verlässlichkeit: gekaufte immaterielle Werte hinein, selbst geschaffene größtenteils hinaus</li>
+      <li>Das HGB wird für seine vielen <strong>expliziten</strong> Wahlrechte kritisiert; IAS 38 versteckt <strong>implizite</strong> Wahlrechte - das Management entscheidet, wann aus Forschung Entwicklung wird und ob die Tests nach 38.57 erfüllt sind</li>
+    </ul>
+  </div>
+</div>
+
+Der letzte Punkt ist der, den Prüfer mögen. Explizite Wahlrechte durch Ermessensentscheidungen zu ersetzen, beseitigt das Ermessen nicht; es verschiebt es in die Definitionen. Zwei identische Softwareprojekte können zu unterschiedlichen Bilanzen führen, je nachdem, wie früh das Management die Entwicklungsphase für eröffnet erklärt.
+
+## 7 · Rückstellungen - IAS 37
+
+Wechsle auf die andere Seite der Bilanz. Eine **Rückstellung** ist eine **Schuld mit ungewisser Fälligkeit oder Höhe** (IAS 37.10). Sie ist immer noch eine Schuld - eine gegenwärtige Verpflichtung gegenüber einem Dritten, von der ein Ressourcenabfluss erwartet wird - nur weiß man noch nicht genau, wann und wie viel. Ansetzen, wenn alle drei Bedingungen erfüllt sind:
+
+<Steps>
+1. Es besteht eine **gegenwärtige Verpflichtung** aus einem vergangenen Ereignis. Ihre Existenz kann ungewiss sein, aber sie muss **wahrscheinlicher sein als nicht** (IAS 37.15).
+2. Ein **Ressourcenabfluss** zur Erfüllung ist **wahrscheinlich**.
+3. Eine **verlässliche Schätzung** des Betrags ist möglich (IAS 37.14). Ist alles andere erfüllt, aber keine verlässliche Schätzung möglich, geht der Posten stattdessen in den Anhang.
+</Steps>
+
+Die Folien verdichten das zu einem Wahrscheinlichkeitsraster. Lies die Zeile (gibt es eine Verpflichtung?) gegen die Spalte (wird sie etwas kosten?):
+
+| Verpflichtung ↓ · Abfluss → | Abfluss wahrscheinlich | Abfluss möglich | Abfluss unwahrscheinlich |
+|---|---|---|---|
+| **Wahrscheinlich** (wahrscheinlicher als nicht) | **Rückstellung** in der Bilanz (nur Anhang, wenn keine verlässliche Schätzung möglich ist) | Anhang: Eventualverbindlichkeit | nichts |
+| **Möglich** | Anhang: Eventualverbindlichkeit | Anhang: Eventualverbindlichkeit | nichts |
+| **Unwahrscheinlich** | nichts | nichts | nichts |
+
+Zwei Abgrenzungsregeln folgen unmittelbar aus der Definition der Schuld. **Kein Dritter, keine Rückstellung:** Weil eine Schuld jemanden braucht, dem gegenüber man verpflichtet ist, verweigert IFRS Rückstellungen für rein interne künftige Aufwendungen, ein klarer Bruch mit dem HGB, das Rückstellungen für bestimmte interne Aufwendungen wie unterlassene Instandhaltung zulässt. Und **Pensionen gehören nicht hierher:** Verpflichtungen aus leistungsorientierten Pensionsplänen sind gesondert in **IAS 19** geregelt.
+
+## 8 · Rückstellung oder nicht? Die sieben Testfälle
+
+| Sachverhalt | Ergebnis | Warum |
+|---|---|---|
+| Bankkredit | <Badge text="Schuld, keine Rückstellung" variant="note" /> | Betrag und Fälligkeit sind vertraglich fixiert; nichts ist ungewiss |
+| Produkthaftungsprozess, neutrale Gutachter erwarten **keine** Entschädigung | <Badge text="Keine Rückstellung" variant="danger" /> | Abfluss nicht wahrscheinlich; als Eventualverbindlichkeit angeben, wenn er zumindest möglich ist |
+| Produkthaftungsprozess, neutrale Gutachter erwarten eine **wahrscheinliche** Entschädigung | <Badge text="Rückstellung" variant="success" /> | Gegenwärtige Verpflichtung, wahrscheinlicher Abfluss, Betrag schätzbar |
+| Generalüberholung alle vier Jahre, die nächste 2017 | <Badge text="Keine Rückstellung" variant="danger" /> | Kein Dritter hat einen Anspruch; das Unternehmen könnte sie einfach ausfallen lassen. Das HGB sieht das anders |
+| Restrukturierung nötig, detaillierter Plan liegt vor und wurde den Mitarbeitenden kommuniziert | <Badge text="Rückstellung" variant="success" /> | Die Ankündigung schafft bei anderen eine berechtigte Erwartung, es besteht also eine faktische Verpflichtung |
+| Das Management beabsichtigt lediglich zu restrukturieren, kein Plan | <Badge text="Keine Rückstellung" variant="danger" /> | Eine Absicht ist keine Verpflichtung; das Management kann es sich noch anders überlegen |
+| Leistungsorientierter Pensionsplan | <Badge text="IAS 19, nicht IAS 37" variant="caution" /> | Pensionsverpflichtungen haben ihren eigenen Standard |
+
+## 9 · Bewertung einer Rückstellung - beste Schätzung heißt Erwartungswert
+
+IAS 37.36 verlangt die **beste Schätzung** des Betrags, der zur Erfüllung der Verpflichtung nötig ist, und die Folien setzen sie mit dem **Erwartungswert** gleich: jedes Ergebnis mit seiner Wahrscheinlichkeit gewichten und aufsummieren. Ist der Zinseffekt wesentlich, wird das Ergebnis auf einen **Barwert** abgezinst. Die beiden Folienbeispiele (unten vollständig durchgerechnet) ergeben 60, wo das HGB 50 buchen würde, und 75, wo das HGB 100 buchen würde. Beachte, dass der Erwartungswert *weder* das wahrscheinlichste Ergebnis *noch* der schlechteste Fall ist. IFRS zielt auf Neutralität; das HGB zielt auf Vorsicht. Gleiche Fakten, unterschiedliche Zahlen, allein wegen der Philosophie hinter dem Standard.
+
+## 10 · Eventualverbindlichkeiten - die Anhangzone
+
+Ist eine Verpflichtung nur möglich oder ein Abfluss nicht wahrscheinlich, ist der Posten eine **Eventualverbindlichkeit** und wird im Anhang beschrieben statt gebucht. Der Anhang 2005 von Bayer ist das Beispiel der Folie: Eventualverbindlichkeiten von 177 Millionen, sämtlich aus für Dritte übernommenen Verbindlichkeiten, beschrieben als mögliche künftige Verpflichtungen, deren Existenz am Bilanzstichtag ungewiss ist. Der Anhang geht dann den **Cipro**-Rechtsstreit durch: 39 angebliche Sammelklagen, eine Individualklage und eine Klage einer Verbraucherorganisation (abgewiesen), seit Juli 2000 in den Vereinigten Staaten eingereicht, mit dem Vorwurf, ein Patentvergleich von 1997 mit einem Generikahersteller habe gegen das Kartellrecht verstoßen, indem er generisches Ciprofloxacin verzögerte, verbunden mit Forderungen nach dreifachem Schadensersatz. Das Unternehmen weist darauf hin, dass das Patent später eine Nachprüfung und gerichtliche Angriffe überstanden hat und inzwischen abgelaufen ist. Alles, was ein Leser zur Beurteilung des Risikos braucht, steht dort, aber es wurde keine Rückstellung angesetzt, weil eine Entschädigung nicht als wahrscheinlich eingeschätzt wurde.
+
+## 11 · Gelerntes - der Zielkonflikt an einer Stelle
+
+- Setze einen Posten an, wenn der **Nutzen wahrscheinlich** ist und er **verlässlich bewertet werden kann**. Dieser Test schließt selbst geschaffenen Geschäfts- oder Firmenwert, Forschung, Marken und Kundenlisten aus: **Relevanz vs. Verlässlichkeit** in Reinform. Derselbe Zielkonflikt steckt in den Entwicklungskosten: Sie zu aktivieren ist relevanter, sie als Aufwand zu erfassen ist verlässlicher, und IAS 38 sitzt unbequem dazwischen.
+- Die Abschreibungsmethoden sind dieselben wie bei materiellen Vermögenswerten: **linear, degressiv und leistungsabhängig**. In der Praxis dominiert die lineare Methode, außer dort, wo die degressive gewählt wird, um steuerliche Abzüge vorzuziehen.
+- Vermögenswerte verlieren manchmal auf eine Weise an Wert, die die planmäßige Abschreibung nicht abbilden kann. Dann werden sie abgewertet, meist auf den **Nutzungswert** auf Basis **abgezinster Zahlungsströme**.
+
+## Durchgerechnetes Beispiel
+
+### (a) Das Softwareprojekt - drei Bilanzen aus einem Satz von Fakten
+
+Fakten aus den Folien: Forschungskosten 1.000 und Entwicklungskosten 2.000 in Periode 01, die Bedingungen des IAS 38.57 sind erfüllt, der beizulegende Zeitwert auf einem aktiven Markt liegt zum 31. Dezember 01 bei 2.200, und die Nutzung beginnt in Periode 02 (also noch keine Abschreibung). Latente Steuern werden ignoriert.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">HGB<span class="n">alles als Aufwand</span></div>
+      <div class="sc-node slate">Immaterieller Vermögenswert 0<span class="sub">keine Aktivierung des Projekts</span></div>
+      <div class="sc-node soft">Zahlungsmittel -3.000<span class="sub">alle 3.000 ausgegeben</span></div>
+      <div class="sc-node amber">Jahresüberschuss -3.000<span class="sub">Forschung + Entwicklung in der GuV</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">IFRS Anschaffungskostenmodell<span class="n">Entwicklung aktiviert</span></div>
+      <div class="sc-node green">Immaterieller Vermögenswert 2.000<span class="sub">Entwicklungskosten erfüllen 38.57</span></div>
+      <div class="sc-node soft">Zahlungsmittel -3.000<span class="sub">gleicher Mittelabfluss</span></div>
+      <div class="sc-node amber">Jahresüberschuss -1.000<span class="sub">nur Forschung als Aufwand</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">IFRS Neubewertungsmodell<span class="n">aktiver Markt existiert</span></div>
+      <div class="sc-node green">Immaterieller Vermögenswert 2.200<span class="sub">Ansatz zum beizulegenden Zeitwert</span></div>
+      <div class="sc-node soft">Zahlungsmittel -3.000 · Neubewertungsrücklage +200<span class="sub">Wertsteigerung im Eigenkapital geparkt</span></div>
+      <div class="sc-node amber">Jahresüberschuss -1.000<span class="sub">die 200 berühren nie den Gewinn</span></div>
+    </div>
+  </div>
+  <figcaption>Identische Zahlungsströme, drei verschiedene Bilder. Das HGB zeigt einen Verlust von 3.000 und keinen Vermögenswert; das IFRS-Anschaffungskostenmodell zeigt einen Verlust von 1.000 und einen Vermögenswert von 2.000; das Neubewertungsmodell hebt den Vermögenswert auf 2.200, leitet die zusätzlichen 200 aber in eine Neubewertungsrücklage, sodass der Gewinn bei -1.000 bleibt. Das Eigenkapital unterscheidet sich je nach Modell um 2.000 oder 2.200.</figcaption>
+</div>
+
+### (b) Zwei Rückstellungen, bewertet als Erwartungswerte
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Regel</span>
+    <code>beste Schätzung = Σ pᵢ × Betragᵢ</code> (Barwert, wenn der Zinseffekt wesentlich ist)
+  </div>
+  <div>
+    <span class="name">Fall 1</span>
+    <code>0,2 × 100 + 0,8 × 50 = 20 + 40 = 60</code> → IAS 37 bucht 60; das HGB bucht 50, das einzelne wahrscheinlichste Ergebnis
+  </div>
+  <div>
+    <span class="name">Fall 2</span>
+    <code>0,5 × 100 + 0,5 × 50 = 50 + 25 = 75</code> → IAS 37 bucht 75; das HGB bucht 100, ein Münzwurf, also nimmt die Vorsicht den höheren Wert
+  </div>
+</div>
+
+### (c) Aufteilung eines Kaufpreises von 20 Mio.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">Gezahlter Preis 20 Mio.<span class="sub">was A für B hergibt</span></div>
+    <div class="arrow">→<small>abzüglich</small></div>
+    <div class="sc-node slate">Materielles Nettovermögen 10 Mio.<span class="sub">beizulegender Zeitwert der Vermögenswerte abzüglich der Schulden</span></div>
+    <div class="arrow">→<small>abzüglich</small></div>
+    <div class="sc-node green">Marke 6 Mio.<span class="sub">identifizierbarer immaterieller Wert, jetzt angesetzt</span></div>
+    <div class="arrow">→<small>Restgröße</small></div>
+    <div class="sc-node amber">Geschäfts- oder Firmenwert 4 Mio.<span class="sub">IFRS 3, nur auf Wertminderung getestet</span></div>
+  </div>
+  <figcaption>Kaufpreisallokation. Die Marke, die in Bs eigenen Büchern unsichtbar war, wird im Konzernabschluss von A zu einem Vermögenswert von 6 Mio., weil eine Transaktion ihr jetzt eine verlässliche Zahl gegeben hat. Die verbleibenden 4 Mio. sind der Geschäfts- oder Firmenwert: bezahlt, aber nichts Identifizierbarem zurechenbar.</figcaption>
+</div>
+
+## Fallecke
+
+Die Sitzung schließt damit, all das auf einen echten Geschäftsbericht zu richten, den von Borussia Dortmund, mit fünf Fragen: Wie werden **Spieler und ihr Wert** behandelt, und ist das sinnvoll; wie wird der **Spielerwert abgeschrieben**; welche **anderen wesentlichen Vermögenswerte** hat der Club, und wie weit erscheinen sie in der Bilanz; was verrät die **GuV** über das **Geschäftsmodell**, und wo finden sich zusätzliche Informationen; und was ist generell **seltsam an der Rechnungslegung eines Sportvereins**? Meine Skizze der Antworten:
+
+**Spieler als immaterielle Vermögenswerte.** Die immateriellen Vermögenswerte des Clubs bestehen aus gekauften **Spielerregistrierungen** plus etwas Software. Eine Registrierung wird zu Anschaffungskosten aktiviert, die die **Ablösesumme** und die direkt zurechenbaren Beraterkosten umfassen, und dann **linear über die Laufzeit des individuellen Spielervertrags abgeschrieben**. Bricht der Wert eines Spielers ein (eine schwere Verletzung, ein Formverlust, ein Vertrag, der nicht verlängert wird), wird die Registrierung **abgewertet**; in der Saison 2015/16 waren die Abwertungen auf immaterielle Vermögenswerte groß genug, um das erste Halbjahr in einen Nettoverlust zu drücken, obwohl der Umsatz gewachsen war. Über die Vertragslaufzeit abzuschreiben ist vertretbar - das Recht erlischt mit dem Vertrag - aber es lässt den Buchwert dem Kalender folgen, nicht der Form oder dem Marktpreis des Spielers.
+
+**Was die Bilanz nicht sehen kann.** Die Regeln wenden die Hürde des IAS 38 gnadenlos an. Ein Spieler, der aus der eigenen Akademie des Clubs kam, hat keine Ablösesumme gekostet, also gibt es keine verlässlichen Kosten und **keinen Vermögenswert**, wie wertvoll er auch sein mag. Dasselbe gilt für die **Marke** und die **Fanbasis**: selbst geschaffen, also verboten, obwohl der Club selbst die Markenreichweite als seinen einzigen nichtfinanziellen Leistungsindikator nennt und einräumt, dass sie nicht gemessen werden kann. Die Bilanz zeigt also den gekauften Kader und das Stadion, während die Dinge, die das Geld tatsächlich erwirtschaften, weitgehend fehlen. Zwei Clubs mit identischen Kadern können völlig unterschiedliche Vermögenssummen ausweisen, je nachdem, wie viele Spieler gekauft statt ausgebildet wurden.
+
+**Was die GuV verrät.** Die Umsatzpositionen erzählen das Geschäftsmodell besser als die Bilanz: **TV-Vermarktung** (Übertragungsrechte), **Werbung** (Sponsoring), **Spielbetrieb** (Einnahmen am Spieltag), **Merchandising**, Konferenzen und Catering sowie **Transfergeschäfte**. Die Transfererlöse sind die interessante Größe: Sie sind sprunghaft, an sportlichen Erfolg und Kaderplanung gebunden, und sie sind die einzige Stelle, an der der Wert eines selbst ausgebildeten Spielers je sichtbar wird, nämlich am Tag seines Verkaufs. Die generelle Merkwürdigkeit der Rechnungslegung eines Fußballclubs ist genau das: Die Bilanzierung ist technisch korrekt, und trotzdem ist die Bilanz ein schlechter Wegweiser dafür, was der Club wert ist, weil sein Wert in Menschen, einer Marke und einem Publikum steckt, die der Verlässlichkeitstest draußen hält.
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Immaterieller Vermögenswert | Ein identifizierbarer, nicht monetärer Vermögenswert ohne physische Substanz, etwa eine Lizenz, ein Patent, Software oder eine Spielerregistrierung (IAS 38) |
+| Identifizierbar | Vom Unternehmen separierbar oder aus einem Vertrag oder Rechtsanspruch entstanden; der Test, der den Geschäfts- oder Firmenwert aus IAS 38 heraushält |
+| Forschungsphase | Eigenständige, planmäßige Untersuchung mit dem Ziel neuer Erkenntnisse; immer als Aufwand erfasst |
+| Entwicklungsphase | Anwendung von Erkenntnissen auf einen Plan oder Entwurf vor der kommerziellen Produktion; nur aktiviert, wenn die Kriterien des IAS 38.57 erfüllt sind |
+| Kriterien des IAS 38.57 | Technische Realisierbarkeit, Absicht und Ressourcen zur Fertigstellung sowie ein nachweisbarer Markt oder Nutzen |
+| Selbst geschaffene Marke / Kundenliste / Geschäfts- oder Firmenwert | Selbst geschaffene immaterielle Werte, deren Ansatz IAS 38 ausdrücklich verweigert, was auch immer sie wert sind |
+| Anschaffungskostenmodell | Anschaffungskosten abzüglich planmäßiger Abschreibung abzüglich Wertminderung; bei immateriellen Werten mit unbestimmter Nutzungsdauer nur Wertminderung |
+| Neubewertungsmodell | Buchwert zum beizulegenden Zeitwert, nur bei aktivem Markt zulässig; die Wertsteigerung geht in eine Neubewertungsrücklage im Eigenkapital |
+| Geschäfts- oder Firmenwert | Was ein Erwerber über den beizulegenden Zeitwert des identifizierbaren Nettovermögens hinaus zahlt; IFRS 3, auf Wertminderung getestet, nicht planmäßig abgeschrieben |
+| Rückstellung | Eine Schuld mit ungewisser Fälligkeit oder Höhe (IAS 37.10), angesetzt, wenn die Verpflichtung wahrscheinlicher ist als nicht, der Abfluss wahrscheinlich und der Betrag schätzbar ist |
+| Faktische Verpflichtung | Eine Verpflichtung, die durch einen kommunizierten Plan oder eine geübte Praxis entsteht und anderen eine berechtigte Erwartung gibt, etwa eine angekündigte Restrukturierung |
+| Eventualverbindlichkeit | Eine mögliche Verpflichtung oder eine gegenwärtige, die nicht wahrscheinlich oder nicht schätzbar ist; im Anhang angegeben, nicht gebucht |
+| Beste Schätzung / Erwartungswert | Wahrscheinlichkeitsgewichteter Durchschnitt der Ergebnisse, abgezinst, wenn der Zinseffekt wesentlich ist |
+| Relevanz vs. Verlässlichkeit | Der Zielkonflikt hinter jeder Regel hier: nützliche gegen nachprüfbare Informationen |
+
+## Teste dich selbst
+
+1. Ein Autobauer liegt beim Umsatz auf Rang eins und beim Vermögen auf Rang zwölf, beim Marktwert aber nur auf Rang 42, während ein Softwareunternehmen beim Umsatz auf Rang 109 und beim Marktwert auf Rang eins liegt. Was sagt das über die Bilanz aus, und welche Belege aus großen Übernahmen weisen in dieselbe Richtung?
+2. Ein Unternehmen gibt im Jahr 01 1.000 für Forschung und 2.000 für die Entwicklung eines Softwareprodukts aus. Die Bedingungen des IAS 38.57 sind erfüllt, und ein aktiver Markt bepreist das Produkt zum Jahresende mit 2.200. Nenne den immateriellen Vermögenswert und den Jahresüberschuss nach HGB, nach dem IFRS-Anschaffungskostenmodell und nach dem IFRS-Neubewertungsmodell.
+3. Ein Rechtsstreit wird entweder 100 (Wahrscheinlichkeit 0,2) oder 50 (Wahrscheinlichkeit 0,8) kosten. Welche Rückstellung verlangt IAS 37, was würde das HGB zeigen, und wie ändert sich die Antwort, wenn die Wahrscheinlichkeiten 0,5 und 0,5 sind?
+4. Rückstellung oder nicht nach IFRS: (a) eine in vier Jahren fällige Generalüberholung, (b) ein den Mitarbeitenden bereits angekündigter Restrukturierungsplan, (c) ein Rechtsstreit, in dem unabhängige Gutachter keine Zahlung erwarten, (d) ein leistungsorientierter Pensionsplan.
+5. Unternehmen A zahlt 20 Mio. für Unternehmen B, dessen materielles Nettovermögen 10 Mio. wert ist und dessen Marke mit 6 Mio. bewertet wird. Wie wird die Marke im Konzernabschluss von A behandelt, was sind die verbleibenden 4 Mio., und warum hätte B diese Marke selbst nie zeigen können?
+6. Warum weist ein Club, der einen Spieler für 40 Mio. mit Dreijahresvertrag kauft, einen Vermögenswert aus, während ein ebenso guter Absolvent der eigenen Akademie nicht in der Bilanz steht? Nenne eine Konsequenz für den Vergleich von Clubs und ein Wahlrecht, das das HGB explizit macht, IAS 38 aber dem Ermessen des Managements überlässt.
+
+<Aside type="note" title="Lösungen">
+1. Die Buchwerte werden von materiellen Werten dominiert, während der Markt immaterielle Werte wie Software, Know-how und Netzwerke bewertet, die die Regeln größtenteils von der Bilanz fernhalten. Kaufpreise von rund 300 % (Stahl), 370 % (Autobauer), 760 % (Mobilfunk) und 1.000 % (Telekommunikation) des Buchwerts des Eigenkapitals zeigen dieselbe Lücke.
+2. HGB: immaterieller Vermögenswert 0, Jahresüberschuss -3.000. IFRS-Anschaffungskostenmodell: immaterieller Vermögenswert 2.000, Jahresüberschuss -1.000. IFRS-Neubewertungsmodell: immaterieller Vermögenswert 2.200, Neubewertungsrücklage 200 im Eigenkapital, Jahresüberschuss weiterhin -1.000.
+3. IAS 37: 0,2 × 100 + 0,8 × 50 = 60; das HGB würde 50 buchen. Bei 0,5 / 0,5 beträgt der Erwartungswert 75, während das HGB die vorsichtigen 100 buchen würde. Abzinsen, wenn der Zinseffekt wesentlich ist.
+4. (a) Nein, es gibt keinen Dritten, also besteht keine Verpflichtung (das HGB würde sie zulassen). (b) Ja, der kommunizierte Plan schafft eine faktische Verpflichtung. (c) Keine Rückstellung; als Eventualverbindlichkeit angeben, wenn ein Abfluss möglich ist. (d) Überhaupt nicht IAS 37; die Bilanzierung erfolgt nach IAS 19.
+5. Die Marke wird als immaterieller Vermögenswert von 6 Mio. angesetzt, weil die Übernahme ihr einen verlässlichen, transaktionsbasierten Wert gibt. Die verbleibenden 4 Mio. sind der Geschäfts- oder Firmenwert nach IFRS 3, auf Wertminderung getestet statt planmäßig abgeschrieben. B konnte die Marke nicht zeigen, weil selbst geschaffene Marken von IAS 38 ausdrücklich verboten sind.
+6. Die gekaufte Registrierung hat verlässliche Kosten (die Ablöse) und einen wahrscheinlichen Nutzen, sie wird also aktiviert und über drei Jahre abgeschrieben; der selbst ausgebildete Spieler hat keine messbaren Kosten, der Verlässlichkeitstest schließt ihn also aus. Konsequenz: Die Vermögenssummen hängen von der Kaufen-oder-Ausbilden-Historie ab und sind zwischen Clubs nicht vergleichbar. Implizites Wahlrecht: Das Management entscheidet, wann die Forschungsphase endet und ob die Kriterien des 38.57 erfüllt sind, was das HGB stattdessen über explizite Aktivierungswahlrechte regeln würde.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Warum es wichtig ist:** Rangvergleiche (Rang eins beim Umsatz, Rang 42 beim Marktwert; Rang 109 beim Umsatz, Rang eins beim Marktwert) und Übernahmeprämien von **300 bis 1.000 %** des Buchwerts des Eigenkapitals zeigen, dass Märkte für immaterielle Werte zahlen, die die Bilanz weitgehend ignoriert.
+- **Definition nach IAS 38:** identifizierbar, nicht monetär, ohne physische Substanz. Geschäfts- oder Firmenwert, Leasingverhältnisse, finanzielle Vermögenswerte, für Kunden hergestellte immaterielle Güter und Explorationsrechte werden anderswo behandelt.
+- **Ansatz:** wahrscheinlicher Nutzen + verlässlich bewertbare Kosten. Gekaufte immaterielle Werte bestehen den Test leicht. Selbst geschaffen: **Forschung immer als Aufwand**; **Entwicklung nur dann aktiviert**, wenn technische Realisierbarkeit, Absicht und Ressourcen sowie ein Markt oder Nutzen nachgewiesen werden können. **Rundheraus verboten:** selbst geschaffene Marken, Kundenlisten, Ausbildungsaufwand, interner Geschäfts- oder Firmenwert.
+- **Danach:** Anschaffungskostenmodell (planmäßig abschreiben + Wertminderung; unbestimmte Nutzungsdauer = nur Wertminderung) oder Neubewertungsmodell (nur bei aktivem Markt, Wertsteigerung in eine Neubewertungsrücklage). Echte Bilanzierungsangaben zeigen, dass Entwicklung vor der behördlichen Zulassung selten aktiviert wird, selbst erstellte Software dagegen oft.
+- **Softwareprojekt:** HGB 0 / -3.000; IFRS Anschaffungskosten 2.000 / -1.000; IFRS Neubewertung 2.200 mit 200 Rücklage / -1.000. **Fälle:** gekaufter Spieler = immaterieller Vermögenswert, über den Vertrag abgeschrieben; Forschung im Frühstadium = Aufwand; erworbene Marke = 6 Mio. Vermögenswert, 4 Mio. Geschäfts- oder Firmenwert.
+- **Rückstellungen (IAS 37):** Schuld mit ungewisser Fälligkeit oder Höhe. Braucht eine gegenwärtige Verpflichtung (wahrscheinlicher als nicht), einen wahrscheinlichen Abfluss und eine verlässliche Schätzung. Wahrscheinlich/wahrscheinlich = Rückstellung; möglich = Eventualverbindlichkeit im Anhang; unwahrscheinlich = nichts. Kein Dritter, keine Rückstellung (anders als im HGB). Pensionen gehen an IAS 19.
+- **Bewertung:** beste Schätzung = Erwartungswert (0,2 × 100 + 0,8 × 50 = 60; 0,5 × 100 + 0,5 × 50 = 75), abgezinst, wenn wesentlich; das HGB würde 50 und 100 zeigen.
+- **Der rote Faden:** Jede Regel ist ein Kompromiss zwischen **Relevanz und Verlässlichkeit**, und IAS 38 ersetzt die expliziten Wahlrechte des HGB durch implizites Managementermessen.
+</Aside>
+
+*Weiter: [Jahresabschlussanalyse →](/de/learnings/mba/financial-performance-and-management-control/07-financial-statement-analysis/) - die Abschlüsse in ein Urteil über das Geschäft verwandeln.*

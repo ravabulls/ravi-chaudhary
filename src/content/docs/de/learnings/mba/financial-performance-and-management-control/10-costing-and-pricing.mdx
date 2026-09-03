@@ -1,0 +1,483 @@
+---
+title: "Kostenrechnung & Preisgestaltung"
+description: "Drei Kräfte ziehen an einem Preis (Kunden, Wettbewerber, Kosten), und der Zeithorizont entscheidet, welche Kosten zählen - kurzfristig nur variable Kosten und der Deckungsbeitrag, langfristig sämtliche Kosten plus eine Gewinnmarge. Zuschlagskalkulation (Cost-plus) auf Basis der Vollkostenrechnung und einer Zielrendite, warum die Kosten eines einzelnen Fluges überwiegend Umlage sind, das zweistufige Kostenrechnungssystem, versteckte Komplexitätskosten, Target Costing, das vom Marktpreis rückwärts zu erlaubten Kosten rechnet, sowie die nicht kostenbasierten Hebel Preisdifferenzierung und Peak-Load-Pricing."
+sidebar:
+  label: "10 · Kostenrechnung & Preisgestaltung"
+  order: 10
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Bisher hat die Controlling-Hälfte des Kurses Kosten in fixe und variable sortiert und Deckungsbeiträge genutzt, um kurzfristige Entscheidungen zu beurteilen. Dieses Kapitel wendet sich der Frage zu, die jedes Unternehmen irgendwann laut beantworten muss: **Was verlangen wir?** Direkt dahinter sitzt eine leisere, schwierigere: **Was kostet uns dieses Produkt eigentlich?** Die beiden sind untrennbar. Man kann nicht auf Kostenbasis kalkulieren, bevor man entschieden hat, welche Kosten zum Produkt gehören, und für alles, was komplizierter ist als ein Limonadenstand, ist diese Entscheidung eine Kette von Ermessensurteilen.
+
+Die Vorlesung führt die Argumentation in zwei Richtungen. **Cost-plus** geht vorwärts: Vollkosten aufbauen, einen Gewinnaufschlag addieren, zu einem Preis gelangen. **Target Costing** geht rückwärts: beim Preis beginnen, den der Markt zahlen wird, den nötigen Gewinn abziehen und das, was übrig bleibt, als die Kosten behandeln, die man haben *darf*. Beide Richtungen laufen durch dieselbe Mechanik - ein Kostenrechnungssystem, das Einzelkosten zurechnet und Gemeinkosten umlegt - und das Kapitel ist ehrlich darin, dass diese Mechanik immer knarziger wird, je mehr Produkte es gibt und je stärker die Einzelkosten schrumpfen.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** An einem Preis ziehen drei Kräfte - was Kunden wertschätzen, was Wettbewerber verlangen und was das Produkt kostet - und der **Zeithorizont** entscheidet, welche Kosten zählen: kurzfristig nur variable Kosten und der Deckungsbeitrag, langfristig *sämtliche* Kosten plus eine Gewinnmarge. **Cost-plus** startet bei den eigenen Kosten und addiert eine Marge; **Target Costing** startet beim Marktpreis und rechnet rückwärts zu erlaubten Kosten. In welche Richtung man auch rechnet, die Antwort ist nur so gut wie die Umlage der Gemeinkosten darunter.
+</Aside>
+
+## 1 · Was an einem Preis zieht - drei Kräfte und eine Uhr
+
+Fragt man eine Führungskraft, was einen Preis bestimmt, lautet die Reflexantwort "unsere Kosten". Das ist ein Drittel der Wahrheit. Die Vorlesung nennt **drei Einflussgrößen**, die immer zusammenwirken, und ergänzt dann eine Dimension, die leicht vergessen wird: **wie lange der Preis halten muss**.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Kunden<span class="n">die Wertobergrenze</span></div>
+      <div class="sc-node violet">Was ist es ihnen wert?<span class="sub">liegt der Preis über dem wahrgenommenen Wert, gehen sie</span></div>
+      <div class="sc-node soft">Ablesbar über Marktforschung<span class="sub">wer kauft, und wie preissensibel er ist</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Wettbewerber<span class="n">der Referenzpunkt</span></div>
+      <div class="sc-node amber">Was kosten die Alternativen?<span class="sub">Konkurrenten deckeln, was man verlangen kann</span></div>
+      <div class="sc-node soft">Substitute zählen ebenfalls<span class="sub">nicht nur ähnlich aussehende Produkte</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Kosten<span class="n">die langfristige Untergrenze</span></div>
+      <div class="sc-node green">Was kostet es uns?<span class="sub">darunter verliert jeder Verkauf auf Dauer Geld</span></div>
+      <div class="sc-node soft">Welche Kosten? Hängt vom Horizont ab<span class="sub">siehe die beiden Panels unten</span></div>
+    </div>
+  </div>
+  <figcaption>Die drei Einflussgrößen einer Preisentscheidung. Kunden und Wettbewerber setzen die Obergrenze, die Kosten setzen die Untergrenze, und der Raum dazwischen ist der Ort, an dem die Preisentscheidung stattfindet.</figcaption>
+</div>
+
+Der **Zeithorizont** entscheidet, *welche* Kosten in die Rechnung gehören:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Kurzfristige Preisgestaltung <small>ein einmaliger Auftrag, freie Kapazität</small></div>
+    <ul>
+      <li>Fokus nur auf <strong>variable Kosten</strong> - die Fixkosten sind da, ob man den Auftrag annimmt oder nicht</li>
+      <li>Entscheidungsinstrument: <strong>Deckungsbeitragsrechnung</strong> - schlägt der Preis die variablen Stückkosten?</li>
+      <li>Jeder Preis über den variablen Kosten erhöht den Gewinn <em>dieser</em> Periode</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Langfristige Preisgestaltung <small>die reguläre Preisliste</small></div>
+    <ul>
+      <li><strong>Alle Kosten</strong>, variable und fixe, müssen gedeckt werden - plus eine <strong>Gewinnmarge</strong></li>
+      <li>Zwei Wege: der <strong>kostenbasierte Ansatz (Cost-plus)</strong> und der <strong>marktbasierte Ansatz (Target Costing)</strong></li>
+      <li>Der Rest dieses Kapitels handelt von diesen beiden Wegen</li>
+    </ul>
+  </div>
+</div>
+
+## 2 · Was kostet ein einzelner Flug? - warum Kostenrechnung überwiegend Umlage ist
+
+Die Vorlesung eröffnet die Produktkalkulation mit einer täuschend einfachen Frage zu einer Billigfluglinie (die Folien nutzen ihren Abschluss von 2011): **Was kostet ein bestimmter Flug - sagen wir, ein Abflug von Hahn nach Göteborg?** Hier ist alles, was die Airline in jenem Jahr ausgegeben hat:
+
+| Gewinn- und Verlustrechnung 2011, in Millionen € | |
+|---|---|
+| **Umsatzerlöse** | **5,147.7** |
+| Personalkosten | 535.4 |
+| Abschreibungen | 401.5 |
+| Treibstoff und Öl | 1,739.9 |
+| Wartung | 133.8 |
+| Marketing und Vertrieb | 236.8 |
+| Flugzeugmieten | 139.0 |
+| Streckengebühren | 581.7 |
+| Flughafengebühren | 654.9 |
+| Sonstiges | 100.8 |
+| **Betriebliche Aufwendungen gesamt** | **4,563.9** |
+| **Betriebsergebnis** | **583.8** |
+
+Nun versuche man, diese Zeilen einem einzelnen Flug zuzuordnen. Der auf dieser Etappe verbrannte Treibstoff, die Streckengebühr für diesen Luftraum und die Landegebühren an diesen beiden Flughäfen lassen sich mit vertretbarer Sicherheit dem Flug zuordnen. Alles andere ist geteilt: Crews werden über das gesamte Netz eingeplant, Flugzeuge schreiben ab, welche Strecke sie auch fliegen, die Wartung folgt den Flugstunden, das Marketing verkauft die Marke, und die Mieten decken Maschinen ab, die Dutzende von Zielen bedienen. Für einen einzelnen Flug als Kostenträger ist **der größte Teil der Kostenbasis indirekt**, und Gemeinkosten lassen sich nicht zurechnen - sie müssen nach irgendeiner Regel **umgelegt** werden. Die Kosten eines Fluges sind daher keine Tatsache, die man nachschlägt; sie sind das Ergebnis eines Kostenrechnungssystems und der darin eingebackenen Umlageentscheidungen.
+
+Die Folien stellen dem ein kleines Modelabel gegenüber, das das Gegenteil von Kostenverschleierung tut: Es **veröffentlicht die vollständige Cost-plus-Aufbaurechnung** jedes Kleidungsstücks, die Kostenbestandteile und den Aufschlag obendrauf, sodass der Kunde genau sieht, wie der Preis konstruiert wurde. Cost-plus als Transparenzversprechen statt als interne Kalkulation.
+
+## 3 · Das zweistufige Kostenrechnungssystem - zurechnen, was geht, den Rest umlegen
+
+Ein Kostenrechnungssystem beantwortet die Flugfrage in zwei Zügen. **Schritt eins** sortiert jeden Euro Kosten nach seiner *Art* und fragt, ob er direkt oder indirekt ist. **Schritt zwei** schickt Einzelkosten direkt auf das Produkt und leitet Gemeinkosten über Kostenstellen, bevor sie auf einem Produkt landen.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Materialkosten<span class="n">überwiegend direkt</span></div>
+      <div class="sc-node green">Rohstoffe, Hilfsstoffe, Komponenten<span class="sub">eine Stückliste sagt, welches Produkt sie verbraucht hat</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Personalkosten<span class="n">überwiegend indirekt</span></div>
+      <div class="sc-node amber">Fertigungslöhne, Verwaltungspersonal<span class="sub">Menschen bedienen viele Produkte und Abteilungen</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Maschinenkosten<span class="n">überwiegend indirekt</span></div>
+      <div class="sc-node amber">Abschreibungen, Wartung<span class="sub">eine Maschine läuft mit dem, was auf ihr eingeplant ist</span></div>
+    </div>
+  </div>
+  <figcaption>Schritt eins, die Kostenartenrechnung: Der gesamte Kostenpool wird in gängige Kostenarten aufgeteilt, und jede Art wird als direkt oder indirekt markiert. Material ist der eine Block, der üblicherweise zurechenbar ist.</figcaption>
+</div>
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Einzelkosten → zurechnen <small>Schritt zwei, Teil 1</small></div>
+    <ul>
+      <li>Einzelmaterial und Einzellohn gehen <strong>direkt auf das Produkt</strong></li>
+      <li>Grundlage: <strong>Produktionspläne und Stücklisten</strong> - Dokumente, die bereits sagen, welches Produkt was verbraucht hat</li>
+      <li>Kein Ermessen nötig, also keine Verzerrung</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Gemeinkosten → umlegen <small>Schritt zwei, Teil 2</small></div>
+    <ul>
+      <li>Zunächst in <strong>Kostenstellen</strong> gesammelt - Beschaffung, Produktion, Vertrieb, Verwaltung</li>
+      <li>Dann von den Kostenstellen mit einem Umlageschlüssel auf die <strong>Kostenträger</strong> (Produkt 1 bis Produkt n) geschoben</li>
+      <li>Jeder Schlüssel ist eine Wahl - und ein anderer Schlüssel ergibt andere Produktkosten</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sc-chips">
+  <span class="sc-chip green">Kostenträger = das, dessen Kosten man wissen will</span>
+  <span class="sc-chip blue">Kostenstelle = wo Gemeinkosten sich sammeln</span>
+  <span class="sc-chip amber">zurechnen = einem Dokument folgen</span>
+  <span class="sc-chip violet">umlegen = eine Regel anwenden</span>
+</div>
+
+## 4 · Vollkostenrechnung - die Kostenbasis aufbauen
+
+Setzt man die beiden Schritte zusammen, erhält man **Vollkosten je Produkt**: alle Kosten, die das Produkt auf seinem Weg vom Rohstoff bis zum betreuten Kunden aufsammelt. Das Beispiel der Vorlesung ist ein Unternehmen, das **200,000 Stück** im Jahr herstellt. Man lese es von oben nach unten - der erste Block sind die Kosten, das Stück zu *fertigen*, der zweite Block die Kosten, es zu *entwickeln, zu verkaufen und zu betreuen*.
+
+| Kostenzeile | Pro Stück (€) | Gesamt für 200,000 Stück (€) |
+|---|---|---|
+| Einzelmaterial | 385 | 77,000,000 |
+| Fertigungseinzellohn | 53 | 10,600,000 |
+| Direkte Maschinenkosten | 57 | 11,400,000 |
+| Fertigungsgemeinkosten | 45 | 9,000,000 |
+| **= Herstellkosten des Umsatzes** | **540** | **108,000,000** |
+| F&E | 20 | 4,000,000 |
+| Produkt- und Prozessdesign | 30 | 6,000,000 |
+| Marketing | 90 | 18,000,000 |
+| Distribution | 25 | 5,000,000 |
+| Kundendienst | 15 | 3,000,000 |
+| **= Betriebskosten** | **180** | **36,000,000** |
+| **= Vollkosten je Produkt** | **720** | **144,000,000** |
+
+Zwei Dinge fallen auf. Erstens enthalten die **720** bereits umgelegtes Geld: Fertigungsgemeinkosten, F&E, Design und der Rest wurden diesem Stück nie zugerechnet, sie wurden darüber verteilt. Zweitens gelten die Stückzahlen nur **bei 200,000 Stück** - halbiert man die Menge, verdoppelt sich der fixe Anteil jeder umgelegten Zeile pro Stück. Das sollte man für die durchgerechneten Beispiele im Kopf behalten.
+
+## 5 · Cost-plus - einen Gewinnaufschlag auf die Kostenbasis addieren
+
+Der **kostenbasierte Ansatz der langfristigen Preisgestaltung** ist genau das, was sein Name sagt: eine Kostenbasis nehmen, einen Gewinnaufschlag addieren, und das ist der Preis. Weil es ein *langfristiger* Preis ist, ist die Kostenbasis die **Vollkostenbasis** - langfristig müssen die Erlöse alles decken, Fixes wie Variables.
+
+<Steps>
+
+1. **Kostenbasis pro Stück** - die Vollkosten je Produkt (720 im Beispiel).
+
+2. **Den Gewinnaufschlag addieren** - ein Prozentsatz der Kostenbasis, der den Gewinn liefern soll.
+
+3. **= Voraussichtlicher Verkaufspreis vor Umsatzsteuer** - der Nettopreis, den das Unternehmen tatsächlich behält.
+
+4. **Die Umsatzsteuer addieren** - der Anteil des Staates, an den Kunden weitergereicht.
+
+5. **= Voraussichtlicher Verkaufspreis inklusive Umsatzsteuer** - der Listenpreis, den der Kunde sieht.
+
+</Steps>
+
+Woher kommt der Aufschlagssatz? Er ist eine Managemententscheidung, und die Vorlesung zeigt einen disziplinierten Weg, sie zu treffen: **ihn aus einer Zielrendite auf das eingesetzte Kapital ableiten**.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Zielgewinn</span>
+    <code>eingesetztes Kapital 45,000,000 × Zielrendite 15% = 6,750,000</code>
+  </div>
+  <div>
+    <span class="name">Pro Stück</span>
+    <code>6,750,000 ÷ 200,000 Stück = 33.75 pro Stück</code>
+  </div>
+  <div>
+    <span class="name">Aufschlag in %</span>
+    <code>33.75 ÷ 720 Kostenbasis = 4.6875%</code>
+  </div>
+  <div>
+    <span class="name">Preis vor Umsatzsteuer</span>
+    <code>720 + 33.75 = 753.75</code>
+  </div>
+</div>
+
+Der Aufschlag wirkt winzig (unter 5%), weil er auf *Vollkosten* sitzt, die bereits jeden Gemeinkostenblock enthalten. Hätte das Unternehmen stattdessen einfach runde **12%** gewählt, ergibt dieselbe Kostenbasis 720 + 86.40 = **806.40** - ein Preis, der um mehr als 50 höher liegt, ohne jede Veränderung am Produkt oder an seinen Kosten. Das ist die erste leise Schwäche von Cost-plus: Der Aufschlag ist eine Entscheidung, die sich als Rechnung verkleidet.
+
+<Aside type="caution">
+**Cost-plus ist zirkulär.** Die Kostenbasis pro Stück hängt von der unterstellten Menge ab (200,000 Stück verteilen die Fixkosten), der Preis hängt von der Kostenbasis ab, und die Menge, die man tatsächlich verkauft, hängt vom Preis ab. Unterstellt man eine kleinere Menge, steigen die Stückkosten, also steigt der Preis, also kaufen weniger Leute - was genau die kleinere Menge ist, mit der man begonnen hat. Das durchgerechnete Beispiel (b) unten zeigt die Schleife mit Zahlen und warum nur Marktforschung sie durchbricht.
+</Aside>
+
+## 6 · Warum Cost-plus schwieriger wird - Umlage, Vielfalt und versteckte Komplexitätskosten
+
+Das Beispiel mit den 4.6875% ist sauber, weil uns die Zahlen gereicht wurden. In realen Werken steht die Kostenbasis von zwei Seiten gleichzeitig unter Druck.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Einzelkosten schrumpfen<span class="sub">weniger vom Gesamten ist zurechenbar</span></div>
+    <div class="arrow">→<small>also ist ein größerer Anteil indirekt</small></div>
+    <div class="sc-node violet">Mehr Umlage, weniger Zurechnung<span class="sub">mehr der Stückkosten beruht auf einer Regel</span></div>
+    <div class="arrow">→<small>während gleichzeitig</small></div>
+    <div class="sc-node amber">Mehr Produkte, mehr Varianten<span class="sub">jede mit einem anderen Bedarfsmuster</span></div>
+    <div class="arrow">→<small>die</small></div>
+    <div class="sc-node slate">Gemeinkosten ungleichmäßig verbrauchen<span class="sub">ein einfacher Schlüssel verteilt sie trotzdem gleichmäßig</span></div>
+  </div>
+  <figcaption>Die beiden Druckpunkte auf der Cost-plus-Kostenbasis. Weniger der Kosten ist zurechenbar, und der nicht zurechenbare Teil wird von verschiedenen Produkten sehr unterschiedlich verbraucht - so wird eine Umlageregel, die bei drei Produkten harmlos war, bei dreißig irreführend.</figcaption>
+</div>
+
+Das Übelste daran ist das, was die Vorlesung **variantenbedingte Komplexitätskosten** nennt. Jede zusätzliche Variante zieht einen Schwanz kleiner Gemeinkosten hinter sich her, von denen keiner auf einer Stückliste auftaucht:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">zusätzliche Lieferantensuche und -auswahl</span>
+  <span class="sc-chip amber">lange Lieferzeiten</span>
+  <span class="sc-chip amber">zusätzliche Tests</span>
+  <span class="sc-chip amber">umfangreiche Dokumentation und Pflege</span>
+  <span class="sc-chip amber">mehr Bestelltransaktionen</span>
+  <span class="sc-chip amber">hohe Lagerbestände</span>
+  <span class="sc-chip amber">komplexe Logistik</span>
+  <span class="sc-chip amber">höhere Fehlerquote in der Produktion</span>
+</div>
+
+Diese Kosten sind **versteckt**: Sie sitzen im Gemeinkostenpool, vermischt mit allem anderen, und ein Kostenrechnungssystem kann sie nicht ohne Weiteres herauslösen und der Variante zuordnen, die sie verursacht hat. Selbst die **Prozesskostenrechnung (Activity-Based Costing)**, die erfunden wurde, um Gemeinkosten über die Aktivitäten zu verteilen, die Produkte tatsächlich in Anspruch nehmen, gibt hier nur begrenzte Orientierung, und den traditionellen Kostenschätzverfahren geht es genauso. Die Vorlesung weist auf aktuelle Forschung zu einem **simulationsbasierten Ansatz** für die Schätzung von Komplexitätskosten hin - für uns zählt nicht die Methode, sondern das Eingeständnis: Je komplexer das Produktprogramm, desto weniger sollte man einem Cost-plus-Preis trauen, der auf einfacher Umlage aufgebaut ist.
+
+## 7 · Target Costing - beim Markt beginnen und rückwärts rechnen
+
+Cost-plus fragt: *Was kostet es, also was müssen wir verlangen?* **Target Costing** dreht die Frage um: *Was wird der Markt zahlen, also was darf es kosten?* Die Vorlesung stellt die beiden Philosophien nebeneinander.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Kostenbasiert: Cost-plus <small>von innen nach außen</small></div>
+    <ul>
+      <li>Ausgangspunkt: ein <strong>gegebenes Produkt, ein gegebener Prozess und eine gegebene Kapazität</strong></li>
+      <li>Aufgabe: den <strong>Verbrauch von Produktionsfaktoren</strong> analysieren und bewerten</li>
+      <li>Genutzt für monatliches Reporting, Planung und Kontrolle, Produktkosten- und Preiskalkulation</li>
+      <li>Ziel: die Produktkosten immer weiter drücken</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Marktbasiert: Target Costing <small>von außen nach innen</small></div>
+    <ul>
+      <li>Ausgangspunkt: <strong>Kundenpräferenzen</strong> und der <strong>erzielbare Marktpreis</strong></li>
+      <li>Aufgabe: die <strong>erlaubten Produktkosten</strong> ableiten - und die <strong>Produkteigenschaften</strong> aus dem ableiten, was Kunden wertschätzen</li>
+      <li>Stellt sicher, dass Produkte so gestaltet <em>und</em> bepreist werden, wie Kunden es wollen</li>
+      <li>Ziel: dieselbe dauerhafte Kostensenkung, aber vom Markt getrieben</li>
+    </ul>
+  </div>
+</div>
+
+Das Vorgehen hat drei Stufen, und die Reihenfolge lohnt sich zu merken, weil Prüfungsfragen ihr folgen:
+
+<Steps>
+
+1. **Zielkostenermittlung.** Die Marktforschung liefert den **Zielpreis** - was das Kundensegment zu zahlen bereit ist. Zuerst die **Umsatzsteuer** herausrechnen (die Scheibe des Staates gehörte nie einem selbst), dann den **Zielgewinn** abziehen. Was bleibt, sind die **erlaubten Kosten**, auch Zielkosten genannt.
+
+2. **Zielkostenspaltung.** Die erlaubten Kosten auf die **Produktkomponenten** aufteilen - wie viel darf jeder Teil des Produkts kosten, im Verhältnis zu dem, was Kunden daran schätzen.
+
+3. **Zielkostenkontrolle.** Das Ziel jeder Komponente mit ihren **Standardkosten** im aktuellen Entwurf vergleichen und nachsteuern. Wo die Standardkosten höher liegen, ist diese Lücke das **Kostensenkungspotenzial**, angegangen über die **Wertanalyse**: Aktivitäten in wertschöpfende und nicht wertschöpfende sortieren und Letztere streichen oder umgestalten.
+
+</Steps>
+
+Das Zahlenbeispiel der Vorlesung ist ein Flugpreis von Köln/Bonn nach Barcelona ausschließlich für Privatreisende, ohne Geschäftssegment:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Zielpreis</span>
+    <code>60.00 (was der Privatreisende zahlen wird, inklusive Umsatzsteuer)</code>
+  </div>
+  <div>
+    <span class="name">abzüglich 16% Umsatzsteuer</span>
+    <code>60.00 - 9.60 = 50.40 Nettopreis</code>
+  </div>
+  <div>
+    <span class="name">abzüglich Zielgewinn</span>
+    <code>20% Umsatzrendite × 50.40 = 10.08</code>
+  </div>
+  <div>
+    <span class="name">= Zielkosten</span>
+    <code>40.32 erlaubte Kosten je Sitzplatz</code>
+  </div>
+</div>
+
+Umsatzrendite heißt Gewinn geteilt durch Umsatz, und der Umsatz ist der **Nettopreis**, also werden die 20% auf 50.40 genommen, nicht auf 60.00. Alles, was die Airline tut - Crew, Treibstoff, Flugzeug, Bodenabfertigung - muss in 40.32 hineinpassen, sonst lohnt es sich nicht, den Sitzplatz zu diesem Preis zu verkaufen.
+
+### Target Costing in Aktion: das 2,500-Dollar-Auto
+
+Das bekannteste industrielle Beispiel ist das **Volksauto**, das ein indischer Autobauer 2003 zu bauen beschloss. Trotz des Wachstums des Landes lagen die Autopreise weit über dem, was sich die meisten Inder leisten konnten, also gab der Vorstandsvorsitzende seinen Entwicklern drei Bedingungen mit: die Vorschriften einhalten, festgelegte Ziele für Kraftstoffeffizienz und Beschleunigung treffen und zu einem **Zielpreis von nur 2,500 Dollar** verkaufen. Das Auto kam 2008 zu genau diesem Preis auf den Markt, mit 50 Meilen pro Gallone, 65 mph Höchstgeschwindigkeit und Erfüllung der indischen Sicherheits- und Abgasstandards. Der Preis wurde genau so getroffen, wie es die Target-Costing-Logik vorhersagt:
+
+- **Kostensenkung über Wettbewerb** - statt langfristiger Lieferantenbeziehungen wurden Teile über **internetbasierte Auktionen** beschafft.
+- **Weglassen von Komponenten** - kein Radio, keine Servolenkung, keine elektrischen Fensterheber, keine Klimaanlage und **ein Scheibenwischer statt zwei**.
+- **Technische Innovationen** - eine **hohlgebohrte Lenkwelle**, eine Antriebswelle mit kleinerem Durchmesser, ein Kofferraum in Aktentaschengröße und ein kleiner **Heckmotor**, der nicht viel stärker war als ein Aufsitzrasenmäher der Oberklasse.
+
+Man beachte die Reihenfolge: Der Preis kam zuerst, und das Produkt wurde von ihm aus rückwärts entworfen. Das ist Target Costing.
+
+## 8 · Jenseits der Kosten - Preise nach Verhalten
+
+Ob man den Preis aufbaut oder rückwärts rechnet, Kosten sind nur eine Eingangsgröße. Die Vorlesung schließt mit zwei **nicht kostenbezogenen Überlegungen**, beide gestützt auf **Marktforschung zum Konsumentenverhalten**:
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Preisdifferenzierung <small>verschiedene Kunden, verschiedene Preise</small></div>
+    <ul>
+      <li>Manchen Kunden mehr berechnen, weil ihre <strong>Preiselastizität</strong> geringer ist - sie zahlen ohnehin</li>
+      <li>Klassischer Fall: <strong>Geschäftsreisende</strong> (müssen reisen, der Arbeitgeber zahlt) gegenüber <strong>Privatreisenden</strong> (wechseln oder bleiben zu Hause)</li>
+      <li>Derselbe Sitzplatz, dieselben Kosten, zwei Preise</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Peak-Load-Pricing <small>verschiedene Zeiten, verschiedene Preise</small></div>
+    <ul>
+      <li>Nach <strong>Kapazitätsauslastung</strong> berechnen - hoch, wenn die Kapazität knapp ist, niedrig, wenn sie brachliegt</li>
+      <li>Klassischer Fall: <strong>Hotelzimmer während einer Messe</strong> kosten weit mehr als dasselbe Zimmer in der Woche danach</li>
+      <li>Die Kosten des Zimmers haben sich nicht verändert, die Nachfrage schon</li>
+    </ul>
+  </div>
+</div>
+
+Beides erinnert daran, dass die erste Einflussgröße auf den Preis, der Kunde, nicht eine Person ist, sondern viele Segmente und viele Momente - und ein einziger Cost-plus-Preis lässt Geld auf dem Tisch liegen.
+
+## Durchgerechnetes Beispiel
+
+Drei Übungen aus dem Kurs, mit den korrekten Lösungen durchgerechnet.
+
+### (a) Der Cost-plus-Stundensatz einer Beratung <Badge text="Übung 6" variant="note" />
+
+Eine Logistikberatung kalkuliert ihre Stunden nach Cost-plus und will **25% Rendite auf 750,000 eingesetztes Kapital**. Der Lohn kostet 25 pro Stunde, sonstige variable Kosten 4 pro Stunde, die fixen Gemeinkosten betragen 250,000 im Jahr, und sie erwartet **20,000 abrechenbare Stunden**. Welcher Stundensatz erreicht das Ziel?
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Variabel pro Stunde</span>
+    <code>Lohn 25 + sonstige variable 4 = 29.00</code>
+  </div>
+  <div>
+    <span class="name">Fix pro Stunde</span>
+    <code>250,000 ÷ 20,000 Stunden = 12.50</code>
+  </div>
+  <div>
+    <span class="name">Zielrendite pro Stunde</span>
+    <code>750,000 × 25% = 187,500 ÷ 20,000 Stunden = 9.375</code>
+  </div>
+  <div>
+    <span class="name">Zielsatz</span>
+    <code>25 + 4 + 12.50 + 9.375 = 50.875 pro Stunde</code>
+  </div>
+</div>
+
+Dasselbe Rezept wie in Abschnitt 5: Vollkosten je Leistungseinheit (hier eine Stunde) plus ein Zielgewinn je Einheit, abgeleitet aus der Rendite auf das eingesetzte Kapital. Und dieselbe Schwäche - die 12.50 und die 9.375 gelten nur, wenn 20,000 Stunden tatsächlich abgerechnet werden.
+
+### (b) Ein Produkt, drei Mengen, eine Nachfragekurve <Badge text="Übung 9" variant="note" />
+
+Ein Unternehmen stellt ein Produkt her mit **Fixkosten von 200,000** und **variablen Kosten von 10 pro Stück**; die Kostenfunktion gilt zwischen 10,000 und 30,000 Stück. Es wendet einen **Aufschlag von 33.3%** auf die Vollstückkosten an.
+
+**Teil a - Cost-plus bei drei Mengenprognosen:**
+
+| Absatzprognose | Fix pro Stück | Variabel pro Stück | Vollstückkosten | + 33.3% Aufschlag | Cost-plus-Preis |
+|---|---|---|---|---|---|
+| 10,000 Stück | 20.00 | 10 | 30.00 | 10.00 | **40.00** |
+| 20,000 Stück | 10.00 | 10 | 20.00 | 6.67 | **26.67** |
+| 30,000 Stück | 6.67 | 10 | 16.67 | 5.56 | **22.22** |
+
+Drei Preise für ein Produkt, und nichts hat sich geändert außer der Menge, die der Buchhalter unterstellt hat. Das ist die Zirkularität aus Abschnitt 5 in aller Offenheit: Der Preis hängt von den Stückkosten ab, die Stückkosten hängen von der Menge ab, die Menge hängt vom Preis ab.
+
+**Teil b - den Markt entscheiden lassen.** Die Marktforschung zeigt, wie viele Stück sich zu welchem Preis verkaufen. Der Gewinn ist (Preis - 10) × Stück - 200,000:
+
+| Preis | Menge | Deckungsbeitrag pro Stück | Deckungsbeitrag gesamt | Gewinn |
+|---|---|---|---|---|
+| 40 | 10,000 | 30 | 300,000 | 100,000 |
+| 35 | 15,000 | 25 | 375,000 | 175,000 |
+| 30 | 20,000 | 20 | 400,000 | **200,000** |
+| 25 | 25,000 | 15 | 375,000 | 175,000 |
+| 20 | 30,000 | 10 | 300,000 | 100,000 |
+
+Der **gewinnmaximale Preis ist 30**, bei 20,000 verkauften Stück. Keiner der drei Cost-plus-Preise aus Teil a trifft ihn. Die Nachfragekurve, nicht der Aufschlag, bricht den Kreis auf - und das ist das ganze Argument für den marktbasierten Ansatz.
+
+### (c) Der Gastronomiekomplex und die verlockende Vermietung <Badge text="Übung 8" variant="note" />
+
+Ein Gastronomiekomplex hat drei Abteilungen. Umsätze, Einzelkosten und das daraus resultierende **Abteilungsergebnis** sind bekannt; die **Gemeinkosten von 52,000** im Monat sind bisher nur in Summe bekannt.
+
+**Teil a - die Gemeinkosten nach Fläche umlegen.** Die Gesamtfläche beträgt 1,200 + 840 + 960 = 3,000 sq ft, also 52,000 ÷ 3,000 = **17.33 pro sq ft**.
+
+| | Speisesaal | Café | Lounge | Gesamt |
+|---|---|---|---|---|
+| Umsatz | 184,800 | 135,600 | 152,900 | 473,300 |
+| Einzelkosten | (154,600) | (129,000) | (127,600) | (411,200) |
+| **Abteilungsergebnis** | **30,200** | **6,600** | **25,300** | **62,100** |
+| Fläche (sq ft) | 1,200 | 840 | 960 | 3,000 |
+| Gemeinkosten zu 17.33 pro sq ft | (20,800) | (14,560) | (16,640) | (52,000) |
+| **Betriebsergebnis** | **9,400** | **-7,960** | **8,660** | **10,100** |
+
+**Teil b - das Angebot.** Ein Betreiber eines Souvenirladens würde die Fläche des Cafés für **8,000 im Monat** mieten. Auf den ersten Blick ist es offensichtlich: 8,000 Miete schlagen einen Verlust von 7,960. Aber man sehe noch einmal hin - das Café erwirtschaftet ein *positives* Abteilungsergebnis von 6,600; der Verlust erscheint erst, nachdem 14,560 an Gemeinkosten über den Flächenschlüssel darauf abgestellt wurden. Bevor man berät, muss man wissen, welche Gemeinkosten tatsächlich wegfielen und was mit den beiden anderen Abteilungen passiert.
+
+**Teil c - der Test auf entscheidungsrelevante Kosten.** Der Eigentümer schätzt, dass die Gemeinkosten bei vermietetem Café von 52,000 auf **46,600** sänken (Verwaltung, Werbung, Nebenkosten, Reparaturen, Versicherung und Abschreibungen gehen alle etwas zurück; die Zinsen bleiben bei 5,400). Der Lounge-Umsatz sänke um **13,600** und die Lounge-Einzelkosten um **10,200**; der Speisesaal ist nicht betroffen.
+
+| | Speisesaal | Lounge | Vermietung | Gesamt |
+|---|---|---|---|---|
+| Umsatz | 184,800 | 139,300 | 8,000 | 332,100 |
+| Einzelkosten | (154,600) | (117,400) | 0 | (272,000) |
+| **Abteilungsergebnis** | **30,200** | **21,900** | **8,000** | **60,100** |
+| Gemeinkosten | | | | (46,600) |
+| **Betriebsergebnis** | | | | **13,500** |
+
+Das gesamte Betriebsergebnis steigt von **10,100 auf 13,500**, der Eigentümer sollte die **Vermietung annehmen** - aber aus einem Grund, der nichts mit den -7,960 zu tun hat. Die Abkürzung bestätigt es: + 8,000 Miete, - 6,600 entgangenes Café-Ergebnis, - 3,400 entgangener Lounge-Deckungsbeitrag (13,600 - 10,200), + 5,400 eingesparte Gemeinkosten = **+ 3,400**.
+
+<Aside type="caution">
+**Umgelegte Kosten können in die Irre führen.** Die Flächenumlage ließ das Café wie einen Verlustbringer aussehen und wies zufällig in dieselbe Richtung wie die richtige Entscheidung - aber die Zahl, die sie erzeugte (7,960), spielte in der korrekten Analyse keine Rolle. Der richtige Test sind immer entscheidungsrelevante Kosten und Erlöse: Was ändert sich tatsächlich, wenn wir das tun? Der umgelegte Anteil einer Abteilung an Kosten, die ohnehin weiterlaufen, ist niemals ein Grund, sie zu schließen.
+</Aside>
+
+## Fallecke
+
+**Die Airline und die Kosten eines einzelnen Fluges.** Der Abschluss 2011 zeigt 4,563.9 Mio. betriebliche Aufwendungen gegenüber 5,147.7 Mio. Umsatz, aber fast nichts davon trägt eine Streckenbezeichnung. Treibstoff für die Etappe, die Streckengebühr und die Flughafengebühren lassen sich einem Flug zuordnen; Personal, Abschreibungen, Wartung, Marketing, Mieten und der Rest sind über das Netz geteilt und erreichen den Flug nur über Umlageschlüssel. Lehre: Die Kosten eines einzelnen Kostenträgers in einem Geschäft mit geteilter Kapazität sind überwiegend eine *Konstruktion*, also erbt jeder Cost-plus-Preis auf dieser Strecke die Umlageannahmen - und eine Strecke, die auf Vollkostenbasis Geld verliert, kann ihre variablen Kosten trotzdem bequem decken.
+
+**Das transparente Modelabel.** Ein kleines Label veröffentlicht die vollständige Cost-plus-Aufschlüsselung jedes Kleidungsstücks - was hineinging und was obendrauf kam. Lehre: Cost-plus ist nicht nur eine interne Preismethode, es kann ein Marketingversprechen sein. Transparenz überzeugt allerdings nur, wenn die Kostenseite sauber ist; je mehr umgelegte Gemeinkosten in der Zahl stecken, desto weniger sagt die Aufschlüsselung dem Kunden wirklich.
+
+**Das Volksauto.** Ein Zielpreis von 2,500 Dollar wurde 2003 festgelegt, fünf Jahre bevor das Auto existierte, und jede Konstruktions- und Beschaffungsentscheidung wurde von ihm diszipliniert: Lieferantenauktionen statt Beziehungen, eine auf das Wesentliche reduzierte Stückliste (ein Wischer, kein Radio, keine Servolenkung) und eine Technik, die eher clever als üppig war (hohle Lenkwelle, kleiner Heckmotor). Lehre: Target Costing ist ebenso sehr eine Konstruktionsmethode wie eine Rechnungsmethode - die erlaubten Kosten werden auf Komponenten heruntergebrochen, und die Wertanalyse entfernt alles, wofür der Kunde nicht zahlen würde.
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Zuschlagskalkulation (Cost-plus) | Die Vollkosten einer Einheit aufbauen, einen prozentualen Gewinnaufschlag addieren, und das ist der Preis vor Umsatzsteuer. |
+| Target Costing (Zielkostenrechnung) | Beim Preis beginnen, den der Markt zahlen wird, die Umsatzsteuer und den nötigen Gewinn abziehen und den Rest als die maximalen Kosten behandeln, die das Produkt haben darf (die erlaubten Kosten). |
+| Gewinnaufschlag | Der Prozentsatz oder Betrag, der auf die Kostenbasis addiert wird, um Gewinn zu erzeugen; ein disziplinierter Weg, ihn zu setzen, führt über eine Zielrendite auf das eingesetzte Kapital. |
+| Zielrendite | Der Gewinn, den das Management als Prozentsatz des eingesetzten Kapitals will; auf die verkauften Einheiten verteilt ergibt er den je Einheit nötigen Gewinn. |
+| Vollkosten je Produkt | Herstellkosten des Umsatzes (Einzelmaterial, Einzellohn, direkte Maschinenkosten, Fertigungsgemeinkosten) plus Betriebskosten (F&E, Design, Marketing, Distribution, Kundendienst). |
+| Kostenträger | Alles, dessen Kosten man wissen will - ein Produkt, ein Flug, ein Kunde, eine Abteilung. |
+| Kostenartenrechnung | Der erste Schritt des Kostenrechnungssystems: alle Kosten nach Art sortieren (Material, Personal, Maschine) und jede als direkt oder indirekt markieren. |
+| Kostenstelle | Eine Abteilung oder ein Bereich (Beschaffung, Produktion, Vertrieb, Verwaltung), wo Gemeinkosten gesammelt werden, bevor sie weiter umgelegt werden. |
+| Zurechnen vs. umlegen | Zurechnen folgt einem Dokument (Stückliste, Produktionsplan) zum Produkt; Umlegen verteilt Gemeinkosten mit einem gewählten Schlüssel. |
+| Komplexitätskosten | Versteckte Gemeinkosten, die durch Produktvielfalt entstehen (zusätzliche Tests, Dokumentation, Lagerbestand, Logistik, Fehler) und die gewöhnliche Kostenrechnungssysteme nicht trennen können. |
+| Wertanalyse | Aktivitäten in wertschöpfende und nicht wertschöpfende sortieren und Letztere streichen, um die Lücke zwischen Standardkosten und Zielkosten zu schließen. |
+| Preisdifferenzierung | Verschiedenen Kundengruppen unterschiedliche Preise für dieselbe Sache berechnen, weil ihre Preiselastizität sich unterscheidet. |
+| Peak-Load-Pricing | Mehr berechnen, wenn die Kapazität knapp ist, und weniger, wenn sie brachliegt. |
+| Entscheidungsrelevante Kosten | Die Kosten und Erlöse, die sich mit einer Entscheidung tatsächlich ändern; umgelegte Kosten, die ohnehin weiterlaufen, sind nicht relevant. |
+
+## Teste dich selbst
+
+1. Nenne die drei Einflussgrößen einer Preisentscheidung und erkläre, welche Kosten in einer kurzfristigen gegenüber einer langfristigen Preisentscheidung zählen.
+2. Ein Produkt hat Vollkosten von 720 pro Stück. Das eingesetzte Kapital beträgt 45,000,000, die Zielrendite 15% und es werden 200,000 Stück verkauft. Leite den Aufschlagssatz und den Verkaufspreis vor Umsatzsteuer her. Wie hoch wäre der Preis bei einem pauschalen Aufschlag von 12%?
+3. Ein Tarif für Privatreisende wird auf 60 inklusive 16% Umsatzsteuer festgelegt, und die Airline will 20% Umsatzrendite. Berechne die Zielkosten je Sitzplatz und erkläre, warum die 20% nicht auf die 60 genommen werden.
+4. Warum sind die Kosten eines bestimmten Fluges überwiegend Umlage statt Zurechnung? Nenne zwei Kostenzeilen, die du einem einzelnen Flug zuordnen könntest, und drei, die du nicht zuordnen könntest.
+5. Im Restaurantfall weist das Café nach der Umlage der Gemeinkosten einen Betriebsverlust von 7,960 aus. Erkläre, warum diese Zahl die Vermietungsentscheidung nicht treiben sollte, und nenne den korrekten Test mit Zahlen.
+6. Erkläre die Zirkularität der Cost-plus-Preisgestaltung anhand des Einproduktunternehmens (Fixkosten 200,000, variable Kosten 10, Aufschlag 33.3%) und sage, wie Marktforschung sie auflöst.
+
+<Aside type="note" title="Lösungen">
+1. Kunden (der Wert, den sie sehen), Wettbewerber (die Alternativen) und Kosten. Kurzfristig: nur variable Kosten, beurteilt über die Deckungsbeitragsrechnung. Langfristig: alle Kosten, fixe und variable, plus eine Gewinnmarge - erreicht entweder über Cost-plus oder über Target Costing.
+2. 45,000,000 × 15% = 6,750,000 Zielgewinn; ÷ 200,000 = 33.75 pro Stück; 33.75 ÷ 720 = 4.6875% Aufschlag; Preis 720 + 33.75 = 753.75. Mit 12%: 720 + 86.40 = 806.40.
+3. 60.00 - 9.60 Umsatzsteuer = 50.40 netto; 20% × 50.40 = 10.08 Zielgewinn; Zielkosten 40.32. Umsatzrendite ist Gewinn über Umsatz, und der Umsatz ist der Nettopreis - die Umsatzsteuer war nie das Geld der Airline.
+4. Nur wenige Zeilen gehören zu einer Etappe (der darauf verbrannte Treibstoff, die Streckengebühr, die Flughafengebühren); Personal, Abschreibungen, Wartung, Marketing, Flugzeugmieten und Sonstiges sind über das gesamte Netz geteilt und erreichen den Flug nur über einen Umlageschlüssel. Der Kostenträger ist winzig im Verhältnis zur geteilten Kapazität.
+5. Die 7,960 enthalten 14,560 an Gemeinkosten, die nach Fläche verteilt wurden, und das meiste davon läuft weiter, ob es das Café gibt oder nicht; sein eigenes Abteilungsergebnis beträgt + 6,600. Relevanter Test: Was ändert sich? + 8,000 Miete, - 6,600 Abteilungsergebnis, - 3,400 entgangener Lounge-Deckungsbeitrag (13,600 - 10,200), + 5,400 eingesparte Gemeinkosten = + 3,400, also steigt das gesamte Betriebsergebnis von 10,100 auf 13,500. Annehmen.
+6. Stückkosten = 10 + 200,000 ÷ Menge, also bei 10,000 / 20,000 / 30,000 Stück 30 / 20 / 16.67 und der Cost-plus-Preis 40 / 26.67 / 22.22. Der Preis beruht auf einer Mengenschätzung, aber die Menge hängt vom Preis ab. Die Nachfragetabelle ergibt den Gewinn (Preis - 10) × Stück - 200,000 = 100,000 / 175,000 / 200,000 / 175,000 / 100,000, also ist der beste Preis 30 - den keiner der Cost-plus-Preise gefunden hat.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- An einem Preis ziehen **Kunden, Wettbewerber und Kosten**; der **Zeithorizont** entscheidet, welche Kosten zählen - **variable Kosten und Deckungsbeitrag** kurzfristig, **alle Kosten plus eine Gewinnmarge** langfristig.
+- Langfristige Preisgestaltung hat zwei Wege: **kostenbasiert (Cost-plus)** und **marktbasiert (Target Costing)**.
+- Ein Flug einer Billigfluglinie: Treibstoff, Strecken- und Flughafengebühren lassen sich zurechnen; Personal, Abschreibungen, Wartung, Marketing, Mieten und der Rest werden **umgelegt**. Die Kosten eines Fluges sind eine Konstruktion, keine Tatsache.
+- Das **zweistufige Kostenrechnungssystem**: zuerst die Kostenartenrechnung (Material überwiegend direkt, Personal- und Maschinenkosten überwiegend indirekt), dann Einzelkosten aus Produktionsplänen und Stücklisten **zurechnen** und Gemeinkosten über Kostenstellen (Beschaffung, Produktion, Vertrieb, Verwaltung) auf Kostenträger **umlegen**.
+- Beispiel **Vollkostenrechnung**: Herstellkosten des Umsatzes 540 + Betriebskosten 180 = **720 pro Stück**, 144 Mio. für 200,000 Stück.
+- **Cost-plus**: Kostenbasis + Gewinnaufschlag = Preis vor Umsatzsteuer; + Umsatzsteuer = Listenpreis. Aufschlag aus einer Zielrendite: 45 Mio. × 15% = 6.75 Mio., ÷ 200,000 = 33.75, = 4.6875% → **753.75**; ein Aufschlag von 12% ergäbe **806.40**.
+- Herausforderungen: **schrumpfende Einzelkosten** bedeuten mehr Umlage; **mehr Varianten** verbrauchen Gemeinkosten ungleichmäßig; **variantenbedingte Komplexitätskosten** bleiben versteckt, und selbst die Prozesskostenrechnung erfasst sie nur teilweise.
+- **Target Costing**: Zielpreis - Umsatzsteuer - Zielgewinn = **erlaubte Kosten** → auf Komponenten herunterbrechen → mit den Standardkosten vergleichen → **Wertanalyse**. Flugpreis: 60 - 9.60 - 10.08 = **40.32**. Das 2,500-Dollar-Auto: Lieferantenauktionen, weggelassene Komponenten, cleveres Engineering.
+- **Nicht kostenbasierte Preisgestaltung**: Preisdifferenzierung (Geschäfts- gegenüber Privatreise) und Peak-Load-Pricing (Hotel während einer Messe).
+- Übungen: Beratungssatz **50.875** pro Stunde; das Einproduktunternehmen zeigt die Cost-plus-Zirkularität (40 / 26.67 / 22.22), und der Markt sagt **30**; das Restaurant zeigt, dass **umgelegte Kosten in die Irre führen** - entscheidungsrelevante Kosten sagen, das Café zu vermieten (10,100 → 13,500).
+</Aside>
+
+*Weiter: [Leistungsmessung & das Steuerungsproblem →](/de/learnings/mba/financial-performance-and-management-control/11-performance-measurement-and-control/) - Menschen und Einheiten messen, und warum das Maß ihr Verhalten verändert.*

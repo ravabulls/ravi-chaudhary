@@ -1,0 +1,341 @@
+---
+title: "Materielle Vermögenswerte: Sachanlagen & Vorräte"
+description: "Wie Maschinen und Warenbestände in die Bilanz kommen und was danach mit ihnen geschieht - Anschaffungs- und Herstellungskosten, lineare gegenüber degressiver gegenüber leistungsabhängiger Abschreibung, Wertminderung gegen diskontierte Zahlungsströme, FIFO und gewogener Durchschnitt, der niedrigere Wert aus Anschaffungskosten und Nettoveräußerungswert, und warum BlackBerrys Z10- und Q10-Bestände abgeschrieben werden mussten."
+sidebar:
+  label: "5 · Sachanlagen & Vorräte"
+  order: 5
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Die vorangegangenen Kapitel haben mir das Skelett geliefert: eine Bilanz, die auflistet, was das Unternehmen kontrolliert, eine Gewinn- und Verlustrechnung, die erklärt, wie sich das Eigenkapital bewegt hat, und IFRS als Regelwerk, das entscheidet, was gezeigt werden darf und mit welchem Betrag. In diesem Kapitel trifft das Regelwerk auf die Werkshalle. Maschinen, Gebäude, Fahrzeuge und die Waren im Lager sind das Handfesteste, was ein Unternehmen besitzt, und trotzdem sind die Zahlen, mit denen sie in den Büchern stehen, alles andere als offensichtlich.
+
+Zwei Fragen ziehen sich durch alles hindurch. **Welche Zahl steht am ersten Tag in der Bilanz?** Das ist die Erstbewertung, und die Antwort lautet immer irgendeine Variante von „Kosten“. **Wie darf sich diese Zahl danach verändern?** Das ist die Folgebewertung. Für Sachanlagen (Property, Plant and Equipment, PPE) wird sie durch die planmäßige Abschreibung und gelegentlich durch eine Wertminderung beantwortet; für Vorräte durch eine Verbrauchsfolgemethode plus die Regel vom niedrigeren Wert aus Anschaffungskosten und Nettoveräußerungswert. Das Kapitel endet mit dem BlackBerry-Fall, der das ganze Thema in einem Bild zeigt: ein Berg unverkaufter Smartphones, geführt zu Anschaffungskosten, während der Markt längst entschieden hatte, dass sie nur noch einen Bruchteil davon wert waren.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Ein materieller Vermögenswert kommt zu **Kosten** in die Bücher - alles, was nötig war, um ihn nutzungs- oder verkaufsbereit zu machen - und wird danach mit **höchstens dem Wert geführt, den er für das Unternehmen noch hat**. Die Abschreibung lässt diese Kosten Jahr für Jahr planmäßig in den Aufwand tropfen; die Wertminderung ist die Notkorrektur, wenn die Realität unter den Plan fällt; der Test auf den niedrigeren Wert aus Anschaffungskosten und Nettoveräußerungswert ist dieselbe Notkorrektur für Vorräte. Jede Abwertung trifft **Vermögen, Eigenkapital und Gewinn im selben Betrag im selben Moment** und berührt niemals die Zahlungsmittel.
+</Aside>
+
+## 1 · Was als materieller Vermögenswert zählt
+
+Zwei Familien physischer Vermögenswerte, zwei Standards. Die Trennung ist wichtig, weil sie auf völlig unterschiedliche Weise an Wert verlieren.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Grundstücke, Anlagen &amp; Ausrüstung <small>IAS 16</small></div>
+    <ul>
+      <li><strong>Physische</strong> Gegenstände, die man anfassen kann: Gebäude, Maschinen, Fahrzeuge, IT-Hardware</li>
+      <li>Gehalten, um in der Produktion oder bei der Erbringung von Leistungen <strong>genutzt</strong> zu werden, nicht um verkauft zu werden, und voraussichtlich <strong>über mehr als eine Periode</strong> im Einsatz, deshalb stehen sie im Anlagevermögen</li>
+      <li>Verlieren an Wert durch <strong>Nutzung</strong> und Alterung</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Vorräte <small>IAS 2</small></div>
+    <ul>
+      <li><strong>Umlaufvermögen</strong>, gehalten zum <strong>Verkauf</strong> im normalen Geschäftsverlauf (Fertigerzeugnisse)</li>
+      <li>Oder noch <strong>in der Herstellung</strong> für einen solchen Verkauf (unfertige Erzeugnisse), oder als <strong>Roh-, Hilfs- und Betriebsstoffe</strong> gekauft, um in der Produktion verbraucht oder weiterverkauft zu werden</li>
+      <li>Verlieren an Wert, indem sie sich <strong>nicht verkaufen</strong> oder für weniger verkaufen als erhofft</li>
+    </ul>
+  </div>
+</div>
+
+| Stufe | Sachanlagen | Vorräte |
+|---|---|---|
+| **Erstbewertung** | Anschaffungskosten oder Herstellungskosten | Anschaffungskosten oder Herstellungskosten |
+| **Folgebewertung** | Planmäßige Abschreibung, dazu Wertminderung, falls der Wert einbricht (oder das Neubewertungsmodell) | Eine Verbrauchsfolgemethode (gewogener Durchschnitt oder FIFO), die entscheidet, welche Kosten das Lager verlassen, dazu der niedrigere Wert aus Anschaffungskosten und Nettoveräußerungswert |
+
+Die Version in einem Satz: Sachanlagen erhalten einen **planmäßigen**, über Jahre verteilten Wertverlust, Vorräte einen **Vergleich** mit dem, was sie noch erlösen können.
+
+## 2 · Ansatz und Erstbewertung - was in die Kosten eingeht
+
+Ein Posten wird **angesetzt** (überhaupt in die Bilanz aufgenommen), wenn zwei Dinge gelten: Es ist **wahrscheinlich, dass dem Unternehmen ein künftiger wirtschaftlicher Nutzen** daraus zufließt, und seine **Kosten lassen sich verlässlich bemessen**. Einmal drin, wird er **zu Kosten** bewertet, und die Kosten gibt es in zwei Ausprägungen, je nachdem, ob der Vermögenswert gekauft oder selbst hergestellt wurde.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Anschaffungskosten</span>
+    <code>Kaufpreis + Kosten dafür, den Vermögenswert nutzungs- oder verkaufsbereit zu machen (Transport, Versicherung, Installation, Testläufe) - Rabatte und Skonti</code>
+  </div>
+  <div>
+    <span class="name">Herstellungskosten</span>
+    <code>Fertigungsmaterial + Fertigungslöhne + Gemeinkosten des Produktionsbereichs</code>
+  </div>
+  <div>
+    <span class="name">Zusatz bei Sachanlagen</span>
+    zuzüglich der geschätzten Kosten für Rückbau, Entfernung oder Wiederherstellung des Standorts am Ende der Nutzungsdauer (als Barwert)
+  </div>
+  <div>
+    <span class="name">Niemals enthalten</span>
+    Umsatzsteuer (sie wird erstattet, ist also kein Kostenbestandteil) sowie allgemeine Verwaltungs- oder Vertriebsgemeinkosten (Aufwand der Periode)
+  </div>
+</div>
+
+**Maschinenbeispiel.** Kaufpreis 100,000, Transport 1,000, Versicherung 500, Testläufe 5,000 und ein Händlerrabatt von 10,000. Alles, was die Maschine zum Laufen bringt, wird hinzugerechnet, der Rabatt abgezogen: 100,000 + 1,000 + 500 + 5,000 - 10,000 = **96,500**. Das ist der aktivierte Betrag und die Zahl, auf der die spätere Abschreibung aufsetzt.
+
+**Kernkraftwerksbeispiel.** Das Kraftwerk kostet alles in allem 100m, aber es besteht eine gesetzliche Verpflichtung, den Standort nach 20 Jahren zu rekultivieren, geschätzt mit 10m. Dieser künftige Abfluss gehört vom ersten Tag an zum Kraftwerk, deshalb wird sein **Barwert** den Kosten zugeschlagen. Bei 10% über 20 Jahre sind 10m abgezinst rund 1.5m (10m geteilt durch 1.1 hoch 20). Die Anschaffungskosten betragen daher **101.5m**, und auf der anderen Seite der Bilanz erscheint für die Verpflichtung eine **Rückstellung von 1.5m**.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">Kraftwerk<span class="sub">100m, alles eingerechnet</span></div>
+    <div class="arrow">→<small>Rückbauverpflichtung hinzurechnen</small></div>
+    <div class="sc-node amber">Barwert der Rekultivierung<span class="sub">10m in 20 Jahren bei 10% ≈ 1.5m</span></div>
+    <div class="arrow">→<small>aktivieren</small></div>
+    <div class="sc-node green">Vermögenswert 101.5m<span class="sub">über die Lebensdauer des Kraftwerks abgeschrieben</span></div>
+    <div class="arrow">→<small>und spiegeln</small></div>
+    <div class="sc-node slate">Rückstellung 1.5m<span class="sub">die Verpflichtung, als Schuld</span></div>
+  </div>
+  <figcaption>Rückbaukosten sind keine böse Überraschung im Jahr 20. Sie sind Teil des Preises dafür, das Kraftwerk zu haben, also gehen sie jetzt in die Kosten ein und sickern über die Abschreibung in den Aufwand.</figcaption>
+</div>
+
+**Autobeispiel (Herstellungskosten).** Ein Automobilhersteller hat am 31. Dezember noch ein fertiges Auto auf Lager. Fertigungsmaterial 20,000, Fertigungslöhne 10,000, Fertigungsgemeinkosten 5,000, allgemeine Verwaltungsgemeinkosten 1,000. Die Herstellungskosten betragen 20,000 + 10,000 + 5,000 = **35,000**. Die 1,000 Verwaltungsgemeinkosten haften dem Auto nicht an: Die Zentrale hätte dasselbe gekostet, ob dieses Auto gebaut wurde oder nicht, deshalb gehen sie direkt in die Gewinn- und Verlustrechnung.
+
+<Aside type="caution">
+**Drei Fallen in der Kostengröße.** (1) Umsatzsteuer geht nie ein. (2) Rabatte werden abgezogen, auch wenn sie auf der Rechnung getrennt ausgewiesen sind. (3) Nur Gemeinkosten des Produktionsbereichs gehen in die Herstellungskosten ein, niemals Verwaltungsgemeinkosten. Wenn eine Klausuraufgabe allgemeine Verwaltungskosten auflistet, stehen sie da, um ausgeschlossen zu werden.
+</Aside>
+
+## 3 · Abschreibung - die Kosten über die Nutzungsdauer verteilen
+
+**Abschreibung** ist die systematische Verteilung des **abschreibungsfähigen Betrags** (ursprüngliche Kosten abzüglich erwartetem Restwert) über die **Nutzungsdauer** des Vermögenswerts, und zwar in einem Muster, das abbildet, wie sein wirtschaftlicher Wert verbraucht wird. Sie ist ein **Zuordnungsinstrument** nach dem Grundsatz der Periodenabgrenzung: Die Kosten der Maschine werden in die Perioden geschoben, die von ihrer Leistung profitieren. Es hilft, ebenso klar zu sein, was Abschreibung **nicht** ist:
+
+- kein **Ansparen von Zahlungsmitteln** für eine Ersatzmaschine, es bewegt sich kein Geld;
+- keine bloße **Steuerangelegenheit**, es geht zuerst um die Finanzberichterstattung;
+- kein Versuch, den **Marktpreis** des Vermögenswerts Jahr für Jahr nachzuzeichnen, dafür sind Wertminderung und Neubewertung da.
+
+| Methode | Jährlicher Betrag | Passt zu Vermögenswerten, die |
+|---|---|---|
+| **Linear** <Badge text="der Regelfall" variant="success" /> | abschreibungsfähiger Betrag / Nutzungsdauer in Jahren | sich gleichmäßig über die Zeit abnutzen |
+| **Degressiv (geometrisch-degressiv)** <Badge text="Ausnahme" variant="caution" /> | konstanter Prozentsatz × noch offener abschreibungsfähiger Restbetrag, sodass der Betrag jedes Jahr schrumpft | früh den meisten Wert verlieren (Technologie, Fahrzeuge) |
+| **Leistungsabhängig (nutzungsbezogen)** <Badge text="Ausnahme" variant="caution" /> | abschreibungsfähiger Betrag × Einheiten dieser Periode / erwartete Gesamteinheiten | sich nach dem Ausstoß abnutzen, nicht nach dem Kalender |
+
+Die lineare Abschreibung ist unter IFRS und in fast jeder realen Bilanzierungsrichtlinie der Standardfall. Die Auswahlregel ist leicht formuliert und schwer anzuwenden: Wähle die Methode, die **das Muster abbildet, in dem der wirtschaftliche Nutzen des Vermögenswerts verbraucht wird**. Das durchgerechnete Beispiel weiter unten zeigt, wie unterschiedlich die drei mit ein und derselben Maschine umgehen.
+
+## 4 · Wertminderung und Neubewertung - wenn die Kostengröße nicht mehr stimmt
+
+Die Abschreibung läuft nach einem Plan, der zu Beginn gemacht wurde. Die **Wertminderung (Impairment)** ist die außerplanmäßige Abwertung für den Fall, dass die Ereignisse den Plan überholen. An jedem Bilanzstichtag fragt das Unternehmen, ob der **aktuelle (erzielbare) Wert** unter den **Buchwert** (Kosten abzüglich kumulierter Abschreibungen) gefallen ist. Wenn ja, wird der Vermögenswert zusätzlich zur normalen Abschreibung auf diesen niedrigeren Wert abgewertet. Nach **IAS 36** wird der erzielbare Wert bemessen, indem der Buchwert mit den **diskontierten Zahlungsströmen** verglichen wird, die der Vermögenswert voraussichtlich noch erzeugt. Fallen die Gründe für die Abwertung später weg, wird sie **zugeschrieben**, aber niemals über die (fortgeführten) ursprünglichen Kosten hinaus. Liegt der aktuelle Wert über dem Buchwert, passiert nichts: Das Anschaffungskostenmodell hebt einen Vermögenswert nie über die Kosten.
+
+- **Das Neubewertungsmodell** ist die Alternative: Der Vermögenswert wird zu einem frischen **aktuellen Wert unabhängig von den historischen Anschaffungskosten** geführt, nach oben wie nach unten. Der Kurs nennt es die „neutrale“ Variante, weil ihm die einseitige Abwärtsneigung von Anschaffungskosten plus Wertminderung fehlt.
+- **Die praktischen Schwierigkeiten** sind unter jedem Modell dieselben: Irgendjemand muss **aktuelle Werte, Restwerte, Nutzungsdauern und erwartete Ausbringungsmengen schätzen**. Nichts davon sind Fakten, alles sind Ermessensentscheidungen, und jede Ermessensentscheidung ist eine Stelle, an der Relevanz und Verlässlichkeit auseinanderdriften (das Thema des nächsten Kapitels).
+
+| | Abschreibung | Wertminderung |
+|---|---|---|
+| **Wann** | Jede Periode, planmäßig | Nur wenn der aktuelle Wert unter den Buchwert fällt |
+| **Auslöser** | Zeitablauf, Nutzung | Ereignisse: Nachfrageeinbruch, Beschädigung, Technologiesprung |
+| **Gemessen an** | Kosten und den zu Beginn getroffenen Schätzungen | Aktueller Wert, meist diskontierte Zahlungsströme |
+| **Umkehrbar** | Nein | Ja, wenn die Gründe wegfallen, gedeckelt bei den Kosten |
+
+### Wie eine echte Bilanzierungsrichtlinie aussieht
+
+Die Vorlesungsunterlage gibt die Sachanlagen-Richtlinie aus dem Geschäftsbericht 2006 eines großen Chemie- und Pharmakonzerns wieder (Bayer AG). In einfachen Worten sagt sie:
+
+- Sachanlagen werden zu **Anschaffungs- oder Herstellungskosten** geführt und, soweit sie sich abnutzen, über die geschätzte Nutzungsdauer **linear abgeschrieben** oder **abgewertet**, wenn ihr Wert unter den Nettobuchwert fällt.
+- Die Kosten umfassen den Preis, **Anschaffungsnebenkosten** und spätere Zugänge, **abzüglich Preisminderungen**. Besteht eine Verpflichtung zum Rückbau, zur Entfernung oder zur Wiederherstellung eines Standorts, werden die geschätzten Kosten **dem Vermögenswert zugeschlagen und eine entsprechende Rückstellung gebildet**, exakt die Logik des Kernkraftwerks. Selbst erstellte Anlagen werden mit **Fertigungsmaterial, direkten Fertigungskosten und einem angemessenen Anteil an Material- und Fertigungsgemeinkosten** bewertet, exakt die Logik des Autos.
+- **Reparaturen und laufende Instandhaltung werden als Aufwand erfasst**; Ausgaben werden nur aktiviert, wenn sie künftigen wirtschaftlichen Nutzen bringen.
+- Die Nutzungsdauern werden **nach Anlagenklasse** festgelegt: Gebäude 20 bis 50 Jahre, Außenanlagen 10 bis 20, Anlageninstallationen 6 bis 20, Maschinen und Ausrüstung 6 bis 12, Labor- und Forschungseinrichtungen 3 bis 5, Lagertanks und Rohrleitungen 10 bis 20, Fahrzeuge 4 bis 8, EDV-Ausstattung 3 bis 5, Betriebs- und Geschäftsausstattung 4 bis 10.
+- Die Wertminderung folgt **IAS 36**: Buchwerte werden mit **diskontierten Zahlungsströmen** verglichen; Abwertungen werden **zugeschrieben**, wenn die Gründe entfallen, aber nie über die Anschaffungskosten hinaus.
+
+Als Vorlage lohnt es sich, das auswendig zu können: Kosten, was hineingeht, linear nach Klasse, Reparaturen als Aufwand, Wertminderung gegen diskontierte Zahlungsströme, Zuschreibung gedeckelt bei den Kosten.
+
+## 5 · Vorräte - welche Kosten verlassen das Lager?
+
+Bei einer Maschine weiß man genau, was sie gekostet hat. Bei Vorräten hat man oft Tausende identischer Stücke, an unterschiedlichen Tagen zu unterschiedlichen Preisen gekauft, und jede Einheit einzeln zu verfolgen ist unpraktikabel. **Verbrauchsfolgemethoden** lösen das, indem sie unterstellen, welche Kosten abfließen, wenn eine Einheit verbraucht oder verkauft wird. IAS 2 erlaubt zwei: den **gewogenen Durchschnitt**, bei dem ein Durchschnittskostensatz je Einheit über alles Verfügbare sowohl für die verbrauchten Einheiten (Aufwand) als auch für die verbleibenden Einheiten (Bestand) verwendet wird; und **FIFO, first-in-first-out**, bei dem die ältesten Kosten zuerst abfließen und der verbleibende Bestand die jüngsten Preise trägt. Eine dritte Annahme, **LIFO (last-in-first-out)**, jüngste Kosten zuerst hinaus, ist zum Verständnis nützlich, gehört aber **nicht zu den Optionen des IAS 2**.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">FIFO<span class="n">das Silo</span></div>
+      <div class="sc-node green">Oben hinein, unten hinaus<span class="sub">das älteste Getreide geht zuerst</span></div>
+      <div class="sc-node soft">Bestand = jüngste Preise<span class="sub">Aufwand = älteste Preise</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">LIFO<span class="n">der Sandkasten</span></div>
+      <div class="sc-node amber">Zuletzt auf den Haufen gekippt, zuerst abgeschaufelt<span class="sub">der neueste Sand geht zuerst</span></div>
+      <div class="sc-node soft">Nach IAS 2 nicht zulässig<span class="sub">nur zum Verständnis gezeigt</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Gewogener Durchschnitt<span class="n">die Drogerie</span></div>
+      <div class="sc-node violet">Artikel werden zufällig aus dem Regal genommen<span class="sub">der Verbrauch ist nicht vorhersehbar</span></div>
+      <div class="sc-node soft">Ein gemischter Kostensatz<span class="sub">für Aufwand und Bestand gleichermaßen</span></div>
+    </div>
+  </div>
+  <figcaption>Drei Verbrauchsfolgeannahmen. Der physische Fluss muss nicht dem Kostenfluss entsprechen: Die Methode ist eine Bilanzierungskonvention, keine Beschreibung davon, welche Kiste der Gabelstapler geholt hat.</figcaption>
+</div>
+
+Ein Sonderfall: Produkte mit einem **liquiden Kassamarkt**, etwa Gold oder Kupfer, dürfen zum **Verkaufspreis** statt zu Kosten bewertet werden, weil der Preis beobachtbar und der Verkauf eine Formsache ist. Das gilt nicht für Finanzinstrumente, die eigenen Regeln folgen.
+
+## 6 · Vorräte - der niedrigere Wert aus Anschaffungskosten und Nettoveräußerungswert
+
+Die Kosten sind nur der Ausgangspunkt. An jedem Bilanzstichtag werden Vorräte mit dem **niedrigeren Wert aus Kosten und Nettoveräußerungswert (NRV)** geführt, wobei gilt: **NRV = geschätzter Verkaufspreis abzüglich geschätzter Fertigstellungskosten abzüglich geschätzter Kosten, die für den Verkauf nötig sind**. Zwei Details entscheiden über Klausurpunkte: Der Verkaufspreis stammt vom **Absatzmarkt** (was Kunden zahlen werden), niemals vom Beschaffungsmarkt (was ein erneuter Einkauf kosten würde); und wenn sich der NRV in einer späteren Periode **erholt**, wird die Abwertung **rückgängig gemacht**, bis zu den ursprünglichen Kosten. Das Vorgehen:
+
+1. die **Kosten** für die Vorratsposition ermitteln (über die Verbrauchsfolgemethode);
+2. den **Verkaufspreis** auf dem Absatzmarkt nach den Verhältnissen am Bilanzstichtag schätzen und die **noch anfallenden Kosten** abziehen, um den Artikel fertigzustellen und zu verkaufen (Endmontage, Verpackung, Transport), was den NRV ergibt;
+3. den **niedrigeren Wert ansetzen**; ist der NRV niedriger, geht die Differenz als Abwertung in die Umsatzkosten;
+4. in der nächsten Periode **erneut prüfen** und zuschreiben, wenn der NRV gestiegen ist, niemals über die Kosten hinaus.
+
+Das Drei-Produkte-Beispiel der Vorlesungsunterlage zeigt die Mechanik und legt eine Falle:
+
+| | Produkt A | Produkt B | Produkt C |
+|---|---|---|---|
+| Verkaufspreis | 400 | 450 | 600 |
+| abzüglich Endmontage | 40 | 40 | 50 |
+| abzüglich Verpackung | 15 | 15 | 20 |
+| abzüglich Transport | 8 | 10 | 15 |
+| **= Nettoveräußerungswert** | **337** | **385** | **515** |
+| Anschaffungs- oder Herstellungskosten | 380 | 380 | 410 |
+| **Bilanzwert (der niedrigere)** | **337** (NRV) | **380** (Kosten) | **410** (Kosten) |
+| Wiederbeschaffungskosten auf dem Beschaffungsmarkt (ignorieren) | 370 | 300 | 420 |
+
+Produkt A wird um 43 abgewertet, weil es seine Kosten nach Abzug der Verkaufskosten nicht mehr erlösen kann. B und C bleiben zu Kosten stehen, weil sie sich noch mit Marge verkaufen.
+
+<Aside type="caution">
+**Die Wiederbeschaffungskosten-Falle.** Die Tabelle listet außerdem auf, was es heute kosten würde, jedes Produkt erneut zu kaufen oder herzustellen (370, 300, 420). Nach IFRS ist diese Zahl irrelevant, weil es beim NRV um den **Absatzmarkt** geht. Die Wiederbeschaffungskosten von 300 bei Produkt B sehen alarmierend aus, aber B verkauft sich noch für netto 385, also bleibt es bei 380. Nur wenn eine Aufgabe ausdrücklich nach der älteren US-GAAP-Regel „lower of cost or market“ fragt, kommen Wiederbeschaffungskosten ins Spiel.
+</Aside>
+
+## 7 · Die BlackBerry-Frage - ist eine Wertminderung nötig?
+
+Die Vorlesungsunterlage wendet die NRV-Logik auf BlackBerrys Bilanz des Geschäftsjahres 2014 an (Geschäftsjahresende 1. März 2014) und antwortet mit drei Fakten, die nur zusammen Sinn ergeben:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Vorräte verdreifacht<span class="sub">603m (2013) → 1,836m (2014)</span></div>
+    <div class="arrow">+<small>während</small></div>
+    <div class="sc-node amber">Hardware-Umsatz halbiert<span class="sub">6,902m → 3,880m</span></div>
+    <div class="arrow">+<small>und</small></div>
+    <div class="sc-node amber">Netzbetreiber senkten die Preise drastisch<span class="sub">um die Geräte überhaupt loszuwerden</span></div>
+    <div class="arrow">→<small>also</small></div>
+    <div class="sc-node slate">Ja, abwerten<span class="sub">der NRV liegt weit unter den Kosten</span></div>
+  </div>
+  <figcaption>Mehr Bestand, weniger Nachfrage, niedrigere Preise. Jedes einzelne davon ließe sich vielleicht wegerklären; alle drei zusammen bedeuten, dass sich der Bestand nicht zu dem verkaufen lässt, was er gekostet hat.</figcaption>
+</div>
+
+Die Anschlussfragen der Vorlesungsunterlage sind die Größenordnung der Anpassung und ihre Wirkung auf Vermögen, Schulden und die Gewinn- und Verlustrechnung. Die Mechanik ist dieselbe wie bei Produkt A oben, nur mit mehr Nullen:
+
+| Wo | Wirkung der Vorratsabwertung |
+|---|---|
+| **Vermögen** | Die Vorräte sinken um den Abwertungsbetrag, also fallen Umlaufvermögen und Bilanzsumme um denselben Betrag |
+| **Schulden** | An dem, was jemandem geschuldet wird, ändert sich nichts; der gesamte Treffer landet im **Eigenkapital** (Gewinnrücklagen), abgesehen von einem etwaigen Steuereffekt |
+| **Gewinn- und Verlustrechnung** | Der Aufwand geht in die **Umsatzkosten** der Hardware, also fallen Bruttomarge und Jahresüberschuss um denselben Betrag |
+| **Zahlungsströme** | **Keine.** Es fließt kein Geld ab; der Aufwand wird im operativen Cashflow wieder hinzugerechnet, wie eine Abschreibung |
+
+## Durchgerechnetes Beispiel
+
+### (a) Eine Maschine, drei Abschreibungsmethoden, eine Wertminderung
+
+Eine Maschine kostet **11m**, hat einen erwarteten Restwert von **1m** (abschreibungsfähiger Betrag 10m), eine Nutzungsdauer von **5 Jahren** und eine erwartete Gesamtausbringung von **5,000 Einheiten**. Die tatsächliche Ausbringung beträgt in den Jahren 1 bis 5 jeweils 800, 600, 2,000, 800 und 800 Einheiten. Der degressive Satz beträgt **40%**.
+
+| Jahr | Linear | Buchwert | Leistungsabhängig | Buchwert | Degressiv | Buchwert |
+|---|---|---|---|---|---|---|
+| 0 | - | 11.0m | - | 11.0m | - | 11.0m |
+| 1 | 2.0m | 9.0m | 1.6m | 9.4m | 4.0m | 7.0m |
+| 2 | 2.0m | 7.0m | 1.2m | 8.2m | 2.4m | 4.6m |
+| 3 | 2.0m | 5.0m | 4.0m | 4.2m | 1.44m | 3.16m |
+| 4 | 2.0m | 3.0m | 1.6m | 2.6m | 1.08m | 2.08m |
+| 5 | 2.0m | 1.0m | 1.6m | 1.0m | 1.08m | 1.0m |
+| **Summe** | **10.0m** | | **10.0m** | | **10.0m** | |
+
+- **Linear:** 10m geteilt durch 5 Jahre = 2.0m jedes Jahr; der Buchwert läuft in gleichen Schritten bis zum Restwert hinunter.
+- **Leistungsabhängig:** 10m × (Einheiten dieses Jahres / 5,000). Jahr 1: 10m × 800/5,000 = 1.6m; Jahr 2: 600/5,000 ergibt 1.2m; Jahr 3: 2,000/5,000 ergibt 4.0m; Jahre 4 und 5: je 1.6m. Der Betrag springt mit dem Ausstoß hin und her, aber die Summe ist weiterhin 10m und der Buchwert endet weiterhin bei 1m.
+- **Degressiv:** 40% des noch offenen abschreibungsfähigen Restbetrags. Jahr 1: 40% × 10m = 4.0m; Jahr 2: 40% × 6m = 2.4m; Jahr 3: 40% × 3.6m = 1.44m. Reine 40% würden mit 0.864m und rund 0.52m weitergehen und den Buchwert bei etwa 1.78m stehen lassen, oberhalb des Restwerts von 1m: Ein konstanter Prozentsatz **landet von allein nie sauber auf dem Restwert**. Die Lösung der Vorlesungsunterlage verteilt die verbleibenden 2.16m deshalb linear auf die letzten beiden Jahre, je 1.08m, der übliche praktische Behelf.
+
+**Die Prüfung auf Wertminderung.** Nach Jahr 2 wird der erzielbare Wert der Maschine mit **6m** berechnet. Vergleiche das mit jedem Buchwert am Ende von Jahr 2:
+
+- Linear: 7m Buchwert gegen 6m erzielbar → **1m abwerten**. Die Maschine steht nun mit 6m in den Büchern, und die verbleibenden 5m über dem Restwert werden auf die letzten drei Jahre verteilt (rund 1.67m pro Jahr statt 2m).
+- Leistungsabhängig: 8.2m gegen 6m → 2.2m abwerten.
+- Degressiv: 4.6m liegt bereits unter 6m → keine Wertminderung, und auch keine Zuschreibung, weil das Anschaffungskostenmodell einen Vermögenswert nie über seine fortgeführten Kosten hebt.
+
+Der „richtige“ Jahresendwert hängt also von der Methode ab, und die Prüfung auf Wertminderung zieht die früh und die spät belastenden Methoden dann wieder näher zusammen. Ob das gut ist, ist die Diskussionsfrage der Vorlesungsunterlage:
+
+| Wertminderung: Vorteile | Wertminderung: Nachteile |
+|---|---|
+| Die Bilanz spiegelt die **aktuelle wirtschaftliche Realität**, die Zahl ist also **relevanter** für Investoren und Kreditgeber | Erfordert eine **Schätzung des aktuellen Werts**: Diskontierte Zahlungsströme beruhen auf Prognosen und einem Diskontierungssatz, also leidet die **Verlässlichkeit** |
+| Verhindert, dass Vermögen und Eigenkapital nach schlechten Nachrichten **zu hoch ausgewiesen** werden (Vorsicht), und zwingt das Management, sich einer gescheiterten Investition zu **stellen**, statt sie jahrelang still abzuschreiben | Lässt **Ermessensspielraum** bei Zeitpunkt und Höhe, was Bilanzpolitik einlädt, und macht den ausgewiesenen Gewinn **sprunghaft**: jahrelang nichts, dann ein großer Einmalaufwand |
+| Zuschreibungen sind erlaubt, ein vorübergehender Einbruch kann also später korrigiert werden | Einseitig im Anschaffungskostenmodell: Die Chance erscheint nie, nur das Risiko |
+
+### (b) FIFO gegenüber gewogenem Durchschnitt
+
+Der Anfangsbestand beträgt **10 Einheiten zu je 27**. Während der Periode kauft das Unternehmen **10 Einheiten zu 20** und danach **25 Einheiten zu 18** und verbraucht **15 Einheiten**. Wie hoch sind der Aufwand und der Schlussbestand?
+
+<Steps>
+
+1. **Zusammenzählen, was verfügbar ist.** 10 × 27 = 270, plus 10 × 20 = 200, plus 25 × 18 = 450. Das sind insgesamt **45 Einheiten mit Kosten von 920**. Welche Methode auch verwendet wird, Aufwand plus Schlussbestand müssen sich wieder zu 920 addieren.
+
+2. **FIFO.** Die 15 verbrauchten Einheiten sind die ältesten: alle 10 zu 27 (270) und 5 der 20er (100). Aufwand = **370**. Der Schlussbestand sind die 30 jüngsten Einheiten: 5 zu 20 (100) plus 25 zu 18 (450) = **550**. Probe: 370 + 550 = 920.
+
+3. **Gewogener Durchschnitt.** Ein gemischter Kostensatz: 920 / 45 = **20.44 je Einheit**. Aufwand = 15 × 20.44 = **306.67**. Schlussbestand = 30 × 20.44 = **613.33**. Probe: 306.67 + 613.33 = 920.
+
+4. **Den Unterschied lesen.** Die Preise fielen (27, dann 20, dann 18), also drückt FIFO die teuren alten Einheiten zuerst in den Aufwand: höherer Aufwand, niedrigerer Bestand, niedrigerer Gewinn. Der gewogene Durchschnitt glättet das. Nur zum Verständnis: LIFO würde 15 × 18 = 270 als Aufwand erfassen und den Bestand bei 650 belassen, das Spiegelbild. Bei steigenden Preisen dreht sich die Reihenfolge um.
+
+</Steps>
+
+| | FIFO | Gewogener Durchschnitt | LIFO (nicht IAS 2) |
+|---|---|---|---|
+| Aufwand (15 Einheiten) | 370 | 306.67 | 270 |
+| Schlussbestand (30 Einheiten) | 550 | 613.33 | 650 |
+| Probe: Summe | 920 | 920 | 920 |
+
+## Fallecke
+
+**BlackBerry Z10 und Q10 - das Dilemma des Analysten.** Im April 2014 wird ein Investmentanalyst bei einem Pensionsfonds in Toronto gefragt, ob BlackBerry ein Kauf ist, und insbesondere, ob die Smartphones, die sich in den Büchern stapeln, mit einer sinnvollen Zahl geführt werden. Das Unternehmen hatte das Betriebssystem BlackBerry 10 mit dem reinen Touchscreen-Gerät Z10 und dem Tastaturgerät Q10 am 30. Januar 2013 eingeführt, fast sechs Jahre nach dem ersten iPhone. Die Kritiken waren gut, die Verkäufe nicht: Verbraucher nannten fehlende Apps (rund 130,000 in BlackBerry World gegenüber mehr als 1.2 Millionen in den Stores von Apple und Google), schwache Akkulaufzeit und dünne Unternehmensunterstützung. Der weltweite Marktanteil war von einem Höchststand von 20.1% im Jahr 2009 auf 0.6% Ende 2013 gefallen, und die Hardware-Umsätze im Anhang waren von 13.8bn (2012) über 6.6bn (2013) auf 3.8bn (2014) gerutscht.
+
+**Warum der Vorratszahl nicht zu trauen war.** Die Vorräte wurden **zu Kosten, nach FIFO**, geführt und waren zum Geschäftsjahresende vor jeder Abwertung auf über 1.8bn angeschwollen. Das Unternehmen hatte bereits eine **Vorratsabwertung von 934m im zweiten Quartal** bekannt gegeben, überwiegend auf Z10 und Q10, sodass die Frage war, ob zum Geschäftsjahresende eine **zweite** Abwertung nötig war. Die drei Warnsignale sind die drei Faktoren der Vorlesungsunterlage: Die Vorräte hatten sich im Jahresvergleich etwa verdreifacht, der Hardware-Umsatz hatte sich etwa halbiert, und die Mobilfunk-Netzbetreiber, also der Kanal, der die Endkunden tatsächlich erreicht, senkten die Preise kräftig, nur um die Geräte zu bewegen. Zusammengenommen sagen sie, dass sich der Bestand nicht zu dem verkaufen wird, was er gekostet hat, und genau das ist der Auslöser für die Regel vom niedrigeren Wert aus Kosten und NRV.
+
+**Die Größenordnung, im NRV-Stil.** Stückzahlen und Stückkosten waren nicht öffentlich, also schätzte der Analyst sie über Branchenkontakte: rund 1.629bn an Fertigerzeugnissen, ungefähr 2,664,500 Geräte, aufgeteilt in etwa 1,350,600 Z10, 1,303,900 Q10 und 10,000 ältere BlackBerry-7-Geräte (die letzte Gruppe verkaufte sich noch zum vollen Preis). Ein fertiges Z10 kostete das Unternehmen rund 595 bis 615, ein Q10 rund 610 bis 630, dazu etwa 12 je Einheit, um den Verkauf abzuschließen. Verbraucher waren nur bereit, etwa 160 bis 170 für ein Z10 und 265 bis 275 für ein Q10 zu zahlen. Der NRV je Einheit ist der Preis abzüglich der 12, also war ein Z10 rund 153 wert gegenüber Kosten von etwa 605 und ein Q10 rund 258 gegenüber etwa 620. Meine eigene grobe Rechnung mit den Mittelwerten ergibt eine Abwertung von knapp 0.6bn auf der Z10-Linie und 0.47bn auf der Q10-Linie, also rund **1.1bn insgesamt**, etwa zwei Drittel des Bestands an Fertigerzeugnissen. Der Fall überlässt die genaue Zahl dem Leser; es geht um die Methode und die Größenordnung.
+
+**Was die Abwertung bewirkt und warum der Aktienkurs sich dafür interessiert.** Die Vorräte sinken um den Abwertungsbetrag, also fallen Umlaufvermögen und Bilanzsumme; keine Schuld bewegt sich; die Gewinnrücklagen nehmen den Verlust auf, vor jedem Steuereffekt. Die Umsatzkosten steigen um denselben Betrag, also verschlechtern sich die Bruttomarge und der ohnehin große Jahresfehlbetrag des Geschäftsjahres 2014, und der Gewinn je Aktie fällt (bei rund 525 Millionen ausstehenden Aktien entspricht eine Abwertung dieser Größe etwa zwei Dollar je Aktie). Die Working-Capital-Kennzahl fällt, weil das Umlaufvermögen schrumpft, die kurzfristigen Schulden aber nicht; der Verschuldungsgrad steigt, weil das Eigenkapital schrumpft, die 1,627m langfristige Schulden aber nicht; der operative Cashflow bleibt unberührt, weil kein Geld abfließt. Die Abwertung ist eine reine Buchung, und doch formt sie den ausgewiesenen Gewinn, das Eigenkapital und jede darauf aufbauende Kennzahl um, und sie signalisiert, dass das Flaggschiffprodukt gescheitert ist. Hätte der Markt das noch nicht eingepreist, würde der Fonds auf Basis aufgeblähter Zahlen kaufen. Eine Randnotiz aus dem Fall: IFRS verwendet den niedrigeren Wert aus Kosten und NRV, während die US-Regel damals „lower of cost or market“ verwendete, wobei „market“ die Wiederbeschaffungskosten meinte, nach oben durch den NRV und nach unten durch den NRV abzüglich einer normalen Marge begrenzt; der Analyst behandelte die beiden für eine erste Schätzung als hinreichend ähnlich.
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| **Sachanlagen (PPE)** | Physische Vermögenswerte, die im Unternehmen genutzt und nicht verkauft werden, über mehr als eine Periode (IAS 16) |
+| **Vorräte** | Waren, die zum Verkauf gehalten werden, für den Verkauf hergestellt werden, oder Stoffe, die in der Produktion verbraucht werden (IAS 2) |
+| **Ansatz (Recognition)** | Einen Posten überhaupt in die Bilanz aufnehmen: künftiger Nutzen wahrscheinlich und Kosten verlässlich bemessbar |
+| **Anschaffungskosten** | Kaufpreis plus alles, was nötig ist, um den Vermögenswert bereitzumachen, abzüglich Rabatte, ohne Umsatzsteuer; bei Sachanlagen zuzüglich geschätzter Rückbaukosten |
+| **Herstellungskosten** | Fertigungsmaterial und Fertigungslöhne plus Fertigungsgemeinkosten, niemals allgemeine Verwaltungsgemeinkosten |
+| **Abschreibungsfähiger Betrag** | Ursprüngliche Kosten abzüglich erwartetem Restwert, die Summe, die insgesamt jemals abgeschrieben wird |
+| **Abschreibung** | Planmäßige, systematische Verteilung des abschreibungsfähigen Betrags über die Nutzungsdauer, dem Muster des Wertverlusts folgend |
+| **Linear / degressiv / leistungsabhängig** | Gleicher Betrag jedes Jahr / konstanter Prozentsatz des noch offenen Restbetrags / Betrag proportional zum Ausstoß |
+| **Wertminderung (Impairment)** | Außerplanmäßige Abwertung auf einen niedrigeren aktuellen Wert, nach IAS 36 mit diskontierten Zahlungsströmen bemessen; zuschreibbar bis zu den Kosten |
+| **Neubewertungsmodell** | Einen Vermögenswert zu einem frischen aktuellen Wert unabhängig von den historischen Anschaffungskosten führen, nach oben wie nach unten |
+| **Gewogener Durchschnitt / FIFO** | Die beiden Verbrauchsfolgemethoden, die IAS 2 erlaubt, um zu entscheiden, welche Kosten den Bestand verlassen |
+| **Nettoveräußerungswert (NRV)** | Geschätzter Verkaufspreis abzüglich Fertigstellungs- und Verkaufskosten, auf Basis des Absatzmarkts |
+| **Niedrigerer Wert aus Kosten und NRV** | Die Vorratsregel: den kleineren der beiden ansetzen, die Abwertung zuschreiben, wenn sich der NRV erholt |
+| **Rückstellung** | Eine Schuld von ungewissem Zeitpunkt oder ungewisser Höhe, etwa der Barwert einer Standortwiederherstellungsverpflichtung |
+
+## Teste dich selbst
+
+1. Eine Maschine wird für 250,000 vor einem Händlerrabatt von 5% gekauft. Die Lieferung kostet 4,000, die Installation 6,000, und die Rechnung weist 47,500 Umsatzsteuer aus. Wie hoch sind die Anschaffungskosten?
+2. Erkläre den Unterschied zwischen Abschreibung und Wertminderung in drei Sätzen, einschließlich dessen, woran jede gemessen wird und ob sie rückgängig gemacht werden kann.
+3. Ein Vermögenswert kostet 8m bei einem Restwert von 2m und fünf Jahren Nutzungsdauer. Berechne die Abschreibung des Jahres 2 und den Buchwert am Ende von Jahr 2 linear sowie degressiv mit 30% des offenen abschreibungsfähigen Restbetrags.
+4. Anfangsbestand 20 Einheiten zu 10; Zukäufe von 30 Einheiten zu 12 und 50 Einheiten zu 14; 60 Einheiten werden verkauft. Berechne die Umsatzkosten und den Schlussbestand nach FIFO und nach gewogenem Durchschnitt und mache die Probe auf die Summe.
+5. Ein Produkt kostete 500 in der Herstellung, verkauft sich für 560 und braucht noch 30 an Fertigstellung, 10 an Verpackung und 25 an Fracht. Seine Wiederbeschaffungskosten betragen 480. Mit welchem Wert wird es geführt, und warum sind die 480 irrelevant?
+6. Nenne die drei Fakten, die zusammen zeigten, dass BlackBerry eine Vorratsabwertung brauchte, und gib die Wirkung der Abwertung auf die Bilanzsumme, das Eigenkapital, den Jahresüberschuss und den operativen Cashflow an.
+
+<Aside type="note" title="Lösungen">
+1. 250,000 abzüglich des Rabatts von 12,500 = 237,500, plus Lieferung 4,000 und Installation 6,000 = **247,500**. Die Umsatzsteuer bleibt außen vor.
+2. Die Abschreibung ist die planmäßige Verteilung des abschreibungsfähigen Betrags über die Nutzungsdauer, gemessen an den Kosten und den anfänglichen Schätzungen, und sie wird nicht rückgängig gemacht. Die Wertminderung ist eine außerplanmäßige Abwertung, wenn der aktuelle (erzielbare) Wert, meist diskontierte Zahlungsströme nach IAS 36, unter den Buchwert fällt. Sie kann zugeschrieben werden, wenn die Gründe wegfallen, aber nie über die Kosten hinaus.
+3. Abschreibungsfähiger Betrag 6m. Linear: 1.2m in Jahr 2, Buchwert 8m - 2.4m = **5.6m**. Degressiv mit 30%: Jahr 1 sind 30% × 6m = 1.8m, Jahr 2 sind 30% × 4.2m = 1.26m, Buchwert 8m - 3.06m = **4.94m**.
+4. Verfügbar: 200 + 360 + 700 = 1,260 für 100 Einheiten. FIFO: Umsatzkosten 20 × 10 + 30 × 12 + 10 × 14 = **700**, Schlussbestand 40 × 14 = **560**. Gewogener Durchschnitt: 12.60 je Einheit, Umsatzkosten 60 × 12.60 = **756**, Schlussbestand 40 × 12.60 = **504**. Beide Paare addieren sich zu 1,260.
+5. NRV = 560 - 30 - 10 - 25 = 495, was niedriger ist als die Kosten von 500, also wird das Produkt mit **495** geführt und 5 werden abgeschrieben. Die Wiederbeschaffungskosten von 480 gehören zum Beschaffungsmarkt; IFRS bemisst den NRV auf dem Absatzmarkt.
+6. Die Vorräte hatten sich etwa verdreifacht (603m auf 1,836m), der Hardware-Umsatz hatte sich etwa halbiert (6,902m auf 3,880m), und die Netzbetreiber mussten die Preise kräftig senken, um die Geräte zu verkaufen. Die Abwertung reduziert Bilanzsumme, Eigenkapital und Jahresüberschuss um denselben Betrag; der operative Cashflow bleibt unverändert, weil es sich um einen nicht zahlungswirksamen Aufwand handelt.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Sachanlagen (IAS 16)**: materiell, zur Nutzung gehalten, über mehr als eine Periode. **Vorräte (IAS 2)**: zum Verkauf gehalten, für den Verkauf in Herstellung, oder Stoffe.
+- **Ansetzen**, wenn der künftige Nutzen wahrscheinlich und die Kosten verlässlich bemessbar sind; **zu Kosten** bewerten.
+- **Anschaffungskosten** = Preis + Kosten, um ihn nutzbar oder verkäuflich zu machen - Rabatte, keine Umsatzsteuer, plus Rückbaukosten bei Sachanlagen (Maschine 96,500; Kernkraftwerk 101.5m mit einer Rückstellung von 1.5m). **Herstellungskosten** = Einzelkosten + Fertigungsgemeinkosten, keine Verwaltung (Auto 35,000).
+- **Abschreibung** = systematische Verteilung der Kosten abzüglich Restwert über die Nutzungsdauer; Zuordnung, kein Ansparen, nicht nur Steuer. **Linear** ist die Norm; **degressiv** und **leistungsabhängig** sind die Ausnahmen; die Wahl richtet sich nach dem Muster des Wertverlusts.
+- **Wertminderung** = außerplanmäßige Abwertung, wenn der erzielbare Wert (diskontierte Zahlungsströme, IAS 36) unter dem Buchwert liegt; zuschreibbar bis zu den Kosten. Die **Neubewertung** ist die neutrale Alternative. Jede Methode ruht auf **Schätzungen** von Wert, Restwert, Nutzungsdauer und Ausbringung.
+- **Vorräte**: Verbrauchsfolgemethoden **gewogener Durchschnitt** oder **FIFO** (LIFO nur zum Verständnis); Rohstoffe mit liquiden Märkten dürfen zum Verkaufspreis stehen; ansetzen mit dem **niedrigeren Wert aus Kosten und NRV**, NRV = Verkaufspreis abzüglich Fertigstellungs- und Verkaufskosten, Absatzmarkt statt Beschaffungsmarkt, Zuschreibungen erlaubt.
+- **Maschinenbeispiel**: 2.0m pro Jahr linear; 1.6 / 1.2 / 4.0 / 1.6 / 1.6 nach Nutzung; 4.0 / 2.4 / 1.44 und dann linear bei degressiver Abschreibung; nach Jahr 2 bedeuten 7m gegen 6m eine Wertminderung von 1m.
+- **FIFO-Beispiel**: Aufwand 370 und Bestand 550; gewogener Durchschnitt 306.67 und 613.33; beide zusammen 920.
+- **BlackBerry**: Vorräte verdreifacht, Hardware-Umsatz halbiert, Netzbetreiber senkten die Preise, also abwerten. Vermögen, Eigenkapital und Gewinn fallen gemeinsam; die Zahlungsmittel bewegen sich nicht; der Aktienkurs sollte das bereits widerspiegeln.
+</Aside>
+
+*Weiter: [Immaterielle Vermögenswerte, Rückstellungen & der Zielkonflikt zwischen Relevanz und Verlässlichkeit →](/de/learnings/mba/financial-performance-and-management-control/06-intangibles-provisions-relevance-vs-reliability/) - die Vermögenswerte, die man nicht anfassen kann, und die Verpflichtungen, deren Höhe man noch nicht kennt.*

@@ -1,0 +1,467 @@
+---
+title: "Management Accounting & Cost Concepts"
+description: "Part B opens: what management accounting is and why measurement-managed firms outperform, the three purposes of cost accounting, the many faces of the controller, and the core cost vocabulary - cost objects, direct vs indirect, variable vs fixed, the unit-cost trap, different costs for different purposes, and decision-facilitating vs decision-influencing information."
+sidebar:
+  label: "8 · Cost Concepts"
+  order: 8
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Everything up to now (Part A) looked *outwards*: balance sheets, IFRS rules, statement analysis - the numbers a company must publish for shareholders, banks and the tax office. This chapter opens **Part B - management accounting and control**, and the camera turns *inwards*. The question is no longer "what must we report?" but "which numbers help us run the business better?".
+
+Part B has five stops. This chapter covers the first two: the **fundamentals** (what management accounting is, why measuring pays, what controllers actually do) and the **cost vocabulary** (cost objects, direct and indirect, variable and fixed, why unit costs mislead). The chapters after this one build on these words - cost-volume-profit analysis, costing and pricing, and finally performance measurement systems with the Balanced Scorecard. The course reading for both blocks is Horngren's managerial chapters 1 and 5.
+
+Nothing here is mathematically hard. The difficulty is conceptual: the same euro can be direct *or* indirect, fixed *or* variable, depending on what you are looking at and why. Get the vocabulary precise now and the later chapters become almost mechanical.
+
+<Aside type="tip">
+**The one idea to carry through.** A cost figure means nothing on its own. It only makes sense relative to a **cost object** (cost *of what?*) and a **purpose** (cost *for which decision?*). Every trap in this chapter, from the direct/indirect split to the misleading unit cost, comes from forgetting one of those two questions.
+</Aside>
+
+## 1 · The map of Part B
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">1 Fundamentals<span class="sub">what management accounting is, roles</span></div>
+    <div class="arrow">→</div>
+    <div class="sc-node violet">2 Cost terms<span class="sub">objects, direct/indirect, variable/fixed</span></div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">3 CVP analysis<span class="sub">break-even, sensitivity</span></div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">4 Costing &amp; pricing<span class="sub">what a product costs, what to charge</span></div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">5 Performance systems<span class="sub">measurement &amp; Balanced Scorecard</span></div>
+  </div>
+  <figcaption>Part B in five blocks. The two highlighted ones are this chapter; everything after it reuses the vocabulary defined here.</figcaption>
+</div>
+
+## 2 · What management accounting is - and how it differs from its siblings
+
+In my own words: **management accounting** is the process of *measuring* and *supplying* operational and financial information so that it does three things at once - it **guides** what managers do, it **motivates** the behaviour the organisation wants, and it **supports the culture and values** needed to reach the strategy. Notice that only the first job is about numbers; the other two are about people. That double nature (information *and* behaviour) returns in section 11.
+
+The three accounting "siblings" overlap but have different customers:
+
+| | Financial accounting | Management accounting | Cost accounting |
+|---|---|---|---|
+| **Who it serves** | Outsiders: shareholders, creditors, tax | Managers inside the firm | Both, as the engine underneath |
+| **What it measures** | Financial results, under binding standards (IFRS, HGB) | Financial *and* other information, whatever helps reach the organisation's goals | Mainly financial information on the **acquisition and consumption of resources** |
+| **Freedom of design** | Almost none | Designed for the decision at hand | Turns basic bookkeeping data into decision-facilitating information |
+
+The link to remember: **cost accounting takes the raw data of financial accounting** (the same invoices, wages and depreciation) and reshapes it so that a manager can decide something with it.
+
+## 3 · Does measuring actually pay?
+
+A mid-1990s study of North American companies split firms into those that manage *by measurement* and those that do not, then compared outcomes. The gap is not subtle:
+
+| Outcome | Measurement-managed firms | Non-measurement-managed firms |
+|---|---|---|
+| Seen as the **market leader** in their industry over the past three years | **97%** | 54% |
+| Among the **top third financially** in their industry | **83%** | 52% |
+| Last major cultural or organisational **change judged successful** | **74%** | 44% |
+
+Correlation is not proof of causation (successful firms may simply afford better measurement), but the pattern is strong enough that the course treats it as evidence: **organisations that measure systematically perform better and change more successfully.** This is the empirical justification for the whole of Part B.
+
+## 4 · The three purposes of cost accounting
+
+Why run a cost accounting system at all? The German textbook classification gives three purposes, one facing outwards and two facing inwards:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Documentation<span class="n">external use</span></div>
+      <div class="sc-node slate">Value assets &amp; stock<span class="sub">production cost of inventories</span></div>
+      <div class="sc-node slate">Determine cost of sales<span class="sub">feeds the income statement</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Short-term planning<span class="n">internal - create transparency</span></div>
+      <div class="sc-node green">Production<span class="sub">which programme to manufacture</span></div>
+      <div class="sc-node green">Sales<span class="sub">the lowest acceptable price</span></div>
+      <div class="sc-node green">Procurement<span class="sub">make or buy?</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Short-term monitoring<span class="n">internal - control</span></div>
+      <div class="sc-node amber">Profit of the period<span class="sub">time-adjusted cost-object accounting</span></div>
+      <div class="sc-node amber">Profitability &amp; cost-effectiveness<span class="sub">are we efficient?</span></div>
+    </div>
+  </div>
+  <figcaption>Documentation serves the outside world (valuation of inventories and cost of goods sold). Planning and monitoring serve managers: planning decides the programme, price floors and make-or-buy; monitoring checks the period result and cost efficiency.</figcaption>
+</div>
+
+A 2009 survey of German companies confirms that practice really does use cost accounting for exactly these purposes - the textbook list is not just theory. The course's shorthand for the three is **documentation, planning and control**.
+
+## 5 · Who does this work? The controller's many faces
+
+Management accountants (in German firms, *controllers*) carry a reputation problem: the default mental image is the **bean counter**. The course lists eight stereotypes, arranged from unflattering to flattering:
+
+- **Bean counter / number cruncher** <Badge text="negative" variant="danger" /> - buried in figures, no feel for the business
+- **Brakeman / constrainer** <Badge text="negative" variant="danger" /> - the person who says no to every idea
+- **Inspector** <Badge text="negative" variant="danger" /> - checks up on people, hunts for mistakes
+- **Sniffer dog / detective** <Badge text="mixed" variant="caution" /> - digs out what is really going on
+- **Court jester** <Badge text="mixed" variant="caution" /> - allowed to tell uncomfortable truths to the top
+- **Internal consultant** <Badge text="positive" variant="success" /> - advises line managers on their problems
+- **Economic conscience** <Badge text="positive" variant="success" /> - reminds everyone what things cost
+- **Pilot / navigator** <Badge text="positive" variant="success" /> - helps steer the company towards its goals
+
+How do managers actually see them? A 2012 survey of managers (multiple answers allowed) gives a much friendlier picture than the stereotype:
+
+| Role as seen by managers | Share of answers | Role as seen by managers | Share of answers |
+|---|---|---|---|
+| Navigator | **67%** | Internal consultant | 12% |
+| Sniffer dog | **59%** | Economic conscience | 8% |
+| Communicator | **52%** | Inspector | 6% |
+| Bean counter | 26% | Innovator | 4% |
+| Change agent | 22% | Architect | 2% |
+| Brakeman | 18% | Court jester | 2% |
+
+Two out of three managers call their controller a **navigator**; only one in four still thinks "bean counter". The unpopular images (inspector, brakeman) sit near the bottom.
+
+Behind the images sit **four concrete roles** every management accountant plays:
+
+| Role | What it involves |
+|---|---|
+| **Financial reporting** | Collecting and supplying the data for external reports to shareholders, creditors and others |
+| **Stewardship** | Designing and running the internal control system that protects the company's assets; designing and administering the budgeting system |
+| **Performance evaluation** | Internal reporting on how well managers and units are performing |
+| **Business advisor** | Helping managers run their businesses by providing strategic management accounting data on products, processes and technology |
+
+The first two are the "keeper of the books and the assets" roles; the last two are where the navigator image comes from.
+
+## 6 · Cost, cost objects, and how costs reach them
+
+Now the vocabulary. A **cost** is the value of resources **sacrificed or given up to achieve a specific objective** - money, materials, hours, machine time. The "specific objective" is the crucial phrase: costs are always *of something*. That something is the **cost object**: anything for which you want a separate cost measurement.
+
+| Type of cost object | Example from the course |
+|---|---|
+| A **product** | One Porsche 911 |
+| A **service** | One airline flight from Cologne/Bonn to Paris |
+| A **project** | Rolling out the SAP accounting software |
+| A **customer** | Everything a logistics group delivers for Amazon |
+| An **activity** | Repairing a defective PC delivered by a manufacturer |
+| A **department** | The management accounting department itself |
+
+Costing happens in two moves. First all costs are **accumulated** in the bookkeeping (the plain total spent). Then they are **assigned** to the cost objects we care about:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Total costs<span class="sub">1,200,000 accumulated</span></div>
+    <div class="arrow">→<small>cost assignment</small></div>
+    <div class="sc-node amber">Product A<span class="sub">120,000</span></div>
+    <div class="arrow">+</div>
+    <div class="sc-node amber">Product B<span class="sub">240,000</span></div>
+    <div class="arrow">+</div>
+    <div class="sc-node amber">Product C<span class="sub">840,000</span></div>
+  </div>
+  <figcaption>Cost accumulation collects the pool (here 1,200,000); cost assignment splits it across the cost objects (120,000 + 240,000 + 840,000). The whole art of costing is in the second step.</figcaption>
+</div>
+
+Assignment itself comes in two flavours, and this is the first big classification:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Direct costs <small>assigned by tracing</small></div>
+    <ul>
+      <li>Related to the particular cost object <strong>and</strong> can be traced to it in an <strong>economically feasible</strong>, cost-effective way</li>
+      <li>You can point at the invoice and say: this went into <em>that</em></li>
+      <li>e.g. the steel in a car, the eight participants paid for one focus group</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Indirect costs <small>assigned by allocation</small></div>
+    <ul>
+      <li>Related to the cost object only indirectly, or tracing would cost more than it is worth</li>
+      <li>Shared across several objects, so they are <strong>allocated</strong> with some key (hours, floor space, headcount)</li>
+      <li>e.g. the plant manager's salary, the head-office lease</li>
+    </ul>
+  </div>
+</div>
+
+<Aside type="caution">
+**The split depends on the cost object.** A supervisor's salary is *direct* to the assembly line she runs but *indirect* to any single car that rolls off it. Whenever an exam asks "direct or indirect?", the first thing to write down is "with respect to what?". Note also the phrase *economically feasible*: some costs could in principle be traced (every phone call, every litre of petrol) but nobody keeps the records because it is not worth it - so they are treated as indirect.
+</Aside>
+
+## 7 · A full product cost, line by line
+
+The course example prices one product for a firm making **200,000 units**. Two layers stack on top of each other: the costs of making the thing (cost of goods sold) and the costs of everything around it along the value chain (operating costs).
+
+| Cost line | Per unit | Total for 200,000 units |
+|---|---|---|
+| Direct materials | 385 | 77,000,000 |
+| Direct manufacturing labour | 53 | 10,600,000 |
+| Direct machining | 57 | 11,400,000 |
+| Manufacturing overhead | 45 | 9,000,000 |
+| **= Cost of goods sold** | **540** | **108,000,000** |
+| Research and development | 20 | 4,000,000 |
+| Design of products and processes | 30 | 6,000,000 |
+| Marketing | 90 | 18,000,000 |
+| Distribution | 25 | 5,000,000 |
+| Customer service | 15 | 3,000,000 |
+| **= Operating costs** | **180** | **36,000,000** |
+| **Full product cost** | **720** | **144,000,000** |
+
+In one line: `385 + 53 + 57 + 45 = 540` for cost of goods sold, `20 + 30 + 90 + 25 + 15 = 180` for operating costs, and `540 + 180 = 720` per unit, which is `108m + 36m = 144m` for the 200,000 units.
+
+Three of the four manufacturing lines are *direct* (materials, labour, machining); the fourth, manufacturing overhead, is the allocated remainder. Keep this table in mind for section 10 - different decisions use different slices of it.
+
+## 8 · Variable and fixed - how costs behave
+
+The second big classification is not about *where* a cost goes but *how it moves*. The reference point is the **cost driver**: the activity whose level causes the cost, typically the number of units produced.
+
+- **Variable costs** change **in total** in proportion to the cost driver. Double the output and total material cost doubles. Plotted against the driver, they are a straight line through the origin.
+- **Fixed costs** do **not** change in total when the driver moves (within the range we are looking at). Rent, the plant manager's salary, a fixed licence fee. Plotted, they are a flat line.
+
+### Concept in action: turning a fixed cost into a variable one
+
+A car-sharing service such as Zipcar lets individuals and businesses rent a car by the week, day or even hour: reserve online, walk to the car park, unlock the car with a card or an app, drive away. For a company, this **converts the fixed cost of owning a car into a variable cost**: you pay per hour of actual use, and if business slows or the cars are no longer needed you are simply not saddled with the fixed cost any more. Business customers already brought in 15% of the firm's revenue, expected to double.
+
+<Aside type="caution">
+**The trap in the car-sharing story.** Variable is not automatically cheaper. Per hour, renting costs more than the hourly share of owning, so a heavy user can end up **paying more overall**. What you buy with a variable cost structure is *flexibility and lower risk*, not a lower bill. The same trade-off returns in the CVP chapter under the name operating leverage.
+</Aside>
+
+### The two classifications combined
+
+Direct/indirect and variable/fixed are independent axes, so every cost lands in one of four cells. The course example uses a car assembly plant with the cost object "one car model":
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Direct &amp; variable <small>traced, moves with volume</small></div>
+    <ul>
+      <li><strong>Tyres</strong> used in assembling the car</li>
+      <li>Each set clearly belongs to one car, and every extra car needs another set</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Direct &amp; fixed <small>traced, stays flat</small></div>
+    <ul>
+      <li><strong>Salary of the supervisor</strong> on this model's assembly line</li>
+      <li>Belongs to this product alone, but does not rise when volume rises</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Indirect &amp; variable <small>allocated, moves with volume</small></div>
+    <ul>
+      <li><strong>Power costs</strong> when electricity is metered only for the plant as a whole</li>
+      <li>More cars burn more power, but nobody can say which kilowatt-hour went to which model</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Indirect &amp; fixed <small>allocated, stays flat</small></div>
+    <ul>
+      <li><strong>Salary of the plant manager</strong></li>
+      <li>Serves every product in the plant, unchanged whether output goes up or down</li>
+    </ul>
+  </div>
+</div>
+
+## 9 · The unit-cost trap
+
+Unit costs (total cost divided by units) are everywhere in practice, and they are dangerous the moment they contain **fixed costs**. The course example: the president of a university jazz society is hiring a band for a party and gets three fee schedules - **(1) a flat 1,000**, **(2) 500 flat plus 1 per person**, **(3) 2 per person**. Nobody knows yet how many people will come.
+
+| Attendees | Schedule 1 total | per head | Schedule 2 total | per head | Schedule 3 total | per head |
+|---|---|---|---|---|---|---|
+| 50 | 1,000 | 20.0 | 550 | 11.0 | 100 | 2.0 |
+| 100 | 1,000 | 10.0 | 600 | 6.0 | 200 | 2.0 |
+| 250 | 1,000 | 4.0 | 750 | 3.0 | 500 | 2.0 |
+| 500 | 1,000 | 2.0 | 1,000 | 2.0 | 1,000 | 2.0 |
+| 1,000 | 1,000 | 1.0 | 1,500 | 1.5 | 2,000 | 2.0 |
+
+Read the columns. Under the pure fixed fee the cost per head **falls from 20 to 1** as the room fills; under the mixed schedule it falls **from 11 to 1.5**; under the pure per-person fee it **stays at 2** whatever happens. At exactly 500 guests all three cost the same. Which schedule is best therefore depends entirely on the expected turnout - the unit cost at one attendance level tells you nothing about another level.
+
+That gives the rule that must be memorised in both directions:
+
+| | When the item is a **variable** cost | When the item is a **fixed** cost |
+|---|---|---|
+| **Total cost** | changes with the level of the cost driver | stays the same |
+| **Unit cost** | stays the same | changes - falls as volume rises, climbs as it falls |
+
+<Aside type="caution">
+**Never multiply a unit cost that contains fixed costs by a different volume.** If the unit cost was computed at 100,000 units and you use it to budget for 150,000, you silently pretend the fixed costs grew by half. This is the single most common cost accounting error in practice, and the worked examples below drill it.
+</Aside>
+
+## 10 · Different costs for different purposes
+
+Go back to the full product cost of 720 in section 7. Which of those lines "count" as the product's cost? The honest answer: **it depends what the number is for.** Lay the six value-chain stages out in a row:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">R&amp;D</div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">Design</div>
+    <div class="arrow">→</div>
+    <div class="sc-node amber">Production</div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">Marketing</div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">Distribution</div>
+    <div class="arrow">→</div>
+    <div class="sc-node soft">Customer service</div>
+  </div>
+  <figcaption>The value chain. Financial statements count only the production slice as product cost; government contract reimbursement allows a wider slice; pricing and product-emphasis decisions need the whole chain.</figcaption>
+</div>
+
+- **Product costs for financial statements** - only the **production** stage. Inventories and cost of goods sold are valued at manufacturing cost; R&D, marketing and the rest are expensed as period costs. (This is the documentation purpose from section 4.)
+- **Product costs for reimbursement under government contracts** - a **wider slice**, because contract rules typically allow design and other upstream costs to be recovered, not just factory costs.
+- **Product costs for pricing and product-emphasis decisions** - the **full value chain**. If the price does not cover marketing, distribution and service too, the product loses money no matter how lean the factory is.
+
+Same product, three different "costs", all correct for their purpose. This is the "cost *for which decision?*" half of the chapter's one idea.
+
+## 11 · Two orientations: helping decisions vs steering behaviour
+
+The final concept explains why cost systems are designed the way they are. Management accounting information does two very different jobs, and the design criteria pull in opposite directions:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Decision-facilitating <small>decision-making orientation</small></div>
+    <ul>
+      <li>Cost accounting used to <strong>support a decision</strong>: which programme, which price, make or buy</li>
+      <li>Design criterion 1: <strong>relevance and adequacy</strong> for the problem - which tends to make the system <strong>complex</strong></li>
+      <li>Design criterion 2: <strong>independent of the decision maker</strong> - the number should not change with who is asking</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Decision-influencing <small>behavioural orientation</small></div>
+    <ul>
+      <li>Cost accounting used to <strong>influence managers</strong> who have cognitive limits and their own preferences (opportunism, motivation)</li>
+      <li>Design criterion 1: <strong>understandable and adequate for the decision maker</strong> - simple enough to act on</li>
+      <li>Design criterion 2: <strong>resistant to manipulation</strong> - people will game whatever they are measured on</li>
+    </ul>
+  </div>
+</div>
+
+The tension is real: the most decision-relevant system (many drivers, many allocations) is often the least understandable and the easiest to game, while a simple robust system may be too crude for a tricky decision. This is exactly why performance measurement and the Balanced Scorecard get their own chapter later.
+
+## Worked example
+
+Three exercises from the course, with the model answers.
+
+### (a) Cost classification - a focus-group research firm
+
+A marketing research firm runs **focus groups** for consumer-product companies. Each group has eight participants who are paid a total of 9,000 per session; sessions take place in hotels, are led by an independent specialist (fixed retainer plus 3,600 per session) and are attended by one staff member. Classify each item as **direct or indirect with respect to one focus group**, and **variable or fixed with respect to the number of groups run**.
+
+| Item | D / I | V / F | Why |
+|---|---|---|---|
+| A. Payments to the participants of a group | **Direct** | **Variable** | Paid per session, clearly for this one group; more groups, more payments |
+| B. Annual subscription to a consumer magazine | **Indirect** | **Fixed** | One yearly bill that serves the whole firm; unchanged however many groups run |
+| C. Phone calls confirming attendance (no call records kept) | **Indirect** | **Variable (or fixed - discuss)** | The calls are for a group, but without records they cannot be traced economically; total phone cost rises with more groups, though under a flat tariff it would behave as fixed |
+| D. Hotel meals for participants | **Direct** | **Variable** | Ordered for this group's people; every extra group adds meals |
+| E. Lease of the corporate office | **Indirect** | **Fixed** | The roof over everything; rent does not move with the number of sessions |
+| F. Recording tapes, sent to the client | **Direct** | **Variable** | Used in and identifiable with one session; each session consumes more |
+| G. Petrol for company cars (monthly bills, no mileage breakdown) | **Indirect** | **Variable** | Fuel use grows with the sessions staff drive to, but no log links litres to a group |
+
+The lesson from C and G: a cost can be *physically* caused by a cost object and still be **indirect**, purely because nobody keeps the records that would make tracing economically feasible.
+
+### (b) Average cost per unit - a plastics producer
+
+Fixed costs 645,000 per year, variable cost 7 per unit, output somewhere between 100,000 and 200,000 units. Average cost per unit at three volumes:
+
+| Units | Fixed | Variable (7 × units) | Total | Average per unit |
+|---|---|---|---|---|
+| 100,000 | 645,000 | 700,000 | 1,345,000 | **13.45** |
+| 150,000 | 645,000 | 1,050,000 | 1,695,000 | **11.30** |
+| 200,000 | 645,000 | 1,400,000 | 2,045,000 | **10.23** |
+
+The variable part stays at 7 per unit throughout; the whole drop from 13.45 to 10.23 comes from spreading the same 645,000 over more units (6.45, then 4.30, then 3.23 per unit). Quote a single "unit cost" for this firm and you have hidden the volume assumption.
+
+### (c) Step fixed costs - a beach-sand mining company
+
+A company extracts minerals from beach sand. Its costs: a subcontractor charging **80 per tonne** mined and returned, a government mining and environmental tax of **50 per tonne**, and a barge operator charging **150,000 per month for each block of 100 tonnes per day of capacity** (0 to 100 tonnes per day costs 150,000, 101 to 200 costs 300,000, and so on), payable in full even if less is shipped. Barges run 25 days a month. Current output: 180 tonnes per day.
+
+<Steps>
+
+1. **Variable cost per tonne.** Subcontractor 80 + tax 50 = **130 per tonne**. Both bills move one-for-one with tonnage.
+
+2. **Fixed cost per month at 180 tonnes per day.** 180 sits in the 101 to 200 block, so two barge blocks are needed: **300,000 per month**. This is a *step* fixed cost - flat within each 100-tonne band, jumping at the boundary.
+
+3. **Unit cost at 180 tonnes per day.** Monthly tonnage 180 × 25 = 4,500 tonnes. Fixed cost per tonne 300,000 / 4,500 = **66.67**. Total unit cost 66.67 + 130 = **196.67 per tonne**.
+
+4. **Unit cost at 220 tonnes per day.** Monthly tonnage 220 × 25 = 5,500 tonnes. But 220 crosses into the 201 to 300 block, so the barge bill jumps to **450,000**. Fixed cost per tonne 450,000 / 5,500 = **81.82**. Total unit cost 81.82 + 130 = **211.82 per tonne**.
+
+5. **Why the unit cost rises with volume.** Normally more output spreads fixed costs thinner. Here the second 150,000 block was spread over 80 extra tonnes per day (from 100 to 180), but the third 150,000 block is spread over only **20 extra tonnes per day** (from 200 to 220). A whole new step of fixed cost, barely used, pushes the average up. The company would need to fill the third barge much further before the unit cost fell again.
+
+</Steps>
+
+<div class="sc-chips">
+  <span class="sc-chip blue">variable: 130 per tonne, always</span>
+  <span class="sc-chip amber">fixed: 150,000 per 100 t/day block</span>
+  <span class="sc-chip violet">180 t/day → 196.67</span>
+  <span class="sc-chip green">220 t/day → 211.82</span>
+</div>
+
+## Case corner
+
+### The Electronics Board mini-case - why a growing company needs cost accounting
+
+The mini-case asks two things: summarise the company's situation, and list as many reasons as possible why introducing a **cost accounting system** would help. The situation, in short, is a growing electronics business that has so far run on bookkeeping and gut feel, and is now making decisions (pricing, product mix, sourcing) without knowing what anything actually costs. The reasons map neatly onto the three purposes from section 4:
+
+- **Knowing what each product really costs** - direct costs traced, indirect costs allocated with a sensible key - instead of a single blended figure. Without this, every other answer is guesswork.
+- **Pricing floors** - the lowest price the sales team may accept without losing money on each order (the planning purpose, sales side).
+- **Make-or-buy decisions** - comparing the internal cost of a component or board with a supplier's quote (the planning purpose, procurement side).
+- **Deciding the production programme** - which boards to push and which to drop when capacity is tight.
+- **Spotting loss-makers** - products or customers that look busy but destroy margin; growth hides them until someone measures.
+- **Monitoring** - period profit by product line, and whether costs are under control as volumes rise (the control purpose).
+- **Valuing inventories and cost of sales** correctly for the external accounts (the documentation purpose), which becomes more demanding as the product range grows.
+- **Steering behaviour** - giving managers understandable, hard-to-game targets (the decision-influencing orientation from section 11).
+
+### Car sharing as "concept in action"
+
+Zipcar's business customers are a live example of section 8. Owning a fleet is a fixed cost: it is paid whether the cars move or not. Renting by the hour makes the cost variable with actual use, which is a gift in a downturn - the cars simply go back. The price of that flexibility is a higher cost per hour of use, so a company with steady, heavy usage may pay more in total. The management lesson is to choose a cost structure for its *risk profile*, not only for its average cost.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| **Management accounting** | Measuring and supplying operational and financial information that guides action, motivates behaviour and supports the strategy |
+| **Financial accounting** | External reporting to shareholders, creditors and the state, governed by binding standards |
+| **Cost accounting** | Measuring how resources are acquired and consumed; turns bookkeeping data into decision-facilitating information |
+| **Cost** | Resources sacrificed or forgone to achieve a specific objective |
+| **Cost object** | Anything you want a separate cost figure for: a product, service, project, customer, activity or department |
+| **Cost accumulation** | Collecting costs in the books before assigning them |
+| **Cost assignment** | Splitting the accumulated pool across cost objects, by tracing or by allocation |
+| **Direct cost** | Related to the cost object and traceable to it in an economically feasible way |
+| **Indirect cost** | Related only indirectly, or not worth tracing; assigned by allocation with a key |
+| **Cost driver** | The activity whose level causes a cost, e.g. units produced |
+| **Variable cost** | Changes in total in proportion to the cost driver; constant per unit |
+| **Fixed cost** | Unchanged in total when the driver moves; per unit it falls as volume rises |
+| **Step fixed cost** | Flat within a capacity band, then jumps to a new level (the barge example) |
+| **Decision-facilitating vs decision-influencing** | Information designed to support a decision (relevant, complex, neutral) vs information designed to steer behaviour (understandable, manipulation-resistant) |
+
+## Test yourself
+
+1. Define management accounting in one sentence and explain how cost accounting relates to financial accounting.
+2. A bakery makes several breads. With the cost object "the rye bread line", classify each as direct/indirect and variable/fixed: rye flour; the salary of the supervisor who runs only the rye line; the bakery manager's salary; gas for the ovens, metered for the whole bakery only.
+3. The jazz society expects 200 guests. Compute total and per-head cost under all three band schedules (1,000 flat; 500 plus 1 per head; 2 per head) and state which is cheapest.
+4. Name the three purposes of cost accounting and give one concrete decision for each.
+5. Why does the mining company's unit cost rise from 196.67 to 211.82 when daily output goes up from 180 to 220 tonnes?
+6. What are the two orientations of management accounting information, and which two design criteria belong to each?
+
+<Aside type="note" title="Answers">
+1. Measuring and supplying operational and financial information that guides managers, motivates behaviour and supports the strategy. Cost accounting uses the basic data of financial accounting (the same transactions) and reshapes it into decision-facilitating information; financial accounting reports outwards under fixed rules, management accounting serves managers.
+2. Rye flour: direct, variable. Rye-line supervisor: direct, fixed. Bakery manager: indirect, fixed. Oven gas metered for the whole bakery: indirect, variable (it rises with output but cannot be traced to one line).
+3. Schedule 1: 1,000 total, 5.00 per head. Schedule 2: 500 + 200 = 700 total, 3.50 per head. Schedule 3: 2 × 200 = 400 total, 2.00 per head. At 200 guests the pure per-head fee is cheapest; the ranking flips above 500 guests.
+4. Documentation: valuing inventories and cost of sales for the external accounts. Short-term planning: production programme, price floor, make-or-buy. Short-term monitoring: period profit and cost-effectiveness of a unit.
+5. The barge charge is a step fixed cost of 150,000 per 100-tonne-per-day block. At 220 tonnes a third block is needed (450,000 instead of 300,000) but only 20 extra tonnes per day use it, so fixed cost per tonne climbs from 66.67 to 81.82 while the variable 130 stays the same.
+6. Decision-facilitating: relevance and adequacy for the problem (accepting complexity), and independence from the decision maker. Decision-influencing: understandable and adequate for the decision maker, and resistant to manipulation.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- Part B turns from external reporting to **running the business**. Its five blocks: fundamentals, cost terms, CVP, costing and pricing, performance systems and the Balanced Scorecard.
+- **Management accounting** measures and supplies information that **guides, motivates and supports the strategy**. **Financial accounting** reports outwards under rules; **cost accounting** measures the acquisition and consumption of resources and feeds decisions.
+- **Measuring pays**: measurement-managed firms are market leaders 97% vs 54%, top-third performers 83% vs 52%, and succeed with change 74% vs 44%.
+- Cost accounting has **three purposes**: documentation (inventories, cost of sales - external), short-term planning (programme, price floor, make-or-buy) and short-term monitoring (period profit, cost-effectiveness).
+- Controllers carry images from **bean counter** to **navigator**; managers mostly see navigators (67%) and sniffer dogs (59%). Four roles: financial reporting, stewardship, performance evaluation, business advisor.
+- A **cost** is resources sacrificed for an objective; the **cost object** is the thing costed. Costs are **accumulated** then **assigned**: **direct** costs are traced (economically feasible), **indirect** costs are allocated - and the split depends on the cost object.
+- Full product cost example: 540 cost of goods sold + 180 operating costs = **720 per unit**, 144m for 200,000 units.
+- **Variable** costs move in total with the cost driver (constant per unit); **fixed** costs do not (per unit they fall with volume). Combine with direct/indirect for the four-cell matrix: tyres, line supervisor, plant power, plant manager.
+- **Unit costs containing fixed costs are treacherous** - the band example goes from 20 to 1 per head. Step fixed costs can even push unit cost *up* (196.67 to 211.82).
+- **Different costs for different purposes** along the value chain: production only for financial statements, wider for government contracts, the whole chain for pricing.
+- Information is either **decision-facilitating** (relevant, neutral, complex) or **decision-influencing** (understandable, manipulation-resistant).
+</Aside>
+
+*Next: [Cost-Volume-Profit & Break-Even →](/learnings/mba/financial-performance-and-management-control/09-cost-volume-profit-and-break-even/) - how many do we have to sell before we make money?*

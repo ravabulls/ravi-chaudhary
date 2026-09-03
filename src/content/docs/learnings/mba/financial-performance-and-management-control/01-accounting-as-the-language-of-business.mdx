@@ -1,0 +1,363 @@
+---
+title: "Accounting as the Language of Business"
+description: "Why accounting exists and whom it serves - the value-chain view of a firm, financial vs management accounting, the three purposes of accounting information (information, documentation, distribution), accounting entity, period and GAAP, the financial reporting system, auditing after 1929, and the Accounting Monopoly game that turns dice rolls into a balance sheet, an income statement and a cash-flow split."
+sidebar:
+  label: "1 · The Language of Business"
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Every other module in this MBA eventually lands on a number: a margin, a budget, a return on capital. This module is about where those numbers come from. Its declared aim is that we understand the concepts and the *language* of financial performance and management control well enough to use them as a working tool for communication, monitoring and allocating resources. The slogan the whole course hangs on is **accounting as the language of business** - and like any language it has vocabulary (earnings, equity, depreciation, provisions, EBIT and EBITDA, ROCE), grammar (the accounting equation) and regional dialects (HGB, IFRS, US-GAAP).
+
+The module has three parts. **Part I, financial accounting**: fundamentals, the balance sheet, the income statement, IFRS, accounting for specific items such as property, plant and equipment or inventory, and financial statement analysis. **Part II, management accounting and control**: cost terms, costing and pricing, cost-volume-profit analysis, performance measurement and the balanced scorecard. **Part III, finance and simulation**: time value of money, cash-flow and project analysis, NPV, IRR and payback, WACC, the leverage effect and a simulation lab. Grading is 30% case studies and reflection, 30% assignments, 40% open-book final exam; the textbook is Horngren's Accounting (the financial chapters), chapter 1 for this session.
+
+This first chapter asks four questions: what financial accounting is (as opposed to management accounting), why it exists at all, who uses the information and for what, and whether accounting is shaped by history and social context. Then we stop theorising and play Monopoly - with a twist: every roll becomes a business transaction, and at the end each team has to produce a balance sheet and an income statement.
+
+<Aside type="tip">
+**The one idea to carry through.** Accounting is a *standardised information system*, and its shape is dictated by its **purpose** and its **users**. Outsiders cannot see inside the firm, so financial accounting exists to shrink that information gap. But different outsiders want different things - investors want decision-useful truth, creditors want caution, the tax office wants a base to tax - so the very same set of numbers is pulled in different directions. Whenever an accounting rule looks strange, ask: *whom does this rule serve?*
+</Aside>
+
+## 1 · What a firm actually does - the value-chain view
+
+Before we can measure performance we need a picture of the thing being measured. The course opens with a plain value-chain sketch of an organisation. On the left sits the **sourcing market** (the factor market, where suppliers live); on the right sits the **selling market** (the demand market, where customers live). In between, the firm **procures** resources, **transforms** them and **commercialises** the result.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Sourcing market<span class="sub">factor market · suppliers</span></div>
+    <div class="arrow">→<small>procurement</small></div>
+    <div class="sc-node amber">Resources used<span class="sub">labour, machines, buildings, materials, rights</span></div>
+    <div class="arrow">→<small>transformation</small></div>
+    <div class="sc-node violet">Offerings produced<span class="sub">goods, services, rights</span></div>
+    <div class="arrow">→<small>commercialisation</small></div>
+    <div class="sc-node slate">Selling market<span class="sub">demand market · customers</span></div>
+  </div>
+  <figcaption>The value-chain perspective on a firm. Around the core chain sit the support functions and, above everything, leadership. The firm buys inputs on one market and sells outputs on another; everything interesting happens in the transformation in between.</figcaption>
+</div>
+
+So what does **performance** mean in this picture? A firm is a machine that turns resources bought on one market into offerings sold on another. Performance is simply how well that machine works: is what comes out worth *more* than what went in, and is the stock of resources the firm controls *growing* or *shrinking*? Those two questions are exactly the ones the income statement (a flow over a period) and the balance sheet (a stock at a date) are built to answer. Accounting is the measuring device bolted onto the value chain.
+
+## 2 · Two kinds of accounting, one language
+
+The word "accounting" covers two systems that share data but serve different masters.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Financial accounting <small>outward-facing</small></div>
+    <ul>
+      <li>Produces <strong>standardised financial information</strong> about a company or a group of companies</li>
+      <li>Aimed at <strong>external reporting</strong> - people outside the firm</li>
+      <li><strong>Directed by authoritative guidelines</strong> (laws and standards) - you do not get to choose the format</li>
+      <li>Backward-looking by nature: it reports what happened in the period</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Management accounting <small>inward-facing</small></div>
+    <ul>
+      <li>Measures and reports <strong>financial and non-financial</strong> information (units, hours, defect rates, customer data)</li>
+      <li>Meant primarily to <strong>help managers reach the goals of the organisation</strong></li>
+      <li>No external rulebook - whatever format helps a decision is the right format</li>
+      <li>Often forward-looking: budgets, forecasts, what-if analyses</li>
+    </ul>
+  </div>
+</div>
+
+**Cost accounting is the bridge** between the two. It starts from the same recorded transactions as financial accounting, but re-sorts the expenses by product, department or process so that managers can steer with them (Part II of the course); some of its results flow back into the financial statements too, for example when own-produced inventory has to be valued.
+
+One more distinction: **financial reporting** is the wider term. It builds on financial accounting information but puts a stronger emphasis on **disclosure** - getting the information *out* to the people who need it. Its core job is to **reduce the information asymmetry** between well-informed insiders (above all the managers) and the firm's external contract partners.
+
+## 3 · Who reads the numbers - insiders, outsiders and the information gap
+
+Inside the firm, managers and employees know what is going on. Outside it, a whole crowd of parties has money, jobs or claims riding on the firm without being able to look inside. Financial reporting is the pipe that carries trustworthy information from the first group to the second.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node violet">Insiders<span class="sub">managers, employees - served by management accounting</span></div>
+    <div class="arrow">→<small>financial reporting shrinks the gap</small></div>
+    <div class="sc-node amber">Outsiders<span class="sub">investors, creditors, tax authorities, customers, suppliers, the public, labour unions</span></div>
+  </div>
+  <figcaption>Information asymmetry: insiders know, outsiders must trust. Standardised, rule-bound financial reporting is what makes that trust reasonable.</figcaption>
+</div>
+
+<div class="sc-chips">
+  <span class="sc-chip violet">internal: managers</span>
+  <span class="sc-chip violet">internal: employees</span>
+  <span class="sc-chip amber">investors</span>
+  <span class="sc-chip amber">creditors</span>
+  <span class="sc-chip amber">fiscal authorities</span>
+  <span class="sc-chip amber">customers</span>
+  <span class="sc-chip amber">suppliers</span>
+  <span class="sc-chip amber">the public</span>
+  <span class="sc-chip amber">labour unions</span>
+</div>
+
+Notice how varied the outsiders are. A bank deciding on a loan, a tax office assessing a return, a union preparing a wage round and a supplier wondering whether it will be paid all read the *same* annual report - and each of them wants something slightly different from it. That variety is the root of most of the tensions in accounting.
+
+## 4 · What the information is for - three purposes
+
+The slides frame it neatly: information for external users is either **an end in itself** (someone just wants to know) or **the base for further legal or contractual consequences** (something is triggered by the number). That gives three purposes.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Information<span class="n">an end in itself</span></div>
+      <div class="sc-node violet">Investors<span class="sub">decision usefulness - invest, hold or sell?</span></div>
+      <div class="sc-node violet">Management<span class="sub">stewardship - accounting for how the owners' resources were handled</span></div>
+      <div class="sc-node soft">Other parties<span class="sub">customers, suppliers, employees - self-information: is this partner solid?</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Documentation<span class="n">conservation of evidence</span></div>
+      <div class="sc-node amber">Bankruptcy<span class="sub">what was there, and when did it go?</span></div>
+      <div class="sc-node amber">Conflict<span class="sub">disputes between owners, partners, courts</span></div>
+      <div class="sc-node amber">Taxation<span class="sub">proof behind the tax return</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Distribution<span class="n">consequences follow the number</span></div>
+      <div class="sc-node green">Dividends<span class="sub">creditor side: minimum distribution (creditor protection) vs shareholder side: maximum distribution (shareholder protection)</span></div>
+      <div class="sc-node green">Taxation<span class="sub">income tax, corporate tax, trade tax - via the authoritative principle</span></div>
+    </div>
+  </div>
+  <figcaption>Three purposes of accounting information. Only the first is pure information; the other two turn the numbers into evidence or into money that changes hands.</figcaption>
+</div>
+
+**Information.** For investors the key word is **decision usefulness**: does the report help me decide whether to put money in? For management the key word is **stewardship**: the report is management's account to the owners of how it looked after their resources. For customers, suppliers and employees it is **self-information** - checking for themselves whether the firm is a safe partner to sell to, buy from or work for.
+
+**Documentation.** Accounting also conserves evidence. When a firm goes bankrupt, when owners fall out, or when the tax office asks questions, the books are the record of what was there and what happened to it.
+
+**Distribution and taxation.** Here the number has teeth. The profit figure decides what may leave the firm as dividends. Creditors want distributions kept to a *minimum* so that the asset cushion behind their claims stays inside the company (creditor protection); shareholders want the *maximum* paid out, or at least a guarantee that management cannot hoard everything (shareholder protection). And in Germany the commercial accounts are the starting point for the tax accounts - the **authoritative principle** - so the same profit figure feeds income tax, corporate tax and trade tax.
+
+### Stewardship vs decision usefulness
+
+These two are worth separating in your head because they pull the rules in different directions. **Stewardship** looks backward: did management handle the owners' money properly? It rewards caution and verifiability. **Decision usefulness** looks forward: what will the firm be worth, should I invest? It rewards relevance and current values, even at the price of some estimation. A rulebook built for stewardship looks different from one built for investor decisions - which is the seed of the HGB vs IFRS contrast later in the course.
+
+<Aside type="caution">
+**The HGB juggles multiple objectives at once.** German commercial accounting is asked to inform investors, to cap what may be paid out to protect creditors, to guarantee shareholders a fair share, and to serve as the tax base. One profit figure, four jobs. That is why HGB accounting leans *conservative* - when in doubt, book the lower asset value and the higher liability - and why its profit can differ from an IFRS profit for the very same firm without anyone lying.
+</Aside>
+
+## 5 · Three concepts underneath every statement
+
+Whatever the rulebook, three ideas sit under every set of accounts.
+
+| Concept | What it fixes | Detail |
+|---|---|---|
+| **Accounting entity** (reporting entity, business entity) | *About whom* the accounts inform | Either a **legal entity** (an AG, GmbH or Corp.) which gives **single financial statements**, or an **economic entity** (a group of companies, such as a car-maker with all its subsidiaries) which gives **consolidated financial statements** |
+| **Accounting period** | *For which stretch of time* the entity is observed | Normally one **fiscal year** (the annual statement); listed firms also report per **quarter** (the quarterly statement) |
+| **Generally Accepted Accounting Principles (GAAP)** | *By which rules* the numbers are produced | A common set of standards so that the information is comparable and standardised |
+
+The origin of GAAP differs by legal tradition. In **common-law** (Anglo-Saxon) countries the standards are set by **private standard setters**; in **code-law** countries they are **codified in law**. Either way the result is the same: accounting becomes a *standardised* information instrument, which is precisely what outsiders need.
+
+<div class="sc-chips">
+  <span class="sc-chip blue">IFRS - International Financial Reporting Standards, issued by the IASB (the Bound Volume)</span>
+  <span class="sc-chip amber">HGB - Handelsgesetzbuch, German commercial code (codified law)</span>
+  <span class="sc-chip green">US-GAAP - issued by the FASB (Original Pronouncements)</span>
+</div>
+
+All three sets of rules are freely downloadable, and the course will use IFRS as its main lens in chapter 4.
+
+## 6 · The financial reporting system
+
+Financial accounting is one part of a wider **financial reporting system** - all the financial information a company discloses, whether through a regulator's filing system (the US-SEC's EDGAR database) or its own investor relations pages. It has four layers.
+
+| Layer | What it contains | Germany | US-SEC |
+|---|---|---|---|
+| **Annual report** | An unaudited free part, the single and/or consolidated financial statements, the management discussion and analysis (MD&amp;A), the auditor's report | Required by HGB, AktG, BörsG, BörsZulV | Form 10-K (domestic), Form 20-F (foreign issuers) |
+| **Interim financial reporting** | Reports covering three or six months with condensed financial statements | § 44b BörsG | Form 10-Q, Form 6-K |
+| **Timely disclosure of material events** | Ad-hoc announcements of events that could materially move the share price | § 15 WpHG | Form 8-K, Form 6-K |
+| **Other** | Press releases, corporate reports, presentations | - | - |
+
+The layers trade depth for speed: the annual report is complete and audited but slow; interim reports are lighter and quicker; ad-hoc disclosure is instant but covers only single events. Together they keep the information gap from re-opening between annual reports.
+
+## 7 · Auditing - why someone checks the numbers
+
+An **audit** is an examination of a company's transactions and the financial statements that result from them. The reason it became compulsory is a story, and the story is the point of this section.
+
+Before the **1929 stock market crash**, senior managers were partly rewarded on the basis of what the financial statements showed - and those same managers *prepared* the statements. Built-in potential for bias. After the crash, the **SEC Act of 1934** required public companies to have their statements audited by **independent outside auditors who are CPAs** (certified public accountants) and to file the results with the SEC. For shareholders the value is simple: an audit report adds **credibility** to the statements they base decisions on.
+
+<Steps>
+1. **Introduction** - what exactly was audited (which statements, which entity, which period).
+2. **Scope** - how the audit was conducted, i.e. the standards and procedures the auditor followed.
+3. **Opinion** - two judgements: are the statements presented **fairly**, and to what degree was **GAAP** followed?
+4. **Other topics** - for example changes in accounting principles, or the adequacy of management's review of internal controls.
+</Steps>
+
+Those four elements make up the **standard audit report**. The market for large audits is dominated by the **Big Four**: Deloitte Touche Tohmatsu, Ernst &amp; Young, KPMG International and PricewaterhouseCoopers. Roughly **97%** of the firms listed on the New York Stock Exchange are clients of one of these four - a concentration worth remembering when we talk about auditor independence.
+
+## 8 · Accounting is shaped by history and social context
+
+The lessons-learned slide pulls the chapter together in four lines, which I rephrase here because they are exam-ready:
+
+- Financial accounting addresses **external users**; management accounting supplies **management**.
+- Financial accounting produces **standardised** financial information about a company and exists to **reduce information asymmetry** between insiders and external contract partners.
+- Accounting information serves **different purposes, and the purposes determine the design**. A system built for creditor protection and taxation comes out **conservative** (the HGB tradition); a system built for capital-market investors aims at a **true and fair view** (the IFRS and US tradition).
+- **Auditing** shows that accounting is a product of **social evolution**: a market crash produced a law, the law produced a profession, and the profession changed what a set of accounts means.
+
+So the answer to the fourth opening question is yes: accounting is not a neutral mirror. It is a set of conventions that grew out of specific crises, legal traditions and power balances between owners, lenders and the state. Two rulebooks can report two different profits for one firm, and both can be "right" by their own purpose.
+
+## 9 · Let's simulate business - Accounting Monopoly
+
+The theory is abstract until you try to record a business yourself, which is what the session's game is for.
+
+**Setup.** Groups of seven: three teams, each with a **roller** (the CEO, who plays) and a **recorder** (the CFO, who writes everything down), plus one **banker** who runs the bank and settles rule disputes. Play, and keep a **narrative of every roll and move, numbered by round**. The slides give the style:
+
+- Round 1: land on Oxford Street and buy it (price 300).
+- Round 2: land on Liverpool Station and pay rent of 25.
+- Round 3: put a mortgage on Kings Cross Station (mortgage value 100).
+
+The instruction is to describe **as clearly as possible every "thing" that happens** to the team. When the stop signal comes, each team has ten minutes to record its end result. The teaching notes hand out a **chart of accounts** to sort the mess into:
+
+| Balance sheet accounts | Income statement accounts |
+|---|---|
+| **Assets**: cash, land, receivables, investments in railroads, investments in utilities, buildings (houses) and their accumulated depreciation, buildings (hotels) and their accumulated depreciation, other assets | **Revenues**: rental revenue from land, rental revenue from houses and hotels, salary revenue, investment revenue from utilities, investment revenue from railroads, interest revenue, miscellaneous revenue |
+| **Liabilities**: mortgage payable, interest payable, taxes payable | **Expenses**: rent, tax, fines and penalties, repairs and maintenance, interest, depreciation, miscellaneous |
+| **Equity**: common stock, retained earnings | **Gains and losses**: gains or losses on sale of property, other gains and losses |
+
+**Discussion questions** afterwards - these are really the questions of the whole of Part I:
+
+1. How was it to record transactions and results, and what made it hard?
+2. What should be recorded and what not?
+3. How do you account for the *status quo* and how do you measure *performance*?
+4. Which team was more successful - and on what basis can that judgement be made objective?
+
+## Worked example
+
+The workbook walks one team's game through to full statements. I reproduce it step by step because it is the cleanest small example of the three statements fitting together that I have seen.
+
+<Steps>
+1. **Opening balance sheet.** Each team starts with 1,500 of cash, contributed by the "owners". Assets: cash 1,500. Equity: common stock 1,500. Total 1,500 on both sides.
+2. **The period's events** (the example data). Buy Oxford Street 300, Bond Street 320, Park Lane 350, Kings Cross Station 200, Water Works 150 and Mayfair 400. Pay 25 rent at Liverpool Station and 100 at Trafalgar Square. Build one house each on Mayfair and Park Lane (200 apiece). Collect rent twice on Oxford Street (26 each), once on Bond Street (28), once on Park Lane with its house (350), twice on Kings Cross (25 each), and once on Water Works with a dice roll of ten (4 × 10 = 40). Depreciate each house by 20. Mortgage Kings Cross for 100. Land on income tax (200). Receive a get-out-of-jail-free card. Pay street repairs (40 per house = 80) and a school fee of 50. Pass Go four times (200 each = 800).
+3. **Inventory at the stop signal.** Cash 345; the four streets; the station and the utility; two houses at 200 less 20 each; a mortgage of 100 on Kings Cross; the card.
+4. **Sort into the chart of accounts**, then build the closing balance sheet, the income statement, and finally a cash-flow split.
+</Steps>
+
+**Closing balance sheet**
+
+| Assets | | Liabilities and equity | |
+|---|---:|---|---:|
+| Cash | 345 | Mortgage payable (Kings Cross Station) | 100 |
+| Land (Park Lane 350, Mayfair 400, Bond Street 320, Oxford Street 300) | 1,370 | Interest payable (accrued on the mortgage) | 10 |
+| Investments in railroads (Kings Cross Station) | 200 | **Total liabilities** | **110** |
+| Investments in utilities (Water Works) | 150 | Common stock | 1,500 |
+| Buildings, houses (2 × 200 less 2 × 20 depreciation) | 360 | Retained earnings | 815 |
+| Other assets (get-out-of-jail card: not recognised) | 0 | **Total equity** | **2,315** |
+| **Total assets** | **2,425** | **Total liabilities and equity** | **2,425** |
+
+**Income statement for the period**
+
+| Revenues | | Expenses | |
+|---|---:|---|---:|
+| Rental revenue, land (Oxford Street 2 × 26 = 52, Bond Street 28) | 80 | Rent expense (Liverpool Station 25, Trafalgar Square 100) | 125 |
+| Rental revenue, houses (Park Lane with one house) | 350 | Tax expense (income tax square) | 200 |
+| Salary revenue (passed Go 4 × 200) | 800 | Repairs and maintenance (street repairs, 2 houses × 40) | 80 |
+| Investment revenue, utilities (Water Works, 4 × 10) | 40 | Depreciation expense (2 houses × 20) | 40 |
+| Investment revenue, railroads (Kings Cross 2 × 25) | 50 | Miscellaneous expense (school fee 50 plus the 10 of accrued mortgage interest) | 60 |
+| **Total revenues** | **1,320** | **Total expenses** | **505** |
+
+Gains and losses on property sales: none (nothing was sold). **Earnings = 1,320 - 505 = 815.**
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Earnings</span>
+    <code>revenues 1,320 - expenses 505 = 815</code>
+  </div>
+  <div>
+    <span class="name">Retained earnings</span>
+    <code>opening 0 + earnings 815 - dividends 0 = 815</code>
+  </div>
+  <div>
+    <span class="name">Equity</span>
+    <code>common stock 1,500 + retained earnings 815 = 2,315</code>
+  </div>
+  <div>
+    <span class="name">Accounting equation</span>
+    <code>assets 2,425 = liabilities 110 + equity 2,315</code>
+  </div>
+</div>
+
+Two things to see here. First, the income statement's bottom line **is** the balance sheet's retained earnings: the period's profit is the growth in the owners' claim. Second, the equation balances *because* every event was recorded on both sides - that is not luck, it is the structure of double entry (chapter 2).
+
+**Where did the cash go?** The team made 815 of profit yet its cash *fell* from 1,500 to 345. The cash-flow split explains it:
+
+| Cash flow | Amount | What sits inside |
+|---|---:|---|
+| Operating activities (CFO) | +865 | All 1,320 of revenue was cash; cash expenses were rent 125, tax 200, repairs 80 and school fee 50 = 455; depreciation (40) and the accrued interest (10) cost no cash |
+| Investing activities (CFI) | -2,120 | Land 1,370 + railroad 200 + utility 150 + two houses 400 |
+| Financing activities (CFF) | +100 | The mortgage taken on Kings Cross |
+| **Net change in cash** | **-1,155** | 1,500 opening - 1,155 = 345 closing |
+
+<div class="sc-formula">
+  <div>
+    <span class="name">CFO from earnings</span>
+    <code>earnings 815 + depreciation 40 + interest accrued but unpaid 10 = 865</code>
+  </div>
+  <div>
+    <span class="name">Cash check</span>
+    <code>865 - 2,120 + 100 = -1,155 → 1,500 - 1,155 = 345</code>
+  </div>
+</div>
+
+**Profit is not cash.** The team is 815 richer by the accounting measure and 1,155 poorer in cash, and both statements are correct. The difference is that the cash went into *assets that are still there* (land, station, utility, houses) - an investment, not an expense - while a mortgage brought cash in without making the team any richer. This single example is the reason companies publish three statements, not one.
+
+## Case corner
+
+**Why recording is harder than it looks.** The moment you start writing down a Monopoly game as transactions, three questions bite. *What counts?* Rolling the dice is not a transaction; landing on Go and collecting 200 is. Buying a street changes the balance sheet but not the profit; paying rent changes both. *When?* Depreciation of the houses is a transaction even though no money moved; the 10% interest that will be due on the Kings Cross mortgage is accrued now as interest payable even though nothing has been paid yet. *At what value?* Land goes in at the price paid (historical cost), houses at cost less depreciation; a mortgaged property stays on the asset side at its full cost, with the mortgage shown separately as a liability rather than netted off. Every one of these judgement calls is a real accounting rule in disguise, and every team makes them slightly differently until a common chart of accounts forces consistency - which is GAAP in miniature.
+
+**Why the get-out-of-jail card is not recognised.** It clearly has *some* economic value - it will save a fine one day. But it cost nothing, it cannot be sold in the game, and there is no reliable way to put a money figure on it. An item that cannot be measured reliably in money terms stays out of the balance sheet, so the "other assets" line stays empty. The same logic later explains why a firm's self-created brand or its motivated workforce is not on its balance sheet.
+
+**How to judge which team won.** Cash is the wrong yardstick: a team that bought nothing would end with the most cash and the weakest position. Two better measures follow from the statements. The **balance sheet** shows the status quo - total equity of 2,315 versus 1,500 at the start; the **income statement** shows performance - earnings of 815 for the period. Since nothing was distributed, the two agree: the winner is the team whose **equity grew the most**, i.e. the highest earnings. And because every team applies the same recognition and measurement rules, that comparison is *objective* in exactly the sense the discussion question asks for. Standardised rules are what turn "we feel richer" into a number two teams can argue about.
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Value chain | The firm seen as procure, transform, commercialise: resources bought on the sourcing market become offerings sold on the selling market |
+| Financial accounting | Standardised financial information about a company or group, produced under authoritative rules for people outside the firm |
+| Management accounting | Financial and non-financial information produced, in whatever form helps, for managers inside the firm |
+| Cost accounting | The bridge: re-sorts recorded expenses by product, department or process so managers can steer |
+| Financial reporting | The disclosure side of accounting; its job is to reduce information asymmetry between insiders and outside contract partners |
+| Information asymmetry | Insiders know more than outsiders; reporting narrows the gap so outsiders can deal with the firm on fair terms |
+| Decision usefulness | Information that helps an investor decide whether to invest - the investor-focused purpose |
+| Stewardship | Management's account to the owners of how it looked after their resources - the accountability-focused purpose |
+| Authoritative principle | In Germany the commercial (HGB) accounts are the starting point for the tax accounts |
+| Accounting entity | The unit the accounts describe: a legal entity (single statements) or an economic group (consolidated statements) |
+| Accounting period | The stretch of time observed: normally a fiscal year, or a quarter for interim reports |
+| GAAP | Generally accepted accounting principles: the shared rulebook, set privately in common-law countries and codified in code-law countries |
+| Audit | Independent examination of transactions and statements by outside CPAs, compulsory for US public companies since the SEC Act of 1934 |
+| Retained earnings | Profits kept in the business; the link between the income statement and the balance sheet |
+
+## Test yourself
+
+1. Using the value-chain picture, explain what the "performance" of a firm means and why a measuring system is needed to judge it.
+2. Contrast financial and management accounting on three dimensions: users, rules and the kind of information reported. Where does cost accounting sit?
+3. Name the three purposes of financial accounting information and give one concrete example of each. Which of them is an end in itself?
+4. Define accounting entity, accounting period and GAAP. How does the origin of GAAP differ between common-law and code-law countries, and which standard belongs to which tradition?
+5. Why did the United States begin requiring independent audits, and what four elements does a standard audit report contain?
+6. A Monopoly team starts with 1,500 cash. At the end it holds cash 345, land 1,370, investments 350 and houses of 360 net, and owes a mortgage of 100 plus 10 of interest. Compute total assets, total liabilities, equity, retained earnings and the period's earnings. Then explain in one sentence why the cash fall of 1,155 is not a loss.
+
+<Aside type="note" title="Answers">
+1. The firm buys resources (labour, machines, buildings, materials, rights) on the sourcing market, transforms them and sells offerings (goods, services, rights) on the selling market. Performance is how well this works: whether the outputs are worth more than the inputs and whether the resources controlled are growing. Neither can be seen directly, so accounting measures the flow (income statement) and the stock (balance sheet).
+2. Financial accounting: external users, directed by authoritative guidelines, standardised financial information. Management accounting: managers, no external rulebook, financial and non-financial information chosen to help decisions. Cost accounting bridges them by re-sorting the same transaction data by product, process or department.
+3. Information (investor decision usefulness, management stewardship, self-information for customers, suppliers and employees) - this one is an end in itself. Documentation (conserving evidence for bankruptcy, conflicts, tax). Distribution and taxation (dividends between creditor protection and shareholder protection; the tax base via the authoritative principle).
+4. Entity: about whom - legal entity gives single statements, economic group gives consolidated statements. Period: fiscal year or quarter. GAAP: the common rulebook. Common-law countries use private standard setters (IFRS from the IASB, US-GAAP from the FASB); code-law countries codify it (the German HGB).
+5. After the 1929 crash it was clear that managers who were rewarded on the numbers also prepared the numbers, so the SEC Act of 1934 required independent CPA audits filed with the SEC to give shareholders credible statements. The report contains an introduction (what was audited), the scope (how), an opinion (fairness and GAAP compliance) and other topics (changes in principles, internal-control review).
+6. Total assets 345 + 1,370 + 350 + 360 = 2,425; liabilities 100 + 10 = 110; equity 2,425 - 110 = 2,315; retained earnings 2,315 - 1,500 = 815; with no dividends, earnings = 815. The cash fell because 2,120 went into assets that are still on the balance sheet (an investment, not an expense) while only 100 came in from financing; operating activities actually generated 865 of cash.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- A firm **procures, transforms and commercialises**: resources from the sourcing market become offerings on the selling market. **Performance** is how well that transformation works, and accounting is its measuring device.
+- **Financial accounting** is external, standardised and rule-directed; **management accounting** is internal, manager-supporting and free-form; **cost accounting** bridges them. **Financial reporting** exists to **reduce information asymmetry** between insiders (managers, employees) and outsiders (investors, creditors, tax authorities, customers, suppliers, the public, unions).
+- Three purposes: **information** (decision usefulness for investors, stewardship for management, self-information for others), **documentation** (evidence for bankruptcy, conflict, tax) and **distribution and taxation** (dividends between creditor protection and shareholder protection; the tax base via the authoritative principle). The HGB serves **multiple objectives** at once, which is why it is conservative.
+- Three underlying concepts: **accounting entity** (legal entity → single statements; economic entity → consolidated), **accounting period** (year, quarter), **GAAP** (private standard setters in common-law countries, codified in code-law countries: IFRS, US-GAAP, HGB).
+- The **financial reporting system** has four layers: annual report (audited statements plus MD&amp;A; 10-K, 20-F), interim reports (10-Q, 6-K), ad-hoc disclosure of price-relevant events (8-K, 6-K; § 15 WpHG) and everything else.
+- **Auditing** was born of the 1929 crash and the 1934 SEC Act; the standard report has introduction, scope, opinion (fairness, GAAP) and other topics; the Big Four audit roughly 97% of NYSE firms. Lesson: accounting is **shaped by history and social context** - conservative HGB view vs true-and-fair view.
+- **Accounting Monopoly**: record every move, sort it into a chart of accounts, build the statements. Opening cash 1,500 = common stock 1,500; closing assets 2,425 = liabilities 110 + equity 2,315; earnings 815 = retained earnings; cash fell 1,155 (CFO +865, CFI -2,120, CFF +100). **Profit is not cash**, the jail card is not an asset, and the winner is the team whose **equity** grew most.
+</Aside>
+
+*Next: [The Balance Sheet →](/learnings/mba/financial-performance-and-management-control/02-the-balance-sheet/) - the snapshot of what a business owns and owes.*

@@ -1,0 +1,384 @@
+---
+title: "Die Bilanz"
+description: "Eine Momentaufnahme der Vermögenslage zu einem Stichtag - Aktiva auf der linken Seite (die Ressourcen, die ein Unternehmen kontrolliert), Verbindlichkeiten und Eigenkapital auf der rechten Seite (wer Ansprüche darauf hält), warum Vermögen = Verbindlichkeiten + Eigenkapital niemals scheitern kann, wie man aus einer Inventarliste eine Bilanz aufbaut und wie jede Transaktion mindestens zwei Konten bewegt und die Gleichung dabei im Gleichgewicht hält."
+sidebar:
+  label: "2 · Die Bilanz"
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Financial Performance & Management Control - TUHH Institute of Management Accounting & Simulation, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Kapitel 1 hat die Bühne bereitet: Die Finanzbuchhaltung ist die standardisierte Sprache, mit der ein Unternehmen Außenstehenden mitteilt, wie es um es steht. Dieses Kapitel öffnet den ersten der in dieser Sprache geschriebenen Abschlüsse, die **Bilanz**. Wenn es im gesamten Kurs darum geht, finanzielle Leistung zu messen, dann ist die Bilanz das Ausgangsfoto: was das Unternehmen *hat* und wer einen *Anspruch* darauf hält, eingefroren zu einem Stichtag.
+
+Das Kapitel beantwortet vier Fragen. Was sind die wesentlichen Merkmale einer Bilanz? Welche Art von Informationen liefert sie? Was ist die Grundgleichung der Bilanz, und was folgt daraus? Und wie werden Transaktionen erfasst, zunächst direkt in der Bilanz, dann (als Ausblick) über eine ordentliche Buchführung auf Konten. Nach der Monopoly-Sitzung fühlen sich diese Fragen konkret an: was zu erfassen ist, was wegzulassen ist und wie man Grundstücke, Häuser, Spielgeld und eine Hypothek in einen einzigen Abschluss verwandelt.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Eine Bilanz besteht aus zwei Listen *desselben Geldes*, gesehen von zwei Seiten. Die linke Seite listet auf, **wo das Geld steckt** (Aktiva: Kasse, Vorräte, Ausrüstung); die rechte Seite listet auf, **woher das Geld kam** (Verbindlichkeiten gegenüber Gläubigern, Eigenkapital der Eigentümer). Weil beide Listen denselben Ressourcenpool beschreiben, ist **Vermögen = Verbindlichkeiten + Eigenkapital** kein Zufall, der sich glücklich ausgeht, sondern eine Definition, die gelten *muss*. Jede Transaktion verändert mindestens zwei Konten, genau damit sie weiter gilt.
+</Aside>
+
+## 1 · Was die Bilanz berichtet
+
+Eine Bilanz berichtet die **Vermögenslage** einer Rechnungslegungseinheit **zu einem bestimmten Stichtag**. Vermögenslage bedeutet zweierlei zugleich:
+
+- den **Bestand an Ressourcen, die das Unternehmen kontrolliert** - das sind die **Aktiva (Vermögenswerte)**, und
+- die **Ansprüche gegen diese Ressourcen** - das sind die **Verbindlichkeiten** (Ansprüche der Gläubiger) und das **Eigenkapital** (der Anspruch der Eigentümer, also das, was übrig bleibt).
+
+Das Wort *Bestand* ist wichtig. Die Bilanz ist eine Niveaugröße, keine Stromgröße: Sie sagt „am 31. Dezember kontrollierten wir so viel und schuldeten so viel", nicht „im Laufe des Jahres verdienten wir so viel". Die Stromgrößen gehören in die Gewinn- und Verlustrechnung und in die Kapitalflussrechnung (nächstes Kapitel). Die Bilanz ist das Foto; die anderen Abschlüsse sind der Film zwischen zwei Fotos.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Linke Seite - Aktiva <small>Liste der Ressourcen</small></div>
+      <ul>
+        <li>Was die Einheit <strong>kontrolliert</strong>: Kasse, Forderungen, Vorräte, Ausrüstung, Gebäude, Patente</li>
+        <li>Zu lesen als <strong>Mittelverwendung</strong>: wohin das Geld <em>investiert</em> wurde</li>
+        <li>Summiert sich zur <strong>Summe der Aktiva</strong></li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Rechte Seite - Verbindlichkeiten &amp; Eigenkapital <small>Liste der Quellen</small></div>
+      <ul>
+        <li><strong>Verbindlichkeiten</strong>: die Ansprüche Außenstehender (Gläubiger) - die „echten" Schulden</li>
+        <li><strong>Eigenkapital</strong>: der Residualanspruch der Eigentümer - die Ausgleichsposition</li>
+        <li>Zu lesen als <strong>Mittelherkunft</strong>: woher das Geld <em>kam</em></li>
+        <li>Summiert sich zur <strong>Summe aus Verbindlichkeiten und Eigenkapital</strong>, stets gleich der Summe der Aktiva</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Die zwei Gesichter einer Bilanz. Links: Ressourcen und wie die Mittel verwendet wurden (Investitionen). Rechts: wer diese Mittel bereitgestellt hat (Finanzierung / Mittelherkunft). Dasselbe Geld, zwei Sichtweisen, deshalb müssen die Summen übereinstimmen.</figcaption>
+</div>
+
+## 2 · Die Grundgleichung der Bilanz
+
+Die gesamte Struktur ruht auf einer Zeile:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Grundgleichung</span>
+    <code>Vermögen = Verbindlichkeiten + Eigenkapital</code>
+  </div>
+  <div>
+    <span class="name">Umgestellt</span>
+    <code>Eigenkapital = Vermögen - Verbindlichkeiten</code> (das Eigenkapital ist die Residualgröße, auch Kapital oder Reinvermögen genannt)
+  </div>
+  <div>
+    <span class="name">Konsequenz</span>
+    Summe der Aktiva = Summe aus Verbindlichkeiten und Eigenkapital, in jeder Bilanz, an jedem Stichtag
+  </div>
+</div>
+
+Die Vorlesung nennt dies eine **analytische Wahrheit**: Sie gilt konstruktionsbedingt, nicht durch Glück. Aktiva sind die Ressourcen; Verbindlichkeiten und Eigenkapital sind schlicht eine vollständige Liste derjenigen, die Ansprüche auf diese Ressourcen halten. Da jede Ressourceneinheit irgendwoher stammen muss, schöpfen die Ansprüche die Aktiva exakt aus. Das Eigenkapital ist als der Rest definiert, weshalb die beiden Seiten niemals voneinander abweichen können.
+
+<Aside type="caution">
+**Eine Bilanz, die nicht ausgeglichen ist, ist keine „schlechte Nachricht", sondern ein Fehler.** Wenn die Summen abweichen, hat man weder einen Verlust noch einen versteckten Gewinn entdeckt. Man hat etwas falsch klassifiziert, ein Konto vergessen oder eine Seite einer Transaktion erfasst und die andere nicht. Also zurückgehen und den Fehler finden. Die Gleichung ist eine Kontrolle der Buchführung, niemals ein Ergebnis des Geschäfts.
+</Aside>
+
+Zwei Folgerungen ergeben sich unmittelbar aus der Gleichung, und beide kommen später im Kurs wieder:
+
+1. **Jede Transaktion muss mindestens zwei Konten berühren** (Abschnitt 7). Eine Veränderung auf nur einer Seite würde die Gleichheit zerstören.
+2. **Das Eigenkapital bewegt sich, wenn sich Aktiva oder Verbindlichkeiten ohne ausgleichenden Partner bewegen.** Gewinne, Verluste und Entnahmen der Eigentümer zeigen sich alle als Veränderungen des Eigenkapitals. Das ist die Brücke zur Gewinn- und Verlustrechnung im nächsten Kapitel.
+
+## 3 · Aktiva - was die Einheit kontrolliert
+
+**Vermögenswerte (Aktiva)** sind wirtschaftliche Ressourcen, die das Unternehmen **besitzt oder kontrolliert**, die aus **vergangenen Transaktionen oder Ereignissen** stammen und von denen **künftiger Nutzen erwartet wird**. In diesem Satz stecken drei Tests, und ein Posten muss alle bestehen:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Kontrolle<span class="sub">die Einheit besitzt oder kontrolliert ihn, nutzt ihn nicht nur</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Vergangenes Ereignis<span class="sub">er stammt aus etwas, das bereits geschehen ist</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Künftiger Nutzen<span class="sub">er soll später helfen, Geld zu verdienen</span></div>
+  </div>
+  <figcaption>Die drei Tests für einen Vermögenswert. Eine unterzeichnete Absicht, im nächsten Jahr eine Maschine zu kaufen, besteht den Test des vergangenen Ereignisses nicht; eine vollständig verschlissene Maschine besteht den Test des künftigen Nutzens nicht.</figcaption>
+</div>
+
+Die Bilanz listet Vermögenswerte nicht Posten für Posten auf. Sie fasst sie in **Konten** zusammen, die Unterteilungen des Elements „Aktiva" sind. Die Hauptaufteilung erfolgt danach, wie schnell sich der Posten wieder in Geld verwandelt:
+
+| Gruppe | Konto | Was darin steckt (in einfachen Worten) |
+|---|---|---|
+| **Umlaufvermögen** | Zahlungsmittel und Zahlungsmitteläquivalente | Geld auf der Bank und in der Kasse sowie Dinge, die so gut wie Bargeld sind |
+| | Forderungen aus Lieferungen und Leistungen | Kunden haben auf Kredit bei uns gekauft und schulden uns das Geld noch |
+| | Vorräte | Zum Verkauf gehaltene Waren (Handelsware), Betriebsstoffe und in manchen Betrieben Kunstwerke oder ähnliche Bestände |
+| | Aktive Rechnungsabgrenzung | Rechnungen, die wir für eine künftige Periode bereits bezahlt haben, z. B. im Voraus gezahlte Steuern, Nebenkosten oder Versicherungen |
+| **Anlagevermögen** | Immaterielle Vermögenswerte | Rechte ohne körperliche Form, z. B. Patente und Lizenzen |
+| | Grundstücke | Grund und Boden |
+| | Anlagen | Gebäude und Produktionsanlagen |
+| | Ausrüstung | Maschinen, Fahrzeuge, Ladeneinrichtung und Ähnliches |
+
+Umlaufvermögen soll innerhalb des normalen Geschäftszyklus, typischerweise eines Jahres, zu Geld werden (oder verbraucht werden). Anlagevermögen wird gehalten, um über viele Jahre *genutzt* und nicht verkauft zu werden.
+
+### Das Begriffswirrwarr
+
+Die Vorlesung warnt ausdrücklich davor, dass **die Bezeichnungen zwischen Standards und Ländern variieren**, und illustriert dies mit der veröffentlichten Bilanz eines großen Chemiekonzerns (BASF). Dieselbe wirtschaftliche Sache kann unter verschiedenen Etiketten auftauchen, je nachdem, ob der Abschluss nach IFRS, US-GAAP oder dem deutschen HGB aufgestellt wurde und ob er übersetzt wurde. Typische Synonyme, denen man begegnet:
+
+<div class="sc-chips">
+  <span class="sc-chip blue">Anlagevermögen = langfristige Vermögenswerte = fixed assets</span>
+  <span class="sc-chip green">Forderungen aus Lieferungen und Leistungen = Debitoren = trade receivables</span>
+  <span class="sc-chip violet">Vorräte = Bestände = stocks</span>
+  <span class="sc-chip amber">Eigenkapital = Anteilseignerkapital = Kapital = Reinvermögen</span>
+</div>
+
+Die Lehre daraus: nicht die Etiketten auswendig lernen, sondern die *Logik* (Kontrolle, vergangenes Ereignis, künftiger Nutzen und wie schnell etwas zu Geld wird). Dann kann man jede Bilanz lesen, gleich welches Vokabular sie verwendet.
+
+## 4 · Verbindlichkeiten - was die Einheit Außenstehenden schuldet
+
+**Verbindlichkeiten** sind die **rechtlichen und wirtschaftlichen Verpflichtungen** der Organisation **gegenüber Außenstehenden**, die aus **vergangenen Transaktionen oder Ereignissen** stammen und die sie **künftig zu erfüllen erwartet**. Wieder dieselbe dreiteilige Form wie bei den Aktiva, nur gespiegelt: ein Außenstehender, ein vergangenes Ereignis, ein künftiger Abfluss.
+
+Die typischen Konten:
+
+| Konto | Was es in einfachen Worten bedeutet |
+|---|---|
+| Verbindlichkeiten aus Lieferungen und Leistungen | *Wir* haben etwas auf Kredit gekauft und den Lieferanten noch nicht bezahlt (das Spiegelbild der Forderungen aus Lieferungen und Leistungen) |
+| Darlehensverbindlichkeiten (Schuldscheine) | Eine förmlichere Schuld, die durch ein schriftliches Zahlungsversprechen gedeckt ist, typischerweise ein Bankkredit |
+| Rückstellungen | Verpflichtungen, von denen wir wissen, dass wir sie haben, deren genaue Höhe oder Fälligkeit aber noch unsicher ist, sodass wir eine bestmögliche Schätzung zurücklegen |
+| Langfristige Schulden | Kredite, die später als in einem Jahr fällig werden, z. B. Anleihen oder langfristige Bankdarlehen |
+
+<Aside type="caution">
+**Forderung vs. Verbindlichkeit - die Richtung im Blick behalten.** *Forderung* bedeutet, dass Geld *zu uns* fließen wird (ein Vermögenswert). *Verbindlichkeit* bedeutet, dass Geld *von uns* abfließen wird (eine Schuld). „Forderungen aus Lieferungen und Leistungen" ist der Kredit, den wir unseren Kunden gewährt haben; „Verbindlichkeiten aus Lieferungen und Leistungen" ist der Kredit, den uns unsere Lieferanten gewährt haben. Derselbe Wortstamm, entgegengesetzte Seiten der Bilanz.
+</Aside>
+
+## 5 · Eigenkapital - der Residualanspruch
+
+**Eigenkapital** ist der Anspruch der Eigentümer auf die Vermögenswerte der Organisation. Es gibt keinen unabhängigen Weg, es zu messen: Es ist schlicht **Vermögen minus Verbindlichkeiten**. Würde das Unternehmen alles zum Buchwert verkaufen und jeden Gläubiger bezahlen, wäre das Eigenkapital das, was für die Eigentümer übrig bliebe.
+
+Wie das Eigenkapital *dargestellt* wird, hängt von der Rechtsform der Einheit ab:
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Einzelunternehmen<span class="n">ein Eigentümer</span></div>
+      <div class="sc-node amber">Eigentümer, Kapital<span class="sub">eine Zeile, z. B. Lopez, Kapital</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Personengesellschaft<span class="n">mehrere Eigentümer</span></div>
+      <div class="sc-node amber">Gesellschafter A, Kapital · Gesellschafter B, Kapital<span class="sub">eine Kapitalzeile je Gesellschafter</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Kapitalgesellschaft<span class="n">Anteilseigner</span></div>
+      <div class="sc-node violet">Gezeichnetes Kapital (Stammaktien)<span class="sub">erfasst zum Nennwert / festgelegten Wert</span></div>
+      <div class="sc-node violet">Kapitalrücklage über dem Nennwert<span class="sub">was Investoren über den Nennwert hinaus gezahlt haben</span></div>
+      <div class="sc-node soft">Gewinnrücklagen<span class="sub">im Unternehmen belassene Gewinne (siehe Monopoly-Fall)</span></div>
+    </div>
+  </div>
+  <figcaption>Eigenkapital nach Rechtsform. Die Summe ist stets Vermögen minus Verbindlichkeiten; nur die Art, wie sie in Zeilen aufgeteilt wird, ändert sich mit der Rechtsform.</figcaption>
+</div>
+
+### Das Nennwert-Beispiel
+
+Für eine Kapitalgesellschaft geben die Folien ein kleines Beispiel, das man sich genau merken sollte. Der **Nennwert (oder festgelegte Wert)** ist der auf der Aktienurkunde aufgedruckte Nominalbetrag. Er hat nichts damit zu tun, was Investoren tatsächlich zahlen. Angenommen, eine Aktie trägt einen Nennwert von $5 und ein Investor kauft sie für $20 von der Gesellschaft:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Gezeichnetes Kapital</span>
+    <code>1 Aktie × $5 Nennwert = $5</code> (erfasst zum Nennwert)
+  </div>
+  <div>
+    <span class="name">Kapitalrücklage über dem Nennwert</span>
+    <code>1 Aktie × ($20 - $5) = $15</code> (das Aufgeld über dem Nennwert)
+  </div>
+  <div>
+    <span class="name">Insgesamt eingebracht</span>
+    <code>$5 + $15 = $20</code> = das Geld, das tatsächlich hereinkam, also steigen Aktiva und Eigenkapital beide um $20
+  </div>
+</div>
+
+## 6 · Eine Bilanz aus einer Inventarliste ableiten
+
+In der Praxis, und im Monopoly-Spiel, beginnt man mit einer unübersichtlichen Liste von allem, was man hat, und allem, was man schuldet. Daraus eine Bilanz zu machen, ist eine dreistufige Routine:
+
+<Steps>
+
+1. **Klassifizieren.** Jeden Posten der Inventarliste nehmen und entscheiden, zu welchem Bilanzkonto er gehört: Ist es Kasse, eine Forderung, ein Vorrat, Ausrüstung, eine Verbindlichkeit, ein Darlehen, Kapital?
+
+2. **Aggregieren.** Posten, die zum selben Konto gehören, zu einer Zahl zusammenfassen. Das Beispiel der Folie: Maschine 1 zu $10,000 und Maschine 2 zu $20,000 werden zu einer einzigen Ausrüstungszeile von $30,000.
+
+3. **Ordnen und darstellen.** Die Konten in einer einheitlichen Reihenfolge nach **Liquidität** anordnen, also danach, wie schnell der Posten zu Geld wird. Beide Richtungen sind in der Praxis üblich: Abschlüsse US-amerikanischer Prägung laufen von der höchsten zur geringsten Liquidität (Kasse zuerst, Gebäude zuletzt), während viele kontinentaleuropäische Abschlüsse umgekehrt verfahren (langfristige Posten zuerst, Kasse zuletzt). Eine Richtung wählen, dabei bleiben und sie auf der Passivseite spiegeln (kurzfristige Schulden nahe der Kasse, langfristige Schulden nahe dem Anlagevermögen).
+
+</Steps>
+
+Dann die Summen bilden und prüfen, ob die Summe der Aktiva der Summe aus Verbindlichkeiten und Eigenkapital entspricht. Ist das Kapital der Eigentümer nicht direkt gegeben, *ist* es die Ausgleichsgröße: Vermögen minus Verbindlichkeiten. Das Biwheels-Beispiel im durchgerechneten Abschnitt weiter unten macht genau das.
+
+## 7 · Bilanztransaktionen
+
+Jetzt beginnt sich die Bilanz zu bewegen. Drei Definitionen bilden den Rahmen:
+
+- **Konzept der wirtschaftlichen Einheit.** Eine **Einheit** ist eine Organisation, die als eigenständige wirtschaftliche Einheit von anderen Organisationen und von Einzelpersonen getrennt dasteht, und für *diese Einheit* wird die Bilanz aufgestellt. Der Privatwagen des Eigentümers steht nicht in der Bilanz des Unternehmens, und der Bankkredit des Unternehmens ist in der Buchführung nicht die Privatschuld des Eigentümers. Das ist dieselbe Idee der Rechnungslegungseinheit wie in Kapitel 1.
+- **Transaktion.** Eine **Transaktion** ist jedes Ereignis, das die **Vermögenslage** der Einheit **verändert und zuverlässig in Geld erfasst werden kann**. Beide Hälften sind nötig. Einen hervorragenden Manager einzustellen beeinflusst die Aussichten, lässt sich aber nicht zuverlässig bepreisen, also ist es keine Transaktion. Vorräte auf Kredit zu kaufen dagegen schon.
+- **Mindestens zwei Konten.** Jede Transaktion wirkt auf die Bilanzgleichung, und **mindestens zwei Konten** werden von jeder Buchung berührt. Eine Buchung, die **mehr als zwei** Konten berührt, heißt **zusammengesetzte Buchung**.
+
+Weil die Gleichung jede Transaktion überstehen muss, gibt es nur eine Handvoll Formen, die eine Transaktion annehmen kann:
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Aktivtausch <small>nur linke Seite</small></div>
+    <ul>
+      <li>Ein Vermögenswert steigt, ein anderer sinkt um denselben Betrag</li>
+      <li>Summe der Aktiva unverändert, Gleichung unberührt</li>
+      <li>Monopoly: Oxford Street für 300 bar kaufen - Grundstück steigt, Kasse sinkt</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Beide Seiten wachsen <small>Aktivum steigt, Anspruch steigt</small></div>
+    <ul>
+      <li>Ein Vermögenswert kommt herein, und eine Verbindlichkeit oder ein Eigenkapitalanspruch steigt mit ihm</li>
+      <li>Monopoly: Kings Cross für 100 beleihen - Kasse steigt, Hypothekenverbindlichkeit steigt</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Beide Seiten schrumpfen <small>Aktivum sinkt, Anspruch sinkt</small></div>
+    <ul>
+      <li>Ein Vermögenswert geht ab, und ein Anspruch erlischt</li>
+      <li>Tilgung eines Darlehens: Kasse sinkt, Darlehensverbindlichkeit sinkt</li>
+      <li>Miete von 25 bei Monopoly zahlen: Kasse sinkt, und das Eigenkapital sinkt (ein Aufwand)</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Passivtausch <small>nur rechte Seite</small></div>
+    <ul>
+      <li>Ein Anspruch ersetzt einen anderen, die Aktiva bleiben unberührt</li>
+      <li>z. B. eine kurzfristige Verbindlichkeit wird in ein langfristiges Darlehen umfinanziert</li>
+    </ul>
+  </div>
+</div>
+
+Welche Form es auch ist, die Summen der beiden Seiten bleiben nach jedem Schritt gleich. Das ist die ganze Disziplin: **beide Wirkungen erfassen, oder gar nichts erfassen**.
+
+## 8 · Buchführung - der Ausblick
+
+Führt man ein paar Transaktionen direkt durch die Bilanz (wie im durchgerechneten Beispiel unten), wird das Problem offensichtlich: Den gesamten Abschluss nach jedem Verkauf, jedem Einkauf und jeder Zahlung neu zu schreiben, ist **langsam und fehleranfällig**. Die Antwort ist, für jede Bilanzzeile eine eigene laufende Aufzeichnung zu führen, ein **Konto**, Transaktionen dort zu buchen, sobald sie geschehen, und die Bilanz erst zum Stichtag aus den Kontensalden zusammenzusetzen. Weil jede Transaktion mindestens zwei Konten berührt, ist dies die **doppelte Buchführung**. Die Mechanik (Soll, Haben, Journale, Hauptbücher) bleibt dem Anhang des Lehrbuchs überlassen; hier zählt die Logik.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Transaktion<span class="sub">ein Ereignis, das die Vermögenslage verändert, in Geld bewertet</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Konten<span class="sub">eine laufende Aufzeichnung je Bilanzzeile, mindestens zwei je Buchung berührt</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Bilanz<span class="sub">zum Stichtag aus den Kontensalden zusammengesetzt</span></div>
+  </div>
+  <figcaption>Von der Transaktion zum Abschluss. Die Bilanz wird nicht nach jedem Ereignis neu geschrieben; sie wird zum Berichtsstichtag aus den Konten erzeugt.</figcaption>
+</div>
+
+## Durchgerechnetes Beispiel
+
+### (a) Die Biwheels-Bilanz aufbauen
+
+Die Biwheels Company gehört Herrn Lopez, der $400,000 investierte, um sie zu gründen. Zum Berichtsstichtag zeigt die Inventarliste: Kasse 352,000; Ladeneinrichtung 14,000; Handelswarenvorräte 159,200; eine Darlehensverbindlichkeit von 100,000; Verbindlichkeiten aus Lieferungen und Leistungen von 25,200. Wendet man die drei Schritte aus Abschnitt 6 an (klassifizieren, aggregieren, nach abnehmender Liquidität ordnen):
+
+| Aktiva | $ | Verbindlichkeiten und Eigenkapital | $ |
+|---|---:|---|---:|
+| Kasse | 352,000 | Verbindlichkeiten aus Lieferungen und Leistungen | 25,200 |
+| Handelswarenvorräte | 159,200 | Darlehensverbindlichkeit | 100,000 |
+| Ladeneinrichtung | 14,000 | **Summe Verbindlichkeiten** | **125,200** |
+| | | Lopez, Kapital | 400,000 |
+| **Summe Aktiva** | **525,200** | **Summe Verbindlichkeiten und Eigenkapital** | **525,200** |
+
+Die Rechnung in beide Richtungen prüfen: 352,000 + 159,200 + 14,000 = 525,200 auf der linken Seite; 25,200 + 100,000 + 400,000 = 525,200 auf der rechten Seite. Die Gleichung geht auf, also ist die Klassifizierung zumindest in sich stimmig. Man beachte die Reihenfolge: Kasse (am liquidesten) zuerst, dann Vorräte, dann Ausrüstung; rechts steht der Lieferantenkredit (am ehesten fällig) über der Bankschuld.
+
+Wäre die Kapitalzahl *nicht* gegeben gewesen, hätten wir sie berechnet: 525,200 an Vermögen minus 125,200 an Verbindlichkeiten = 400,000 an Eigenkapital.
+
+### (b) Die ersten Transaktionen durch die Gleichung führen
+
+Die Folien spielen auch nach, wie Biwheels *gestartet ist*, eine Transaktion nach der anderen, wobei die Gleichung nach jedem Schritt geprüft wird:
+
+| Schritt | Kasse | Ladeneinrichtung | = | Darlehensverbindlichkeit | Lopez, Kapital | Prüfung |
+|---|---:|---:|:-:|---:|---:|---|
+| (1) Lopez investiert 400,000 in bar | +400,000 | | = | | +400,000 | 400,000 = 400,000 |
+| (2) Bankdarlehen von 100,000 | +100,000 | | = | +100,000 | | |
+| Saldo nach (2) | 500,000 | | = | 100,000 | 400,000 | 500,000 = 500,000 |
+| (3) Ladeneinrichtung für 15,000 bar kaufen | -15,000 | +15,000 | = | | | |
+| Saldo nach (3) | 485,000 | 15,000 | = | 100,000 | 400,000 | 500,000 = 500,000 |
+
+Jede Zeile gegen die vier Formen aus Abschnitt 7 lesen. Transaktion 1 ist *beide Seiten wachsen* (Aktivum steigt, Eigenkapital steigt). Transaktion 2 ist wieder *beide Seiten wachsen*, aber der Anspruch ist diesmal eine Verbindlichkeit: Das Geld der Bank ist echtes Bargeld in der Kasse und eine echte Verpflichtung auf der rechten Seite. Transaktion 3 ist ein reiner *Aktivtausch*: Die Summe der Aktiva bleibt bei 500,000, nur ihre Zusammensetzung ändert sich von reinem Bargeld zu Bargeld plus Ausrüstung. Auf der rechten Seite bewegt sich überhaupt nichts.
+
+**Eine vierte typische Transaktion, in Worten.** Biwheels braucht Fahrräder zum Verkauf und kauft daher **Handelswarenvorräte auf Kredit** bei einem Lieferanten. Die Vorräte (ein Vermögenswert) steigen; die Verbindlichkeiten aus Lieferungen und Leistungen (eine Schuld) steigen um denselben Betrag; die Kasse bewegt sich nicht, weil noch nichts bezahlt wurde. Beide Seiten der Gleichung wachsen, die Summen stimmen weiterhin überein, und zwei Konten wurden berührt. Die 25,200 an Verbindlichkeiten aus Lieferungen und Leistungen in der Inventarliste aus Teil (a) sind genau ein solcher Posten: Ware erhalten, Rechnung noch nicht beglichen. Wird der Lieferant schließlich bezahlt, sinken Kasse und Verbindlichkeiten aus Lieferungen und Leistungen beide (*beide Seiten schrumpfen*), und die Gleichung ist wieder ausgeglichen.
+
+<Aside type="caution">
+**Zwei getrennte Illustrationen, zwei Zahlensätze.** Das Inventarlisten-Beispiel zeigt Ladeneinrichtung mit 14,000; die Transaktionsdurchsicht kauft Ausrüstung für 15,000. Es sind unterschiedliche Momentaufnahmen aus den Folien, kein Widerspruch, der aufzulösen wäre. Man sollte keine Prüfungszeit damit verlieren, sie zur Deckung bringen zu wollen.
+</Aside>
+
+## Fallecke
+
+### Die Monopoly-Schlussbilanz
+
+Das Monopoly-Spiel aus der vorigen Sitzung endet mit genau der Aufgabe aus Abschnitt 6: das, was das Team hält, in eine Bilanz zu verwandeln. Die Eröffnungsbilanz war trivial: Kasse 1,500 = gezeichnetes Kapital 1,500 (das Startgeld der Bank wird als Einlage der Anteilseigner behandelt). Das Schlussbeispiel aus der Buchhaltungsvorlage sieht so aus:
+
+| Aktiva | | Verbindlichkeiten und Eigenkapital | |
+|---|---:|---|---:|
+| Kasse | 345 | Hypothekenverbindlichkeit (Kings Cross Station) | 100 |
+| Grundstücke (Park Lane 350, Mayfair 400, Bond Street 320, Oxford Street 300) | 1,370 | Zinsverbindlichkeit | 10 |
+| Forderungen | 0 | Steuerverbindlichkeiten | - |
+| Beteiligungen - Bahnhöfe (Kings Cross Station) | 200 | **Summe Verbindlichkeiten** | **110** |
+| Beteiligungen - Versorgungsbetriebe (Water Works) | 150 | Gezeichnetes Kapital | 1,500 |
+| Gebäude - Häuser (2 Häuser zu je 200, abzüglich je 20 Abschreibung) | 360 | Gewinnrücklagen | 815 |
+| Gebäude - Hotels | 0 | **Summe Eigenkapital** | **2,315** |
+| Sonstige Vermögenswerte | - | | |
+| **Summe Aktiva** | **2,425** | **Summe Verbindlichkeiten und Eigenkapital** | **2,425** |
+
+Was der Fall lehrt, Zeile für Zeile:
+
+- **Grundstücks-, Bahnhofs- und Versorgungsurkunden sind Vermögenswerte** zu dem, was dafür gezahlt wurde: kontrolliert, aus einem vergangenen Kauf, mit erwarteten Mieteinnahmen. Kings Cross Station bleibt mit den vollen 200 auf der Aktivseite, obwohl der Bahnhof beliehen ist. Eine Beleihung entfernt den Vermögenswert nicht; sie schafft eine **Verbindlichkeit** (Hypothekenverbindlichkeit 100), und im Gegenzug fließt Geld zu.
+- **Häuser werden abzüglich Abschreibung ausgewiesen.** Jedes Haus kostete 200 und steht mit 180 zu Buche, also nach 20 an Wertverzehr. Zwei Häuser ergeben 360. Die Abschreibung ist der erste Hinweis darauf, dass Vermögenswerte im Zeitverlauf verbraucht werden, ein Thema späterer Kapitel.
+- **Eine Zinsverbindlichkeit von 10** ist eine Schuld, die das Team auf die Hypothek verursacht, aber noch nicht bezahlt hat: eine Verpflichtung aus einem vergangenen Ereignis, später zu erfüllen, also gehört sie in die Bilanz, obwohl kein Geld geflossen ist.
+- **Das Eigenkapital teilt sich in gezeichnetes Kapital und Gewinnrücklagen.** Das gezeichnete Kapital sind die 1,500, mit denen das Spiel begann. Die Gewinnrücklagen von 815 sind der während des Spiels erwirtschaftete und im Unternehmen belassene Gewinn; sie sind der Grund, warum das Schlusseigenkapital (2,315) größer ist als das Anfangseigenkapital (1,500). Woher die 815 kommen, ist Gegenstand des nächsten Kapitels.
+- **Die Karte „Du kommst aus dem Gefängnis frei" wird nicht als Vermögenswert angesetzt.** Sie könnte dem Team eines Tages Geld sparen, aber dieser Nutzen lässt sich nicht zuverlässig in Geld messen, und es steht kein Kaufpreis dahinter. Sie besteht den Test der zuverlässigen Erfassung in Geld nicht, deshalb lässt die Buchhaltungsvorlage die Zeile „Sonstige Vermögenswerte" bewusst leer.
+
+Die Rechenprobe: 345 + 1,370 + 200 + 150 + 360 = 2,425; und 100 + 10 + 1,500 + 815 = 2,425. Die Bilanz des Spiels ist ausgeglichen, was die Mindestbedingung dafür ist, dass sie überhaupt eine Bilanz ist.
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Bilanz | Eine Darstellung der Vermögenslage zu einem Stichtag: was die Einheit kontrolliert und wer Ansprüche darauf hält |
+| Grundgleichung der Bilanz | Vermögen = Verbindlichkeiten + Eigenkapital; auf jeder Bilanz per Definition wahr |
+| Vermögenswert (Aktivum) | Eine wirtschaftliche Ressource, die aus einem vergangenen Ereignis besessen oder kontrolliert wird und von der künftiger Nutzen erwartet wird |
+| Umlaufvermögen | Vermögen, das innerhalb des Geschäftszyklus zu Geld werden oder verbraucht werden soll: Kasse, Forderungen, Vorräte, aktive Rechnungsabgrenzung |
+| Anlagevermögen | Vermögen, das über viele Jahre zur Nutzung gehalten wird: immaterielle Werte, Grundstücke, Anlagen, Ausrüstung |
+| Verbindlichkeit | Eine rechtliche oder wirtschaftliche Verpflichtung gegenüber einem Außenstehenden aus einem vergangenen Ereignis, die künftig zu erfüllen ist |
+| Rückstellung | Eine Verbindlichkeit, deren Höhe oder Fälligkeit unsicher ist und die mit einer bestmöglichen Schätzung erfasst wird |
+| Eigenkapital | Der Residualanspruch der Eigentümer: Vermögen minus Verbindlichkeiten (auch Kapital, Reinvermögen) |
+| Nennwert (festgelegter Wert) | Der auf einer Aktie aufgedruckte Nominalwert; gezeichnetes Kapital wird zum Nennwert erfasst, der Rest des Preises geht in die Kapitalrücklage über dem Nennwert |
+| Konto | Eine Unterteilung eines Bilanzelements (z. B. Kasse, Verbindlichkeiten aus Lieferungen und Leistungen) mit eigener laufender Aufzeichnung |
+| Einheit | Die eigenständige wirtschaftliche Einheit, für die die Bilanz aufgestellt wird, getrennt von ihren Eigentümern und anderen Organisationen |
+| Transaktion | Ein Ereignis, das die Vermögenslage der Einheit verändert und zuverlässig in Geld erfasst werden kann |
+| Zusammengesetzte Buchung | Eine Transaktionsbuchung, die mehr als zwei Konten berührt |
+| Doppelte Buchführung | Jede Transaktion in mindestens zwei Konten erfassen, damit die Gleichung stets gilt |
+
+## Teste dich selbst
+
+1. In je einem Satz: Was berichtet die Bilanz, und warum muss sie datiert sein?
+2. Biwheels weist Kasse 352,000, Handelswarenvorräte 159,200, Ladeneinrichtung 14,000, eine Darlehensverbindlichkeit von 100,000 und Verbindlichkeiten aus Lieferungen und Leistungen von 25,200 aus. Berechne die Summe der Aktiva, die Summe der Verbindlichkeiten und das Eigenkapital und gib an, welche Zahl die „ausgleichende" ist.
+3. Eine Kapitalgesellschaft verkauft eine Aktie mit einem Nennwert von $5 für $20 an einen Investor. Welche Eigenkapitalkonten ändern sich und um wie viel? Um wie viel ändert sich die Summe der Aktiva?
+4. Welche der folgenden Vorgänge sind Transaktionen im Sinne der Rechnungslegung, und warum: (a) das Unternehmen unterzeichnet eine Absichtserklärung, im nächsten Quartal einen neuen Vertriebsleiter einzustellen; (b) das Unternehmen kauft Handelsware auf Kredit bei einem Lieferanten; (c) eine Zeitung veröffentlicht einen begeisterten Artikel über das Unternehmen; (d) das Unternehmen ruft ein Bankdarlehen ab?
+5. Biwheels kauft Ladeneinrichtung für 15,000 in bar. Was passiert mit der Summe der Aktiva, der Summe der Verbindlichkeiten und dem Eigenkapital? Welche der vier Transaktionsformen ist das?
+6. In der Monopoly-Schlussbilanz beträgt die Summe der Aktiva 2,425, die Hypothekenverbindlichkeit 100, die Zinsverbindlichkeit 10 und das gezeichnete Kapital 1,500. Wie hoch sind die Gewinnrücklagen, und warum bleibt die Karte „Du kommst aus dem Gefängnis frei" außerhalb der Bilanz?
+
+<Aside type="note" title="Lösungen">
+1. Sie berichtet die Vermögenslage einer Einheit, also den Bestand an Ressourcen, die sie kontrolliert (Aktiva), und die Ansprüche darauf (Verbindlichkeiten und Eigenkapital). Sie ist eine Momentaufnahme eines *Bestands*, ergibt also nur zu einem bestimmten Stichtag Sinn; einen Tag später können die Zahlen anders sein.
+2. Summe der Aktiva 352,000 + 159,200 + 14,000 = 525,200. Summe der Verbindlichkeiten 100,000 + 25,200 = 125,200. Eigenkapital = 525,200 - 125,200 = 400,000. Das Eigenkapital ist die ausgleichende Größe; es ist als Vermögen minus Verbindlichkeiten definiert.
+3. Das gezeichnete Kapital steigt um $5 (eine Aktie zum Nennwert); die Kapitalrücklage über dem Nennwert steigt um $15 (der Preis von $20 minus $5 Nennwert). Das gesamte Eigenkapital und die Summe der Aktiva (Kasse) steigen beide um $20.
+4. Nur (b) und (d) sind Transaktionen: Beide verändern die Vermögenslage (Vorräte und Verbindlichkeiten aus Lieferungen und Leistungen steigen; Kasse und Darlehensverbindlichkeit steigen) und lassen sich zuverlässig in Geld messen. (a) ist nur eine Absicht, es ist noch nichts geschehen; (c) mag die Aussichten beeinflussen, lässt sich aber nicht zuverlässig bepreisen.
+5. Die Summe der Aktiva, die Summe der Verbindlichkeiten und das Eigenkapital bleiben alle unverändert. Die Kasse sinkt um 15,000 und die Ladeneinrichtung steigt um 15,000, es ist also ein Aktivtausch innerhalb der linken Seite; zwei Konten werden berührt, die rechte Seite bleibt unberührt.
+6. Die Summe der Verbindlichkeiten beträgt 110, also ist das Eigenkapital 2,425 - 110 = 2,315; Gewinnrücklagen = 2,315 - 1,500 = 815. Die Karte wird nicht angesetzt, weil ihr künftiger Nutzen nicht zuverlässig in Geld gemessen werden kann (kein Preis, keine sichere Verwendung), sie besteht also den Ansatztest nicht, auch wenn sie eines Tages Geld sparen könnte.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Die **Bilanz** berichtet die **Vermögenslage zu einem Stichtag**: den **Bestand kontrollierter Ressourcen (Aktiva)** und die **Ansprüche darauf (Verbindlichkeiten + Eigenkapital)**. Linke Seite = Ressourcen / Mittelverwendung; rechte Seite = Quellen / Finanzierung.
+- **Vermögen = Verbindlichkeiten + Eigenkapital** ist eine **analytische Wahrheit**: Das Eigenkapital ist als Residualgröße definiert, also muss die Gleichung immer gelten. Tut sie es nicht, hat man einen Fehler gemacht.
+- **Aktiva**: besessen oder kontrolliert, aus einem vergangenen Ereignis, mit erwartetem künftigem Nutzen. Gruppiert in **Konten**: Umlaufvermögen (Kasse, Forderungen, Vorräte, aktive Rechnungsabgrenzung) gegenüber Anlagevermögen (immaterielle Werte, Grundstücke, Anlagen, Ausrüstung). Vorsicht vor dem **Begriffswirrwarr** zwischen IFRS, US-GAAP und HGB.
+- **Verbindlichkeiten**: Verpflichtungen gegenüber Außenstehenden aus vergangenen Ereignissen, künftig zu erfüllen: Verbindlichkeiten aus Lieferungen und Leistungen, Darlehensverbindlichkeiten, Rückstellungen, langfristige Schulden.
+- **Eigenkapital** = Vermögen minus Verbindlichkeiten, dargestellt nach Rechtsform: Kapitalkonto des Eigentümers (Einzelunternehmen), eine Kapitalzeile je Gesellschafter oder bei Kapitalgesellschaften **gezeichnetes Kapital zum Nennwert + Kapitalrücklage über dem Nennwert** ($5 Nennwert, für $20 verkauft, ergibt $5 + $15).
+- **Eine Bilanz ableiten**: jeden Posten klassifizieren, gleichartige Posten aggregieren, nach Liquidität ordnen, beide Seiten summieren und prüfen.
+- **Transaktionen**: ein Ereignis, das die Vermögenslage verändert und zuverlässig in Geld messbar ist; jedes wirkt auf die Gleichung und auf **mindestens zwei Konten** (zusammengesetzte Buchung = mehr als zwei). Die **Einheit** wird von ihren Eigentümern getrennt gehalten.
+- Die Bilanz nach jeder Transaktion neu zu schreiben ist langsam und fehleranfällig, deshalb nutzen echte Unternehmen **Konten und doppelte Buchführung** und stellen den Abschluss zum Berichtsstichtag zusammen.
+</Aside>
+
+*Weiter: [Die Gewinn- und Verlustrechnung, Zahlungsmittel & Periodenabgrenzung →](/de/learnings/mba/financial-performance-and-management-control/03-income-statement-cash-and-accruals/) - wie der Gewinn gemessen wird und warum er nicht dasselbe ist wie Zahlungsmittel.*
