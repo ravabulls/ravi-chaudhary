@@ -1,0 +1,336 @@
+---
+title: "The Kano Model"
+description: "Which product attributes actually create customer satisfaction - basic, performance, excitement and indifference attributes, why the absence of a basic feature hurts but its presence earns nothing, how the paired functional and dysfunctional questionnaire classifies each attribute, why categories migrate from wow to expected over time, and how to turn the result into a feature-priority decision."
+sidebar:
+  label: "7 · The Kano Model"
+  order: 7
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Innovation & New Business Proposal - TUHH Institute of Entrepreneurship & Institute of Innovation Marketing, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The customer journey chapter told me *where* in the experience something goes wrong. The Kano model answers a different and much sharper question: of all the features I could build into the product, **which ones actually produce satisfaction?** That is the underlying question the slides put at the top of the section, and it is not the same as asking which features customers say they want. Some features that customers rate as very important turn out to earn nothing when you deliver them, because the customer simply assumed they would be there. Others that nobody asked for turn out to delight.
+
+The model is a framework for judging the **importance of product attributes**, and the class notes give it two concrete goals. The first is to find the attributes that are so essential to the customer that they are **never voiced at all** - if I only listen to what people say in interviews, I will miss exactly these, and shipping without them destroys the product. The second is to find the attributes that carry a **wow potential**, the ones that can surprise the customer into genuine enthusiasm. Between them sit the attributes that make the difference, the ones worth competing on.
+
+The reason this matters for a new venture is budget. Every attribute costs engineering time and unit cost. Kano sorts a long wish list into four piles with four completely different investment rules, and it does it with a survey that a small team can run in a week.
+
+<Aside type="tip">
+**The one idea to carry through.** Satisfaction is **not** a straight line in feature quality. For some attributes, more is better and the customer notices in both directions. For others, the *absence* creates strong dissatisfaction but the *presence* creates no satisfaction at all, because the customer expected it as a matter of course. For a third group, presence delights and absence is not even punished. Any feature decision made without knowing which of these three you are dealing with is a guess.
+</Aside>
+
+## 1 · The two axes, and why the picture is not a straight line
+
+Every version of the Kano diagram uses the same two axes. The **horizontal axis** is objective: how much of the attribute the product actually delivers, running from a low level (missing, weak, slow) to a high level (present, strong, fast). The **vertical axis** is subjective: the customer's reaction, running from **dissatisfaction** at the bottom, through a neutral middle, to **satisfaction** at the top. The whole model is about the *shape* of the line that connects the two.
+
+We cannot draw curves here, so the honest way to memorise the picture is to describe each shape in words. Read the three tiers below as three different lines drawn through that same pair of axes.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Performance shape<span class="n">a diagonal line through the middle</span></div>
+      <div class="sc-node violet">Starts low and to the left in dissatisfaction, rises steadily, ends high and to the right in satisfaction<span class="sub">the only category where the customer reacts proportionally in both directions</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Basic shape<span class="n">a line that climbs steeply then flattens against neutral</span></div>
+      <div class="sc-node amber">Starts very deep in dissatisfaction at a low level, climbs fast, then flattens just below or at the neutral line and never goes above it<span class="sub">no amount of over-delivery buys satisfaction</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Excitement shape<span class="n">a line that stays flat then curls upward</span></div>
+      <div class="sc-node green">Stays flat at neutral even when the attribute is entirely absent, then curls sharply upward once it is present<span class="sub">absence costs nothing, presence delights</span></div>
+    </div>
+  </div>
+  <figcaption>The three curve shapes on the same axes. Indifference attributes are the fourth case and have no shape worth drawing: the line stays flat at neutral from one end to the other.</figcaption>
+</div>
+
+## 2 · The four attribute categories
+
+<div class="sc-quad">
+  <div class="q violet">
+    <div class="qh">Performance attributes <small>known · spoken</small></div>
+    <ul>
+      <li>The customer is aware of them and <strong>talks about them</strong> when asked</li>
+      <li>Satisfaction rises roughly in step with the level delivered; a low level produces dissatisfaction</li>
+      <li>Class example - <strong>laptop battery life</strong>: longer is straightforwardly better, shorter is straightforwardly worse</li>
+      <li>This is where competitors get compared against each other</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Basic attributes <small>implicit · must-be · mandatory · not articulated</small></div>
+    <ul>
+      <li>Taken for granted, so the customer <strong>does not mention them</strong> in an interview</li>
+      <li>Absence causes <strong>strong dissatisfaction</strong>; presence causes <strong>no satisfaction</strong>, because it was simply expected</li>
+      <li>Class example - a <strong>laptop that is immune to bumps</strong>: nobody praises a laptop for surviving a knock, everybody condemns one that does not</li>
+      <li>These are the price of entry to the market, not a selling point</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Excitement attributes <small>not articulated · not expected · exciting</small></div>
+    <ul>
+      <li>The customer neither asks for them nor expects them</li>
+      <li>Presence creates <strong>delight</strong> well above neutral; absence is <strong>not punished</strong> at all</li>
+      <li>This is the wow potential the model was built to find</li>
+      <li>Cannot be discovered by asking people what they want, because they do not know yet</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Indifference attributes <small>the customer does not care</small></div>
+    <ul>
+      <li>Neither presence nor absence moves the customer in either direction</li>
+      <li>The line stays flat at neutral across the whole axis</li>
+      <li>Pure cost with no return - the first candidates to cut from the specification</li>
+    </ul>
+  </div>
+</div>
+
+<Aside type="caution">
+**Two extra cells in the full evaluation table.** The classic Kano evaluation grid also produces **reverse** (the customer actively prefers the feature *not* to be there, so delivering it makes things worse) and **questionable** (the pair of answers contradicts itself, which almost always means the question was misread or badly worded). The class exercise works with the four main categories, but if you build the full grid yourself you will meet these two, and a high count of questionable answers is a signal to rewrite the question, not a finding about the product.
+</Aside>
+
+## 3 · The exercise as it is run in class
+
+The way the method is actually experienced in the session is through a role-play survey. The scenario given is deliberately specific, because vague respondents give vague answers.
+
+<Aside type="note">
+**The hotel scenario.** You have just started your first job after graduation with a large engineering consultancy. Your first client project is in Stuttgart and starts tomorrow, on Monday. On Sunday afternoon you arrive for the first time at the hotel your firm has booked for you, and because the client project will last at least six months you will be sleeping there many, many nights. You walk into the hotel, then into the room, and you start getting familiar with the features and attributes of both. Now evaluate them.
+</Aside>
+
+Two details of that framing do the real work. First, the respondent is put in a **concrete moment of use**, not asked in the abstract what makes a good hotel. Second, the **six-month stay** changes the answers completely: a desk and a quiet room matter far more to someone living there for half a year than to a weekend tourist, which is exactly the segment sensitivity the model warns about.
+
+The second exercise in the slides uses a **kitchen stove and ceramic cooktop** that came bundled with a new apartment kitchen, so it was never deliberately chosen. The respondent imagines using the kitchen for the first time and reacts to a list of attributes: a self-cleaning mechanism, energy class A rather than B, resistance against fingerprints, the number of heat settings on the cooktop fields (nine rather than three), steam cooking, a timer with automatic switch-off, the time the cooktop fields need to reach maximum heat, ventilation of the stove door window so the glass stays cool, setting the stove through sensors rather than buttons, and operating the stove from a smartphone including a camera inside the oven.
+
+The class then positions each attribute on a matrix whose axes are the **contribution to satisfaction** and the **contribution to dissatisfaction**, both running from 0 to 100 percent with a line drawn at 50 percent. Reading the four corners of that matrix is the same as reading the four categories:
+
+| Contribution to dissatisfaction | Contribution to satisfaction | Category |
+|---|---|---|
+| High (above 50 percent) | High (above 50 percent) | **Performance** |
+| High (above 50 percent) | Low (below 50 percent) | **Basic** |
+| Low (below 50 percent) | High (above 50 percent) | **Excitement** |
+| Low (below 50 percent) | Low (below 50 percent) | **Indifference** |
+
+The results from a survey of about 60 master-level students land roughly like this: the **ventilation of the stove door window** and the **number of heat settings** sit near the basic corner; **energy class**, **fingerprint resistance** and the **timer with automatic switch-off** sit around the performance area; **self-cleaning**, **steam cooking**, **smartphone operation** and **sensor fields** sit toward excitement, and reaching maximum heat in about five seconds also shows up as an exciting surprise. Nobody had asked for a self-cleaning oven, and yet it delights.
+
+## 4 · The dynamic that trips everyone up: attributes migrate
+
+This is the point the slides flag explicitly and it is the one most likely to be examined. The contribution of an attribute to satisfaction and dissatisfaction **may change over time**, and it also **varies across customer segments**. Customers get used to things. What amazed them last year is expected this year.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node green">Excitement<span class="sub">nobody expects it, so it delights</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Performance<span class="sub">everyone now knows it exists and compares levels of it</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Basic<span class="sub">taken for granted, only its absence is noticed</span></div>
+  </div>
+  <figcaption>The one-way street of attribute ageing. Hotel Wi-Fi is the standard illustration: a delightful extra a decade ago, then something guests compared hotels on, and now something whose absence provokes a complaint while its presence earns nothing.</figcaption>
+</div>
+
+Three consequences follow directly, and all three are practical:
+
+- **A Kano study has a shelf life.** The analysis has to be **repeated**, because a classification that was true when you ran the survey may already be stale by the time the product ships.
+- **Yesterday's differentiator becomes tomorrow's cost.** A feature you win on today will eventually become a basic attribute you must still pay for while earning nothing from it. The wow pipeline has to keep refilling.
+- **Segment before you classify.** The same attribute can be basic for one segment and indifferent for another, so a single blended result across mixed respondents can be meaningless.
+
+The slides also show a **variation of the model** in which satisfaction with individual quality dimensions is correlated with total satisfaction. That version does not force an attribute into one box; it describes attributes as a **performance attribute with a tendency toward an excitement attribute** or a **performance attribute with a tendency toward a basic attribute** - a useful reminder that the categories are the ends of a spectrum, and that migration means an attribute is usually somewhere in between.
+
+## 5 · The Kano questionnaire
+
+You cannot classify an attribute by asking about it once, because a single question cannot separate "I would be pleased" from "I would be furious if it were missing". So Kano asks about **every attribute twice**, as a matched pair.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Functional question <small>the positive form</small></div>
+      <ul>
+        <li>How would you feel <strong>if the product HAD this feature</strong>, or had it at a higher level?</li>
+        <li>Class wording of the answers: it makes me happy · I expect this of course · no big reaction · I do not really care</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Dysfunctional question <small>the negative form</small></div>
+      <ul>
+        <li>How would you feel <strong>if the product did NOT have it</strong>, or had it at a lower level?</li>
+        <li>Class wording of the answers: it makes me unhappy · a pity, but it does not dissatisfy me · I do not really care</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Each attribute is asked twice. The trick is that the respondent answers the negative form without treating it as the mirror of the positive one, so the pair of answers reveals the category instead of an opinion about importance.</figcaption>
+</div>
+
+The standard five-point answer scale, used identically for both halves of the pair, is:
+
+<div class="sc-chips">
+  <span class="sc-chip green">1 · I like it that way</span>
+  <span class="sc-chip amber">2 · It must be that way</span>
+  <span class="sc-chip">3 · I am neutral</span>
+  <span class="sc-chip violet">4 · I can live with it that way</span>
+  <span class="sc-chip">5 · I dislike it that way</span>
+</div>
+
+### Reading the pair off the evaluation table
+
+The two answers are then looked up as a coordinate pair in a fixed grid. Rows are the functional answer, columns the dysfunctional answer, and the cell gives the category:
+
+| Functional (down) / Dysfunctional (across) | Like | Must-be | Neutral | Live with | Dislike |
+|---|:-:|:-:|:-:|:-:|:-:|
+| **Like** | Q | **A** | **A** | **A** | **O** |
+| **Must-be** | R | I | I | I | **M** |
+| **Neutral** | R | I | I | I | **M** |
+| **Live with** | R | I | I | I | **M** |
+| **Dislike** | R | R | R | R | Q |
+
+<p><Badge text="M = basic (must-be)" variant="caution" /> <Badge text="O = performance (one-dimensional)" variant="note" /> <Badge text="A = excitement (attractive)" variant="success" /> <Badge text="I = indifferent" variant="default" /> <Badge text="R = reverse" variant="danger" /> <Badge text="Q = questionable" variant="tip" /></p>
+
+The logic is worth understanding rather than memorising. If someone **likes** having it and **dislikes** not having it, they react in both directions, so it is a **performance** attribute. If they say it **must** be that way and **dislike** its absence, they are describing an expectation, so it is **basic**. If they **like** having it but can happily live without it, only the upside exists, so it is **excitement**. If neither form of the question moves them, it is **indifferent**.
+
+### Aggregating across respondents
+
+One respondent gives one classification per attribute, which is noise. The result you act on is the **distribution across the whole sample**: for each attribute, count how many respondents landed in each category and take the **most frequently named** one as the working classification. The class version reads the same thing as two percentages - the share of respondents who answered that it makes them happy on the functional question is the attribute's **contribution to satisfaction**, and the share who answered that it makes them unhappy on the dysfunctional question is its **contribution to dissatisfaction** - and plots the attribute in the matrix from section 3.
+
+**What to do when the result is ambiguous.** If no category clearly wins, that is information, not a failure:
+
+- Two categories close together (say performance at 45 percent and basic at 40 percent) usually means the attribute is **mid-migration**, on its way to becoming an expectation. Plan to deliver it, but stop marketing it.
+- A wide spread across all four categories usually means the sample contains **more than one segment**. Split the respondents and re-count rather than averaging them into mush.
+- A high count of **questionable** answers means the question itself failed. Rewrite it in concrete language and ask again.
+- When still in doubt, fall back on the more demanding category, because under-delivering a basic attribute damages you far more than over-delivering a performance one.
+
+## 6 · Turning the classification into decisions
+
+The four categories are useful precisely because each carries a different and non-negotiable investment rule.
+
+| Category | Role | The rule | Why |
+|---|---|---|---|
+| **Basic** | The price of entry | Deliver every single one, **without exception** | No credit for doing it, but one gap is enough to lose the customer, and no excitement feature compensates for a missing basic |
+| **Performance** | The competitive battleground | Compete here, on the **few that matter most** | This is where a measurable level beats a competitor's level, and where the marketing claim lives |
+| **Excitement** | The differentiator | Invest selectively in a **small number** | One or two done properly beat five done thinly, and they are perishable, so keep a pipeline |
+| **Indifference** | Pure cost | **Drop them** and bank the saving | Cutting them funds the excitement features without touching the price |
+
+Note the asymmetry that makes the model worth running: basics are invisible when present and fatal when absent, while excitement features are invisible when absent and decisive when present.
+
+## 7 · Focusing the message on a single attribute
+
+The slides close the section with a communication lesson that follows from the same analysis. A portable **gas-detection device** (from the Hamburg venture Bentekk) is described by five genuine attributes: it is **fast**, giving a reading in a few seconds; **precise**, detecting small parts per million with a maximum error of about 10 percent; **mobile**, being small, robust and lightweight with roughly four hours of battery; **connected**, over Wi-Fi with the data stored in a hub; and **analytical**, supporting serial measurements and documentation.
+
+Despite having all five, the company focuses its entire message on **one** of them: the **speed of analysis**. The reason given is not that speed is the only good thing about the device, but that **this feature most clearly defines the field of application**. Two use cases show why:
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Emergency measurements in plants after an incident<span class="sub">the whole point is knowing within seconds whether the air is safe</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Speed of analysis<span class="sub">the one attribute the message is built on</span></div>
+    <span class="arrow">←</span>
+    <div class="sc-node green">Risk analysis by a task force arriving at an accident site<span class="sub">a reading that takes minutes is a reading that arrives too late</span></div>
+  </div>
+  <figcaption>Both use cases are situations where a slow answer is no answer. Speed is therefore not just the strongest attribute, it is the one that tells the buyer immediately whether the product belongs in their world.</figcaption>
+</div>
+
+The takeaway for my own venture: once Kano has told me which attributes carry the satisfaction, I still have to pick **one** to lead with, and the right one is the attribute that best defines *who the product is for*, not simply the one with the highest score.
+
+## Worked example
+
+A small Kano study on a **business hotel room for long-stay project consultants**, the segment from the class scenario. Six candidate attributes, one respondent first.
+
+| # | Attribute | Functional answer | Dysfunctional answer | Table cell | Category |
+|---|---|---|---|:-:|---|
+| 1 | Spotless bathroom with reliable hot water | It must be that way | I dislike it that way | Must-be, Dislike | **M** basic |
+| 2 | Fast, reliable in-room Wi-Fi | I like it that way | I dislike it that way | Like, Dislike | **O** performance |
+| 3 | Proper desk with good task lighting | I like it that way | I dislike it that way | Like, Dislike | **O** performance |
+| 4 | Blackout curtains and a quiet room | It must be that way | I dislike it that way | Must-be, Dislike | **M** basic |
+| 5 | Shirts returned by the laundry the same evening | I like it that way | I am neutral | Like, Neutral | **A** excitement |
+| 6 | Room with a city skyline view | I am neutral | I am neutral | Neutral, Neutral | **I** indifferent |
+
+Notice how little the respondent's stated enthusiasm tells you on its own. Attributes 2 and 5 both got "I like it that way" on the functional question, yet they land in completely different categories, because only the dysfunctional answers separate them.
+
+Now the same six attributes aggregated across 40 respondents from that segment, as the percentage of respondents landing in each category:
+
+| Attribute | Basic | Perform. | Excite. | Indiff. | Winning category | How I read it |
+|---|--:|--:|--:|--:|---|---|
+| Spotless bathroom, hot water | **78** | 12 | 0 | 10 | Basic (clear) | Non-negotiable, invisible when right |
+| Blackout curtains, quiet room | **62** | 28 | 3 | 7 | Basic (clear) | Non-negotiable for a six-month stay |
+| Fast, reliable Wi-Fi | 40 | **45** | 5 | 10 | Performance (weak) | Ambiguous, mid-migration to basic |
+| Desk with good task lighting | 15 | **55** | 12 | 18 | Performance (clear) | The battleground for this segment |
+| Same-evening laundry return | 5 | 20 | **58** | 17 | Excitement (clear) | The one wow feature |
+| City skyline view | 3 | 15 | 20 | **62** | Indifferent (clear) | Cut it, do not pay a premium for it |
+
+**The recommendation that follows.** Guarantee the bathroom and the quiet, dark room absolutely, and stop advertising them, because they buy nothing. Treat Wi-Fi as **already migrating**: keep investing so it is never the weak point, but drop it from the sales pitch, since 40 percent of the segment already treats it as an expectation. Make the **desk and task lighting** the visible differentiator, because it is the cleanest performance attribute and it is exactly what a consultant living in the room for six months will compare between hotels. Fund the **same-evening laundry** as the single wow feature and market it loudly. Stop paying a premium for **skyline-view** rooms and move that money into the previous two items. Then re-run the study in a year, because the laundry service will not stay exciting forever.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Define the segment before the attributes.** Write down one specific customer in one specific situation, as concrete as the Stuttgart hotel scenario. Different segments classify the same attribute differently, so a mixed sample gives an unusable answer.
+
+2. **Draft the attribute list, and keep it short.** Aim for roughly five to ten attributes. Each one costs the respondent two questions, and a long list produces tired, careless answers. Include a couple you suspect are basic and a couple you hope are exciting, so the survey can actually surprise you.
+
+3. **Phrase each attribute concretely and at a level, not as an abstraction.** Not "good performance" but "reaches maximum heat in about five seconds" or "nine heat settings rather than three". Vague attributes produce questionable answers.
+
+4. **Write the matched question pairs.** For every attribute, one functional question (how you would feel if it were there or at a higher level) and one dysfunctional question (how you would feel if it were absent or at a lower level), both on the same five-point scale.
+
+5. **Separate the pairs inside the questionnaire.** Put all functional questions in one block and all dysfunctional ones in another, so respondents do not simply mirror their earlier answer.
+
+6. **Run it on enough of the right people.** A few dozen respondents from the target segment beats hundreds from a general population. Pilot it on three people first and fix anything they misread.
+
+7. **Classify each response pair with the evaluation table**, then count the categories per attribute and take the most frequent one as the working classification.
+
+8. **Check the ambiguous rows.** Two close categories means migration; a flat spread means you have mixed segments. Split and re-count rather than averaging.
+
+9. **Convert the result into a build decision, then pick the lead message.** Every basic attribute goes into the minimum specification, the top two or three performance attributes become the competitive claims, one or two excitement attributes get real investment, and the indifference attributes get deleted from the backlog. Then choose the **single attribute to lead the message with**, the one that most clearly defines the field of application as in the gas-detector example, and diarise the repeat study.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Kano model | A framework that sorts product attributes by how they actually affect customer satisfaction, rather than by stated importance |
+| Attribute level of fulfilment | The horizontal axis: how much of the feature the product really delivers, from absent to fully present |
+| Satisfaction axis | The vertical axis: the customer's reaction, from strong dissatisfaction at the bottom to delight at the top |
+| Basic (must-be) attribute | Implicit and mandatory, never mentioned by customers; absence causes strong dissatisfaction, presence earns nothing |
+| Performance attribute | Known and spoken about; satisfaction rises roughly in line with the level delivered and falls when it is low |
+| Excitement (attractive) attribute | Neither expected nor asked for; presence delights, absence is not punished; the source of the wow factor |
+| Indifference attribute | The customer does not care either way, so it is cost without return |
+| Reverse attribute | The customer would rather the feature were absent, so adding it actively harms satisfaction |
+| Questionable result | A contradictory answer pair, almost always a sign of a badly worded question rather than a finding |
+| Functional question | The positive half of the pair: how would you feel if the product HAD this feature |
+| Dysfunctional question | The negative half of the pair: how would you feel if the product did NOT have it |
+| Evaluation table | The grid that turns a functional plus dysfunctional answer pair into one of the six category codes |
+| Attribute migration | The one-way drift of an attribute from excitement, to performance, to basic, as customers get used to it |
+| Contribution to satisfaction / dissatisfaction | The two percentages used to plot an attribute in the class matrix: the share who would be happy if it were present, and the share who would be unhappy if it were absent |
+
+## Test yourself
+
+1. State the underlying question the Kano model answers, and the two goals the class notes attach to it.
+2. Why does a basic attribute never produce satisfaction no matter how well it is delivered, and what does that imply about interviewing customers?
+3. Using the laptop examples from the slides, say which category battery life belongs to and which category immunity to bumps belongs to, and justify each in one sentence.
+4. **Classification exercise.** For a food-delivery app, one respondent answers as follows. Classify each attribute using the evaluation table: (a) functional "I like it that way", dysfunctional "I dislike it that way"; (b) functional "It must be that way", dysfunctional "I dislike it that way"; (c) functional "I like it that way", dysfunctional "I can live with it that way"; (d) functional "I am neutral", dysfunctional "I am neutral".
+5. A survey on 40 respondents classifies in-app order tracking as 40 percent basic, 45 percent performance, 5 percent excitement and 10 percent indifferent. What is going on, and what would you do about it?
+6. The gas-detection device has five strong attributes but its message is built on only one. Which one, and what is the stated reason for choosing it?
+
+<Aside type="note" title="Answers">
+1. The question is: which product attributes generate customer satisfaction. The two goals are to identify the attributes so essential that customers never voice them at all, and to identify the attributes that hold the potential to provide a wow factor. Together these are the attributes that make the difference.
+2. Because the customer already assumes it is there, so delivering it only meets an existing expectation and lifts the reaction to neutral at best; only its absence is noticed, as strong dissatisfaction. The implication is that interviews alone will miss basic attributes entirely, since nobody articulates them, which is exactly why the paired-question survey is needed.
+3. Battery life is a **performance** attribute: it is known and spoken about, and satisfaction rises with more hours while a short battery clearly dissatisfies. Immunity to bumps is a **basic** attribute: nobody praises a laptop for surviving a knock, but a laptop that breaks on a small impact causes serious dissatisfaction.
+4. (a) Like with Dislike gives **O**, a performance attribute. (b) Must-be with Dislike gives **M**, a basic attribute. (c) Like with Live with gives **A**, an excitement attribute. (d) Neutral with Neutral gives **I**, indifferent.
+5. Performance only just edges out basic, so the result is ambiguous in the classic mid-migration pattern: order tracking is on its way from a differentiator to an expectation. Practically, keep delivering it reliably because a growing share of the market now treats it as mandatory, but stop using it as a marketing claim, and check whether the split hides two different segments before concluding anything.
+6. **Speed of analysis**, a reading in a few seconds. The reason given is that this feature most clearly defines the field of application, which the two use cases show: emergency measurements in plants after incidences, and risk analysis by task forces arriving at an accident site. In both, an answer that arrives late is no answer at all.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- The Kano model asks **which product attributes generate customer satisfaction**, with two goals: find the attributes so essential they are **never voiced**, and find the ones with **wow potential**. Together these are the attributes that make the difference.
+- Axes: horizontal = **level of the attribute delivered** (low to high), vertical = **dissatisfaction to satisfaction**. The whole point is that the connecting line has a different shape for each category.
+- **Performance** (known, spoken): satisfaction rises with the level, a low level dissatisfies - laptop battery life. **Basic** (implicit, must-be, not articulated): absence causes strong dissatisfaction, presence earns nothing because it was expected - a laptop immune to bumps. **Excitement** (not articulated, not expected): presence delights, absence is not punished. **Indifference**: the customer does not care. The full table adds **reverse** and **questionable**.
+- **Categories migrate over time** and vary by segment: excitement becomes performance becomes basic. So the study has a shelf life and must be **repeated**, and the wow pipeline must keep refilling.
+- The **questionnaire** asks each attribute twice, in a **functional** form (how would you feel if it HAD this) and a **dysfunctional** form (how would you feel if it did NOT), both on the scale: I like it that way · it must be that way · I am neutral · I can live with it that way · I dislike it that way. The answer pair is read off the **evaluation table** as M, O, A, I, R or Q.
+- Aggregate across respondents and take the **most frequent** category, or plot the contribution to satisfaction against the contribution to dissatisfaction. Two close categories means migration; a flat spread means mixed segments; many questionable answers means a bad question.
+- Strategy: **deliver every basic attribute without exception** (the price of entry), **compete on the few performance attributes that matter most**, **invest selectively in one or two excitement attributes**, and **drop the indifference attributes** to fund the rest.
+- Finally, lead the **message with one attribute**, the one that most clearly defines the field of application, as the gas detector does with speed of analysis for emergency measurements and accident-site task forces.
+</Aside>
+
+*Next: [Conjoint Analysis →](/learnings/mba/innovation-and-new-business-proposal/08-conjoint-analysis/) - measuring the trade-offs customers really make.*

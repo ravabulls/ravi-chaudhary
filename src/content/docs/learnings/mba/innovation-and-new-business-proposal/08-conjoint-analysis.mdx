@@ -1,0 +1,386 @@
+---
+title: "Conjoint Analysis"
+description: "Which product attributes generate which value for customers - why asking people directly about importance produces flattering nonsense, how interactions break simple ratings, the decomposition logic behind CONsidered JOINTly, the additive utility model and its notation, estimating part-worth utilities from holistic rankings, computing relative importance as a part-worth range, and how to design, run and validate a study."
+sidebar:
+  label: "8 · Conjoint Analysis"
+  order: 8
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+*Innovation & New Business Proposal - TUHH Institute of Entrepreneurship & Institute of Innovation Marketing, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Kano told me *which kind* of satisfaction each attribute produces. Conjoint analysis answers the next question, and it is a quantitative one: **which product attributes generate which value for customers?** Not "is this feature nice", but "how many units of preference is this level of this attribute worth, compared with that level of that other attribute". It is the tool that finally puts numbers on the trade-offs a customer makes in their head.
+
+The class notes describe conjoint analyses as tools that measure the importance of product attributes **holistically**, and they attach four goals to that. Which attributes are how important? Which attribute levels provide which utility to the customer? Are there **anomalies** - jumps in the utility curve, knock-out criteria, minimum levels below which nothing is acceptable? And what are the **trade-offs** between different attributes? The last one is really the point of the whole method: every product decision is a trade, and this is the only market research tool in the module that measures the exchange rate.
+
+What makes it feel different from a survey is that respondents are never asked about attributes at all. They are shown whole products and asked which one they prefer. The importance numbers are then *worked backwards* out of those judgements. That reversal is the entire trick, and it is why the technique survives the problem I describe in section 2.
+
+<Aside type="tip">
+**The one idea to carry through.** Never ask a customer how important an attribute is. Ask them to **choose between whole products**, each of which is good at some things and bad at others, and then **decompose** their choices mathematically into the value of each individual attribute level. Stated importance is an opinion; a choice between two imperfect products is a genuine sacrifice, and only a sacrifice reveals what something is really worth.
+</Aside>
+
+## 1 · The underlying question and the four goals
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Which attributes are how important?<span class="sub">the relative weight each attribute carries in the decision</span></div>
+    <div class="sc-node amber">Which attribute levels give which utility?<span class="sub">not just that range matters, but how much 80 km beats 50 km</span></div>
+    <div class="sc-node amber">Are there anomalies?<span class="sub">jumps in the curve, knock-out criteria, minimum levels</span></div>
+    <div class="sc-node amber">What are the trade-offs between attributes?<span class="sub">how much of one attribute buys how much of another</span></div>
+  </div>
+  <figcaption>The four goals stated in the notes. The fourth is the one that separates conjoint from every other tool in the module.</figcaption>
+</div>
+
+The class makes the fourth goal concrete with four questions any product manager would recognise. How much more would customers prefer a product if it offered a **UHD resolution rather than HD** on a television, an **e-bike weighing 20 kg rather than 25 kg**, an **electric car with 500 km of range on one charge rather than 300 km**, or an **online meeting tool with a breakout session function rather than without one**? Each is a "how much more", not a "yes or no". Only a method that measures preference on a scale can answer them.
+
+## 2 · Why asking directly does not work
+
+The build-up in the session is done with a holiday hotel, and it is worth reproducing because the failure happens in two stages.
+
+**Stage one: rate the importance.** How important to you personally are the following attributes of a holiday hotel - the walking time from the hotel to the beach, the size of your room, the frequency of room cleaning, the speed of the Wi-Fi connection, and the availability of leisure and sports activities? Everyone answers happily, and almost everyone says most of them are quite important. Nothing has been given up, so nothing has been revealed. The answers are flattering rather than informative.
+
+**Stage two: distribute 100 points.** So the question is tightened: please spread exactly 100 points across those same five attributes, so that the points represent how important each one is for you. This is better, because the budget forces some discipline. But it still fails, for a reason worth stating precisely: the respondent is being asked to introspect about abstract categories, not to make a decision. Nobody has ever stood at a hotel booking page choosing between "room size" and "cleaning frequency" as such. They choose between **hotels**, each of which bundles a particular level of each attribute at a particular price.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Direct questioning <small>rating, or 100 points</small></div>
+      <ul>
+        <li>Asks about <strong>attributes in the abstract</strong>, detached from any product</li>
+        <li>No real sacrifice is involved, so answers are <strong>polite and inflated</strong></li>
+        <li>People are poor at introspecting about their own weightings</li>
+        <li>Cannot capture <strong>levels</strong> - only that an attribute matters, not how much 80 km beats 50 km</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Conjoint questioning <small>whole products, judged holistically</small></div>
+      <ul>
+        <li>Asks the respondent to <strong>rank, rate or choose complete products</strong></li>
+        <li>Every product is good at some things and weak at others, so a <strong>real trade-off</strong> is forced</li>
+        <li>The interview situation is natural, close to how buying actually feels</li>
+        <li>Importance is <strong>derived afterwards</strong> from the pattern of judgements, never asked</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The same information, obtained two ways. The left column asks the respondent to do the analysis; the right column asks them only to prefer, and does the analysis afterwards.</figcaption>
+</div>
+
+## 3 · The second trap: interactions
+
+There is a further problem that no amount of careful wording fixes. The session illustrates it with a single question asked three times: how important is the **size of the window** in a hotel room? Then: how important is it *in this room*? And *in this one*? The answer changes completely depending on what the rest of the room looks like. A large window matters enormously in a small dark room and hardly at all in a bright, generously sized one.
+
+The principle stated in the notes is that **the importance or preference of one attribute may depend on another attribute**. That is what an interaction is: an **interaction occurs when the combined effect of two attributes differs from the sum of their two separate main-effect utilities**. Asked in isolation, the window question has no single correct answer, because importance is not a property of the attribute alone.
+
+<Aside type="caution">
+**Why this matters for the model.** The basic conjoint model assumes attributes are **independent** - the class calls this the modular product assumption - so that total utility is just a sum of parts. That assumption is what keeps the arithmetic simple, and it is usually a reasonable approximation. When it is clearly violated, the fix in the supporting paper is to add an explicit **interaction term**, a product of the two attribute variables, to the utility equation. The listed advantages of conjoint include exactly this ability to detect interaction effects - the example given is that the colour red is specifically popular on a Ferrari, which is an interaction between brand and colour rather than a preference for red as such.
+</Aside>
+
+## 4 · The idea hidden in the name
+
+The name is a contraction, and unpacking it is the fastest way to remember what the method does. Products and services are **CONsidered JOINTly** - the respondent sees the whole bundle, never the pieces - and the analysis then treats that bundle as an aggregation of single components called **part-worth utilities**.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Product or service<span class="sub">described as a bundle of attribute levels</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Measurement of preferences<span class="sub">the respondent ranks, rates or chooses whole products</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Decomposition<span class="sub">1. relative importance of attributes<br/>2. part-worth utilities of attribute levels</span></div>
+  </div>
+  <figcaption>The direction of travel. Data goes in as holistic preference judgements about complete products; two separate results come out - how much each attribute matters, and what each individual level is worth.</figcaption>
+</div>
+
+This is why conjoint is called a **decomposition** method, in contrast to the compositional logic of a points-allocation survey. A compositional method asks for the weights and builds the product score up from them. A decompositional method takes the product score as given and pulls the weights out of it.
+
+## 5 · The additive utility model
+
+The model underlying a conjoint analysis is an **additive utility function**. The total utility of a product is the sum of the part-worth utilities of the levels it happens to have, plus an error term that absorbs everything the model does not capture.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Additive utility</span>
+    <code>y(k) = SUM over j of SUM over m of [ b(jm) · x(jm) ] + Error</code>
+  </div>
+</div>
+
+| Symbol | Meaning in the notation used in class |
+|---|---|
+| y(k) | the preference for product or service k, that is its total utility |
+| j | the attributes, for example weight, range, price |
+| m | the levels within each attribute, for example 20 kg and 25 kg |
+| x(jm) | an indicator that equals 1 if the product has level m for attribute j, and 0 otherwise |
+| b(jm) | the part-worth utility of level m of attribute j - the unknown the analysis solves for |
+| Error | everything about the stated preference that the additive model does not explain |
+
+The indicator variable is the mechanical heart of it. Each product profile switches on exactly one level per attribute, so the sum collapses to "one part-worth from each attribute, added together". In the supporting paper these indicators are handled as **dummy variables** in a regression, with a useful economy: an attribute with three levels only needs **two** dummies, because the third level is identified automatically when both dummies are zero. That third level becomes the baseline and its part-worth is absorbed into the intercept.
+
+## 6 · The smallest possible example: shape and colour
+
+The session demonstrates the mechanics on a deliberately trivial case: **two attributes** (shape and colour), **two levels each**. Multiplying out gives four product profiles, and the respondent is asked one simple thing - please rank order the four products according to your preferences, which would you choose first, second, third and fourth?
+
+Four holistic judgements, and from them come four part-worths. Writing the additive model out for each profile shows what the estimation is up against:
+
+| Profile | Shape level | Colour level | Preference equation |
+|---|---|---|---|
+| 1 | Shape level 1 | Colour level 1 | y1 = b(shape 1) + b(colour 1) + Error |
+| 2 | Shape level 2 | Colour level 2 | y2 = b(shape 2) + b(colour 2) + Error |
+| 3 | Shape level 2 | Colour level 1 | y3 = b(shape 2) + b(colour 1) + Error |
+| 4 | Shape level 1 | Colour level 2 | y4 = b(shape 1) + b(colour 2) + Error |
+
+Four equations, four unknown part-worths, one shared set of stated ranks. The respondent never said a word about shape or colour, and yet the system now contains everything needed to price both.
+
+## 7 · How the part-worths are estimated
+
+The estimation rule is stated in the notes in one sentence, and it is worth learning in that form. **Statistical estimation determines the values of the part-worth utilities so that the calculated preference values, the estimated y values, are as similar as possible to the preferences actually stated by the customer, the real y values.**
+
+That is all it is: choose the numbers that make the model's predicted ranking agree with the observed ranking as closely as it can. In the supporting paper this is done with **ordinary least squares regression** of the stated ratings on the dummy variables - the fitted equation for a public transport example with fare and waiting time came out as an intercept of 49.8 plus 26.7 and 14.0 for the two fare dummies and 25.7 and 20.0 for the two waiting-time dummies, reproducing the nine stated ratings almost exactly.
+
+<Aside type="note">
+**Reading anomalies out of the part-worths.** Because each level gets its own number, the resulting curve does not have to be a straight line, and that is where the notes' anomalies show up. In the transport example the utility lost by waiting 20 minutes instead of 10 is small, while the loss from 20 to 30 minutes is large - a **jump**, and a strong hint that 30 minutes is past somebody's tolerance threshold. Fare, by contrast, lost utility evenly across its whole range. A part-worth that collapses between two adjacent levels is how a **knock-out criterion** or a **minimum acceptable level** announces itself in the data.
+</Aside>
+
+A second convenience from the paper is **normalisation**: rescale all the part-worths so that the smallest across the whole study becomes 0 and the largest becomes 1, using v = (u - a) / (b - a), where a and b are the smallest and largest raw values. This changes nothing about the internal relationships but makes numbers comparable within and across attributes.
+
+## 8 · Relative importance of an attribute
+
+Once every level has a part-worth, the importance of the attribute that owns them follows immediately. An attribute matters to the extent that **moving from its worst level to its best level moves total utility a lot**. So importance is a **range**.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Range of one attribute</span>
+    <code>Range(j) = highest part-worth of j MINUS lowest part-worth of j (absolute value)</code>
+  </div>
+  <div>
+    <span class="name">Relative importance</span>
+    <code>Importance(j) = Range(j) / [ Range(1) + Range(2) + ... + Range(J) ]</code>
+  </div>
+  <div>
+    <span class="name">Property</span>
+    the importances of all attributes add up to 1, or to 100 percent
+  </div>
+</div>
+
+In words, exactly as the slides put it: the relative importance of an attribute is the **absolute difference between its highest and its lowest partial utility value, divided by the sum of all such differences**. The supporting paper calls this the relative importance measure and computes it for the transport case as 26.7 divided by (26.7 plus 25.7), giving 51 percent for fare and therefore 49 percent for waiting time.
+
+Two consequences that are easy to get wrong in an exam. First, importance is **a property of the levels you tested, not of the attribute in the world**. Widen the price range in the study and price will look more important, purely by construction. Second, an attribute whose levels are all roughly equally liked has a **near-zero range and near-zero importance**, no matter how loudly respondents would have insisted it mattered if you had asked them directly.
+
+## 9 · Designing and running a study
+
+The class lays out seven steps, and works them through on an e-scooter sharing system.
+
+| # | Step | What actually happens |
+|:-:|---|---|
+| 1 | Collect product or service attributes | List what could plausibly drive the choice |
+| 2 | Decide attribute levels | Fix realistic values per attribute, and count the full permutation |
+| 3 | Decide model and software | Choice-based, rank-order or adaptive; Sawtooth is the standard tool |
+| 4 | Design stimuli | Reduce the full permutation of combinations to a workable set of profiles |
+| 5 | Collect data | Scenario construction plus background questions |
+| 6 | Analyse | Average-level **and** individual-level analysis are both possible |
+| 7 | Interpret and simulate | Relative importances, level utilities, and the utility of new combinations |
+
+Step 4 is where most study designs live or die.
+
+**The e-scooter attributes and levels.** Maximum speed of the scooters at 15, 20, 25, 30 or 35 km per hour. Average walking time to the next available scooter at 1, 2.5 or 4 minutes. Pricing as either a 1 euro unlock fee plus 30 cents per minute, or no unlock fee plus 50 cents per minute. Reservation possible or not possible. Smartphone holder available or not available.
+
+**Why step 4 exists.** The full permutation is 5 times 3 times 2 times 2 times 2, which is **120 combinations**. No respondent will judge 120 profiles. So the full factorial is reduced - in the class example to **30 profiles presented as 10 comparisons of 3 profiles each**, relying on the assumption that the attributes are independent. The supporting paper does the same thing at larger scale for a smartphone study with five attributes at four levels each, where the full set runs past a thousand profiles and a **fractional factorial design** cuts it to 32 profiles rated on a zero to 100 scale.
+
+<Aside type="caution">
+**Full profile versus reduced design.** A **full profile** design shows every possible combination, which is only feasible for very small studies like the four-profile shape-and-colour case. Everything realistic uses a **reduced** design, chosen so the attributes stay uncorrelated across the surviving profiles - that is what lets the estimation still separate their effects. The cost is that interactions become hard or impossible to estimate, which is the price paid for the independence assumption.
+</Aside>
+
+**Choosing how to ask.** The alternative ways of measuring preference, all of which work as conjoint input:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Rating - to what extent does this product match your preferences, from very much to not at all</span>
+  <span class="sc-chip green">Choice - which of these products would you choose</span>
+  <span class="sc-chip amber">Ranking - rank order these products, most preferred first</span>
+  <span class="sc-chip">Graded paired comparison - how much do you prefer one of these two, from clearly prefer A through indifferent to clearly prefer B</span>
+</div>
+
+**Software and data collection.** The class names Sawtooth Software as the world's leading provider, free of charge for master theses through its grants programme, and mentions a web-based choice-based implementation. Data collection is not only the profiles: it also involves **scenario construction**, so the respondent is judging in a defined situation, and **additional questions** such as age, gender, residence and general mobility preferences.
+
+**Analysis and segmentation.** Both **average and individual-level analysis** are possible, which is unusual and valuable - conjoint gives every single respondent their own set of part-worths. That opens a segmentation route the class demonstrates: run a **cluster analysis on the vectors of relative importance**, using the Ward algorithm with squared Euclidean distances, and the e-scooter respondents fall into **three clusters** of people who trade off speed, walking time and price in visibly different ways. The supporting paper makes the same point: clusters of individuals with similar importances are effectively market segments.
+
+## 10 · Prediction, simulation and validity
+
+The final step is the one that earns the study its budget. Because the model is additive, it can score **any** combination of levels, including combinations nobody was ever shown. That is the meaning of step 7, simulating the utility of new product combinations.
+
+The supporting paper spells out three things about doing this responsibly:
+
+- **Interpolation between levels is acceptable.** A value between two tested levels can be scored by assuming the part-worth function is linear over that gap - a fare halfway between two tested fares takes the average of their two part-worths.
+- **Extrapolation beyond the tested range is not.** Scoring a level outside the span you tested can be badly misleading, and the remedy is to choose the attribute values sensibly when designing the profiles in the first place, so the interesting region is inside the range.
+- **Validate the estimated utility functions.** The two named routes are **predictive validation on a holdout sample** of profiles kept out of the estimation, and validation against **actual or intended market behaviour** such as first choices, sales or market share.
+
+The paper also summarises the technique in five roles, a compact revision list: it is a **measurement** technique for quantifying buyer trade-offs, an **analytical** technique for predicting reactions to new products, a **segmentation** technique for grouping buyers with similar trade-offs, a **simulation** technique for assessing new product ideas against competitors, and an **optimisation** technique for finding the profile that maximises share or return.
+
+**Choice-based conjoint specifically.** The two mainstream variants are **ratings-based** and **choice-based**, and the implementation path forks early: decide the purpose, decide the approach, identify attributes and levels, then either design profiles and analyse with regression, or design **choice sets** and analyse with a **logit** model. Both converge on the same outputs. In the paper's choice-based version of the transport study, 42 choice sets of **size three** were generated and each respondent simply said which of the three they would take; the answers were analysed with a **conditional logit model** estimated by maximum likelihood, and the part-worth pattern matched the ratings-based result. One design detail worth stealing: the sets deliberately mixed **dominated options** - one alternative better on every attribute, which acts as a sanity check on the respondent - with sets where a genuine trade-off is unavoidable.
+
+## 11 · Strengths and limits
+
+| Strengths | Limits |
+|---|---|
+| The interview situation is **natural and realistic** - people compare products, which is what they do anyway | Respondents must process **a lot of information** in each choice task |
+| Yields the **utility of each attribute level**, not just of the attribute, for example price at 5, 10 and 15 euros | The task is **tiring**, and fatigue degrades the later answers |
+| Yields the **relative importance of attributes**, for example that price outweighs the energy label in a television purchase | A practical ceiling of roughly **10 attributes** can be shown |
+| Can detect **interaction effects**, such as red being specifically popular on a Ferrari | Reduced designs usually assume attributes are **independent**, so most interactions go unmeasured |
+| **Flexible** across industrial products, consumer products and services | Importance depends on the **level ranges you chose**, so a badly designed study gives confidently wrong weights |
+
+## Worked example
+
+A small conjoint on a **compact commuter e-bike**. Three attributes, two levels each, so the full permutation is 2 times 2 times 2 = 8 profiles, small enough to show all of them.
+
+| Attribute | Level A | Level B |
+|---|---|---|
+| Weight | 20 kg | 25 kg |
+| Range on one charge | 80 km | 50 km |
+| Price | 1800 euros | 2400 euros |
+
+One respondent ranks all eight from 1 (most preferred) to 8 (least preferred). To turn ranks into a preference score I reverse them, so score = 9 minus rank, and the best profile scores 8.
+
+| Profile | Weight | Range | Price | Rank | Score y |
+|:-:|---|---|---|:-:|--:|
+| P1 | 20 kg | 80 km | 1800 | 1 | 8 |
+| P2 | 20 kg | 80 km | 2400 | 3 | 6 |
+| P3 | 20 kg | 50 km | 1800 | 4 | 5 |
+| P4 | 20 kg | 50 km | 2400 | 7 | 2 |
+| P5 | 25 kg | 80 km | 1800 | 2 | 7 |
+| P6 | 25 kg | 80 km | 2400 | 5 | 4 |
+| P7 | 25 kg | 50 km | 1800 | 6 | 3 |
+| P8 | 25 kg | 50 km | 2400 | 8 | 1 |
+
+**Step 1 - the grand mean.** The eight scores are 8, 6, 5, 2, 7, 4, 3, 1, summing to 36, so the grand mean is 36 / 8 = **4.5**.
+
+**Step 2 - the average score of every level.** Because the design is balanced, each level appears in exactly four profiles, so the level average is a fair estimate of what that level contributes.
+
+| Attribute | Level | Profiles containing it | Sum of scores | Level average | Part-worth (average minus 4.5) |
+|---|---|---|--:|--:|--:|
+| Weight | 20 kg | P1, P2, P3, P4 | 8+6+5+2 = 21 | 5.25 | **+0.75** |
+| Weight | 25 kg | P5, P6, P7, P8 | 7+4+3+1 = 15 | 3.75 | **-0.75** |
+| Range | 80 km | P1, P2, P5, P6 | 8+6+7+4 = 25 | 6.25 | **+1.75** |
+| Range | 50 km | P3, P4, P7, P8 | 5+2+3+1 = 11 | 2.75 | **-1.75** |
+| Price | 1800 | P1, P3, P5, P7 | 8+5+7+3 = 23 | 5.75 | **+1.25** |
+| Price | 2400 | P2, P4, P6, P8 | 6+2+4+1 = 13 | 3.25 | **-1.25** |
+
+**Step 3 - check the model reproduces the ranking.** Predicted score = 4.5 plus the three part-worths of that profile.
+
+| Profile | Calculation | Predicted | Stated | Error |
+|:-:|---|--:|--:|--:|
+| P1 | 4.5 + 0.75 + 1.75 + 1.25 | 8.25 | 8 | +0.25 |
+| P5 | 4.5 - 0.75 + 1.75 + 1.25 | 6.75 | 7 | -0.25 |
+| P2 | 4.5 + 0.75 + 1.75 - 1.25 | 5.75 | 6 | -0.25 |
+| P3 | 4.5 + 0.75 - 1.75 + 1.25 | 4.75 | 5 | -0.25 |
+| P6 | 4.5 - 0.75 + 1.75 - 1.25 | 4.25 | 4 | +0.25 |
+| P7 | 4.5 - 0.75 - 1.75 + 1.25 | 3.25 | 3 | +0.25 |
+| P4 | 4.5 + 0.75 - 1.75 - 1.25 | 2.25 | 2 | +0.25 |
+| P8 | 4.5 - 0.75 - 1.75 - 1.25 | 0.75 | 1 | -0.25 |
+
+Every error is a quarter of a point and the predicted order is P1, P5, P2, P3, P6, P7, P4, P8 - exactly the stated ranking. The additive model fits this respondent well, which is the licence to use it for prediction.
+
+**Step 4 - relative importance.** Each attribute's range is the gap between its best and worst part-worth.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Ranges</span>
+    <code>Weight = 0.75 - (-0.75) = 1.50 · Range = 1.75 - (-1.75) = 3.50 · Price = 1.25 - (-1.25) = 2.50 · Sum = 7.50</code>
+  </div>
+  <div>
+    <span class="name">Relative importance</span>
+    <code>Weight = 1.50 / 7.50 = 20.0% · Range = 3.50 / 7.50 = 46.7% · Price = 2.50 / 7.50 = 33.3%</code>
+  </div>
+</div>
+
+<p><Badge text="Range 46.7%" variant="success" /> <Badge text="Price 33.3%" variant="caution" /> <Badge text="Weight 20.0%" variant="note" /></p>
+
+Battery range is roughly **twice** as important to this respondent as weight, and price sits between them. Note that nobody said so - it was extracted from eight rankings.
+
+**Step 5 - the trade-off in money.** The price part-worth spans 2.50 utility points across a 600 euro gap, so one utility point is worth about 600 / 2.50 = **240 euros** to this respondent. Therefore going from 50 km to 80 km of range (worth 3.50 points) is worth about 3.50 times 240 = **840 euros**, and shedding 5 kg (worth 1.50 points) is worth about **360 euros**. That is a directly usable pricing input.
+
+**Step 6 - predict between two new configurations.** Manufacturing says a **2100 euro** price point is achievable, a level that was never tested. Interpolating linearly, its part-worth is the average of the two tested price part-worths: (1.25 + (-1.25)) / 2 = **0.00**. Two candidate builds at that price:
+
+| Candidate | Weight | Range | Price | Total utility | Result |
+|---|---|---|---|--:|---|
+| Config A - the light one | 20 kg | 50 km | 2100 | 4.5 + 0.75 - 1.75 + 0.00 = **3.50** | loses |
+| Config B - the long-range one | 25 kg | 80 km | 2100 | 4.5 - 0.75 + 1.75 + 0.00 = **5.50** | **preferred** |
+
+**Config B wins by 2.00 utility points.** The reasoning is transparent: the extra 30 km buys +3.50, the extra 5 kg costs -1.50, and the net gain of +2.00 is why range should be protected and weight conceded. Worth 2.00 times 240 = about 480 euros of willingness to pay. And the honest caveat from section 10 applies: 2100 euros is safely **between** two tested levels, so interpolating is fine. Predicting for a 3500 euro model would be extrapolation, and should not be trusted.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Write down the decision the study must inform.** Which two or three specification choices are you genuinely torn about, and what would you do differently depending on the answer? A conjoint that cannot change a decision is not worth the respondents' fatigue.
+
+2. **Pick at most five attributes and justify the list.** Choose the ones you believe actually drive the choice, and be able to say why these and not others. Ten attributes is the practical ceiling and five is a far more comfortable number for a student project.
+
+3. **Define levels that are realistic and bracket your real options.** Two to four levels each, spanning what you could actually build and what competitors already offer. Remember that importance is relative to the ranges you choose, and that you can only safely interpolate inside them, so put your candidate specifications inside the span.
+
+4. **Count the full permutation.** Multiply the level counts together. If the number is more than about ten, you need a reduced design, presented either as profiles to rank or rate, or as choice sets of two or three options.
+
+5. **Choose how you will ask, and set the scene.** Ranking is easy to analyse by hand for a small design; a rating scale gives more information per profile; a choice task is the most realistic. Put the respondent in a specific scenario before the first profile, add an occasional dominated option as an attention check, and collect the background variables you would later want to segment on.
+
+6. **Collect the data, and keep a few profiles as a holdout.** Do not use every profile for estimation. Hold two or three back so you can test whether the fitted part-worths predict judgements the model has not already seen.
+
+7. **Estimate the part-worths and the importances.** For a small balanced design, level averages minus the grand mean is enough for a spreadsheet; for anything larger use dummy variable regression, or a logit model if the data are choices. Then compute each importance as its range over the sum of ranges, and plot the part-worths across levels to spot anomalies - jumps, plateaus, or a level so bad it acts as a knock-out.
+
+8. **Simulate your candidate configurations and check for segments.** Score each realistic specification, convert the differences into money using the price part-worth, and cluster the individual importance vectors to see whether you are looking at one market or three.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Conjoint analysis | A method that shows people whole products, records which they prefer, and works backwards to the value of each attribute level |
+| Attribute | A dimension of the product that can be varied, such as weight, range or price |
+| Attribute level | One specific value the attribute can take, such as 20 kg or 1800 euros |
+| Profile (stimulus) | One complete hypothetical product, made of exactly one level from every attribute |
+| Part-worth utility | The preference value contributed by one specific attribute level - the number the analysis exists to find |
+| Additive utility model | The assumption that a product's total utility is the sum of the part-worths of its levels, plus an error term |
+| Relative importance | An attribute's part-worth range divided by the sum of all attribute ranges, so all importances add to 100 percent |
+| Range of an attribute | The absolute gap between its highest and lowest part-worth - the measure of how much it moves total utility |
+| Interaction | When the joint effect of two attributes differs from the sum of their separate main effects, so one attribute's importance depends on another |
+| Full permutation | Every possible combination of levels - the product of the level counts, which explodes quickly |
+| Reduced (fractional) design | A carefully chosen subset of profiles that keeps attributes uncorrelated so their effects can still be separated |
+| Choice-based conjoint | The variant where respondents pick one option from a small choice set, analysed with a logit model |
+| Holdout sample | Profiles deliberately excluded from estimation and used afterwards to test whether the model predicts well |
+| Simulation | Scoring product configurations that were never shown to anyone, to compare candidate designs before building them |
+
+## Test yourself
+
+1. State the underlying question of conjoint analysis and the four goals attached to it in the notes.
+2. Why does asking respondents to distribute 100 points across hotel attributes still fail, even though the points budget forces a choice?
+3. Explain an interaction in your own words using the hotel window example, and say what the standard conjoint model assumes instead.
+4. What does the name conjoint refer to, and what are the two outputs the decomposition produces?
+5. **Calculation.** A two-attribute study on a laptop yields part-worths of +1.2 and -1.2 for screen size, and +0.4 and -0.4 for keyboard backlight. Compute each attribute's range and its relative importance. Then, if the base utility is 5.0, compute the total utility of a laptop with the good screen and no backlight.
+6. Your fitted model uses price levels of 200 and 400 euros. A colleague asks you to predict demand at 900 euros. What do you say, and why?
+
+<Aside type="note" title="Answers">
+1. The underlying question is which product attributes generate which value for customers. The four goals are: which attributes are how important; which attribute levels provide which utility; whether there are anomalies such as jumps, knock-out criteria or minimum levels; and what the trade-offs between different attributes are.
+2. Because the respondent is still being asked to introspect about **abstract attributes** rather than to make a product decision. Nobody ever chooses between "room size" and "cleaning frequency" as such - they choose between whole hotels that bundle levels of both. Without a concrete sacrifice between complete alternatives, the answers stay flattering and unreliable.
+3. A large window matters hugely in a small dark room and barely at all in a large bright one, so the importance of window size **depends on the other attributes**. Formally, an interaction occurs when the combined effect of two attributes differs from the sum of their two separate main-effect utilities. The standard model assumes the opposite - that attributes are independent, or modular - so total utility is a simple sum; interactions have to be added deliberately as an extra product term.
+4. It refers to products being **CONsidered JOINTly**, that is judged as whole bundles rather than attribute by attribute. The decomposition produces (a) the relative importance of the attributes and (b) the part-worth utilities of the individual attribute levels.
+5. Screen range = 1.2 - (-1.2) = **2.4**. Backlight range = 0.4 - (-0.4) = **0.8**. Sum of ranges = 3.2. Screen importance = 2.4 / 3.2 = **75 percent**; backlight importance = 0.8 / 3.2 = **25 percent**. Total utility = 5.0 + 1.2 - 0.4 = **5.8**.
+6. Refuse, or flag it heavily. 900 euros lies far **outside** the tested range of 200 to 400 euros, and extrapolating a part-worth function beyond the levels actually shown to respondents can be seriously misleading. Interpolating to, say, 300 euros is defensible; the fix for 900 euros is to redesign the study with price levels that bracket the region of interest.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- Underlying question: **which product attributes generate which value for customers.** Goals: which attributes are how important, which levels give which utility, are there **anomalies** (jumps, knock-out criteria, minimum levels), and what are the **trade-offs**.
+- **Direct questioning fails.** Rating importance, or even distributing 100 points across hotel attributes, produces flattering answers because no real sacrifice is made. **Interactions** make it worse: the importance of window size depends on the room, and an interaction means the combined effect of two attributes differs from the sum of their separate main-effect utilities.
+- The name says the method: products are **CONsidered JOINTly**, judged as whole bundles, and the analysis **decomposes** those holistic judgements into (1) relative importance of attributes and (2) part-worth utilities of levels.
+- The model is an **additive utility function**: y(k), the preference for product k, is the sum over attributes j and levels m of the part-worth b(jm) times an indicator x(jm) that is 1 if the product has level m of attribute j and 0 otherwise, plus an error term.
+- The smallest case is **two attributes, two levels, four profiles, ranked first to fourth**. Estimation chooses the part-worths so the **calculated preferences match the stated preferences as closely as possible**, typically by dummy variable regression.
+- **Relative importance = the range of an attribute's part-worths (highest minus lowest, in absolute value) divided by the sum of all attribute ranges.** Importances sum to 100 percent, and they depend on the level ranges you chose to test.
+- Design: collect attributes, set levels, choose model and software, **reduce the full permutation** (120 e-scooter combinations became 30 profiles in 10 comparisons of 3), collect data with a scenario plus background questions, analyse at average **and** individual level, then interpret and **simulate** new combinations.
+- Ask by **rating, choice, ranking or graded paired comparison**. Choice-based studies use small choice sets analysed with a logit model. Individual part-worths allow **cluster-based segmentation** of respondents.
+- **Interpolate inside the tested range, never extrapolate outside it**, and validate on a **holdout sample** and against real market behaviour.
+- Pros: natural interview situation, utility per level, importance per attribute, interaction effects, flexible across products and services. Cons: heavy information load, tiring for respondents, roughly **10 attributes maximum**.
+</Aside>
+
+*Next: [House of Quality →](/learnings/mba/innovation-and-new-business-proposal/09-house-of-quality/) - turning what customers want into what engineers build.*

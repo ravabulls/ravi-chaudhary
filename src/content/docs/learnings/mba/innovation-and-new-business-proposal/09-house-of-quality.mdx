@@ -1,0 +1,354 @@
+---
+title: "House of Quality (Quality Function Deployment)"
+description: "How Quality Function Deployment translates customer requirements into technical requirements - the chain of linked planning matrices, the rooms of the house (customer needs and their weights, technical parameters, the interrelationship matrix scored from five down to one, the roof of interdependencies, the competitive assessment and the target values), the car-door example, and the honest pros and cons of the method."
+sidebar:
+  label: "9 · House of Quality"
+  order: 9
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Proposal - TUHH Institute of Entrepreneurship & Institute of Innovation Marketing, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Everything in the previous chapters produced statements from customers: pains and gains from the value proposition work, pain points from the customer journey, attribute categories from Kano, part-worths from conjoint. All of it is written in customer language. None of it can be handed to an engineer as it stands, because *stays open on a hill* is not something anyone can machine. Quality Function Deployment, usually shortened to QFD, exists to close exactly that gap. Its stated aim is easy to say and hard to do: **translate customer requirements into technical requirements**.
+
+The House of Quality is the working tool of QFD. It is a single large chart, shaped roughly like a house, on which marketing and engineering put their two vocabularies side by side and argue in public about which technical decisions actually serve which customer needs. The value lies less in the finished chart than in the conversation it forces, because it makes people who normally talk past each other point at the same grid.
+
+The name is worth taking literally. The chart has a left wall, a ceiling, a body, a roof, a right wall and a basement, and each of those rooms holds one specific kind of information. Once you know what belongs in each room, the whole method reduces to filling them in in the right order.
+
+<Aside type="tip">
+**The one idea to carry through.** The house is a **translation device with a direction of travel**: what the customer wants goes in on the left, how the product can be changed goes across the top, and the cells in between record *how strongly each how serves each what*. Everything else in the chart - the weights, the roof, the competitive assessment, the target values - exists so that the team can decide which of the hows to actually spend money on.
+</Aside>
+
+## 1 · The aim: from the voice of the customer to the voice of the engineer
+
+QFD starts from a belief rather than a technique: a product should be designed to reflect what customers actually want, which means that the people who talk to customers and the people who build the thing have to work together from the moment the product is first conceived, not hand work over a wall in sequence.
+
+The two vocabularies get formal names on the chart, and the names are a good memory hook.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Voice of the customer<span class="sub">customer requirements in the customer's own words - easy to close from outside, does not leak in rain</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node soft">The house<span class="sub">the translation happens here, cell by cell</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Voice of the engineer<span class="sub">technical parameters that can be measured and set to a target - energy to close the door in foot-pounds</span></div>
+  </div>
+  <figcaption>The marketing side says what to do, the engineering side says how to do it. The house is the place where the two are laid over each other so that every how can be justified by a what.</figcaption>
+</div>
+
+A useful discipline follows from this: customer requirements are kept in the **customer's own phrasing**, even when the phrasing is vague, because the same line will be read by product planners, design engineers, manufacturing engineers and sales people, and each of them would otherwise silently substitute their own interpretation. The cost of keeping the original words is ambiguity about what *quiet* or *easy* really means. The cost of not keeping them is worse: the team ends up solving problems the customer never had.
+
+Also worth remembering that not every requirement comes from an end user. Regulators contribute requirements (being safe in a side collision), retailers contribute requirements (being easy to display), and suppliers and service organisations contribute their own. They all belong on the left wall.
+
+## 2 · QFD is a chain of matrices, not a single chart
+
+This is the part most people miss when they meet only the picture of the house. QFD is a **hierarchically structured analysis made of several linked planning matrices**. The house is just the first of them. The trick that links them is that the **outputs of one matrix become the inputs of the next**: the hows of one stage are written down the left as the whats of the stage after it.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Matrix 1 - the House of Quality<span class="sub">in: customer requirements · out: technical parameters with target dimensions</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Matrix 2 - parts deployment<span class="sub">in: technical parameters · out: characteristics of parts with target dimensions</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Matrix 3 - process planning<span class="sub">in: characteristics of parts · out: production processes with target dimensions</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Matrix 4 - production planning<span class="sub">in: production processes · out: resources with target dimensions</span></div>
+  </div>
+  <figcaption>Four linked houses. Each one hands its columns down to become the rows of the next, which is how a customer sentence eventually reaches a setting on a machine.</figcaption>
+</div>
+
+The car-door example in the classic paper makes the chain concrete. The customer wants a door that is easy to close. That becomes the technical parameter *energy to close the door*, with a target value. In the parts house, that parameter becomes a row and the thickness of the weather stripping becomes a column. In the process house, weather-stripping thickness becomes a row and the speed of the extruder that produces the stripping becomes a column. In the production house, extruder speed becomes a row and the knob setting, the operator training and the maintenance plan become the columns. A knob position on a shop floor is now traceable, link by link, back to a sentence a customer said in an interview.
+
+That traceability is the whole point. It is also why the method is heavy, which section 10 is honest about.
+
+## 3 · The rooms of the house
+
+Six blocks of information, each in its own place. We cannot draw the roof shape here, so the tiers below name the rooms and the table after them shows how they sit relative to each other.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Roof<span class="n">correlation matrix</span></div>
+      <div class="sc-node violet">Interdependencies between technical parameters<span class="sub">do two parameters support each other or trade off against each other</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Ceiling<span class="n">the columns</span></div>
+      <div class="sc-node violet">Technical parameters, the voice of the engineer<span class="sub">measurable, each marked increase, decrease or no direction</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Left wall<span class="n">the rows</span></div>
+      <div class="sc-node amber">Customer requirements plus their relative importance<span class="sub">the voice of the customer, weighted</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Body<span class="n">the central grid</span></div>
+      <div class="sc-node soft">Interrelationships between requirements and parameters<span class="sub">scored from high to low</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Right wall<span class="n">the market view</span></div>
+      <div class="sc-node green">Competitive position on each customer requirement<span class="sub">how well we fulfil it today compared with rivals</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Basement<span class="n">the bottom rows</span></div>
+      <div class="sc-node slate">Measurement of the parameters and the target values<span class="sub">units, our current value, rivals' values, the number we commit to</span></div>
+    </div>
+  </div>
+  <figcaption>The six rooms of the House of Quality. A sensible build order: left wall, right wall, ceiling, body, roof, basement.</figcaption>
+</div>
+
+And here is the same thing as a floor plan, which is how it actually looks on the chart:
+
+| Level | Left block | Centre block | Right block |
+|---|---|---|---|
+| **Roof** | - | Correlation matrix: how the technical parameters affect each other | - |
+| **Ceiling** | - | Technical parameters, with the direction of improvement | - |
+| **Body** | Customer requirements + relative importance | Interrelationship matrix: requirement by parameter | Competitive assessment per requirement |
+| **Basement** | - | Measurement units, our value, rivals' values, **target values** | - |
+
+## 4 · The left wall: customer requirements and their weights
+
+The requirements themselves come from the methods of the earlier chapters, and QFD does not replace any of them - it consumes their output. In practice that means qualitative interviews with target customers, focus groups, observing people actually using the product (some firms simply put the product somewhere public and listen to what passers-by say about it), the customer journey and its pain points, the Kano survey, and conjoint analysis for the trade-offs and their weights.
+
+Two structural points matter more than the list of methods.
+
+**Requirements are organised as a hierarchy of needs**, usually on **two or three levels**: primary needs at the top, broken into secondary needs, sometimes broken again into tertiary needs. In the car-door example a primary need such as *good operation and use* contains a bundle called *easy to open and close door*, which contains the individual lines *easy to close from outside*, *stays open on a hill* and so on. The electric-toothbrush version used in class works the same way: a primary need such as *feel clean and fresh* contains secondary needs like *a clean feeling in my mouth*, *fresh breath all day long* and *pleasant taste and texture*, and each of those unpacks into tertiary statements such as *my teeth feel smooth when I glide my tongue over them* or *I wake up without feeling like I have morning breath*. The hierarchy is what keeps a list of a hundred customer statements navigable.
+
+**Every requirement carries a relative importance.** The weights come from the team's direct experience with customers or, better, from a survey, and they are usually written as percentages that add up to 100. The class exercise uses a simpler scale of 1 for not at all important up to 10 for very important, which is fine for a first pass. In the car-door chart the weights look like this: *easy to close from outside* 7, *stays open on a hill* 5, *easy to open from outside* 3, *does not kick back* 3, *does not leak in rain* 3, *no road noise* 2. Those small numbers are what later decide which technical parameter gets the budget.
+
+## 5 · The right wall: folding the competitor comparison into the house
+
+The house is not only about your own product. You can integrate a competitor analysis directly into it by rating, requirement by requirement, **how well your offer fulfils that requirement compared with rivals**. On the chart this sits on the right, opposite the requirements, typically as a scale from 1 to 5 with a line for our product and a line for each competitor.
+
+Reading it is straightforward and immediately strategic.
+
+| What the right wall shows | What it means | Car-door illustration |
+|---|---|---|
+| Everybody scores badly on a heavily weighted requirement | An open opportunity, worth a demanding target value | No car stays open on a hill |
+| We already score better than rivals | An advantage to defend rather than improve further, so hold the current value and spend the money elsewhere | No road noise |
+
+If different segments rate the product differently, collect a separate assessment per segment rather than blending them into one line. Marketing people will recognise the right wall as a perceptual map in disguise, which is also the bridge to the next chapter.
+
+## 6 · The ceiling: technical parameters, and the solution-neutrality problem
+
+Along the top go the technical parameters, sometimes called engineering characteristics or quality elements. Three rules govern what belongs there:
+
+- A parameter must be **measurable** and expressed in units, because the basement will later demand a number for it.
+- It must **affect something the customer perceives**. The weight of a door is felt by the customer, so it qualifies. The thickness of the sheet metal is a part characteristic the customer never notices directly; it reaches the customer only by influencing the door weight, so it belongs in the *next* house, not this one.
+- Each parameter gets a **direction of improvement**: increase, decrease, or no direction. Energy to close the door carries a minus, because less of it is better.
+
+Two cross-checks fall out of the grid for free. If a technical parameter affects **no** customer requirement at all, either it does not belong on the chart or the team has forgotten a customer requirement. If a customer requirement is touched by **no** technical parameter, the team currently has no way of delivering it and needs to invent one, which is exactly where new product properties come from.
+
+<Aside type="caution">
+**The honest caveat about solution neutrality.** In principle the technical parameters should describe *what* has to be achieved, not *which* solution achieves it, so that the design space stays open. In practice, when the solution space is deliberately defined broadly, it is genuinely difficult to write technical requirements that are independent of a specific technical solution. The moment you write a parameter down you have usually already assumed a mechanism. Solution neutrality is an aim, not a guarantee, and it is worth checking each parameter for smuggled-in assumptions before the matrix is filled.
+</Aside>
+
+## 7 · The body: the interrelationship matrix
+
+Now the team fills the central grid, cell by cell, asking one question each time: **how strongly does this technical parameter affect this customer requirement?** The judgements are made jointly, based on engineering experience, customer responses, statistics or controlled experiments, and the team has to reach consensus on each cell, which is where most of the useful arguing happens.
+
+The class scale is numeric and short:
+
+<div class="sc-chips">
+  <span class="sc-chip green">5 · strong relationship (high)</span>
+  <span class="sc-chip amber">3 · medium relationship</span>
+  <span class="sc-chip violet">1 · weak relationship (low)</span>
+  <span class="sc-chip">0 · no relationship</span>
+</div>
+
+The classic chart uses symbols instead of numbers and adds a sign: a tick for a positive relationship and a cross for a negative one, so that a strong *negative* link is visible as such. Any set of symbols works as long as the team agrees on it; some teams even use different marks for relationships proved by experiment and relationships based on judgement, which is a neat way of showing how much of the chart is actually evidence.
+
+Here is the car-door fragment, with the paper's qualitative marks translated into the class number scale:
+
+| Customer requirement | Weight | Energy to close the door | Check force on level ground | Door seal resistance | Acoustic transmission of the window |
+|---|--:|:-:|:-:|:-:|:-:|
+| Easy to close from outside | 7 | **5** | 0 | 3 (works against it) | 0 |
+| Stays open on a hill | 5 | 0 | **5** | 0 | 0 |
+| Does not leak in rain | 3 | 0 | 0 | **5** | 0 |
+| No road noise | 2 | 0 | 0 | 3 | 1 |
+
+Two things to notice. First, one parameter can serve several requirements: **door seal resistance touches three of these four rows**, which is exactly why it cannot be tuned in isolation. Second, its link to *easy to close from outside* runs in the wrong direction, since more seal resistance seals better but makes the door harder to close, and a matrix that recorded only strength without a sign would hide that conflict completely.
+
+## 8 · The roof: interdependencies between technical parameters
+
+The roof is the triangular matrix sitting on top of the columns, and it answers a question the body cannot: **when I change one technical parameter, what happens to the others?** Each pair of parameters gets a mark:
+
+<div class="sc-chips">
+  <span class="sc-chip green">+ · positive, the two support each other</span>
+  <span class="sc-chip amber">- · negative, the two trade off against each other</span>
+  <span class="sc-chip">0 · no interdependency</span>
+</div>
+
+The car door again. Reducing the energy needed to close the door is **positively** related to the energy needed to open it and to the peak closing force, so those improve together. But it is **negatively** related to door seal resistance and to road noise reduction, because a softer, less resistant seal is easier to close against and also lets in more water and more noise. Another classic pair from the same door: change the gear ratio of the window motor and the motor gets smaller but the window rises more slowly; strengthen the mechanism instead and the door gets heavier, harder to open, and less likely to stay open on a slope.
+
+For engineers this is often the most valuable room in the house, because it is where the unavoidable trade-offs become visible before anyone has cut metal. It also carries a blunt decision rule: if improving one parameter damages so many others that the balance is clearly negative, the team leaves that parameter alone and looks for a different route to the same customer requirement.
+
+## 9 · The basement: measurements, targets and the decision
+
+Underneath the columns the team writes the **objective measures**: the unit of measurement, our current value, and the measured value for each competitor's product. Then, from all of that, it sets a **target value** for each parameter in the redesigned product.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node soft">Read the right wall<span class="sub">where do we lose against rivals on a requirement customers weight heavily</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node soft">Read the body<span class="sub">which technical parameters actually drive that requirement</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node soft">Read the roof<span class="sub">what else moves if we push those parameters, and how badly</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Set the target value<span class="sub">one specific number per parameter, written in the basement</span></div>
+  </div>
+  <figcaption>The route through the house that produces a decision. Marketing, engineering and management make the call together; the house does not remove the hard choice, it just puts the evidence for it on one sheet.</figcaption>
+</div>
+
+The car-door decision runs exactly along that path. Our door measures 11 foot-pounds of closing energy against 9 and 9.5 for the two rival doors, so we are clearly the worst on a requirement customers weight at 7. The body says that requirement is driven by closing energy, peak closing force and seal resistance. The roof warns that pushing closing energy will drag the check forces, the seals and noise reduction along with it. Weighing cost and technical difficulty, the team judges the benefit worth it and sets a target of **7.5 foot-pounds**, which would make the door the easiest to close in the comparison.
+
+The opposite decision is just as instructive. For *no road noise* the requirement is weighted only 2, its link to the window's acoustic transmission is weak, reducing that transmission would make the window heavier, and the extra weight would hurt parameters serving requirements customers care about far more. On top of that, the right wall says we already beat both rivals on road noise. So the target is set **equal to the current value**: deliberately no change.
+
+<Aside type="note">
+**Set a point, not a range.** Targets should be written as a single customer-satisfaction value, for example 7.5 foot-pounds, rather than as a tolerance band such as somewhere between 6 and 8. A band quietly invites everyone to drift toward the cheapest end of it, and nothing then rewards a design that actually hits the value the customer would notice.
+
+Teams also often add extra rows in the basement: the **technical difficulty** of each change, an **imputed importance** for each parameter, and the **estimated cost**. Comparing a parameter's imputed importance against its cost is how cost-cutting decisions get made without blindly cutting something customers value.
+</Aside>
+
+## 10 · What the method buys you, and what it costs
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Pros <small>why teams put up with the effort</small></div>
+      <ul>
+        <li>Products <strong>meet customer needs better</strong>, because every engineering decision is traceable to a weighted requirement</li>
+        <li><strong>Conflicts and negative interdependencies</strong> between quality elements become transparent instead of surfacing late as expensive surprises</li>
+        <li><strong>Better communication between R&amp;D, production and marketing</strong> - the chart is a shared language and a shared argument</li>
+        <li><strong>Easy and understandable documentation</strong>: the reasoning behind the specification is visible on one sheet</li>
+        <li><strong>Resources concentrate</strong> on the customer requirements that matter most instead of being spread evenly</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Cons <small>and they are real</small></div>
+      <ul>
+        <li><strong>Much greater effort at the beginning</strong> of the development process, before anything visible exists</li>
+        <li><strong>High complexity</strong> of the QFD process itself, which needs facilitation and discipline to run</li>
+        <li><strong>Matrices and tables become unmanageable quickly</strong> - real applications have run to more than 100 customer requirements and more than 130 engineering characteristics</li>
+        <li><strong>No consideration of prices and costs</strong>: the house says what is worth doing for the customer, never what it is worth paying for</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The last con is the one with a named remedy. Because the House of Quality ignores money entirely, it is normally paired with target costing, which starts from the price the market will bear and works backwards to what each component is allowed to cost.</figcaption>
+</div>
+
+## Worked example
+
+A small house for an **electric toothbrush**, the product used in the class exercise. Five customer requirements with importance weights on the 1 to 10 scale, four technical parameters, and the direction each parameter should move.
+
+| Technical parameter | Unit | Direction of improvement |
+|---|---|---|
+| **A** Brush head oscillation frequency | movements per minute | increase |
+| **B** Pressure cut-off threshold | newtons | decrease |
+| **C** Battery capacity | milliamp hours | increase |
+| **D** Handle mass | grams | decrease |
+
+Now the interrelationship matrix, scored 5 for strong, 3 for medium, 1 for weak and 0 for none:
+
+| Customer requirement | Weight | A frequency | B pressure cut-off | C battery | D handle mass |
+|---|--:|:-:|:-:|:-:|:-:|
+| My mouth feels genuinely clean afterwards | 9 | 5 | 1 | 0 | 1 |
+| No pain or sensitivity while brushing | 8 | 3 | 5 | 0 | 1 |
+| I can easily manoeuvre it around my mouth | 7 | 0 | 0 | 1 | 5 |
+| I do not have to charge it often | 6 | 3 | 0 | 5 | 1 |
+| The brush is quiet | 4 | 3 | 0 | 0 | 1 |
+| **Weighted column total** | | **99** | **49** | **37** | **62** |
+
+Each total is simply every cell in the column multiplied by its row weight and summed. For A: 9 times 5, plus 8 times 3, plus 7 times 0, plus 6 times 3, plus 4 times 3, which gives 45 + 24 + 0 + 18 + 12 = 99.
+
+**The roof**, for two of the pairs:
+
+- **Positive, supporting.** Lowering the handle mass (D) and lowering the pressure cut-off threshold (B) pull in the same direction. A lighter handle makes it physically easier for the user to stay under a gentle pressure limit, so both changes serve the no-pain requirement.
+- **Negative, trade-off.** Raising the battery capacity (C) and lowering the handle mass (D) fight each other directly, because a bigger cell is a heavier cell. Pushing runtime up therefore costs manoeuvrability. A second trade-off sits between A and C: a higher oscillation frequency drains the battery faster, so it eats the very runtime the bigger cell was meant to buy.
+
+**Reading the house.** Oscillation frequency is far and away the most valuable parameter at 99, because it is the main driver of the highest-weighted requirement and contributes to two others as well; it gets the engineering budget and a demanding target value. Handle mass comes second at 62 and is doubly attractive, since the roof says a lighter handle also helps the pressure requirement, which is the rare case where one change buys two customer benefits. Battery capacity scores lowest at 37 and sits on the wrong side of a trade-off with the parameter above it, so chasing milliamp hours would cost more in manoeuvrability than it returns in satisfaction; the sensible move is to hold capacity roughly where it is and recover runtime through efficiency instead. The pressure cut-off threshold at 49 is worth setting properly but is not a battleground, because it serves essentially one requirement.
+
+If the right wall then showed that a rival already brushes at a much higher frequency, that would confirm the priority rather than change it: the highest-value parameter would also be the one where we are visibly behind.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Collect the customer requirements you already have.** Pull them out of the interviews, the customer journey pain points and the Kano list. Write each one in the customer's words, not in your own engineering paraphrase.
+
+2. **Sort them into a hierarchy of two or three levels.** Group the individual statements into bundles, and the bundles into a handful of primary needs. Aim for something you can still read on one page; a first house with three to six requirements is a far better learning object than one with sixty.
+
+3. **Weight them.** Either distribute percentages that total 100, or score each requirement from 1 to 10. Use conjoint results or survey data if you have them, and record where each weight came from so that it can be challenged later.
+
+4. **Add the competitive assessment on the right.** For each requirement, rate on a 1 to 5 scale how well your concept fulfils it and how well each serious rival does. Do it per segment if your segments disagree.
+
+5. **List the technical parameters across the top.** Measurable, in units, and something whose effect the customer can actually perceive. Mark the direction of improvement for each: increase, decrease or none. Check each one for hidden assumptions about the solution.
+
+6. **Fill the interrelationship matrix.** Argue every cell as a team and score it 5, 3, 1 or 0. Note a sign wherever a parameter works *against* a requirement. Then look for empty rows and empty columns and fix what they reveal.
+
+7. **Fill the roof.** For each pair of technical parameters mark plus, minus or zero. The minus cells deserve the longest discussion, because they are the trade-offs that will otherwise ambush you halfway through development.
+
+8. **Compute the weighted column totals** and rank the parameters. Treat the ranking as a prompt for discussion, not as an answer: a high-scoring parameter that the roof shows to be destructive may still lose to a lower-scoring one.
+
+9. **Set one specific target value per parameter** in the basement, using the competitor measurements as the reference point. Aim high where the requirement is weighted heavily and everyone is currently weak; deliberately hold steady where you already lead.
+
+10. **Take the money question elsewhere.** The house has said nothing about cost, so hand the target values on to a target-costing exercise before you freeze the specification.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Quality Function Deployment (QFD) | A structured method for translating customer requirements into technical requirements, run through a chain of linked planning matrices |
+| House of Quality | The first and best-known QFD matrix, shaped like a house, holding customer needs, technical parameters and the links between them |
+| Voice of the customer | The customer requirements down the left wall, kept in the customer's own wording |
+| Voice of the engineer | The technical parameters across the top, measurable and stated in units |
+| Hierarchy of needs | Customer requirements organised on two or three levels, from primary needs down to secondary and tertiary statements |
+| Relative importance | The weight attached to each customer requirement, as percentages totalling 100 or on a 1 to 10 scale |
+| Interrelationship matrix | The body of the house: how strongly each technical parameter affects each customer requirement, scored from 5 for strong down to 1 for weak |
+| Roof / correlation matrix | The triangle on top: whether two technical parameters support each other (plus) or trade off against each other (minus) |
+| Competitive assessment | The right wall: how well our product and each rival fulfil each customer requirement today |
+| Objective measures | The basement rows giving the unit, our current value and each competitor's measured value for every parameter |
+| Target value | The single number committed to for a technical parameter in the redesigned product, written as a point and not as a tolerance band |
+| Direction of improvement | The marker on each technical parameter saying whether better means increase, decrease or no change |
+| Linked houses | The chain in which the hows of one matrix become the whats of the next, from product to parts to processes to resources |
+| Solution neutrality | The aim of writing technical parameters that do not presuppose one particular technical solution, which a broad solution space makes hard to hold |
+| Target costing | The companion method that supplies what QFD leaves out, working from an achievable market price back to what each component may cost |
+
+## Test yourself
+
+1. State the aim of QFD in one sentence, and explain what makes QFD a chain rather than a single chart.
+2. Name the six rooms of the House of Quality and say what information belongs in each.
+3. Why is the weight of a car door a legitimate technical parameter while the thickness of the sheet metal is not, and where should the sheet-metal thickness go instead?
+4. **Weighted-priority calculation.** Three customer requirements carry the weights 9, 6 and 2. Technical parameter P relates to them with the scores 5, 3 and 1; technical parameter Q relates to them with 1, 5 and 5. Compute both weighted column totals, say which parameter should be prioritised, and name what would make you reconsider that answer.
+5. In the car-door example the team set an ambitious new target for closing energy but deliberately left the window's acoustic transmission unchanged. Give the reasoning behind each of the two decisions.
+6. List three pros and three cons of QFD, and name the method brought in to cover the biggest gap.
+
+<Aside type="note" title="Answers">
+1. The aim is to translate customer requirements into technical requirements, so that what gets engineered is driven by what customers actually want. It is a chain because QFD is a hierarchically structured analysis of several linked planning matrices: customer requirements produce technical parameters with target dimensions, those become the inputs of a parts matrix, whose outputs feed a production-process matrix, whose outputs feed a resources matrix.
+2. Left wall: customer requirements plus their relative importance. Ceiling: technical parameters with a direction of improvement. Body: the interrelationship matrix linking requirements to parameters. Roof: the correlation matrix of interdependencies among the technical parameters. Right wall: the competitive position on each customer requirement. Basement: the measurement of each technical parameter, our value, rivals' values and the target values.
+3. Door weight is directly perceived by the customer, so it belongs on the ceiling of this house. Sheet-metal thickness is a part characteristic the customer never perceives directly; it reaches the customer only by influencing door weight and similar parameters, so it belongs as a column in the next house down the chain, the parts deployment matrix.
+4. P scores 9 times 5 plus 6 times 3 plus 2 times 1 = 45 + 18 + 2 = **65**. Q scores 9 times 1 plus 6 times 5 plus 2 times 5 = 9 + 30 + 10 = **49**. P is the higher priority. It would be worth reconsidering if the roof showed that improving P damages several other parameters serving heavily weighted requirements, or if the right wall showed that we already lead the market on the requirement P mainly drives while we are far behind on the one Q drives.
+5. Closing energy: our door was the worst of the three measured, the requirement it serves carries a high weight, and the body showed it to be a strong driver of that requirement, so despite the negative roof entries the team judged the benefit worth the cost and set a demanding target of 7.5 foot-pounds. Acoustic transmission: the road-noise requirement is only lightly weighted, its link to the window is weak, reducing transmission would add weight and thereby harm parameters serving more important requirements, and the competitive assessment showed we were already ahead, so the target was left equal to the current value.
+6. Pros (any three): products meet customer needs better; conflicts and negative interdependencies become transparent; communication between R and D, production and marketing improves; the documentation is easy and understandable; resources concentrate on the most important customer requirements. Cons (any three): much greater effort at the start of development; high process complexity; matrices and tables quickly become unmanageable; no consideration of prices and costs. The gap on prices and costs is covered by **target costing**.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Aim of QFD:** translate **customer requirements into technical requirements**, so the engineering specification is driven by what customers actually want.
+- QFD is a **hierarchically structured analysis of several linked planning matrices**, where the outputs of one become the inputs of the next: customer requirements to technical parameters with target dimensions, then to characteristics of parts, then to production processes, then to resources.
+- The **House of Quality** is the first matrix. Its rooms: **left wall** = customer requirements plus relative importance (voice of the customer); **ceiling** = technical parameters with a direction of improvement (voice of the engineer); **body** = the interrelationship matrix; **roof** = interdependencies between technical parameters; **right wall** = competitive position on each requirement; **basement** = measurement of the parameters and the **target values**.
+- Requirements come from the earlier methods (interviews, observation, the customer journey, Kano, conjoint), are kept in the customer's own words, and are structured as a **hierarchy of two or three levels**. Each carries a weight, as percentages totalling 100 or on a 1 to 10 scale.
+- The **body** is scored from **5 for a strong link down to 1 for a weak one**, with a sign wherever the parameter works against the requirement. Car door: closing energy strongly serves *easy to close*, while door seal resistance touches three requirements at once and fights the closing one.
+- The **roof** marks each pair of technical parameters as **plus** (supporting) or **minus** (trade-off). Car door: closing energy is positive with opening energy and peak closing force, negative with seal resistance and road-noise reduction.
+- Decisions come from reading the right wall, then the body, then the roof, and then writing **one specific target value**, never a tolerance range. Push hard where everybody is weak and the weight is high; hold steady where you already lead.
+- Caveat: with a **broadly defined solution space** it is hard to write technical parameters that are independent of a specific technical solution, so **solution neutrality is not always easy to maintain**.
+- **Pros:** better fit to customer needs, transparency of conflicts and negative interdependencies, better communication between R and D, production and marketing, easy documentation, resources concentrated on the most important requirements. **Cons:** far greater effort at the start, high process complexity, matrices that become unmanageable, and **no consideration of prices and costs**, which is the cue for **target costing**.
+</Aside>
+
+*Next: [Competitor Analysis & Perceptual Maps →](/learnings/mba/innovation-and-new-business-proposal/10-competitor-analysis-and-perceptual-maps/) - who else is out there, and where you sit against them.*
