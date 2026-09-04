@@ -1,0 +1,871 @@
+---
+title: "Term Sheets"
+description: "Die Anatomie eines Venture-Term-Sheets Klausel für Klausel - warum Verträge unvollständig sind und wie contingent contracting und Milestones das auffangen, warum Investoren Convertible Preferred statt Common Stock nehmen, die Liquidation Preference in ihrer nicht partizipierenden, ihrer multiplen, ihrer partizipierenden und ihrer gedeckelten Form mit den vollständigen WorkHorse-Zahlen, Anti-Dilution als Full Ratchet gegenüber Weighted Average, Kontrollrechte, Founder Vesting und Cliff, Option Pools, Bezugsrechte, Right of First Refusal, Pay-to-Play, Redemption, Tag-Along und Drag-Along sowie der Grund, warum eine großzügige Bewertung durch die Terms wieder zunichtegemacht werden kann."
+sidebar:
+  label: "14 · Term Sheets"
+  order: 14
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Ein Term Sheet ist das Dokument, an dem ein Finanzierungsgespräch aufhört, ein Gespräch zu sein. Bis dahin haben alle über Vision, Traktion und die mögliche Größe des Marktes geredet. Das Term Sheet verwandelt all das in ein **Bündel vertraglicher Klauseln, die die Rechte und Pflichten sowohl des Gründers als auch des Investors regeln**, und sobald diese Klauseln vereinbart sind, werden sie zur Verhandlungsgrundlage für die endgültigen juristischen Dokumente: die **Satzung des Unternehmens (Corporate Charter)**, das **Investor Rights Agreement und das Purchase Agreement** sowie die **Anstellungsverträge der Gründer**. Die Vorlesung ist bei der praktischen Konsequenz unmissverständlich: Wer ein vorgelegtes Term Sheet in die Hand bekommt, sollte sich auf **erfahrene Juristen** stützen, um es zu deuten, denn die Klauseln greifen auf eine Weise ineinander, die man beim Lesen einer einzelnen Klausel nicht erkennt.
+
+Der Grund, warum dieses Dokument eine ganze Sitzung verdient, ist folgender: Die Schlagzeilenzahl darin, die Bewertung, ist genau der Term, auf den alle starren, und zugleich derjenige, der am wenigsten entscheidet. Ein großer Teil der Ökonomie steckt versteckt in Klauseln darüber, was passiert, **falls** die Dinge einen bestimmten Verlauf nehmen: falls der Exit klein ausfällt, falls die nächste Runde niedriger bepreist wird, falls ein Gründer geht, falls jemand früh verkaufen will. Diese bedingten Klauseln existieren, weil niemand jede mögliche Zukunft aufschreiben kann, und genau dieses formale Problem steht am Anfang der Sitzung.
+
+Dieses Kapitel folgt dem Weg der Vorlesung. Zuerst die Grundlagen: Was ein Term Sheet ist, welche verschiedenen Rollen es spielt und warum Verträge zwangsläufig unvollständig sind, sodass Klauseln über Milestones bedingt gemacht werden müssen. Danach die vier Bereiche, die ein Term Sheet regelt: Zahlungsstromrechte, Kontrollrechte, Vergütung und Anstellung der Gründer sowie die übrigen Rechte rund um Anti-Dilution, künftige Finanzierungsrunden und Liquidität. An jede Klausel werden dieselben drei Fragen gestellt: Was tut sie, wen begünstigt sie, und wo liegt die Spannung zwischen den beiden Seiten.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Ein Term Sheet ist eine Maschine, die **unsicheres künftiges Geld und unsichere künftige Entscheidungen** zwischen zwei Parteien aufteilt, die die Zukunft nicht sehen können. Die Bewertung ist der sichtbarste Term und derjenige, den ein Gründer am leichtesten versteht, aber die Vorlesung zieht selbst den Schluss, dass **Zahlungsstromrechte eine großzügige Bewertung stillschweigend wieder zunichtemachen können**. Lies die Klauseln, nicht die Schlagzeilenzahl.
+</Aside>
+
+## 1 · Was ein Term Sheet ist und woraus es wird
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Term Sheet<span class="sub">das Bündel vertraglicher Klauseln, die Rechte und Pflichten von Gründer und Investor regeln</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Corporate Charter<span class="sub">die Verfassung des Unternehmens, in der Aktiengattungen und Stimmrechte geregelt sind</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Investor Rights Agreement &amp; Purchase Agreement<span class="sub">was der Investor kauft und welche Schutzrechte er dabei erhält</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Anstellungsverträge der Gründer<span class="sub">Gründer werden Angestellte, mit Gehalt, Vesting, IP-Übertragung und Wettbewerbsverbot</span></div>
+  </div>
+  <figcaption>Das Term Sheet ist selbst nicht der Vertrag. Es ist die Verhandlungsgrundlage für drei Dokumente, die es sind, und genau deshalb besteht die Vorlesung darauf, einen Vorschlag vor der Unterschrift von erfahrenen Juristen deuten zu lassen.</figcaption>
+</div>
+
+## 2 · Die verschiedenen Rollen eines Term Sheets
+
+Es ist verlockend, ein Term Sheet als Preisschild mit juristischer Verzierung zu lesen. Die Vorlesung nennt fünf wirklich verschiedene Aufgaben, die es gleichzeitig erfüllt, und jede davon erklärt eine andere Klauselfamilie.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Regeln<span class="n">Rechte, Pflichten, Erträge</span></div>
+    <div class="sc-node violet">Es legt fest, worauf jede Partei Anspruch hat, was jede Partei schuldet und wie die Erträge aufgeteilt werden, wenn endlich Geld fließt<span class="sub">das ist die Mechanik der Zahlungsstrom- und Kontrollrechte</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Anreize setzen<span class="n">für alle Beteiligten, Mitarbeitende eingeschlossen</span></div>
+    <div class="sc-node amber">Es entscheidet, wer wofür härter arbeitet, und die Anreizwirkung reicht über die beiden Unterzeichner hinaus bis zu den Mitarbeitenden, die erst später eingestellt werden<span class="sub">Vesting, Option Pools und Beteiligungsobergrenzen existieren alle aus diesem Grund</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Erwartungen klären<span class="n">das Gespräch erzwingen</span></div>
+    <div class="sc-node green">Die Verhandlung bringt beide Seiten dazu auszusprechen, was sie tatsächlich erwarten, und oft ist das der erste Moment, in dem die beiden Prognosen nebeneinandergelegt werden<span class="sub">eine hier entdeckte Meinungsverschiedenheit ist weit billiger als eine beim Exit entdeckte</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Risiko verteilen<span class="n">zwischen den beiden Parteien</span></div>
+    <div class="sc-node slate">Es entscheidet, wer das Abwärtsrisiko trägt und wer die Aufwärtschance, und genau dafür existiert Preferred Stock<span class="sub">Risiko zu verschieben ist nicht umsonst, es wird an anderer Stelle im Sheet bezahlt</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Externe binden<span class="n">Mitarbeitende und künftige Investoren</span></div>
+    <div class="sc-node soft">Es legt die Rechte und Pflichten der Parteien gegenüber Personen fest, die noch gar nicht im Raum sind, nämlich Mitarbeitende und künftige Investoren<span class="sub">Anti-Dilution, Bezugsrechte und Protective Provisions beschränken alle eine Runde, die noch nicht stattgefunden hat</span></div>
+  </div>
+</div>
+
+Die letzte Rolle wird von Anfängern unterschätzt. Eine heute unterschriebene Klausel kann einschränken, was ein völlig anderer Investor in drei Jahren tun darf, und deshalb summieren sich Term Sheets, statt sich zurückzusetzen.
+
+## 3 · Contingent Contracting: Verträge sind unvollständig
+
+Term Sheets betreffen **hochgradig unsichere Vorhaben**, und diese Unsicherheit verschärft ein Problem, das ohnehin in jedem Vertrag steckt: Es ist naturgemäß unmöglich, alle möglichen künftigen Ereignisse und Situationen abzudecken. Ökonomen drücken das so aus, dass Verträge **unvollständig** sind.
+
+Die Antwort darauf heißt **contingent contracting** (bedingtes Kontrahieren), bei dem eine Klausel nur in bestimmten Situationen gilt statt immer. Der Vertrag hört auf, die Zukunft beschreiben zu wollen, und beschreibt stattdessen eine Menge von Auslösern mit jeweils einer eigenen Regel.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Das Problem</span>
+    <code>uncertain venture + impossibility of listing all futures = incomplete contract</code>
+  </div>
+  <div>
+    <span class="name">Die Lösung</span>
+    <code>contingent contracting: clause C applies only in situation S</code>
+  </div>
+</div>
+
+Die Nobelpreisarbeit von 2016 zu unvollständigen Verträgen schärft das zu einer Unterscheidung, die die Vorlesung ausdrücklich zieht, und die man sich einprägen sollte, weil sie erklärt, warum so viele Venture-Klauseln davon handeln, **wer entscheidet**, statt davon, **was passiert**.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Klauseln über nachprüfbare Handlungen <small>brauchen einen Milestone</small></div>
+      <ul>
+        <li>Sie knüpfen ein Ergebnis an etwas, das beide Seiten beobachten und bestätigen können</li>
+        <li>Sie setzen die Existenz <strong>präziser Umstände voraus, die Information offenlegen</strong></li>
+        <li>Nur dort praktikabel, wo Leistung wirklich messbar ist</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Klauseln, die Entscheidungsrechte zuweisen <small>benennen nur den Entscheider</small></div>
+      <ul>
+        <li>Sie beschreiben das Ergebnis überhaupt nicht, sie bestimmen nur, <strong>wer das Recht zu entscheiden hat</strong></li>
+        <li>Gebaut für Fälle, in denen eine Überprüfung nicht möglich ist</li>
+        <li>Und das ist der Normalfall bei Ventures, wo Information <strong>undurchsichtig und schwer zu deuten</strong> ist</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Wenn man nicht aufschreiben kann, was passieren soll, schreibt man auf, wer wählen darf. Diese eine Idee erklärt Board-Sitze, Vetorechte und Protective Provisions.</figcaption>
+</div>
+
+## 4 · Milestones: wie Bedingungen niedergeschrieben werden
+
+Term Sheets definieren Bedingungen über **Milestones**, die markante Ereignisse benennen, welche offenlegen, ob der Fortschritt des Unternehmens den Erwartungen entspricht oder nicht. Die durchgerechnete Klausel der Vorlesung macht den Mechanismus greifbar: Der Board of Directors besteht aus fünf Mitgliedern, und der Investor nominiert zwei, aber **wenn das Unternehmen innerhalb von 12 Monaten nach dem Closing keine Umsätze erzielt, nominiert der Investor zwei zusätzliche Direktoren**. Niemand musste die Zukunft vorhersagen. Man musste sich nur auf einen Auslöser einigen und darauf, was sich verschiebt, wenn er greift. Man beachte außerdem: Was sich hier verschiebt, ist ein **Entscheidungsrecht**, nicht Geld.
+
+| Milestone-Dimension | Typische Beispiele aus der Vorlesung |
+|---|---|
+| **Finanziell** | Umsatz, EBIT, operativer Cashflow, eine Finanzkennzahl |
+| **Operativ** | Regulatorische Zulassung, ein Liefervertrag |
+| **Führungsbezogen** | Einstellung eines CxO, Bestellung eines unabhängigen Direktors |
+| **Technisch** | Ein funktionierender Prototyp, der Erwerb einer Lizenz |
+| **Kommerziell** | Umsatz, Vertragsverlängerungen von Kunden, eine Absichtserklärung eines Großhändlers |
+
+Milestones haben vier ökonomische Funktionen und drei echte Nachteile, die die Vorlesung sorgfältig nicht verschweigt.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Was Milestones für einen tun</div>
+      <ul>
+        <li>Sie definieren <strong>Leistungsziele</strong>, die beide Seiten abgesegnet haben</li>
+        <li>Sie gleichen die Erwartungen von Gründern und Investoren an</li>
+        <li>Sie liefern einen <strong>Ankerpunkt für Nachverhandlungen</strong>, wenn sich die Lage ändert</li>
+        <li>Sie erleichtern die Verhandlung der Bewertung, weil diese an Leistungsziele statt an Meinungen geknüpft wird</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Was sie einen kosten</div>
+      <ul>
+        <li>Leistung zu definieren kann <strong>schwer fassbar</strong> sein: Wann funktioniert ein Prototyp wirklich?</li>
+        <li>Ihnen hinterherzujagen kann zu <strong>Under-Pivoting</strong> führen, etwa das Produkt auf den Markt zu hetzen, statt die Richtung zu wechseln</li>
+        <li>Ihnen hinterherzujagen kann zu <strong>Kurzfristdenken</strong> führen, etwa das Geschäft zu verbiegen, um ein Umsatz- oder Produktionsziel zu treffen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Ein Milestone ist eine Messung, und jede Messung wird zu einem Ziel, auf das Menschen hin optimieren. Das ist nützlich und gefährlich zugleich.</figcaption>
+</div>
+
+## 5 · Die vier Bereiche, die ein Term Sheet regelt
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Zahlungsstromrechte</span>
+  <span class="sc-chip amber">Kontrollrechte</span>
+  <span class="sc-chip green">Vergütung und Anstellung von Gründern und Schlüsselmitarbeitenden</span>
+  <span class="sc-chip">Übrige Rechte: Anti-Dilution, künftige Finanzierung, Liquidität</span>
+</div>
+
+Alles Weitere sitzt in einer dieser vier Schubladen. Wenn man ein echtes Term Sheet in die Hand bekommt, ist das Sortieren der Klauseln in diese vier Stapel der schnellste Weg zu erkennen, was einem tatsächlich abverlangt wird.
+
+## 6 · Zahlungsstromrechte: warum Preferred Stock und nicht Common
+
+Zahlungsstromrechte werden zwischen Gründer und Investoren mit einem erklärten Ziel verteilt, nämlich den **Erwartungswert des Ventures zu maximieren**. Die Vorlesung sagt, das geschehe auf zwei Wegen gleichzeitig: den Investoren **Abwärtsschutz** geben und **beiden Parteien starke Anreize für hohe Leistung** geben. Diese beiden Ziele ziehen gegeneinander, und das Instrument, das sie versöhnt, ist Convertible Preferred Stock.
+
+Investoren erhalten daher **wandelbare (convertible)** Anteile statt Common Stock. Ein wandelbarer Anteil gibt seinem Inhaber das Recht, zwischen zwei Auszahlungen zu wählen:
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Wenn das Unternehmen scheitert <small>der fremdkapitalähnliche Zweig</small></div>
+      <ul>
+        <li>Der Inhaber nimmt eine <strong>fremdkapitalähnliche Auszahlung</strong>, also einen festen Anspruch, der vor den Stammaktionären bedient wird</li>
+        <li>Das ist der <strong>Abwärtsschutz</strong></li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Wenn das Unternehmen Erfolg hat <small>der Eigenkapitalzweig</small></div>
+      <ul>
+        <li>Der Inhaber <strong>wandelt in Common Equity</strong> und nimmt einen normalen Eigentumsanteil</li>
+        <li>Das ist die <strong>Gewinnbeteiligung an der Aufwärtschance</strong></li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Ein Wertpapier, zwei mögliche Auszahlungen, und der Investor wählt im Moment des Exits die jeweils größere. Der Gründer hält schlichten Common Stock und bekommt, was übrig bleibt.</figcaption>
+</div>
+
+Wandelbare Anteile sind **immer Preferred**, das heißt, sie tragen jährliche Vorzugskonditionen in Form einer Dividende, die gestundet wird und über die Zeit aufläuft, statt bar ausgezahlt zu werden. Der Wert dieser Vorzugskonditionen ist das, was dem Investor zusteht, bevor irgendjemand sonst einen Cent sieht.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Preferred Terms, einfache Verzinsung</span>
+    <code>PT = I + DIV = I + I*D*T</code>
+  </div>
+  <div>
+    <span class="name">Dabei gilt</span>
+    <code>I = investment, D = stated yield, T = time to exit</code>
+  </div>
+  <div>
+    <span class="name">Preferred Terms, mit Zinseszins</span>
+    <code>PT = I + I*(D)^T</code>
+  </div>
+</div>
+
+Der Investor wandelt beim Exit dann, wenn der Zahlungsstrom aus dem Halten von Stammaktien die Preferred Terms übersteigen würde. Schreibt man `Finv` für den Eigentumsanteil des Investors und `X` für den Exit-Wert, so erfolgt die Wandlung, wenn `Finv*X` die `PT` schlägt, und das Umstellen liefert die **Conversion Threshold** (Wandlungsschwelle).
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Wandeln, wenn</span>
+    <code>Finv * X  &gt;  PT</code>
+  </div>
+  <div>
+    <span class="name">Wandlungsschwelle</span>
+    <code>CT = PT / Finv</code>
+  </div>
+</div>
+
+Daraus ergibt sich die Auszahlung in drei Bereichen, die wichtigste einzelne Tabelle der ganzen Sitzung.
+
+| Exit-Wert | Bedingung | Zahlungsstrom an die Investoren | Zahlungsstrom an die Gründer |
+|---|---|---|---|
+| **Groß** | X über CT | `Finv * X` | `(1 - Finv) * X` |
+| **Mittel** | PT unter X unter CT | `PT` | `X - PT` |
+| **Klein** | X unter PT | `X` | `0` |
+
+Die letzte Zeile langsam lesen, denn es ist die Zeile, die Gründer vergessen. Unterhalb der Preferred Terms nimmt der Investor **alles** und die Gründer bekommen **nichts**. Gegen den Exit-Wert aufgetragen ist die Auszahlung des Investors die 45-Grad-Linie bis `X = PT`, dann flach bei `PT` bis `X = CT`, danach die ansteigende Linie `Finv*X`. Die Auszahlung des Gründers ist bis `PT` flach null und steigt erst danach.
+
+### Das WorkHorse-Beispiel, non-participating
+
+| Größe | Notation | Betrag |
+|---|---|--:|
+| Stammaktien | Sent | 1,250,000 |
+| Vorzugsanteile | Sinv | 416,667 |
+| Anteil des Investors | Finv | 25% |
+| Preis je Anteil | P | $4.80 |
+| Investition | I | $2,000,000 |
+| Zeit bis zum Exit | T | 1 |
+| Dividendensatz | DR | 8% |
+| Dividenden insgesamt | TD | $160,000 |
+| Preferred Terms | PT | $2,160,000 |
+| Unterer Umschaltpunkt | X = PT | $2,160,000 |
+| Oberer Umschaltpunkt | X = PT/Finv | $8,640,000 |
+
+| Exit-Wert ($M) | Preferred Terms ($M) | Eigenkapitalwert bei Wandlung ($M) | Wandlung attraktiv? | Zahlung an Preferred ($M) | Zahlung an Common ($M) | Anteilsquote der Preferred |
+|--:|--:|--:|---|--:|--:|--:|
+| 1 | 1 | 0.25 | Nein | 1 | 0 | 100% |
+| 3 | 2.16 | 0.75 | Nein | 2.16 | 0.84 | 72% |
+| 8 | 2.16 | 2 | Nein | 2.16 | 5.84 | 27% |
+| 8.64 | 2.16 | 2.16 | Gleich | 2.16 | 6.48 | 25% |
+| 9 | 2.16 | 2.25 | Ja | 2.25 | 6.75 | 25% |
+| 10 | 2.16 | 2.5 | Ja | 2.5 | 7.5 | 25% |
+
+Zwei Dinge fallen auf. In der ersten Zeile beträgt der Exit nur $1M, weniger als die Preferred Terms, sodass der Investor die vollen $2.16M nicht einsammeln kann und schlicht die gesamte $1M nimmt, weshalb die Anteilsquote dort **100 Prozent** lautet. Und bei einem Exit von $8M kassiert ein Investor, dem nominell ein Viertel des Unternehmens gehört, tatsächlich **27 Prozent** des Erlöses, weil die Vorzugsstellung immer noch mehr wert ist als die Anteile.
+
+## 7 · Liquidation Preference: Multiples, Participation und Caps
+
+Das schlichte Convertible Preferred von oben enthält bereits eine **1x Liquidation Preference**: Der Investor bekommt sein Kapital vor den Stammaktionären zurück. Drei Modifikationen machen die Sache Schritt für Schritt investorenfreundlicher.
+
+**Multiple Liquidation Preference.** Das Convertible Preferred kann einen Multiplikator hinzufügen, sodass der Investor sein Kapital mehrfach zurückerhält, bevor irgendjemand sonst bezahlt wird.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Preferred Terms mit Multiple M</span>
+    <code>PT = M*I + DIV</code>
+  </div>
+  <div>
+    <span class="name">Die Wandlungsschwelle wandert nach rechts</span>
+    <code>CTm = PT / Finv = (M*I + DIV) / Finv  &gt;  CT</code>
+  </div>
+</div>
+
+Der Multiplikator tut also zweierlei zugleich: Er hebt den flachen Teil der Investorenauszahlung an, und er schiebt den Punkt, an dem der Investor zu wandeln bereit ist, weiter hinaus, sodass die tote Zone der Gründer breiter wird.
+
+**Participating Preferred, der Double Dip.** Participating Preferred Terms verbinden Fremd- und Eigenkapitalmerkmale, indem sie eine Liquidation Preference, unter Umständen eine multiple, zur Vorzugsdividende hinzufügen. Der Investor nimmt dann die Preferred Terms **und zusätzlich** einen Anteil am Common Equity danach, statt zwischen beidem zu wählen.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Auszahlung bei Participating Preferred</span>
+    <code>CFinv = PT + (X - PT) * Finv</code>
+  </div>
+</div>
+
+| Exit-Wert | Bedingung | Zahlungsstrom an die Investoren | Zahlungsstrom an die Gründer |
+|---|---|---|---|
+| **Größer** | X über PT | `PT + Finv*(X - PT)` | `(1 - Finv)*(X - PT)` |
+| **Klein** | X unter PT | `X` | `0` |
+
+**Participating Preferred mit einem Cap.** Weil ein ungedeckelter Double Dip bei jedem Exit-Wert in die Aufwärtschance der Gründer hineinfrisst, kann eine **Obergrenze (Cap)** auf die Participation gelegt werden, und zwar gezielt, um die Anreize der Gründer zu erhalten. Die Participation entfällt, sobald der Exit `Xcap` übersteigt, und oberhalb des Caps zieht der Investor es irgendwann vor, die Vorzugsstellung ganz aufzugeben und in schlichten Common Stock zu wandeln.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Investorenauszahlung, sobald der Cap greift</span>
+    <code>CFinv = PT + (Xcap - PT) * Finv</code>
+  </div>
+  <div>
+    <span class="name">Exit, ab dem die vollständige Wandlung in Common besser ist</span>
+    <code>Xcom = Xcap + PT*(1 - Finv) / Finv</code>
+  </div>
+</div>
+
+Die Vorlesung fügt eine praktische Anmerkung hinzu: Der Sprung am Cap wird üblicherweise **geglättet**, weil eine scharfe Stufe im Moment des Exits perverse Anreize erzeugt, bei denen eine Seite lieber etwas billiger als etwas teurer verkaufen würde.
+
+### Das WorkHorse-Beispiel, participating mit Cap
+
+Dasselbe Unternehmen wie zuvor, mit einem Cap von `Xcap = $20,000,000`, was eine Schwelle zur vollständigen Wandlung von `Xcom = 20 + 2.16*0.75/0.25 = $26,480,000` ergibt.
+
+| Exit ($M) | PT ($M) | X - PT ($M) | Finv*(X-PT) ($M) | Zahlungsstrom Investor ($M) | Zahlung an Common ($M) | Anteilsquote der Preferred | Was gerade passiert |
+|--:|--:|--:|--:|--:|--:|--:|---|
+| 1 | 1 | 0 | 0 | 1 | 0 | 100% | Nur PT |
+| 3 | 2.16 | 0.84 | 0.21 | 2.37 | 0.63 | 79% | Double Dip |
+| 5 | 2.16 | 2.84 | 0.71 | 2.87 | 2.13 | 57% | Double Dip |
+| 10 | 2.16 | 7.84 | 1.96 | 4.12 | 5.88 | 41% | Double Dip |
+| 20 | 2.16 | 17.84 | 4.46 | 6.62 | 13.38 | 33% | Am Cap |
+| 25 | 2.16 | 17.84 | 4.46 | 6.62 | 18.38 | 26% | Cap greift |
+| 30 | 0 | 30 | 7.5 | 7.5 | 22.5 | 25% | In Common gewandelt |
+
+Man vergleiche das mit der Tabelle für non-participating. Bei einem Exit von $10M nimmt der nicht partizipierende Investor $2.5M; der partizipierende Investor mit denselben 25 Prozent nimmt **$4.12M**. Der gesamte Unterschied entsteht durch ein einziges Wort in der Klausel.
+
+## 8 · Warum überhaupt Vorzugspapiere
+
+Die Vorlesung nennt drei Begründungen, und die dritte ist die wirklich überraschende.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">1. Anreize für Gründer <small>mit Bedarf an Balance</small></div>
+    <ul>
+      <li>Weil der Gründer den Residualanspruch hält, wird er erst bezahlt, wenn das Unternehmen die Vorzugsstellung überspringt, was seine Anstrengung auf die Aufwärtschance konzentriert</li>
+      <li>Der Zusatz in Klammern ist wichtig: zu viel Vorzugsstellung, und der Anteil des Gründers wird in den meisten Zuständen der Welt wertlos, womit genau der Anreiz stirbt, den sie schaffen sollte</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">2. Screening <small>unter Informationsasymmetrie</small></div>
+    <ul>
+      <li>Der Gründer weiß mehr über das Venture als der Investor</li>
+      <li>Ein Term Sheet mit Vorzugsstellung lässt ein schwaches Venture für seinen eigenen Gründer unattraktiv aussehen, sodass schwächere Projekte sich <strong>selbst aussortieren</strong>, statt entdeckt werden zu müssen</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">3. Angleichung <small>der Erwartungen</small></div>
+    <ul>
+      <li>Eine schwere Vorzugsstellung zu akzeptieren ist eine Aussage darüber, dass man einen großen Exit erwartet</li>
+      <li>Die Verhandlung darüber zwingt die beiden Prognosen ans Licht</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Der Mechanismus hinter dem Screening</div>
+    <ul>
+      <li>Zwei Term Sheets anbieten, eines als Participating Preferred und eines als schlichtes Common, so bepreist, dass ein echtes Venture das Preferred-Angebot bevorzugt</li>
+      <li>Welches Sheet ein Gründer wählt, ist selbst eine Information darüber, was er privat glaubt</li>
+    </ul>
+  </div>
+</div>
+
+### Die Zahlen zur Selbstselektion
+
+Zwei Ventures **behaupten** beide einen Exit-Wert von 100. Der wahre Exit-Wert beträgt 100 für das echte und nur 60 für das unechte. Der Investor bietet dieselben 20 entweder als Participating Preferred oder als Common an, und die beiden Angebote sind bewusst unterschiedlich bepreist. Alle Werte in Millionen Euro.
+
+| Position | Angebot Participating Preferred | | Angebot Common |
+|---|--:|:-:|--:|
+| Investition | 20 | = | 20 |
+| Anteil des Investors | 30% | liegt unter | 60% |
+| Post-Money-Bewertung | 66.67 | liegt über | 33.33 |
+| Dividende, ohne Zinseszins | 10% | liegt über | 0.00 |
+| Zeit bis zum Exit | 5 | = | 5 |
+| Preferred Terms | 30 | liegt über | 0 |
+| Wert für den Investor beim **echten** Venture | 51 | liegt unter | 60 |
+| Wert für den Gründer beim **echten** Venture | 49 | liegt über | 40 |
+| Wert für den Investor beim **unechten** Venture | 39 | liegt über | 36 |
+| Wert für den Gründer beim **unechten** Venture | 21 | liegt unter | 24 |
+| Naiver Erwartungswert für Investoren | 45 | liegt unter | 48 |
+| Erwartungswert für Investoren **mit Selbstselektion** | 51 | liegt über | 36 |
+
+Man folge der Logik in der Reihenfolge, in der die Tabelle sie aufbaut. Die Preferred Terms betragen `20 + 20*0.10*5 = 30`. Ein Gründer mit einem **echten** Venture bevorzugt das Preferred-Sheet, 49 gegen 40, weil die hohe Post-Money-Bewertung von 66.67 ihm ein größeres Stück lässt. Ein Gründer mit einem **unechten** Venture bevorzugt das Common-Sheet, 24 gegen 21, weil sein Exit zu klein ist, um die Vorzugsstellung gewinnbringend zu überspringen. Die Sheets sortieren also die Gründer. Die letzten beiden Zeilen sind die Pointe: naiv beurteilt, ohne zu berücksichtigen, wer was annimmt, sieht das Common-Sheet für den Investor besser aus, 48 gegen 45. Sobald die Selbstselektion wirken darf, verdient das Preferred-Sheet **51**, und das Common-Sheet zieht nur die Unechten an und verdient **36**.
+
+## 9 · Vergütung, Anstellung und Vesting der Gründer
+
+Mit der Finanzierung **werden Gründer zu Angestellten**. Das ist eine größere Veränderung, als es klingt, und die Vorlesung nennt drei Konsequenzen der Anstellungsverträge der Gründer.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Sie können gefeuert werden<span class="sub">die Vorlesung nennt Steve Jobs und Travis Kalanick</span></div>
+    <div class="sc-node violet">Sie unterliegen Wettbewerbsverboten<span class="sub">sie können dasselbe Geschäft nicht einfach nebenan neu starten</span></div>
+    <div class="sc-node green">Sie übertragen ihr geistiges Eigentum auf das Unternehmen<span class="sub">die Erfindung ist kein persönliches Eigentum mehr</span></div>
+  </div>
+  <figcaption>Die Unterschrift unter die Runde verwandelt einen Gründer von einem Eigentümer, der dort zufällig arbeitet, in einen Angestellten, der zufällig Anteile hält.</figcaption>
+</div>
+
+Die Vergütung der Gründer kann ein **Gehalt unter Marktniveau**, einen **Leistungsbonus** und **Stock Options in späteren Phasen** umfassen, um die Anreize wiederherzustellen, sobald der ursprüngliche Anteil verwässert ist. Zwei Leitprinzipien ziehen sich hindurch: **Vergütung so weit wie möglich aufschieben, um Liquidität zu sparen**, und **Anreize für langfristige Wertschöpfung setzen**.
+
+Weil der größte Teil der Gründervergütung aus dem künftigen Verkauf von Common Stock stammt, unterliegt dieser Stock dem **Vesting**, das heißt, er muss über die Zeit verdient werden, statt vom ersten Tag an vollständig zu gehören. Zwei Kriterien werden verwendet:
+
+- **Time Vesting** - linear, mit oder ohne **Cliff** und gegebenenfalls mit **Acceleration**.
+- **Performance Vesting** - typischerweise beschleunigt bei einem Börsengang oder einer Übernahme.
+
+Vesting geht **im Fall einer Kündigung aus wichtigem Grund verloren**, und diese Sanktion gibt der ganzen Konstruktion ihre Schärfe.
+
+### Das Vesting-Beispiel, und was ein Cliff wirklich bewirkt
+
+Einem Gründer werden **60 Prozent** Eigentum zugeteilt, mit einer **Vesting-Rate von 6 Prozent pro Quartal** und einem **Cliff von einem Jahr**.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Vesting je Quartal</span>
+    <code>6% of the company per quarter, out of a 60% allotment</code>
+  </div>
+  <div>
+    <span class="name">Zeit bis zum vollständigen Vesting</span>
+    <code>60% / 6% per quarter = 10 quarters</code>
+  </div>
+  <div>
+    <span class="name">Der Cliff</span>
+    <code>after 9 months vested = 0%, after 12 months vested = 4 * 6% = 24%</code>
+  </div>
+</div>
+
+Der Cliff ist der Teil, der Leute überrascht. Vesting setzt ein volles Jahr Anstellung voraus, bevor es überhaupt zu greifen beginnt, sodass ein Gründer, der nach neun Monaten geht, mit **überhaupt nichts** hinausspaziert, während ein Gründer, der drei Monate länger bleibt, direkt auf 24 Prozent springt. Die Klausel ist mit Absicht unnachgiebig: Sie ist eine Vorrichtung gegen Touristen, gebaut damit ein Gründer, der es nie wirklich ernst meinte, nicht für weniger als ein Jahr Arbeit ein Viertel des Unternehmens einsammeln kann.
+
+## 10 · Der Option Pool für Mitarbeitende
+
+Stock Options stammen aus einem **Option Pool**, der typischerweise bei der ersten Finanzierungsrunde, der Series A, aufgesetzt und bei Bedarf wieder aufgefüllt wird.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Poolgröße: 10 bis 20 Prozent der voll verwässerten Anteilsbasis</span>
+  <span class="sc-chip violet">Verbrauch: viele Unternehmen verwenden 2 bis 5 Prozent pro Jahr</span>
+  <span class="sc-chip green">Hängt davon ab, welche Art von Talent angeworben wird</span>
+</div>
+
+Optionen unterliegen selbst dem **Vesting**, es sei denn, sie stammen aus einem Einstellungsbonus oder einem Jahresbonus. Drei weitere Details aus der Vorlesung:
+
+- Sie haben einen **Ausübungspreis (Strike Price)**, oft sehr klein oder an den Preis der letzten Runde gekoppelt.
+- Die **Ausübung** kann ein kurzfristiges Darlehen des Unternehmens erfordern, weil ein Mitarbeitender womöglich nicht das Geld hat, um Anteile zu kaufen, die er noch nicht verkaufen kann.
+- Daher die Betonung darauf, **Mitarbeitenden Liquidität zu verschaffen**: Eine Option, die sich nie zu Geld machen lässt, ist keine echte Vergütung.
+
+## 11 · Kontrollrechte
+
+Die Satzung und die Geschäftsordnung des Unternehmens sehen drei Haupttypen von Kontrollrechten vor, und sie sind nach Stärke geordnet und keine Alternativen zueinander.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Stimmrechte der Anteilseigner<span class="n">die Grundschicht</span></div>
+    <div class="sc-node soft">Kontrolle proportional zu den gehaltenen Anteilen, ausgeübt in der Gesellschafterversammlung<span class="sub">grob, und nur so stark wie der eigene Prozentsatz</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Board of Directors<span class="n">wo Entscheidungen tatsächlich fallen</span></div>
+    <div class="sc-node amber">Die Zusammensetzung des Boards wird Sitz für Sitz verhandelt, und Sitze können selbst von Milestones abhängig gemacht werden<span class="sub">man erinnere sich an die Klausel, bei der ausbleibende Umsätze in 12 Monaten dem Investor zwei weitere Sitze verschaffen</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Vertragliche Rechte<span class="n">die stärkste Schicht</span></div>
+    <div class="sc-node violet">Sie können <strong>sowohl Stimm- als auch Board-Rechte überlagern</strong>, kommen als Vetorechte oder als Zustimmungsrechte und sind zeitlich befristet; typische Gegenstände sind der Verkauf des Unternehmens und die Bestellung des CEO<span class="sub">hier sind die Protective Provisions zu Hause</span></div>
+  </div>
+</div>
+
+Die Unterscheidung zwischen **Veto** und **Zustimmungsrecht** lohnt sich zu behalten. Ein Vetorecht erlaubt dem Investor, etwas zu blockieren; ein Zustimmungsrecht verlangt die positive Zustimmung des Investors, bevor etwas geschehen kann. Ein Investor mit einer kleinen Minderheitsbeteiligung kann über ein vertragliches Recht, das in keiner Beteiligungsquote auftaucht, ein entscheidendes Wort beim Verkauf des Unternehmens haben.
+
+## 12 · Klauseln, die in künftige Finanzierungsrunden hineingreifen
+
+Term Sheets setzen in jeder Runde Regeln, die **künftige** Runden und **künftige** Investoren betreffen. Die Vorlesung gruppiert hier fünf Klauseln.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Protective Provisions</span>
+  <span class="sc-chip amber">Anti-Dilution</span>
+  <span class="sc-chip green">Bezugsrechte</span>
+  <span class="sc-chip">Right of First Refusal</span>
+  <span class="sc-chip">Pay-to-Play</span>
+</div>
+
+**Protective Provisions** sind die oben beschriebenen vertraglichen Rechte, gezielt auf künftige Finanzierung gerichtet: Sie beeinflussen die Ausgestaltung künftiger Finanzierungsrunden, sodass ein später hinzukommender neuer Investor nicht nur mit dem Unternehmen, sondern auch mit dem alten Term Sheet verhandeln muss.
+
+### Anti-Dilution
+
+Anti-Dilution schützt Investoren im Fall einer **Down Round**, definiert als eine Runde, in der der Anteilspreis unter den der vorherigen Runde fällt. Eine **Flat Round** ist eine Runde, in der der Preis nicht steigt. Die Klausel entschädigt einen Investor dafür, einen Anteilspreis gezahlt zu haben, der sich als zu hoch erwiesen hat, und zwar dadurch, dass sie eine Regel zur **rückwirkenden Anpassung des Preises der vorherigen Runde** festlegt, was diesem Investor zusätzliche Anteile verschafft.
+
+Zwei Aussagen der Vorlesung zur Komplementarität sind der sauberste Weg, diese Klausel unter den anderen einzuordnen:
+
+- Convertible Preferred schützt gegen **enttäuschende Exits**; Anti-Dilution schützt gegen **enttäuschende künftige Runden**.
+- Anti-Dilution schützt den **Wert**, den der Investor besitzt, was sie komplementär zu Bezugsrechten macht, die den **Prozentsatz** des Besitzes erhalten.
+
+Das Beispiel läuft über zwei Runden, $5M und $10M.
+
+| Runde | Pre-Money | Post-Money | Anteilspreis |
+|---|--:|--:|--:|
+| Series A | $10M | $15M | $1.00 |
+| Series B | $11.25M | $21.25M | $0.75 |
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel rsp">
+      <div class="head">Full Ratchet <small>investorenfreundlich</small></div>
+      <ul>
+        <li>Die gesamte erste Runde wird schlicht <strong>zum neuen niedrigen Preis neu bepreist</strong>, hier $0.75</li>
+        <li>Es ist unerheblich, wie klein die Down Round war, sodass selbst eine winzige billige Emission die gesamte frühere Runde neu bepreist</li>
+        <li>Das härtestmögliche Ergebnis für die Gründer</li>
+      </ul>
+    </div>
+    <div class="sc-panel eff">
+      <div class="head">Weighted Average <small>gründerfreundlicher</small></div>
+      <ul>
+        <li>Die erste Runde wird nur <strong>teilweise</strong> nach unten neu bepreist, gewichtet danach, wie viel neues Geld zum niedrigen Preis hereinkam</li>
+        <li><strong>Narrow Based</strong> zählt nur die Series-A-Anteile in die Basis</li>
+        <li><strong>Broad Based</strong> bezieht auch die Anteile des Gründers ein, was die Basis vergrößert und die Anpassung weiter abmildert</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Derselbe Auslöser, drei mögliche Härtegrade. Welches Wort in der Klausel steht, ist mehrere Prozentpunkte des Unternehmens wert.</figcaption>
+</div>
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Neubepreisung nach Weighted Average</span>
+    <code>P1wa = P1 * (Sbase + I2/P1) / (Sbase + I2/P2),  Sbase = existing shares</code>
+  </div>
+  <div>
+    <span class="name">Broad Based, Sbase = 15M Anteile</span>
+    <code>P1wa = 1 * (15 + 10/1) / (15 + 10/0.75) = 25 / 28.3 = $0.88</code>
+  </div>
+  <div>
+    <span class="name">Narrow Based, Sbase = 5M Anteile</span>
+    <code>P1wa = 1 * (5 + 10/1) / (5 + 10/0.75) = 15 / 18.3 = $0.82</code>
+  </div>
+</div>
+
+Der vollständige Eigentumsvergleich, wobei der Gründer stets 10.00M Anteile hält und Series B stets 13.33M Anteile zu $0.75 kauft:
+
+| Schutz | Angepasster Series-A-Preis | Series-A-Anteile (M) | Anteile gesamt (M) | Gründer nach Runde 1 | Series A nach Runde 1 | Gründer nach Runde 2 | Series A nach Runde 2 | Series B nach Runde 2 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **A. Kein Schutz** | $1.00 | 5.00 | 28.33 | 66.7% | 33.3% | 35.3% | 17.6% | 47.1% |
+| **B. Full Ratchet** | $0.75 | 6.67 | 30.00 | 60.0% | 40.0% | 33.3% | 22.2% | 44.4% |
+| **C. Weighted Average, narrow** | $0.82 | 6.11 | 29.44 | 62.1% | 37.9% | 34.0% | 20.8% | 45.3% |
+| **D. Weighted Average, broad** | $0.88 | 5.67 | 29.00 | 63.8% | 36.2% | 34.5% | 19.5% | 46.0% |
+
+Der Gründer verliert nach der zweiten Runde unter Full Ratchet 2 Prozentpunkte gegenüber überhaupt keinem Schutz, 35.3 hinunter auf 33.3, und der Series-A-Investor gewinnt 4.6 Punkte, 17.6 hinauf auf 22.2. Man beachte außerdem, dass auch der **Series-B-Investor** verwässert wird, von 47.1 auf 44.4 Prozent, weshalb einen neuen Investor sehr interessiert, welche Anti-Dilution die vorherige Runde trägt.
+
+### Bezugsrechte und das Right of First Refusal
+
+**Bezugsrechte (Pre-Emption Rights)** geben einem Investor das Recht, sich an künftigen Runden zu beteiligen, indem er neue Anteile bis zu seinem **Pro-rata-Betrag** kauft, sodass sein Prozentsatz nicht sinken muss, wenn er es nicht selbst zulässt.
+
+Das **Right of First Refusal** erlaubt dem **Unternehmen**, Anteile zu kaufen, die ein Investor oder ein Gründer verkaufen will, und zwar **zu denselben Konditionen, die ein Dritter geboten hat**. Es zielt darauf, das Eigentum der Insider zu bewahren, und wenn das Unternehmen das Recht nicht ausübt, können es die Investoren tun.
+
+Beide Klauseln schützen die prozentuale Beteiligung eines Investors, aus zwei erklärten Motiven: Sie erlauben Investoren, ihren **Anteil an der Aufwärtschance zu halten**, und eine bestimmte prozentuale Beteiligung kann eine **notwendige Bedingung für Board-Rechte oder Informationsrechte** sein, sodass ein Abrutschen des Prozentsatzes einen Investor stillschweigend seinen Sitz und seine Daten kosten kann.
+
+### Pay-to-Play, die Klausel, die den Gründer schützt
+
+Die Vorlesung sagt ausdrücklich, dass auch Gründer Schutz im Term Sheet brauchen, und **Pay-to-Play** ist das Beispiel dafür. Es legt den bestehenden Investoren eine **Pflicht auf, sich pro rata an künftigen Runden zu beteiligen**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Pflicht zur Pro-rata-Beteiligung<span class="sub">alte Investoren müssen ihren Anteil an der neuen Runde einbringen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Hält alte Investoren im Boot<span class="sub">sowohl das Geld selbst als auch das Signal, dass die Insider weiter daran glauben</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Vertragsstrafe, wenn sie es nicht tun<span class="sub">Verlust von Rechten wie Anti-Dilution und Informationsrechten</span></div>
+  </div>
+  <figcaption>Das Signal ist so wertvoll wie das Geld. Ein bestehender Investor, der seinem Geld nicht folgen will, sagt dem Markt damit etwas, und Pay-to-Play macht Schweigen teuer.</figcaption>
+</div>
+
+## 13 · Liquidität für Investoren: das Geld wieder herausbekommen
+
+Investoren müssen ihre Anteile irgendwann verkaufen, und ein privat gehaltenes Unternehmen bietet keinen Markt, auf dem sich das tun ließe. Vier Klauseln adressieren das.
+
+| Klausel | Was sie gewährt | Wen sie begünstigt |
+|---|---|---|
+| **Redemption Rights** | Der Investor darf seine Anteile nach einem angemessen langen Zeitraum **zurückgeben (redeem)**, zu den Preferred Terms | Investor, und es kann dem Unternehmen zu einem ungünstigen Moment Liquidität entziehen |
+| **Tag-Along Rights** | Investoren können ihre **Anteile gemeinsam mit den Gründern verkaufen**, zu denselben Konditionen, wenn die Gründer verkaufen | Investor, und es hindert Gründer daran, allein Kasse zu machen |
+| **Drag-Along Rights** | Investoren können **andere Anteilseigner zum Verkauf zwingen** | Investor, und es verhindert, dass eine Minderheit einen vom Investor gewünschten Exit blockiert |
+| **Registration Rights und Piggy-Back** | Das Recht, einen **Börsengang zu erzwingen** und Anteile in ihn hinein zu verkaufen | Investor, und Piggy-Back erlaubt ihm, sich an eine von jemand anderem ausgelöste Notierung anzuhängen |
+
+Tag-Along und Drag-Along lohnt es sich als Paar einzuprägen, weil sie Gegensätze sind. Tag-Along ist ein Recht, sich einem Verkauf **anzuschließen**; Drag-Along ist ein Recht, einen Verkauf zu **erzwingen**.
+
+## 14 · Die übrigen Klauseln
+
+| Klausel | Was sie tut |
+|---|---|
+| **Informationsrechte** | Erlauben dem Investor, harte Daten über das Unternehmen zu erhalten, besonders nützlich in frühen Phasen, in denen sonst nichts beobachtbar ist |
+| **Key Man Insurance** | Versicherung auf die Gründer, denn in dieser Phase **ist das Unternehmen die Gründer** |
+| **Rechtliche Regelungen** | Welches Recht gilt und wie Streitigkeiten behandelt werden |
+| **Reps and Warranties** | Rechtlich bindende Erklärungen über den Zustand des Unternehmens; jede Unwahrheit kann zu **finanzieller Haftung** führen und den Deal möglicherweise **hinfällig machen** |
+
+Und dazu eine Reihe von Klauseln, die die Verhandlung selbst regeln statt das Unternehmen:
+
+- **No-Shop-Klausel** - der Gründer verpflichtet sich, für einen festgelegten Zeitraum keine anderen Angebote zu suchen oder zu verhandeln, sodass der Investor seine Due Diligence durchführen kann, ohne gegen andere versteigert zu werden. Gründerunfreundlich, wenn der Zeitraum lang ist, weil sie den Wettbewerbsdruck genau dann entfernt, wenn er am wertvollsten ist.
+- **Exploding Offer** - das Angebot verfällt schnell und komprimiert die Zeit, die zum Herumzeigen oder zum Nachdenken bleibt.
+- **Bedingtheit durch Due Diligence** - das Angebot gilt nur, wenn die Prüfung bestätigt, was behauptet wurde.
+- **Co-Investoren** - der Deal hängt davon ab, dass weitere Investoren der Runde beitreten.
+- **Milestones** - die bedingten Auslöser aus Abschnitt 4, hier als Verhandlungsinstrument eingesetzt.
+
+## 15 · Bewertung gegen Terms
+
+Man kann nicht alles zugleich haben, und man kann nicht jeden Term gleichzeitig verhandeln. **Die Bewertung ist der sichtbarste Term und derjenige, den Gründer am leichtesten verstehen** - und genau darin liegt die Falle, denn alles in den Abschnitten 6 und 7 zeigt, dass **Zahlungsstromrechte eine großzügige Bewertung zunichtemachen können**.
+
+Die Vorlesung macht dann einen konstruktiveren Punkt: Die Abwägungen beweisen, dass diese Verhandlung **kein Nullsummenspiel** ist. Drei Achsen, entlang derer man tauschen kann:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Bewertung gegen Kontrollrechte, also wie viel Schutz man sich selbst gibt</span>
+  <span class="sc-chip amber">Bewertung gegen Vergütung und künftige Auszahlungen</span>
+  <span class="sc-chip green">Bewertung in der Aufwärtschance gegen Bewertung im Abwärtsfall</span>
+</div>
+
+Die dritte Achse wird mit drei Varianten derselben $20-Investition illustriert, alle mit einem Exit von $400 im guten Fall und $80 im schlechten Fall, beide je zu 50 Prozent wahrscheinlich.
+
+| Deal | Anteil des Investors | Post-Money | Investor, gut | Investor, schlecht | Investor, erwartet | Gründer, gut | Gründer, schlecht | Gründer, erwartet |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **Common Shares**, $20 für 25% | 25% | $80 | $100 | $20 | $60 | $300 | $60 | $180 |
+| **2x Preferred**, $20 für 20% | 20% | $100 | $80 | $40 | $60 | $320 | $40 | $180 |
+| **3x Preferred**, $20 für 15% | 15% | $133 | $60 | $60 | $60 | $340 | $20 | $180 |
+
+Jede Zeile gibt dem Investor dieselben erwarteten $60 und dem Gründer dieselben erwarteten $180. Dem Gründer wird eine **höhere Bewertung im Tausch gegen eine größere Vorzugsstellung** angeboten, und das ist der Handel in seiner reinsten Form. Was sich ändert, ist nicht der Durchschnitt, sondern die **Form** des Ergebnisses.
+
+| Deal | Erwartete Gründerrendite bei Optimismus, 60% Erfolg | Erwartete Gründerrendite bei Pessimismus, 40% Erfolg |
+|---|--:|--:|
+| Common-Share-Deal | $204 | $156 |
+| 2x-Preferred-Deal | $208 | $152 |
+| 3x-Preferred-Deal | $212 | $148 |
+
+| Deal | Spanne zwischen gutem und schlechtem Ausgang, Gründer | Spanne zwischen gutem und schlechtem Ausgang, Investoren |
+|---|--:|--:|
+| Common-Share-Deal | $240 | $80 |
+| 2x-Preferred-Deal | $280 | $40 |
+| 3x-Preferred-Deal | $320 | $0 |
+
+Das ist die sauberste Lektion der Vorlesung. Wer wirklich daran glaubt, dass sein Venture Erfolg haben wird, **stellt sich mit einer größeren Vorzugsstellung gegen eine höhere Bewertung besser**, $212 gegen $204 unter der optimistischen Sicht. Wer sich insgeheim weniger sicher ist, stellt sich mit demselben Tausch schlechter, $148 gegen $156. Und die Spannentabelle zeigt, was man tatsächlich gekauft hat: Unter dem 3x-Deal ist das Ergebnis des Investors **vollständig flach bei $60**, ob der Exit nun $400 oder $80 beträgt, während der Gründer jetzt einen Ausschlag von $320 trägt. Man hat keinen besseren Deal bekommen, man hat das Risiko übernommen.
+
+## 16 · Seed-Phase: Convertible Notes und SAFEs
+
+Term Sheets sehen in der Seed- oder **Pre-Venture**-Phase anders aus, die die Vorlesung durch drei Merkmale kennzeichnet: Finanzierungsbeträge unter $100K, **unerfahrene Investoren** und einen wahrscheinlichsten Ausgang, in dem **das Unternehmen einfach verschwindet**. Eine vollständige Preferred-Runde unter diesen Bedingungen zu verhandeln kostet mehr an Anwaltsgebühren, als die Runde wert ist.
+
+**Convertible Notes** sind fremdkapitalähnliche Ansprüche, die genau dafür gebaut sind.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Geld kommt als Fremdkapital herein<span class="sub">es wird keine Bewertung vereinbart und kein Anteilspreis festgelegt</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Automatische Wandlung bei der ersten qualifizierten Runde<span class="sub">typischerweise die Series A</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Wandelt in dasselbe Wertpapier, das dann ausgegeben wird<span class="sub">also in das Convertible Preferred jener Runde</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Zu einem vorab festgelegten Abschlag von 10 bis 20 Prozent<span class="sub">Laufzeit typischerweise 12 bis 24 Monate</span></div>
+  </div>
+  <figcaption>Die Note kauft Zeit. Die Bewertung, der am schwersten zu vereinbarende Term, wenn es nichts zu bewerten gibt, wird aufgeschoben, bis ein echter Investor einen Preis setzt.</figcaption>
+</div>
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Wandlungspreis mit Abschlag</span>
+    <code>Pcn = (1 - DIS) * Pinv</code>
+  </div>
+  <div>
+    <span class="name">Anteile, in die die Note wandelt</span>
+    <code>Scn = Icn / Pcn = Icn / ((1 - DIS) * Pinv)</code>
+  </div>
+  <div>
+    <span class="name">Valuation Cap, der das Bezahlen für den Erfolg vermeidet</span>
+    <code>Pcn = Vcap / Spre  ≤  (1 - DIS) * Pinv</code>
+  </div>
+  <div>
+    <span class="name">Eigentumsverhältnisse unter einem Cap</span>
+    <code>Scn / Spre = Icn / Vcap   and   Scn / (Spre + Scn) = Icn / (Vcap + Icn)</code>
+  </div>
+  <div>
+    <span class="name">Preis der neuen Investoren</span>
+    <code>Pinv = Vpre / (Spre + Scn)</code>
+  </div>
+</div>
+
+Die Wendung **paying for success** benennt das Problem, das der Cap löst. Mit einem bloßen Abschlag gilt: Je besser sich das Unternehmen vor der nächsten Runde entwickelt, desto höher ist der Preis, zu dem das Geld des Seed-Investors wandelt, sodass ausgerechnet derjenige, der als Erster an das Unternehmen geglaubt hat, mit dem kleinsten Anteil endet. Ein Cap legt eine Höchstbewertung fest, zu der die Note wandeln darf.
+
+### WorkHorse Convertible Note, mit und ohne Cap
+
+Eingaben: 950,000 bereits bestehende Anteile, eine Convertible Note über $80,000 mit 20 Prozent Abschlag, eine Seed-Investition von $500,000 bei einer Pre-Money-Bewertung von $2,000,000 und einer Post-Money-Bewertung von $2,500,000, was einen Anteilspreis der Seed-Runde von $2 ergibt.
+
+| | Ohne Cap | Mit einem Cap von $1,000,000 |
+|---|--:|--:|
+| Preis je Anteil für die Note | $1.60 | $1.05 |
+| Anzahl der Anteile für die Note | 50,000 | 76,000 |
+| Bestehende Anteile einschließlich der Note | 1,000,000 | 1,026,000 |
+| Preis je Anteil für die neuen Investoren | $2.00 | $1.95 |
+| Anzahl der Anteile für die neuen Investoren | 250,000 | 256,500 |
+| Anteile insgesamt nach der Runde | 1,250,000 | 1,282,500 |
+| Anteilsquote der Note vor der Seed-Runde | 5.00% | 7.41% |
+| **Anteilsquote der Note nach der Seed-Runde** | **4.00%** | **5.93%** |
+
+Der Cap allein hebt den Seed-Investor von 4.00 auf 5.93 Prozent des Unternehmens, also ungefähr um die Hälfte mehr, und das für exakt dieselben $80,000.
+
+### PunchTab Convertible Note, das vollständige Sensitivitätsraster
+
+Das zweite Beispiel variiert die Beteiligung des Series-A-Investors von 70 Prozent hinunter auf 20 Prozent und verfolgt, was die Note in jedem Fall wert ist. Eingaben: 1,000,000 bereits bestehende Anteile, eine Seed Note über $750,000 mit 20 Prozent Abschlag und 6 Prozent Zinsen mit Zinseszins, Laufzeit 1 Jahr, was einen Gesamtwert der Note von $795,000 ergibt, ein Valuation Cap von $6,000,000 und eine Series-A-Investition von $4,000,000.
+
+| Beteiligung Series A | Post-Money | Pre-Money | Anteilspreis nächste Runde | Anteile an Series A | Abgezinster Notenpreis | Gedeckelter Notenpreis | Anteile an die Note | Anteilsquote der Note vorher | Anteilsquote der Note nachher |
+|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| 70% | 5,714,286 | 964,286 | $0.96 | 4,148,148 | $0.8 | $6.0 | 1,030,556 | 50.75% | 16.68% |
+| 65% | 6,153,846 | 1,403,846 | $1.40 | 2,849,315 | $1.1 | $6.0 | 707,877 | 41.45% | 15.53% |
+| 60% | 6,666,667 | 1,916,667 | $1.92 | 2,086,957 | $1.5 | $6.0 | 518,478 | 34.14% | 14.38% |
+| 55% | 7,272,727 | 2,522,727 | $2.52 | 1,585,586 | $2.0 | $6.0 | 393,919 | 28.26% | 13.22% |
+| 50% | 8,000,000 | 3,250,000 | $3.25 | 1,230,769 | $2.6 | $6.0 | 305,769 | 23.42% | 12.05% |
+| 45% | 8,888,889 | 4,138,889 | $4.14 | 966,443 | $3.3 | $6.0 | 240,101 | 19.36% | 10.88% |
+| 40% | 10,000,000 | 5,250,000 | $5.25 | 761,905 | $4.2 | $6.0 | 189,286 | 15.92% | 9.70% |
+| 35% | 11,428,571 | 6,678,571 | $6.68 | 598,930 | $5.3 | $6.0 | 148,797 | 12.95% | 8.51% |
+| 30% | 13,333,333 | 8,583,333 | $8.58 | 466,019 | $6.9 | $6.0 | 132,500 | 11.70% | 8.29% |
+| 25% | 16,000,000 | 11,250,000 | $11.25 | 355,556 | $9.0 | $6.0 | 132,500 | 11.70% | 8.90% |
+| 20% | 20,000,000 | 15,250,000 | $15.25 | 262,295 | $12.2 | $6.0 | 132,500 | 11.70% | 9.50% |
+
+Man lese die beiden Preisspalten gegeneinander. Die Note wandelt zum jeweils **niedrigeren** Preis, also bindet bis zu einer Series-A-Beteiligung von 35 Prozent der **Abschlag**; ab 30 Prozent würde der abgezinste Preis $6.0 übersteigen, und der **Cap** übernimmt und friert die Note bei 132,500 Anteilen ein. Genau das ist der abgeschaltete Effekt des „paying for success“, und deshalb hört die letzte Spalte auf zu fallen und beginnt wieder zu steigen, von 8.29 auf 9.50 Prozent, sobald der Cap die Arbeit macht.
+
+Der Reiz von Convertible Notes und der Grund, warum sie im Seed-Bereich dominieren:
+
+- Eine einfache, standardisierte Struktur, als Vorlage verfügbar
+- Was den Parteien erlaubt, Rechtskosten zu sparen
+- So gut wie **keine Kontrollrechte und keine sonstigen Schutzrechte** angehängt
+- Sie delegiert und verschiebt sowohl die Bewertung als auch die Verhandlung
+- Der **SAFE**, ein Simple Agreement on Future Equity, ist noch einfacher, weil er **kein Fälligkeitsdatum und keinen Dividendensatz** hat
+
+## Durchgerechnetes Beispiel
+
+Die Liquidation Preference ist die Klausel, die am stärksten verändert, wer was bekommt, und deshalb lohnt es sich, ein Unternehmen durch drei Exit-Größen zu führen. Verwendet wird der WorkHorse Cap Table aus Abschnitt 6.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Der Cap Table</span>
+    <code>Founders: 1,250,000 common. Investor: 416,667 preferred at $4.80 = $2,000,000. Finv = 25%</code>
+  </div>
+  <div>
+    <span class="name">Die Preferred Terms, 8 Prozent Dividende, 1 Jahr bis zum Exit</span>
+    <code>PT = I + I*D*T = 2,000,000 + 2,000,000*0.08*1 = $2,160,000</code>
+  </div>
+  <div>
+    <span class="name">Wandlungsschwelle</span>
+    <code>CT = PT / Finv = 2,160,000 / 0.25 = $8,640,000</code>
+  </div>
+</div>
+
+Nun vergleiche man eine **non-participating** 1x Preference, bei der der Investor zwischen der Vorzugsstellung und der Wandlung wählen muss, mit einer **participating** 1x Preference, bei der der Investor beides nimmt.
+
+| Exit | Non-Participating: Investor | Non-Participating: Gründer | Participating: Investor | Participating: Gründer | Kosten der Participation für die Gründer |
+|---|--:|--:|--:|--:|--:|
+| **Niedrig, $3.0M** | $2.16M, nimmt PT | $0.84M | $2.37M | $0.63M | $0.21M |
+| **Mittel, $8.0M** | $2.16M, nimmt PT | $5.84M | $3.62M | $4.38M | $1.46M |
+| **Hoch, $12.0M** | $3.00M, wandelt | $9.00M | $4.62M | $7.38M | $1.62M |
+
+Die Rechnung hinter jeder Participating-Zahl ist dreimal dieselbe Formel.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Niedriger Exit</span>
+    <code>CFinv = 2.16 + 0.25*(3.00 - 2.16) = 2.16 + 0.21 = $2.37M</code>
+  </div>
+  <div>
+    <span class="name">Mittlerer Exit</span>
+    <code>CFinv = 2.16 + 0.25*(8.00 - 2.16) = 2.16 + 1.46 = $3.62M</code>
+  </div>
+  <div>
+    <span class="name">Hoher Exit</span>
+    <code>CFinv = 2.16 + 0.25*(12.00 - 2.16) = 2.16 + 2.46 = $4.62M</code>
+  </div>
+</div>
+
+**Der Wandlungspunkt.** Für den nicht partizipierenden Investor lohnt sich die Wandlung genau dann, wenn `Finv*X` die `PT` überholt.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Indifferenz</span>
+    <code>0.25 * X = 2,160,000   which gives   X = CT = $8,640,000</code>
+  </div>
+  <div>
+    <span class="name">Unter $8.64M</span>
+    <code>the investor stays preferred and collects a flat $2.16M</code>
+  </div>
+  <div>
+    <span class="name">Über $8.64M</span>
+    <code>the investor converts and collects 25 percent of whatever the exit is</code>
+  </div>
+</div>
+
+Zwei Erweiterungen, bei denen man prüfen sollte, ob man sie beherrscht. Mit einem **2x Multiple** gilt `PT = 2*2,000,000 + 160,000 = $4,160,000`, sodass die Wandlungsschwelle auf `4,160,000 / 0.25 = $16,640,000` hinauswandert und sich die tote Zone der Gründer beinahe verdoppelt. Und mit einem **Cap** auf die Participation bei $20M hört der partizipierende Investor bei `2.16 + 0.25*(20 - 2.16) = $6.62M` auf zu akkumulieren und gibt die Vorzugsstellung erst oberhalb von `Xcom = 20 + 2.16*0.75/0.25 = $26.48M` vollständig auf.
+
+Die Lehre, die man aus der Tabelle mitnehmen sollte: Beim niedrigen Exit ist der Unterschied zwischen participating und non-participating in absoluten Zahlen klein, $0.21M, aber er sind **25 Prozent von allem, was die Gründer überhaupt erhalten hätten**. Die Participation schmerzt genau dort am meisten, wo die Gründer es sich am wenigsten leisten können.
+
+## Auf das eigene Projekt anwenden
+
+<Steps>
+
+1. **Lies nicht zuerst die Bewertung.** Deck sie mit der Hand ab. Alles darunter handelt davon, was mit Geld und Entscheidungen in Weltzuständen geschieht, an die du noch nicht gedacht hast, und die Warnung der Vorlesung lautet, dass Zahlungsstromrechte eine großzügige Bewertung zunichtemachen können.
+
+2. **Sortiere jede Klausel in die vier Bereiche** - Zahlungsstromrechte, Kontrollrechte, Vergütung und Anstellung sowie übrige Rechte rund um Anti-Dilution, künftige Finanzierung und Liquidität. Eine Klausel, die du nicht einordnen kannst, ist eine Klausel, die du nicht verstanden hast.
+
+3. **Finde die Wertpapierart und die Vorzugsstellung.** Ist es Common oder Convertible Preferred? Wie hoch ist der Multiple `M`? Ist die Dividende einfach oder mit Zinseszins, und zu welchem Satz? Rechne `PT = M*I + I*D*T` und danach `CT = PT / Finv` selbst aus. Diese beiden Zahlen bestimmen die Form deiner gesamten Auszahlung.
+
+4. **Stell die Ein-Wort-Frage: participating oder non-participating.** Baue dann die Tabelle mit niedrigem, mittlerem und hohem Exit aus dem durchgerechneten Beispiel oben mit deinen eigenen Zahlen. Wenn es participating ist, verlange einen Cap und berechne `Xcom`.
+
+5. **Prüfe die Formulierung der Anti-Dilution.** Full Ratchet oder Weighted Average, und falls Weighted Average, narrow based oder broad based. Lass die Neubepreisungsformel über eine hypothetische Down Round bei, sagen wir, 60 Prozent deines heutigen Preises laufen und sieh nach, mit welchem Prozentsatz du tatsächlich endest.
+
+6. **Liste jedes Entscheidungsrecht auf, das du abgibst.** Board-Sitze, ob ein Sitz von einem Milestone abhängt, und jedes vertragliche Recht, das Stimmrechte und Board-Kontrolle überlagert. Frage bei jedem Veto- oder Zustimmungsrecht, was in dem Szenario passiert, in dem du und der Investor unterschiedlicher Meinung seid, denn das ist das einzige Szenario, in dem die Klausel jemals zum Einsatz kommt.
+
+7. **Lies deinen eigenen Anstellungsvertrag als Angestellter, nicht als Gründer.** Vesting-Plan, Länge des Cliff, Acceleration bei einem Börsengang oder einer Übernahme, was als Kündigung aus wichtigem Grund zählt, das Wettbewerbsverbot und die IP-Übertragung. Frage dich ganz konkret: Wenn ich in 11 Monaten gefeuert werde, was gehört mir dann?
+
+8. **Finde den Option Pool und seine Verbrauchsrate.** Sind es 10 oder 20 Prozent der voll verwässerten Basis, und wie viele Jahre Einstellungen finanziert er bei 2 bis 5 Prozent pro Jahr, bevor du ihn auffüllen musst?
+
+9. **Geh die Liquiditätsklauseln durch.** Zeitpunkt und Höhe der Redemption, Tag-Along, Drag-Along, Registration und Piggy-Back. Frage konkret, wozu ein Drag-Along den Investor berechtigt, dich zu zwingen, und prüfe, ob Pay-to-Play vorhanden ist, um bestehende Investoren in der nächsten Runde ehrlich zu halten.
+
+10. **Prüfe die Verhandlungsklauseln, bevor du irgendetwas unterschreibst.** Wie lang ist das No-Shop, ist das Angebot ein Exploding Offer, hängt es von der Due Diligence oder vom Beitritt von Co-Investoren ab, und sind die Milestones solche, die du tatsächlich erreichen kannst, ohne in Under-Pivoting oder Kurzfristdenken zu verfallen.
+
+11. **Entscheide, was du tauschst.** Nutze die Logik aus Abschnitt 15: Wenn du wirklich an die Aufwärtschance glaubst, ist eine größere Vorzugsstellung gegen eine höhere Bewertung ein guter Tausch für dich. Wenn du dir insgeheim unsicher bist, ist er ein schlechter. Sei ehrlich darüber, was von beidem zutrifft.
+
+12. **Und dann gib es einem erfahrenen Juristen,** was die Vorlesung selbst vorschreibt, und lass ihn die Wechselwirkungen zwischen den Klauseln erklären statt die Klauseln eine nach der anderen.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Term Sheet | Das Bündel vertraglicher Klauseln, die die Rechte und Pflichten von Gründer und Investor regeln, und die Verhandlungsgrundlage für die Satzung, das Investor Rights Agreement und Purchase Agreement sowie die Anstellungsverträge der Gründer |
+| Unvollständiger Vertrag | Ein Vertrag, der nicht jedes mögliche künftige Ereignis auflisten kann, was unvermeidlich und bei unsicheren Ventures besonders gravierend ist |
+| Contingent Contracting | Klauseln zu schreiben, die nur in bestimmten Situationen gelten, statt zu versuchen, die Zukunft zu beschreiben |
+| Milestone | Ein markantes Ereignis, das offenlegt, ob der Fortschritt den Erwartungen entspricht, verwendet als Auslöser einer bedingten Klausel |
+| Convertible Preferred Stock | Das Wertpapier des Investors: ein fremdkapitalähnlicher fester Anspruch, wenn das Venture scheitert, wandelbar in Common Equity, wenn es Erfolg hat |
+| Preferred Terms, PT | Was dem Investor zusteht, bevor Stammaktionäre irgendetwas bekommen, gleich der Investition plus aufgelaufener Dividende, mal einem etwaigen Multiple |
+| Conversion Threshold, CT | Der Exit-Wert `PT / Finv`, oberhalb dessen der Investor die Wandlung in Common der Vorzugsstellung vorzieht |
+| Liquidation Preference | Das Recht, aus dem Exit-Erlös zuerst bedient zu werden; ein Multiple M gibt das Kapital mehrfach zurück |
+| Non-Participating Preferred | Der Investor wählt entweder die Vorzugsstellung oder die Wandlung in Common, aber nicht beides |
+| Participating Preferred | Der Double Dip: Der Investor nimmt die Vorzugsstellung und beteiligt sich anschließend zusätzlich am verbleibenden Common Equity |
+| Participation Cap | Eine Obergrenze, ab der die Participation endet, eingefügt, um die Gründeranreize zu erhalten; oberhalb von `Xcom` wandelt der Investor vollständig in Common |
+| Anti-Dilution | Rückwirkende Neubepreisung einer früheren Runde nach einer Down Round, die einen Investor entschädigt, der einen zu hohen Anteilspreis gezahlt hat |
+| Full Ratchet | Die härteste Anti-Dilution: Die gesamte frühere Runde wird zum neuen niedrigen Preis neu bepreist |
+| Weighted Average | Sanftere Anti-Dilution, die nur teilweise neu bepreist, narrow based auf Basis der Anteile der früheren Runde oder broad based einschließlich der Gründeranteile |
+| Down Round, Flat Round | Eine Runde, die unter der vorherigen bepreist ist, und eine Runde, deren Preis nicht steigt |
+| Vesting und Cliff | Gründeranteile, die über die Zeit verdient werden; der Cliff ist die Mindestdienstzeit, bevor überhaupt etwas davon vestet |
+| Option Pool | Für Mitarbeiteroptionen reservierte Anteile, 10 bis 20 Prozent der voll verwässerten Basis, verbraucht mit 2 bis 5 Prozent pro Jahr |
+| Protective Provisions | Vertragliche Rechte, die Stimmrechte und Board-Kontrolle überlagern können, als Vetos oder als Zustimmungsrechte, oft über den Verkauf des Unternehmens oder die Bestellung des CEO |
+| Bezugsrechte (Pre-Emption Rights) | Das Recht, in künftigen Runden pro rata zu kaufen, um einen Prozentsatz konstant zu halten |
+| Right of First Refusal | Das Recht des Unternehmens, Anteile zu kaufen, die ein Investor oder Gründer verkauft, zu denselben Konditionen, die ein Dritter geboten hat |
+| Pay-to-Play | Eine Pflicht bestehender Investoren, pro rata weiter zu investieren, mit dem Verlust von Rechten wie Anti-Dilution oder Informationsrechten als Strafe |
+| Redemption Rights | Das Recht des Investors, seine Anteile nach einem langen Zeitraum zu den Preferred Terms zurückgeben zu können |
+| Tag-Along und Drag-Along | Das Recht, sich einem Verkauf der Gründer anzuschließen, und das Recht, andere Anteilseigner zum Verkauf zu zwingen |
+| No-Shop-Klausel | Eine Vereinbarung, während der Due Diligence für einen festgelegten Zeitraum keine konkurrierenden Angebote zu suchen oder zu verhandeln |
+| Convertible Note und SAFE | Seed-Instrumente, die die Bewertung aufschieben und in der nächsten qualifizierten Runde mit Abschlag und oft mit einem Valuation Cap wandeln; der SAFE lässt Fälligkeitsdatum und Dividendensatz weg |
+
+## Selbsttest
+
+1. Nenne die drei Rechtsdokumente, für die ein Term Sheet die Verhandlungsgrundlage ist, und liste die fünf Rollen auf, die ein Term Sheet laut Vorlesung spielt.
+2. Erkläre, was Vertragsunvollständigkeit ist und wie contingent contracting darauf antwortet. Nenne dann den Unterschied zwischen einer Klausel über eine nachprüfbare Handlung und einer Klausel, die ein Entscheidungsrecht zuweist, und sage, welche der beiden besser zu Ventures passt und warum.
+3. Ein Unternehmen hat Gründer mit 1,250,000 Stammaktien und einen Investor, der $2,000,000 für 416,667 Vorzugsanteile gezahlt hat, 25 Prozent des Unternehmens, mit 8 Prozent Dividende und einem Jahr bis zum Exit. Berechne die Preferred Terms und die Wandlungsschwelle und sage dann, was Investor und Gründer jeweils bei Exits von $3M und $12M erhalten, zuerst unter einer non-participating und dann unter einer participating Preference.
+4. Was ist eine Down Round, und was tut Anti-Dilution dagegen? Stelle Full Ratchet und Weighted Average gegenüber und erkläre, warum broad based für den Gründer freundlicher ist als narrow based.
+5. Einem Gründer werden 60 Prozent des Unternehmens zugeteilt, mit einem Vesting von 6 Prozent pro Quartal und einem Cliff von einem Jahr. Wie viel ist nach 9 Monaten gevestet, wie viel nach 12 Monaten, und nach welcher Zeit ist das Vesting abgeschlossen?
+6. Erkläre anhand des Vergleichs aus Abschnitt 15, warum ein optimistischer Gründer einen 3x-Preferred-Deal zu einer höheren Bewertung bevorzugen sollte, während ein pessimistischer Gründer den Common-Share-Deal bevorzugen sollte, obwohl beide Deals dem Gründer dieselben erwarteten $180 geben.
+
+<Aside type="note" title="Antworten">
+1. Die Satzung des Unternehmens, das Investor Rights Agreement und Purchase Agreement sowie die Anstellungsverträge der Gründer. Die fünf Rollen: Es regelt die Rechte, Pflichten und Erträge der Parteien; es setzt Anreize für alle Beteiligten einschließlich der Mitarbeitenden; es bringt die Parteien dazu, ihre Erwartungen zu klären; es verteilt das Risiko zwischen den beiden Parteien; und es legt die Rechte und Pflichten der Parteien gegenüber Externen fest, nämlich Mitarbeitenden und künftigen Investoren.
+2. Unvollständigkeit bedeutet, dass es naturgemäß unmöglich ist, alle möglichen künftigen Ereignisse abzudecken, ein Problem, das unsichere Ventures weit verschärfen. Contingent contracting antwortet darauf, indem es Klauseln schreibt, die nur in bestimmten festgelegten Situationen gelten, ausgelöst durch Milestones. Eine Klausel über eine **nachprüfbare Handlung** braucht einen Milestone und stützt sich auf präzise Umstände, die Information offenlegen; eine Klausel, die **Entscheidungsrechte zuweist**, muss nur benennen, wer das Recht zu entscheiden hat. Der zweite Typ passt zu Ventures, weil Information dort undurchsichtig und schwer zu deuten ist, sodass eine Überprüfung oft nicht möglich ist.
+3. `PT = 2,000,000 + 2,000,000*0.08*1 = $2,160,000` und `CT = 2,160,000 / 0.25 = $8,640,000`. Non-participating bei $3M: `Finv*X = $0.75M` liegt unter PT, also nimmt der Investor $2.16M und die Gründer bekommen $0.84M. Non-participating bei $12M: `Finv*X = $3.0M` schlägt PT, also wandelt der Investor und nimmt $3.0M, die Gründer $9.0M. Participating bei $3M: `2.16 + 0.25*0.84 = $2.37M` an den Investor, $0.63M an die Gründer. Participating bei $12M: `2.16 + 0.25*9.84 = $4.62M` an den Investor, $7.38M an die Gründer.
+4. Eine Down Round ist eine Runde, in der der Anteilspreis unter den Preis der vorherigen Runde fällt; eine Flat Round ist eine, in der der Preis nicht steigt. Anti-Dilution entschädigt einen Investor dafür, einen Preis gezahlt zu haben, der sich als zu hoch erwies, indem sie eine Regel festlegt, die den Preis der früheren Runde rückwirkend anpasst und zusätzliche Anteile ausgibt. **Full Ratchet** bepreist die gesamte frühere Runde zum neuen niedrigen Preis neu, hier $1.00 hinunter auf $0.75, unabhängig davon, wie klein die neue Runde war. **Weighted Average** bepreist nur teilweise neu, gewichtet danach, wie viel neues Geld billig hereinkam. **Broad Based** bezieht die Anteile des Gründers in die Basis ein, wodurch die Basis größer wird, was den angepassten Preis näher an den ursprünglichen zieht, $0.88 statt der narrow based $0.82, sodass weniger zusätzliche Anteile ausgegeben werden und der Gründer nach der zweiten Runde 34.5 Prozent statt 34.0 Prozent behält.
+5. Nach 9 Monaten **nichts**, weil der Cliff von einem Jahr nicht erreicht ist. Nach 12 Monaten springt der gevestete Anteil direkt auf `4 * 6% = 24%`. Das Vesting ist nach `60 / 6 = 10 quarters` abgeschlossen, also nach zweieinhalb Jahren.
+6. Alle drei Deals geben dem Investor dieselben erwarteten $60 und dem Gründer dieselben erwarteten $180 bei einer Erfolgswahrscheinlichkeit von 50 Prozent, gehandelt wird also die **Form** und nicht der Durchschnitt: eine höhere Post-Money-Bewertung, $133 statt $80, im Tausch gegen eine schwerere Vorzugsstellung. Ein Optimist, der den Erfolg für zu 60 Prozent wahrscheinlich hält, stützt sich auf den guten Ausgang, wo der 3x-Deal dem Gründer $340 zahlt gegenüber $300 beim Common-Deal, was erwartete Renditen von $212 gegen $204 ergibt. Ein Pessimist bei 40 Prozent stützt sich auf den schlechten Ausgang, wo der 3x-Deal dem Gründer nur $20 zahlt gegenüber $60 beim Common-Deal, was $148 gegen $156 ergibt. Die Spannentabelle macht denselben Punkt strukturell: Unter dem 3x-Deal ist die Auszahlung des Investors in beiden Ausgängen vollständig flach bei $60, während sich der Ausschlag des Gründers auf $320 weitet, der Gründer hat also eine höhere Bewertung dadurch gekauft, dass er das Risiko übernommen hat.
+</Aside>
+
+## Zusammenfassung zur Wiederholung
+
+<Aside type="tip">
+**Der Ein-Minuten-Rückblick**
+
+- Ein **Term Sheet** ist das Bündel vertraglicher Klauseln, die die Rechte und Pflichten sowohl des Gründers als auch des Investors regeln, und die Verhandlungsgrundlage für die **Satzung des Unternehmens**, das **Investor Rights Agreement und Purchase Agreement** sowie die **Anstellungsverträge der Gründer**. Zum Lesen erfahrene Juristen hinzuziehen.
+- Seine fünf **Rollen**: Rechte, Pflichten und Erträge regeln; Anreize für alle Beteiligten einschließlich der Mitarbeitenden setzen; die Parteien dazu bringen, Erwartungen zu klären; Risiko zwischen den beiden Parteien verteilen; Rechte und Pflichten gegenüber Externen festlegen, also gegenüber Mitarbeitenden und künftigen Investoren.
+- Verträge sind **unvollständig**, weil niemand jedes künftige Ereignis auflisten kann, und Ventures verschärfen das. Die Lösung ist **contingent contracting**, mit **Milestones** als Auslösern, gemessen auf finanziellen, operativen, führungsbezogenen, technischen und kommerziellen Dimensionen. Milestones definieren Ziele, gleichen Erwartungen an, geben einen Ankerpunkt für Nachverhandlungen und helfen bei der Bewertungsverhandlung - aber Leistung kann schwer zu definieren sein, und ihnen hinterherzujagen führt zu **Under-Pivoting** und **Kurzfristdenken**. Wo eine Überprüfung unmöglich ist, weisen Klauseln stattdessen **Entscheidungsrechte** zu.
+- Vier geregelte Bereiche: **Zahlungsstromrechte**, **Kontrollrechte**, **Vergütung und Anstellung** sowie **übrige Rechte** rund um Anti-Dilution, künftige Finanzierung und Liquidität.
+- Investoren nehmen **Convertible Preferred**, nicht Common: eine fremdkapitalähnliche Auszahlung, wenn das Venture scheitert, Wandlung in Common, wenn es Erfolg hat. `PT = M*I + I*D*T` und `CT = PT / Finv`. Unter PT nimmt der Investor alles und die Gründer bekommen null; zwischen PT und CT nimmt der Investor PT; über CT wandelt der Investor und nimmt `Finv*X`.
+- **Participating Preferred** ist der Double Dip: `CFinv = PT + (X - PT)*Finv`. Ein **Cap** stoppt die Participation bei `Xcap`, um die Gründeranreize zu erhalten, mit vollständiger Wandlung oberhalb von `Xcom = Xcap + PT*(1 - Finv)/Finv`, und der Sprung am Cap wird geglättet, um perverse Exit-Anreize zu vermeiden.
+- Preferred Stock existiert, um Gründeranreize auszubalancieren, um **schwache Projekte durch Selbstselektion auszusortieren** und um Erwartungen anzugleichen. In den Zahlen der Vorlesung hebt die Selbstselektion den Investor von naiven 45 auf tatsächliche 51, während das Common-Sheet nur die Unechten anzieht und 36 verdient.
+- Gründer werden **Angestellte**: Sie können gefeuert werden, sie unterliegen dem Wettbewerbsverbotsrecht, und sie übertragen ihr geistiges Eigentum. Die Vergütung besteht aus einem Gehalt unter Marktniveau plus Bonus plus späteren Optionen, aufgeschoben, um Liquidität zu sparen. Anteile **vesten** nach Zeit, mit oder ohne **Cliff**, und nach Leistung, und gehen bei Kündigung aus wichtigem Grund verloren. Im Beispiel vesten 6 Prozent pro Quartal aus einer Zuteilung von 60 Prozent vollständig in 10 Quartalen, und der Cliff von einem Jahr bedeutet null nach 9 Monaten und 24 Prozent nach 12 Monaten.
+- **Option Pool**: 10 bis 20 Prozent der voll verwässerten Basis, bei der Series A festgelegt, wieder aufgefüllt, verbraucht mit 2 bis 5 Prozent pro Jahr, mit einem kleinen oder am Preis der letzten Runde orientierten Ausübungspreis, wobei die Ausübung manchmal ein Darlehen des Unternehmens erfordert.
+- **Kontrollrechte** kommen in drei Schichten: Stimmrechte der Anteilseigner, das Board und **vertragliche Rechte**, die beide überlagern können, als Vetos oder Zustimmungsrechte, typischerweise über den Verkauf des Unternehmens und die Bestellung des CEO.
+- Klauseln, die in künftige Runden hineingreifen: **Protective Provisions**, **Anti-Dilution**, **Bezugsrechte**, **Right of First Refusal**, **Pay-to-Play**. Anti-Dilution schützt den **Wert** nach einer Down Round, Bezugsrechte schützen den **Prozentsatz**, und Convertible Preferred schützt gegen einen enttäuschenden Exit statt gegen eine enttäuschende Runde. **Full Ratchet** bepreist auf $0.75 neu; **Weighted Average** ergibt $0.82 narrow based oder $0.88 broad based, was dem Gründer 33.3, 34.0 und 34.5 Prozent lässt gegenüber 35.3 Prozent ohne jeden Schutz.
+- Liquiditätsklauseln: **Redemption**, **Tag-Along**, um sich einem Verkauf anzuschließen, **Drag-Along**, um einen zu erzwingen, und **Registration plus Piggy-Back**, um eine Notierung zu erzwingen und sich ihr anzuschließen. Dazu **Informationsrechte**, **Key Man Insurance**, **rechtliche Regelungen**, **Reps and Warranties** sowie die Verhandlungsklauseln: **No-Shop**, **Exploding Offer**, **Bedingtheit durch Due Diligence**, **Co-Investoren** und Milestones.
+- **Bewertung gegen Terms**: Die Bewertung ist der sichtbarste und am leichtesten verständliche Term, aber Zahlungsstromrechte können sie zunichtemachen. Tausche Bewertung gegen Kontrolle, gegen Vergütung und gegen Aufwärtschance versus Abwärtsfall. Im Beispiel der Vorlesung geben alle drei Deals dem Investor erwartete $60 und dem Gründer $180, aber eine 3x-Vorzugsstellung glättet die Auszahlung des Investors auf $60 in jedem Ausgang und weitet den Ausschlag des Gründers auf $320. Ein Optimist gewinnt bei diesem Tausch, $212 gegen $204; ein Pessimist verliert, $148 gegen $156.
+- In der **Seed**-Phase, mit Beträgen unter $100K, unerfahrenen Investoren und einem wahrscheinlichen Verschwinden, wandeln **Convertible Notes** automatisch bei der ersten qualifizierten Runde in dasselbe dann ausgegebene Wertpapier, mit einem Abschlag von 10 bis 20 Prozent, Laufzeit 12 bis 24 Monate. Ein **Valuation Cap** verhindert, dass der Seed-Investor für den Erfolg bezahlt. Notes sind billig, standardisiert, tragen so gut wie keine Kontrollrechte und schieben die Bewertung auf; der **SAFE** geht weiter, indem er Fälligkeitsdatum und Dividendensatz weglässt.
+</Aside>
+
+*Weiter: [Staged Financing & Down Rounds →](/de/learnings/mba/innovation-and-new-business-planning/15-staged-financing-and-down-rounds/) - warum das Geld in Raten kommt.*

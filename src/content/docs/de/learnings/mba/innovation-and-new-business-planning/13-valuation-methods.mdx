@@ -1,0 +1,896 @@
+---
+title: "Bewertungsmethoden"
+description: "Wie einer Unternehmung ohne Historie eine Zahl zugeordnet wird - warum beide Seiten überhaupt bewerten, die vier Dinge, die eine Venture-Bewertung schwer machen, der Zielkonflikt zwischen Einfachheit und Komplexität, und die drei praktischen Methoden: Discounted Cash Flow mit Terminal Value und CAPM-Abzinsungssatz, die Venture-Capital-Methode vom Exit-Wert zurück zur Beteiligungsquote, und die Methode der Vergleichsunternehmen mit ihren Multiples und ihren Fallstricken, dazu die wahrscheinlichkeitsbasierten Erweiterungen."
+sidebar:
+  label: "13 · Bewertungsmethoden"
+  order: 13
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Bis hierhin hat der Kurs die Bewertung als Eingangsgröße behandelt. Wir haben Beteiligungsquoten und Investorenrenditen ausgerechnet und dabei einfach unterstellt, dass sich schon jemand darauf geeinigt hatte, was das Unternehmen wert ist. Diese Sitzung öffnet genau diese Kiste. Das prägende Merkmal des Problems, und der Grund, warum es sich nicht so lösen lässt, wie eine Bank ein Bürogebäude bewertet, ist die **Unsicherheit, die um die Zukunft der Unternehmung herumliegt**.
+
+Das Deck ist ehrlich, was die Unbequemlichkeit der Übung angeht. Ein unternehmerisches Unternehmen zu bewerten ist wirklich schwierig und frisst Zeit, deshalb stellt die erste Folie die faire Frage: Warum überhaupt? Die Antwort lautet, dass eine Zahl der Eintrittspreis für eine Verhandlung ist. Beide Seiten brauchen eine fundierte Einschätzung, bevor sie sich zusammensetzen, nicht weil die Einschätzung richtig wäre, sondern weil sie jeder Seite sagt, **wie flexibel sie sich beim Preis leisten kann zu sein**. Für den Investor ist die Bewertung ein Schritt innerhalb eines größeren Entscheidungsprozesses darüber, ob überhaupt investiert wird. Für den Gründer ist genau diese Arbeit das, was ihn investorenreif macht, denn ein Gründer, der nicht erklären kann, woher eine Zahl kommt, hat den Raum schon verloren.
+
+Es folgen drei praktische Methoden plus eine vierte Familie von anspruchsvolleren Verfahren. Sie nähern sich derselben Frage aus völlig verschiedenen Richtungen: eine modelliert die Cashflows des Unternehmens, eine modelliert die Cashflows des Investors, und eine verzichtet ganz auf Modellierung und fragt, was der Markt für Vergleichbares zahlt. Alle drei zu rechnen ist keine doppelte Arbeit, es ist Triangulation.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Jede Methode besteht aus denselben drei Zutaten in anderer Reihenfolge: **eine Zahl weit in der Zukunft, ein Satz, der sie auf heute zurückschrumpft, und eine Behauptung über Vergleichbarkeit**. Keine davon ist eine Messung. Die Bewertung, die man verteidigen kann, ist die, bei der man alle drei Zutaten laut benennen und begründen kann, warum jede vernünftig ist. Das eigentliche Ergebnis ist also nicht die Zahl, es ist die Argumentation dahinter.
+</Aside>
+
+## 1 · Warum sich überhaupt jemand die Mühe macht, ein Venture zu bewerten
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Für den Investor <small>Bewertung ist Teil des Entscheidens</small></div>
+      <ul>
+        <li>Die Zahl speist einen Entscheidungsprozess, der größer ist als die Zahl: investieren oder passen, in welcher Höhe, zu welchen Konditionen</li>
+        <li>Sie setzt die Obergrenze, oberhalb derer der Deal die geforderte Rendite des Fonds nicht mehr erreicht</li>
+        <li>Sie legt die Beteiligungsquote fest, die das Geld kaufen muss</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Für den Unternehmer <small>Bewertung ist der Weg zur Investorenreife</small></div>
+      <ul>
+        <li>Zwingt Finanzplan, Exit-Story und Annahmen in ein einziges konsistentes Objekt</li>
+        <li>Sagt dir deinen eigenen Absprungpunkt, bevor dich jemand ankert</li>
+        <li>Lässt dich die Frage beantworten, die jeder Investor stellt, und die lautet nicht wie hoch ist deine Bewertung, sondern wie bist du dorthin gekommen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Der gemeinsame Grund liegt unter beiden Spalten: Keine Partei kann ohne fundierte Einschätzung verhandeln, und keine kann ohne sie wissen, wie viel Spielraum sie beim Preis hat.</figcaption>
+</div>
+
+## 2 · Vier Gründe, warum es schwer ist, und ein Zielkonflikt
+
+Das Deck nennt vier konkrete Herausforderungen. Es lohnt sich, sie als Satz auswendig zu lernen, denn jede einzelne erledigt eine andere Standardtechnik der Bewertung.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Ein hoher Grad an Unsicherheit <small>nicht dasselbe wie Risiko</small></div>
+    <ul>
+      <li>Risiko heißt, du kennst die möglichen Ergebnisse und ungefähr ihre Wahrscheinlichkeiten, du kannst also darüber mitteln</li>
+      <li>Hier geht es um die tiefere Variante, in der selbst die Liste der Ergebnisse und ihre Wahrscheinlichkeiten unbekannt sind</li>
+      <li>Nichts, was du mit einer Tabellenkalkulation machst, lässt das verschwinden, weshalb jede Methode hier die Unsicherheit am Ende in einem einzigen großen Abzinsungssatz vergräbt</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Informationsasymmetrie <small>die beiden Seiten wissen nicht dasselbe</small></div>
+    <ul>
+      <li>Der Gründer kennt die Technologie, die Pipeline und die Probleme; der Investor kennt den Markt, die vergleichbaren Deals und die Exit-Wege</li>
+      <li>Keiner kann den anderen vollständig überprüfen, ein Teil der Preislücke ist also in Wahrheit eine Informationslücke</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Fehlen wertrelevanter objektiver Informationen <small>keine Historie, auf die man sich stützen kann</small></div>
+    <ul>
+      <li>Keine lange Erfolgsbilanz, keine stabilen Margen, oft überhaupt kein Umsatz</li>
+      <li>Private Märkte veröffentlichen wenig, selbst die vergleichbaren Transaktionen sind also teilweise unsichtbar</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Unzureichende Erfassung immaterieller Werte <small>einschließlich des Humankapitals</small></div>
+    <ul>
+      <li>Fast alles Wertvolle in einem jungen Unternehmen steht außerhalb der Bilanz: Code, Marke, Daten, Patente und vor allem das Team</li>
+      <li>Der Buchwert ist als Bewertungsanker deshalb nahezu bedeutungslos</li>
+    </ul>
+  </div>
+</div>
+
+**Der Zielkonflikt zwischen Einfachheit und Komplexität.** Das Deck macht hier einen eleganten Punkt: Dieselbe Unsicherheit spricht gleichzeitig für beide Richtungen. In der einen Lesart ist so vieles unbekannt, dass nur ein **einfacher, vernünftiger** Ansatz ehrlich ist, weil ausgefeilte Maschinerie bloß Schätzungen aufhübscht. In der anderen Lesart braucht man gerade deshalb, weil so vieles unbekannt ist, eine **präzise, komplexe Methodik**, die die Unsicherheit explizit modelliert statt sie zu verstecken. Das Deck löst das nicht auf und sagt klar, dass verschiedene Leute verschiedene Ansichten vertreten. In der Praxis ist das der Grund, warum ein Investor eine einzeilige Venture-Capital-Rechnung präsentiert, während ein Corporate-Finance-Team ein Modell mit fünfzig Tabellenblättern vorlegt, und beide den jeweils anderen für unseriös halten.
+
+## 3 · Die Landkarte der Methoden
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1. Discounted Cash Flow<span class="sub">aus Theorie und Praxis · modelliert die Cashflows des Unternehmens · kann kompliziert werden und beruht auf anspruchsvollen Annahmen · liefert eine intrinsische, absolute Bewertung</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">2. Venture-Capital-Methode<span class="sub">aus der Praxis · modelliert die Cashflows des Investors · einfach und konsistent · die häufigste Methode in Venture-Deals</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">3. Vergleichsunternehmen<span class="sub">aus der Praxis · nutzt Marktinformationen · liefert eine extrinsische, relative Bewertung</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">4. Wahrscheinlichkeitsbasierte Ansätze<span class="sub">Szenarioanalyse, Simulation und PROFEX · modellieren die Unsicherheit explizit, statt sie im Abzinsungssatz zu vergraben</span></div>
+  </div>
+  <figcaption>Intrinsisch heißt, der Wert kommt aus der eigenen Ökonomie des Unternehmens. Extrinsisch oder relativ heißt, der Wert wird von dem importiert, was der Markt für andere Unternehmen zahlt.</figcaption>
+</div>
+
+## 4 · Methode 1: Discounted Cash Flow
+
+DCF ist das Hauptmodell der Unternehmensfinanzierung und theoretisch das am besten begründbare der drei, und trotzdem ist es für Ventures das **in der Praxis unbeliebteste**. Der Grund wird direkt genannt: Es modelliert Unternehmens-Cashflows, und das erfordert detaillierte Annahmen und echtes Wissen über das Geschäft. Die Unsicherheit einer unternehmerischen Unternehmung macht es weniger anwendbar, **außer in späteren Phasen**, wenn das Unternehmen genug Historie hat, um daraus fortzuschreiben. Das Deck vereinfacht außerdem, indem es die Fremdfinanzierung ignoriert, da Ventures sie selten nutzen.
+
+Die Logik selbst ist nicht kompliziert. Schätze einen Terminal Value einige Jahre voraus, dann zinse ihn und jeden zwischenzeitlichen Cashflow auf heute ab.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1) Das DCF-Modell</span>
+    <code>V_PRE(DCF) = sum over t = 1 to T of [ FCF_t / (1 + d)^t ]  +  TV_T / (1 + d)^T  +  Cash_0</code>
+  </div>
+  <div>
+    <span class="name">Die Symbole gelesen</span>
+    d ist der Abzinsungssatz, T ist die Zeit bis zum Exit, FCF ist der Freie Cashflow nach Abzug der Mittelbeschaffung, TV ist der Terminal Value, und Cash_0 ist die Liquidität, die das Unternehmen bereits hält. Das Ergebnis ist eine <strong>Pre-Money</strong>-Bewertung.
+  </div>
+</div>
+
+### Die drei Grundzutaten
+
+**Zeithorizont T.** Kein willkürliches Fenster. Es ist der Punkt, ab dem das Unternehmen **stabiles Wachstum** erreicht, und in der Praxis fällt er meist ähnlich lang aus wie die Zeit bis zum Exit.
+
+**Freier Cashflow.** Das Deck gibt eine Definition, und die sollte man sich merken.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Freier Cashflow</span>
+    <code>FCF = Net income - change in net working capital - Capex + Depreciation</code>
+  </div>
+</div>
+
+Die Abschreibungen werden wieder hinzugerechnet, weil sie zur Ermittlung des Jahresüberschusses abgezogen wurden, aber kein Geld das Haus verlassen hat. Investitionen und Working Capital werden abgezogen, weil dafür tatsächlich Geld das Haus verlässt, obwohl beides in der Gewinn- und Verlustrechnung kein Aufwand ist. Für ein wachsendes Venture ist die Working-Capital-Zeile brutal: Jeder zusätzliche Euro Umsatz zieht Vorräte und Forderungen mit sich.
+
+**Terminal Value.** Hier steckt der größte Teil der Antwort.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(2) Terminal Value</span>
+    <code>TV_T = FCF_T x (1 + g) / (d - g)</code>
+  </div>
+  <div>
+    <span class="name">wobei</span>
+    g die Wachstumsrate des Freien Cashflows nach dem Horizont ist, und die Formel nur solange Sinn ergibt, wie d größer als g ist.
+  </div>
+</div>
+
+Die Warnung des Decks dazu ist der wichtigste einzelne Satz des DCF-Abschnitts: **Der Terminal Value ist der Hauptbestandteil einer DCF-Bewertung** für ein unternehmerisches Unternehmen, weil die zwischenzeitlichen Cashflows überwiegend negativ sind. Diese frühen Jahre sind Investitionsjahre. Die ehrliche Beschreibung eines Venture-DCF lautet also: Man verbringt Wochen damit, Cashflows zu projizieren, die von der Antwort abziehen, und dann wird die Antwort von zwei Zahlen entschieden, die man am Ende geraten hat, d und g.
+
+### Durchgerechnete Zahlen aus dem Deck: der WorkHorse-DCF
+
+Eingangsgrößen: Abzinsungssatz 15 Prozent, Wachstumsrate des Unternehmens 5 Prozent. Beträge in Dollar, negative Werte in Klammern.
+
+| Geschäftsjahr endet Januar | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 |
+|---|--:|--:|--:|--:|--:|--:|
+| EBIT | (408,812) | (416,784) | 1,068,426 | 1,968,550 | 4,034,335 | 7,583,253 |
+| Steuern | 0 | 0 | (160,264) | (295,283) | (605,150) | (1,137,488) |
+| Abschreibungen | 1,412 | 15,424 | 23,157 | 25,300 | 25,300 | 34,300 |
+| Investitionen | 29,000 | 98,000 | 3,000 | 15,000 | 0 | 45,000 |
+| Veränderung des Net Working Capital | 0 | (978,016) | (1,340,531) | (1,660,351) | (2,645,636) | (4,626,105) |
+| **Freier Cashflow** | **(436,400)** | **(1,477,376)** | **(412,212)** | **23,217** | **808,850** | **1,808,960** |
+| Abzinsungsfaktor | 0.870 | 0.756 | 0.658 | 0.572 | 0.497 | 0.432 |
+| **Abgezinster FCF** | **(379,478)** | **(1,117,109)** | **(271,036)** | **13,274** | **402,141** | **782,063** |
+
+Der Terminal Value wird auf Basis des letzten Jahres berechnet und mit demselben Faktor für Jahr 6 abgezinst.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Terminal Value</span>
+    <code>TV = 1,808,960 x 1.05 / (0.15 - 0.05) = 18,994,081</code>
+  </div>
+  <div>
+    <span class="name">Abgezinster Terminal Value</span>
+    <code>18,994,081 x 0.432 = 8,211,665</code>
+  </div>
+  <div>
+    <span class="name">Kapitalwert</span>
+    <code>-379,478 - 1,117,109 - 271,036 + 13,274 + 402,141 + 782,063 + 8,211,665 = 7,641,521</code>
+  </div>
+</div>
+
+Sieh dir an, was diese Rechnung sagt. Die sechs Jahre operativer Cashflows steuern insgesamt etwa minus 570.000 Dollar bei. Der Terminal Value steuert 8,2 Millionen bei. **Mehr als die gesamte Bewertung ist der Terminal Value**, und die operativen Projektionen verringern sie aktiv. Das ist der Punkt des Decks, in Zahlen ausgedrückt.
+
+### Die Sensitivitätsmatrix, und das ist die eigentliche Lektion
+
+Das Deck bepreist dann dasselbe Unternehmen über verschiedene Abzinsungs- und Wachstumsraten hinweg neu. Leere Zellen sind Kombinationen, in denen das Wachstum nicht unter dem Abzinsungssatz liegt, die Formel bricht dort also zusammen.
+
+**Kapitalwert, in Dollar**
+
+| Abzinsungssatz | g = 0% | g = 5% | g = 10% | g = 15% | g = 20% |
+|---|--:|--:|--:|--:|--:|
+| 5% | 26,916,296 | | | | |
+| 10% | 9,844,709 | 21,076,928 | | | |
+| 15% | 4,641,286 | 7,639,196 | 16,632,925 | | |
+| 20% | 2,307,643 | 3,519,278 | 5,942,546 | 13,212,351 | |
+| 30% | 343,672 | 668,476 | 1,155,682 | 1,967,691 | 3,591,709 |
+| 40% | (396,304) | (276,180) | (116,014) | 108,218 | 444,566 |
+| 50% | (719,029) | (666,092) | (599,920) | (514,843) | (401,406) |
+
+**Terminal Value, in Dollar**
+
+| Abzinsungssatz | g = 0% | g = 5% | g = 10% | g = 15% | g = 20% |
+|---|--:|--:|--:|--:|--:|
+| 5% | 36,179,202 | | | | |
+| 10% | 18,089,601 | 37,988,162 | | | |
+| 15% | 12,059,734 | 18,994,081 | 39,797,122 | | |
+| 20% | 9,044,801 | 12,662,721 | 19,898,561 | 41,606,083 | |
+| 30% | 6,029,867 | 7,597,632 | 9,949,281 | 13,868,694 | 21,707,521 |
+| 40% | 4,522,400 | 5,426,880 | 6,632,854 | 8,321,217 | 10,853,761 |
+| 50% | 3,617,920 | 4,220,907 | 4,974,640 | 5,943,726 | 7,235,840 |
+
+Dasselbe Unternehmen, dieselben Cashflows, ist 26,9 Millionen Dollar wert oder minus 0,7 Millionen, je nach zwei Annahmen, die niemand überprüfen kann. Ein Venture-Investor, der mit 40 bis 50 Prozent abzinst, erhält aus genau den Projektionen, mit denen der Gründer 7,6 Millionen begründet hat, eine **negative** Bewertung. Das ist kein Fehler in der Arithmetik, es ist die ehrliche Signatur der Methode, und es erklärt, warum Praktiker zu etwas Einfacherem abgewandert sind.
+
+## 5 · Woher der Abzinsungssatz kommt, und warum er so hoch ist
+
+Das Deck leitet d aus dem **Capital Asset Pricing Model** her, einem Eckpfeiler der modernen Finanzwirtschaft, entwickelt in den 1960er Jahren und 1990 mit dem Nobelpreis ausgezeichnet.
+
+Die zentrale Intuition ist, dass sich das Risiko in zwei Teile spaltet. Risiko, das **spezifisch** für ein Unternehmen ist, manchmal idiosynkratisch genannt, lässt sich beseitigen, indem man viele Unternehmen gleichzeitig hält, weil das schlechte Jahr der einen Firma das gute Jahr einer anderen ausgleicht. Das ist diversifizierbares Risiko, und der Markt bezahlt einen nicht dafür, es zu tragen, denn man hätte es kostenlos entfernen können. Risiko, das **allen Unternehmen gemeinsam** ist, systematisches Risiko genannt, lässt sich nicht wegdiversifizieren, und eine Rezession ist das Standardbeispiel. Die finanzielle Risikoprämie ist die Zusatzrendite, die Investoren genau dafür verlangen.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Geforderter Abzinsungssatz nach CAPM</span>
+    <code>d = Riskless rate + Beta x (Market rate - Riskless rate)</code>
+  </div>
+  <div>
+    <span class="name">Beta</span>
+    wie stark sich die Renditen dieses Unternehmens mit dem Gesamtmarkt bewegen. Ein Beta von 1,0 heißt, es bewegt sich mit dem Markt, über 1,0 heißt, es verstärkt die Marktausschläge.
+  </div>
+</div>
+
+Für ein junges Venture ist die CAPM-Zahl für sich genommen bei weitem nicht hoch genug, und der nächste Abschnitt erklärt, warum: Ein Investor in ein privates Unternehmen trägt zusätzlich Illiquidität, eine sehr reale Chance auf Totalausfall und die Kosten der Arbeit, die er persönlich leisten wird. Das sind keine systematischen Risiken, das CAPM bepreist sie also nicht, aber der Investor berechnet sie trotzdem.
+
+## 6 · Methode 2: die Venture-Capital-Methode
+
+Das ist die Methode, die Investoren tatsächlich verwenden. Ihr Trick besteht darin, aufzuhören, das Unternehmen zu modellieren, und stattdessen die Cashflows des **Investors** zu modellieren, die fast trivial einfach sind: am Anfang Geld hineingeben, warten, einen Anteil an einem Exit erhalten. Die gesamte Methode besteht aus drei Gleichungen.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1) Post-Money-Bewertung</span>
+    <code>V_POST = X_e / (1 + rho)^T</code>
+  </div>
+  <div>
+    <span class="name">(2) Pre-Money-Bewertung</span>
+    <code>V_PRE = V_POST - I</code>
+  </div>
+  <div>
+    <span class="name">(3) Die Beteiligungsquote des Investors</span>
+    <code>F_INV = I / V_POST</code>
+  </div>
+</div>
+
+Der Reihe nach gelesen erzählen sie eine vollständige Geschichte. Schätze, wofür das Unternehmen beim Exit verkauft wird. Schrumpfe das mit der Rendite, die der Investor fordert, auf heute zurück, und nenne das Ergebnis den Post-Money-Wert. Ziehe das eingesetzte Geld ab, um den Pre-Money-Wert zu erhalten, also das, was den bestehenden Gesellschaftern gutgeschrieben wird. Und schließlich ist der Anteil des Investors einfach sein Scheck geteilt durch den Post-Money-Wert. Das ist die gesamte Methode.
+
+### Die vier Eingangsgrößen
+
+| Eingangsgröße | Was sie ist | Woher sie kommt |
+|---|---|---|
+| **I**, Investitionsbetrag | Wie viel Geld die Unternehmung braucht und, ebenso wichtig, wann sie es braucht | Aus dem Finanzplan gewonnen, der Kenntnis des Geschäftsmodells und der Ökonomie der Branche voraussetzt |
+| **T**, Zeit bis zum Exit | Jahre von der Investition bis zum Liquiditätsereignis | Erfordert Kenntnis der Exit-Märkte, also Übernahmen und Börsengänge, lässt sich aber nicht wirklich im Voraus planen; verschiedene Investoren und Gründer haben verschiedene Horizonte, deshalb sollte das beim Deal offen besprochen werden |
+| **X_e**, Exit-Wert | Der Wert **für den Fall, dass das Unternehmen erfolgreich ist** | Entweder ein DCF-Terminal-Value oder eine Schätzung aus den Exits vergleichbarer Unternehmen |
+| **rho**, geforderte Rendite | Der Zielsatz, die Hurdle Rate oder die geforderte Rendite, die der Investor ansetzt | Aus fünf Komponenten aufgebaut, siehe unten |
+
+Die Feinheit bei **X_e** verdient einen Moment. Es ist eine Schätzung des Exit-Werts, **kein Erwartungswert im statistischen Sinn**. Die Venture-Capital-Methode unterstellt, dass die Unternehmung entweder Erfolg hat oder ganz scheitert, der einzige Wert, den es im Zähler zu tragen lohnt, ist deshalb der Erfolgswert. Die Ausfallwahrscheinlichkeit wird nicht vom Exit-Wert abgezogen; sie wird stattdessen im Abzinsungssatz berechnet. Beides zu mischen, indem man einen wahrscheinlichkeitsgewichteten Exit-Wert **und** einen Venture-Abzinsungssatz verwendet, zählt das Ausfallrisiko doppelt und erzeugt eine Unsinnszahl.
+
+### Die geforderte Rendite hat fünf Bestandteile
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Risikoloser Zins <span class="n">finanziell</span></div>
+      Der reine Zeitwert des Geldes, das, was eine Staatsanleihe fürs Nichtstun zahlt
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Finanzielle Risikoprämie <span class="n">finanziell</span></div>
+      Entschädigung für systematisches Risiko, der Teil, den das CAPM über Beta bepreist
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Illiquiditätsprämie <span class="n">finanziell</span></div>
+      Das sind langfristige Investitionen mit fast keinem Sekundärmarkt, das Geld ist also gebunden, und der Investor berechnet dafür etwas
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Ausfallratenprämie <span class="n">nicht finanziell</span></div>
+      Spiegelt die hohe Sterblichkeit neuer Ventures wider und ist üblicherweise die größte einzelne Komponente
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Serviceprämie <span class="n">nicht finanziell</span></div>
+      Bezahlung für das, was der Investor über das Ausstellen des Schecks hinaus tut: Kontrolle, Beratung, Mentoring, Netzwerk
+    </div>
+  </div>
+  <figcaption>Drei finanzielle und zwei nicht finanzielle Komponenten. Stapelt man sie, sieht eine geforderte Rendite von 40 bis 60 Prozent pro Jahr nicht mehr gierig aus, sondern arithmetisch.</figcaption>
+</div>
+
+Die Serviceprämie ist die, die Gründer vergessen, und sie ist die verhandelbarste der fünf, weil sie die einzige ist, über die man streiten kann, indem man fragt, was der Investor konkret für einen tun wird.
+
+### Eine Ausfallwahrscheinlichkeit in einen Abzinsungssatz verwandeln
+
+Das Deck nennt zwei grobe Wege, die Ausfallratenprämie zu setzen, plus einen eleganten Mittelweg. Die groben Wege sind, **eine große Zahl auf Basis früherer Erfahrung einzusetzen** oder **ein vollständiges Modell der Unsicherheit zu bauen**. Der Mittelweg wandelt eine jährliche Ausfallwahrscheinlichkeit direkt in eine geforderte Rendite um.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Notation</span>
+    z ist die jährliche Ausfallwahrscheinlichkeit, d ist der gewöhnliche Abzinsungssatz. Die Wahrscheinlichkeit, bis zum Exit bei T zu überleben, beträgt daher (1 - z)^T.
+  </div>
+  <div>
+    <span class="name">Erwarteter Exit-Wert</span>
+    <code>X_e x (1 - z)^T</code>
+  </div>
+  <div>
+    <span class="name">Abgezinst mit dem gewöhnlichen Satz</span>
+    <code>V_POST = X_e x (1 - z)^T / (1 + d)^T</code>
+  </div>
+  <div>
+    <span class="name">Gleichgesetzt mit der Venture-Capital-Form</span>
+    <code>X_e x (1 - z)^T / (1 + d)^T = X_e / (1 + rho)^T</code>
+  </div>
+  <div>
+    <span class="name">Was sich zusammenzieht zu</span>
+    <code>(1 - z)^T / (1 + d)^T = 1 / (1 + rho)^T</code>
+  </div>
+  <div>
+    <span class="name">Und daher</span>
+    <code>rho = (d + z) / (1 - z)</code>
+  </div>
+</div>
+
+Diese eine Formel ist die Brücke zwischen den beiden Methoden. Ein völlig gewöhnlicher Abzinsungssatz von 14 Prozent kombiniert mit einer jährlichen Sterbewahrscheinlichkeit von 20 Prozent ergibt rho gleich 0,34 geteilt durch 0,80, also **42,5 Prozent**. Nichts Exotisches ist passiert. Die furchteinflößenden Hurdle Rates der Venture-Capital-Methode sind nur normale Kapitalkosten plus eine Sterberate, und die Formel erlaubt es, direkt über die Sterberate zu streiten, statt abstrakt über die Hurdle Rate.
+
+### Spätere Runden behandeln: die rekursive Fassung
+
+Eine einzelne Runde ist selten die Wahrheit. Wenn weitere Runden kommen, wird das Modell **rekursiv angewendet, von einer Periode zurück auf die vorherige**. Der Exit-Wert wird auf die letzte Runde abgezinst, deren Pre-Money wird zum Zielwert für die Runde davor, und so weiter.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1-MR) Post-Money in Runde r</span>
+    <code>V_POST(r) = V_PRE(r+1) / CCM_r</code>
+  </div>
+  <div>
+    <span class="name">(2-MR) Pre-Money in Runde r</span>
+    <code>V_PRE(r) = V_POST(r) - I(r)</code>
+  </div>
+  <div>
+    <span class="name">(3-MR) Beteiligungsquote in Runde r</span>
+    <code>F_INV(r) = I(r) / V_POST(r)</code>
+  </div>
+  <div>
+    <span class="name">Das Cash-on-Cash-Multiple zwischen zwei Runden</span>
+    <code>CCM_r = (1 + rho)^tau, where tau is the number of years between round r and round r+1</code>
+  </div>
+</div>
+
+So wird die **erwartete Verwässerung behandelt**, und zwar implizit statt über eine separate Verwässerungskorrektur. Weil Runde eins nun vom **Pre-Money** der Runde zwei aus bewertet wird statt vom Exit, und weil dieses Pre-Money die spätere Investition bereits abgezogen hat, drücken die antizipierten künftigen Runden automatisch die Bewertung der aktuellen Runde nach unten und die Beteiligungsquote des aktuellen Investors nach oben. Der erste Investor besitzt am Ende ein größeres Stück einer kleineren Zahl, und genau das ist die Entschädigung, die er für die kommende Verwässerung braucht.
+
+### Durchgerechnete Zahlen aus dem Deck: die WorkHorse-Venture-Capital-Methode
+
+Alle Beträge in Millionen Dollar. Exit-Wert 25, geforderte Rendite 50 Prozent in beiden Szenarien.
+
+| | Eine Runde | Zwei Runden |
+|---|--:|--:|
+| Exit-Wert X | 25 | 25 |
+| Geforderte Rendite rho | 0.5 | 0.5 |
+| Jahre von der letzten Runde bis zum Exit, T | 5 | 4 |
+| Investition in dieser Runde, I | 2.5 | 2 |
+| Cash-on-Cash-Multiple | 7.594 | 5.063 |
+| Post-Money in dieser Runde | 3.292 | 4.938 |
+| Pre-Money in dieser Runde | 0.792 | 2.938 |
+| Jahre zwischen Runde 1 und Runde 2 | | 1 |
+| Investition in Runde 1, I1 | | 0.5 |
+| CCM der ersten Runde | | 1.500 |
+| Post-Money der ersten Runde | | 1.959 |
+| Pre-Money der ersten Runde | | 1.459 |
+
+Verfolge die Spalte mit den zwei Runden, denn dort sieht man die Rekursion in Aktion. Das Multiple über vier Jahre bei 50 Prozent ist 1,5 hoch 4, also 5,063. Fünfundzwanzig geteilt durch 5,063 ergibt ein Post-Money der zweiten Runde von 4,938, und nach Abzug der investierten 2 bleibt ein Pre-Money von 2,938. Dieses Pre-Money ist dann das Ziel für Runde eins: ein Jahr mit 1,5 abzinsen ergibt ein Post-Money der ersten Runde von 1,959, und nach Abzug der investierten 0,5 ein Pre-Money der ersten Runde von **1,459**. Die Beteiligungsquoten folgen daraus: Der zweite Investor nimmt 2 geteilt durch 4,938, etwa **40,5 Prozent**, und der erste 0,5 geteilt durch 1,959, etwa **25,5 Prozent**.
+
+### Drei Varianten, die das Deck zulässt
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Zeitvariables rho, das fällt, während die Unternehmung reift und weniger riskant wird</span>
+  <span class="sc-chip amber">Statt rho ein Cash-on-Cash-Multiple angeben, da CCM gleich (1 + rho)^T ist</span>
+  <span class="sc-chip green">Nur bis zur nächsten Runde prognostizieren, was die Notwendigkeit, den Exit-Wert zu schätzen, bloß nach hinten verschiebt</span>
+</div>
+
+## 7 · Methode 3: Vergleichsunternehmen
+
+Die Methode der Vergleichsunternehmen ist unter Praktikern die beliebteste von allen, und die Beschreibung im Deck ist angenehm unverblümt: Sie ist **arm an Modellierung und reich daran, Marktbewertungen** als Hinweis darauf zu nutzen, wie eine Bewertung aussehen könnte. Die Logik passt in einen Satz. Finde Unternehmen, die der Markt bereits bepreist hat, entscheide, was sie vergleichbar macht, und übertrage ihre Bepreisung. Es gibt sie in zwei Ausprägungen.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Investment Comparables <small>private Deals</small></div>
+      <ul>
+        <li>Vergleiche die Bewertung der Unternehmung direkt mit <strong>ähnlichen Deals von Investoren</strong></li>
+        <li>Konzeptionell einfach, weil man denselben Unternehmenstyp in derselben Phase vergleicht</li>
+        <li>Praktisch an zwei Fronten schwierig. Ähnlich muss gleichzeitig ähnlich in Geschäftsmodell, Phase, Branche und aufgenommenem Betrag heißen</li>
+        <li>Und die Informationen existieren öffentlich kaum. Investoren halten einen Teil davon, Gründer meist nicht</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Exit Comparables <small>öffentliche Märkte</small></div>
+      <ul>
+        <li>Eine andere Logik: Schau, wie die Märkte <strong>vergleichbare reife Unternehmen</strong> bewerten, und wende diese Bepreisung auf deinen projizierten Exit an</li>
+        <li>Zwei entscheidende Wahlen, und sie tragen das gesamte Ergebnis: die <strong>Menge der Vergleichsunternehmen</strong> und die <strong>Vergleichskennzahl</strong></li>
+        <li>Daten gibt es reichlich, weil die Peers börsennotiert sind</li>
+        <li>Aber die ehrliche Frage lautet, ob ein börsennotiertes, reifes, diversifiziertes Unternehmen mit einer Unternehmung überhaupt vergleichbar ist</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Unterschiedliche Referenzpunkte, private Deals gegen öffentliche Märkte. Unterschiedliche Bewertungskriterien, erwartete Leistung gegen tatsächliche gegenwärtige Bewertung. Und unterschiedliche Behandlung: Exit Comparables erreichen eine Venture-Bewertung abgeleitet, über einen projizierten Exit, während Investment Comparables sie direkt ablesen.</figcaption>
+</div>
+
+### Die Arithmetik eines Multiples
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(7) Das Multiple für ein einzelnes Vergleichsunternehmen j</span>
+    <code>M_j(comp) = V_j(comp) / PM_j(comp)</code>
+  </div>
+  <div>
+    <span class="name">(8) Das Multiple für die Peer-Gruppe</span>
+    <code>M(comp) = average of the M_j(comp)</code>
+  </div>
+  <div>
+    <span class="name">(9) Die resultierende Bewertung</span>
+    <code>X_e = PM_e x M(comp)</code>
+  </div>
+  <div>
+    <span class="name">wobei</span>
+    PM die Leistungskennzahl ist, V die beobachtete Bewertung, und PM_e der von deiner eigenen Unternehmung projizierte Wert derselben Kennzahl zum Exit.
+  </div>
+</div>
+
+### Die Leistungskennzahl wählen
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Gewinne, die aber negativ oder volatil sein können</span>
+  <span class="sc-chip green">Cashflow, der eine klare ökonomische Interpretation hat</span>
+  <span class="sc-chip violet">Umsätze, die auch funktionieren, wenn der Cashflow negativ ist</span>
+  <span class="sc-chip">Operative Kennzahlen, die nur einen schwachen Bezug zum Ergebnis haben</span>
+</div>
+
+Die Rangfolge ist in Wahrheit ein Kompromiss zwischen ökonomischer Aussagekraft und Verfügbarkeit. Cashflow bedeutet am meisten, aber junge Unternehmen haben selten welchen. Umsatz bedeutet am wenigsten unter den drei Finanzkennzahlen, aber jedes Unternehmen hat etwas davon. Operative Kennzahlen wie Nutzer oder Abonnenten sind der letzte Ausweg, benutzt, wenn es nichts Finanzielles zu multiplizieren gibt, und die Warnung des Decks vor ihrem schwachen Bezug zum Ergebnis ist der Grund, warum Argumente über Umsatz je Nutzer so oft in sich zusammenfallen.
+
+### Durchgerechnete Zahlen aus dem Deck: Investment Comparables
+
+Fünf private Deals, Beträge in Dollar.
+
+| Vergleichsunternehmen | Standort | Beschreibung | Investition | Post-Money |
+|---|---|---|--:|--:|
+| Cavalavoro | Mailand, Italien | Fortschrittliche leichte Solarpaneele | 500,000 | 3,000,000 |
+| FoalPlay | Boulder, Colorado, USA | Tragbare Hybridgeneratoren mit Benzin und Solar | 200,000 | 6,000,000 |
+| GongZuoMa | Shenzhen, China | Kleine Solar-Akkupacks | 1,500,000 | 5,500,000 |
+| PferdWerk | Johannesburg, Südafrika | Kleine Solar-Akkupacks | 100,000 | 800,000 |
+| Trachevail | Montreal, Quebec, Kanada | Tragbare Generatoren für Flüssigerdgas | 1,000,000 | 2,000,000 |
+| **Durchschnitt** | | | **660,000** | **3,460,000** |
+| **Median** | | | **500,000** | **3,000,000** |
+| **Höchster Wert** | | | **1,500,000** | **6,000,000** |
+| **Niedrigster Wert** | | | **100,000** | **800,000** |
+
+Beachte die Spannweite: Die Post-Money-Bewertungen reichen von 0,8 Millionen bis 6 Millionen, ein Faktor von mehr als sieben, für Unternehmen im selben groben Feld. Der Durchschnitt von 3,46 Millionen wird von FoalPlay nach oben gezogen, das den zweitkleinsten Betrag zur höchsten Bewertung aufgenommen hat. Genau deshalb besteht das Deck darauf, die Verteilung statt des Mittelwerts anzusehen.
+
+### Durchgerechnete Zahlen aus dem Deck: Exit Comparables
+
+Beträge in Millionen Dollar.
+
+| Vergleichsunternehmen | Standort und Geschäft | Exit-Typ | Alter | Finanzierung | Exit-Wert | Umsatz | Umsatz-Multiple | Nettogewinn | P/E |
+|---|---|---|--:|--:|--:|--:|--:|--:|--:|
+| BieBie | Nanjing, China, tragbare Dieselmotoren | Übernahme durch einen chinesischen Hersteller | 23 | 25 | 40 | 30 | 1.33 | 5 | 8.00 |
+| FergieTech | Burnaby BC, Kanada, LNG-Pushback-Schlepper für Airlines | Börsengang an der TSX Venture | 6 | 8 | 15 | 12 | 1.25 | 1 | 15.00 |
+| Noodles | Menlo Park CA, USA, Cloud-Energiemanagement | Börsengang an der NASDAQ | 5 | 50 | 150 | 12 | 12.50 | -15 | nicht verfügbar |
+| UniCorNio | Tel Aviv, Israel, Solar-Patentportfolio | Übernahme durch ein US-Ingenieurunternehmen | 6 | 4 | 15 | 10 | 1.50 | 5 | 3.00 |
+| Zellie | Augsburg, Deutschland, Solar-Automobilkomponenten | Übernahme durch einen deutschen Automobilkonzern | 9 | 6 | 12 | 15 | 0.80 | 2 | 6.00 |
+| **Durchschnitt** | | | 10 | 18.6 | 46.4 | 15.8 | **3.5** | -0.4 | **8.0** |
+| **Median** | | | 6 | 8.0 | 15.0 | 12.0 | **1.3** | 2.0 | **7.0** |
+| **Höchster Wert** | | | 23 | 50.0 | 150.0 | 30.0 | 12.5 | 5.0 | 15.0 |
+| **Niedrigster Wert** | | | 5 | 4.0 | 12.0 | 10.0 | 0.8 | -15.0 | 3.0 |
+
+Wendet man diese Multiples auf die eigenen Projektionen der Unternehmung an, also einen Exit im Alter von 5 Jahren mit kumulierter Finanzierung von 2.500.000 Dollar, Umsätzen zum Exit von 21.110.000 und einem Nettogewinn von 3.430.000:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Exit-Wert auf Basis des durchschnittlichen Umsatz-Multiples</span>
+    <code>21,110,000 x 3.476 = 73,392,433</code>
+  </div>
+  <div>
+    <span class="name">Exit-Wert auf Basis des Median-Umsatz-Multiples</span>
+    <code>21,110,000 x 1.333 = 28,146,667</code>
+  </div>
+  <div>
+    <span class="name">Exit-Wert auf Basis des durchschnittlichen P/E-Multiples</span>
+    <code>3,430,000 x 8.0 = 27,440,000</code>
+  </div>
+  <div>
+    <span class="name">Exit-Wert auf Basis des Median-P/E-Multiples</span>
+    <code>3,430,000 x 7.0 = 24,010,000</code>
+  </div>
+</div>
+
+Drei der vier Antworten liegen dicht beieinander zwischen 24 und 28 Millionen. Die vierte, 73 Millionen, ist mehr als doppelt so hoch wie jede andere, und sie kommt vollständig von einem einzigen Peer, dessen Umsatz-Multiple von 12,5 den Durchschnitt von etwa 1,2 auf 3,5 zieht. Ändere nichts außer dem Tausch von Durchschnitt gegen Median, und das Unternehmen verliert 45 Millionen Dollar an Wert. Das ist das Nützlichste, was man sich über Multiples merken kann.
+
+### Ein zweites durchgerechnetes Beispiel: der Ansatz über börsennotierte Peers
+
+Das Deck bepreist außerdem ein Abo-Modeunternehmen gegen börsennotierte Peers zum Stichtag 17-11-18, mit einem Umsatz der letzten zwölf Monate von 1.037 Millionen Dollar und einem EBITDA der letzten zwölf Monate von 23 Millionen.
+
+| Vergleichsunternehmen | EBITDA-Multiple | Bewertung auf EBITDA | Umsatz-Multiple | Bewertung auf Umsatz |
+|---|--:|--:|--:|--:|
+| Lands End | 18.0 | 415,800,000 | 0.5 | 518,350,000 |
+| Guess | 8.8 | 203,280,000 | 0.5 | 518,350,000 |
+| Abercrombie and Fitch | 5.3 | 122,430,000 | 0.3 | 311,010,000 |
+| 1-800-FLOWERS | 8.6 | 198,660,000 | 0.6 | 622,020,000 |
+| Amazon | 43.6 | 1,007,160,000 | 3.5 | 3,628,450,000 |
+| TripAdvisor | 21.5 | 496,650,000 | 2.4 | 2,488,080,000 |
+| Snap | nicht verfügbar | nicht verfügbar | 19.0 | 19,697,300,000 |
+| Blue Apron | nicht verfügbar | nicht verfügbar | 0.6 | 622,020,000 |
+| **Höchster Wert** | 43.6 | 1,007,160,000 | 19.0 | 19,697,300,000 |
+| **Niedrigster Wert** | 5.3 | 122,430,000 | 0.3 | 311,010,000 |
+| **Mittelwert** | 17.6 | 407,330,000 | 3.4 | 3,550,697,500 |
+| **Median** | 13.4 | 309,540,000 | 0.6 | 622,020,000 |
+
+Die Umsatzspalte reicht von 311 Millionen bis 19,7 Milliarden Dollar, eine Spannweite vom Sechzigfachen, und zwar nur deshalb, weil ein Social-Media-Unternehmen neben einem Katalogversender in der Peer-Gruppe sitzt. Die durchschnittliche Umsatzbewertung von 3,55 Milliarden ist fast das Sechsfache des Medians von 622 Millionen. Diese Tabelle ist ein Warnhinweis, keine Antwort.
+
+### Die Fallstricke beim Umgang mit Multiples
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Konsistent messen<span class="sub">das Multiple muss für jedes Vergleichsunternehmen und für das eigene Unternehmen gleich definiert sein, sonst addiert man Äpfel und Birnen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Die ganze Verteilung ansehen<span class="sub">nicht nur den Durchschnitt · Mittelwert, Median, höchsten und niedrigsten Wert berichten und die Ausreißer erklären</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Daran denken, dass Multiples Marktpreise sind<span class="sub">sie neigen also zum Herdenverhalten · die Peer-Gruppe ist teuer, wenn die ganze Branche in Mode ist, und billig, wenn nicht</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Die Peers zu wählen ist der schwierige Teil<span class="sub">besonders bei innovativen Unternehmen · innovativ zu sein ist keine Ähnlichkeit, es kann also nicht die Grundlage einer Peer-Gruppe sein</span></div>
+  </div>
+  <figcaption>Der letzte Punkt ist der schärfste. Zwei Unternehmen, die beide innovativ sind, haben nichts gemeinsam außer einem Wort, und eine auf dieser Basis zusammengestellte Peer-Gruppe liefert genau die Antwort, die man haben wollte.</figcaption>
+</div>
+
+Eine weitere Anpassung, auf die das Deck hinweist, ist der **Liquiditätsabschlag zwischen börsennotierten und privaten Unternehmen**. Aktien eines börsennotierten Unternehmens lassen sich an jedem Handelstag verkaufen; Anteile an einer privaten Unternehmung nicht. Allein dieser Unterschied bedeutet, dass ein aus öffentlichen Märkten entliehenes Multiple abgeschlagen werden sollte, bevor man es auf ein privates Unternehmen anwendet, und es ist einer der legitimen Gründe, warum die Zahl eines Investors unter der landet, die ein Gründer aus börsennotierten Peers berechnet.
+
+## 8 · Die vierte Familie: Unsicherheit explizit modellieren
+
+Diese Ansätze sind, wie das Deck es formuliert, konzeptionell solide, aber in der Praxis nicht sehr beliebt. Sie adressieren das eine, was sowohl der DCF als auch die Venture-Capital-Methode stillschweigend vermeiden: Keine von beiden **modelliert die Wahrscheinlichkeit verschiedener Ereignisse explizit**. Beide vergraben all das in einem einzigen Abzinsungssatz.
+
+**Szenarioanalyse** modelliert eine Handvoll möglicher Verläufe, zum Beispiel einen schlechten, einen mittleren und einen guten. Sie läuft in drei Schritten: die Szenarien und ihre Wahrscheinlichkeiten identifizieren, in jedem Szenario eine Bewertung berechnen, dann mitteln.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Szenariogewichteter Wert</span>
+    <code>V = sum over s of [ p_s x V_s ]</code>
+  </div>
+</div>
+
+Der durchgerechnete Fall im Deck läuft über vier Szenarien für dieselbe Unternehmung, durchgängig mit einem Abzinsungssatz von 20 Prozent. Beträge in Dollar.
+
+| | Quick win | Home run | Long slug | Big flop |
+|---|--:|--:|--:|--:|
+| Exit-Wert | 20,000,000 | 80,000,000 | 40,000,000 | 0 |
+| Gesamte Verwässerung | 75.00% | 37.50% | 30.00% | |
+| Verwässerter Exit-Wert | 15,000,000 | 30,000,000 | 12,000,000 | 0 |
+| Jahre bis zum Exit | 4 | 7 | 9 | |
+| Abzinsungsfaktor | 2.07 | 3.58 | 5.16 | |
+| Abgezinster verwässerter Exit-Wert | 7,233,796 | 8,372,449 | 2,325,680 | 0 |
+| Szenariowahrscheinlichkeit | 15% | 10% | 15% | 60% |
+| **Wahrscheinlichkeitsgewichteter Wert** | **1,085,069** | **837,245** | **348,852** | **0** |
+
+Die vier gewichteten Werte summieren sich zu einem **Erwartungswert von 2.271.166 Dollar**. Man beachte, wie brutal eine ehrliche Ausfallwahrscheinlichkeit von 60 Prozent ist: Das Home-run-Szenario, beim Exit 80 Millionen wert, steuert nur 837.000 Dollar zur Antwort bei, nachdem Verwässerung, neun Jahre Abzinsung und eine Wahrscheinlichkeit von 10 Prozent angewendet wurden.
+
+**Simulation** geht weiter und modelliert Ergebnisse kontinuierlich statt in diskreten Klassen, konzentriert sich auf wenige Schlüsselparameter und modelliert sie gemeinsam. Der ehrliche Vorbehalt des Decks ist, dass die Herausforderung darin besteht, das **überzeugend** zu tun, denn eine Simulation ist nur so gut wie die Verteilungen, die man in sie hineingibt.
+
+**PROFEX**, kurz für probability of exit, erweitert die Venture-Capital-Methode, indem es die Unsicherheit über Exit-Ergebnisse direkt modelliert. Es berechnet konsistente Bewertungen für alle Finanzierungsrunden und stellt das Leben des Unternehmens als eine Folge wahrscheinlicher Wegkreuzungen dar, an denen es jeweils **profitabel aussteigen, weitermachen oder scheitern** kann. An jeder Wegkreuzung gibt es eine Wahrscheinlichkeitsverteilung und eine Menge von Bewertungen. In jeder Runde ist die Post-Money-Bewertung der abgezinste Wert der erwarteten Bewertung der nächsten Runde, und das Deck merkt an, dass **die entscheidende Runde die erste ist**, wenn die Unsicherheit am höchsten ist.
+
+| PROFEX-Stufen, Dollar | Stufe 1 | Stufe 2 | Stufe 3 | Stufe 4 | Stufe 5 |
+|---|--:|--:|--:|--:|--:|
+| Bedingte Wahrscheinlichkeit eines Exits | 0% | 30% | 40% | 100% | |
+| Bedingte Wahrscheinlichkeit einer Refinanzierung | 50% | 50% | 60% | 0% | |
+| Bedingte Wahrscheinlichkeit einer Liquidation | 50% | 20% | 0% | 0% | |
+| Wahrscheinlichkeit, die Stufe zu erreichen | 100% | 50.0% | 25.0% | 15.0% | |
+| Investition | 500,000 | 2,000,000 | 12,000,000 | 6,000,000 | |
+| Exit-Wert | 0 | 0 | 20,000,000 | 80,000,000 | 40,000,000 |
+| Zeitpunkt der Stufe, Jahre | 0 | 1 | 4 | 7 | 9 |
+| Abzinsungssatz | 20% | 20% | 20% | 20% | 20% |
+| **Post-Money-Bewertung** | 2,310,987 | 7,546,368 | 26,080,247 | 27,777,778 | |
+| **Pre-Money-Bewertung** | 1,810,987 | 5,546,368 | 14,080,247 | 21,777,778 | |
+
+## 9 · Die Antworten zusammenführen
+
+Das Deck gibt keine Formel dafür, drei Bewertungen zu einer zu verschmelzen. Was es stattdessen gibt, ist ein Vergleich dessen, wofür jede Methode tatsächlich taugt, und die implizite Anweisung lautet, zu wissen, mit welcher Zahl man vorangeht und warum.
+
+| Methode | Wessen Cashflows | Was sie liefert | Ihre Hauptschwäche |
+|---|---|---|---|
+| **Venture-Capital-Methode** | Die des Investors | Der in der Praxis häufigste Ansatz, einfach und in sich konsistent, und er liefert die Beteiligungsquote direkt | Alles hängt daran, den Exit-Wert richtig zu treffen, und der Exit-Wert muss ohnehin meist aus Vergleichsunternehmen importiert werden |
+| **Discounted Cash Flow** | Die des Unternehmens | Eine intrinsische Bewertung, verankert im Geschäft selbst | Erfordert starke Annahmen und eignet sich nicht dafür, fundamentale Unsicherheit oder mehrere Finanzierungsrunden zu modellieren |
+| **Vergleichsunternehmen** | Die von niemandem, sie nutzt unternehmensexterne Marktinformationen | Eine relative Bewertung, verankert in beobachtbaren Preisen, und die natürliche Quelle des Exit-Werts, den die anderen Methoden brauchen | Exit Comparables stützen sich auf börsennotierte Unternehmen, die mit einer Unternehmung womöglich gar nicht vergleichbar sind; Investment Comparables kommen echten Peers näher, aber nur knapp, und die Daten sind rar |
+| **Wahrscheinlichkeitsbasierte Modelle** | Explizit modelliert | Eine solidere Behandlung der Unsicherheit als ein einziger fetter Abzinsungssatz | Sie tauschen einen Satz starker Annahmen gegen einen anderen, nämlich starke Annahmen darüber, wie die Wahrscheinlichkeiten zu modellieren sind |
+
+Zwei abschließende Warnungen aus dem Deck verdienen eine eigene Zeile. Erstens ruhen **all diese Methoden auf starken Annahmen darüber, was der richtige Abzinsungssatz ist**, und diese eine Eingangsgröße kann die Antwort um eine Größenordnung verschieben, wie die Sensitivitätsmatrix gezeigt hat. Zweitens, und subtiler, unterstellen **sie alle, dass der Investor gewöhnliche Stammanteile erhält**. Das ist fast nie der Fall. Die meisten Venture-Investoren nehmen komplexere Wertpapiere mit Vorzügen und Schutzrechten, und herauszuarbeiten, wie diese Wertpapiere die Ökonomie des Deals verändern, ist ein wirklich komplexes Problem, das anspruchsvolle Analyse erfordert. Es ist zugleich das Thema des nächsten Kapitels.
+
+## Fallecke
+
+**OutReach Networks, erste Venture-Runde.** Der Schauplatz ist der November 2011. Der Gründer und CEO von OutReach Networks, einem Unternehmen, das er 2007 startete, nachdem er Aktienoptionen seines früheren Arbeitgebers im Wert von 50.000 Dollar zu Geld gemacht hatte, hält ein Angebot einer Venture-Capital-Gesellschaft in den Händen und ist sich nicht sicher, ob er sich freuen oder beleidigt sein soll.
+
+**Die Unternehmung.** OutReach verkauft Produkte für drahtlose Netzwerke im **lizenzfreien Funkfrequenzspektrum**: leistungsstarke Funkmodule, Antennen und Managementwerkzeuge. Die Gründungseinsicht stammt aus seiner Arbeit als Funkingenieur, wo er feststellte, dass ein lizenzfreier Teil des Spektrums ein Funksignal über eine weit größere Fläche tragen kann als das lizenzierte Spektrum. Das lizenzfreie Spektrum hat zwei entscheidende Vorteile: Es ist kostenlos, und es ist reichlich verfügbar. Zielgruppe sind die rund 75 Prozent der Weltbevölkerung, die 2011 keinen Internetzugang hatten, plus die 30 Prozent der Vereinigten Staaten mit eingeschränktem oder keinem Breitband. Der Engpass ist überall die **letzte Meile** vom Kernnetz zum einzelnen Haushalt, die kabelgebundene Lösungen nur mit großem Aufwand und langen Vorlaufzeiten überbrücken können.
+
+Durch die Kombination von Standardhardware mit eigener Software senkt die OutReach-Ausrüstung die anfänglichen Investitionen für den Aufbau eines Netzes auf der letzten Meile so weit, dass völlig neue Arten von Betreibern tragfähig werden. Eine Person mit grundlegenden Netzwerkkenntnissen, einem erhöhten Standort, Zugang zu gewerblichem Internet und OutReach-Ausrüstung für etwa **5.000 Dollar** kann ein Netz aufbauen, das **100 Teilnehmer** abdeckt und 15 bis 20 Mbit/s liefert, gegenüber den 3 bis 4 Mbit/s, bei denen DSL an seine Grenze stieß. Schon mit 20 Kunden, die 50 Dollar im Monat zahlen, sind die Hardwarekosten einschließlich der Endgeräte beim Kunden in den ersten **fünf Monaten** gedeckt. Diese Ökonomie hat eine wachsende Gemeinschaft drahtloser Internetanbieter hervorgebracht, und deren Nachfrage zieht die OutReach-Ausrüstung durch.
+
+**Warum diese Unternehmung ungewöhnlich ist.** Sie ist **seit Anfang an profitabel**, und das aus zwei strukturellen Gründen. Sie verkauft indirekt über Kanäle, statt einen eigenen Vertrieb aufzubauen, was den größten Kostenblock eliminiert, den die meisten Hardwareunternehmen tragen, und sie lagert die Fertigung aus, weil die Produktdesigns einfach sind, was Sachanlagen nahe null hält. Weniger als 100 Mitarbeitende im Jahr 2011. Operative Margen um 30 Prozent seit 2010, projiziert auf diesem Niveau bleibend. Der Umsatz stieg von 9 Millionen Dollar im Jahr 2009, dem ersten vollen Jahr, auf 63 Millionen im Jahr 2011. Der Nachteil des indirekten Verkaufs ist die begrenzte Sicht auf künftige Verkäufe und wenige Hebel, sie bei Bedarf zu beschleunigen. Nur 31 Prozent des Umsatzes von 2011 kamen aus Nordamerika, 26 Prozent aus Südamerika, 35 Prozent aus Europa, dem Nahen Osten und Afrika und 9 Prozent aus dem asiatisch-pazifischen Raum. Der Gründer hält 75 Prozent, der CFO 15 Prozent, und weiteres Führungspersonal sowie Mitarbeitende die restlichen 10 Prozent, bei 50 Millionen ausstehenden Anteilen.
+
+**Die Bewertungsfrage.** Die Venture-Gesellschaft hat **30 Millionen Dollar für 30 Prozent** des Unternehmens geboten. Der Gründer meint, dieses Geld sollte nicht mehr als **15 Prozent** kaufen. Er kann nicht nachvollziehen, wie die Gesellschaft auf 30 Prozent kommt, selbst wenn man berücksichtigt, dass Venture-Investoren typischerweise eine kumulierte Rendite von 40 bis 60 Prozent suchen, und er merkt an, dass er selbst dann, wenn er die projizierten Freien Cashflows stark abschlägt und auf die Hälfte ihrer projizierten Werte kürzt, immer noch eine weit höhere Bewertung erhält als die, die das Angebot impliziert. Die Antwort der Gesellschaft lautet, dass 30 Millionen Dollar für eine typische erste Runde groß sind, dass IT-Erstrundeninvestitionen in den beiden Vorjahren im Schnitt bei etwa 5 Millionen lagen und dass dieser eine Deal einen erheblichen Anteil des 350 Millionen Dollar großen Fonds binden würde.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Was das Angebot impliziert</span>
+    <code>V_POST = 30 / 0.30 = 100 million,  so V_PRE = 100 - 30 = 70 million</code>
+  </div>
+  <div>
+    <span class="name">Was das Gegenangebot des Gründers impliziert</span>
+    <code>V_POST = 30 / 0.15 = 200 million,  so V_PRE = 200 - 30 = 170 million</code>
+  </div>
+</div>
+
+**Die Übung mit den Vergleichsunternehmen.** Der Investor lieferte eine Menge börsennotierter Vergleichsunternehmen, die Peers, die aus seiner Sicht jeder Investor ansehen würde. Beträge in Millionen Dollar, Multiples per November 2011.
+
+| Unternehmen | Marktkapitalisierung | Umsatz | Umsatzwachstum, 1 Jahr | EBITDA-Marge | Verschuldung zu Kapital | TEV zu Forward-EBITDA | Forward P/E | Beta |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| Acme Packet | 2,244 | 295 | 45.6% | 30.1% | nicht verfügbar | 13.7 | 24.3 | 1.50 |
+| Aruba Networks | 2,258 | 433 | 48.2% | 3.0% | nicht verfügbar | 13.3 | 31.5 | 1.95 |
+| Aviat Networks | 108 | 463 | 3.9% | 0.2% | 7.6% | 4.2 | 21.3 | 1.35 |
+| Cisco Systems | 100,206 | 43,724 | 4.7% | 25.3% | 26.3% | 6.4 | 10.3 | 1.20 |
+| **Mittelwert** | 26,204 | 11,229 | 25.6% | 14.6% | 17.0% | **9.4** | **21.8** | **1.50** |
+| **Median** | 2,251 | 448 | 25.2% | 14.1% | 17.0% | **9.9** | **22.8** | **1.43** |
+
+Das Exhibit nennt außerdem die beiden Eingangsgrößen, die für einen CAPM-Abzinsungssatz nötig sind: Für den zehnjährigen US-Treasury-Satz wurden **5 Prozent** unterstellt und für die Marktrisikoprämie **6,0 Prozent**.
+
+Die relevanten Forward-Zahlen für OutReach kommen aus den Projektionen: 2012 ein Umsatz von 137 Millionen, ein EBITDA von 38,84 Millionen und ein Nettoergebnis von 26,71 Millionen, steigend auf 2017 einen Umsatz von 525 Millionen, ein EBITDA von 157,85 Millionen und ein Nettoergebnis von 108,66 Millionen. Da das Unternehmen keine Schulden trägt, sind sein Unternehmenswert und sein Eigenkapitalwert dasselbe, die Enterprise-Value-Multiples lassen sich also ohne Anpassung anwenden.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Wert auf Basis des Median-Forward-EBITDA-Multiples der Peers</span>
+    <code>38.84 x 9.85 = 383 million</code>
+  </div>
+  <div>
+    <span class="name">Wert auf Basis des durchschnittlichen Forward-EBITDA-Multiples der Peers</span>
+    <code>38.84 x 9.4 = 365 million</code>
+  </div>
+  <div>
+    <span class="name">Wert auf Basis des Median-Forward-P/E der Peers</span>
+    <code>26.71 x 22.8 = 609 million</code>
+  </div>
+  <div>
+    <span class="name">Wert auf Basis des durchschnittlichen Forward-P/E der Peers</span>
+    <code>26.71 x 21.8 = 583 million</code>
+  </div>
+</div>
+
+Jetzt den Vergleich in die andere Richtung laufen lassen, was die aufschlussreichere Lesart ist. Frage, welche Multiples die beiden Verhandlungspositionen implizieren.
+
+| Impliziert durch | Post-Money-Wert | Forward-EBITDA-Multiple | Forward P/E |
+|---|--:|--:|--:|
+| Das Angebot des Investors, 30 Prozent für 30 Millionen | 100 | 2.6 | 3.7 |
+| Das Gegenangebot des Gründers, 15 Prozent für 30 Millionen | 200 | 5.1 | 7.5 |
+| Median der Peers | | 9.9 | 22.8 |
+| Mittelwert der Peers | | 9.4 | 21.8 |
+| Billigster einzelner Peer | | 4.2 | 10.3 |
+
+Lies diese Tabelle langsam. Das Angebot bepreist ein profitables, schnell wachsendes Unternehmen mit dem **2,6-Fachen des Forward-EBITDA**, während der billigste börsennotierte Peer beim 4,2-Fachen und der Median beim 9,9-Fachen gehandelt wird. Selbst das angeblich aggressive Gegenangebot des Gründers liegt bei beiden Kennzahlen unter dem billigsten Peer. Allein nach der Evidenz der Vergleichsunternehmen sind die 15 Prozent des Gründers keine aggressive Forderung, sondern eine konservative.
+
+**Warum die Peer-Gruppe die Sache nicht entscheidet.** Die vier Peers illustrieren jeden Fallstrick aus Abschnitt 7 auf einmal. Cisco ist 45-mal so groß wie die anderen drei zusammen und zieht jeden Mittelwert in die Bedeutungslosigkeit, weshalb die durchschnittliche Marktkapitalisierung von 26 Milliarden elfmal über dem Median von 2,25 Milliarden liegt. Zwei der vier wachsen mit 4 bis 5 Prozent pro Jahr, nichts, was den 117 Prozent von OutReach nahekommt, während die anderen beiden mit 46 bis 48 Prozent wachsen. Die EBITDA-Margen reichen von 0,2 Prozent bis 30 Prozent, was ein EBITDA-Multiple über die Menge hinweg nahezu unvergleichbar macht. Und jeder einzelne von ihnen ist **börsennotiert**, ein Liquiditätsabschlag ist also fällig, bevor ihre Multiples ein privates Unternehmen berühren. Alle vier Einwände drücken in dieselbe Richtung: Die von den Peers implizierten Werte von 365 bis 609 Millionen sind eine Obergrenze, kein Ziel.
+
+**Gegenprobe mit der Venture-Capital-Methode.** Hier wird die Logik des Investors sichtbar. Nimm den Exit-Wert aus den Vergleichsunternehmen, wende das Median-Forward-EBITDA-Multiple der Peers auf die Projektion für 2017 an, und unterstelle einen Exit fünf Jahre später, am Ende von 2016.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Exit-Wert aus Exit Comparables</span>
+    <code>X_e = 157.85 x 9.85 = 1,555 million</code>
+  </div>
+  <div>
+    <span class="name">Bei einer geforderten Rendite von 50 Prozent über 5 Jahre</span>
+    <code>V_POST = 1,555 / 1.5^5 = 1,555 / 7.594 = 205 million,  so F_INV = 30 / 205 = 14.6 percent</code>
+  </div>
+  <div>
+    <span class="name">Bei einer geforderten Rendite von 40 Prozent</span>
+    <code>V_POST = 1,555 / 1.4^5 = 1,555 / 5.378 = 289 million,  so F_INV = 30 / 289 = 10.4 percent</code>
+  </div>
+  <div>
+    <span class="name">Bei einer geforderten Rendite von 60 Prozent, dem oberen Ende der genannten Spanne</span>
+    <code>V_POST = 1,555 / 1.6^5 = 1,555 / 10.486 = 148 million,  so F_INV = 30 / 148 = 20.2 percent</code>
+  </div>
+</div>
+
+Über das gesamte Band von 40 bis 60 Prozent, das der Fall selbst als das nennt, was Venture-Investoren suchen, gibt die Venture-Capital-Methode eine Beteiligungsquote von 10 bis 20 Prozent zurück. Die 15 Prozent des Gründers liegen mitten in dieser Spanne. Um **30 Prozent** zu rechtfertigen, müsste die geforderte Rendite weit höher sein.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Die vom Angebot implizierte Rendite</span>
+    <code>(1 + rho)^5 = 1,555 / 100 = 15.55,  so rho = 15.55^(1/5) - 1 = 73 percent per year</code>
+  </div>
+  <div>
+    <span class="name">Und welche Ausfallwahrscheinlichkeit dafür nötig wäre, mit rho = (d + z) / (1 - z) und d = 14 Prozent aus dem CAPM</span>
+    <code>0.73 = (0.14 + z) / (1 - z),  which gives z = 34 percent per year</code>
+  </div>
+</div>
+
+Der CAPM-Satz dort kommt direkt aus dem Exhibit: 5 Prozent risikolos plus ein durchschnittliches Peer-Beta von 1,50 mal eine Marktrisikoprämie von 6 Prozent ergibt **14 Prozent**. Eine jährliche Ausfallchance von 34 Prozent ist eine plausible Zahl für ein Startup vor dem ersten Umsatz. Sie ist keine plausible Zahl für ein Unternehmen mit 63 Millionen Dollar Umsatz, 17 Millionen EBITDA und einer Historie der Profitabilität seit Gründung. Setzt man stattdessen eine besser begründbare jährliche Ausfallrate von 20 Prozent an, ergibt die Formel rho gleich 0,34 geteilt durch 0,80, also **42,5 Prozent**, was genau im normalen Band landet und eine Beteiligungsquote nahe 11 Prozent impliziert.
+
+**Was ich daraus schließen würde.** Das Angebot entsteht nicht aus einer Bewertung, es entsteht aus Gewohnheit. Der Investor wendet die Beteiligungsquote an, die ein Fonds in einer ersten Runde üblicherweise nimmt, und ein Anteil von 30 Prozent für einen Lead-Investor ist der Branchenstandard. Die Bewertungszahlen wurden rückwärts dazu passend konstruiert. Die echten Argumente auf der Seite des Investors sind real, aber klein: Einem privaten Unternehmen steht gegenüber diesen börsennotierten Multiples ein Liquiditätsabschlag zu, die Projektionen stammen aus dem eigenen Modell des Investors statt aus einer Erfolgsbilanz, die Umsatzsicht ist schwach, weil das Vertriebsmodell indirekt ist, das geistige Eigentum ist nicht ordentlich geschützt, und 30 Millionen Dollar sind ein ungewöhnlich großer erster Scheck, der einen spürbaren Teil eines 350 Millionen Dollar großen Fonds verbraucht. Nichts davon summiert sich zu einer geforderten Rendite von 73 Prozent. Der richtige Zug ist, hart zu verhandeln, mit genau dieser Arithmetik auf dem Tisch, und die stärkste Karte des Gründers ist die, auf der der ganze Fall ruht: **Er braucht das Geld nicht.** Ein seit Gründung profitables Unternehmen kann weggehen, und das ist die einzige Verhandlungsposition im Venture Capital, die nie schwächer wird.
+
+## Durchgerechnetes Beispiel
+
+Eine eigene Unternehmung, auf drei Arten bewertet. Nennen wir sie ein kleines Unternehmen für industrielle Sensoranalytik, derzeit bei 1,2 Millionen Euro Umsatz, das **2,0 Millionen Euro** aufnimmt und 0,1 Millionen an Liquidität hält. Alle Zahlen in Millionen Euro.
+
+### Methode 1, Discounted Cash Flow
+
+Projizierte Freie Cashflows, ein Abzinsungssatz von 30 Prozent, der ein junges privates Unternehmen widerspiegelt, und eine langfristige Wachstumsrate von 4 Prozent.
+
+| Jahr | 1 | 2 | 3 | 4 | 5 |
+|---|--:|--:|--:|--:|--:|
+| Freier Cashflow | (0.80) | (0.50) | 0.40 | 1.20 | 2.00 |
+| Abzinsungsfaktor bei 30% | 0.769 | 0.592 | 0.455 | 0.350 | 0.269 |
+| Abgezinster Freier Cashflow | (0.615) | (0.296) | 0.182 | 0.420 | 0.539 |
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Terminal Value am Ende von Jahr 5</span>
+    <code>TV_5 = 2.00 x 1.04 / (0.30 - 0.04) = 2.08 / 0.26 = 8.00</code>
+  </div>
+  <div>
+    <span class="name">Abgezinster Terminal Value</span>
+    <code>8.00 x 0.269 = 2.154</code>
+  </div>
+  <div>
+    <span class="name">Summe der abgezinsten operativen Cashflows</span>
+    <code>-0.615 - 0.296 + 0.182 + 0.420 + 0.539 = 0.230</code>
+  </div>
+  <div>
+    <span class="name">Pre-Money-Bewertung</span>
+    <code>V_PRE = 0.230 + 2.154 + 0.10 = 2.48</code>
+  </div>
+</div>
+
+Der Terminal Value macht **90 Prozent** der abgezinsten Summe aus, genau wie das Deck es vorhersagt. Und die Sensitivität ist gnadenlos: Erhöhe den Abzinsungssatz auf 40 Prozent, ändere sonst nichts, und die operativen Cashflows steuern fast exakt null bei, während der Terminal Value auf 2,08 geteilt durch 0,36 fällt, also 5,78, abgezinst mit 0,186 auf 1,07. Die Pre-Money-Bewertung sinkt auf **1,18**, weniger als die Hälfte, durch eine Änderung der Annahme, die niemand widerlegen könnte.
+
+### Methode 2, die Venture-Capital-Methode
+
+Unterstelle einen Exit bei 40 Millionen Euro in fünf Jahren und eine geforderte Rendite von 50 Prozent, die die Ausfallratenformel mit einem gewöhnlichen Abzinsungssatz von 20 Prozent und einer jährlichen Ausfallwahrscheinlichkeit von 20 Prozent rechtfertigt, da 0,40 geteilt durch 0,80 gleich 0,50 ist.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Cash-on-Cash-Multiple</span>
+    <code>CCM = 1.5^5 = 7.594</code>
+  </div>
+  <div>
+    <span class="name">Post-Money-Bewertung</span>
+    <code>V_POST = 40 / 7.594 = 5.27</code>
+  </div>
+  <div>
+    <span class="name">Pre-Money-Bewertung</span>
+    <code>V_PRE = 5.27 - 2.00 = 3.27</code>
+  </div>
+  <div>
+    <span class="name">Beteiligungsquote des Investors</span>
+    <code>F_INV = 2.00 / 5.27 = 38.0 percent</code>
+  </div>
+</div>
+
+Nun die Runde behandeln, die wirklich kommt: eine zweite Runde über 3,0 Millionen Euro in Jahr 2, drei Jahre vor dem Exit. Wende die Rekursion an.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Runde 2, drei Jahre bis zum Exit</span>
+    <code>V_POST(2) = 40 / 1.5^3 = 40 / 3.375 = 11.85,  V_PRE(2) = 11.85 - 3.00 = 8.85,  F_INV(2) = 3.00 / 11.85 = 25.3 percent</code>
+  </div>
+  <div>
+    <span class="name">Runde 1, zwei Jahre früher, bewertet vom Pre-Money der Runde 2 aus</span>
+    <code>V_POST(1) = 8.85 / 1.5^2 = 8.85 / 2.25 = 3.93,  V_PRE(1) = 3.93 - 2.00 = 1.93,  F_INV(1) = 2.00 / 3.93 = 50.8 percent</code>
+  </div>
+  <div>
+    <span class="name">Konsistenzprüfung beim ersten Investor</span>
+    <code>50.8 percent x (1 - 0.253) = 38.0 percent at exit, worth 0.380 x 40 = 15.2, which is 7.59 times the 2.00 invested</code>
+  </div>
+</div>
+
+Diese Prüfung ist der Sinn der ganzen Methode. Die zweite Runde vorwegzunehmen senkt das Pre-Money der ersten Runde von 3,27 auf **1,93** und hebt die Quote des Investors von 38 auf **51 Prozent**, und die beiden Effekte heben sich exakt auf, sodass der Investor immer noch sein gefordertes 7,59-faches Multiple verdient. Verwässerung ist kein nachträglich angeschraubter Gedanke, sie steckt bereits im Modell.
+
+### Methode 3, Vergleichsunternehmen
+
+Zwei Lesarten. Für einen **aktuellen** Wert: Fünf jüngere private Finanzierungen ähnlicher Unternehmen in ähnlicher Phase hatten Post-Money-Bewertungen von 3,0, 4,0, 5,0, 6,5 und 9,0 Millionen Euro, ein Median von 5,0 und ein Mittelwert von 5,5. Für einen **Exit**-Wert: Börsennotierte Peers in der Industriesoftware werden zu einem Median vom 3,0-Fachen des Umsatzes gehandelt, und die Umsatzprojektion für Jahr 5 liegt bei 12 Millionen Euro.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Investment Comparables, Wert heute</span>
+    <code>V_POST = median post-money of 5.0,  so V_PRE = 5.0 - 2.0 = 3.00 and F_INV = 2.0 / 5.0 = 40 percent</code>
+  </div>
+  <div>
+    <span class="name">Exit Comparables, als Zulieferung für die Venture-Capital-Methode</span>
+    <code>X_e = 12 x 3.0 = 36, close enough to the 40 assumed above to say the exit story is not fantasy</code>
+  </div>
+</div>
+
+### Die drei Antworten nebeneinander
+
+| Methode | Pre-Money, Millionen Euro | Investorenanteil für 2.0 Millionen | Was die Zahl tatsächlich treibt |
+|---|--:|--:|---|
+| Discounted Cash Flow, d = 30% und g = 4% | 2.48 | 44.6% | Der Terminal Value, der 90 Prozent der Antwort ausmacht |
+| Discounted Cash Flow, d = 40% und g = 4% | 1.18 | 62.9% | Derselbe Terminal Value, härter abgezinst |
+| Venture-Capital-Methode, eine Runde | 3.27 | 38.0% | Der Exit über 40 Millionen und die geforderte Rendite von 50 Prozent |
+| Venture-Capital-Methode, mit der zweiten Runde | 1.93 | 50.8% | Derselbe Exit, abzüglich der Verwässerung durch eine Runde zwei über 3.0 Millionen |
+| Investment Comparables | 3.00 | 40.0% | Das Median-Post-Money von fünf ähnlichen privaten Deals |
+
+**Warum sie sich unterscheiden, und mit welcher ich vorangehen würde.** Die Spannweite reicht von 1,2 bis 3,3 Millionen Euro Pre-Money, ein Faktor von fast drei, und jede dieser Zahlen ist verteidigbar. Sie unterscheiden sich, weil sie leicht verschiedene Fragen beantworten. Der DCF fragt, was die eigene Cash-Erzeugung dieses Unternehmens wert ist, und wird von einer Wachstumsrate fünf Jahre in der Zukunft dominiert. Die Venture-Capital-Methode fragt, was ein Investor zahlen kann und trotzdem die Rendite seines Fonds erreicht, und wird vom Exit-Wert und der Hurdle Rate dominiert. Vergleichsunternehmen fragen, was der Markt derzeit für Dinge zahlt, die so aussehen wie dieses, und werden davon dominiert, wer in der Peer-Gruppe gelandet ist. Die drei Antworten sind keine konkurrierenden Schätzungen eines wahren Werts, sie sind drei verschiedene Linsen.
+
+Ich würde mit der **Venture-Capital-Methode in der Zwei-Runden-Fassung vorangehen, bei etwa 1,9 bis 2,0 Millionen Pre-Money**, aus drei Gründen. Es ist die Sprache, in der der Investor ohnehin schon denkt, die Verhandlung findet also auf gemeinsamen Begriffen statt. Sie erzeugt direkt eine Beteiligungsquote, und das ist die Größe, über die tatsächlich verhandelt wird. Und sie berücksichtigt ehrlich die Runde zwei, von der alle wissen, dass sie kommt, was die anderen beiden Methoden ignorieren. Ich würde dann die Vergleichsunternehmen daneben stellen als Plausibilitätsprüfung am Markt, denn 3,0 Millionen ist das, wozu ähnliche Unternehmen aufgenommen haben, und das ist ein real beobachteter Preis statt einer Projektion. Den DCF würde ich im Anhang behalten und defensiv einsetzen, denn er überzeugt niemanden, aber er belegt, dass ich meine eigenen Cashflows kenne, und die Lücke zwischen der 30-Prozent- und der 40-Prozent-Variante ist das Ehrlichste auf der Seite: Sie zeigt, worum es in der Verhandlung wirklich geht, und das sind nicht die Projektionen, es ist der Abzinsungssatz.
+
+## Wende es auf dein Projekt an
+
+<Steps>
+
+1. **Entscheide zuerst, wofür die Bewertung da ist.** Eine Zahl, um eine Verhandlung zu eröffnen, eine Zahl, um zu prüfen, ob ein Angebot fair ist, oder eine Zahl, um zu belegen, dass du investorenreif bist. Die drei Verwendungen vertragen sehr unterschiedliche Genauigkeitsgrade, und nur die zweite muss der Prüfung eines Investors standhalten.
+
+2. **Schreibe deine vier Eingangsgrößen für die Venture-Capital-Methode vor allem anderen auf,** denn nach diesen wird ein Investor fragen: wie viel du brauchst und wann, wie viele Jahre bis zu einem plausiblen Exit, wofür das Unternehmen verkauft würde, wenn es funktioniert, und welche Rendite der Investor fordern wird. Wenn du nicht alle vier nennen kannst, bist du nicht bereit, über eine Bewertung zu sprechen.
+
+3. **Baue den Exit-Wert aus Vergleichsunternehmen, nicht aus Ehrgeiz.** Finde echte Exits in deinem Feld, halte den Exit-Wert und die Kennzahl dahinter fest, berechne für jeden das Multiple und berichte Mittelwert, Median, höchsten und niedrigsten Wert. Wende dann den Median auf deine eigene projizierte Kennzahl an, nicht den Mittelwert.
+
+4. **Begründe deine geforderte Rendite, statt eine Volksweisheitszahl zu akzeptieren.** Baue sie aus den fünf Komponenten auf: risikoloser Zins, finanzielle Risikoprämie, Illiquiditätsprämie, Ausfallratenprämie und Serviceprämie. Prüfe sie dann mit der Formel rho gleich (d plus z) geteilt durch (1 minus z), indem du fragst, welche jährliche Ausfallwahrscheinlichkeit der Satz des Investors impliziert. Wenn die implizierte Zahl für ein Unternehmen in deiner Phase absurd ist, hast du dein Verhandlungsargument gefunden.
+
+5. **Rechne die Rekursion für die Runden, von denen du weißt, dass sie kommen.** Bewerte Runde zwei vom Exit aus, dann Runde eins vom Pre-Money der Runde zwei aus. Die niedrigere Zahl der ersten Runde, die dabei herauskommt, ist keine Niederlage, sie ist der ehrliche Preis eines Plans, der später mehr Geld braucht.
+
+6. **Rechne einen DCF als interne Disziplin, nicht als Pitch-Dokument.** Projiziere den Freien Cashflow sauber als Jahresüberschuss minus Veränderung des Net Working Capital minus Investitionen plus Abschreibungen, berechne einen Terminal Value und baue dann sofort die Sensitivitätsmatrix über Abzinsungs- und Wachstumsraten. Die Matrix, nicht der Punktschätzer, ist das nützliche Ergebnis.
+
+7. **Stelle die Investment Comparables zusammen, an die du tatsächlich herankommst.** Ähnliches Geschäftsmodell, ähnliche Phase, Branche und Rundengröße. Halte die Post-Money-Bewertungen fest, nicht nur die aufgenommenen Beträge, und sei ehrlich darüber, wie dünn die Stichprobe ist.
+
+8. **Stelle jede Antwort in eine Tabelle mit der treibenden Annahme daneben,** so wie es das durchgerechnete Beispiel oben macht. Präsentiere nie eine einzelne Zahl ohne die Spanne darum herum, und nie einen Durchschnitt ohne den Median daneben.
+
+9. **Wähle die Zahl, mit der du vorangehst, und bereite dich darauf vor, die zwei dahinter zu verteidigen.** Sage laut, aus welcher Methode sie stammt und warum diese Methode zu deiner Phase passt. Ein Investor prüft deine Argumentation, nicht deine Arithmetik.
+
+10. **Denke daran, was das alles unterstellt.** Jede Methode hier bepreist gewöhnliche Stammanteile. In dem Moment, in dem Vorzüge, Liquidationsrechte und Verwässerungsschutz ins Term Sheet kommen, beschreibt die Schlagzeilenbewertung nicht mehr, was irgendjemand tatsächlich besitzt, und das ist das Thema des nächsten Kapitels.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Pre-Money-Bewertung | Das, was das Unternehmen unmittelbar vor dem Eintreffen des neuen Geldes vereinbarungsgemäß wert ist |
+| Post-Money-Bewertung | Der Pre-Money-Wert plus das gerade investierte Geld, und der Nenner, der die Beteiligungsquoten festlegt |
+| Intrinsische oder absolute Bewertung | Ein Wert, der aus der eigenen Ökonomie des Unternehmens abgeleitet ist, und genau das liefert ein Discounted Cash Flow |
+| Extrinsische oder relative Bewertung | Ein Wert, der von dem importiert wird, was der Markt für andere Unternehmen zahlt, und genau das liefern Vergleichsunternehmen |
+| Freier Cashflow | Jahresüberschuss minus Veränderung des Net Working Capital minus Investitionen plus Abschreibungen, also das Geld, das das Geschäft tatsächlich abwirft |
+| Terminal Value | Der Wert von allem jenseits des Projektionshorizonts, berechnet als der Cashflow des letzten Jahres, gewachsen um g und geteilt durch d minus g. Bei Ventures ist er meist der größte Teil der Antwort |
+| Abzinsungssatz d | Der jährliche Satz, mit dem künftiges Geld auf heute zurückgeschrumpft wird, nach CAPM abgeleitet als risikoloser Zins plus Beta mal Marktrisikoprämie |
+| Beta | Wie stark sich die Renditen eines Unternehmens mit dem Gesamtmarkt bewegen, also das Maß für sein nicht diversifizierbares Risiko |
+| Systematisches Risiko | Risiko, das allen Unternehmen gemeinsam ist, etwa eine Rezession, das keine noch so große Diversifikation entfernt und für dessen Tragen Investoren deshalb bezahlt werden müssen |
+| Idiosynkratisches Risiko | Risiko, das für ein einzelnes Unternehmen spezifisch ist, das in einem großen Portfolio verschwindet und für dessen Tragen der Markt dich deshalb nicht bezahlt |
+| Geforderte Rendite, rho | Die Hurdle Rate, die ein Venture-Investor ansetzt, aufgebaut aus risikolosem Zins, finanzieller Risikoprämie, Illiquiditätsprämie, Ausfallratenprämie und Serviceprämie |
+| Illiquiditätsprämie | Zusatzrendite, verlangt weil sich eine private Beteiligung nicht verkaufen lässt, da es so gut wie keinen Sekundärmarkt gibt |
+| Ausfallratenprämie | Zusatzrendite, verlangt weil die meisten neuen Ventures sterben, umgerechnet aus einer jährlichen Ausfallwahrscheinlichkeit z über rho gleich (d plus z) geteilt durch (1 minus z) |
+| Serviceprämie | Zusatzrendite für die Arbeit, die der Investor über das Geld hinaus leistet: Kontrolle, Beratung, Mentoring und Netzwerk |
+| Exit-Wert X_e | Das, wofür das Unternehmen verkauft wird, wenn es Erfolg hat, aus einer Übernahme oder einem Börsengang. Es ist eine Schätzung für den Erfolgsfall, kein wahrscheinlichkeitsgewichteter Erwartungswert |
+| Cash-on-Cash-Multiple, CCM | Das Bruttomultiple aus zurückgeflossenem Geld über investiertem Geld, gleich (1 plus rho) hoch der Anzahl der Haltejahre |
+| Investment Comparables | Bewertungen, abgelesen an ähnlichen privaten Finanzierungen, den nächstliegenden echten Peers, aber den am schwersten zu beschaffenden Daten |
+| Exit Comparables | Bewertungen, abgelesen an börsennotierten reifen Unternehmen, leicht zu beobachten, aber fraglich vergleichbar mit einer Unternehmung, und mit einem Liquiditätsabschlag zu versehen |
+| Liquiditätsabschlag | Der Abschlag auf ein Multiple aus dem öffentlichen Markt, bevor man es auf ein privates Unternehmen anwendet, weil private Anteile nicht jederzeit verkauft werden können |
+| PROFEX | Probability of exit, eine Erweiterung der Venture-Capital-Methode, die die Unternehmung als eine Folge von Wegkreuzungen behandelt, an denen sie aussteigen, weitermachen oder scheitern kann |
+
+## Teste dich selbst
+
+1. Ein Venture zu bewerten ist schwierig und zeitaufwendig. Nenne den Grund, den das Deck dafür angibt, es trotzdem zu tun, liste dann die vier Herausforderungen auf, die es schwer machen, und erkläre den Zielkonflikt zwischen einem einfachen und einem komplexen Ansatz.
+2. Der Freie Cashflow eines Ventures in Jahr 6 beträgt 1.808.960 Dollar, der Abzinsungssatz liegt bei 15 Prozent und die langfristige Wachstumsrate bei 5 Prozent. Berechne den Terminal Value und zinse ihn dann mit einem Abzinsungsfaktor von 0,432 über sechs Jahre zurück. Wenn sich die sechs Jahre abgezinster operativer Cashflows auf minus 570.144 Dollar summieren, wie hoch ist der Kapitalwert, und welchen Anteil daran macht der Terminal Value aus?
+3. Ein Investor steckt 3 Millionen Euro in eine Unternehmung, erwartet einen Exit bei 30 Millionen Euro in vier Jahren und fordert eine jährliche Rendite von 45 Prozent. Berechne das Cash-on-Cash-Multiple, die Post-Money-Bewertung, die Pre-Money-Bewertung und die Beteiligungsquote des Investors.
+4. Bewerte mit den Peer-Zahlen aus dem Fall, einem Median-Forward-EBITDA-Multiple der Peers von 9,85 und einem Median-Forward-Kurs-Gewinn-Verhältnis der Peers von 22,8 ein Unternehmen mit einem Forward-EBITDA von 38,84 Millionen Dollar und einem Forward-Nettoergebnis von 26,71 Millionen Dollar. Sage dann, welche Multiples ein Angebot von 30 Millionen Dollar für 30 Prozent implizieren würde, und kommentiere.
+5. Ein gewöhnlicher Abzinsungssatz für ein Unternehmen beträgt 25 Prozent und seine jährliche Ausfallwahrscheinlichkeit 15 Prozent. Berechne die geforderte Rendite, die ein Venture-Investor ansetzen sollte, und erkläre in einem Satz, warum diese Formel in einer Verhandlung wichtig ist.
+6. Nenne die zwei entscheidenden Wahlen in der Methode der Exit Comparables und die vier Fallstricke beim Umgang mit Multiples, und erkläre dann, warum Mittelwert und Median einer Peer-Gruppe so heftig auseinanderfallen können.
+
+<Aside type="note" title="Lösungen">
+1. Man tut es, weil beide Parteien eine fundierte Einschätzung brauchen, um in die Verhandlung zu gehen und um zu wissen, wie flexibel sie beim Preis sein können. Für den Investor ist es Teil des Entscheidungsprozesses; für den Unternehmer ist es das, was ihn investorenreif macht. Die vier Herausforderungen sind ein hoher Grad an Unsicherheit der tiefen Art, in der die Ergebnisse selbst nicht bekannt sind, Informationsasymmetrie zwischen Gründer und Investor, ein Fehlen wertrelevanter objektiver Informationen, weil es keine Historie gibt, und eine unzureichende Erfassung immaterieller Werte einschließlich des Humankapitals. Der Zielkonflikt besteht darin, dass dieselbe Unsicherheit in beide Richtungen spricht: Sie verlangt nach einem einfachen, vernünftigen Ansatz, weil ausgefeilte Modelle bloß Schätzungen aufhübschen, und sie verlangt zugleich nach einer präzisen, komplexen Methodik, weil genau die Unsicherheit modelliert werden muss. Verschiedene Leute vertreten verschiedene Ansichten, und das Deck löst es nicht auf.
+2. Der Terminal Value ist 1.808.960 mal 1,05 geteilt durch 0,10, also **18.994.081**. Abgezinst ist er 18.994.081 mal 0,432, also **8.211.665**. Der Kapitalwert ist 8.211.665 minus 570.144, also **7.641.521**. Der Terminal Value ist 8.211.665 geteilt durch 7.641.521, also etwa **107 Prozent** der Antwort, weil die operativen Cashflows netto negativ sind. Das ist der Punkt des Decks, dass der Terminal Value der Hauptbestandteil eines Venture-DCF ist.
+3. CCM ist 1,45 hoch 4, also **4,42**. Post-Money ist 30 geteilt durch 4,42, also **6,79 Millionen Euro**. Pre-Money ist 6,79 minus 3,00, also **3,79 Millionen Euro**. Die Beteiligungsquote ist 3,00 geteilt durch 6,79, also **44,2 Prozent**.
+4. Über das EBITDA-Multiple ergibt 38,84 mal 9,85 etwa **383 Millionen Dollar**. Über das P/E ergibt 26,71 mal 22,8 etwa **609 Millionen Dollar**. Ein Angebot von 30 Millionen für 30 Prozent impliziert einen Post-Money-Wert von 100 Millionen, das sind 100 geteilt durch 38,84, also das **2,6-Fache des Forward-EBITDA**, und 100 geteilt durch 26,71, also das **3,7-Fache der Forward-Gewinne**. Beides liegt weit unter selbst dem billigsten börsennotierten Peer bei 4,2 beziehungsweise 10,3, das Angebot lässt sich also aus den Vergleichsunternehmen nicht rechtfertigen und muss von woanders herkommen, höchstwahrscheinlich aus einer üblichen Zielbeteiligungsquote kombiniert mit einem Liquiditätsabschlag und Zweifeln an den Projektionen.
+5. rho ist (0,25 plus 0,15) geteilt durch (1 minus 0,15), also 0,40 geteilt durch 0,85, was **47,1 Prozent** ergibt. Sie ist wichtig, weil sie einen Streit über eine nicht überprüfbare Hurdle Rate in einen Streit über eine jährliche Ausfallwahrscheinlichkeit verwandelt, und darüber können beide Seiten tatsächlich mit Belegen über Phase, Umsatz und Profitabilität des Unternehmens diskutieren.
+6. Die zwei entscheidenden Wahlen sind die Menge der Vergleichsunternehmen und die Vergleichskennzahl. Die vier Fallstricke sind: das Multiple über alle Vergleichsunternehmen und das betrachtete Unternehmen hinweg konsistent messen; die ganze Verteilung ansehen statt nur den Durchschnitt; daran denken, dass Multiples Marktbewertungen sind und deshalb zum Herdenverhalten neigen; und akzeptieren, dass es bei innovativen Firmen wirklich schwer ist, vergleichbare Unternehmen zu finden und auszuwählen, da innovativ zu sein keine Ähnlichkeit ist. Mittelwert und Median laufen auseinander, weil Peer-Gruppen fast immer einen Ausreißer enthalten, etwa wenn das Umsatz-Multiple eines Peers von 12,5 eine Menge mit einem typischen Multiple von etwa 1,2 auf einen Durchschnitt von 3,5 hebt, oder wenn ein einzelnes sehr großes börsennotiertes Unternehmen eine Menge kleiner Unternehmen dominiert.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Der Ein-Minuten-Rückblick**
+
+- Bewertung ist schwierig und zeitaufwendig, aber beide Seiten brauchen eine **fundierte Einschätzung**, um zu verhandeln und um zu wissen, wie flexibel sie beim Preis sein können. Für Investoren ist sie Teil des Entscheidungsprozesses; für Gründer ist sie der Weg zur **Investorenreife**.
+- Vier Herausforderungen: **tiefe Unsicherheit**, bei der selbst die Ergebnisse unbekannt sind, **Informationsasymmetrie**, **Fehlen wertrelevanter objektiver Informationen** und **unzureichende Erfassung immaterieller Werte** einschließlich des Humankapitals.
+- Dieselbe Unsicherheit spricht für einen **einfachen, vernünftigen** Ansatz und für einen **präzisen, komplexen**. Verschiedene Leute vertreten verschiedene Ansichten.
+- **DCF**, aus Theorie und Praxis, modelliert die Cashflows des Unternehmens und liefert einen intrinsischen, absoluten Wert: `V_PRE = sum of FCF_t/(1+d)^t + TV_T/(1+d)^T + Cash_0`, mit `FCF = Net income - change in NWC - Capex + Depreciation`, `TV_T = FCF_T x (1+g)/(d-g)` und `d = riskless + beta x (market rate - riskless)` aus dem CAPM. **Der Terminal Value ist der größte Teil der Antwort**, weil die zwischenzeitlichen Venture-Cashflows negativ sind, und die Sensitivitätsmatrix zeigt dasselbe Unternehmen mit 26,9 Millionen Dollar oder minus 0,7 Millionen wert, abhängig von zwei nicht überprüfbaren Annahmen.
+- **Die Venture-Capital-Methode**, aus der Praxis, einfach und konsistent, modelliert die Cashflows des Investors: `V_POST = X_e/(1+rho)^T`, `V_PRE = V_POST - I`, `F_INV = I/V_POST`. Vier Eingangsgrößen: I, T, X_e und rho. X_e ist eine Schätzung für den **Erfolgsfall**, keine statistische Erwartung, weil das Modell unterstellt, dass die Unternehmung entweder funktioniert oder stirbt.
+- **rho hat fünf Bestandteile**: risikoloser Zins, finanzielle Risikoprämie und Illiquiditätsprämie auf der finanziellen Seite; Ausfallratenprämie und Serviceprämie auf der nicht finanziellen. Die Brückenformel lautet `rho = (d + z)/(1 - z)`, 14 Prozent plus eine jährliche Ausfallrate von 20 Prozent ergeben also 42,5 Prozent.
+- **Spätere Runden** werden per Rekursion behandelt, nicht per Anbau: `V_POST(r) = V_PRE(r+1)/CCM_r`, was die aktuelle Bewertung nach unten und die Quote des aktuellen Investors nach oben drückt, und zwar genau so weit, dass die kommende Verwässerung ausgeglichen wird.
+- **Vergleichsunternehmen**, aus der Praxis, nutzen Marktinformationen für einen extrinsischen, relativen Wert: `M_j = V_j/PM_j`, `M = average of M_j`, `X_e = PM_e x M`. **Investment Comparables** nutzen private Deals und sind die näheren Peers, aber die knapperen Daten; **Exit Comparables** nutzen börsennotierte Unternehmen und sind reichlich vorhanden, aber fraglich vergleichbar, und ihnen ist ein **Liquiditätsabschlag** geschuldet.
+- Kennzahlen nach ökonomischer Aussagekraft geordnet: **Cashflow** am besten, **Umsätze** am verfügbarsten, **Gewinne** können negativ oder volatil sein, **operative Kennzahlen** nur schwach mit dem Ergebnis verbunden. Vier Fallstricke: konsistent messen, die ganze Verteilung lesen, daran denken, dass Multiples zur Herde neigen, und akzeptieren, dass **innovativ zu sein keine Ähnlichkeit ist**.
+- **Wahrscheinlichkeitsbasierte Methoden** modellieren Unsicherheit explizit: **Szenarioanalyse** mit `V = sum of p_s x V_s`, **Simulation** und **PROFEX**, das die Unternehmung als eine Folge von Wegkreuzungen behandelt, an denen sie aussteigen, weitermachen oder scheitern kann, und bei dem die entscheidende Runde die erste ist.
+- Nichts verschmilzt die drei Antworten automatisch. Gehe mit der Methode voran, die zu deiner Phase und deinem Publikum passt, zeige die anderen als Spanne, und denke daran, dass sie alle unterstellen, dass der Investor **gewöhnliche Stammanteile** erhält, was fast nie stimmt.
+</Aside>
+
+*Weiter: [Term Sheets →](/de/learnings/mba/innovation-and-new-business-planning/14-term-sheets/) - die Klauseln, die entscheiden, wer das Unternehmen wirklich kontrolliert.*

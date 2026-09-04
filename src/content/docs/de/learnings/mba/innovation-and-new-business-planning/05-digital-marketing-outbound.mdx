@@ -1,0 +1,607 @@
+---
+title: "Digital Marketing I: Outbound"
+description: "Wie ein Unternehmen Aufmerksamkeit online einkauft - Search, Display und Video Ads; die Keyword-Auktion, der Quality Score und der Ad Rank, die über Position und tatsächlich gezahlten Preis entscheiden; Ad Networks, Ad Exchanges und Real-Time Bidding; kontextuelle, verhaltensbasierte und Retargeting-Ansätze; und der gesamte Kennzahlensatz von Impressions und Click-through-Rate über Cost per Click, Cost per Mille, Cost per Acquisition und Conversion Rate bis zum Attributionsproblem."
+sidebar:
+  label: "5 · Digital: Outbound"
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Fast das ganze zwanzigste Jahrhundert hindurch stand eine neue Konsumgütermarke vor zwei Mauern, die sie nicht überklettern konnte. Die erste war die **Distribution**: Die großen etablierten Anbieter besaßen die Regalfläche im Handel, ein Startup-Produkt hatte also schlicht keinen Platz. Die zweite war die **Werbung**: Der einzige Weg zu breiter Markenbekanntheit führte über das Fernsehen, und Fernsehen war für ein junges Unternehmen unbezahlbar. Beide Mauern sind gefallen. E-Commerce bedeutet, dass Regalfläche im Handel nicht mehr der einzige Weg zum Käufer ist, und digitale Werbung lässt ein winziges Team eine präzise ausgewählte Zielgruppe zu Kosten erreichen, die es sich tatsächlich leisten kann.
+
+Deshalb beginnt der Text mit einer Liste von Direct-to-Consumer-Startups, die in wenigen Jahren ernsthafte Bewertungen erreicht haben. Im Mai 2019 kündigte der Rasierklingenhersteller Schick an, **Harry's** zu kaufen, damals sechs Jahre alt, für **1,37 Milliarden Dollar** - drei Jahre nachdem Unilever rund **1 Milliarde Dollar** für **Dollar Shave Club** gezahlt hatte. Auf derselben Liste stehen Bonobos in der Bekleidung mit 310 Millionen, Casper bei Matratzen mit 1,1 Milliarden, Allbirds bei Schuhen mit 1,4 Milliarden, Glossier in der Kosmetik mit 1,2 Milliarden und Honest mit Baby-, Kosmetik- und Haushaltsprodukten mit rund 1 Milliarde. Keines dieser Unternehmen hat die Etablierten überboten. Sie haben sie im Targeting geschlagen.
+
+Dieses Kapitel ist die erste Hälfte des Bildes vom Digital Marketing: **Outbound**-Marketing, also jede Situation, in der das Unternehmen das Gespräch beginnt und eine Botschaft in Richtung einer ausgewählten Zielgruppe schiebt. In digitalen Kanälen heißt das drei Anzeigentypen - **Search**, **Display** und **Video** - plus die unbequeme Frage, wie man beweist, dass irgendetwas davon gewirkt hat.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Online-Werbung wird nicht nach Preisliste gekauft. Sie wird in einer **Auktion** gekauft, in der die Position vom Gebot mal der von der Plattform eingeschätzten Relevanz der Anzeige abhängt, und in der der tatsächlich gezahlte Preis von dem Bieter bestimmt wird, der hinter einem liegt. Die Ökonomie einer Kampagne steckt deshalb in nur zwei Zahlen: **was ein Klick kostet** und **was aus einem Klick wird**. Jede Kennzahl in diesem Kapitel misst eine dieser beiden Größen, und die schwierigste Frage des ganzen Feldes - die Attribution - ist schlicht der Streit darüber, welche Anzeige den Verkauf verdient hat.
+</Aside>
+
+## 1 · Warum der digitale Wandel für ein junges Unternehmen zählt
+
+Digitale Technologie hat drei Dinge auf einmal verändert: wie Menschen nach Informationen suchen, wie sie miteinander reden und wie sie kaufen. Cookies verfolgen einen Besucher durch das Netz. Seiten zur Kuratierung und zum Teilen von Inhalten gaben Einzelnen eine Möglichkeit zu publizieren und Unternehmen einen neuen Ort, um zu werben. Soziale Plattformen lassen eine Botschaft innerhalb von Sekunden ein großes Publikum erreichen. Und die beispiellose Verbreitung von Mobiltelefonen hat ganze Bevölkerungen erschlossen, besonders in Entwicklungsländern, die nie über festes Breitband verfügten.
+
+Die praktische Folge für eine Führungskraft ist, dass Markteinsicht nicht mehr auf Befragungen, Transaktionsdaten und Fokusgruppen beschränkt ist. Man hört direkt, was Menschen über das eigene Produkt sagen, weiß oft **wer** es sagt und manchmal auch, zu wem. Das wiederum erlaubt besseres Targeting und macht es möglich, einzelne Marketingkontaktpunkte mit Umsätzen und mit dem Kundenlebenszeitwert zu verknüpfen.
+
+Das Geld ist gefolgt. 2019 erreichte digitale Werbung **129 Milliarden Dollar in den Vereinigten Staaten**, das waren **54 Prozent der gesamten Werbeausgaben**, und **333 Milliarden Dollar weltweit**, rund **50 Prozent des Gesamtmarktes**. Erwartet wurde, dass Digital **bis 2023 über 60 Prozent aller Werbeausgaben** ausmacht.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Paid Media<span class="sub">man kauft die Sichtbarkeit - ein Dreißig-Sekunden-Spot im Fernsehen, eine Suchanzeige</span></div>
+    <div class="sc-node violet">Owned Media<span class="sub">Kanäle, die man selbst kontrolliert - Sichtbarkeit über die eigene Website</span></div>
+    <div class="sc-node green">Earned Media<span class="sub">Menschen teilen und diskutieren von sich aus über einen</span></div>
+  </div>
+  <figcaption>Drei Quellen der Sichtbarkeit, die eine digitale Kampagne gleichzeitig jongliert. Mundpropaganda und Bewertungsportale stehen daneben und können entweder die nötige Werbemenge senken oder das Gekaufte verstärken.</figcaption>
+</div>
+
+Die schiere Menge an Inhalten ist der Grund, warum sich Manager eher gelähmt als ermächtigt fühlen. Bis 2018 enthielt eine durchschnittliche Internetminute mehr als **4 Millionen YouTube-Videoaufrufe**, rund **2.000 neue Reddit-Kommentare** und knapp **500.000 Tweets**. Knapp ist die Aufmerksamkeit, nicht der Werbeplatz.
+
+## 2 · Der Rahmen: Outbound versus Inbound, und warum die Trennung zählt
+
+Der Text ordnet alles um vier Elemente herum. Die ersten beiden sind Spiegelbilder voneinander, und diesen Gegensatz sauber zu beherrschen ist die prüfungsrelevanteste Idee dieses Kapitels.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Outbound-Marketing <small>dieses Kapitel</small></div>
+    <ul>
+      <li>Das <strong>Unternehmen beginnt</strong> das Gespräch und sendet eine Botschaft an Zielkunden</li>
+      <li>Der direkte Nachfahre klassischer Print-, Radio- und Fernsehwerbung</li>
+      <li>Digital sind das <strong>Search, Display und Video Ads</strong></li>
+      <li>Man jagt den Kunden, also zahlt man für jeden Versuch</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Inbound-Marketing <small>nächstes Kapitel</small></div>
+    <ul>
+      <li>Das Unternehmen sorgt dafür, dass es <strong>gefunden werden kann</strong>, wenn ein Konsument nach einem Produkt oder einer Dienstleistung sucht</li>
+      <li>Erfordert, die Website sowohl an das Suchverhalten der Menschen als auch an die Algorithmen der Suchmaschinen anzupassen</li>
+      <li>Daher kommt die <strong>Suchmaschinenoptimierung</strong></li>
+      <li>Statt zu jagen, wird man selbst zu dem, wonach gesucht wird</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Social Media <small>Konsumenten erzeugen die Inhalte</small></div>
+    <ul>
+      <li>Plattformen, auf denen Konsumenten selbst Bewertungen und Meinungen erzeugen, die andere Käufer beeinflussen</li>
+      <li>Unternehmen beteiligen sich aktiv, um Kunden auf neue Weise zu erreichen und zu bedienen</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Mobile Technologie <small>immer verbunden</small></div>
+    <ul>
+      <li>Hält den Konsumenten jederzeit und überall verbunden</li>
+      <li>Verändert, wie Menschen suchen und kaufen, und schafft eigene Managementprobleme</li>
+    </ul>
+  </div>
+</div>
+
+Der Text liefert ein Bild, das leicht hängen bleibt: Outbound-Marketing ist wie die **Suche nach einer Nadel im Heuhaufen**, Inbound-Marketing dagegen wie der **Einsatz eines Magneten**, sodass die Nadel von selbst kommt. Das ist auch der Grund, warum die Trennung ökonomisch zählt. Outbound-Ausgaben skalieren mit der Zahl der Menschen, die man zu erreichen versucht, sind also variable Kosten, die nie aufhören. Inbound-Arbeit ähnelt eher einem Vermögenswert, den man einmal aufbaut und dann behält.
+
+<Aside type="note">
+**Eine Mischform, die man kennen sollte: Native Advertising.** Manche Interaktionen zwischen Konsumenten und Unternehmen mischen die Kategorien. Native Advertising ist gesponserter Inhalt, der so gestaltet ist, dass er sich in den redaktionellen Fluss einer Seite einfügt und nur an einer Kennzeichnung und einem Logo erkennbar bleibt. Es existiert wegen eines Zahlenproblems: Gewöhnliche Bannerwerbung erreicht Click-through-Rates von etwa **0,02 Prozent**, während native Beiträge auf einer großen Content-Seite bei **1 bis 3 Prozent** lagen. In der Praxis wird eine redaktionelle Liste schöner Orte als Markenversion derselben Liste neu geschrieben. Native Ads nutzen meist Rich Media, sind in der Regel mobiltauglich und darauf gebaut, geteilt zu werden. Regulierer beobachten das Format genau, weil die Grenze zwischen redaktionellem und bezahltem Inhalt verschwimmt.
+</Aside>
+
+## 3 · Search Ads: einen bereits vorhandenen Moment der Kaufabsicht kaufen
+
+Rund **80 Prozent aller Online-Sitzungen an PCs und Laptops beginnen mit irgendeiner Suche**, was Suchmaschinen zum Tor zum Internet gemacht hat. Da Menschen Wörter eintippen statt konkrete URLs, sind die Anzeigen auf einer Ergebnisseite ungewöhnlich wirksame Interaktionspunkte.
+
+Tippt jemand eine Phrase wie Urlaub im Resort ein, liefert die Suchmaschine zwei Arten von Links zurück. **Organische Links** werden nach Relevanz oder Nutzerbeliebtheit sortiert und kosten das Unternehmen nichts. **Bezahlte Links**, auch Sponsored Links oder Search Ads genannt, werden gekauft und stehen normalerweise über den organischen Ergebnissen oder in einer Spalte daneben. Dasselbe Unternehmen kann an beiden Stellen gleichzeitig erscheinen. Firmen können sowohl auf einzelne Wörter als auch auf mehrwortige Phrasen bieten, und verschiedene Keyword-Kombinationen erzeugen verschiedene Ergebnisse.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1 · Keywords festlegen<span class="sub">auf welche Wörter geboten wird, wie viel je Keyword und welches Gesamtbudget zur Verfügung steht</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">2 · Anzeigenkreation gestalten<span class="sub">das Keyword taucht meist im Anzeigentext selbst auf, was Platzierung und wahrgenommene Relevanz zugleich hebt</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">3 · Kampagne starten<span class="sub">die Anzeige kann erscheinen, sobald jemand ein Keyword sucht, auf das man geboten hat, sofern sie hoch genug rankt, um auf die Seite zu kommen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">4 · Landing Pages vorbereiten<span class="sub">eigens gebaute Seiten, typischerweise nicht die Startseite, mit genau dem Inhalt, den die Suche impliziert hat</span></div>
+  </div>
+  <figcaption>Der vierstufige Prozess des Suchmaschinenmarketings. Man beachte Schritt drei: Eine ausgespielte Anzeige kostet nichts. Dem Werbetreibenden wird erst berechnet, wenn jemand tatsächlich klickt, und selbst dann nie mehr als das Gebot.</figcaption>
+</div>
+
+Das Abrechnungsmodell ist das, was Suche vom Fernsehen unterscheidet. Suchmaschinen verlangen keinen Festpreis. Sie führen eine **verallgemeinerte Zweitpreisauktion** durch und berechnen pro Klick, und je höher das Gebot, desto wahrscheinlicher landet die Anzeige auf einem sichtbaren Platz. Die einfache Illustration aus dem Text: Wenn 1.000 Menschen klicken und das Gebot **0,10 Dollar pro Klick** beträgt, sind die maximalen Kosten 1.000 mal 0,10, also **100 Dollar**. Weil die Zahlung durch einen Klick und nicht durch eine Ansicht ausgelöst wird, greift eine Suchanzeige eine bereits vorhandene Kaufabsicht ab - die Person hat einem gesagt, was sie will, bevor man selbst gesprochen hat. Gebotshöhe und Budget folgen deshalb beide daraus, wie wirksam und profitabel sich die Anzeigen erweisen.
+
+## 4 · Keywords: ein Portfolio pflegen, das in die Millionen gehen kann
+
+Verschiedene Menschen beschreiben denselben Wunsch mit verschiedenen Worten, deshalb ist eine Keyword-Liste ein Portfolio, das gepflegt und gesteuert werden muss und nicht einmal geschrieben wird. Die Größenordnung ist wirklich beachtlich: Eine der weltweit größten Reiseseiten **kaufte 2010 über 100 Millionen Keywords**, und im dritten Quartal 2018 gab eine große Hotelbuchungsseite **mehr als 1 Milliarde Dollar für Google Ads** aus, einen großen Teil davon für Suche.
+
+Vier Kräfte lassen die Liste anwachsen:
+
+- **Varianten einer Idee.** Wer ein Hotel in Los Angeles sucht, tippt vielleicht Los Angeles Hotel, Hollywood Hotel, Zimmer in LA oder Drei-Sterne-Hotel in Los Angeles. Jeder Zusatz ist ein weiteres Keyword zu ein und derselben Suchidee.
+- **Verschiedene Sprachen**, die Kunden mit anderer Demografie erreichen.
+- **Rechtschreibfehler und Tippfehler**, die Unternehmen teils bewusst kaufen, auch wenn Autokorrektur und Rechtschreibvorschläge das weniger nötig machen als früher.
+- **Negative Keywords**, die das Gegenteil bewirken: Sie verhindern, dass die eigene Anzeige bei bestimmten Suchen erscheint. Ein Kosmetikunternehmen will den Suchenden nach Hautbehandlung, ganz sicher aber nicht den nach Hautkrebsbehandlung. Das Wort Krebs auszuschließen verhindert, dass Geld für Suchen verbrannt wird, die kaum konvertieren.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Branded Keywords <small>auf den eigenen Namen bieten</small></div>
+      <ul>
+        <li>Die eigenen Markenbegriffe bringen einen ohnehin an die Spitze der organischen Ergebnisse, warum also überhaupt zahlen?</li>
+        <li><strong>Verteidigung.</strong> Ein Wettbewerber kann einen bezahlten Platz kaufen, der <em>über</em> dem eigenen organischen Link liegt, und die Interessenten abziehen</li>
+        <li><strong>Angriff.</strong> Eine Studie fand, dass Suchanzeigen die Click-through-Rate des organischen Links desselben Unternehmens um <strong>25 Prozent</strong> erhöhten</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Generische Keywords <small>auf die Kategorie bieten</small></div>
+      <ul>
+        <li>Eine Hotelkette, die auf eine Kategoriephrase wie Hotels in Bangkok bietet</li>
+        <li>Die suchende Person hatte diese Kette womöglich überhaupt nicht im Relevant Set, und die Anzeige kann sie hereinholen</li>
+        <li>Selbst ohne Klick weiß sie nun, dass die Kette ein Hotel in dieser Stadt hat, und sucht vielleicht später weiter</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Beide Keyword-Typen verdienen ihren Platz, aus unterschiedlichen Gründen. Markenbegriffe schützen einen Vermögenswert, den man bereits besitzt; generische Begriffe kaufen den Eintritt in eine Entscheidung, in der man bisher nicht vorkam.</figcaption>
+</div>
+
+Welche Mischung man auch fährt, das Portfolio braucht Überwachung. Fortgeschrittene Unternehmen nutzen **Scripts**, also programmierten Code, der Routineaufgaben automatisch erledigt, aber manuelles Urteil bleibt nötig, um Trends bei Suchbegriffen einzuschätzen, mit veränderten Formulierungsgewohnheiten Schritt zu halten und Keywords neu zu positionieren, wenn ein Wettbewerber die Taktik ändert. Suchmaschinen helfen: Ein **Keyword-Planer** meldet den Traffic hinter jeder Keyword-Variante, und so findet man heraus, dass eine Formulierung eines Begriffs weit mehr Volumen trägt als eine andere.
+
+<Aside type="caution">
+**Was dieser Text definiert und was nicht.** Er baut die Keyword-Breite aus konkreten Mechaniken auf - Einzelwörter versus mehrwortige Phrasen, Varianten, andere Sprachen, Rechtschreibfehler und negative Keywords - und nicht aus formalen Match-Type-Bezeichnungen. Für diesen Kurs also das Breitenproblem genau in diesen Begriffen beschreiben und ein **negatives Keyword** sauber erklären können, denn das ist der eine Ausschlussmechanismus, den der Text tatsächlich definiert.
+</Aside>
+
+## 5 · Die Auktion: was die Position bestimmt und was man wirklich zahlt
+
+Wo eine Anzeige sitzt, zählt, weil die Blicke dorthin gehen. Eine **Eye-Tracking-Studie von 2005** erzeugte eine Heatmap, in der sich die Aufmerksamkeit **oben links** auf der Ergebnisseite konzentrierte, eine Zone, die Marketer das **goldene Dreieck** nannten und die damit die wertvollste und deshalb teuerste Position war; bei Anzeigen in der rechten Spalte zogen die oberen die meiste Aufmerksamkeit. Eine **Wiederholungsstudie von 2014** fand, dass das Auge weiterhin oben links beginnt, die Seite nun aber schnell und senkrecht statt waagerecht abtastet, was auf Scrollgewohnheiten vom Smartphone und auf veränderte Anzeigenausspielung am Desktop zurückgeführt wird. Menschen brauchen heute **8 bis 9 Sekunden**, um das relevante Ergebnis zu finden, gegenüber **14 bis 15 Sekunden** ein Jahrzehnt zuvor.
+
+Die nützliche Folgerung lautet, dass es weniger entscheidend ist als früher, das allererste Ergebnis zu erobern, weil Menschen die obersten drei oder vier ohnehin überfliegen. Eine höhere Position zieht weiterhin mehr Aufmerksamkeit und mehr Klicks, aber der **oberste Platz ist nicht automatisch der profitabelste**: Die Click-through-Rate sinkt mit fallender Position, doch die Conversion Rate kann steigen, weil jemand, der einen weiter unten stehenden Link klickt, implizit stärkeres Interesse an genau diesem Unternehmen gezeigt hat. Nur laufendes Testen, Messen und Analysieren zeigt die richtige Position und das richtige Gebot für einen gegebenen Keyword-Satz.
+
+Die Position wird von zwei Dingen bestimmt, die miteinander multipliziert werden.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Cost-per-Click-Gebot<span class="sub">was man bereit ist, für einen Klick auf dieses Keyword zu zahlen</span></div>
+    <span class="arrow">×</span>
+    <div class="sc-node violet">Quality Score<span class="sub">das eigene Urteil der Suchmaschine über die Anzeige, von 1 bis 10; der Algorithmus bleibt geheim</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Ad Rank<span class="sub">die Platzierungsposition auf der Ergebnisseite</span></div>
+  </div>
+  <figcaption>Der Ad Rank ist das Produkt aus beiden, nicht das Gebot allein. Genau diese eine Konstruktionsentscheidung verhindert, dass ein reicher Werbetreibender die Seite mit irrelevanten Anzeigen füllt, die Suchende ärgern und vertreiben würden.</figcaption>
+</div>
+
+**Das Gebot.** Was man zu zahlen bereit ist, hängt vom Wettbewerb ab, vom Suchbudget, von der erwarteten Click-through-Rate und von der **Conversion Rate**, also dem Anteil der klickenden Besucher, aus dem ein Verkauf oder eine andere gewünschte Handlung wie eine Registrierung wird. Keywords mit viel Traffic kosten mehr, und die Preise schwanken enorm zwischen Kategorien: 2018 zahlten Reiseunternehmen im Schnitt **1,53 Dollar pro Klick am Desktop und 2,43 mobil**, während Bildungseinrichtungen **18,91 Dollar am Desktop und 13,95 mobil** zahlten.
+
+**Die Auktionsregel.** Der Mechanismus ist eine **verallgemeinerte Zweitpreisauktion**, aufgebaut auf nobelpreisgekrönter Auktionsforschung. Der Höchstbietende erhält die erste Position, zahlt aber den Betrag des Zweithöchsten, der Zweitbietende zahlt den des Dritten und so weiter die Liste hinunter. Der Sinn dieser Konstruktion ist, dass sie Wahrhaftigkeit erzeugt: Die beste Strategie ist, die echte maximale Zahlungsbereitschaft zu bieten.
+
+**Der Quality Score.** Die Suchmaschine vergibt jeder Anzeige eine Bewertung, um die Ziele dreier Parteien gleichzeitig auszubalancieren - des Konsumenten, des Werbetreibenden und ihre eigenen. Er beruht auf drei Komponenten.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Potenzielle Click-through-Rate der Anzeige</span>
+  <span class="sc-chip amber">Relevanz für die Konsumenten</span>
+  <span class="sc-chip green">Qualität der Landing Page</span>
+</div>
+
+Jede Komponente hat einen Grund. Die **Click-through-Rate**, Klicks geteilt durch Impressions, misst offenbarte Präferenz: Nutzer klicken eine Anzeige nur, wenn sie sie hilfreich finden, und sie ist zugleich die Einnahmequelle der Suchmaschine, die nur bei einem Klick bezahlt wird. **Relevanz** ist die Übereinstimmung zwischen den gesuchten Wörtern und dem Inhalt der Anzeige. Die **Qualität der Landing Page** wird über die **Bounce Rate** gemessen, also wie schnell Besucher nach der Ankunft wieder gehen - ein Faktor, der gezielt aufgenommen wurde, um zu verhindern, dass ein Werbetreibender einen Klick ködert und den Besucher auf einer Seite ablädt, die nicht zur Anzeige passt und für ihn irrelevant ist.
+
+### Die durchgerechnete Auktion aus dem Text
+
+Vier Werbetreibende konkurrieren um drei verfügbare Plätze bei einem Keyword. Die Spalte mit dem gezahlten Preis zeigt, was jeder unter einer schlichten Zweitpreisregel ohne Quality Score gezahlt hätte; die letzte Spalte zeigt das tatsächliche Ergebnis.
+
+| Werbetreibender | Maximalgebot | Preis ohne Quality Score | Quality Score | Gebot × Qualität | Ad Rank | Tatsächliche Kosten pro Klick |
+|---|--:|--:|--:|--:|:-:|--:|
+| W | 4.00 | 3.00 | 1 | 4 | 4 | nicht ausgespielt |
+| X | 3.00 | 2.00 | 3 | 9 | 2 | 8 / 3 = **2.67** |
+| Y | 2.00 | 1.00 | 6 | 12 | 1 | 9 / 6 = **1.50** |
+| Z | 1.00 | - | 8 | 8 | 3 | 4 / 8 = **0.50** |
+
+Werbetreibender **Y bietet nur 2 Dollar gegen die 4 von W** und bekommt trotzdem die erste Position, weil sein Quality Score von 6 den Score von 1 bei W schlägt. Da nur drei Plätze verfügbar sind, **wird W trotz des höchsten Gebots überhaupt nicht ausgespielt**. Der Preis, den jeder Gewinner zahlt, ist das Minimum, das nötig ist, um den Rang gegen den darunterliegenden Werbetreibenden zu halten, woraus sich die Regel ergibt:
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Preis, um den eigenen Rang zu halten</div>
+    <code>P1 * Q1 = B2 * Q2</code>
+  </div>
+  <div>
+    <div class="name">Nach dem Preis umgestellt</div>
+    <code>P1 = B2 * Q2 / Q1</code>
+  </div>
+  <div>
+    <div class="name">Angewendet auf Werbetreibenden Y</div>
+    <code>Price(Y) = 3 * 3 / 6 = 1.50</code>
+  </div>
+</div>
+
+Drei Schlussfolgerungen zieht der Text daraus, alle drei merkenswert:
+
+- **Man zahlt fast immer weniger als das eigene Gebot.** Y zahlt 1,50 bei einem Gebot von 2,00. Die Plattform garantiert, dass nie mehr als das Maximum berechnet wird, und meist wird weniger berechnet.
+- **Ein höherer Quality Score senkt die Kosten pro Klick.** Das ist der bewusst gesetzte Anreiz: die Anzeige für Konsumenten relevanter machen, statt einfach mehr zu bieten, um Aufmerksamkeit zu greifen.
+- **Die tatsächlichen Kosten hängen von Wettbewerbern ab, die man nicht sieht.** Deren Gebote und Quality Scores sind einem unbekannt und verändern sich über die Zeit, deshalb lässt sich vorab unmöglich genau wissen, was eine Suchkampagne kosten wird. Sicher ist nur, dass sie das gesetzte Budget nicht überschreitet.
+
+## 6 · Der Kennzahlensatz und die Profitabilitätsformel
+
+Anders als klassische Medien erlaubt digitale Werbung, Konsumenten nach dem Kontakt automatisch zu verfolgen, deshalb ist die Wirkungsbeurteilung vergleichsweise einfach. Diese Definitionen muss man im Schlaf können.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Impressions</div>
+    <code>the number of times the ad was seen by consumers</code>
+  </div>
+  <div>
+    <div class="name">Click-through-Rate</div>
+    <code>CTR = clicks / impressions</code>
+  </div>
+  <div>
+    <div class="name">Cost per Click</div>
+    <code>CPC = total spend / clicks</code>
+  </div>
+</div>
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Kosten je tausend Impressions</div>
+    <code>CPM = (total spend / impressions) * 1,000</code>
+  </div>
+  <div>
+    <div class="name">Conversion Rate</div>
+    <code>CR = conversions / clicks</code>
+  </div>
+  <div>
+    <div class="name">Cost per Acquisition</div>
+    <code>CPA = total cost / customers acquired</code>
+  </div>
+</div>
+
+Impressions zeigen die **Reichweite** einer Anzeige, aber nichts über ihre Wirkung, denn bloßer Kontakt beweist nicht, dass jemand beeinflusst wurde oder die Anzeige überhaupt bemerkt hat - genau deshalb berechnen Suchmaschinen sie nicht. Click-through-Rate und Conversion Rate sind die besseren Signale, und die CTR der meisten Suchanzeigen liegt im **niedrigen einstelligen Prozentbereich**.
+
+Die Illustration des Textes ist die Suchkampagne einer Bank aus dem Jahr 2010 über fünf Seiten: Gesamtausgaben **516.070 Dollar** für **11.529.237 Impressions**, **472.433 Klicks** und **7.107 abgeschlossene Girokontoanträge**, eine CTR von insgesamt **4,10 Prozent** und eine Conversion Rate von **1,50 Prozent**.
+
+| Seite | Mediaausgaben | Impressions | Klicks | Anträge | CTR | Conversion Rate |
+|---|--:|--:|--:|--:|--:|--:|
+| Google | 288,000 | 5,575,637 | 234,963 | 3,717 | 4.21% | 1.58% |
+| MSN | 37,000 | 897,406 | 50,242 | 663 | 5.60% | 1.32% |
+| SuperPages | 70 | 116,922 | 1,410 | 16 | 1.21% | 1.13% |
+| Yahoo! | 177,000 | 4,435,709 | 165,166 | 2,419 | 3.72% | 1.46% |
+| Unified Marketplace | 14,000 | 503,563 | 20,652 | 292 | 4.10% | 1.41% |
+| **Gesamt** | **516,070** | **11,529,237** | **472,433** | **7,107** | **4.10%** | **1.50%** |
+
+Die erste Zeile so gelesen, wie der Text es tut: Die CTR ist 234.963 geteilt durch 5.575.637, also **4,21 Prozent**. Der CPC ist 288.000 geteilt durch 234.963, also **1,23 Dollar**. Die Conversion Rate ist 3.717 geteilt durch 234.963, also **1,58 Prozent**. Kommt die Marge hinzu, ergibt sich die Profitabilität.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Gewinn aus Suchanzeigen</div>
+    <code>(impressions * CTR * conversion rate * margin) - search ad cost</code>
+  </div>
+  <div>
+    <div class="name">Angewendet bei 100 Dollar Marge je Antrag</div>
+    <code>(5,575,637 * 4.21% * 1.58% * 100) - 288,000 = 83,700</code>
+  </div>
+</div>
+
+Dasselbe schlicht gesagt: 3.717 abgeschlossene Anträge zu je 100 Dollar sind 371.700 Dollar, abzüglich der ausgegebenen 288.000 ergibt **83.700 Dollar**. Kleine Abweichungen entstehen, wenn man aus den gerundeten Prozentwerten neu rechnet. Diese Rechnung ist ein guter erster Durchgang zur Rendite, ignoriert aber stillschweigend die Attribution, die Abschnitt 9 auseinandernimmt.
+
+## 7 · Display Ads: Kontext statt Kaufabsicht kaufen
+
+Eine Suchanzeige erreicht jemanden nur, während er ein bestimmtes Keyword jagt. Eine **Display-Anzeige** lässt sich auf jeder Website platzieren, die die Marke für ihre Zielgruppe als relevant ansieht - etwa ein Kartenherausgeber, der auf der Seite einer Wirtschaftszeitung wirbt. Display Ads tragen deshalb **zwei mögliche Ziele**: Sie können wie Suchanzeigen auf sofortige Handlung gebaut sein oder wie Fernseh- und Printanzeigen auf den Aufbau von Markenbekanntheit zielen.
+
+| Format | Was es ist |
+|---|---|
+| Banner Ad | Eine der ältesten und klassischsten Formen, normalerweise quer über den Seitenkopf |
+| Interstitial Ad | Eine ganze Seite, die vor der eigentlich angeforderten Seite erscheint; erregt mehr Aufmerksamkeit, ist aber aufdringlicher |
+| Expandable Banner | Ein Banner, das sich automatisch über einen großen Teil des Bildschirms ausdehnt und in Größe und Wirkung zwischen Banner und Interstitial liegt |
+| Overlay | Wie ein Interstitial, aber mit transparentem Hintergrund, sodass die ursprüngliche Seite dahinter sichtbar bleibt |
+| Rich Media | Anzeigen mit interaktiven Bestandteilen wie Video, Audio oder klickbaren Links |
+| 360-Grad-Anzeige | Für Smartphones gebaut, liefert eine Rundumansicht, während der Nutzer das Gerät bewegt |
+
+### Die Branche: Netzwerke, Exchanges und Real-Time Bidding
+
+Suche ist auf wenige Suchmaschinen konzentriert. Display ist das Gegenteil - eine **fragmentierte Branche** mit vielen spezialisierten Akteuren entlang der Wertschöpfungskette zwischen Werbetreibendem und Betrachter.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Werbetreibende<span class="sub">von globalen Konsumgüterkonzernen bis zu kleinen Startups; große beauftragen Agenturen, kleine nutzen Selbstbedienungswerkzeuge online</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Ad Networks<span class="sub">bündeln Werbeflächen vieler Publisher und bringen sie mit der Nachfrage zusammen, plus eigene Platzierungsalgorithmen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Ad Exchanges<span class="sub">automatisieren die Zuordnung - programmatischer Einkauf über Real-Time Bidding, bepreist durch Angebot und Nachfrage wie an einer Börse</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Content-Publisher<span class="sub">von überregionalen Zeitungen bis zu privaten Blogs; die Preise hängen von Traffic, Ansehen und Zielgruppendemografie ab</span></div>
+  </div>
+  <figcaption>Das Rückgrat der Display-Branche. Große Werbetreibende kaufen manchmal direkt bei großen Publishern, doch die meisten Transaktionen laufen über einen Zwischenhändler. Bis 2017 wurden fast 72 Prozent der US-Ausgaben für digitales Display programmatisch über Exchanges eingekauft, wobei jede Auktion im Bruchteil einer Sekunde abgewickelt wird.</figcaption>
+</div>
+
+Drei weitere Rollen sitzen um dieses Rückgrat herum. **Demand-Side-Plattformen** agieren als Makler des Käufers und lassen eine Agentur Werbeinventar über viele Exchanges und Netzwerke hinweg in einer Oberfläche steuern. **Supply-Side-Plattformen** erledigen die Spiegelaufgabe für Publisher und helfen ihnen, die besten Preise für ihr Inventar von verschiedenen Käufern zu erzielen. **Data-Management-Plattformen** sammeln, interpretieren und verkaufen Browsing- und andere Kundendaten, damit das Targeting schärfer wird, und Spezialisten für Datenschutz, Tag Management und Analytics füllen den Rest einer weitläufigen Landschaft.
+
+### Preismodelle und das Click-through-Problem
+
+Display-Inventar wird je nach Ziel auf eine von zwei Arten eingekauft. Auf **Impressionsbasis** über den **CPM** zahlt man jedes Mal, wenn die Anzeige gesehen wird, unabhängig davon, ob jemand klickt - das passt zu Markenbekanntheit oder Markenimage. Auf **Klickbasis** zahlt man pro Klick, was zu einer Direct-Response-Kampagne passt, die Klicks und Conversions sucht. Manche Kanäle lassen die Wahl.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Display-Gewinn, auf CPM-Basis eingekauft</div>
+    <code>impressions * [(CTR * conversion rate * margin) - CPM / 1,000]</code>
+  </div>
+  <div>
+    <div class="name">Display-Gewinn, auf CPC-Basis eingekauft</div>
+    <code>impressions * CTR * [(conversion rate * margin) - CPC]</code>
+  </div>
+</div>
+
+Die Display-Kampagne derselben Bank zeigt, wie anders sich diese Anzeigen verhalten. Über sieben Netzwerke hinweg gab sie **634.000 Dollar** für **308.779.216 Impressions**, **139.176 Klicks** und **7.190 Anträge** aus, was eine CTR von **0,05 Prozent** und eine Conversion Rate von **5,17 Prozent** ergibt. Nimmt man das größte Netzwerk, bei einer Marge von 100 Dollar je Antragsteller:
+
+<div class="sc-formula">
+  <div>
+    <div class="name">CPM</div>
+    <code>(176,000 / 97,466,342) * 1,000 = 1.81</code>
+  </div>
+  <div>
+    <div class="name">CTR</div>
+    <code>34,777 / 97,466,342 = 0.04%</code>
+  </div>
+  <div>
+    <div class="name">Conversion Rate</div>
+    <code>2,934 / 34,777 = 8.44%</code>
+  </div>
+  <div>
+    <div class="name">CPC</div>
+    <code>176,000 / 34,777 = 5.06</code>
+  </div>
+  <div>
+    <div class="name">Display-Gewinn</div>
+    <code>97,466,342 * (0.04% * 8.44% * 100 - 1.81 / 1,000) = 117,400</code>
+  </div>
+  <div>
+    <div class="name">Dasselbe Ergebnis auf direktem Weg</div>
+    <code>(2,934 * 100) - 176,000 = 117,400</code>
+  </div>
+</div>
+
+Nun beide Kanäle nebeneinander, denn das Muster ist kontraintuitiv und sehr prüfungsrelevant.
+
+| Kennzahl | Search, eine Suchmaschine | Display, ein Netzwerk | Wie man es liest |
+|---|--:|--:|---|
+| Click-through-Rate | 4.2% | 0.04% | Search gewinnt um etwa den Faktor hundert |
+| Cost per Click | 1.23 | 5.06 | Klicks aus der Suche sind weit billiger |
+| Conversion Rate | 1.58% | 8.44% | Display-Klicks sind weit seltener, aber deutlich besser qualifiziert |
+
+Diese winzige Display-Click-through-Rate ist die strukturelle Schwäche des Formats, und sie ist die Lücke, für deren Schließung Native Advertising und besseres Targeting existieren. Das Gegengewicht ist, dass Display Markenkennzahlen auch ohne Klicks tatsächlich bewegt. Eine Test-Kontroll-Studie über **6.400 Display-Kampagnen von 2008 bis 2010** fand einen signifikanten Effekt auf Markenbekanntheit, Markensympathie und Kaufabsicht, und eine **Studie von 2018 über 675 Kampagnen aus den Jahren 2008 bis 2017** fand, dass Display gegenüber einer Kontrollgruppe die ungestützte Markenbekanntheit um bis zu **12 Prozent** hob, die Markenwahrnehmung um **2 Prozent** verbesserte und die Kaufabsicht um **3 Prozent** steigerte.
+
+### Vier Wege, Display Ads wirksamer zu machen
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Kontextuelle Anzeigen <small>die Anzeige zum Seitenthema passen</small></div>
+    <ul>
+      <li>Eine Autoanzeige auf einer Seite mit Autotests erreicht jemanden, der sich ohnehin für Autos interessiert, und kann sogar nützliche Information sein</li>
+      <li>Die billigste und zuverlässigste verfügbare Verbesserung</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Formate mit hoher Sichtbarkeit <small>Pop-ups und Autoplay</small></div>
+    <ul>
+      <li>Wirksam darin, Aufmerksamkeit zu greifen, und aus genau diesem Grund weithin als lästig empfunden</li>
+      <li>Wichtige Nuance: Sie bringen <strong>nichts Zusätzliches</strong>, sobald eine Anzeige bereits kontextuell ist</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Retargeting <small>verhaltensbasiert, über ein Cookie gesteuert</small></div>
+    <ul>
+      <li>Wird Menschen gezeigt, die die eigene Website zuvor besucht haben; dieser Besuch erzeugte ein Cookie, und die Anzeige folgt ihnen später auf fremde Seiten</li>
+      <li>Wirkt am besten, solange der Konsument <strong>noch aktiv sucht</strong> in der Produktkategorie</li>
+      <li>Übertrieben wird es als Nachstellen empfunden und erzeugt negative Gefühle gegenüber der Marke</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Morphing Ads <small>algorithmische Personalisierung</small></div>
+    <ul>
+      <li>Anders als statischer Print variieren sie zwischen Personen, die dieselbe Seite besuchen, ausgewählt aus einem Portfolio anhand bekannter Merkmale wie Demografie und besuchter Seiten</li>
+      <li>Die Anzeige an den erschlossenen <strong>kognitiven Stil</strong> anzupassen hat die Click-through-Rate in einem Feldtest nahezu <strong>verdoppelt</strong></li>
+      <li>Auf einer Autoseite hat die Kombination aus Stil, Kaufphase und Karosserievorliebe die CTR <strong>mehr als verdreifacht</strong> und Markenerwägung sowie Kaufabsicht gehoben</li>
+    </ul>
+  </div>
+</div>
+
+Das Morphing-Ergebnis hat eine schöne Erklärung: Manche Menschen überzeugen Fakten und Zahlen, andere erfassen ein Konzept über Grafiken, jedem die passende Version auszuspielen ist deshalb kein Trick, sondern bessere Kommunikation.
+
+## 8 · Video Ads
+
+Wo Display Ads statische Bilder auf Websites oder in Apps sind, zeigen **Video Ads** bewegte. Viele Unternehmen führen Video schlicht unter Display, weil Werbeziel und Messung sich überschneiden - eine Plattform kann dieselbe Zielgruppe mit Display im Partnernetzwerk und mit Video auf ihrer Videoseite ansprechen, und die großen sozialen Plattformen akzeptieren beide Formate. Video wächst aber schnell genug, um eigene Behandlung zu verdienen.
+
+Die fünf Grundschritte sind dieselben wie bei jeder Outbound-Kampagne: **Ziel festlegen** (Markenbekanntheit, Traffic auf die Website, mehr Käufe), **Zielgruppe auswählen** (Altersgruppe, Geografie, Interessen), **Anzeige erstellen**, **Budget setzen** und dann **Ergebnisse messen und überwachen**.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Überspringbare In-Stream-Anzeige<span class="n">der Zuschauer hat einen Ausgang</span></div>
+      <div class="sc-node green">Läuft vor, während oder nach dem Hauptvideo und kann nach wenigen Sekunden übersprungen werden<span class="sub">wer bleibt, hat sich zum Bleiben entschieden</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Nicht überspringbare In-Stream-Anzeige<span class="n">kein Ausgang</span></div>
+      <div class="sc-node amber">Eine 15 bis 20 Sekunden lange Anzeige, die der Nutzer nicht überspringen kann<span class="sub">garantiert vollständig gesehen, auf Kosten des Wohlwollens</span></div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Bumper<span class="n">sehr kurz, kein Ausgang</span></div>
+      <div class="sc-node violet">Ein nicht überspringbares Video von unter sechs Sekunden<span class="sub">gebaut für Reichweite und Wiederholung statt für eine vollständige Botschaft</span></div>
+    </div>
+  </div>
+  <figcaption>Die drei gängigen Videoformate. Überspringbar versus nicht überspringbar ist in Wahrheit ein Tausch zwischen einem selbstgewählten, interessierteren Publikum und einem garantierten, aber möglicherweise verärgerten.</figcaption>
+</div>
+
+**Wie Video bepreist und beurteilt wird.** Weil die meisten Video Ads Aufmerksamkeit und Marke aufbauen sollen statt einen Klick auszulösen, ist die Click-through-Rate der falsche Maßstab, auch wenn sie für Suche gut funktioniert. Video wird normalerweise auf **Impressionsbasis über den CPM** eingekauft und gemessen, genau wie Fernsehkampagnen. Manches Video trägt einen konkreten Handlungsaufruf, der einen Klick rechtfertigt, und rein digitale Maße wie **Social Shares** und **Post-View-Engagement** versuchen, Effekte zu erfassen, die das Fernsehen nie hatte - aber nichts davon lässt einen Marketer die exakte Rendite der Kampagne bestimmen, und Video mit Umsatz oder Kaufabsicht zu verknüpfen bleibt schwierig und ist manchmal überhaupt nicht möglich.
+
+Video endet auch nicht mehr bei Videoseiten. Smart-TVs und Streamingdienste lassen Marken Fernsehpublikum so ansprechen, wie sie digitales Publikum ansprechen. 2019 lag dieser Streaming-Anteil bei **unter 1 Prozent des 129 Milliarden Dollar großen US-Onlinewerbemarktes**, sollte aber rasch steigen, und die Sender bauten die Fähigkeit aus, zielgerichtete Fernsehwerbung wirksamer und messbarer zu machen.
+
+## 9 · Messen, was Outbound wirklich bewirkt hat
+
+Alles bisher beurteilte Anzeigen über Impressions oder Click-through. Das sind die üblichen Ansätze, und es sind zugleich die oberflächlichen. Der Text benennt fünf tieferliegende Probleme.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Korrelation versus Kausalität</span>
+  <span class="sc-chip amber">Attribution</span>
+  <span class="sc-chip green">Dynamik, die verzögerte Wirkung</span>
+  <span class="sc-chip">Wechselwirkung online und offline</span>
+  <span class="sc-chip">Kundenlebenszeitwert</span>
+</div>
+
+**Korrelation versus Kausalität.** Ein großes Feldexperiment auf einem bedeutenden Online-Marktplatz fand, dass das Messen von Klicks und Umsätzen **nicht** beweist, dass die Werbung den Umsatzanstieg verursacht hat. Branded Keywords zeigten keinen messbaren kurzfristigen Nutzen, und die Renditen bezahlter Suche fielen weit unter die üblichen Schätzungen. Das Argument ist einfach und vernichtend: Viele Menschen, die eine Suchanzeige klicken, hätten auch das organische Ergebnis geklickt oder ohnehin gekauft. Klassische Methoden korrelieren lediglich Klicks mit Umsätzen, und **nur eine experimentelle Studie kann Kausalität aufdecken**. Die Suchplattform widersprach dem Befund und verwies auf eigene Arbeiten über Hunderte von Werbetreibenden, in denen **mehr als 89 Prozent der Klicks auf Suchanzeigen inkrementell** waren und **50 Prozent selbst dann noch inkrementell** waren, wenn der Werbetreibende bereits das oberste organische Ergebnis hielt. Die Ergebnisse unterscheiden sich zwischen Werbetreibenden so stark, dass die ehrliche Prüfungsantwort lautet: Die Frage bleibt offen, und jeder Werbetreibende sollte auf seinen eigenen Kampagnen experimentieren.
+
+**Attribution.** Vor dem Kauf wird ein Konsument vielleicht über Fernsehen oder Print auf eine Marke aufmerksam, wird von Display Ads online beeinflusst und kauft schließlich über den Klick auf eine Suchanzeige. **Last-Click-Attribution** schreibt die gesamte Leistung dieser letzten Suchanzeige zu, obwohl die früheren Kanäle die Arbeit geleistet haben, sie auf ihrer Kaufentscheidungsreise voranzubringen. Die assistierenden Medien zu ignorieren **überzeichnet deshalb die scheinbare Wirksamkeit der Suche**.
+
+| Attributionsmodell | Wie die Leistung zugerechnet wird | Der Haken |
+|---|---|---|
+| Letzte Interaktion | Die letzte Anzeige oder der letzte Klick bekommt 100 Prozent des Verkaufs | Ignoriert Langzeiteffekte früherer Anzeigen im Funnel; übergewichtet häufig ausgespielte Anzeigen |
+| Erste Interaktion | Die erste Anzeige oder der erste Klick bekommt 100 Prozent | Ignoriert die späteren Anzeigen, die den Kunden tatsächlich konvertiert haben; übergewichtet häufige Anzeigen |
+| Linear | Jede Anzeige und jeder Klick bekommt gleiches Gewicht | Willkürliche Verteilung; übergewichtet häufige Anzeigen |
+| Zeitverfall | Alles bekommt etwas Gewicht, spätere Kontakte werden höher gewichtet | Willkürliche Gewichte - wie stark soll der Verfall sein? Übergewichtet häufige Anzeigen, und es bleibt unklar, warum spätere Anzeigen mehr verdienen |
+| Positionsbasiert | Das Gewicht hängt von der Position des Kontakts im Pfad ab | Willkürliche Gewichte |
+| Regressions- oder modellbasiert | Gewichte werden aus Daten über den gesamten Interaktionspfad geschätzt | Ein wissenschaftlicher Weg der Gewichtung, aber blind dafür, dass manche Anzeigen nur deshalb gesehen werden, weil sie auf einer relevanten Seite stehen, auch ohne eigene Wirkung |
+| Experimentbasiert | A/B-Tests entscheiden | Der genaueste Weg, Wirksamkeit zu bestimmen, aber schwer über viele Netzwerke und Konsumenten hinweg zu steuern und schwierig oder teuer durchzuführen |
+
+Die ersten fünf sind gebräuchlich, aber es sind **willkürliche Modelle ohne wissenschaftliche Grundlage**. Nur die letzten beiden sind streng: Die modellbasierte Auswertung nutzt vorhandene Daten über die Interaktionen des Konsumenten entlang des Kaufpfads, um die Wirkung jeder einzelnen zu schätzen, während **Experimente Anzeigen zufällig auf Treatment- und Kontrollgruppen verteilen**, sodass der Unterschied in Reaktion oder Conversion zwischen den Gruppen tatsächlich der Anzeigenexposition zugeschrieben werden kann. Das ist zugleich die praktische Antwort auf das Kausalitätsproblem von oben, und deshalb steht **A/B-Testing** im Glossar als ein Experiment, das ein einzelnes Element variiert, meist den Anzeigentext oder die Gestaltung der Landing Page, um zu sehen, welche Version das gewünschte Ergebnis besser antreibt.
+
+Attribution muss auch mit der Wechselwirkung zwischen den Formaten umgehen, denn Search und Display wirken nicht isoliert. Eine Studie über elf Werbetreibende fand, dass die Kombination aus **Search und Display die Conversion um 22 Prozent gegenüber Search allein** hob und eine Conversion Rate erzeugte, die **400 Prozent besser war als Display allein**. Mehrere akademische Experimente bestätigten, dass das Ignorieren dieser Wechselwirkung dazu führt, Display zu unterschätzen.
+
+**Dynamik, die verzögerte Wirkung.** Bei teuren oder komplizierten Käufen wie einem Auto oder einem Wertpapierdepot kauft niemand in dem Moment, in dem er eine Anzeige sieht. Menschen durchlaufen wochen- oder monatelang Schleifen durch Online- und Offline-Quellen einschließlich Bewertungsportalen, ein Muster, das eine Plattform als **Zero Moment of Truth** bezeichnet hat, und Such-Heatmaps für Autos zeigen Monate intensiver Informationssuche vor dem Kauf. Die konventionelle Messung schaut nur auf kurzfristige Effekte. Eine Studie zur Onlinekampagne einer Bank mit einem multivariaten Zeitreihenmodell fand, dass das Ignorieren dieser Langfristeffekte die **Rendite um bis zu 40 Prozent unterzeichnet** und dass der dynamische Effekt **bei Search deutlich stärker war als bei Display** - was dafür sprach, einen größeren Anteil des Onlinebudgets in Richtung Search zu verschieben, selbst wenn man Display seine Assistenzrolle zugutehält.
+
+**Wechselwirkung online und offline.** Hier gibt es zwei Probleme: die **Synergie** zwischen beiden und die Wirkung jedes Kanals auf den Umsatz des anderen, was die Omnichannel-Frage ist. Offline-Interaktionen erwiesen sich über viele Kategorien hinweg als ebenso wichtig wie Online-Interaktionen, und am einflussreichsten dort, wo die persönliche Passform zählt (Bekleidung, Schuhe, Körperpflege und Kosmetik) oder wo Erfahrung im echten Leben wertvoll ist (Autos, rezeptfreie Gesundheitsprodukte, Haushaltswaren, Lebensmittel). Ein Autohersteller, der beide Kanäle gemeinsam modellierte, kam zu dem Schluss, dass seine optimalen Offline-Ausgaben **12 Prozent niedriger** und seine Online-Ausgaben **7 Prozent höher** liegen sollten, wer beide Budgets getrennt plant, lässt also Geld liegen. Wo Konsumenten online recherchieren und im Laden kaufen, **unterzeichnen** schlichte CTR und Conversion Rate die Onlineanzeigen erheblich - und wenn das Unternehmen seine E-Commerce- und Filialverantwortlichen an getrennten Kanalzahlen misst, bestraft es genau die Website, die Menschen in die Filialen treibt. Experimente klären das: Ein Möbelhändler fand einen **Anstieg der Ladenbesuche um 11 Prozent** bei Menschen, denen Social Ads gezeigt wurden, gegenüber einer identischen Kontrollgruppe, und eine Modemarke führte einen **Anstieg der Transaktionen im Laden um 31 Prozent** auf denselben Kanal zurück.
+
+**Kundenlebenszeitwert.** Die Click-through-Rate korreliert nicht immer mit der Rendite, deshalb muss der Endpunkt Umsatz oder Profitabilität sein und nicht Klicks. Mobile Gaming ist das warnende Beispiel: Unternehmen beurteilten digitale Kampagnen früher über die **Kosten je Installation**, bis sich zeigte, dass die meisten Spiele nur rund **35 Prozent der Spieler nach dem ersten Tag** halten und erschreckende **94 Prozent innerhalb eines Monats** verlieren, während **weniger als 4 Prozent der Spieler überhaupt jemals Geld** für In-App-Währung oder Gegenstände ausgeben. Ein Kanal kann bei CTR oder Kosten je Installation glänzend aussehen und trotzdem niemanden liefern, der zahlt, deshalb ging die Branche zum **Kundenlebenszeitwert** über. Dieselbe Logik kann eine Budgetentscheidung umdrehen: Eine Bank mag Onlineakquise günstiger finden als klassische Kanäle, aber wenn online gewonnene Kunden gerne vergleichen, sind sie womöglich preissensibler, bleiben kürzer und sind über ihre Lebenszeit weniger wert als offline gewonnene Kunden.
+
+## Durchgerechnetes Beispiel
+
+Eine erste Suchkampagne für ein kleines Produkt, einen Monat lang gefahren. Man startet mit fünf Eingangsgrößen und leitet alles andere ab.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Klicks</div>
+    <code>clicks = impressions * CTR</code>
+  </div>
+  <div>
+    <div class="name">Ausgaben</div>
+    <code>spend = clicks * CPC</code>
+  </div>
+  <div>
+    <div class="name">Conversions</div>
+    <code>conversions = clicks * conversion rate</code>
+  </div>
+  <div>
+    <div class="name">Cost per Acquisition</div>
+    <code>CPA = spend / conversions</code>
+  </div>
+  <div>
+    <div class="name">Return on Ad Spend</div>
+    <code>ROAS = revenue / spend</code>
+  </div>
+  <div>
+    <div class="name">Deckungsbeitrag, in der Form des Textes</div>
+    <code>(impressions * CTR * conversion rate * margin) - spend</code>
+  </div>
+</div>
+
+| Schritt | Rechnung | Ergebnis |
+|---|---|--:|
+| Gekaufte Impressions | gegeben | 2,000,000 |
+| Click-through-Rate | gegeben | 1.50% |
+| Klicks | 2,000,000 × 1.50% | 30,000 |
+| Cost per Click | gegeben | 0.80 |
+| Ausgaben | 30,000 × 0.80 | **24,000** |
+| Conversion Rate | gegeben | 2.50% |
+| Conversions (Bestellungen) | 30,000 × 2.50% | **750** |
+| Wert je Bestellung | gegeben | 60.00 |
+| Umsatz | 750 × 60 | 45,000 |
+| Cost per Acquisition | 24,000 / 750 | **32.00** |
+| Return on Ad Spend | 45,000 / 24,000 | **1.88** |
+| Deckungsbeitrag | 45,000 - 24,000 | **21,000** |
+
+Der Return on Ad Spend ist hier schlicht Umsatz geteilt durch Ausgaben; der Text selbst formuliert denselben Vergleich als die Subtraktion in der letzten Zeile, Wert der Conversions minus Werbekosten.
+
+**Nun jeweils eine Eingangsgröße bewegen.** Sonst ändert sich in beiden Fällen nichts.
+
+| Szenario | Klicks | Conversions | Ausgaben | CPA | ROAS | Deckungsbeitrag |
+|---|--:|--:|--:|--:|--:|--:|
+| Basisfall | 30,000 | 750 | 24,000 | 32.00 | 1.88 | 21,000 |
+| Conversion Rate fällt von 2.50% auf 2.00% | 30,000 | 600 | 24,000 | 40.00 | 1.50 | 12,000 |
+| Cost per Click steigt von 0.80 auf 1.00 | 30,000 | 750 | 30,000 | 40.00 | 1.50 | 15,000 |
+
+Die Sensitivität ist die Lehre. Ein Fünftel der Conversion Rate zu verlieren - ein halber Prozentpunkt, die Art von Veränderung, die eine schlechtere Landing Page auslöst - löscht **43 Prozent des Deckungsbeitrags**, während sich die Ausgaben überhaupt nicht bewegen. Ein Anstieg des Klickpreises um 25 Prozent, wie ihn ein neu in die Auktion eintretender Wettbewerber erzeugt, kostet **29 Prozent des Deckungsbeitrags**. Der Break-even liegt dort, wo der CPA dem Bestellwert von 60 Dollar entspricht, wofür 400 Conversions aus diesen 30.000 Klicks nötig sind, also eine Conversion Rate von **1,33 Prozent**. Darunter verbrennt die Kampagne Geld, der gesamte Abstand zwischen Gewinn und Verlust beträgt also etwas mehr als einen Prozentpunkt Conversion.
+
+## Wende es auf dein Projekt an
+
+<Steps>
+
+1. **Lege das Ziel vor dem Format fest.** Sofortige Handlung führt zu Search Ads und klickbasierter Bepreisung. Bekanntheit führt zu Display oder Video und impressionsbasierter Bepreisung. Das falsche Format für das Ziel zu kaufen macht die Kennzahlen bedeutungslos.
+
+2. **Schreibe die Keyword-Liste, sowohl branded als auch generisch.** Nimm den eigenen Namen auf, um ihn zu verteidigen, Kategoriebegriffe, um Menschen zu erreichen, die noch nie von dir gehört haben, und die naheliegenden Varianten und Formulierungen. Nutze einen Keyword-Planer, um den Traffic hinter jedem einzelnen zu prüfen.
+
+3. **Füge sofort negative Keywords hinzu.** Liste die Suchen auf, die deine Wörter teilen, aber nie deine Absicht, und schließe sie vor dem Start aus. Das ist die billigste verfügbare Ersparnis.
+
+4. **Baue für jede Anzeigengruppe eine echte Landing Page.** Nicht die Startseite, sondern eine Seite mit genau dem, was die Suche impliziert hat. Sie hebt die Conversion und über die Bounce Rate auch den Quality Score, was wiederum die Kosten pro Klick senkt.
+
+5. **Setze das Gebot aus der Ökonomie, nicht aus dem Ehrgeiz.** Rechne rückwärts: Wert je Conversion mal der erwarteten Conversion Rate ergibt das Maximum, das ein Klick wert sein kann. Biete deine echte Zahlungsbereitschaft, denn die Zweitpreisauktion belohnt Wahrhaftigkeit, und setze eine harte Budgetobergrenze, weil du deine Wettbewerber nicht sehen kannst.
+
+6. **Kämpfe nicht automatisch um Position eins.** Teste auch niedrigere Positionen. Der Click-through fällt, aber die Conversion kann steigen, und der billigere Klick kann der profitable sein.
+
+7. **Instrumentiere den Funnel von Anfang bis Ende**, damit du Impressions, Klicks, CTR, CPC, Conversions, Conversion Rate, CPA und Umsatz je Kampagne und je Keyword lesen kannst und nicht nur je Konto.
+
+8. **Führe ein Holdout-Experiment durch, nicht bloß einen Report.** Ziehe zufällig eine Kontrollgruppe, die keine Anzeigen sieht, und vergleiche die Conversions. Nur so lassen sich die Verkäufe, die du verursacht hast, von denen trennen, die ohnehin passiert wären.
+
+9. **Misstraue Last-Click, bevor du Budget umverteilst.** Prüfe, ob Display oder Video bei den Conversions assistiert hat, die die Suche für sich beansprucht, und berücksichtige die verzögerte Wirkung, wenn dein Produkt eine lange Entscheidungsphase hat.
+
+10. **Beurteile den Kanal nach dem Lebenszeitwert, nicht nach den Akquisekosten.** Eine billige Akquise, die sofort abwandert, ist teurer als eine teure, die bleibt.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Outbound-Marketing | Das Unternehmen beginnt das Gespräch und schiebt eine Botschaft zu Zielkunden; online heißt das Search, Display und Video Ads |
+| Inbound-Marketing | Dafür sorgen, dass das Unternehmen gefunden wird, wenn der Konsument sucht, woraus die Suchmaschinenoptimierung entsteht |
+| Organischer Link | Ein unbezahltes Ergebnis, sortiert nach Relevanz oder Nutzerbeliebtheit |
+| Bezahlter Link (Search Ad) | Ein gesponsertes Ergebnis, für das der Werbetreibende zahlt, meist über oder neben den organischen |
+| Verallgemeinerte Zweitpreisauktion | Die Gebotsregel, bei der der Gewinner den obersten Platz bekommt, aber den Betrag des nächsten Bieters zahlt, was ehrliches Bieten fördert |
+| Quality Score | Die geheime Bewertung einer Anzeige von 1 bis 10 durch die Suchmaschine, aufgebaut aus wahrscheinlicher Click-through-Rate, Relevanz für den Konsumenten und Qualität der Landing Page |
+| Ad Rank | Wo die Anzeige auf der Seite landet, bestimmt durch Gebot mal Quality Score statt durch das Gebot allein |
+| Negatives Keyword | Ein Wort, das man ausschließt, damit die eigene Anzeige nie bei einer Suche erscheint, die die eigenen Begriffe teilt, aber nicht die Absicht |
+| Landing Page | Die eigens gebaute Seite, auf die ein Klick führt; ihre Bounce Rate fließt in den Quality Score ein |
+| Impression | Eine einzelne Ausspielung einer Anzeige; zeigt Reichweite, beweist nichts über die Wirkung, und Suchmaschinen berechnen sie nicht |
+| Click-through-Rate (CTR) | Klicks geteilt durch Impressions, in Prozent; niedrige einstellige Werte bei Search, ein Bruchteil eines Prozents bei Bannern |
+| Cost per Click (CPC) | Gesamtausgaben geteilt durch Klicks, der Betrag, der für einen Klick gezahlt wird |
+| Cost per Mille (CPM) | Ausgaben geteilt durch Impressions, mal tausend; die Bepreisung, wenn das Ziel Bekanntheit ist |
+| Conversion Rate | Der Anteil der klickenden Besucher, die die gewünschte Handlung abschließen, etwa einen Kauf oder eine Registrierung |
+| Cost per Acquisition (CPA) | Gesamtkosten geteilt durch die Zahl der gewonnenen Kunden, Käufe oder Käufer |
+| Return on Ad Spend | Der durch die Werbung erzeugte Umsatz geteilt durch das dafür ausgegebene Geld; der Text formuliert dieselbe Idee als Wert der Conversions minus Werbekosten |
+| Ad Network und Ad Exchange | Ein Netzwerk bündelt die Flächen von Publishern und bringt sie mit der Nachfrage zusammen; eine Exchange automatisiert die Zuordnung über Real-Time Bidding, was programmatischer Einkauf heißt |
+| Retargeting | Display Ads, die Menschen gezeigt werden, die die eigene Seite bereits besucht haben, ausgelöst durch das bei diesem Besuch erzeugte Cookie |
+| Last-Click-Attribution | Dem letzten Klick die gesamte Leistung eines Verkaufs zuzuschreiben, was die Suche überzeichnet und alles Assistierende verdeckt |
+| Kundenlebenszeitwert (CLV) | Der Barwert künftiger Zahlungsströme aus einer Kundenbeziehung; eine Obergrenze dafür, was man für die Gewinnung eines Kunden zahlen sollte |
+
+## Teste dich selbst
+
+1. Erkläre in je einem Satz, was Outbound- und was Inbound-Marketing ist, und nenne das Bild, das der Text für den Unterschied benutzt.
+2. Welche zwei Faktoren bestimmen den Rang einer Suchanzeige, und aus welchen drei Komponenten besteht der zweite davon?
+3. **Auktionsrechnung.** Nimm die vier Werbetreibenden aus Abschnitt 5 und unterstelle, dass Werbetreibender Y seinen Quality Score von 6 auf 10 erhöht, während alles andere gleich bleibt. Wer rangiert nun auf eins, zwei und drei, wer geht leer aus, und was zahlt der erstplatzierte Werbetreibende pro Klick?
+4. **Kennzahlenrechnung.** Aus der Suchtabelle der Bank zeigt die Yahoo!-Zeile 177.000 Dollar Ausgaben, 4.435.709 Impressions, 165.166 Klicks und 2.419 abgeschlossene Anträge. Berechne die CTR, den CPC, die Conversion Rate, die Kosten je Akquisition und den Gewinn, wenn jeder Antrag 100 Dollar Marge wert ist.
+5. Suchanzeigen auf einer Suchmaschine hatten eine CTR von 4,2 Prozent und eine Conversion Rate von 1,58 Prozent, während Display Ads in einem Netzwerk eine CTR von 0,04 Prozent und eine Conversion Rate von 8,44 Prozent hatten. Erkläre, warum dieses Muster kein Widerspruch ist.
+6. Warum überzeichnet Last-Click-Attribution die Suchwerbung, und welche zwei Attributionsansätze behandelt der Text als streng statt als willkürlich?
+
+<Aside type="note" title="Lösungen">
+1. Outbound ist der Fall, in dem das Unternehmen das Gespräch beginnt und eine Botschaft an Zielkunden sendet, über Search, Display und Video Ads. Inbound ist der Fall, in dem das Unternehmen sich auffindbar macht, sodass Konsumenten von sich aus kommen, was erfordert, die Website am Suchverhalten der Konsumenten und an den Algorithmen der Suchmaschinen auszurichten. Das Bild: Outbound ist die Suche nach der Nadel im Heuhaufen, Inbound ist der Einsatz eines Magneten, der sie heranzieht.
+2. Das Cost-per-Click-Gebot und der Quality Score, miteinander multipliziert ergeben sie den Ad Rank. Der Quality Score baut auf der potenziellen Click-through-Rate der Anzeige, ihrer Relevanz für die Konsumenten und der Qualität der Landing Page auf, beurteilt über die Bounce Rate.
+3. Die Produkte aus Gebot mal Qualität werden zu W = 4, X = 9, Y = 20, Z = 8. Also **rangiert Y auf eins**, X auf zwei, Z auf drei, und **W wird nicht ausgespielt**, da es nur drei Plätze gibt. Y zahlt das Gebot des Zweitplatzierten mal dessen Qualität geteilt durch die eigene Qualität: 3 mal 3 geteilt durch 10, also **0,90 Dollar**. X würde 8 geteilt durch 3 zahlen, also 2,67, und Z würde 4 geteilt durch 8 zahlen, also 0,50.
+4. CTR = 165.166 / 4.435.709 = **3,72 Prozent**. CPC = 177.000 / 165.166 = **1,07 Dollar**. Conversion Rate = 2.419 / 165.166 = **1,46 Prozent**. CPA = 177.000 / 2.419 = **73,17 Dollar**. Gewinn = (2.419 mal 100) minus 177.000 = 241.900 minus 177.000 = **64.900 Dollar**.
+5. Die beiden Formate erwischen Menschen in verschiedenen Momenten. Eine Suchanzeige trifft jemanden, der den Wunsch gerade eingetippt hat, deshalb klickt ein großer Anteil der Betrachter, aber viele stöbern noch, deshalb konvertieren relativ wenige. Ein Banner unterbricht jemanden, der etwas anderes tut, deshalb klickt fast niemand - und die seltene Person, die doch klickt, hat sich ungewöhnlich stark selbst ausgewählt und ist interessiert, was die Conversion Rate hebt. Der Tausch zeigt sich auch im Preis: Suchklicks kosten in diesem Beispiel 1,23 gegenüber 5,06 bei Display.
+6. Weil der Konsument die Marke vor dem Kauf meist mehrfach getroffen hat und Last-Click den gesamten Verkauf dem letzten Kontakt zuschreibt, der typischerweise eine Suchanzeige ist, während der Display-, Video- oder Fernsehkontakt, der sie auf ihrer Reise vorangebracht hat, nichts bekommt. Die beiden strengen Ansätze sind die **Regressions- oder modellbasierte Attribution**, die das Gewicht jeder Interaktion aus Daten über den gesamten Pfad schätzt, und die **experimentbasierte Attribution**, die Konsumenten zufällig auf Treatment- und Kontrollgruppen verteilt, sodass der Unterschied in der Conversion tatsächlich von den Anzeigen verursacht ist.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Outbound** heißt, das Unternehmen schiebt die Botschaft hinaus - Search, Display und Video Ads; **Inbound** heißt, auffindbar zu sein, wenn der Konsument sucht. Nadel im Heuhaufen versus Magnet. Social Media und Mobile vervollständigen den Rahmen aus vier Elementen.
+- **Search Ads** kaufen eine bereits vorhandene Kaufabsicht. Vier Schritte: Keywords wählen, Kreation gestalten, starten, Landing Pages bauen. Ausgespielt zu werden kostet nichts; berechnet wird erst bei einem Klick, und nie über dem eigenen Gebot.
+- Keyword-Portfolios explodieren durch **Varianten, Sprachen und Rechtschreibfehler** und brauchen **negative Keywords**, um Suchen zu blocken, die die eigenen Wörter teilen, aber nicht die Absicht. Auf **Branded** Begriffe bieten, um den Platz über dem eigenen organischen Link zu verteidigen, und auf **generische** Begriffe, um in Relevant Sets zu kommen, in denen man nicht war.
+- **Ad Rank = Gebot × Quality Score**, wobei der Quality Score aus potenzieller CTR, Relevanz und Qualität der Landing Page über die Bounce Rate besteht. In einer **verallgemeinerten Zweitpreisauktion** zahlt man das Minimum, das nötig ist, um den Rang zu halten: **P1 = B2 × Q2 / Q1**. Ein höherer Quality Score senkt den Preis; ein hohes Gebot mit schlechtem Score kann die Seite ganz verfehlen.
+- Kernkennzahlen: **CTR = clicks / impressions**, **CPC = spend / clicks**, **CPM = spend / impressions × 1,000**, **conversion rate = conversions / clicks**, **CPA = cost / customers acquired**. Profitabilität: **(impressions × CTR × conversion rate × margin) - ad cost**.
+- **Display** tauscht Kaufabsicht gegen Kontext, wird über **Netzwerke und Exchanges** mit **Real-Time Bidding** eingekauft (bis 2017 rund 72 Prozent der US-Display-Ausgaben), leidet unter miserablem Click-through und wird durch **kontextuelle** Platzierung, **Retargeting** über Cookies und **Morphing Ads**, die auf die einzelne Person zugeschnitten sind, verbessert.
+- **Video** wird über Impressions gemessen und über CPM eingekauft, weil das meiste davon Marke statt Klicks aufbaut. Formate: überspringbar In-Stream, nicht überspringbar mit 15 bis 20 Sekunden und Bumper unter sechs Sekunden.
+- Die Messung ist der schwere Teil: **Korrelation ist keine Kausalität**, und nur Experimente belegen eine inkrementelle Wirkung; **Last-Click-Attribution schmeichelt der Suche**; Langfristeffekte können bis zu **40 Prozent** der Rendite verdecken; getrennt geplante Online- und Offline-Budgets verlieren Geld; und der richtige Endpunkt ist der **Kundenlebenszeitwert**, nicht Klicks oder Installationen.
+</Aside>
+
+*Weiter: [Digital Marketing: Inbound, Social & Mobile →](/de/learnings/mba/innovation-and-new-business-planning/06-digital-marketing-inbound-social-mobile/) - gefunden werden statt Aufmerksamkeit zu kaufen.*

@@ -1,0 +1,785 @@
+---
+title: "Beteiligung, Verwässerung und Renditen"
+description: "Wie aus einem Scheck ein Prozentsatz des Unternehmens wird - implizite Bewertung, Pre-Money und Post-Money, Anzahl und Preis der neuen Anteile, der Optionspool und die voll verwässerte Basis, Verwässerung über mehrere Runden, Cash-on-Cash, IRR und Kapitalwert, und wie Gründer den Kuchen untereinander aufteilen."
+sidebar:
+  label: "12 · Beteiligung & Renditen"
+  order: 12
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Diese Sitzung ist die Rechensitzung. Alles davor drehte sich darum, ob ein Vorhaben überhaupt förderungswürdig ist; hier geht es darum, was auf dem Papier tatsächlich passiert, wenn jemand einsteigt. Ein Investor übergibt eine Geldsumme und erhält im Gegenzug ein Stück des Unternehmens. Die Größe dieses Stücks festzulegen und dem Unternehmen eine Zahl zu geben, sind ein und derselbe Vorgang, nur von zwei Seiten beschrieben, und fast jede andere Größe einer Finanzierungsrunde - der Anteilspreis, die Anzahl der neuen Anteile, wie viel die bestehenden Eigentümer verlieren, was der Investor am Ende verdient - fällt aus dieser einen Beziehung heraus.
+
+Das Kapitel liest sich deshalb wie eine Kette kleiner Gleichungen und nicht wie eine Sammlung von Argumenten. Man beginnt bei der Identität, dass die Investition gleich dem Beteiligungsanteil mal der Bewertung ist, und leitet daraus die Post-Money-Bewertung ab, dann die Pre-Money-Bewertung, dann den Anteilspreis, dann die Anzahl der Anteile, die neu geschaffen werden müssen, dann den verwässerten Prozentsatz jedes Einzelnen in der nächsten Runde und schließlich das Multiple und die jährliche Rendite, die der Investor beim Exit verbucht. Kein einzelner Schritt ist für sich schwierig. Die Schwierigkeit liegt allein darin, den Überblick zu behalten, von welcher Bewertung, welcher Runde und wessen Anteilen gerade die Rede ist.
+
+Die vier Lernziele, die das Deck setzt, sind genau diese Kette: verstehen, wie Investitionssumme, Beteiligungsanteile, Bewertung, Verwässerung und Renditen zusammenhängen; die Zuteilung und die Preise der Anteile sowie die Pre-Money- und Post-Money-Bewertungen herleiten; Investorenrenditen mit alternativen Maßen analysieren; und verstehen, wie Gründer die Beteiligungsanteile innerhalb ihres eigenen Teams zuteilen. Das letzte Ziel erinnert daran, dass der erste Deal, den ein Gründer verhandelt, gar nicht mit einem Investor zustande kommt, sondern mit den Mitgründern.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Die gesamte Sitzung hängt an einer Identität: **Investition gleich Beteiligungsanteil mal Post-Money-Bewertung**. Von links nach rechts gelesen sagt sie, wie viel vom Unternehmen das Geld kauft. Von rechts nach links gelesen sagt sie, was das Unternehmen implizit wert ist. Jede andere Zahl einer Runde - Anteilspreis, neu ausgegebene Anteile, die Verwässerung aller Beteiligten, das spätere Multiple des Investors - ist dieselbe Identität, nur umgestellt.
+</Aside>
+
+## 1 · Was Beteiligung bedeutet: Die Bewertung erfüllt zwei Aufgaben
+
+Über Beteiligungsquoten zu entscheiden und dem Unternehmen einen Wert zu geben, wird als zentraler Bestandteil der Strukturierung einer Investition beschrieben, nicht als Nebenrechnung. Das Deck macht das scharf, indem es die zwei verschiedenen Wirkungen auflistet, die eine Bewertung hat.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Wirkung eins <small>sie legt die Aufteilung fest</small></div>
+      <ul>
+        <li>Die Bewertung bestimmt, <strong>welchen Prozentsatz des Eigenkapitals der Investor erhält</strong>, wenn er die Investition beisteuert</li>
+        <li>Das ist eine Entscheidung über Kontrolle und darüber, wem das Aufwärtspotenzial gehört, und sie fällt heute</li>
+        <li>Es ist zugleich das, was die Gründer dauerhaft abgeben, also die Gründerseite des Geschäfts</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Wirkung zwei <small>sie legt die erwartete Rendite fest</small></div>
+      <ul>
+        <li>Die Bewertung <strong>erlaubt Investoren, die Renditen abzuschätzen</strong>, die sie mit ihrer Investition erwarten</li>
+        <li>Bei gegebener Vermutung über den Exit-Wert legt der heute gezahlte Preis das morgen verdiente Multiple fest</li>
+        <li>Das ist die Investorenseite des Geschäfts, und deshalb streiten beide Seiten über diese Zahl</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Dieselbe Bewertungszahl erledigt zwei Aufgaben gleichzeitig. Deshalb ist es keine Formalie, sie zu verhandeln: Eine einzige Zahl legt zugleich die Beteiligungsaufteilung und die Rendite fest, auf die der Investor hoffen darf.</figcaption>
+</div>
+
+## 2 · Mechanik von Beteiligung und Bewertung: die implizite Bewertung
+
+Das erste Gleichungspaar ist beinahe eine Definition. Eine Bewertung wird **impliziert** durch das, was ein Investor für einen Anteil zu zahlen bereit ist: Wenn jemand eine bestimmte Summe einbringt und dafür einen bestimmten Bruchteil akzeptiert, hat er gesagt, was er das gesamte Unternehmen für wert hält, ganz gleich, ob diese Zahl irgendwo aufgeschrieben wurde.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1) Implizite Bewertung</span>
+    <code>Investment = Ownership × Valuation      →      I = F(inv) × V(post)</code>
+  </div>
+  <div>
+    <span class="name">(2) Dasselbe, umgestellt</span>
+    <code>Valuation = Investment ÷ Ownership      →      V(post) = I ÷ F(inv)</code>
+  </div>
+</div>
+
+Die Notation des Decks ist bewusst schlicht, und sie lohnt sich zu merken, weil jede spätere Gleichung darauf aufbaut.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">I = Investition</span>
+  <span class="sc-chip violet">F = Beteiligungsanteil</span>
+  <span class="sc-chip amber">V = Bewertung</span>
+  <span class="sc-chip amber">S = Anzahl der Anteile</span>
+  <span class="sc-chip green">PRE = Pre-Money</span>
+  <span class="sc-chip green">POST = Post-Money</span>
+</div>
+
+Gleichung (2) ist die praktische. Jemand bietet 500,000 für 20 Prozent; damit bist du gerade mit 2.5 Millionen post-money bewertet worden, und um genau diese Zahl geht es im Term Sheet in Wahrheit.
+
+## 3 · Pre-Money- und Post-Money-Bewertung
+
+Das zweite Paar trennt den Wert des Unternehmens **vor** dem Eintreffen des Geldes von dem Wert, **nachdem es eingetroffen ist**. Der Unterschied zwischen beiden ist genau der Scheck, denn Geld auf dem Konto ist in dem Moment, in dem es landet, selbst Teil dessen, was das Unternehmen wert ist.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(3) Pre-Money</span>
+    <code>Pre-money valuation = Post-money valuation - Investment      →      V(pre) = V(post) - I</code>
+  </div>
+  <div>
+    <span class="name">(4) Post-Money</span>
+    <code>Post-money valuation = Pre-money valuation + Investment      →      V(post) = V(pre) + I</code>
+  </div>
+</div>
+
+Daraus folgen zwei Dinge, die Anfänger regelmäßig falsch machen. Erstens wird der Beteiligungsanteil in den Gleichungen (1) und (2) immer an der **Post-Money**-Bewertung gemessen, niemals an der Pre-Money-Bewertung, denn der Investor besitzt einen Anteil an einem Unternehmen, das sein eigenes Geld bereits enthält. Zweitens ist die Pre-Money-Bewertung in einer ersten Runde der Wert all dessen, was die Gründer aufgebaut haben, bevor externes Geld existierte, weshalb das Deck sie **Sweat Equity** nennt: eine Idee, ein Prototyp, ein Team und eine Marktposition, bepreist, als wären sie Kapital.
+
+## 4 · Anzahl und Preis der Anteile
+
+Prozentsätze reden sich bequem, aber ein echter Deal wird durch die Ausgabe von Anteilen vollzogen. In der allerersten Runde kann die Gesamtzahl der Anteile frei gewählt werden, denn sie ist nichts als ein Skalierungsfaktor - eine Million Anteile oder zehn Millionen Anteile beschreiben dasselbe Unternehmen, nur der Anteilspreis ändert sich. Ab der zweiten Runde ist sie nicht mehr frei, weil die bestehende Anteilszahl bereits feststeht.
+
+In Anteilen geschrieben, wird Gleichung (4) zu einer Aufstellung darüber, wer was hält:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(5) Anteile nach der Runde</span>
+    <code>S(post) = S(pre) + S(inv)      PRE = Eigentümer vor dem Deal, POST = Eigentümer nach dem Deal, INV = die neuen Investoren</code>
+  </div>
+  <div>
+    <span class="name">(6) Was die Investition kauft</span>
+    <code>I = P × S(inv)      die Investition ist schlicht der Preis P mal die Anzahl der neuen Anteile</code>
+  </div>
+  <div>
+    <span class="name">(7) Post-Money in Anteilen</span>
+    <code>V(post) = P × S(post)</code>
+  </div>
+  <div>
+    <span class="name">(8) Pre-Money in Anteilen</span>
+    <code>V(pre) = P × S(pre)</code>
+  </div>
+  <div>
+    <span class="name">(9) Beteiligungsanteile</span>
+    <code>F(pre) = S(pre) ÷ S(post)      und      F(inv) = S(inv) ÷ S(post)</code>
+  </div>
+</div>
+
+Man beachte die Eleganz von (7) und (8): **ein einziger Anteilspreis bewertet alles**. Dasselbe P multipliziert die alten Anteile zum Pre-Money-Wert und die Gesamtzahl der Anteile zum Post-Money-Wert. Das ist die Plausibilitätsprüfung, die man bei jedem vorgelegten Deal machen sollte: Wenn der vom neuen Geld implizierte Anteilspreis, mit der alten Anteilszahl multipliziert, nicht die genannte Pre-Money-Bewertung reproduziert, stimmt etwas an den Zahlen nicht.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Die zwei Eckzahlen vereinbaren<span class="sub">die Investition I und den Beteiligungsanteil F(inv), den der Investor will</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Post-Money fällt heraus<span class="sub">V(post) = I ÷ F(inv), und dann V(pre) = V(post) - I</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Der Anteilspreis fällt heraus<span class="sub">P = V(pre) ÷ S(pre), die alten Anteile tragen den Pre-Money-Wert</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Die neuen Anteile fallen heraus<span class="sub">S(inv) = I ÷ P, und die Cap Table ist vollständig</span></div>
+  </div>
+  <figcaption>Die Reihenfolge, in der eine Runde tatsächlich gerechnet wird. Oben zwei verhandelte Zahlen, darunter vier abgeleitete Zahlen, mehr Ermessen ist nicht nötig.</figcaption>
+</div>
+
+## 5 · Der Stock-Options-Pool und die voll verwässerte Basis
+
+Startups können erfahrenen Leuten nicht zahlen, was große Unternehmen zahlen, also zahlen sie teilweise in Eigenkapital. Anteilsbasierte Vergütung dient dazu, **Talente zu gewinnen und zu halten** und **Barzahlungen aufzuschieben**, gegenüber Schlüsselmitarbeitern und Aufsichtsgremien. Anteile können direkt gewährt werden oder über Stock Options, und diese Optionen werden in einem **Pool** ausgegeben, der typischerweise in der ersten Runde eingerichtet wird und üblicherweise **10 bis 20 Prozent der Gesamtbeteiligung** wert ist.
+
+Ein Pool ist eine dritte Eigentümerkategorie, also bekommen die Gleichungen einen Term dazu:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(5 SOP) Jetzt drei Gruppen</span>
+    <code>S(post) = S(pre) + S(inv) + S(sop)</code>
+  </div>
+  <div>
+    <span class="name">(8 SOP) Pre-Money schließt den Pool ein</span>
+    <code>V(pre) = P × (S(pre) + S(sop))</code>
+  </div>
+  <div>
+    <span class="name">(9 SOP) Drei Anteile</span>
+    <code>F(pre) = S(pre) ÷ S(post)      F(inv) = S(inv) ÷ S(post)      F(sop) = S(sop) ÷ S(post)</code>
+  </div>
+</div>
+
+Mit dem Pool kommen zwei Konventionen. Anteilszahlen werden auf **voll verwässerter** Basis angegeben, das heißt, alle im Pool liegenden Anteile werden so gezählt, als wären sie bereits in Stammanteile umgewandelt worden, obwohl die meisten davon noch niemandem gewährt wurden. Und wie Gleichung (8 SOP) zeigt, deckt die Pre-Money-Bewertung dann **die Gründeranteile und die Anteile der Optionsinhaber zusammen** ab.
+
+<Aside type="caution">
+**Die Verhandlungsfalle, die Gründer sehen müssen.** Weil der Pool innerhalb der Pre-Money-Bewertung sitzt, verwässert es den einsteigenden Investor überhaupt nicht, wenn man zustimmt, den Pool vor einer Runde zu vergrößern - es verwässert allein die Gründer und die übrigen bestehenden Halter, während die Pre-Money-Eckzahl unverändert bleibt. Das Deck sagt es unmissverständlich: Gründer müssen sich dessen beim Verhandeln bewusst sein. Eine großzügig klingende Pre-Money-Bewertung mit einem großen daraus herausgeschnittenen Pool kann für die Gründer weniger wert sein als eine niedrigere Bewertung mit einem kleinen Pool.
+</Aside>
+
+## 6 · Die Kapitalisierungstabelle
+
+Die **Cap Table** ist die Tabelle, in der all das gespeichert wird. Für jeden Anteilseigner und in jeder Runde hält sie drei Dinge fest:
+
+- die **Anzahl der gehaltenen Anteile**
+- den **investierten Betrag**
+- den **Beteiligungsanteil**
+
+Anteile, die auf Stock Options und auf Wandelpapiere entfallen, werden auf voll verwässerter Basis ausgewiesen. Die Tabelle ist in **Blöcke gegliedert, einen je Finanzierungsrunde** oder Serie, und jede Zeile berichtet einen Eigentümer, üblicherweise gruppiert in Gründer, Investoren und weitere Parteien. Hier ist die Seed-Runde des Falls, den das Deck durchrechnet, mit den Personen ersetzt durch ihre Rollen.
+
+| Erste Runde (Seed), Anteilspreis 2.00 | Gekaufte Anteile | Gehaltene Anteile | In der Runde investiert | Insgesamt investiert | Beteiligung |
+|---|--:|--:|--:|--:|--:|
+| Gründer 1 | | 200,000 | 0 | 0 | 16.0% |
+| Gründer 2 | | 200,000 | 0 | 0 | 16.0% |
+| Gründer 3 | | 200,000 | 0 | 0 | 16.0% |
+| Gründer 4 | | 200,000 | 0 | 0 | 16.0% |
+| Seed-Investor A | 125,000 | 125,000 | 250,000 | 250,000 | 10.0% |
+| Seed-Investor B | 125,000 | 125,000 | 250,000 | 250,000 | 10.0% |
+| Weitere Partei: ein privater Geldgeber | | 50,000 | 0 | 0 | 4.0% |
+| Weitere Partei: eine Universität | | 50,000 | 0 | 0 | 4.0% |
+| Stock-Options-Pool | | 100,000 | 0 | 0 | 8.0% |
+| **Summe** | **250,000** | **1,250,000** | **500,000** | **500,000** | **100%** |
+
+Jede Gleichung von oben lässt sich an dieser einen Tabelle überprüfen. Die Halter vor dem Deal besitzen 1,000,000 Anteile, also beträgt die Pre-Money-Bewertung bei 2.00 je Anteil 2,000,000. Die beiden Investoren bringen zusammen 500,000 ein, also beträgt die Post-Money-Bewertung 2,500,000, was ebenfalls 2.00 mal die 1,250,000 Gesamtanteile ist. Und 500,000 geteilt durch 2,500,000 ergibt die 20 Prozent, die die beiden Investoren zusammen halten.
+
+## 7 · Verwässerung über mehrere Runden
+
+Vorhaben nehmen selten nur einmal Geld auf. Sie finanzieren sich über mehrere Runden, was **Multistage Financing** heißt, und jedes Mal, wenn neue Investoren neu ausgegebene Anteile kaufen, verändert sich die Position der bestehenden Anteilseigner. Die zu merkende Definition ist präzise:
+
+<Aside type="note" title="Verwässerung">
+**Verwässerung** ist die Verringerung des Beteiligungsanteils der derzeitigen Anteilseigner, verursacht durch die Ausgabe neuer Anteile in einer neuen Finanzierungsrunde. Man beachte, was sie nicht ist: Niemand nimmt dir Anteile weg. Du behältst genau die Anteile, die du hattest. Nur der Nenner wächst unter dir.
+</Aside>
+
+Die Notation bekommt einen Rundenindex. Runden laufen r = 1, 2, bis R. Der Buchstabe i markiert die Runde, in der ein bestimmter Investor beigesteuert hat. Und **F(i at r)** bedeutet den Beteiligungsanteil, gemessen in Runde r, eines Investors, der seinerzeit in Runde i investiert hat. Damit wird der gesamte Gleichungssatz Runde für Runde neu geschrieben.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1 MR) Der eigene Anteil der neuen Runde</span>
+    <code>I(r) = F(r at r) × V(post, r)</code>
+  </div>
+  <div>
+    <span class="name">(3 MR) Pre-Money dieser Runde</span>
+    <code>V(pre, r) = V(post, r) - I(r)</code>
+  </div>
+  <div>
+    <span class="name">(5 MR) Die Anteilszahl wächst</span>
+    <code>S(post, r) = S(post, r-1) + S(r at r)</code>
+  </div>
+  <div>
+    <span class="name">(6 MR) Der Preis dieser Runde</span>
+    <code>I(r) = P(r) × S(r at r)</code>
+  </div>
+  <div>
+    <span class="name">(7 MR) Post-Money dieser Runde</span>
+    <code>V(post, r) = P(r) × S(post, r)</code>
+  </div>
+  <div>
+    <span class="name">(8 MR) Pre-Money dieser Runde</span>
+    <code>V(pre, r) = P(r) × S(post, r-1)      die Gesamtanteilszahl der vorigen Runde trägt den Pre-Money-Wert</code>
+  </div>
+  <div>
+    <span class="name">(9 MR) Der Anteil eines beliebigen Halters</span>
+    <code>F(i at r) = S(i at r) ÷ S(post, r)</code>
+  </div>
+</div>
+
+(5 MR) und (9 MR) zusammengenommen ergeben die mit Abstand nützlichste Formel des Kapitels, denn mit ihr lässt sich die Verwässerung berechnen, ohne Anteilszahlen überhaupt anzufassen:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(10 MR) Die Verwässerungsformel</span>
+    <code>F(i at r) = F(i at r-1) × (1 - F(r at r))      dein alter Prozentsatz, geschrumpft um genau den Anteil, den die neue Runde nimmt</code>
+  </div>
+</div>
+
+Wenn eine neue Runde 25 Prozent des Unternehmens verkauft, dann wird **jeder**, der vorher da war, mit 0.75 multipliziert, Gründer, Angels, der Optionspool und die Universität gleichermaßen. Verwässerung ist demokratisch. Der Series-A-Block des Falls zeigt das in Aktion.
+
+| Zweite Runde (Series A), Anteilspreis 4.80 | Gekaufte Anteile | Gehaltene Anteile | In der Runde investiert | Insgesamt investiert | Beteiligung |
+|---|--:|--:|--:|--:|--:|
+| Gründer 1 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Gründer 2 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Gründer 3 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Gründer 4 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Seed-Investor A | 41,667 | 166,667 | 200,000 | 450,000 | 10.0% |
+| Seed-Investor B | 0 | 125,000 | 0 | 250,000 | 7.5% |
+| Series-A-Lead | 208,333 | 208,333 | 1,000,000 | 1,000,000 | 12.5% |
+| Series-A-Co-Investor | 166,667 | 166,667 | 800,000 | 800,000 | 10.0% |
+| Weitere Partei: ein privater Geldgeber | 0 | 50,000 | 0 | 0 | 3.0% |
+| Weitere Partei: eine Universität | 0 | 50,000 | 0 | 0 | 3.0% |
+| Stock-Options-Pool | 0 | 100,000 | 0 | 0 | 6.0% |
+| **Summe** | **416,667** | **1,666,667** | **2,000,000** | **2,500,000** | **100%** |
+
+Gegen die Formeln geprüft. Die Runde nimmt 2,000,000 auf, und die beiden neuen Investoren nehmen zusammen 22.5 Prozent, aber die Runde als Ganzes gibt Anteile im Wert von 25 Prozent des Post-Money-Unternehmens aus, weil einer der Seed-Investoren erneut eingestiegen ist. Post-Money ist 4.80 mal 1,666,667, also 8,000,000; Pre-Money ist 4.80 mal die vorherigen 1,250,000 Anteile, also 6,000,000; und 6,000,000 plus 2,000,000 ergibt wieder die 8,000,000, wie es Gleichung (4) verlangt. Jeder bereits vorhandene Halter wurde mit 0.75 multipliziert: Die Gründer rutschten von 16 auf 12 Prozent, der Optionspool von 8 auf 6, die beiden weiteren Parteien von 4 auf 3. Seed-Investor B tat nichts und fiel von 10 auf 7.5 Prozent. Seed-Investor A legte weitere 200,000 nach, kaufte 41,667 frische Anteile und **verteidigte damit die 10-Prozent-Position** - genau deshalb verhandeln Investoren überhaupt Pro-rata-Folgerechte.
+
+## 8 · Risiko und Rendite vor den Formeln
+
+Bevor Renditen gemessen werden, wiederholt das Deck den Grundsatz, dass höhere Renditen dadurch verdient werden, dass man mehr Risiko übernimmt, an einem bewusst einfachen Beispiel. Zwei Investitionen benötigen jeweils 40 Dollar Kapital. A bringt sicher 50 Dollar. B bringt 100 Dollar mit einer Wahrscheinlichkeit von 60 Prozent und nichts mit einer Wahrscheinlichkeit von 40 Prozent, das erwartete Ergebnis liegt also bei 60 Dollar gegenüber den 50 von A. B ist im Erwartungswert mehr wert, und dennoch hängt die Wahl zwischen beiden vollständig vom **Grad der Risikoaversion** des Investors ab.
+
+Investoren sind typischerweise risikoavers, das heißt, sie verlangen für jedes zusätzliche Risiko eine höhere Rendite als Ausgleich. Das Spiegelbild dieser Aussage ist der Mechanismus, der die Preise tatsächlich setzt: Wenn Investition C 10 Prozent bei einem bestimmten Risiko bringt, wird ein risikoaverser Investor bereitwillig **mehr zahlen** für Investition D, die dieselbe Rendite bei geringerem Risiko bietet, und mehr zu zahlen **senkt** mechanisch die Rendite von D. Sicherheit wird gekauft, indem man einen niedrigeren Ertrag akzeptiert.
+
+Zwei Eigenschaften unterscheiden die Gründungsfinanzierung von der gewöhnlichen Unternehmensfinanzierung.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Das Risiko ist extrem <small>in statistischer Sprache: schief</small></div>
+      <ul>
+        <li>Die meisten unternehmerischen Vorhaben <strong>scheitern</strong> schlicht</li>
+        <li>Einige wenige erzeugen eine <strong>moderate</strong> Rendite</li>
+        <li>Sehr wenige erzeugen <strong>sehr hohe</strong> Renditen, und diese tragen das gesamte Portfolio</li>
+        <li>Das durchschnittliche Ergebnis ist deshalb eine schlechte Beschreibung eines einzelnen Deals</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Liquiditätsrisiko <small>man kann nicht einfach verkaufen</small></div>
+      <ul>
+        <li>Anteile an einem privaten Unternehmen zu verkaufen <strong>dauert</strong></li>
+        <li>Ein Käufer findet sich womöglich nur zu einem <strong>sehr niedrigen Preis</strong></li>
+        <li>Das ist das Gegenteil einer börsennotierten Aktie, die sich heute zum notierten Kurs verkaufen lässt</li>
+        <li>Deshalb ist die Haltedauer für einen Venture-Investor keine frei wählbare Größe</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Die zwei Eigenschaften, die Venture-Renditen schwer mit Renditen börsennotierter Märkte vergleichbar machen: eine extrem schiefe Verteilung der Ergebnisse und Geld, das sich nicht auf Zuruf abziehen lässt.</figcaption>
+</div>
+
+Das Deck weist die Karikatur ausdrücklich zurück: **Venture-Investoren sind keine Risikoliebhaber**. Sie gehen mit Risiko auf zwei Arten um, statt es zu genießen. Sie **diversifizieren** über mehrere Vorhaben, damit die schiefe Verteilung genug Ziehungen hat, um den seltenen Gewinner hervorzubringen, und sie glauben, das Risiko **senken** zu können, indem sie sich aktiv im Unternehmen engagieren. Die richtige Beschreibung ist deshalb ein **risikotoleranter Investor, der daran arbeitet, das Risiko** der von ihm gehaltenen Unternehmen zu senken.
+
+Schließlich trennt das Deck zwei Arten von Rendite, bevor überhaupt gerechnet wird. **Realisierte Renditen** sind rückwärtsgerichtet und objektiv, eine Aufzeichnung dessen, was eine Investition tatsächlich erbracht hat, und Investoren schauen genau deshalb zurück, um für die nächste Entscheidung zu lernen. **Erwartete Renditen** sind vorwärtsgerichtete Erwartungen. Die folgenden Formeln sind für realisierte Renditen geschrieben und werden dann für Erwartungen wiederverwendet.
+
+## 9 · Drei Maße für die Investorenrendite
+
+Für die Rechnung zählt nicht der gesamte Exit-Wert des Unternehmens, sondern der Teil davon, der dem Investor gehört:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(11) Der Exit-Wert des Investors</span>
+    <code>X(inv) = F(inv) × X      wobei X der Exit-Wert des Unternehmens ist und F(inv) der Anteil des Investors</code>
+  </div>
+</div>
+
+Danach werden drei Standardmaße verglichen: **Kapitalwert**, **interner Zinsfuß** und **Cash on Cash**. Zwei davon brauchen den Zeitwert des Geldes, den das Deck zuerst festhält. Ein Euro heute ist mehr wert als ein Euro morgen, schlicht weil der heutige Euro angelegt werden kann und über Nacht eine Rendite erwirtschaftet. Mit FV für den Zukunftswert, PV für den Barwert und d für die Rendite, auch Diskontsatz genannt:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Zeitwert des Geldes, eine Periode</span>
+    <code>FV(I) = I + I×d = I(1 + d)            PV(I) = I ÷ (1 + d)</code>
+  </div>
+  <div>
+    <span class="name">Zeitwert des Geldes, T Jahre</span>
+    <code>FV(I) = I(1 + d)^T            PV(I) = I ÷ (1 + d)^T</code>
+  </div>
+</div>
+
+Nun die drei Maße selbst.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(12) Kapitalwert</span>
+    <code>NPV = X(inv) ÷ (1 + d)^T - I      d = Diskontsatz, T = Zeit bis zum Exit</code>
+  </div>
+  <div>
+    <span class="name">(13) Cash-on-Cash-Multiple</span>
+    <code>CCM = X(inv) ÷ I      wie oft das eingesetzte Kapital beim Exit zurückkommt</code>
+  </div>
+  <div>
+    <span class="name">(14) Interner Zinsfuß</span>
+    <code>I × (1 + IRR)^T = X(inv)      der Diskontsatz, bei dem der Kapitalwert exakt null wäre</code>
+  </div>
+</div>
+
+Jedes hat eine charakteristische Stärke und einen charakteristischen blinden Fleck.
+
+| Maß | Was es ist | Stärke | Blinder Fleck |
+|---|---|---|---|
+| **NPV** | Der auf heute abgezinste Exit-Erlös, abzüglich dessen, was eingesetzt wurde | Das Hauptwerkzeug der Investitionsrechnung; es berücksichtigt den **Zeithorizont**, sodass sich Investitionen mit unterschiedlichen Horizonten vergleichen lassen | Braucht einen Diskontsatz d, der in der Gründungsfinanzierung schwer zu finden ist, weil es kaum Vergleichsunternehmen gibt |
+| **CCM** | Wie oft das Geld zurückkommt | Einfachheit, und es braucht überhaupt keine Annahme | Ignoriert den **Zeitwert des Geldes** und ignoriert das eingegangene **Risiko** |
+| **IRR** | Der annualisierte Satz, der impliziert wird, wenn I über T Jahre zu X(inv) wird | Das bei Praktikern gebräuchlichste Maß; berücksichtigt den Zeitwert des Geldes und damit die **zeitliche Lage** der Zahlungsströme | Sagt nichts über die **Höhe** der Rendite in Geld und nichts über das eingegangene Risiko |
+
+(13) und (14) zusammengenommen ergeben die Brücke zwischen den beiden Praktikermaßen:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(15) CCM und IRR sind derselbe Sachverhalt</span>
+    <code>CCM = (1 + IRR)^T      also IRR = CCM^(1÷T) - 1</code>
+  </div>
+</div>
+
+Das Deck druckt die Umrechnung als Raster. Die Spalten sind Multiples, die Zeilen Haltedauern; die Zellen sind die jährliche Rendite, der dieses Multiple entspricht.
+
+| Zeit (Jahre) | CCM 0.5 | CCM 1 | CCM 2 | CCM 3 | CCM 4 | CCM 5 | CCM 10 |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| 0.5 | -75% | 0% | 300% | 800% | 1500% | 2400% | 9900% |
+| 1 | -50% | 0% | 100% | 200% | 300% | 400% | 900% |
+| 2 | -29% | 0% | 41% | 73% | 100% | 124% | 216% |
+| 3 | -21% | 0% | 26% | 44% | 59% | 71% | 115% |
+| 4 | -16% | 0% | 19% | 32% | 41% | 50% | 78% |
+| 5 | -13% | 0% | 15% | 25% | 32% | 38% | 58% |
+| 6 | -11% | 0% | 12% | 20% | 26% | 31% | 47% |
+| 8 | -8% | 0% | 9% | 15% | 19% | 22% | 33% |
+| 10 | -7% | 0% | 7% | 12% | 15% | 17% | 26% |
+| 15 | -5% | 0% | 5% | 8% | 10% | 11% | 17% |
+| 20 | -3% | 0% | 4% | 6% | 7% | 8% | 12% |
+
+Die Lehre des Rasters ist der eine Satz darunter: **Der CCM variiert nicht mit dem Zeithorizont, der IRR schon**. Sein Geld zu verdoppeln ist immer ein CCM von 2, ob es sechs Monate oder zwanzig Jahre gedauert hat, während dieselbe Verdopplung im ersten Fall ein IRR von 300 Prozent und im zweiten von 4 Prozent ist. Das schafft auch ein Vergleichsproblem in der anderen Richtung. Zwei Projekte können bei sehr unterschiedlichen Horizonten denselben IRR ausweisen - 41 Prozent erscheint im Raster sowohl als Multiple von 2 über zwei Jahre als auch als Multiple von 4 über vier Jahre - und der übliche Ausweg ist die Annahme, das kürzere Projekt lasse sich einfach verlängern. Aber lässt sich dieser Satz wirklich über mehr Jahre halten? Niemand weiß es, und das ist die ehrliche Antwort.
+
+Deshalb wird der Kapitalwert als das konzeptionell stärkere Maß beschrieben. Sein entscheidender Vorteil ist genau, dass er den Zeithorizont berücksichtigt und damit den Vergleich von Investitionen mit unterschiedlichen Horizonten erlaubt; sein Nachteil ist die Notwendigkeit, einen angemessenen Diskontsatz zu schätzen, was schwierig ist. Die praktische Schlussfolgerung des Decks ist eine Arbeitsteilung: **den Kapitalwert für Entscheidungen nutzen und IRR und CCM als die gängigen Berichtsmaße verstehen**.
+
+Zwei Schlussbemerkungen überliest man leicht und wird trotzdem gern danach gefragt. Erstens ergeben **Gründerrenditen konzeptionell wenig Sinn**, weil eine Rendite ein Verhältnis zu einer Investition ist und Gründer keine Investition beisteuern; ihre Gewinne müssen in Geld gemessen werden, nicht in Prozent. Zweitens erhält man **Renditen auf Unternehmensebene**, indem man in denselben Formeln schlicht X(inv) durch X ersetzt, den gesamten Exit-Wert.
+
+## 10 · Renditen, wenn es mehrere Runden gegeben hat
+
+Sobald es mehrere Runden gibt, ist der Anteil eines Investors beim Exit nicht der Anteil, den er gekauft hat, sondern das, was alle nachfolgenden Verwässerungen überlebt hat. Mit R für die Exit-Runde:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(16) Der Anteil, auf den es ankommt</span>
+    <code>F(i at EXIT) = F(i at R)      was man beim Exit besitzt, ist die Beteiligung aus Runde i, heruntergewässert bis Runde R</code>
+  </div>
+  <div>
+    <span class="name">(17) Das Geld, auf das es ankommt</span>
+    <code>X(i) = F(i at R) × X</code>
+  </div>
+</div>
+
+Auch die Haltedauer muss je Investor gemessen werden, nicht je Unternehmen. Bezeichnet man das Datum der Runde r mit t(r), dann ist der Abstand zwischen zwei Daten τ(i, r) = t(r) - t(i). τ(1, 4) ist also die Zeitspanne zwischen der ersten und der vierten Runde, und τ(i, R) die Zeitspanne von der eigenen Einstiegsrunde eines Investors bis zum Exit. Die drei Maße werden dann je Investor geschrieben:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(12 MR) NPV je Investor</span>
+    <code>NPV = X(i) ÷ (1 + d)^τ(i,R) - I(i)</code>
+  </div>
+  <div>
+    <span class="name">(13 MR) CCM je Investor</span>
+    <code>CCM = X(i) ÷ I(i)</code>
+  </div>
+  <div>
+    <span class="name">(14 MR) IRR je Investor</span>
+    <code>I(i) × (1 + IRR(i))^τ(i,R) = X(i)</code>
+  </div>
+</div>
+
+Die praktische Folge ist, dass zwei Investoren desselben erfolgreichen Unternehmens völlig unterschiedliche Zahlen berichten können. Der Seed-Investor hat das höhere Multiple, weil er billig gekauft hat, aber er hat weit länger gehalten, sodass sein IRR durchaus niedriger sein kann als der eines späteren Investors, der mehr gezahlt und kürzer gewartet hat.
+
+## 11 · Wie Bewertung, Exit-Wert und Renditen gegeneinander ziehen
+
+Der letzte Theorieblock verbindet die Renditemaße zurück mit der Bewertung, und zwar über den CCM, weil er der einfachste ist; das Deck merkt an, dass sich die Ergebnisse auf die anderen Maße verallgemeinern lassen. Setzt man (2) in (13) ein, auf Unternehmensebene, ergibt sich:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(18) Rendite als Funktion der Bewertung</span>
+    <code>CCM = X ÷ V(post)      Exit-Wert geteilt durch das, womit das Unternehmen bewertet war, als das Geld hineinging</code>
+  </div>
+</div>
+
+Daraus folgen unmittelbar zwei Einsichten, und zusammen sind sie der älteste Ratschlag der Finanzwelt.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Einsicht 1 <small>Investorenseite</small></div>
+    <ul>
+      <li>Bei gegebener Bewertung führt ein <strong>höherer Exit-Wert</strong> zu einer höheren realisierten Investorenrendite</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Einsicht 2 <small>Investorenseite</small></div>
+    <ul>
+      <li>Bei gegebenem Exit-Wert führt eine <strong>höhere Bewertung</strong> zu einer niedrigeren realisierten Investorenrendite - in drei Worten: billig kaufen, teuer verkaufen</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Einsicht 3 <small>Gründerseite</small></div>
+    <ul>
+      <li>Bei gegebener Bewertung führt ein <strong>höherer Exit-Wert</strong> zu höheren unternehmerischen Gewinnen</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Einsicht 4 <small>Gründerseite</small></div>
+    <ul>
+      <li>Bei gegebenem Exit-Wert führt eine <strong>höhere Bewertung</strong> zu höheren unternehmerischen Gewinnen - das genaue Gegenteil von Einsicht 2</li>
+    </ul>
+  </div>
+</div>
+
+Die Gründerseite braucht eine eigene Gleichung, denn wie oben angemerkt hat ein Gründer keine Investition, durch die man teilen könnte, und hat deshalb Gewinne statt Renditen. (1) und (16) zusammengenommen, und mit der Tatsache, dass die Gründer alles behalten, was die Investoren nicht besitzen, F(ent) = 1 - F(inv):
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(19) Das Geld des Gründers beim Exit</span>
+    <code>X(ent) = [1 - (I ÷ V(post))] × X</code>
+  </div>
+</div>
+
+Die Einsichten 2 und 4 stehen in direkter **Spannung**, und diese Spannung ist die Verhandlung. Beide Seiten wollen, dass der Exit-Wert X so groß wie möglich ausfällt, und deshalb können sie ehrlich kooperieren. Aber bei gegebenem X ist jeder Bewertungspunkt, den die Gründer gewinnen, ein Renditepunkt, den der Investor verliert. Es gibt keine geschickte Rahmung, die das auflöst; es ist Arithmetik.
+
+Formuliert man (18) in Erwartungswerten, mit dem hochgestellten e für erwartet, wird aus der Beziehung eine Preisregel, die Investoren tatsächlich anwenden:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(20) Bewertung aus einer geforderten Rendite</span>
+    <code>V(post) = X(e) ÷ CCM(e)      erwarteter Exit-Wert geteilt durch das Multiple, das der Investor fordert</code>
+  </div>
+</div>
+
+**Einsicht 5:** Bei gegebener geforderter Rendite führt ein höherer erwarteter Exit-Wert zu einer höheren Bewertung. **Einsicht 6:** Bei gegebenem erwartetem Exit-Wert führt eine höhere geforderte Rendite zu einer niedrigeren Bewertung. Das ist die gesamte Logik der Venture-Preisbildung in einer Zeile - ein Investor, der bei den funktionierenden Deals das Zehnfache seines Geldes machen muss, bietet eine sehr viel niedrigere Bewertung als einer, der das Dreifache braucht, selbst wenn beide dieselbe Geschichte über den Exit glauben.
+
+### Die ökonomischen Determinanten der Bewertung
+
+Das Deck nennt vier Dinge, die die Zahl tatsächlich bewegen, plus einen technischen Vorbehalt.
+
+| Determinante | Richtung der Wirkung |
+|---|---|
+| **Die Gelegenheit selbst** | Eine bessere Gelegenheit trägt höhere Bewertungen und höhere erwartete Exits |
+| **Der Marktkontext** | Heiße Märkte, im Gegensatz zu kalten Aktienmärkten, tragen höhere Bewertungen und höhere erwartete Exits |
+| **Der Wettbewerb um den Deal** | Mehr Investoren, die um denselben Deal konkurrieren, treiben die Bewertungen nach oben |
+| **Die Qualität der Investoren** | Hochwertige Investoren erzielen beim Einstieg **niedrigere** Bewertungen, und die Gründer akzeptieren das trotzdem, weil die Aussichten mit ihnen an Bord besser sind |
+
+Der Vorbehalt: Die **Art des Eigenkapitals** kann die Eckbewertung aufblähen. Vorzugsanteile tragen Rechte, die Stammanteile nicht haben, weshalb eine für Vorzugsanteile genannte Bewertung nicht eins zu eins mit einer für Stammanteile genannten Bewertung vergleichbar ist. Die Mechanik dieser Rechte gehört in die Term-Sheet-Diskussion.
+
+## 12 · Der erste Deal: Wie Gründer die Anteile untereinander aufteilen
+
+Bevor irgendein Investor auftaucht, müssen die Gründer das Unternehmen untereinander aufteilen, und das Deck nennt das **den ersten Deal**. Er sollte vereinbart sein, bevor man auf Investoren zugeht, und die Vorgehensweisen unterscheiden sich sowohl im **Zeitpunkt**, frühe Entscheidung gegen späte Entscheidung, als auch in den verwendeten **Kriterien**. Das Forum dafür ist die **Gründervereinbarung**, die ein formales Dokument sein kann oder ein informeller Moment, in dem die Entscheidungen fallen.
+
+Eine Gründervereinbarung behandelt fünf Hauptthemen:
+
+- **wer überhaupt die Gründer sind**
+- **Gehälter** und andere Formen der Vergütung
+- die **Pflichten und Rechte des Unternehmens gegenüber den Gründern**
+- die **Anteilszuteilung** selbst
+- die **Kontingenzen**, unter denen einzelne Gründer stärkere oder schwächere Rechte erhalten, zum Beispiel das Vesting von Anteilen
+
+Bei der Zuteilung selbst gibt es eine grundsätzliche Weggabelung, und das Deck weigert sich, einen Sieger zu küren.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Gleiche Aufteilung <small>der egalitäre Ansatz</small></div>
+      <ul>
+        <li>Jeder nimmt dasselbe Stück</li>
+        <li>Was sie funktionieren lässt, ist, dass alle Beteiligten die Lage wirklich <strong>gleich wahrnehmen</strong></li>
+        <li>Schnell, vermeidet ein unangenehmes Gespräch und signalisiert, dass das Team eine Einheit ist</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Ungleiche Aufteilung <small>unterschiedliche Beiträge belohnen</small></div>
+      <ul>
+        <li>Die Stücke bilden ab, dass die Leute nicht dasselbe beitragen</li>
+        <li>Was sie funktionieren lässt, ist das <strong>Setzen der richtigen Anreize</strong></li>
+        <li>Schwerer zu verhandeln, aber sie bepreist die Realität statt der Höflichkeit</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Eine wichtige und weitreichende Entscheidung, die sich später nur sehr schwer revidieren lässt, denn sie zu revidieren heißt, jemanden zu bitten, Anteile zurückzugeben.</figcaption>
+</div>
+
+Welche Prinzipien sollen sie leiten? Zwei, die zeitlich in verschiedene Richtungen ziehen.
+
+- **Rückwärtsgerichtet und objektiv:** wer bereits was beigetragen hat - die Idee, Kapital, geistiges Eigentum oder andere Ressourcen.
+- **Vorwärtsgerichtet und auf Anreize bezogen:** wer im kommenden Zeitraum mehr beitragen kann.
+
+Die Ökonomie hinter der vorwärtsgerichteten Sicht stammt aus der 2016 mit dem Nobelpreis ausgezeichneten Arbeit zur Ökonomie der Anreize und zur Vertragstheorie, die Anreize **innerhalb von Teams** betonte. Das Argument lautet, dass die **relative Produktivität innerhalb des Teams** die Anteilszuteilung leiten sollte, weil das die für das Vorhaben wertvollsten Personen belohnt und motiviert; dass diese relative Produktivität von **Fähigkeiten** abhängt, etwa von Vorerfahrung und Ausbildung, und von **Rollen** im Unternehmen, etwa davon, CEO zu sein; und dass die Anreize gleichwohl **ausgewogen genug sein sollten, um alle an Bord zu halten**, was besonders dann zählt, wenn die Beiträge voneinander abhängen und niemand im Team entbehrlich ist.
+
+### Das FAST-Werkzeug
+
+**FAST** steht für **Founder Allocation of Shares Tool** und macht aus dem Argument ein Verfahren.
+
+<Steps>
+
+1. **Die Teammitglieder und ihre Rollen definieren.**
+
+2. **Die Zeiträume und ihre Gewichte definieren**, sodass vergangener und künftiger Beitrag explizit gegeneinander abgewogen werden können.
+
+3. **Den Gründern Punkte für ihre Beiträge in jedem Zeitraum zuteilen.**
+
+4. **Nettotransfers zwischen den Gründern identifizieren**, also Geld, das ein Gründer relativ zu den anderen tatsächlich eingebracht oder entnommen hat.
+
+5. **Beteiligungsquoten und Kontingenzen empfehlen**, also wie viel der Zuteilung jedes Gründers sofort gewährt wird und wie viel verdient werden muss.
+
+</Steps>
+
+Die durchgerechnete Fassung im Deck gewichtet die Vergangenheit mit **20 Prozent** und jedes der nächsten beiden Jahre mit jeweils **40 Prozent**, sodass zwei Drittel der Zuteilung davon abhängen, was die Leute voraussichtlich tun werden, und nicht davon, was sie bereits getan haben. Innerhalb jeder Periode kommen die Punkte aus produktiven Arbeitstagen, Erfolgen und aufgegebenen Alternativen.
+
+| Periode, Gewicht | Zeile | F1 | F2 | F3 | F4 | F5 | Summe | Gewährt als |
+|---|---|--:|--:|--:|--:|--:|--:|---|
+| | Erfahrung, Qualifikation, Talent | 0 | 0 | 0 | 0 | 0 | 0 | |
+| | Rollen und Verantwortlichkeiten | 0.1 | 0 | 0 | 0 | 0 | 0.1 | |
+| | Produktivitätspunkte | 1.1 | 1 | 1 | 1 | 0 | 4.1 | |
+| | Produktivitätsfaktor | 0.27 | 0.24 | 0.24 | 0.24 | 0.00 | 1.00 | |
+| Die Vergangenheit, 20% | Arbeitstage | 80 | 40 | 60 | 40 | 0 | 220 | |
+| Die Vergangenheit, 20% | Produktive Arbeit | 21.46 | 9.76 | 14.63 | 9.76 | 0.00 | 55.61 | Sofort |
+| Die Vergangenheit, 20% | Erfolge | 10 | 5 | 10 | 5 | 0 | 30 | Sofort |
+| Die Vergangenheit, 20% | Aufgegebene Alternativen | 0 | 0 | 0 | 0 | 0 | 0 | Sofort |
+| Die Vergangenheit, 20% | Summe, dann normiert | 31.46 → 7.35 | 14.76 → 3.45 | 24.63 → 5.75 | 14.76 → 3.45 | 0 → 0 | 85.61 → 20.00 | |
+| Nächstes Jahr, 40% | Arbeitstage | 365 | 365 | 182.5 | 365 | 0 | 1278 | |
+| Nächstes Jahr, 40% | Produktive Arbeit | 97.93 | 89.02 | 44.51 | 89.02 | 0.00 | 320 | Vesting |
+| Nächstes Jahr, 40% | Erfolge | 0 | 0 | 30 | 15 | 0 | 45 | Bedingt |
+| Nächstes Jahr, 40% | Aufgegebene Alternativen | 10 | 30 | 0 | 20 | 0 | 60 | Sofort |
+| Nächstes Jahr, 40% | Summe, dann normiert | 107.93 → 10.15 | 119.02 → 11.19 | 74.51 → 7.00 | 124.02 → 11.66 | 0 → 0 | 425 → 40.00 | |
+| Übernächstes Jahr, 40% | Arbeitstage | 365 | 365 | 182.5 | 365 | 0 | 1277.5 | |
+| Übernächstes Jahr, 40% | Produktive Arbeit | 97.93 | 89.02 | 44.51 | 89.02 | 0.00 | 320 | Vesting |
+| Übernächstes Jahr, 40% | Erfolge | 0 | 0 | 30 | 0 | 0 | 30 | Bedingt |
+| Übernächstes Jahr, 40% | Aufgegebene Alternativen | 10 | 30 | 0 | 20 | 0 | 60 | Sofort |
+| Übernächstes Jahr, 40% | Summe, dann normiert | 107.93 → 10.52 | 119.02 → 11.60 | 74.51 → 7.26 | 109.02 → 10.62 | 0 → 0 | 410 → 40.00 | |
+
+Die drei Perioden werden dann addiert, um tatsächlich zwischen den Gründern transferiertes Geld bereinigt und in eine Empfehlung umgerechnet.
+
+| Über alle Perioden | F1 | F2 | F3 | F4 | F5 | Summe |
+|---|--:|--:|--:|--:|--:|--:|
+| Normierte Punkte insgesamt | 28.01 | 26.24 | 20.02 | 25.73 | 0.00 | 100.00 |
+| Nettotransfers | 0 | 98,913 | -12,500 | 10,000 | 0 | 96,413 |
+| Transferpunkte | 0.00 | 6.58 | -0.83 | 0.67 | 0.00 | 6.41 |
+| Normierte Punkte plus Transferpunkte | 28.01 | 32.81 | 19.19 | 26.40 | 0.00 | 106.41 |
+| **Empfohlener Beteiligungsanteil** | **26.33%** | **30.84%** | **18.03%** | **24.81%** | **0.00%** | **100.00%** |
+| **Empfohlene Anteilszuteilung** | **210,604** | **246,690** | **144,264** | **198,442** | **0** | **800,000** |
+
+Die Bewertung vor Transfers beträgt 1,503,587 und nach Transfers 1,600,000, wobei die Differenz die 96,413 an Nettotransfers sind. Man beachte, wie viel Arbeit die Transfers leisten: Gründer 2 hat rund 99,000 an echtem Geld eingebracht, und allein das hebt ihn von 26.24 Punkten auf 32.81 und lässt ihn Gründer 1 überholen, der mehr von der Arbeit gemacht hat. Und man beachte, dass Gründer 5 überall null erzielt und null Anteile empfohlen bekommt, was die höfliche Art des Werkzeugs ist zu sagen, dass jemand auf der Gründerliste in Wahrheit kein Gründer ist.
+
+Schließlich wird die Empfehlung in Anteile aufgeteilt, die sofort gewährt werden, und Anteile, die verdient werden müssen, und hier kommt das **Vesting** ins Spiel.
+
+| Kontingenzen | F1 | F2 | F3 | F4 |
+|---|--:|--:|--:|--:|
+| Empfohlene Anteilszuteilung | 210,604 | 246,690 | 144,264 | 198,442 |
+| Anzahl der **Vesting**-Anteile | 140,950 | 160,267 | 61,408 | 131,449 |
+| Anzahl der **Meilenstein**-Anteile | 0 | 0 | 41,387 | 10,875 |
+| Anzahl der **sofort gewährten** Anteile | 69,653 | 86,423 | 41,469 | 56,117 |
+| Vesting-Punkte, nächstes Jahr | 9.21 | 8.37 | 4.18 | 8.37 |
+| Vesting-Punkte, übernächstes Jahr | 9.54 | 8.67 | 4.34 | 8.67 |
+| Anteil der Vesting-Punkte | 66.93% | 64.97% | 42.57% | 66.24% |
+| Meilenstein-Punkte, nächstes Jahr | 0.00 | 0.00 | 2.82 | 1.41 |
+| Meilenstein-Punkte, übernächstes Jahr | 0.00 | 0.00 | 2.92 | 0.00 |
+| Anteil der Meilenstein-Punkte | 0.00% | 0.00% | 28.69% | 5.48% |
+
+Die Logik ist konsistent mit der Herkunft der Punkte. Punkte für **vergangene** Arbeit, für aufgegebene **Alternativen** und für **vergangene Erfolge** werden sofort gewährt, weil sie bereits geliefert wurden. Punkte für **künftige produktive Arbeit** kommen ins **Vesting**, werden also dadurch verdient, dass man bleibt und arbeitet. Punkte für **künftige Erfolge** werden zu **Meilenstein**-Anteilen, abhängig davon, dass der Erfolg tatsächlich eintritt. Gründer 3 ist der interessante Fall: Er arbeitet halbtags, weshalb sein Vesting-Anteil mit 42.57 Prozent der niedrigste ist, aber fast 29 Prozent seiner Zuteilung hängen daran, bestimmte Meilensteine zu erreichen.
+
+## Durchgerechnetes Beispiel
+
+Ein vollständiger Durchgang Runde für Runde mit sauberen Zahlen, damit sich die ganze Kette auf Papier nachvollziehen lässt.
+
+**Der Ausgangspunkt.** Vor jedem externen Geld existieren zwei Gründer und ein Optionspool. Gründer A hält 480,000 Anteile, Gründer B hält 320,000, und der Stock-Options-Pool hält 200,000, alles auf voll verwässerter Basis. S(pre) in der ersten Runde beträgt also 1,000,000 Anteile, und die aktuelle Aufteilung ist 48 Prozent, 32 Prozent und 20 Prozent.
+
+**Schritt 1, die Seed-Runde wird verhandelt.** Ein Investor sagt zu, 500,000 für 20 Prozent des Unternehmens einzubringen. Diese beiden Zahlen sind die einzigen Eingaben; alles andere wird abgeleitet.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Schritt 1 - Post-Money, aus Gleichung (2)</span>
+    <code>V(post) = I ÷ F(inv) = 500,000 ÷ 0.20 = 2,500,000</code>
+  </div>
+  <div>
+    <span class="name">Schritt 2 - Pre-Money, aus Gleichung (3)</span>
+    <code>V(pre) = V(post) - I = 2,500,000 - 500,000 = 2,000,000</code>
+  </div>
+  <div>
+    <span class="name">Schritt 3 - Anteilspreis, aus Gleichung (8)</span>
+    <code>P = V(pre) ÷ S(pre) = 2,000,000 ÷ 1,000,000 = 2.00 je Anteil</code>
+  </div>
+  <div>
+    <span class="name">Schritt 4 - neue Anteile, aus Gleichung (6)</span>
+    <code>S(inv) = I ÷ P = 500,000 ÷ 2.00 = 250,000 neue Anteile</code>
+  </div>
+  <div>
+    <span class="name">Schritt 5 - die Kontrolle, aus den Gleichungen (5), (7) und (9)</span>
+    <code>S(post) = 1,000,000 + 250,000 = 1,250,000 ; P × S(post) = 2.00 × 1,250,000 = 2,500,000 = V(post) ✓ ; 250,000 ÷ 1,250,000 = 20% ✓</code>
+  </div>
+</div>
+
+**Schritt 2, eine Series A achtzehn Monate später.** Ein neuer Investor bringt 2,000,000 für 25 Prozent ein, und diesmal ist die Anteilszahl nicht mehr frei - die bestehenden 1,250,000 Anteile sind eine Tatsache.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Runde 2 - Bewertungen, aus (1 MR) und (3 MR)</span>
+    <code>V(post,2) = 2,000,000 ÷ 0.25 = 8,000,000 ; V(pre,2) = 8,000,000 - 2,000,000 = 6,000,000</code>
+  </div>
+  <div>
+    <span class="name">Runde 2 - Anteilspreis, aus (8 MR)</span>
+    <code>P(2) = V(pre,2) ÷ S(post,1) = 6,000,000 ÷ 1,250,000 = 4.80 je Anteil</code>
+  </div>
+  <div>
+    <span class="name">Runde 2 - neue Anteile, aus (6 MR) und (5 MR)</span>
+    <code>S(2 at 2) = 2,000,000 ÷ 4.80 = 416,667 ; S(post,2) = 1,250,000 + 416,667 = 1,666,667</code>
+  </div>
+  <div>
+    <span class="name">Runde 2 - der Verwässerungsfaktor, aus (10 MR)</span>
+    <code>1 - F(2 at 2) = 1 - 0.25 = 0.75      jeder bereits vorhandene Halter wird mit 0.75 multipliziert</code>
+  </div>
+</div>
+
+Jede Beteiligung vorher und nachher in einer Tabelle. Die Anteilszahlen der alten Halter ändern sich nie; nur der Nenner tut es.
+
+| Halter | Anteile | Vor Seed | Anteile nach Seed | Nach Seed | Anteile nach Series A | Nach Series A |
+|---|--:|--:|--:|--:|--:|--:|
+| Gründer A | 480,000 | 48.0% | 480,000 | 38.4% | 480,000 | 28.8% |
+| Gründer B | 320,000 | 32.0% | 320,000 | 25.6% | 320,000 | 19.2% |
+| Stock-Options-Pool | 200,000 | 20.0% | 200,000 | 16.0% | 200,000 | 12.0% |
+| Seed-Investor | - | - | 250,000 | 20.0% | 250,000 | 15.0% |
+| Series-A-Investor | - | - | - | - | 416,667 | 25.0% |
+| **Summe** | **1,000,000** | **100%** | **1,250,000** | **100%** | **1,666,667** | **100%** |
+
+Die Verwässerungsformel lässt sich an jeder Zeile prüfen: Der Seed-Investor geht 20 Prozent mal 0.75 gleich 15 Prozent, Gründer A geht 38.4 mal 0.75 gleich 28.8, der Pool geht 16 mal 0.75 gleich 12. Niemand wurde herausgegriffen.
+
+**Schritt 3, der Exit.** Das Unternehmen wird für **40,000,000** verkauft, genau **fünf Jahre** nachdem die Seed-Runde hineingegangen ist. Der Seed-Investor hält weiterhin 15 Prozent, und dazwischen ist nichts weiter passiert.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Exit-Wert für den Seed-Investor, aus (17)</span>
+    <code>X(seed) = F(seed at R) × X = 0.15 × 40,000,000 = 6,000,000</code>
+  </div>
+  <div>
+    <span class="name">Cash-on-Cash-Multiple, aus (13 MR)</span>
+    <code>CCM = X(seed) ÷ I(seed) = 6,000,000 ÷ 500,000 = 12.0 mal das Geld</code>
+  </div>
+  <div>
+    <span class="name">Interner Zinsfuß, aus (14 MR) und (15)</span>
+    <code>IRR = CCM^(1÷T) - 1 = 12^(1÷5) - 1 = 1.644 - 1 = rund 64% pro Jahr</code>
+  </div>
+  <div>
+    <span class="name">Kapitalwert bei geforderten 30%, aus (12 MR)</span>
+    <code>NPV = 6,000,000 ÷ (1.30)^5 - 500,000 = 6,000,000 ÷ 3.713 - 500,000 = 1,616,000 - 500,000 = rund 1,116,000</code>
+  </div>
+</div>
+
+Und der Vergleich, der Abschnitt 10 konkret macht. Der Series-A-Investor ist in Jahr 2 eingestiegen und hat deshalb nur drei Jahre gehalten, behält 25 Prozent, beim Exit 10,000,000 wert, bei einer Investition von 2,000,000.
+
+| Investor | Investiert | Anteil beim Exit | Wert beim Exit | CCM | Haltedauer | IRR |
+|---|--:|--:|--:|--:|--:|--:|
+| Seed | 500,000 | 15.0% | 6,000,000 | 12.0 | 5 Jahre | rund 64% |
+| Series A | 2,000,000 | 25.0% | 10,000,000 | 5.0 | 3 Jahre | rund 71% |
+
+Der Seed-Investor hat mit Abstand das bessere Multiple, und der spätere Investor hat trotzdem den besseren Jahressatz, weil sein Geld zwei Jahre kürzer im Einsatz war. Genau deshalb besteht das Deck darauf, beides zu berichten und den Kapitalwert zu nutzen, wenn tatsächlich eine Entscheidung ansteht.
+
+## Wende es auf dein Projekt an
+
+<Steps>
+
+1. **Schreibe deine heutige voll verwässerte Anteilszahl auf**, einschließlich jedes Gründers, jeder Beraterbeteiligung und des gesamten Optionspools, gewährt oder nicht. Wenn du noch keine Anteile hast, erfinde eine saubere Zahl wie 1,000,000 und teile sie prozentual auf - in einer ersten Runde ist die Zahl ohnehin nur ein Skalierungsfaktor.
+
+2. **Entscheide über den Optionspool, bevor du mit irgendjemandem sprichst.** Zehn bis zwanzig Prozent der Gesamtbeteiligung sind das normale Band. Setze ihn jetzt an, damit du weißt, dass er innerhalb deiner Pre-Money-Bewertung sitzt, statt das später zu entdecken.
+
+3. **Schreibe die zwei Zahlen auf, die du tatsächlich verhandeln würdest:** den Betrag, den du aufnehmen musst, I, und den Anteil, den du abzugeben bereit bist, F(inv). Alles andere wird abgeleitet, also verhandle nichts anderes.
+
+4. **Leite die Runde ab.** Post-Money ist I geteilt durch F(inv); Pre-Money ist Post-Money minus I; der Anteilspreis ist Pre-Money geteilt durch deine aktuelle Anteilszahl; die neuen Anteile sind I geteilt durch diesen Preis. Prüfe, dass Preis mal Gesamtanteile dein Post-Money reproduziert.
+
+5. **Wende den Verwässerungsfaktor auf jeden bestehenden Halter an.** Multipliziere jeden aktuellen Prozentsatz mit eins minus F(inv) und schreibe die Vorher-Nachher-Spalte neben jeden Namen, auch neben deinen eigenen. Diese Spalte, nicht die Bewertung, ist die Zahl, die du tatsächlich spüren wirst.
+
+6. **Wiederhole das für eine zweite Runde, die du dir vorstellen kannst**, zu einer höheren Bewertung, und sieh dir an, was zwei Verwässerungsrunden anrichten. Zwei Runden, die 20 und 25 Prozent verkaufen, lassen dir 0.80 mal 0.75 gleich 60 Prozent dessen, womit du gestartet bist.
+
+7. **Rechne aus, was der Investor braucht.** Schätze einen Exit-Wert und eine Haltedauer und nutze CCM gleich Exit-Wert geteilt durch Post-Money, um zu sehen, welches Multiple deine Bewertung für ihn impliziert. Wenn dir dieses Multiple klein vorkommt, ist deine Bewertungsforderung für die Anforderung dieses Investors zu hoch, und Gleichung (20) sagt dir genau, welche Bewertung sie erfüllen würde.
+
+8. **Und jetzt mach die Gründeraufteilung ehrlich**, mit der FAST-Logik. Liste die Rollen auf, gewichte die Vergangenheit gegen die nächsten beiden Jahre, bewerte produktive Arbeitstage, Erfolge und aufgegebene Alternativen und ergänze jedes echte Geld, das jemand eingebracht hat, als Transfer. Teile dann das Ergebnis jedes Gründers in sofort gewährte Anteile, Vesting-Anteile und Meilenstein-Anteile auf und vereinbare es schriftlich, bevor du jemals einen Investor triffst. Das ist der erste Deal, und er ist im Nachhinein weit schwerer zu reparieren als jedes Term Sheet.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er im Klartext bedeutet |
+|---|---|
+| Beteiligungsanteil (F) | Der Anteil des Unternehmens, den jemand hält, immer gemessen an der voll verwässerten Gesamtanteilszahl |
+| Bewertung (V) | Der Preis, der dem gesamten Unternehmen in einer Runde gegeben wird und aus dem jede andere Zahl abgeleitet wird |
+| Implizite Bewertung | Die Bewertung, die sich aus einem Deal zurückrechnen lässt, denn I für einen Anteil F zu zahlen heißt zu glauben, das Unternehmen sei I geteilt durch F wert |
+| Post-Money-Bewertung | Der Wert des Unternehmens, sobald das neue Geld darin steckt; der Prozentsatz des Investors wird immer daran gemessen |
+| Pre-Money-Bewertung | Der Wert des Unternehmens unmittelbar bevor das Geld eintrifft, also Post-Money minus der Investition |
+| Sweat Equity | Der Name für die Pre-Money-Bewertung in einer ersten Runde, weil sie bepreist, was die Gründer ohne externes Geld aufgebaut haben |
+| Anteilspreis (P) | Eine einzige Zahl, die alles bewertet: Pre-Money geteilt durch alte Anteile und ebenso die Investition geteilt durch neue Anteile |
+| Stock-Options-Pool | Anteile, die zurückgelegt werden, um Talente zu gewinnen und zu halten und Barzahlungen aufzuschieben, typischerweise in der ersten Runde mit 10 bis 20 Prozent der Beteiligung geschaffen |
+| Voll verwässert | Eine Anteilszahl, die jede Option im Pool und jedes Wandelpapier so behandelt, als wäre es bereits in Stammanteile umgewandelt |
+| Cap Table | Die Tabelle, die je Anteilseigner und je Runde die gehaltenen Anteile, den investierten Betrag und den Beteiligungsanteil festhält |
+| Verwässerung | Der Rückgang des Beteiligungsanteils bestehender Anteilseigner durch die Ausgabe neuer Anteile in einer neuen Runde; du behältst deine Anteile, der Nenner wächst |
+| Verwässerungsfaktor | Eins minus dem in der neuen Runde verkauften Anteil; jeden alten Prozentsatz damit multiplizieren |
+| Multistage Financing | Geld über mehrere Runden aufnehmen statt auf einmal, was Verwässerung zu einem wiederkehrenden Ereignis macht |
+| Realisierte Rendite | Eine rückwärtsgerichtete, objektive Aufzeichnung dessen, was eine Investition tatsächlich erbracht hat |
+| Erwartete Rendite | Eine vorwärtsgerichtete Erwartung dessen, was eine Investition erbringen wird |
+| Cash-on-Cash-Multiple (CCM) | Wie oft das investierte Geld beim Exit zurückkommt; einfach, aber blind für Zeit und Risiko |
+| Interner Zinsfuß (IRR) | Der Jahressatz, der die Investition über die Haltedauer in den Exit-Erlös verwandelt; der Diskontsatz, bei dem der Kapitalwert null ist |
+| Kapitalwert (NPV) | Exit-Erlös auf heute abgezinst minus der Investition; konzeptionell am stärksten, weil er unterschiedliche Zeithorizonte verkraftet, braucht aber einen Diskontsatz |
+| Liquiditätsrisiko | Das Risiko, dass private Anteile sich nur langsam verkaufen lassen, oder schnell nur zu einem sehr niedrigen Preis |
+| Gründervereinbarung | Der erste Deal, unter den Gründern geschlossen, bevor Investoren auftauchen, über die Frage, wer die Gründer sind, über Bezahlung, Rechte und Pflichten, die Anteilsaufteilung und Kontingenzen |
+| Vesting | Anteile, die über die Zeit durch Bleiben und Arbeiten verdient werden müssen, statt sofort gewährt zu werden |
+| FAST | Founder Allocation of Shares Tool, das Beiträge je Periode bewertet, um Transfers bereinigt und Beteiligungen samt Kontingenzen empfiehlt |
+
+## Teste dich selbst
+
+1. Ein Investor bringt 600,000 für eine Beteiligung von 30 Prozent ein. Die Gründer halten derzeit insgesamt 700,000 Anteile. Berechne die Post-Money-Bewertung, die Pre-Money-Bewertung, die Anzahl der neu ausgegebenen Anteile und den Anteilspreis, und prüfe deinen Preis anschließend gegen die Pre-Money-Bewertung.
+2. Ein Business Angel besitzt 12 Prozent eines Unternehmens. Die nächste Runde gibt neue Anteile in Höhe von 20 Prozent des Unternehmens nach der Runde aus, und der Angel beteiligt sich nicht. Wie hoch ist seine Beteiligung danach, und was wäre stattdessen richtig gewesen, wenn die Runde als Verkauf von 20 Prozent des Pre-Money-Unternehmens beschrieben worden wäre?
+3. Ein Investor hat 250,000 eingebracht, und vier Jahre später ist seine Beteiligung beim Exit 1,000,000 wert. Berechne das Cash-on-Cash-Multiple und den internen Zinsfuß und sage, welches der beiden du einem Limited Partner berichten würdest und warum.
+4. Erkläre mit den Gleichungen (18) und (20), warum ein Investor, der ein Multiple von zehn fordert, eine niedrigere Bewertung bietet als einer, der ein Multiple von drei fordert, selbst wenn beide denselben Exit-Wert erwarten.
+5. Einem Gründer wird eine Pre-Money-Bewertung von 4,000,000 mit einem vor der Runde zu schaffenden Optionspool von 20 Prozent angeboten, oder 3,600,000 mit einem Pool von 10 Prozent. Erkläre, welche Seite des Tisches der Pool verwässert und warum das zweite Angebot für die Gründer besser sein könnte.
+6. Nenne die fünf Themen, die eine Gründervereinbarung regeln sollte, und erkläre, warum FAST manche Anteile sofort gewährt, manche ins Vesting stellt und manche an Meilensteine knüpft.
+
+<Aside type="note" title="Lösungen">
+1. Post-Money ist 600,000 geteilt durch 0.30 gleich **2,000,000**. Pre-Money ist 2,000,000 minus 600,000 gleich **1,400,000**. Der Investor muss am Ende 30 Prozent halten, also müssen die 700,000 Anteile der Gründer 70 Prozent darstellen, womit die Gesamtzahl nach der Runde 1,000,000 Anteile beträgt und die neuen Anteile **300,000** sind. Der Anteilspreis ist 600,000 geteilt durch 300,000 gleich **2.00**. Kontrolle mit Gleichung (8): 2.00 mal 700,000 gleich 1,400,000, und das ist die Pre-Money-Bewertung. ✓
+2. Gleichung (10 MR) anwenden: 12 Prozent mal eins minus 0.20 gleich 12 mal 0.80 gleich **9.6 Prozent**. Hätte die Runde stattdessen Anteile in Höhe von 20 Prozent des Pre-Money-Unternehmens verkauft, besäßen die neuen Investoren 0.20 geteilt durch 1.20 gleich 16.67 Prozent des Post-Money-Unternehmens, der Verwässerungsfaktor wäre 0.8333, und der Angel behielte 10 Prozent. Die Lehre ist, dass ein Bruchteil erst dann etwas bedeutet, wenn man dazusagt, ob er pre-money oder post-money gemessen wird.
+3. Der CCM ist 1,000,000 geteilt durch 250,000 gleich **4.0**. Der IRR ist 4 hoch ein Viertel, minus eins, also 1.414 minus 1, das sind rund **41 Prozent** - dieselbe Zahl, die im Raster des Decks bei vier Jahren und einem Multiple von vier steht. Berichten würdest du beides, aber für eine Entscheidung würdest du den Kapitalwert vorziehen, denn der CCM ignoriert den Zeitwert des Geldes und der IRR ignoriert die Höhe des Gewinns und das eingegangene Risiko.
+4. Gleichung (18) sagt, der CCM ist X geteilt durch V(post), und Gleichung (20) stellt das um zu V(post) gleich erwartetes X geteilt durch geforderten CCM. Mit demselben erwarteten Exit-Wert im Zähler ergibt die Division durch zehn statt durch drei eine ungefähr ein Drittel so große Bewertung. Die geforderte Rendite ist ein Divisor, der auf dasselbe erwartete Ergebnis angewendet wird, und das ist Einsicht 6.
+5. Der Pool sitzt gemäß Gleichung (8 SOP) innerhalb der Pre-Money-Bewertung, verwässert also **allein die Gründer und die bestehenden Halter**, nicht den einsteigenden Investor. Angebot eins lässt den Gründern 80 Prozent eines Pre-Money von 4,000,000, das sind effektiv 3,200,000 an Gründerwert; Angebot zwei lässt ihnen 90 Prozent von 3,600,000, also 3,240,000. Die niedrigere Eckzahl ist für die Gründer geringfügig mehr wert, und der Abstand wächst mit jedem Prozentpunkt Pool weiter.
+6. Wer die Gründer sind; Gehälter und andere Vergütung; die Pflichten und Rechte des Unternehmens gegenüber den Gründern; die Anteilszuteilung; und die Kontingenzen, unter denen Gründer Rechte gewinnen oder verlieren, etwa Vesting. FAST gewährt sofort, was bereits geliefert wurde - vergangene Arbeit, vergangene Erfolge und aufgegebene Alternativen - stellt künftige produktive Arbeit ins Vesting, sodass sie durch Bleiben verdient wird, und macht künftige Erfolge zu bedingten Meilenstein-Anteilen, sodass sie durch Liefern verdient werden.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Die Bewertung erledigt **zwei Aufgaben**: Sie legt fest, welchen Prozentsatz des Eigenkapitals der Investor für sein Geld bekommt, und sie erlaubt ihm, die Rendite abzuschätzen, die er erwarten darf.
+- Die Grundidentität ist **(1) I = F(inv) × V(post)**, umgestellt zu **(2) V(post) = I ÷ F(inv)**. Der Beteiligungsanteil wird immer am **Post-Money** gemessen.
+- **(3) V(pre) = V(post) - I** und **(4) V(post) = V(pre) + I**. In einer ersten Runde heißt das Pre-Money **Sweat Equity**.
+- In Anteilen: **(5) S(post) = S(pre) + S(inv)**, **(6) I = P × S(inv)**, **(7) V(post) = P × S(post)**, **(8) V(pre) = P × S(pre)**, **(9) F = S ÷ S(post)**. Ein einziger Anteilspreis bewertet sowohl die alten Anteile als auch das ganze Unternehmen.
+- Ein **Stock-Options-Pool** von typischerweise 10 bis 20 Prozent fügt eine dritte Eigentümerkategorie hinzu, wird **voll verwässert** gezählt und sitzt **innerhalb des Pre-Money**, sodass seine Vergrößerung allein die Gründer verwässert.
+- Die **Cap Table** hält je Halter und je Runde die gehaltenen Anteile, den investierten Betrag und den Beteiligungsanteil fest.
+- **Verwässerung** ist der Rückgang des Anteils bestehender Halter, wenn neue Anteile ausgegeben werden. Die Formel ist **(10 MR) F(i at r) = F(i at r-1) × (1 - F(r at r))** - jeden alten Prozentsatz mit eins minus dem Anteil multiplizieren, den die neue Runde nimmt.
+- Venture-Risiko ist **schief**, die meisten Vorhaben scheitern und sehr wenige zahlen für alles, und es trägt **Liquiditätsrisiko**. Venture-Investoren sind keine Risikoliebhaber; sie **diversifizieren** und **engagieren sich aktiv**, also behandle sie als risikotolerant.
+- Drei Maße: **(12) NPV = X(inv) ÷ (1+d)^T - I**, **(13) CCM = X(inv) ÷ I**, **(14) I × (1+IRR)^T = X(inv)**, verbunden durch **(15) CCM = (1+IRR)^T**. Der CCM ignoriert Zeit und Risiko, der IRR ignoriert Höhe und Risiko, der Kapitalwert verkraftet Horizonte, braucht aber einen Diskontsatz. **NPV für Entscheidungen, CCM und IRR für die Berichterstattung.**
+- Der CCM ändert sich **nicht** mit dem Horizont, der IRR schon. Sein Geld zu verdoppeln ist über sechs Monate ein IRR von 300 Prozent und über zwanzig Jahre einer von 4 Prozent.
+- Gründer**renditen** ergeben wenig Sinn, weil Gründer nichts investieren; nutze Gewinne, **(19) X(ent) = [1 - (I ÷ V(post))] × X**. Bei Unternehmensrenditen ersetzt X das X(inv).
+- **(18) CCM = X ÷ V(post)** liefert die sechs Einsichten: Ein höherer Exit-Wert hilft beiden Seiten; eine höhere Bewertung **hilft den Gründern und schadet den Investoren**, und genau das ist die ganze Spannung. **(20) V(post) = erwartetes X ÷ geforderter CCM** bepreist die Runde von der Hürde des Investors her.
+- Die Bewertung wird getrieben von der **Gelegenheit**, dem **Marktkontext**, dem **Wettbewerb um den Deal** und der **Qualität der Investoren**, wobei die besten Investoren zu niedrigeren Bewertungen einsteigen; **Vorzugsanteile** können eine Eckbewertung aufblähen.
+- Der **erste Deal** der Gründer kommt vor jedem Investor. Eine Gründervereinbarung regelt, wer die Gründer sind, die Bezahlung, die Pflichten des Unternehmens, die Anteilsaufteilung und Kontingenzen wie Vesting. Teile nur dann gleich auf, wenn wirklich alle dieselbe Wahrnehmung teilen; teile ungleich auf, um unterschiedliche Beiträge zu belohnen und Anreize zu setzen.
+- Teile **rückwärtsgerichtet** zu, wer was beigetragen hat, und **vorwärtsgerichtet**, wer mehr beitragen kann, geleitet von der relativen Produktivität im Team und mit Anreizen, die ausgewogen genug bleiben, dass niemand geht. **FAST** operationalisiert das in fünf Schritten und endet mit sofort gewährten Anteilen, Vesting-Anteilen und Meilenstein-Anteilen.
+</Aside>
+
+*Weiter: [Bewertungsmethoden →](/de/learnings/mba/innovation-and-new-business-planning/13-valuation-methods/) - woher die Bewertungszahl tatsächlich kommt.*

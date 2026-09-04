@@ -1,0 +1,619 @@
+---
+title: "Stufenfinanzierung und Down Rounds"
+description: "Warum Investoren Geld in Raten freigeben statt auf einmal - die Ersparnis des Unternehmers bei der Verwässerung gegen den Optionswert des Wartens beim Investor, Macht über die Geldbörse und leichter Ausstieg, die Entscheidungsbaum-Rechnung, die die Stufung bepreist, Tranching gegen Stufung, Insider- und Outsider-Runden, die Retention Rate, wer einen hohen und wer einen niedrigen Preis will, Bezugsrechte, Pay-to-Play und Verwässerungsschutz sowie die vollständige Mechanik einer Abwärtsrunde mit Full Ratchet gegen Weighted Average."
+sidebar:
+  label: "15 · Stufenfinanzierung"
+  order: 15
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Jedes bisherige Finanzkapitel hat eine Finanzierungsrunde als einzelnes Ereignis behandelt: Geld geht hinein, Anteile kommen heraus, alle Prozentsätze verschieben sich. Echtes Wagniskapital kommt fast nie so an. Es kommt in Raten, jede einzeln verhandelt, jede zu einem neuen Preis, und jede unter der Bedingung, dass das Unternehmen seit dem letzten Mal etwas geleistet hat. In diesem Kapitel geht es darum, warum das so ist, und darum, was es mit den Eigentumsanteilen aller Beteiligten macht, wenn der Plan aufgeht und, schmerzhafter, wenn er es nicht tut.
+
+Die Sitzung ist um ein einziges durchlaufendes Rechenbeispiel gebaut. Ein Unternehmen braucht Geld in drei Stücken: **2 Millionen Dollar für einen Prototyp, 3 Millionen für den Beginn der Kommerzialisierung und 10 Millionen für die Skalierung**, insgesamt 15 Millionen Dollar. Es kann alle 15 auf einmal aufnehmen, oder sie in zwei Runden zu 5 und 10 aufteilen, oder in drei Runden zu 2, 3 und 10. Die Folien rechnen dann aus, was jede dieser Möglichkeiten mit den Eigentumsanteilen macht, und anschließend, was jede mit dem Wert macht, sobald man die Ausfallwahrscheinlichkeit ernst nimmt. Die Unterschiede sind nicht klein. Der Unternehmer landet bei irgendwo zwischen rund 20 Prozent und rund 59 Prozent desselben Unternehmens, allein abhängig davon, wie das Geld geschnitten wurde.
+
+Die zweite Hälfte der Sitzung ist der unglückliche Fall. Findet eine spätere Runde zu einem **niedrigeren Anteilspreis** statt als eine frühere, bekommt alles, was im Term Sheet nach Formalität aussah, plötzlich Zähne. Verwässerungsschutzklauseln greifen, alte Investoren erhalten Gratisanteile, Gründer werden gequetscht, Optionsinhaber werden ausgewaschen, und die Verhandlung verlagert sich vom Verhältnis Unternehmen gegen Investor zum Verhältnis der Investoren untereinander.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Stufenfinanzierung existiert, weil **Informationen im Zeitverlauf eintreffen, Geld das aber nicht muss**. Jede Rate, die der Investor zurückhält, ist eine Option, die er noch besitzt, und jede zurückgehaltene Rate ist Verwässerung, die der Unternehmer noch nicht erlitten hat. Deshalb können beide Seiten die Stufung dem einen großen Scheck ehrlich vorziehen. Die gesamte Klauselarchitektur - Bezugsrechte, Pay-to-Play, Tranching, Verwässerungsschutz - ist nichts anderes als die vertragliche Maschinerie für die Lücke zwischen einer Rate und der nächsten.
+</Aside>
+
+## 1 · Was die Sitzung klären will
+
+Vier Fragen rahmen alles Folgende, und es lohnt sich, sie vor der Detailwiederholung als Checkliste zu lesen.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1. Warum wird Eigenkapital in unternehmerischen Firmen so oft gestuft vergeben?<span class="sub">was jede Seite davon hat, das Geld in Raten zu erhalten</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">2. Wie ist die Verhandlungsdynamik zwischen alten und neuen Investoren?<span class="sub">Insider und Outsider wollen unterschiedliche Preise, und der Unterschied ist messbar</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">3. Welche Term-Sheet-Klauseln beziehen sich speziell auf gestufte Investitionen?<span class="sub">Bezugsrechte, Vorkaufsrecht, Pay-to-Play, Tranching, Verwässerungsschutz, der Liquidationsstapel</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">4. Was passiert, wenn ein Unternehmen eine Abwärtsrunde erlebt?<span class="sub">der Preis fällt, die Klauseln greifen, und irgendjemand zahlt dafür</span></div>
+  </div>
+  <figcaption>Die vier Lernziele. Ziel 1 und 2 sind Ökonomie, Ziel 3 ist operativ gemachtes Vertragsrecht, und Ziel 4 ist der Punkt, an dem die ersten drei zusammenstoßen.</figcaption>
+</div>
+
+## 2 · Warum gestuft finanziert wird: zwei verschiedene Motive, die zufällig übereinstimmen
+
+Die Folien trennen die Motivation sauber nach Partei, und diese Trennung sollte man sich genau so merken, wie sie gegeben wird, denn der Unternehmer hat einen Grund und der Investor hat drei.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Für den Unternehmer <small>ein Motiv</small></div>
+      <ul>
+        <li>Die Stufung <strong>senkt die Kosten der Kapitalbeschaffung und die damit verbundene Verwässerung</strong></li>
+        <li>Die Logik: Man verkauft nur so viele Anteile zum heutigen niedrigen Preis, wie man Geld für heute braucht. Den Rest verkauft man später, zu einem höheren Preis, wenn das Risiko gesunken ist</li>
+        <li>Früh aufgenommenes Geld ist das teuerste Geld, das man je nimmt, weil es gegen die größte verbleibende Unsicherheit bepreist wird</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Für den Investor <small>drei Motive</small></div>
+      <ul>
+        <li>Die Stufung schafft den <strong>Optionswert des Wartens</strong>: das Recht, nicht die Pflicht, die nächste Rate einzuzahlen, sobald mehr bekannt ist</li>
+        <li>Die Stufung erhöht die Kontrolle durch die <strong>Macht über die Geldbörse</strong>: Das Unternehmen muss wiederkommen, und es muss mit etwas Vorzeigbarem wiederkommen</li>
+        <li>Die Stufung <strong>erleichtert den Abbruch der Investition</strong>, und die Folien schärfen das zu einer Unterscheidung zwischen <strong>Verweigern</strong> und <strong>Zurückholen</strong></li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Die beiden Spalten stehen nicht im Widerspruch. Beide Seiten bevorzugen Raten, aus Gründen, die nichts miteinander zu tun haben.</figcaption>
+</div>
+
+Die Unterscheidung zwischen Verweigern und Zurückholen ist der schärfste Gedanke auf der Folie. Ist Geld einmal im Unternehmen, lässt es sich extrem schwer wieder herausziehen: Man müsste einen Verkauf erzwingen, prozessieren oder die anderen Gesellschafter überzeugen. Geld, das man schlicht **noch nicht zugesagt** hat, kostet nichts, wenn man es zurückhält. Die Stufung verwandelt also den nahezu unmöglichen Akt der Rückholung einer Investition in den trivial leichten Akt, die nächste einfach nicht zu tätigen. Der Abbruch wird zu einer Entscheidung statt zu einem Kampf.
+
+## 3 · Die Rechnung der Stufung: dieselben 15 Millionen Dollar, drei verschiedene Ergebnisse
+
+Zunächst die mechanische Version, vor allen Wahrscheinlichkeiten. Der Unternehmer hält durchgehend 10 Millionen Anteile. Die Bewertungen steigen zwischen den Runden, weil das Unternehmen vorangekommen ist.
+
+| Struktur | Runde | Neues Kapital, Mio. Dollar | Post-Money, Mio. Dollar | Pre-Money, Mio. Dollar | Preis je Anteil, Dollar | Neue Anteile, Mio. | Anteile gesamt, Mio. | Investoren halten | Unternehmer hält |
+|---|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **Eine Runde** | 1 | 15 | 25 | 10 | 1.00 | 15 | 25 | 60.00% | **40.00%** |
+| **Zwei Runden** | 1 | 5 | 15 | 10 | 1.00 | 5 | 15 | 33.33% | 66.67% |
+| | 2 | 10 | 55 | 45 | 3.00 | 3.33 | 18.33 | 45.45% | **54.55%** |
+| **Drei Runden** | 1 | 2 | 12 | 10 | 1.00 | 2 | 12 | 16.67% | 83.33% |
+| | 2 | 3 | 24.6 | 21.6 | 1.80 | 1.67 | 13.67 | 26.83% | 73.17% |
+| | 3 | 10 | 51 | 41 | 3.00 | 3.33 | 17.00 | 41.18% | **58.82%** |
+
+Man lese die fette Spalte von oben nach unten. Dasselbe Unternehmen, mit derselben Gesamtsumme von 15 Millionen Dollar finanziert, lässt seinem Gründer **40 Prozent, 54.55 Prozent oder 58.82 Prozent**, rein als Funktion davon, wie fein das Geld geschnitten wurde. Sonst hat sich nichts geändert. Das ist das Motiv des Unternehmers aus Abschnitt 2, als Zahl ausgedrückt.
+
+Die Folien fügen derselben Tabelle dann eine vierte Variante hinzu, und die sollte man sich merken, denn es ist der erste Auftritt einer Abwärtsrunde im Kurs. Alles ist wie im Drei-Runden-Fall, außer dass **Runde 2 schiefgeht**: Statt von 1.00 auf 1.80 Dollar zu steigen, fällt der Preis auf 0.60 Dollar.
+
+| Down-Round-Variante | Neues Kapital, Mio. Dollar | Post-Money, Mio. Dollar | Pre-Money, Mio. Dollar | Preis je Anteil, Dollar | Neue Anteile, Mio. | Anteile gesamt, Mio. | Unternehmer hält |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| Runde 1 | 2 | 12 | 10 | 1.00 | 2 | 12 | 83.33% |
+| Runde 2 **(Abwärtsrunde)** | 3 | 10.2 | 7.2 | **0.60** | 5 | 17.00 | 58.82% |
+| Runde 3 | 10 | 61 | 51 | 3.00 | 3.33 | 20.33 | **49.18%** |
+
+Dieselben 3 Millionen Dollar kaufen jetzt **5 Millionen Anteile statt 1.67 Millionen**, weil jeder Anteil billig ist. Diese eine schlechte Runde kostet den Unternehmer am Ende **9.64 Prozentpunkte**, 49.18 Prozent statt 58.82 Prozent, obwohl Runde 3 sich auf exakt dieselben 3.00 Dollar je Anteil erholt wie im gesunden Pfad. Eine Abwärtsrunde ist keine vorübergehende Peinlichkeit, die spätere gute Nachrichten wieder auslöschen. Die zusätzlich ausgegebenen Anteile sind dauerhaft.
+
+## 4 · Den Optionswert des Wartens bepreisen
+
+Die obige Tabelle unterstellt, dass jede Runde stattfindet. Der nächste Schritt in den Folien nimmt das Scheitern ernst, modelliert das Vorhaben als **binäres Ergebnis** mit einer expliziten Erfolgswahrscheinlichkeit und löst einen **Entscheidungsbaum rückwärts**. Der Exit-Wert beträgt 200 Dollar bei Erfolg des Vorhabens, der Diskontsatz 20 Prozent und der Gesamthorizont fünf Perioden.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Post-Money auf jeder Stufe</div>
+    <code>VPOST = probability of reaching the next stage * value at that stage / discount factor</code>
+  </div>
+  <div>
+    <div class="name">Pre-Money</div>
+    <code>VPRE = VPOST - investment at this stage</code>
+  </div>
+</div>
+
+| | Eine Runde | Zwei Runden | Drei Runden |
+|---|---|---|---|
+| Zeitpunkte | t gleich 0, Exit bei 5 | t gleich 0 und 2, Exit bei 5 | t gleich 0, 1 und 2, Exit bei 5 |
+| Bedingte Wahrscheinlichkeit, die Stufe zu erreichen | 10% | 20%, dann 50% | 40%, dann 50%, dann 50% |
+| Unbedingte Wahrscheinlichkeit | 10% | 20%, dann 10% | 40%, 20%, dann 10% |
+| Investition, Dollar | 15 | 5, dann 10 | 2, 3, dann 10 |
+| Zeit bis zur nächsten Stufe | 5 | 2, dann 3 | 1, 1, dann 3 |
+| Diskontfaktor bei 20% | 2.49 | 1.44, dann 1.73 | 1.20, 1.20, dann 1.73 |
+| Post-Money, Dollar | 8.04 | 6.65, dann 57.87 | 5.65, 19.95, dann 57.87 |
+| Pre-Money, Dollar | **-6.96** | **1.65**, dann 47.87 | **3.65**, 16.95, dann 47.87 |
+
+Man beachte, was in der Spalte mit einer Runde passiert. Das Post-Money ist 200 mal 10 Prozent geteilt durch 2.49, also 8.04 Dollar, und der Investor soll 15 einzahlen. Die Pre-Money-Bewertung beträgt daher **minus 6.96 Dollar**. Der Deal ist nicht bloß unattraktiv, er ist rechnerisch unmöglich: Niemand finanziert ein Unternehmen mit negativem Pre-Money-Wert. Die vollständige Vorabfinanzierung ist nicht der schlechtere Deal, sie ist **überhaupt kein Deal**.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Optionswert der Stufung, zwei Runden</div>
+    <code>1.65 - (-6.96) = 8.61</code>
+  </div>
+  <div>
+    <div class="name">Optionswert der Stufung, drei Runden</div>
+    <code>3.65 - (-6.96) = 10.61</code>
+  </div>
+</div>
+
+Dieser Unterschied im Pre-Money-Wert ist die **Flexibilität, ein erfolgloses Vorhaben abzubrechen**, in Dollar ausgedrückt. Die Aufteilung in zwei Runden ist 8.61 Dollar an Wert wert, die Aufteilung in drei Runden 10.61. Er entsteht rein durch das Recht, nach jeder Rate aufzuhören.
+
+Rechnet man die Anteilstabelle mit diesen wahrscheinlichkeitsbereinigten Bewertungen neu, verändert sich die Position des Unternehmers dramatisch, weil frühe Anteile jetzt zu dem bepreist werden, was sie wirklich wert sind.
+
+| Struktur | Runde | Kapital, Mio. Dollar | Erfolgswahrscheinlichkeit | Post-Money | Pre-Money | Preis je Anteil, Dollar | Neue Anteile, Mio. | Anteile gesamt, Mio. | Unternehmer hält |
+|---|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **Eine Runde** | 1 | 15 | 10% | 8.04 | -6.96 | nicht finanzierbar | - | - | **kein Deal** |
+| **Zwei Runden** | 1 | 5 | 20% | 6.65 | 1.65 | 0.16 | 30.33 | 40.33 | 24.80% |
+| | 2 | 10 | 50% | 57.87 | 47.87 | 1.19 | 8.42 | 48.75 | **20.51%** |
+| **Drei Runden** | 1 | 2 | 40% | 5.65 | 3.65 | 0.36 | 5.48 | 15.48 | 64.59% |
+| | 2 | 3 | 50% | 19.95 | 16.95 | 1.09 | 2.74 | 18.22 | 54.88% |
+| | 3 | 10 | 50% | 57.87 | 47.87 | 2.63 | 3.81 | 22.03 | **45.40%** |
+
+Drei Runden lassen dem Unternehmer **45.40 Prozent** gegenüber **20.51 Prozent** bei zwei Runden. Der Grund steht in der Preisspalte: Nimmt man im allerersten, riskantesten Moment nur 2 Millionen Dollar auf, verkauft man nur 5.48 Millionen billige Anteile. Nimmt man in diesem Moment 5 Millionen auf, verkauft man 30.33 Millionen davon.
+
+<Aside type="note" title="PROFEX, wiederholt aus dem Bewertungskapitel">
+Dieselbe mehrstufige Logik formalisiert das **PROFEX**-Modell. Der Name steht für **PRobability OF EXit**, und es erweitert die Venture-Capital-Methode, indem es die Unsicherheit über die Exit-Ergebnisse modelliert, statt sie in einem sehr hohen Diskontsatz zu vergraben. Es berechnet konsistente Bewertungen für alle Finanzierungsrunden und modelliert das Unternehmen als Abfolge wahrscheinlicher Wegkreuzungen, an denen es **profitabel aussteigen, weitermachen oder scheitern** kann. An jeder Wegkreuzung gibt es eine Wahrscheinlichkeitsverteilung und einen Satz Bewertungen je Ergebnis, und in jeder Runde ist der Post-Money-Wert der diskontierte Wert der erwarteten Bewertung der nächsten Runde. Der Gewinn daraus: Man kann anschließend Diskontsätze verwenden, die kein idiosynkratisches Ausfallrisiko mehr enthalten, weil dieses Risiko bereits in den wahrscheinlichkeitsgewichteten Bewertungen steckt.
+
+Auf das WorkHorse-Beispiel angewendet laufen die Stufen so: 0.5 investiert bei t gleich 0 auf einem Pre-Money von 1.8 und einem Post-Money von 2.3; 2 investiert bei t gleich 1 auf einem Pre von 5.5 und einem Post von 7.5; 12 investiert bei t gleich 4 auf einem Pre von 14.1 und einem Post von 26.1; 6 investiert bei t gleich 7 auf einem Pre von 21.8 und einem Post von 27.8; und Exit bei t gleich 9. Die Zweigwahrscheinlichkeiten ziehen sich an, je weiter das Vorhaben fortschreitet, von einer 50-prozentigen Ausfallchance auf der zweiten Stufe bis zu einem sicheren Exit auf der letzten.
+</Aside>
+
+## 5 · Meilensteine und Tranching als automatischer Verwandter der Stufung
+
+Jede Rate ist an eine Bedingung gebunden. Das Beispiel der Folien definiert die Stufen darüber, **was das Geld kauft**: 2 Millionen Dollar bringen einen Prototyp, 3 Millionen bringen den Start der Kommerzialisierung, 10 Millionen finanzieren die Skalierung. Diese Ergebnisse sind die Meilensteine, und der Entscheidungsbaum zeigt, wozu ein Meilenstein wirklich da ist: Ihn zu erreichen **verändert die Wahrscheinlichkeit, die nächste Stufe zu erreichen**, im Drei-Runden-Fall von 40 Prozent auf 50 Prozent auf 50 Prozent. Ein Meilenstein, der diese Zahl nicht bewegen würde, leistet keine Arbeit.
+
+**Tranching** ist die Zwischenlösung zwischen einem großen Scheck und einer vollständig neuen Runde. Es ist eine vertragliche Vereinbarung, die **einen Gesamtbetrag der Runde und den Anteilspreis** festlegt und diesen Betrag dann in Tranchen aufteilt, typischerweise zwei. Die zweite Tranche ist **an das Erreichen eines Meilensteins gebunden**, und die Folien merken an, dass diese Bedingung entweder **automatisch** wirken kann oder **im Ermessen des Investors** steht.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Stufung <small>eine wirklich neue Runde</small></div>
+      <ul>
+        <li>Erfordert jedes Mal eine <strong>Verhandlung</strong></li>
+        <li>Bringt <strong>Unsicherheit über das Ergebnis</strong> mit sich: Man kennt den Preis nicht, und auch nicht, ob es überhaupt dazu kommt</li>
+        <li>Aufwärtspotenzial für den Unternehmer, wenn es gut gelaufen ist, weil der Preis stark steigen kann</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Tranching <small>eine Runde, in zwei Teilen ausgezahlt</small></div>
+      <ul>
+        <li>Weitgehend <strong>automatisch</strong>, sobald der Meilenstein erreicht ist</li>
+        <li>Der Preis ist für beide Tranchen im Voraus fixiert, es gibt also in keine Richtung ein Neubepreisungsrisiko</li>
+        <li>Sicherheit für beide Seiten, bezahlt mit dem Verzicht auf das Aufwärtspotenzial einer Neubewertung</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Beide teilen eine Zahlung in zwei, aber nur eines von beiden öffnet den Preis erneut. Die Stufung kauft die Chance auf eine bessere Bewertung, das Tranching kauft Sicherheit der Auszahlung.</figcaption>
+</div>
+
+Der WorkHorse-Vergleich macht den Zielkonflikt konkret. In allen drei Varianten startet der Gründer mit 800,000 von 1,666,667 Anteilen, also 48 Prozent, und das Unternehmen braucht insgesamt 5 Millionen Dollar.
+
+| | Vollfinanzierung | Stufenfinanzierung | Tranchenfinanzierung |
+|---|--:|--:|--:|
+| Investition B-Runde | 5,000,000 | 2,000,000 | 2,000,000 |
+| Preis je Anteil B-Runde | 8.00 | 10.00 | 10.00 |
+| Pre-Money B-Runde | 13,333,333 | 16,666,667 | 16,666,667 |
+| Post-Money B-Runde | 18,333,333 | 18,666,667 | 18,666,667 |
+| Neu ausgegebene Anteile | 625,000 | 200,000 | 200,000 |
+| Gründeranteil nach B | 34.91% | 42.86% | 42.86% |
+| Investition B-plus | - | 3,000,000 | 3,000,000 |
+| Preis je Anteil B-plus | - | **12.00** | **10.00** |
+| Pre-Money B-plus | - | 22,400,000 | 18,666,667 |
+| Neu ausgegebene Anteile | - | 250,000 | 300,000 |
+| Anteile insgesamt am Ende | 2,291,667 | 2,116,667 | 2,166,667 |
+| **Gründeranteil am Ende** | **34.91%** | **37.80%** | **36.92%** |
+
+Die Vollfinanzierung ist für den Gründer klar am schlechtesten, weil die gesamten 5 Millionen Dollar zum niedrigen frühen Preis von 8 Dollar verkauft werden. Die Stufung ist mit 37.80 Prozent am besten, weil die zweiten 3 Millionen zu 12 Dollar verkauft werden, nachdem sich das Unternehmen bewiesen hat. Das Tranching landet mit 36.92 Prozent dazwischen: Der Preis bleibt bei 10 Dollar fixiert, der Gründer verzichtet also auf die Neubewertung von 10 auf 12, dafür kommt die zweite Tranche automatisch und muss nicht neu verhandelt werden. Die Lücke zwischen 37.80 und 36.92 Prozent ist der Preis dieser Sicherheit.
+
+## 6 · Alte Investoren und neue Investoren
+
+An einer neuen Runde sind typischerweise sowohl **alte Investoren, die Insider**, als auch **neue Investoren, die Outsider**, beteiligt, und sie sind nicht austauschbar. Die Folien fragen direkt nach der besten Zusammensetzung und geben die ehrliche Antwort, dass jede reine Form einen Mangel hat.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Insider-Runde <small>nur die bestehenden Investoren zahlen ein</small></div>
+    <ul>
+      <li>Vorteil: <strong>Wissen</strong>. Sie kennen das Unternehmen, das Team und die Zahlen bereits, die Runde kann also schnell und günstig sein</li>
+      <li>Risiko der <strong>Ausnutzung</strong>: Niemand Unabhängiges setzt den Preis, die Insider können ihn also zu ihren Gunsten festlegen</li>
+      <li>Risiko des <strong>begrenzten Beitrags</strong>: keine neue Expertise, kein neues Netzwerk, kein neues Geld über das hinaus, was die bestehenden Fonds halten</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Outsider-Runde <small>ein neuer Lead-Investor bepreist die Runde</small></div>
+    <ul>
+      <li>Vorteil: frische <strong>Expertise</strong>, ein wirklich unabhängiger Preis und neue Netzwerke</li>
+      <li>Die unbequeme Frage, die sie aufwirft: <strong>Warum halten sich die Insider heraus?</strong></li>
+      <li>Ein Outsider liest die Abwesenheit der Insider so, dass die Bestinformierten es ablehnen nachzukaufen</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Was entscheidet, welche man bekommt</div>
+    <ul>
+      <li><strong>Tiefe Taschen</strong>: ob die bestehenden Fonds noch Reserven für dieses Unternehmen reserviert haben</li>
+      <li><strong>Expertise und Netzwerke</strong>: ob das Unternehmen als Nächstes Geld oder Fähigkeiten braucht</li>
+      <li><strong>Signalwirkungen</strong>: was jede Konstellation dem Markt mitteilt</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Retention Rate</div>
+    <ul>
+      <li>Das Ausmaß, in dem der Anteil eines Investors sinkt, wenn er <strong>nicht</strong> nachinvestiert</li>
+      <li>Formal das Verhältnis zwischen dem finalen Eigentumsanteil der Insider nach dem Deal und ihrem heutigen Anteil</li>
+      <li>Sie erlaubt einem Investor, die Rendite abzuschätzen, die er am Ende erhält, <strong>nach Berücksichtigung künftiger Verwässerung</strong></li>
+    </ul>
+  </div>
+</div>
+
+Die Retention Rate ist die Zahl, die künftige Verwässerung planbar statt zu einer bösen Überraschung macht. Hält man heute 20 Prozent und weiß, dass zwei weitere Runden kommen, an denen man sich nicht beteiligen wird, sagt die Retention Rate, welcher Bruchteil dieser 20 Prozent bis zum Exit überlebt, und damit, welchen Exit-Wert man tatsächlich braucht, damit sich das Geld rechnet.
+
+## 7 · Wer einen hohen Preis will und wer einen niedrigen
+
+Hier wird das Verhandeln wirklich interessant, denn ein bestehender Investor spielt beide Rollen zugleich. **Als Insider**, der bereits Anteile hält, will er eine **hohe** Bewertung, damit sein bestehender Anteil nicht verwässert wird. **Als Outsider**, der in dieser Runde neue Anteile kauft, will er eine **niedrige** Bewertung, damit sein neues Geld mehr kauft. Welche Kraft setzt sich durch?
+
+Die Antwort der Folien ist eine saubere Regel, gebaut auf **Pro-rata**, definiert als die Investition, die den eigenen Eigentumsanteil exakt konstant hält. Alles darunter ist eine Investition **unter Pro-rata**, alles darüber ist **über Pro-rata**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Investition unter Pro-rata<span class="sub">der eigene Anteil schrumpft so oder so, man ist also überwiegend Verkäufer: man will den Preis HOCH</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node soft">Investition genau Pro-rata<span class="sub">der eigene Prozentsatz bleibt bei jedem Preis gleich, man ist also INDIFFERENT</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Investition über Pro-rata<span class="sub">man kauft netto zu, man will den Preis also NIEDRIG</span></div>
+  </div>
+  <figcaption>Pro-rata ist der Drehpunkt. Es ist genau der Punkt, an dem ein Investor aufhört, sich für den Preis der Runde zu interessieren.</figcaption>
+</div>
+
+Die WorkHorse-Tabelle beweist es. Das Unternehmen nimmt 10 Millionen Dollar in einer B-Runde auf, und der Kurs soll eine **Hochpreisrunde zu 10.00 Dollar** mit einer **Niedrigpreisrunde zu 8.00 Dollar** vergleichen. Vor der Runde gibt es 1,666,667 Anteile zu 4.80 Dollar, ein Unternehmen mit 8 Millionen Dollar.
+
+| Halter | Vor der B-Runde | Niedriger Preis, 8.00 Dollar | Hoher Preis, 10.00 Dollar | Ihr Scheck in der B-Runde | Bevorzugt |
+|---|--:|--:|--:|--:|---|
+| Gründer | 48.0% | 27.43% | 30.00% | keiner | hoher Preis |
+| Der Angel, Stammanteile | 7.5% | 4.29% | 4.69% | keiner | hoher Preis |
+| Sonstige Stammanteile | 19.5% | 11.14% | 12.19% | keiner | hoher Preis |
+| Der Angel, Series A | 2.5% | 1.86% | 1.94% | 100,000, unter Pro-rata | hoher Preis |
+| Eagle-I Ventures | 12.5% | **12.50%** | **12.50%** | 1,250,000, genau Pro-rata | **indifferent** |
+| Coyo-T Capital | 10.0% | 16.43% | 15.63% | 2,500,000, über Pro-rata | niedriger Preis |
+| JetLuck, neu | 0% | 17.14% | 15.00% | 4,000,000, komplett neu | niedriger Preis |
+| GestuetenTechnik, neu | 0% | 9.21% | 8.06% | 2,150,000, komplett neu | niedriger Preis |
+| Anteile gesamt | 1,666,667 | 2,916,667 | 2,666,667 | 10,000,000 | |
+| Post-Money | 8,000,000 | 23,333,333 | 26,666,667 | | |
+
+Eagle-I Ventures hielt 12.5 Prozent und schrieb einen Scheck über 1,250,000 Dollar, also genau 12.5 Prozent der aufgenommenen 10 Millionen. Es endet bei **exakt 12.50 Prozent unter beiden Preisen**. Das ist der Pro-rata-Drehpunkt, sichtbar in einer echten Tabelle. Coyo-T hielt 10 Prozent, investierte aber 2.5 Millionen, weit über seinem Pro-rata-Anteil, die billige Runde passt ihm also. Alle, die Stammanteile halten und keinen Scheck schreiben - die Gründer und die Mitarbeitenden - stehen eindeutig auf der Seite des hohen Preises, weshalb Gründer und neue Investoren die beiden Pole der Preisverhandlung sind und die bestehenden Fonds irgendwo dazwischen sitzen, je nachdem, wie groß der Scheck ist, den sie schreiben.
+
+## 8 · Die Term-Sheet-Klauseln, die es gibt, weil Geld in Stufen kommt
+
+Mehrere Klauseln ergeben erst dann Sinn, wenn man akzeptiert, dass es eine nächste Runde geben wird. Das ist der Satz, den die Folien hervorheben.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Bezugsrechte<span class="n">schützen den Prozentsatz</span></div>
+    <div class="sc-node violet">Das Recht, an künftigen Runden teilzunehmen, indem man neue Anteile bis zu einem <strong>Pro-rata</strong>-Betrag erwirbt<span class="sub">so kann ein Investor seinen Prozentsatz über so viele Runden konstant halten, wie er sich leisten kann</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Vorkaufsrecht<span class="n">schützt, wer die Gesellschafter sind</span></div>
+    <div class="sc-node amber">Erlaubt dem <strong>Unternehmen</strong>, Anteile zu erwerben, die ein Investor oder Gründer verkauft, zu denselben Bedingungen wie von einem Dritten geboten. Es zielt darauf, den Besitz der Insider zu bewahren, und übt das Unternehmen das Recht nicht aus, können es die Investoren tun<span class="sub">es hält unerwünschte Außenstehende aus dem Gesellschafterregister heraus</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Warum es beide gibt<span class="n">zwei Motivationen</span></div>
+    <div class="sc-node soft">Beide schützen den <strong>prozentualen</strong> Anteil eines Investors, erstens damit er seinen Anteil am Aufwärtspotenzial behält, und zweitens weil <strong>ein bestimmter Prozentsatz eine notwendige Bedingung für Board-Rechte oder Informationsrechte sein kann</strong><span class="sub">fällt man unter die Schwelle, verliert man seinen Sitz, nicht nur etwas Wert</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Pay-to-Play<span class="n">die Klausel des Unternehmers</span></div>
+    <div class="sc-node green">Auch Unternehmer brauchen Schutz. Eine <strong>Pflicht zur Pro-rata-Teilnahme</strong> hält alte Investoren dabei, <strong>Geld und Signal</strong> beizusteuern, durchgesetzt durch eine vertragliche Sanktion: Ein Investor, der nicht zahlt, <strong>verliert Rechte</strong>, typischerweise den Verwässerungsschutz, Informationsrechte und weitere<span class="sub">es verwandelt das Bezugsrecht in eine Pflicht, damit Insider das Unternehmen nicht im ungünstigsten Moment still verlassen</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Liquidationsstapel<span class="n">Rangfolge zwischen den Runden</span></div>
+    <div class="sc-node slate">Die Rangfolge der verschiedenen Investoren, nach Series geordnet. <strong>Der Rang steigt oft mit den Runden</strong>, Series B wird also vor Series A bedient. Die Alternative ist <strong>pari passu</strong>, bei der A und B gleichrangig bedient werden<span class="sub">diese Verhandlung läuft weitgehend zwischen den Investoren, nicht mit dem Unternehmen, und die Folien warnen, dass es keine einfache allgemeine Regel gibt, weil die Investorenzusammensetzung über die Series hinweg sehr unterschiedliche Situationen erzeugt</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Verwässerungsschutz<span class="n">schützt Wert, nicht Prozentsatz</span></div>
+    <div class="sc-node violet">Passt den <strong>Preis</strong> an, zu dem eine frühere Runde wandelt, wenn eine spätere Runde darunter bepreist wird<span class="sub">die vollständige Mechanik steht in Abschnitt 9 und im durchgerechneten Beispiel</span></div>
+  </div>
+</div>
+
+Zwei Gegenüberstellungen sollte man sich merken, denn sie sind genau die Art Unterscheidung, nach der eine Prüfung fragt. **Wandelbare Vorzugsanteile schützen gegen einen enttäuschenden Exit; der Verwässerungsschutz schützt gegen eine enttäuschende künftige Runde.** Und **Bezugsrechte bewahren den prozentualen Anteil; der Verwässerungsschutz bewahrt den gehaltenen Wert.** Die beiden Paare ergänzen sich, sie ersetzen einander nicht, weshalb ein gut gemachtes Term Sheet beides enthält.
+
+## 9 · Abwärtsrunden
+
+Zuerst die Definitionen, denn sie sind präzise.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Down Round - Preis fällt unter die letzte Runde</span>
+  <span class="sc-chip amber">Flat Round - Preis steigt nicht</span>
+  <span class="sc-chip green">Up Round - Preis steigt</span>
+</div>
+
+Man beachte, dass sich die Definition auf den **Preis je Anteil** bezieht, nicht auf die Post-Money-Bewertung. In der Down-Round-Variante der Folien stieg das Post-Money über die Runden hinweg weiterhin von 12 auf 10.2 auf 61 Millionen Dollar, und es war trotzdem eindeutig eine Abwärtsrunde, weil der Preis von 1.00 auf 0.60 Dollar fiel. Daran stolpern Leute ständig.
+
+**Der Verwässerungsschutz entschädigt Investoren dafür, einen Anteilspreis gezahlt zu haben, der sich als zu hoch herausstellt.** Er tut das, indem er eine Regel festlegt, nach der **der Preis der vergangenen Runde** nach unten **angepasst** wird, was bedeutet, dass das Geld des alten Investors in mehr Anteile wandelt, als es ursprünglich gekauft hat. Es gibt zwei Regelfamilien.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Full Ratchet <small>die brutale Variante</small></div>
+      <ul>
+        <li>Die frühere Runde wird schlicht <strong>zum neuen, niedrigeren Preis neu bepreist</strong></li>
+        <li>Der alte Investor wird behandelt, als hätte er immer schon das gezahlt, was der neue Investor zahlt</li>
+        <li>Ignoriert, wie klein die Abwärtsrunde ist: Eine winzige billige Ausgabe bepreist die gesamte frühere Runde neu</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Weighted Average <small>die übliche Variante</small></div>
+      <ul>
+        <li>Die frühere Runde wird auf eine <strong>Mischung</strong> aus altem und neuem Preis neu bepreist, gewichtet danach, wie viele Anteile jeder repräsentiert</li>
+        <li>Eine kleine Abwärtsrunde bewegt den alten Preis nur leicht, eine große bewegt ihn stark</li>
+        <li>Kommt in den Ausprägungen <strong>narrow-based</strong> und <strong>broad-based</strong>, die sich nur darin unterscheiden, was als bestehende Anteilsbasis zählt</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Der einzige Unterschied ist, wie weit der alte Preis heruntergezogen wird. Full Ratchet ignoriert die Größe der billigen Ausgabe, Weighted Average skaliert die Anpassung daran.</figcaption>
+</div>
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Weighted-Average-angepasster Preis für Runde 1</div>
+    <code>P1WA = P1 * (SBase + I2/P1) / (SBase + I2/P2)</code>
+  </div>
+  <div>
+    <div class="name">Dabei gilt</div>
+    <code>P1 = old price, P2 = new price, I2 = new investment, SBase = existing shares</code>
+  </div>
+  <div>
+    <div class="name">Narrow based</div>
+    <code>SBase = the Series A shares only</code>
+  </div>
+  <div>
+    <div class="name">Broad based</div>
+    <code>SBase = all existing shares, including the entrepreneur's</code>
+  </div>
+</div>
+
+Man lese die Formel in Worten. Der Zähler fragt, wie viele Anteile das neue Geld zum alten Preis gekauft **hätte**, der Nenner fragt, wie viele es zum neuen Preis **tatsächlich** kauft. Das Verhältnis ist in einer Abwärtsrunde daher stets kleiner als eins, und es zieht den alten Preis genau um so viel herunter, wie die billige Ausgabe im Verhältnis zur bestehenden Basis ins Gewicht fällt. Weil **broad-based** eine größere Basis nutzt, ist die billige Ausgabe ein kleinerer Bruchteil des Ganzen, die Anpassung also **milder**, und die Gründer behalten mehr. Narrow-based nutzt nur die Series-A-Anteile, dieselbe billige Ausgabe wiegt dort viel schwerer, und die Anpassung beißt härter.
+
+Eine Abwärtsrunde zu strukturieren ist aus Gründen schwierig, die weit über die Rechnerei hinausgehen. Die Folien nennen vier:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Zustimmung der Insider-Gesellschafter<span class="sub">die diejenigen sind, die verwässert werden, und die zustimmen müssen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Gründer motiviert halten<span class="sub">die Menschen, die man am meisten braucht, haben gerade einen großen Teil ihres Anteils verloren</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Auswaschen der Mitarbeiteroptionen<span class="sub">Mitarbeiteroptionen mit Ausübungspreis über dem neuen Preis sind über Nacht wertlos, das ganze Team ist also betroffen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Bereite externe Investoren finden<span class="sub">jemand muss in einem Moment noch an das Potenzial des Unternehmens glauben, in dem die Belege das Gegenteil sagen</span></div>
+  </div>
+  <figcaption>Das Signalproblem ist der rote Faden durch alle vier. Eine Abwärtsrunde ist eine öffentliche Aussage darüber, dass der letzte Preis falsch war, und jede Gruppe liest sie mit.</figcaption>
+</div>
+
+## 10 · Wer den Optionspool bezahlt
+
+Dieselbe Wer-zahlt-Frage taucht an einer leiseren Stelle auf, und sie ist eine Frage der Stufung, weil Optionspools üblicherweise in jeder Runde aufgefüllt werden. Das WorkHorse-Beispiel vergleicht drei Wege, eine Aufstockung um 200,000 Anteile in der B-Runde zu handhaben.
+
+| | Kein Optionspool | Pool zu konstantem Preis | Pool bei konstanter Bewertung |
+|---|--:|--:|--:|
+| Preis je Anteil | 8.00 | 8.00 | **7.14** |
+| Neu ausgegebene Mitarbeiteroptionen | 0 | 200,000 | 200,000 |
+| Anteile gesamt nach der Runde | 2,916,667 | 3,116,667 | 3,266,667 |
+| Post-Money | 23,333,333 | 24,933,333 | 23,333,333 |
+| Gründer | 27.43% | 25.67% | **24.49%** |
+| Eagle-I Ventures, Series A | 12.50% | 11.70% | 11.73% |
+| JetLuck, neue Series B | 17.14% | 16.04% | **17.14%** |
+| Neue Optionen | 0% | 6.42% | 6.12% |
+
+Die beiden rechten Spalten sind die ganze Lektion. Bei **konstantem Preis** wird der Pool obendrauf ausgegeben und das Post-Money steigt auf 24.9 Millionen Dollar, also werden **alle** ein wenig verwässert, auch der eintretende Series-B-Investor, dessen Anteil von 17.14 auf 16.04 Prozent fällt. Bei **konstanter Bewertung** wird das Post-Money bei 23.3 Millionen gehalten und der Preis auf 7.14 Dollar gedrückt, und der neue Investor landet bei **exakt denselben 17.14 Prozent, die er ganz ohne Pool gehabt hätte**. Der Pool ist vollständig aus dem Pre-Money gekommen, das heißt, die **Gründer haben ihn komplett bezahlt** und fallen auf 24.49 Prozent. In der Praxis verlangen Investoren, dass der Pool im Pre-Money geschaffen wird, und diese Tabelle ist der Grund dafür.
+
+## 11 · Wenn es schlecht läuft: Wash-outs und Turnarounds
+
+Hat ein Unternehmen **an Zugkraft verloren, besitzt aber noch wertvolle Vermögenswerte** wie Technologie, Menschen oder Kunden, können neue Investoren mit einem **Wash-out** einsteigen und das Projekt als Turnaround neu starten. Die Bewertung fällt erheblich, besonders bei Wash-outs, es kommt zu **substanzieller Verwässerung und zu Verlusten**, und alte und neue Investoren **geraten oft in Konflikt und landen mitunter vor Gericht**.
+
+Turnarounds haben eine wiedererkennbare Gestalt. Sie **führen oft zu erbitterten Streitigkeiten, sogar unter den Investoren selbst**, und sie werden entweder von den **Insider-Investoren, die häufig ein neues Managementteam einsetzen**, durchgeführt oder von **spezialisierten Investoren**, die genau davon leben. Der Grund, warum die Streitigkeiten zwischen den Investoren und nicht mit dem Unternehmen laufen, ist der Liquidationsstapel aus Abschnitt 8: Ist der Kuchen erst einmal unter die Summe aller Vorzugsansprüche geschrumpft, bleibt als einzige echte Frage die Reihenfolge der Auszahlung.
+
+## 12 · Dynamische Strategien auf beiden Seiten des Tisches
+
+Die Sitzung schließt damit, von jeder einzelnen Runde zurückzutreten und zu fragen, was ein rationaler Akteur über die gesamte Abfolge hinweg tut.
+
+**Investoren treffen vier Entscheidungen**: wann sie erstmals in ein Unternehmen investieren; ob sie nachinvestieren und wenn ja wie viel; mit wem sie ko-investieren und wie sie die Investition aufteilen; und wie sie die Stufung strukturieren, um einen guten Exit zu erreichen.
+
+| Entscheidung | Die Treiber, die die Folien nennen |
+|---|---|
+| **Wann erstmals investieren** | **Finanzielle Ressourcen**, tiefe oder flache Taschen, da verschiedene Stufen sehr unterschiedliche Beträge erfordern. **Expertise und Fähigkeit, Wert beizutragen**, da auch das, was ein Unternehmen braucht, je nach Stufe variiert. **Risikoeinstellung**, da das Risiko eines Vorhabens in den frühesten Stufen am höchsten ist und in die späteren hinein allmählich abnimmt |
+| **Ob und wie viel nachinvestieren** | Die **Portfoliostrategie**, also wie viel Exponierung der Investor gegenüber dem Technologie-, Markt- und Länderrisiko dieses Unternehmens haben will. Das **Vertrauen des Investors in das Potenzial** des Unternehmens. Das Ausmaß, in dem der Investor das Unternehmen mit Ko-Investoren **teilen kann oder will** |
+
+Diese Treiber münden in einen von drei Ansätzen zur Nachinvestition: **nie nachinvestieren**, was zu Investoren mit flachen Taschen passt; **typischerweise nachinvestieren**; oder eine **opportunitätsgetriebene Einzelfallentscheidung**. Die Folien betonen sorgfältig, dass keiner dieser Ansätze in allen Situationen bessere Ergebnisse liefert und dass die Wahl teilweise von Investorenpräferenzen abhängt und nicht von Optimierung.
+
+**Auch Unternehmer haben vier Entscheidungen**: welche Investoren sie wählen; wie viel Geld sie wann aufnehmen; **welches Bewertungsprofil sie aufbauen**; und welche Art von Exit sie anstreben. Die dritte schließt den Kreis zum Stoff über Abwärtsrunden. Unternehmer wollen naturgemäß **mit einer hohen Bewertung starten**, müssen aber damit rechnen, dass sie diese **im Zeitverlauf immer weiter steigern müssen**, um Investoren und Mitarbeitende anzuziehen und gute Presse zu bekommen. **Wahrnehmungen zählen und müssen gemanagt werden.** Eine erste Runde, die so hoch bepreist ist, wie der Markt es hergibt, ist eine erste Runde, die einen stillschweigend darauf verpflichtet hat, sie später zu übertreffen, und die Down-Round-Rechnung aus Abschnitt 3 ist das, was passiert, wenn man es nicht schafft.
+
+## Fallecke
+
+**OptiGuard, Inc.: das Series-A-Term-Sheet.** Ein 2013 in Baltimore gegründetes Cybersecurity-Vorhaben, das Software baut, die schützt, was auf dem **Bildschirm** eines Mobilgeräts steht, statt dessen, was im Netzwerk unterwegs ist. Die drei Funktionen sind **Gerätesicherheit**, die die Anzeige unscharf macht, wenn der berechtigte Nutzer wegschaut oder weggeht, und die Gesichter automatisch erkennt; **Lauschangriffserkennung**, die den Bereich hinter dem Nutzer scannt und ein Videofenster einblendet, das ein zweites Gesicht zeigt, das auf den Bildschirm sieht; und **Eindringlingsschutz**, der jeden fotografiert, der sich anzumelden versucht, während der Nutzer abwesend ist. Alles wird mit Zeitstempel in ein Prüfprotokoll geschrieben, und genau das macht es an regulierte Branchen wie das Gesundheitswesen verkäuflich.
+
+**Der Markt.** Der weltweite Umsatz mit Sicherheitsprodukten und -dienstleistungen sollte prognosegemäß von rund **55 Milliarden Dollar 2015 auf rund 70 Milliarden bis 2019** wachsen, eine jährliche Wachstumsrate von 6.3 Prozent. Die Produkte von OptiGuard sitzen im Segment **Security and Vulnerability Management**, dem am schnellsten wachsenden Segment mit 10.9 Prozent jährlichem Wachstum, von 5.4 auf 7.9 Milliarden Dollar. Das Hindernis ist nicht die Marktgröße, sondern die Budgetpriorität: Firmen verteilen knappe IT-Sicherheitsbudgets auf die kritischsten bekannten Bedrohungen, und Bildschirm-Lauschangriffe müssen erst etwas verdrängen, das bereits finanziert ist.
+
+**Die Finanzierungshistorie.** Fünfundzwanzig Venture-Firmen erteilten dem Unternehmen eine Absage, überwiegend weil das Managementteam keine unternehmerische Erfahrung hatte. Das Unternehmen nahm daraufhin im Oktober 2014 eine **Seed-Runde über 315,000 Dollar** auf und verkaufte dabei **140,000 Stammanteile zu 2.25 Dollar**, rund 7.8 Prozent des Eigenkapitals. Bis September 2015 war das Geld wieder knapp, und es nahm ein **Überbrückungsdarlehen über 350,000 Dollar** auf, das bei Abschluss einer Series A innerhalb von sechs Monaten eine Rückzahlung von **700,000 Dollar** verlangte. Der Burn lag bei rund **200,000 Dollar im Monat**, einschließlich Produktentwicklung, Rechts- und Technologiekosten, davon etwa 100,000 für Gehälter und Miete.
+
+**Das Angebot auf dem Tisch.** Im November 2015 legte der Überbrückungsgeber ein Series-A-Term-Sheet vor: **5.0 Millionen Dollar wandelbare Vorzugsanteile zu 4.00 Dollar je Anteil**, wobei die gesamten 700,000 Dollar der Brücke statt einer Rückzahlung zum selben Preis von 4.00 Dollar in Series-A-Anteile wandeln.
+
+**Die Entscheidung, nach der der Fall fragt.** Zwei Fragen, und beide sind der Stoff dieses Kapitels. Erstens: **Sind 5.0 Millionen Dollar genug im Tausch gegen mehr als 40 Prozent des Unternehmens?** Zweitens: **Wie werden sich die vorgeschlagenen Vertragsbedingungen im wahrscheinlichen Fall weiterer Finanzierungen auswirken**, da das Unternehmen mit diesem Betrag in rund zwei Jahren erneut Geld aufnehmen muss.
+
+**Die erste Frage durchgerechnet.** Der Cap Table vor der Series A, in Anteilen:
+
+| Halter | Stammanteile | Gewährte Optionen | Voll verwässert | Anteil voll verwässert |
+|---|--:|--:|--:|--:|
+| Gründer und CEO | 1,000,000 | 100,000 | 1,100,000 | 61.1% |
+| Mitgründer | 400,000 | 40,000 | 440,000 | 24.4% |
+| Seed-Investoren | 140,000 | - | 140,000 | 7.8% |
+| Sonstige Investoren | 100,000 | 20,000 | 120,000 | 6.7% |
+| **Summe** | **1,640,000** | **160,000** | **1,800,000** | **100%** |
+
+Weitere **248,000 Optionen sind reserviert, aber noch nicht gewährt**. Nun die Runde: 5,000,000 Dollar zu 4.00 kaufen **1,250,000 Anteile**, und die wandelnde Brücke über 700,000 Dollar kauft weitere **175,000**, der Series-A-Halter nimmt also **1,425,000 Anteile** für effektiv 5.7 Millionen Dollar.
+
+- Voll verwässerte Summe nach der Runde, auf Basis der gewährten Optionen: 1,800,000 plus 1,425,000 gleich **3,225,000 Anteile**. Die Series A hält **44.2 Prozent**, die Formulierung des Falls über mehr als 40 Prozent stimmt also schon vor dem reservierten Pool.
+- Zählt man die 248,000 reservierten Optionen mit: 3,473,000 Anteile, Series A bei **41.0 Prozent**. Der Pool mildert es ab, aber es bleiben über 40.
+- Implizites **Pre-Money ist 1,800,000 mal 4.00 gleich 7.2 Millionen Dollar**, beziehungsweise 8.19 Millionen mit Reserve; das **Post-Money beträgt 12.9 Millionen**, beziehungsweise 13.89 Millionen mit Reserve.
+- Der voll verwässerte Anteil des CEO fällt von **61.1 Prozent auf 34.1 Prozent**, beziehungsweise 31.7 Prozent mit Reserve.
+
+Jetzt der Benchmark. Series-A-Runden in Cybersecurity liefen 2015 auf **161 Deals** mit **652.4 Millionen Dollar investiertem Kapital**, einem **Median-Scheck von 3.0 Millionen**, einem **Median-Pre-Money von 11.67 Millionen** und einem **Median-Post-Money von 17.83 Millionen** hinaus. OptiGuard wird ein überdurchschnittlich großer Scheck zu einem **Pre-Money rund 40 Prozent unter dem Median** angeboten. Das Gefühl des CEO, dass die Bewertung niedrig aussieht, wird von den Daten gestützt, und die Erklärung ist im Fall genauso gut sichtbar: kein Proof of Concept, noch keine unterzeichneten Kunden, ein Team ohne unternehmerischen Leistungsnachweis und ein Geldgeber, der bereits eine Brücke hält, die zurückgezahlt oder gewandelt werden muss. Die Alternativen des Unternehmens sind schwach, und der Preis spiegelt das wider.
+
+Die Frage der Angemessenheit beantwortet sich an der Burn Rate von selbst: **5.0 Millionen geteilt durch 200,000 im Monat sind 25 Monate**, was der Erwartung des Falls entspricht, in etwa zwei Jahren mehr Geld zu brauchen, und keine Reserve lässt, falls die beiden verhandelten Verträge im Gesundheitswesen sich verzögern.
+
+**Die zweite Frage durchgerechnet, und die ist der ganze Punkt dieses Kapitels.** Die Stufungsklauseln im angebotenen Term Sheet, gelesen vor dem Hintergrund der Abschnitte 8 und 9:
+
+- **Der Verwässerungsschutz ist Weighted Average**, nicht Full Ratchet. Das ist die mit Abstand gründerfreundlichste Bedingung im Dokument, und das durchgerechnete Beispiel unten zeigt genau, wie viel sie wert ist. Der Wandlungspreis wird angepasst, wann immer Anteile darunter ausgegeben werden, ausdrücklich aber **nicht** bei Wandlungen von Vorzugsanteilen und **nicht** für die 248,000 reservierten Mitarbeiteranteile, der Optionspool kann also nicht versehentlich eine Neubepreisung auslösen.
+- **Ein Vorkaufsrecht auf Neuemissionen** gibt jedem Investor, der mindestens 20,000 Series-A-Anteile hält, das Recht, einen **Pro-rata-Prozentsatz** jeder Neuemission zu erwerben, endend mit einem qualifizierten Börsengang. Das ist das Bezugsrecht aus Abschnitt 8, und es bedeutet, dass der Bestandsinvestor seinen Prozentsatz in der nächsten Runde verteidigen kann.
+- **Die Board-Vertretung hängt an einem Prozentsatz**: sieben Direktoren, von denen die Vorzugsanteile drei und die Stammanteile vier wählen, **solange mindestens 25 Prozent der Vorzugsanteile ausstehen**. Das ist die zweite Motivation der Folien für Bezugsrechte, wörtlich genommen, denn wer unter die Schwelle fällt, verliert Board-Sitze und nicht bloß Wert.
+- **Die Liquidationspräferenz ist partizipierend**: Die Vorzugsanteile holen sich zuerst den ursprünglichen Kaufpreis plus erklärte, nicht gezahlte Dividenden zurück, und danach wird das verbleibende Vermögen mit den Stammanteilen auf As-converted-Basis geteilt. In einer späteren Runde wird die neue Series B darüber streiten, wo sie relativ dazu steht, und das ist die Liquidationsstapel-Verhandlung aus Abschnitt 8, die, wie die Folien sagen, weitgehend zwischen den Investoren geführt wird.
+- **Die Rückzahlungsklausel** erlaubt einer Mehrheit der Vorzugsanteile, ab Jahr sechs eine Rückzahlung in drei gleichen Jahresraten zu erzwingen. Das ist die Macht über die Geldbörse, über die Runde hinaus verlängert, und in einer schwierigen Lage ein Hebel, der auf das Unternehmen zielt.
+- **Das Vesting** läuft mit 1/36 pro Monat über 36 Monate, mit einer Rückkaufoption des Unternehmens zu Anschaffungskosten, was die Standardantwort auf die Sorge der Folien ist, Gründer nach der Verwässerung motiviert zu halten.
+
+Das Term Sheet enthält **keine Pay-to-Play-Klausel**. Da es sich um einen einzelnen Lead-Investor mit einem Fonds von 80 Millionen Dollar handelt, dessen Erfahrung überwiegend in Life Sciences und nicht in Technologie liegt, ist genau das die stärkste Verhandlungsforderung des Gründers: eine Pflicht zur Pro-rata-Teilnahme in der nächsten Runde, damit der Insider bei der Series B entweder Geld und ein positives Signal liefert oder seinen Verwässerungsschutz und seine Informationsrechte verliert. Das, plus das Drängen auf **broad-based** statt narrow-based Weighted Average, ist der Ort des eigentlichen Werts, und die Zahlen unten zeigen, warum.
+
+**Ein Down-Round-Stresstest.** Der Fall nennt keine Series-B-Bedingungen, das Folgende ist also ein von mir durchgespieltes Szenario und keine Fallangabe: Angenommen, die beiden Deals im Gesundheitswesen verzögern sich und die Series B wird zwei Jahre später zu **3.00 Dollar** über **8 Millionen Dollar** bepreist, unter den 4.00 Dollar der Series A. Wendet man die Weighted-Average-Formel mit einer breiten Basis aus allen 3,225,000 bestehenden Anteilen an:
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Angepasster Series-A-Preis, broad based</div>
+    <code>P1WA = 4.00 * (3,225,000 + 8,000,000/4.00) / (3,225,000 + 8,000,000/3.00)</code>
+  </div>
+  <div>
+    <div class="name">Rechenweg</div>
+    <code>= 4.00 * 5,225,000 / 5,891,667 = 4.00 * 0.8869 = 3.55</code>
+  </div>
+</div>
+
+Die 5.7 Millionen Dollar der Series A wandeln nun zu 3.55 statt zu 4.00 und ergeben **1,606,782 Anteile statt 1,425,000**, ein Geschenk von etwa **181,800 Anteilen**. Die Series B gibt 2,666,667 Anteile aus. Die Summe wird 6,073,449, und der Anteil des CEO fällt auf **18.1 Prozent**. Ohne jeden Verwässerungsschutz hielte der CEO 18.7 Prozent; unter **Full Ratchet** würde die Series A glatt zu 3.00 wandeln, 1,900,000 Anteile nehmen, und der CEO wäre bei **17.3 Prozent**. Weighted Average kostet den Gründer etwa 0.6 Punkte, wo Full Ratchet etwa 1.4 kosten würde. Diese Lücke ist bei diesem Unternehmen der Grund, Klausel fünf des Term Sheets zu lesen, bevor man irgendetwas anderes unterschreibt.
+
+## Durchgerechnetes Beispiel
+
+Das Down-Round-Beispiel der Folien, Schritt für Schritt durchgerechnet. Ein Unternehmen nimmt zwei Runden auf. Die **Series A** nimmt 5 Millionen Dollar zu **1.00 Dollar** je Anteil, auf einem Pre-Money von 10 Millionen und einem Post-Money von 15 Millionen. Der Unternehmer hält 10 Millionen Anteile. Dann geht etwas schief, und die **Series B** nimmt 10 Millionen Dollar zu **0.75 Dollar** je Anteil, ein Pre-Money von 11.25 Millionen und ein Post-Money von 21.25 Millionen. Man beachte erneut, dass die Post-Money-Bewertung **stieg**, während der Preis je Anteil **fiel**, und es ist der Preis, der eine Abwärtsrunde definiert.
+
+**Schritt 1, der Basisfall ohne Schutz.** Die Series B kauft 10 geteilt durch 0.75 gleich **13.33 Millionen Anteile**. Die Gesamtzahl der Anteile wird 15 plus 13.33 gleich **28.33 Millionen**. Die 10 Millionen Anteile des Unternehmers sind jetzt 35.3 Prozent, die 5 Millionen der Series A sind 17.6 Prozent.
+
+**Schritt 2, Full Ratchet.** Der Series-A-Preis wird schlicht auf **0.75 Dollar** zurückgesetzt. Ihre 5 Millionen Dollar kaufen jetzt 5 geteilt durch 0.75 gleich **6.67 Millionen Anteile** statt 5 Millionen.
+
+**Schritt 3, Weighted Average.** Die Formel anwenden, mit P1 gleich 1.00, P2 gleich 0.75 und I2 gleich 10 Millionen.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Broad based, SBase gleich alle 15 Millionen bestehenden Anteile</div>
+    <code>P1WA = 1 * (15 + 10/1) / (15 + 10/0.75) = 25 / 28.33 = 0.88</code>
+  </div>
+  <div>
+    <div class="name">Narrow based, SBase gleich nur die 5 Millionen Series-A-Anteile</div>
+    <code>P1WA = 1 * (5 + 10/1) / (5 + 10/0.75) = 15 / 18.33 = 0.82</code>
+  </div>
+  <div>
+    <div class="name">Series-A-Anteile, broad based</div>
+    <code>5 / 0.88 = 5.67 million shares</code>
+  </div>
+  <div>
+    <div class="name">Series-A-Anteile, narrow based</div>
+    <code>5 / 0.82 = 6.11 million shares</code>
+  </div>
+</div>
+
+**Schritt 4, alles nebeneinanderstellen.** Anteilszahlen in Millionen.
+
+| | Vor der B-Runde | Kein Schutz | Full Ratchet, 0.75 | Weighted Average narrow, 0.82 | Weighted Average broad, 0.88 |
+|---|--:|--:|--:|--:|--:|
+| Unternehmer, Anteile | 10.00 | 10.00 | 10.00 | 10.00 | 10.00 |
+| Series A, Anteile | 5.00 | 5.00 | **6.67** | **6.11** | **5.67** |
+| Series B, Anteile | - | 13.33 | 13.33 | 13.33 | 13.33 |
+| **Anteile gesamt** | 15.00 | 28.33 | 30.00 | 29.44 | 29.00 |
+| Unternehmer, neu ausgewiesener Anteil nach Runde 1 | 66.7% | 66.7% | 60.0% | 62.1% | 63.8% |
+| Series A, neu ausgewiesener Anteil nach Runde 1 | 33.3% | 33.3% | 40.0% | 37.9% | 36.2% |
+| **Unternehmer nach Runde 2** | | **35.3%** | **33.3%** | **34.0%** | **34.5%** |
+| **Series A nach Runde 2** | | **17.6%** | **22.2%** | **20.8%** | **19.5%** |
+| **Series B nach Runde 2** | | **47.1%** | **44.4%** | **45.3%** | **46.0%** |
+
+**Was die Tabelle sagt.** Gegenüber dem ungeschützten Fall kostet Full Ratchet den Gründer **2.0 Prozentpunkte**, narrow-based Weighted Average kostet **1.3** und broad-based Weighted Average nur **0.8**. Die Erholung des Series-A-Investors spiegelt das exakt: Er geht von 17.6 Prozent hinauf auf 22.2, 20.8 oder 19.5 Prozent, je nach Klausel. Broad-based ist am mildesten, weil die Basis von 15 Millionen Anteilen die 10 Millionen des Unternehmers einschließt, die billige Ausgabe also ein kleinerer Bruchteil des Ganzen ist und der Preis sich kaum bewegt, von 1.00 nur auf 0.88.
+
+**Wer dafür bezahlt.** Der Schutz erzeugt **neue Anteile aus dem Nichts**, die Gesamtzahl der Anteile steigt also von 28.33 Millionen auf bis zu 30.00 Millionen, und jeder Anteil, der **nicht** geschützt ist, wird durch diesen Zuwachs verwässert. In dieser Rechnung heißt das sowohl der Unternehmer, der von 35.3 auf 33.3 Prozent fällt, als auch der eintretende Series-B-Investor, der von 47.1 auf 44.4 Prozent fällt, weil seine 13.33 Millionen Anteile fix gehalten werden. In einer echten Verhandlung wird der neue Investor das nicht akzeptieren, sondern auf einem festen Post-Money-Prozentsatz bestehen, was die gesamten Kosten des Ratchets auf die Stammgesellschafter schiebt: auf die Gründer und die Mitarbeitenden. So oder so kommt das Geld von jemandem, der nicht der geschützte Investor ist. Das ist der konkrete Grund, warum Gründer um **broad-based Weighted Average** kämpfen und sich gegen Full Ratchet wehren, und der Grund, warum eine **Pay-to-Play**-Klausel ein so nützliches Gegengewicht ist: Sie besagt, dass ein alter Investor seinen Verwässerungsschutz nur behält, wenn er auch frisches Geld in genau die Runde steckt, die ihn ausgelöst hat.
+
+## Auf dein eigenes Projekt anwenden
+
+<Steps>
+
+1. **Teile deinen gesamten Finanzierungsbedarf danach auf, was jedes Stück kauft.** Folge dem Muster der Folien - so viel für einen Prototyp, so viel für den Beginn der Kommerzialisierung, so viel für die Skalierung - statt eine einzige runde Gesamtsumme zu nennen. Wenn du nicht sagen kannst, was ein Stück kauft, ist es keine Stufe, sondern ein Wunsch.
+
+2. **Hänge an jede Grenze einen Meilenstein und prüfe, ob er eine Wahrscheinlichkeit bewegt.** Frage, was ein Investor über deine Chance glauben würde, die nächste Stufe zu erreichen, vor und nach diesem Meilenstein. Ist die Antwort dieselbe Zahl, wähle einen anderen Meilenstein.
+
+3. **Baue die Anteilstabelle für mindestens zwei Strukturen.** Eine Runde gegen zwei, oder zwei gegen drei, im Aufbau aus Abschnitt 3: Kapital, Post-Money, Pre-Money, Preis, neue Anteile, Anteile gesamt, dein Prozentsatz. Die Lücke zwischen den Zellen unten rechts ist der Wert, den die Stufung für dich hat.
+
+4. **Rechne es mit Wahrscheinlichkeiten neu.** Nimm den Ansatz aus Abschnitt 4: Weise jeder Stufe eine bedingte Erreichungswahrscheinlichkeit zu, dazu einen Exit-Wert und einen Diskontsatz, und arbeite rückwärts. Hier entpuppt sich eine einzige große Runde häufig als nicht finanzierbar statt bloß als teuer.
+
+5. **Entscheide Stufung gegen Tranching konkret für die nächste Runde.** Tranching gibt dir einen fixierten Preis und eine nahezu automatische Auszahlung gegen einen Meilenstein, die Stufung gibt dir die Chance auf eine Neubewertung und das Risiko, dass gar keine Runde zustande kommt. Frage dich, ob dein nächster Meilenstein einer ist, auf den du eine Neubepreisung wetten würdest.
+
+6. **Trage deine bestehenden Investoren auf der Pro-rata-Linie ein.** Rechne für jeden aus, welcher Scheck seinen Prozentsatz genau halten würde. Wer weniger schreibt, will einen hohen Preis, wer mehr schreibt, will einen niedrigen, und wer genau diesen Betrag schreibt, ist indifferent. Das sagt dir im Voraus, wer wofür argumentieren wird.
+
+7. **Frage jeden Bestandsinvestor früh, ob er dabei ist.** Ein Insider, der ablehnt, sendet ein Signal, das ein Outsider mitliest, und du erfährst das lieber Monate vor der Runde als mitten in ihr. Wenn Reserven das Problem sind, ist das ein anderes Gespräch als wenn Vertrauen das Problem ist.
+
+8. **Lies dein eigenes Term Sheet nur auf die Stufungsklauseln hin.** Bezugsrechte, Vorkaufsrecht, Pay-to-Play, Tranching-Bedingungen, Art und Basis des Verwässerungsschutzes, Liquidationsrang und jede prozentuale Schwelle, die Board- oder Informationsrechte steuert. Schreibe neben jede Klausel, was sie tut, wenn die nächste Runde billiger ist.
+
+9. **Mache einen Stresstest mit einer echten Abwärtsrunde.** Nimm deinen realistischen Preis der nächsten Runde, kürze ihn um ein Drittel und rechne den Cap Table dreimal neu: kein Schutz, Full Ratchet, broad-based Weighted Average. Jetzt kennst du den Preis der Klausel, die du unterschreiben sollst.
+
+10. **Prüfe den Kollateralschaden, nicht nur deinen eigenen Prozentsatz.** Wo liegt der Ausübungspreis des Mitarbeiter-Optionspools, und wären diese Optionen beim niedrigeren Preis unter Wasser? Wer muss der Abwärtsrunde zustimmen, und würde er das tun? Kannst du das Team danach motiviert halten? Das sind die vier Schwierigkeiten aus Abschnitt 9, und sie töten mehr Abwärtsrunden als die Rechnerei.
+
+11. **Setze dein Bewertungsprofil bewusst.** Nimm nicht den höchsten Preis, den es für Runde eins gibt, ohne zu fragen, welchen Preis du in Runde zwei brauchst, damit sie eine Aufwärtsrunde wird. Ein hoher erster Preis ist eine Verpflichtung, ihn zu übertreffen.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Stufenfinanzierung | Die Gesamtinvestition in getrennten Runden freigeben, jede zu einem neuen Preis verhandelt und an Fortschritt gebunden |
+| Optionswert des Wartens | Der Wert des Rechts, aber nicht der Pflicht des Investors, die nächste Rate zu finanzieren, sobald mehr bekannt ist. Im Beispiel der Folien 8.61 Dollar für zwei Runden und 10.61 für drei |
+| Macht über die Geldbörse | Die Kontrolle, die ein Investor allein dadurch gewinnt, dass das Unternehmen für die nächste Rate wiederkommen muss |
+| Verweigern gegen Zurückholen | Weitere Investitionen abzulehnen ist leicht; bereits investiertes Geld zurückzuholen ist nahezu unmöglich. Die Stufung verwandelt das zweite Problem in das erste |
+| Tranching | Eine Runde mit einem vereinbarten Preis, in zwei Teilen ausgezahlt, wobei der zweite an einem Meilenstein freigegeben wird, automatisch oder im Ermessen des Investors |
+| Bezugsrecht | Das Recht, den eigenen Pro-rata-Anteil jeder Neuemission zu kaufen, damit der eigene Prozentsatz nicht fällt |
+| Vorkaufsrecht | Das Recht des Unternehmens, Anteile zu kaufen, die ein Investor oder Gründer verkauft, zu denselben Bedingungen wie ein externer Käufer, damit unerwünschte Außenstehende draußen bleiben |
+| Pay-to-Play | Eine Pflicht alter Investoren zur Pro-rata-Teilnahme, mit dem Verlust von Rechten wie Verwässerungsschutz und Informationsrechten als Sanktion für Nichtteilnahme |
+| Pro-rata | Die Investition, die den eigenen Eigentumsanteil exakt unverändert lässt. Darunter will man einen hohen Preis, darüber einen niedrigen, genau dort ist man indifferent |
+| Retention Rate | Das Verhältnis des finalen Eigentumsanteils eines Investors nach dem Deal zu seinem heutigen Anteil, wenn er nicht nachinvestiert, genutzt zur Schätzung der Rendite, die künftige Verwässerung überlebt |
+| Insider-Runde | Eine Runde, die nur von den bestehenden Investoren finanziert wird: schnell und informiert, aber ohne unabhängigen Preis und ohne neue Fähigkeiten |
+| Outsider-Runde | Eine von einem neuen Investor angeführte Runde: unabhängige Bepreisung und frische Expertise, aber sie wirft die Frage auf, warum die Insider draußen blieben |
+| Liquidationsstapel | Die Reihenfolge, in der die verschiedenen Series bei einem Exit bedient werden. Der Rang steigt oft mit späteren Runden, oder die Series stehen pari passu |
+| Down Round | Eine Runde, die **unter dem Anteilspreis der vorherigen Runde** bepreist wird, unabhängig davon, was die Post-Money-Bewertung tut |
+| Flat Round | Eine Runde, in der der Preis nicht steigt |
+| Verwässerungsschutz | Eine Klausel, die eine frühere Runde nach unten neu bepreist, wenn eine spätere Runde billiger ist, sodass das Geld des früheren Investors in mehr Anteile wandelt |
+| Full Ratchet | Verwässerungsschutz, der die frühere Runde vollständig auf den neuen Preis herunter neu bepreist, wie klein die neue Ausgabe auch ist |
+| Weighted Average | Verwässerungsschutz, der auf eine Mischung aus altem und neuem Preis neu bepreist, gewichtet nach Anteilszahlen. Broad-based schließt alle bestehenden Anteile ein und ist mild, narrow-based zählt nur die geschützte Series und beißt härter |
+| Wash-out | Eine Neustartfinanzierung zu drastisch reduzierter Bewertung, bei der das Unternehmen an Zugkraft verloren hat, aber noch wertvolle Technologie, Menschen oder Kunden hält |
+| Optionspool bei konstanter Bewertung | Den Mitarbeiterpool innerhalb des Pre-Money schaffen, sodass ihn die Gründer und nicht die neuen Investoren bezahlen |
+
+## Teste dich selbst
+
+1. Nenne das Motiv des Unternehmers für die Stufung und die drei Motive des Investors und erkläre, was die Folien mit der Unterscheidung zwischen Verweigern und Geld-Zurückholen meinen.
+2. Im Beispiel der Folien braucht ein Unternehmen 15 Millionen Dollar. Gib den finalen Eigentumsanteil des Unternehmers bei einer Runde, bei zwei Runden und bei drei Runden an und erkläre in einem Satz, warum sich die Zahlen unterscheiden.
+3. Warum wird die Struktur mit einer Runde als nicht finanzierbar beschrieben, sobald Wahrscheinlichkeiten eingeführt werden, und wie hoch ist der Optionswert der Stufung in zwei und in drei Runden?
+4. Was ist der Unterschied zwischen Stufung und Tranching, und was hat jedes von beiden dem Gründer im WorkHorse-Vergleich gekostet oder gespart?
+5. Drei bestehende Investoren nehmen an einer neuen Runde teil: Einer investiert unter seinem Pro-rata, einer genau Pro-rata, einer darüber. Wer von ihnen will einen hohen Preis, wer einen niedrigen, und wem ist es egal, und warum?
+6. Ein Unternehmen hat 10 Millionen Unternehmeranteile und 5 Millionen Series-A-Anteile, gekauft zu 1.00 Dollar. Eine Series B investiert 10 Millionen Dollar zu 0.75 Dollar. Berechne den angepassten Series-A-Preis unter broad-based und narrow-based Weighted Average und gib den finalen Prozentsatz des Unternehmers ohne Schutz, unter Full Ratchet und unter beiden Weighted-Average-Varianten an.
+
+<Aside type="note" title="Lösungen">
+1. Für den Unternehmer senkt die Stufung die **Kosten der Kapitalbeschaffung und die damit verbundene Verwässerung**, weil Anteile nur in dem Umfang zum heutigen niedrigen Preis verkauft werden, wie heute Geld gebraucht wird. Für den Investor schafft die Stufung den **Optionswert des Wartens**, erhöht die **Kontrolle durch die Macht über die Geldbörse** und **erleichtert den Abbruch der Investition**. Die Unterscheidung zwischen Verweigern und Zurückholen besagt, dass die Rückholung von Geld, das bereits im Unternehmen steckt, einen erzwungenen Verkauf oder einen Prozess erfordert und nahezu unmöglich ist, während es nichts kostet, den nächsten Scheck einfach nicht zu schreiben. Die Stufung verwandelt das schwere Problem in das leichte.
+2. Eine Runde **40.00 Prozent**, zwei Runden **54.55 Prozent**, drei Runden **58.82 Prozent**. Je feiner geschnitten wird, desto kleiner ist der Betrag, der zum frühesten und damit niedrigsten Anteilspreis verkauft werden muss, es wird also für dasselbe Gesamtkapital weniger vom Unternehmen abgegeben.
+3. Bei einer 10-prozentigen Chance auf einen Exit von 200 Dollar fünf Perioden später und einem Diskontsatz von 20 Prozent beträgt das Post-Money 200 mal 0.10 geteilt durch 2.49, also **8.04 Dollar**, gegen eine Investition von 15, das Pre-Money beträgt also **minus 6.96 Dollar**. Ein negatives Pre-Money bedeutet, dass es überhaupt kein Investor finanzieren kann. Der Optionswert der Stufung ist die Verbesserung des Pre-Money: **1.65 minus minus 6.96 gleich 8.61** für zwei Runden und **3.65 minus minus 6.96 gleich 10.61** für drei.
+4. **Stufung** ist eine wirklich neue Runde: Sie erfordert eine neue Verhandlung und trägt Unsicherheit über das Ergebnis in sich, einschließlich der Frage, ob sie überhaupt stattfindet und zu welchem Preis. **Tranching** fixiert einen Gesamtbetrag und einen Anteilspreis im Voraus und teilt die Auszahlung, wobei die zweite Tranche weitgehend automatisch an einem Meilenstein freigegeben wird. Im WorkHorse-Vergleich endete der Gründer bei **34.91 Prozent** mit der Vollfinanzierung von 5 Millionen zu 8 Dollar, bei **37.80 Prozent** mit der Stufung, in der die zweiten 3 Millionen zu 12 Dollar bepreist wurden, und bei **36.92 Prozent** mit dem Tranching, in dem die zweiten 3 Millionen bei 10 Dollar fixiert blieben. Das Tranching kostete also etwa 0.9 Punkte gegenüber der Stufung, und das war der Preis der Sicherheit.
+5. Wer **unter Pro-rata** investiert, will einen **hohen** Preis: Sein Prozentsatz fällt so oder so, er ist also faktisch Verkäufer. Wer **über Pro-rata** investiert, will einen **niedrigen** Preis, weil er netto zukauft und billige Anteile ihm mehr bringen. Wer **genau Pro-rata** investiert, ist **indifferent**, da sein Prozentsatz bei jedem Preis gleich bleibt. Eagle-I Ventures hat das in der WorkHorse-Tabelle gezeigt und hielt sowohl in der 8-Dollar- als auch in der 10-Dollar-Runde exakt 12.50 Prozent.
+6. Die Series B kauft 10 geteilt durch 0.75 gleich **13.33 Millionen Anteile**. Broad based: P1WA gleich 1 mal (15 plus 10) geteilt durch (15 plus 13.33) gleich 25 geteilt durch 28.33 gleich **0.88 Dollar**, die Series A wandelt also in 5 geteilt durch 0.88 gleich **5.67 Millionen Anteile**. Narrow based: 1 mal (5 plus 10) geteilt durch (5 plus 13.33) gleich 15 geteilt durch 18.33 gleich **0.82 Dollar**, die Series A erhält also 5 geteilt durch 0.82 gleich **6.11 Millionen Anteile**. Full Ratchet bepreist auf 0.75 neu, die Series A erhält also 5 geteilt durch 0.75 gleich **6.67 Millionen Anteile**. Finaler Prozentsatz des Unternehmers, mit durchgehend 10 Millionen Anteilen: ohne Schutz 10 geteilt durch 28.33 gleich **35.3 Prozent**; broad-based Weighted Average 10 geteilt durch 29.00 gleich **34.5 Prozent**; narrow-based Weighted Average 10 geteilt durch 29.44 gleich **34.0 Prozent**; Full Ratchet 10 geteilt durch 30.00 gleich **33.3 Prozent**.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Finanziert wird gestuft, weil beide Seiten es wollen. Der **Unternehmer** spart bei den **Kosten der Kapitalbeschaffung und der damit verbundenen Verwässerung**, der **Investor** gewinnt den **Optionswert des Wartens**, **Kontrolle durch die Macht über die Geldbörse** und einen leichten Ausstieg, denn weitere Investitionen zu **verweigern** ist trivial, während **Geld zurückzuholen** nahezu unmöglich ist.
+- Dieselben 15 Millionen Dollar, drei Strukturen, drei Ergebnisse: Der Unternehmer behält **40.00 Prozent** bei einer Runde, **54.55 Prozent** bei zwei, **58.82 Prozent** bei drei. Ist Runde zwei eine Abwärtsrunde zu 0.60 statt 1.80 Dollar, bricht die letzte Zahl auf **49.18 Prozent** ein und erholt sich nie wieder.
+- Sobald Wahrscheinlichkeiten ins Spiel kommen, hat eine einzelne Runde über 15 Millionen Dollar ein Post-Money von **8.04 Dollar** und ein Pre-Money von **minus 6.96**, sie ist also überhaupt nicht finanzierbar. Der **Optionswert der Stufung** beträgt **8.61 Dollar** für zwei Runden und **10.61** für drei, und der wahrscheinlichkeitsbereinigte Eigentumsanteil liegt bei **20.51 Prozent** für zwei Runden gegen **45.40 Prozent** für drei.
+- **Meilensteine** steuern die Stufen, und ihre Aufgabe ist es, die Wahrscheinlichkeit zu bewegen, die nächste zu erreichen. **Tranching** fixiert Betrag und Preis und gibt den zweiten Teil an einem Meilenstein frei, automatisch oder im Ermessen des Investors, die **Stufung** erfordert eine neue Verhandlung mit ungewissem Ausgang. Gründerergebnisse im WorkHorse-Beispiel: **34.91 Prozent** Vollfinanzierung, **37.80 Prozent** gestuft, **36.92 Prozent** tranchiert.
+- Neue Runden mischen **Insider**, die Wissen mitbringen, aber Ausnutzung und begrenzten Beitrag riskieren, mit **Outsidern**, die Expertise mitbringen, aber die Frage aufwerfen, warum die Insider draußen blieben. Die Bestimmungsgrößen sind **tiefe Taschen, Expertise und Netzwerke sowie Signalwirkungen**, und die **Retention Rate** misst, wie viel vom Anteil eines Investors überlebt, wenn er nicht nachinvestiert.
+- **Pro-rata** ist der Drehpunkt im Preiskampf. Unter Pro-rata will man einen hohen Preis, darüber einen niedrigen, genau dort ist man indifferent - Eagle-I Ventures hielt sowohl bei 8 als auch bei 10 Dollar exakt **12.50 Prozent**.
+- Stufungsspezifische Klauseln: **Bezugsrechte** und das **Vorkaufsrecht** schützen den prozentualen Anteil, teils wegen des Aufwärtspotenzials und teils weil Prozentsätze **Board- und Informationsrechte** steuern; **Pay-to-Play** schützt den Unternehmer, indem es alte Investoren verpflichtet, weiterhin Geld und Signal beizusteuern, bei Verlust von Rechten; der **Liquidationsstapel** ordnet die Series, üblicherweise mit vorrangigen späteren Runden, oder **pari passu**.
+- Eine **Abwärtsrunde** ist über den **fallenden Anteilspreis** definiert, nicht über die Bewertung. Der **Verwässerungsschutz** entschädigt einen Investor dafür, zu viel gezahlt zu haben, indem er die frühere Runde neu bepreist: **Full Ratchet** ganz nach unten, **Weighted Average** auf eine Mischung mittels P1WA gleich P1 mal (SBase plus I2/P1) geteilt durch (SBase plus I2/P2), **broad based** auf allen Anteilen und **narrow based** allein auf der geschützten Series.
+- Nach den Zahlen der Folien lässt eine Series A zu 1.00 Dollar, gefolgt von einer Series B zu 0.75, den Gründer ungeschützt bei **35.3 Prozent**, bei **34.5 Prozent** unter broad-based Weighted Average zu 0.88, bei **34.0 Prozent** unter narrow-based zu 0.82 und bei **33.3 Prozent** unter Full Ratchet. Die zusätzlichen Anteile verwässern jeden, der nicht geschützt ist.
+- Abwärtsrunden sind aus vier nichtfinanziellen Gründen schwer: **Zustimmung der verwässerten Insider**, **Gründer motiviert halten**, **Auswaschen der Mitarbeiteroptionen** und **externe Investoren finden, die noch glauben**. Schlimmere Fälle werden zu **Wash-outs** und **Turnarounds**, mit substanzieller Verwässerung, Konflikt zwischen alten und neuen Investoren und mitunter Rechtsstreit.
+- Investoren wählen, **wann sie erstmals investieren, ob sie nachinvestieren, mit wem sie ko-investieren und wie sie die Stufung für einen guten Exit strukturieren**; Unternehmer wählen, **welche Investoren, wie viel und wann, welches Bewertungsprofil und welchen Exit**. Das Letzte zählt am meisten: Eine in Runde eins zu hoch gesetzte Bewertung ist ein Versprechen, sie in Runde zwei zu übertreffen.
+</Aside>
+
+<Aside type="note">
+**Und damit schließt das Modul.** Es begann mit einem Kunden, der den Wert erkennen konnte und trotzdem nicht kaufte, und die Antwort war, dass die Adoption durch wahrgenommene Kosten und Risiken blockiert wird, die Kommunikation, Zielgruppenwahl und Kanalentscheidung Stück für Stück abbauen müssen. Es ging weiter zur Wertabschöpfung: was man verlangen soll, wie man den Preis differenziert, wie man Wert statt Merkmale verkauft und welcher Kanal den Käufer tatsächlich erreicht. Diese Entscheidungen sind keine Marketingdekoration, sie sind die Eingangsgrößen für die Erlöszeile im Finanzplan, die wiederum den Kapitalbedarf, die Burn Rate und den aufzunehmenden Betrag treibt. Von dort übernahm die Finanzhälfte: was das Vorhaben wert ist, wem wie viel davon gehört, was die Klauseln in einem Term Sheet wirklich tun, und schließlich, warum das Geld in Raten kommt und was passiert, wenn eine spätere Rate niedriger bepreist wird als die letzte. Der Plan ist ein Argument in zwei Sprachen, und das letzte Kapitel ist der Ort, an dem die beiden zusammenkommen - denn der Anteil, den man am Ende behält, hängt von den Kunden ab, die man am Anfang gewonnen hat.
+</Aside>
+
+*Zurück zur [Kursübersicht →](/de/learnings/mba/innovation-and-new-business-planning/).*
