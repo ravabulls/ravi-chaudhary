@@ -78,7 +78,10 @@ img {
 
 .sc-fig {
   margin: 1.5rem 0;
-  overflow-x: auto;          /* wide flows scroll, never break the page */
+  max-width: 100%;
+  /* Last-resort scroll only. Every block below is built to reflow instead,
+     so this should almost never engage. */
+  overflow-x: auto;
 }
 .sc-fig figcaption,
 .sc-cap {
@@ -96,7 +99,8 @@ img {
   align-items: stretch;
   justify-content: center;
   gap: 0.5rem;
-  min-width: min-content;
+  /* no min-width: the flow must be allowed to shrink and wrap rather than
+     forcing its container wider than the viewport */
 }
 .sc-flow.col { flex-direction: column; align-items: center; }
 .sc-flow .arrow {
@@ -147,6 +151,10 @@ img {
   text-align: center;
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
   border: 0;
+  /* long labels must wrap inside the node rather than widen it */
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 .sc-node .sub {
   font-weight: 400;
@@ -164,20 +172,23 @@ img {
   box-shadow: none;
 }
 
-/* --- Tiered columns (multi-stage supply chains) --- */
+/* --- Tiered columns (multi-stage supply chains) ---
+   An auto-fit grid rather than a nowrap flex row: the tiers sit side by side
+   while they fit and drop to fewer columns, and finally to a single stacked
+   column, as the viewport narrows. This is what keeps long five-tier figures
+   inside a phone screen instead of forcing a horizontal scroll. */
 .sc-tiers {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 0.75rem;
-  align-items: flex-start;
-  min-width: min-content;
+  align-items: start;
 }
 .sc-tier {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
-  flex: 1 0 auto;
+  min-width: 0;
 }
 .sc-tier-head {
   font-size: 0.78rem;
@@ -251,10 +262,12 @@ img {
 .sc-pillar ul { margin: 0; padding-left: 1.1rem; }
 .sc-pillar li { font-size: 0.82rem; margin: 0.2rem 0; }
 
-/* --- Quadrant (2x2 strategy grids like Kraljic) --- */
+/* --- Quadrant (2x2 strategy grids like Kraljic) ---
+   Stays a 2x2 while there is room for it, collapses to a single column on a
+   narrow screen instead of overflowing the page. */
 .sc-quad {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 0.5rem;
 }
 .sc-quad .q {
@@ -262,6 +275,8 @@ img {
   padding: 0.7rem 0.85rem;
   border: 1px solid var(--sl-color-gray-5);
   background: var(--sl-color-gray-6);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .sc-quad .q .qh { font-weight: 700; margin-bottom: 0.2rem; }
 .sc-quad .q .qh small { font-weight: 400; color: var(--sl-color-gray-3); }
@@ -330,3 +345,91 @@ table.sc-matrix td.hl {
 
 /* Diagram figures should never carry the image drop-shadow/border */
 .sc-fig svg { box-shadow: none; border-radius: 0; max-width: 100%; height: auto; }
+
+/* ============================================================
+   Responsive behaviour for the .sc-* toolkit
+   The rule everywhere: reflow vertically rather than scroll
+   horizontally, and never let a block push the page wider
+   than the viewport.
+   ============================================================ */
+
+/* Nothing in the content column may exceed it. */
+.sl-markdown-content .sc-fig,
+.sl-markdown-content .sc-flow,
+.sl-markdown-content .sc-tiers,
+.sl-markdown-content .sc-split,
+.sl-markdown-content .sc-quad,
+.sl-markdown-content .sc-pillars,
+.sl-markdown-content .sc-formula,
+.sl-markdown-content .sc-chips {
+  max-width: 100%;
+}
+
+/* Grid and flex children must be allowed to shrink below their content
+   width, otherwise a single long word forces the whole row wider. */
+.sc-panel,
+.sc-pillar,
+.sc-formula > div,
+.sc-chip,
+.sc-tier-head {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* Formulas can carry long expressions - let them wrap instead of scrolling. */
+.sc-formula code {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+@media (max-width: 50rem) {
+  /* Tiers go to a single stacked column early: their nodes carry long
+     sentences, so two cramped columns read worse than one clear one. */
+  .sc-tiers { grid-template-columns: 1fr; }
+  .sc-tier-head { width: 100%; }
+}
+
+@media (max-width: 40rem) {
+  /* A horizontal flow becomes a vertical one, and the connectors turn to
+     match, so the sequence still reads correctly top to bottom. */
+  .sc-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sc-flow .arrow {
+    transform: rotate(90deg);
+    margin: 0.1rem auto;
+  }
+  .sc-flow .arrow small {
+    /* the label would be sideways too, so turn it back upright */
+    transform: rotate(-90deg);
+    max-width: none;
+  }
+  /* A boundary marker divides left from right; stacked, it divides
+     above from below, so its rule has to move to the top edge. */
+  .sc-flow .sc-bnd {
+    border-left: 0;
+    border-top: 3px dashed var(--sc-violet);
+    padding: 0.4rem 0 0;
+    justify-content: center;
+  }
+  .sc-quad { grid-template-columns: 1fr; }
+  .sc-pillars { grid-template-columns: 1fr; }
+  .sc-legend { justify-content: flex-start; }
+  /* Tables stay scrollable, but shrink the type first so fewer of them
+     need to scroll at all. */
+  .sl-markdown-content table:not(.sc-matrix) { font-size: 0.78rem; }
+  .sl-markdown-content table:not(.sc-matrix) th,
+  .sl-markdown-content table:not(.sc-matrix) td { padding: 0.28rem 0.4rem; }
+  /* A nowrap matrix cannot reflow, so let it wrap once the screen is this
+     narrow - a wrapped cell beats a figure that runs off the page. */
+  .sl-markdown-content table.sc-nowrap td,
+  .sl-markdown-content table.sc-nowrap th { white-space: normal; }
+}
+
+@media (max-width: 30rem) {
+  .sc-node { font-size: 0.84rem; padding: 0.5rem 0.7rem; }
+  .sc-node .sub { font-size: 0.7rem; }
+  .sc-chip { font-size: 0.76rem; padding: 0.3rem 0.6rem; }
+  .sc-fig figcaption, .sc-cap { font-size: 0.8rem; }
+}
