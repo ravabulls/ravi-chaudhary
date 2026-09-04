@@ -1,0 +1,467 @@
+---
+title: "Law on Artificial Intelligence"
+description: "The legal definitions of AI compared, the AI Act definition in Art. 3 (1), the risk-based pyramid from unacceptable through high and limited transparency risk down to minimal risk, the prohibited practices of Art. 5, the high-risk route through Art. 6 and Annex III, the transparency duties of Art. 50, who counts as provider, deployer, importer and distributor, the UNESCO ethics recommendation with the US and Chinese frameworks around it, what AI does to copyright and trade marks, and the four-step way to classify an AI contract."
+sidebar:
+  label: "13 · Law on AI"
+  order: 13
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The last session of the module opens on a screen with no legal text on it at all: a link to a post on X, reached through a German news report about a **deepfake of Kamala Harris** circulating during the US election campaign. Nothing is explained. The point is that everyone in the room can already see three or four different legal problems in a single video clip, and none of them fits neatly in any of the boxes we spent the previous chapters building. That is the honest starting position for AI and law.
+
+From there the day runs in a straight line. First, what AI actually is, technically and then legally, because three different legal systems have written three different definitions of it. Then the legal and ethical challenges, worked out by the class in two groups. Then the frameworks that try to govern AI - a UNESCO recommendation, a set of US instruments, a Chinese development plan - and then the one that is a real regulation with teeth, the **EU AI Act** of 13 March 2024, structured around risk. After that, what AI does to intellectual property, which is where copyright and trade mark law start creaking. And finally, how you classify an AI contract when you are the one buying or selling the system.
+
+The reason this closes the module rather than opening it is that almost every earlier chapter reappears here. The AI Act is a piece of EU regulation that harmonises member-state law. Its transparency duties are information duties, like the ones in data protection. Its training-data problem is a copyright problem. Its allocation of responsibility between the party that builds the system and the party that runs it is a contract problem. AI is not a new area of law so much as a stress test for all the old ones.
+
+<Aside type="tip">
+**The one idea to carry through.** The AI Act does not regulate technology, it regulates **risk to people**. The same model can be forbidden, heavily regulated, lightly regulated or completely free depending on **what it is used for and on whom**. So the first question about any AI system is never what algorithm is inside it - it is which tier of the pyramid the use case lands in, and whether you are the **provider** or the **deployer** when it does.
+</Aside>
+
+## 1 · A very short history, and why the room reads it first
+
+The class is asked to read two articles on the history of AI before discussing anything, one from Britannica and one from Coursera, and then to summarise and discuss. The timeline the deck gives, sourced from Coursera, is worth keeping because it explains why regulation arrives only now.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">1950s<span class="sub">machine learning is born; Alan Turing imagines machines imitating humans beyond their given function. At the Dartmouth Conference of 1956 the claim is made that learning and any other feature of human intelligence can be described precisely enough to be simulated by a machine, and John McCarthy coins the term artificial intelligence</span></div>
+    <div class="sc-node soft">1960 to 1974<span class="sub">innovation takes form: MIT builds the first chatbot ELIZA, simulating therapeutic conversation (1966), and Stanford builds Shakey the Robot, meant to operate independently in realistic environments (1966 to 1972)</span></div>
+    <div class="sc-node slate">1974 to the 1990s<span class="sub">the AI winter (1984): technology cannot deliver what machine learning promises. Still, the first driverless car appears in 1986, and IBM's chess program Deep Blue wins only one of six games against Kasparov in 1996 but every single rematch in 1997</span></div>
+    <div class="sc-node amber">2000 to 2019<span class="sub">the blossoming: MIT's KISMET mimics human emotion (from 2000), NASA rovers navigate the surface of Mars with AI help (2004), Siri and Alexa launch as natural-language assistants, Geoffrey Hinton introduces neural networking and deep learning, and Hanson Robotics in Hong Kong launches the humanoid SOPHIA (2016), granted citizenship by Saudi Arabia in 2017</span></div>
+    <div class="sc-node green">2020 onwards<span class="sub">the buzz continues: OpenAI releases the GPT-3 chatbot (2020), a generative pre-trained transformer and large language model trained on 175 billion parameters, then DALL-E (2021) converting text to image; GPT-4 follows and is integrated into Bing by Microsoft, and Google releases Bard</span></div>
+  </div>
+  <figcaption>Seventy years of AI in one line. The legal reaction only starts after the last box, which is why every framework in this chapter is dated 2021 or later.</figcaption>
+</div>
+
+## 2 · What AI is, technically
+
+The working description the deck borrows from IBM is that AI is technology enabling computers and machines to simulate human learning, comprehension, problem solving, decision making, creativity and autonomy. Underneath that sit four nested layers.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Artificial intelligence <span class="n">the outer ring</span></div>
+      Human intelligence exhibited by machines.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Machine learning <span class="n">ML</span></div>
+      AI systems that learn from pre-defined data.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Deep learning <span class="n">DL</span></div>
+      ML models that mimic human cognition and can adapt to undefined data.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Generative AI <span class="n">the inner ring</span></div>
+      DL models that gather data independently in order to create original content.
+    </div>
+  </div>
+  <figcaption>Four nested layers, each narrower than the one above it. Every generative AI system is also a deep learning system, a machine learning system and an AI system.</figcaption>
+</div>
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">How deep learning learns <small>four modes</small></div>
+    <ul>
+      <li><strong>Unsupervised or semi-supervised</strong> learning, working from labelled and unlabelled data</li>
+      <li><strong>Self-supervised</strong> learning, which generates implicit labels or classifications out of unstructured data</li>
+      <li><strong>Reinforcement</strong> learning, by trial and error and rewards rather than by finding hidden patterns</li>
+      <li><strong>Transfer</strong> learning, applying knowledge gained on one specific task to unknown tasks or data</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">How generative AI generates <small>three architectures</small></div>
+    <ul>
+      <li><strong>Variational autoencoders</strong>, which vary gathered content on the basis of prompts</li>
+      <li><strong>Diffusion models</strong>, which add noise to images until they are unrecognisable and then remove it to create original content</li>
+      <li><strong>Transformers</strong>, for instance GPT-4, trained on sequenced data so as to generate extended sequences of content</li>
+    </ul>
+  </div>
+</div>
+
+## 3 · What AI is, legally: three definitions compared
+
+The class is set an exercise: find, list and compare the definitions of AI in three instruments - **UNESCO SHS/BIO/PI/2021, Chapter 1 No. 2 lit. a**, **15 U. S. Code § 9401 (3)**, and **Art. 3 (1) of the EU AI Act**. Rewritten in my own words, they say this.
+
+| Instrument | What it counts as AI |
+|---|---|
+| **UNESCO SHS/BIO/PI/2021**, Ch. 1 No. 2 lit. a | Information-processing technologies that combine models and algorithms so as to produce a capacity to learn and to carry out cognitive tasks, leading to outcomes such as prediction and decision making in material and virtual environments, designed to work with varying degrees of autonomy through knowledge modelling and representation and by exploiting data and calculating correlations. The methods named, without being exhaustive, are machine learning including deep learning and reinforcement learning, and machine reasoning including planning, scheduling, knowledge representation and reasoning, search and optimisation |
+| **15 U. S. Code § 9401 (3)** | A machine-based system that can, for a given set of human-defined objectives, make predictions, recommendations or decisions influencing real or virtual environments. Such systems use machine and human-based inputs in order to (A) perceive real and virtual environments, (B) abstract those perceptions into models through automated analysis, and (C) use model inference to formulate options for information or action |
+| **Art. 3 (1) EU AI Act** | A machine-based system designed to operate with varying levels of autonomy, which may show adaptiveness after deployment, and which, for explicit or implicit objectives, infers from the input it receives how to generate outputs such as predictions, content, recommendations or decisions that can influence physical or virtual environments |
+
+The deck then boils the AI Act version down to a four-line summary: software, developed with deep learning techniques and logic- and science-based concepts, producing results such as content, predictions, recommendations or decisions, with regard to objectives set by humans.
+
+<Aside type="note" title="The comparison, as the quiz settles it">
+The shared denominators of the US and EU definitions are that both describe **machine-based systems**, both are about **influence on real or virtual environments**, and both cover systems that **may provide predictions, recommendations or decisions**. What is *not* shared: **adaptiveness** appears only in the EU wording, and neither definition requires **human-given input** as a condition. That last point matters more than it looks - a system does not escape the AI Act by running without a human in the loop.
+</Aside>
+
+## 4 · The machine learning process, and the three classes of data
+
+The deck walks the process step by step, and the reason a law course does it is that each step is a place where an obligation or an infringement can attach.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Define task and select model<span class="sub">step 1</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Data acquisition, then data preparation<span class="sub">collect data without processing or transforming it (1a), then extract, transform and select it to produce the training data (1b)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Algorithm development<span class="sub">set the parameters on the basis of the training data (2)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Data segregation<span class="sub">subsets of training data not yet used are separated off as validation data (3)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Model training<span class="sub">let the model predict patterns, set evaluation metrics, interpret and assess performance on the validation set (4)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Model evaluation<span class="sub">separate further subsets as test data to analyse accuracy and tune the model (5)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Deployment<span class="sub">the model is implemented into decision-making workflows; evaluation on test data feeds tuning (6)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Model scoring, then performance monitoring<span class="sub">new values and inputs are generated to assess how the model functions (7), followed by repeated testing and tuning (8)</span></div>
+  </div>
+  <figcaption>The eight steps. The three classes of data that matter, and the quiz answer, are training data, validation data and test data. Evaluation data and sequenced data are not classes of data in this process.</figcaption>
+</div>
+
+**Excursus: legal tech.** Before the challenges, the room is asked whether AI could benefit the legal profession, legal services, the judiciary and public access to them. The deck's own examples are AI agents that draft and review contracts, AI case studies that collect and analyse attorney-reviewed precedent according to the legal argument you want to build, and so-called AI lawyers offering web-research-based consultation, claim and motion drafting, and document management and simplification for practitioners, students and consumers.
+
+## 5 · The group work: legal and ethical challenges
+
+The class splits into two groups. **Group A** brainstorms the **legal** risks and challenges, **group B** the **ethical** ones, in both cases risks to individual and collective rights, to freedoms, or to public interests. Three questions steer the brainstorm and one question closes it.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">How might AI affect society, governments and individuals?</span>
+  <span class="sc-chip green">What are the chances and benefits brought by AI-based innovation?</span>
+  <span class="sc-chip amber">Look up the White House Blueprint for an AI Bill of Rights (Oct 2022) and NIST.AI.100-1: what are the core messages?</span>
+  <span class="sc-chip">What could be a solution for the challenges?</span>
+</div>
+
+<Aside type="caution">
+**NIST.AI.100-1 is set as reading, not taught.** The deck names the NIST document as something the groups should look up, but it does not summarise its content anywhere. So I have deliberately written nothing about what the NIST framework says - anything I put here would be invention rather than notes.
+</Aside>
+
+## 6 · AI in international law: the UNESCO recommendation
+
+**UNESCO, Recommendation on the Ethics of AI (SHS/BIO/PI/2021)**, adopted on **23 November 2021** and published in **2022**. Its legal character is the first thing to note: it is a **recommendation to all member states** to adopt the principles, proposed actions and governance regimes it outlines. It is **not regulation as such**, which the deck flags as typical for international law. The principles for the ethical use of AI technology sit on pages 20 to 23 of the document.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Proportionality and do no harm <small>plus safety and security</small></div>
+    <ul>
+      <li>The AI method chosen must be <strong>appropriate in context</strong> and <strong>proportional</strong> to a legitimate aim, which rules out mass surveillance and scoring</li>
+      <li>All risks to humans are to be assessed <strong>in advance</strong> and precluded</li>
+      <li>Risks to human, environmental and ecosystem safety and security must be identified so that they can be prevented and eventually eliminated</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Fairness and non-discrimination <small>social justice</small></div>
+    <ul>
+      <li>AI innovation must be accessible and available, respecting locally relevant content, multilingualism and inclusivity, regardless of gender, culture, age, ethnicity and socioeconomic factors</li>
+      <li>Technologically advanced countries carry a <strong>responsibility of solidarity</strong> to overcome global digital and knowledge divides</li>
+      <li>There must be an <strong>effective remedy</strong> against discriminatory and biased algorithmic determination</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Privacy, responsibility and accountability <small>the data half</small></div>
+    <ul>
+      <li>Privacy is irremissible for human dignity and autonomy; national and international data protection law must be built in a multi-stakeholder way, respected across the whole life cycle of an AI system and protected by the courts</li>
+      <li>That covers lawful collection, use and disclosure of personal data, the ability of data subjects to exercise their rights, and a legitimate aim and valid legal basis for processing, including informed consent</li>
+      <li>Algorithmic systems need adequate <strong>privacy impact assessments</strong>, including societal and ethical considerations, and <strong>privacy by design</strong></li>
+      <li>AI actors are responsible and accountable for design and implementation; systems must be <strong>auditable and traceable</strong> by technical and institutional design, with states ensuring oversight, impact assessment, audit and due diligence mechanisms including whistle-blower protection</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Human oversight, transparency, literacy, governance <small>the people half</small></div>
+    <ul>
+      <li><strong>Human oversight</strong>, including inclusive public oversight where appropriate: ethical and legal responsibility must always be attributable to natural persons or identifiable legal entities</li>
+      <li><strong>Human determination</strong>: AI must never fully replace human decision making and acting, and life and death decisions must never be ceded to AI</li>
+      <li><strong>Transparency and explainability</strong> are preconditions for human rights and ethical principles; without them liability regimes lose their efficacy and the ability to challenge AI-based decisions, and with it the right to a fair trial and an effective remedy. Explainability means making algorithmic processes and determinations intelligible and giving insight into their outcome</li>
+      <li><strong>Awareness and literacy</strong> promoted through open education, civic engagement, digital skills and AI ethics training, with governments, intergovernmental organisations, media, academia, community leaders and private actors ensuring informed decisions and protection from undue influence</li>
+      <li><strong>Multi-stakeholder and adaptive governance</strong>: international law, human rights and national sovereignty respected in the use of data, with open standards and interoperability adopted in the interests of all actors including marginalised groups</li>
+      <li><strong>Sustainability</strong>: social, cultural, economic and environmental impact assessed continuously against the UN Sustainable Development Goals</li>
+    </ul>
+  </div>
+</div>
+
+The quiz makes one negative point explicitly: **philanthropy is not** a UNESCO principle on the ethics of AI, whereas the right to privacy and data protection, sustainability, human oversight and determination, and awareness and literacy all are.
+
+## 7 · The other rulebooks: the United States and China
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">United States <small>a sequence, then a reversal</small></div>
+    <ul>
+      <li>The White House <strong>Blueprint for an AI Bill of Rights</strong> (Oct 2022), non-binding, with principles such as notice and explanation, algorithmic discrimination protection, and human alternatives, consideration and fallback</li>
+      <li>A <strong>voluntary AI safety pledge</strong> (Jul 2023), signed by major technology companies including OpenAI, Meta, Alphabet, Microsoft, IBM, Stability AI, Adobe and Amazon</li>
+      <li><strong>Executive Order 14110 of 30 October 2023</strong>, on safe, secure and trustworthy development and use of AI, aiming to ensure safety, security and data privacy, advance equity and civil rights, stand up for consumers, patients, students and workers as vulnerable subjects, promote innovation and competition, and ensure responsible and effective government use of AI</li>
+      <li><strong>Pro</strong>: the first effective US regulation on AI, expressly acknowledging and addressing the risks of unregulated use and deployment, and accountability for technology firms</li>
+      <li><strong>Con</strong>: a very wide scope, no categorisation of AI systems by their impact on individual rights, no specific prohibition or regulation of high-risk models, and accountability that stops short of disclosing models and data sources</li>
+      <li>All of it was <strong>cancelled</strong> by an Executive Order of <strong>23 January 2025</strong>, to be replaced within <strong>180 days</strong> by an action plan to sustain and enhance American global AI dominance for human flourishing, economic competitiveness and national security (Sect. 4, 2) and to revoke barriers to American AI innovation (Sect. 1). The deck's conclusion: as of today the use and deployment of AI is <strong>not regulated by US law</strong></li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">China <small>a plan, not a statute</small></div>
+    <ul>
+      <li><strong>A Next Generation AI Development Plan</strong>, issued by the State Council on <strong>20 July 2017</strong></li>
+      <li>It is a strategic layout for Chinese market dominance in AI technology, with the underlying ideological and dogmatic principles and an agenda for development, set to be achieved by <strong>2030</strong> and expressly making use of the advantages of a socialist system</li>
+      <li>By <strong>2025</strong>: initial AI laws and regulations, ethical norms and policy systems, and the formation of AI security assessment and control capabilities</li>
+      <li>By <strong>2030</strong>: world-leading AI technology innovation and personnel training centres, together with more comprehensive AI laws and regulations, ethical norms and a policy system</li>
+    </ul>
+  </div>
+</div>
+
+Read the two columns side by side and the EU's position becomes obvious. One jurisdiction has deregulated, another has a development plan whose legal instruments are still promised, and in between the EU has passed an actual regulation. That is why the rest of the chapter is about the AI Act.
+
+## 8 · The EU AI Act: purpose and architecture
+
+The **(EU) AI Act of 13 March 2024** is described in the deck as the **first regulatory act on AI worldwide**. Its purpose, in **Art. 1 No. 1**, is to lay down provisions that support innovation, improve the functioning of the internal market and promote the uptake of **human-centric and trustworthy AI**, while ensuring a high level of protection against the harmful effects of AI for **health**, **safety** and the **fundamental rights enshrined in the EU Charter**, expressly including **democracy**, **the rule of law** and **environmental protection**.
+
+It **harmonises member-state legislation**, and Art. 1 No. 2 sets out what it actually contains.
+
+| Building block | Where it lives |
+|---|---|
+| **Unacceptable-risk practices are prohibited** - social scoring and manipulative AI are the deck's examples | **Art. 5** |
+| **High-risk AI systems**: classification rules and then strict requirements | **Arts. 6 and 7** for classification, **Art. 8 and following** for the requirements |
+| **Transparency obligations** for AI systems that interact with humans, addressed to providers and deployers where not public | **Art. 50**, with **Art. 2 No. 1** and **Art. 3 (2), (3)** on scope and the actors |
+| Rules on **market monitoring, surveillance, governance and enforcement** | **Chapters VII to IX**, that is **Arts. 64 to 94** |
+| **Measures in support of innovation** | **Arts. 57 to 63**, the chapter that opens with AI regulatory sandboxes |
+
+The transparency block is worth reading twice, because it names its targets: **emotion recognition and biometric systems**, **image, audio or video manipulation - deep fakes**, and **AI-generated or AI-manipulated text published to inform the public on matters of public interest**. The duty that attaches is to **inform the natural persons exposed to the system about its operation, unless that is obvious** (Art. 50 (1) sentence 1), and it does not apply where the named purposes are authorised by law (Art. 50 (1) sentence 2 and Art. 50 (2)). Checked against the Regulation, Art. 50 also requires providers to mark synthetic audio, image, video or text in a **machine-readable** format detectable as artificially generated, requires deployers of deep-fake systems to disclose the manipulation, and requires the information to reach people **in a clear and distinguishable manner at the latest at the time of the first interaction or exposure**.
+
+## 9 · The risk pyramid, tier by tier
+
+This is the single most useful picture in the module. The source is the European Commission's own depiction.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Unacceptable risk <span class="n">not permitted</span></div>
+      For example social scoring. The practice is prohibited outright, Art. 5.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">High risk <span class="n">permitted, but only on conditions</span></div>
+      For example recruiting and medical solutions. Permitted subject to compliance with the AI requirements and an <strong>ex ante conformity assessment</strong>.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Limited or transparency risk <span class="n">permitted with duties to inform</span></div>
+      For example chatbots. Permitted subject to compliance with information and transparency duties, Art. 50.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Minimal risk or no risk <span class="n">permitted without restrictions</span></div>
+      Everything that does not land in a tier above. No obligations attach under the Act.
+    </div>
+  </div>
+  <figcaption>Four tiers, four completely different legal consequences. Source: European Commission, digital-strategy.ec.europa.eu.</figcaption>
+</div>
+
+**What is actually prohibited (Art. 5).** Checking the Regulation against the deck's two examples, the list of prohibited AI practices covers: subliminal, purposefully manipulative or deceptive techniques that materially distort behaviour and cause significant harm; exploitation of vulnerabilities due to age, disability or a specific social or economic situation, again where behaviour is materially distorted and significant harm results; **social scoring**, that is evaluating or classifying people over a period of time by their social behaviour or personal characteristics where the score leads to detrimental treatment in contexts unrelated to the original data or to treatment that is unjustified or disproportionate; predicting the risk of a person committing a criminal offence based solely on profiling or personality traits; building or expanding facial recognition databases by untargeted scraping of facial images from the internet or CCTV; inferring emotions in the workplace or in education institutions, other than for medical or safety reasons; biometric categorisation deducing race, political opinions, trade union membership, religious or philosophical beliefs, sex life or sexual orientation; and real-time remote biometric identification in publicly accessible spaces for law enforcement, save in the narrowly listed cases with prior authorisation.
+
+**How a system becomes high risk (Arts. 6 and 7).** There are two routes. Either the system is a **safety component of a product**, or is itself a product, covered by the listed Union harmonisation legislation and required to undergo third-party conformity assessment; or it falls into one of the **areas listed in Annex III** - biometrics, critical infrastructure, education and vocational training, employment and workers' management, access to essential private and public services and benefits, law enforcement, migration, asylum and border control, and the administration of justice and democratic processes. Art. 6 (3) gives a way out where the system does not pose a significant risk of harm because it only performs a narrow procedural task, improves the result of a completed human activity, detects decision patterns without replacing human assessment, or does preparatory work - but a system that **profiles natural persons is always high risk**, and a provider claiming the exception must document that assessment before placing the system on the market. Art. 7 is the mechanism for amending Annex III, with a list of criteria such as intended purpose, autonomy and human override, dependence of affected persons, imbalance of power, and whether the outcome is reversible.
+
+**What high risk costs you (Art. 8 and following).** The requirements the Regulation sets out are a **risk management system** (Art. 9), **data and data governance** (Art. 10), **technical documentation** (Art. 11), **record-keeping** (Art. 12), **transparency and provision of information to deployers** (Art. 13), **human oversight** (Art. 14), and **accuracy, robustness and cybersecurity** (Art. 15).
+
+## 10 · Who is who: provider, deployer, importer, distributor
+
+The deck addresses the transparency duties to **providers and deployers** and points at the definitions in Art. 3 and the scope in Art. 2. Verified against the Regulation itself, the definitions in Art. 3 are these, and the collective term for all of them is **operator**.
+
+| Role | Who it is | What the Act asks of them for a high-risk system |
+|---|---|---|
+| **Provider**, Art. 3 (3) | Whoever develops an AI system or a general-purpose AI model, or has one developed, and places it on the market or puts it into service **under their own name or trade mark**, paid or free | Art. 16: comply with the requirements, put name and contact address on the system, run a quality management system, keep the documentation and the automatically generated logs, complete the conformity assessment before market, draw up the EU declaration of conformity, affix the CE marking, register, take corrective action, demonstrate conformity on a reasoned request, and meet accessibility requirements |
+| **Deployer**, Art. 3 (4) | Whoever uses an AI system **under their own authority**, unless the use is a personal, non-professional activity | Art. 26: use the system in accordance with the instructions for use, assign human oversight to people with the competence, training and authority to do it, ensure input data is relevant and sufficiently representative where they control it, monitor operation, suspend use and inform the provider and market surveillance authority where a risk appears, and report serious incidents |
+| **Importer**, Art. 3 (6) | A person in the EU who places on the market a system bearing the name or trade mark of someone established in a **third country** | Art. 23: verify before placing that the conformity assessment was done, the technical documentation drawn up, the CE marking, declaration of conformity and instructions present, and an authorised representative appointed; refuse to place a non-conforming or falsified system; add their own name and contact details; keep storage and transport from spoiling compliance |
+| **Distributor**, Art. 3 (7) | Anyone in the supply chain other than the provider or importer who **makes a system available** on the Union market | Art. 24: verify the CE marking, declaration of conformity and instructions and that provider and importer met their duties; withhold a non-conforming system; protect compliance during storage and transport; take or procure corrective action, withdrawal or recall; inform authorities and hand over documentation on a reasoned request |
+
+On scope, Art. 2 (1) catches providers placing systems on the EU market wherever they are established, deployers established in the EU, providers **and** deployers in third countries where the **output is used in the Union**, importers and distributors, product manufacturers, authorised representatives, and affected persons located in the EU.
+
+<Aside type="caution">
+**Where these notes stop.** The deck itself names only **providers and deployers**. The importer and distributor rows above come from the definitions article the deck points to, Art. 3, and from the corresponding obligation articles, and I have marked them as such rather than pretending the session covered them.
+</Aside>
+
+## 11 · Three things this deck does not settle
+
+<Aside type="caution">
+Three items my revision plan expected are **not in the source**, so I have left them out rather than guess:
+
+- **General-purpose AI models.** The deck never reaches Chapter V of the Regulation, so there is nothing here on the obligations of GPAI model providers or on models with systemic risk.
+- **The timeline of application.** The deck dates the Act to 13 March 2024 and stops there. It gives no phased application dates, so no deadlines are written down in these notes.
+- **Penalties.** The deck points at Chapters VII to IX for market monitoring, surveillance, governance and enforcement, but it never states a fine, a percentage of turnover, or a penalty ceiling. I have written none.
+
+For any of these three, go to the Regulation itself rather than to this page.
+</Aside>
+
+## 12 · AI and intellectual property
+
+The IP half of the session starts by re-drawing the map, then asks what AI does to it.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Trade mark<span class="sub">business reputation</span></div>
+    <div class="sc-node violet">Copyright<span class="sub">exclusive creation</span></div>
+    <div class="sc-node green">Patents<span class="sub">exclusive innovation</span></div>
+    <div class="sc-node slate">Trade secrets<span class="sub">economically valuable information</span></div>
+    <div class="sc-node soft">Open access, open source and Creative Commons licences<span class="sub">the permissive layer sitting alongside the four rights</span></div>
+  </div>
+  <figcaption>The rights that protect IP, as the session lists them. The quiz confirms that a registered trade mark, copyright, patents and trade secrets are IP rights, while an unregistered trade mark is not counted among them.</figcaption>
+</div>
+
+**Copyright.** It lets the creator, author or right holder protect their individual creation - the **selection, coordination and arrangement** - and stop others reproducing the work without permission, and it **arises automatically on creation**. Under EU law a creation is protectable if it is **precisely and objectively identifiable**. The deck also gives a non-European yardstick, the criteria applied under Chinese law by the **Beijing Internet Court in 2023**: the work must (a) belong to the fields of literature, art or science, (b) possess **originality**, (c) have a **form of expression**, and (d) be the result of an **intellectual achievement**.
+
+**Trade marks.** A trade mark dissuades competitors from using your mark or a similar one without permission and lets you sell and license the mark; the deck cites **Art. 9** of the EU Trade Mark Regulation for that, giving the regulation number as (EU) 2017/1007 on that slide and as (EU) 2017/1001 on the distinctiveness slides, so I have noted both rather than pick one. Only **specific and classifiable goods and services** can be registered (Art. 31 § 1 c), with the scope of specification in Art. 33 § 2). Protection is **territorial**, so the mark must be registered with the appropriate authority - UKIPO, USPTO, EUIPO - and the scope of protection is limited accordingly. **Distinctiveness** under Art. 7 means the goods and services must not be merely descriptive, and it is assessed by (1) the perception of the relevant target group, (2) the reasonably well informed, reasonably observant and circumspect average customer for those specific goods and services, (3) a dynamic perception taking customary practice and knowledge in that market segment into account, and (4) market-specific variations. The US equivalents named are the **threshold of originality** and the **principle of exhaustion**, the first sale doctrine.
+
+**The Nice Classification.** An international agreement ratified and used by most countries including the EU, to keep the classification of goods and services consistent. It has **34 classes for goods and 11 for services**, and it **does not grant enforceable rights** by itself.
+
+<Aside type="note" title="Excursus: virtual goods, and where the offices disagree">
+The class is sent to the Nice catalogue with a question: what goes wrong when you classify virtual goods and services? And what difference does it make whether the item is purely virtual (a NYAN Cat NFT), a virtual twin of something physical (a sneaker and its matching NFT), or a service that is fully abstract (virtual reality) rather than partially abstract (augmented reality)?
+
+Class 9 covers apparatus and instruments for recording, transmitting, reproducing or processing sound, images or data, recorded and downloadable media, computer software and blank recording media. Class 18 covers leather and imitations of leather. The two offices then part company: **EUIPO** puts NFTs in **Class 9 exclusively, always**, while **UKIPO** says that if the NFT represents a physical good, the corresponding class - Class 18 for a shoe - applies **as well**.
+</Aside>
+
+**Algorithmic infringement.** The exercise is to walk back through the machine learning process and ask, at each step, which rights an algorithm's workings might infringe and how, then to ask what measures you would take in developing your own AI system so that no IP right is infringed during its learning process. Four precedent cases are offered if time allows: **Getty Images v Stability AI** before the British High Court of Justice, under Civil Procedure Rules Part 17 Rule 17.3 and Part 24 and Sections 16, 17 and 20 of the Copyright, Designs and Patents Act 1988; **Gemini Data v Google**, 11 September 2024; **Center for Investigative Reporting, Inc. v. OpenAI, Inc., et al.**, 27 June 2024; and **Andersen v Stability AI**, ND Cal, August 2024, Orrick J.
+
+**The quiz answers, which are the session's actual position.** On what can be IP protected: a **virtual McDonald's restaurant** can, and an **operating system** can. The way you like to wear your clock upside down cannot, a shirt with a Lego mannequin's head printed on it cannot, and - the important one - **an AI-created image of your neighbour's dog cannot**. Read that against the copyright criteria and the reason is visible: protection is built around an individual creation that is an intellectual achievement with originality, and an AI-generated image is not treated as meeting it. On how an AI might infringe: **by gathering protected information as training data** and **by using copyrighted art to create an image**. Licensing a mark autonomously, classifying its own output under the Nice Agreement, and using open access databases for test data are all marked as **not** infringements.
+
+<Aside type="caution">
+The deck settles whether AI output is protectable through that quiz answer, and it settles the training-data problem through the infringement answer and the four cases. It says **nothing about who would own AI output** if it were protectable, and **nothing about inventorship** for AI-assisted patents. Those two questions stay open in my notes because they stay open in the source.
+</Aside>
+
+## 13 · AI contracts: the four-step classification
+
+The last slide of the module is a method rather than a clause list. When an AI system is being procured or supplied, work through four steps in order.
+
+<Steps>
+
+1. **Determine the subject matter.** Are you agreeing on (a) **goods** - AI systems or software containing AI components, (b) **services** using or administering AI technology, or (c) **miscellaneous performances**, the deck's example being medical studies or treatment where diagnostics are done with the help of AI?
+
+2. **Set out the primary and secondary obligations of both or all parties.** For goods, that means **provision, deployment or distribution**, and whether what is acquired is **(partial) ownership**, a **particular licence**, or a **lease**. The secondary layer covers **implementation into the existing IT infrastructure**, **maintenance**, and specific provisions such as an **NDA**.
+
+3. **Decide whether the software or AI system is individualised or standardised**, and where it matters, whether the provision is **temporary or permanent**.
+
+4. **Run the risk assessment.** Is this a **high-risk AI system** under Arts. 6 to 8 of the AI Act? Do the **transparency obligations** of Art. 50 apply?
+
+</Steps>
+
+Step 4 is the one that connects the whole chapter. Once you know the tier, you know which obligations exist - and every obligation in section 9 and section 10 above has to land on a named party in the contract, because the Act allocates duties to roles and it is the contract that decides which role each side is playing.
+
+<Aside type="caution">
+The deck's contract material is this four-step classification and nothing more. It does **not** give clause wording for liability caps, warranties on accuracy or performance, data and training-data rights, or documentation deliverables, so I have not written any. What the source does support is the point above: responsibility follows the role, and the role is fixed by the deal.
+</Aside>
+
+## Worked example
+
+Three systems a company might realistically put in front of you in the same week, classified under the pyramid.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Unacceptable <span class="n">system C</span></div>
+      Prohibited. No compliance route exists.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">High risk <span class="n">system A</span></div>
+      Permitted, but only with the full requirement set and an ex ante conformity assessment.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Limited or transparency risk <span class="n">system B</span></div>
+      Permitted, subject to information and transparency duties.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Minimal risk <span class="n">nothing here today</span></div>
+      Permitted without restrictions. Most ordinary business software lands here.
+    </div>
+  </div>
+  <figcaption>Same company, same week, three completely different legal answers.</figcaption>
+</div>
+
+| The system | Category and why | What follows in practice |
+|---|---|---|
+| **A.** A model that filters job applications and ranks candidates for the HR team | **High risk**. It falls in the Annex III area of employment and workers' management, specifically recruitment and selection, so Art. 6 (2) applies. The Art. 6 (3) exception is not available, because it does more than a narrow procedural task and it profiles applicants | The requirements of Art. 8 and following: a risk management system, data governance, technical documentation, record-keeping, information to the deployer, human oversight, and accuracy, robustness and cybersecurity - plus an **ex ante conformity assessment**. If the company builds it and puts it out under its own name it is the **provider** and Art. 16 applies. If it buys it and runs it, it is the **deployer** and Art. 26 applies: follow the instructions for use, put competent and empowered humans on oversight, keep input data relevant and representative, monitor, suspend and report |
+| **B.** A customer-support chatbot on the company website that also drafts reply emails | **Limited or transparency risk**. It interacts directly with natural persons and it generates synthetic text, so the Art. 50 block applies rather than the high-risk block | Tell users they are dealing with an AI system unless that is obvious to a reasonably well informed and observant person, and give that information clearly, at the latest at the first interaction. Mark generated content in a machine-readable, detectable way. If it is ever used to produce published text informing the public on a matter of public interest, disclose the artificial generation |
+| **C.** A tool that scores customers over time on their general social behaviour and then denies them unrelated services when the score is low | **Unacceptable risk**. This is social scoring under Art. 5: evaluation or classification of people over a period of time based on social behaviour or inferred personal characteristics, with the score leading to detrimental treatment in contexts unrelated to where the data came from, or treatment that is disproportionate | Nothing to negotiate and no conformity route to follow. The practice is **prohibited**, and the correct advice is to stop the project rather than to document it |
+
+## Apply it to your project
+
+<Steps>
+
+1. **Write down what the system does to people, not what is inside it.** The tier depends on the use case and on who is affected, so a description in terms of the model architecture cannot be classified at all.
+
+2. **Check the Art. 5 list first.** Manipulation, exploitation of vulnerability, social scoring, predictive policing based solely on profiling, untargeted facial scraping, emotion inference at work or in education, sensitive biometric categorisation, real-time remote biometric identification for law enforcement. If you are in there, stop.
+
+3. **Run the two high-risk routes.** Is the system a safety component of a regulated product, or the product itself, needing third-party conformity assessment? Or does the use case sit in an Annex III area - biometrics, critical infrastructure, education, employment, essential services, law enforcement, migration, justice and democratic processes?
+
+4. **If Annex III applies, test the Art. 6 (3) exception honestly**, and remember that anything **profiling natural persons is always high risk**. If you claim the exception, document the assessment **before** the system goes to market.
+
+5. **Decide which role you are in.** Provider, deployer, importer or distributor. This single answer decides which obligation article you have to read, and it is a question of what you do with the system, not of how big you are.
+
+6. **Check Art. 50 separately.** Even a system that is not high risk can owe transparency duties if it interacts with people, does emotion recognition or biometrics, produces deep fakes, or generates published text on matters of public interest.
+
+7. **Walk the machine learning process for IP exposure.** Where did the training data come from, is anything in it protected, and would using it be gathering protected information as training data or using copyrighted art to create output?
+
+8. **Put the ethics questions alongside the legal ones.** Proportionality and do no harm, fairness and non-discrimination, privacy, human oversight with responsibility attributable to identifiable persons, transparency and explainability, and sustainability.
+
+9. **Then classify the contract**: subject matter, primary and secondary obligations, individualised or standardised and for how long, and finally the risk assessment - because the tier decides what the contract has to make somebody responsible for.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| AI system (Art. 3 (1) AI Act) | A machine-based system with varying autonomy, possibly adaptive after deployment, that infers from its input how to generate predictions, content, recommendations or decisions influencing physical or virtual environments |
+| Machine learning | AI systems that learn from pre-defined data |
+| Deep learning | Machine learning models that mimic human cognition and can adapt to undefined data |
+| Generative AI | Deep learning models that gather data independently in order to create original content |
+| Training, validation and test data | The three classes of data in the machine learning process: what the model learns from, what it is assessed on, and what is used to analyse accuracy and tune it |
+| Risk (Art. 3 (2)) | The combination of how likely harm is and how severe it would be |
+| Provider | Whoever develops or has developed an AI system and puts it on the market or into service under their own name or trade mark |
+| Deployer | Whoever uses an AI system under their own authority, outside purely personal non-professional use |
+| Importer and distributor | The party inside the EU who places a third-country-branded system on the market, and anyone else in the chain who makes a system available |
+| Operator | The umbrella term for provider, product manufacturer, deployer, authorised representative, importer and distributor |
+| Unacceptable risk | The prohibited tier, Art. 5. Social scoring and manipulative AI are the standing examples |
+| High risk | Permitted only with the full requirement set and an ex ante conformity assessment; reached either through regulated products or through the Annex III areas |
+| Limited or transparency risk | Permitted subject to information and transparency duties under Art. 50; chatbots are the example |
+| Minimal risk | Permitted without restrictions under the Act |
+| Ex ante conformity assessment | The check that has to be completed **before** a high-risk system reaches the market, not afterwards |
+| Explainability | Making algorithmic processes and determinations intelligible and giving insight into the outcome, so decisions can be challenged |
+| Human determination | The UNESCO principle that AI must never fully replace human decision making, and that life and death decisions must never be ceded to AI |
+| Nice Classification | The international agreement standardising classes of goods and services for trade marks, 34 for goods and 11 for services, which grants no enforceable rights of its own |
+
+## Test yourself
+
+1. Give the Art. 3 (1) definition of an AI system in your own words, and name the two things the EU and US definitions share and the one element that appears only in the EU version.
+2. Name the four risk tiers of the AI Act and the legal consequence attached to each.
+3. **Classify this:** a bank deploys a model that scores loan applicants' creditworthiness and rejects the low scorers automatically. Which tier, on what basis, and what must the bank do?
+4. What is the difference between a provider and a deployer, and why does the difference decide which article you read?
+5. What legal character does the UNESCO Recommendation on the Ethics of AI have, and name five of its principles.
+6. How might an AI system infringe IP rights, according to the session, and which two of the quiz options are **not** infringements?
+
+<Aside type="note" title="Answers">
+1. A machine-based system designed to run with varying levels of autonomy, possibly showing adaptiveness after deployment, which for explicit or implicit objectives infers from its input how to generate outputs such as predictions, content, recommendations or decisions that can influence physical or virtual environments. Shared with the US definition: both are **machine-based systems**, both **influence real or virtual environments**, and both cover **predictions, recommendations or decisions**. Only the EU version mentions **adaptiveness**; neither requires human-given input.
+2. **Unacceptable risk** - not permitted. **High risk** - permitted subject to compliance with the AI requirements and an ex ante conformity assessment. **Limited or transparency risk** - permitted subject to information and transparency duties. **Minimal or no risk** - permitted without restrictions.
+3. **High risk.** Evaluating the creditworthiness of natural persons or establishing their credit score is one of the Annex III areas, access to essential private and public services, so Art. 6 (2) applies, and the Art. 6 (3) exception is unavailable because the system profiles people and materially influences the outcome. As **deployer** the bank owes the Art. 26 duties: use it per the instructions for use, assign human oversight to competent and empowered staff, keep the input data it controls relevant and representative, monitor operation, suspend and inform the provider and the market surveillance authority if a risk appears, and report serious incidents. Whoever put the model on the market under its own name is the **provider** and owes the Art. 16 duties plus the Art. 8 and following requirements.
+4. The **provider** develops the system, or has it developed, and places it on the market or puts it into service under its own name or trade mark. The **deployer** uses it under its own authority, outside personal non-professional use. The Act allocates duties by role, so the same organisation reads Art. 16 as provider and Art. 26 as deployer, and a company that buys a system and rebrands it can find itself in the first column rather than the second.
+5. It is a **recommendation to member states** to adopt the principles, proposed actions and governance regimes it sets out - not regulation as such, which is typical of international law. Five of its principles: proportionality and do no harm; safety and security; fairness and non-discrimination; the right to privacy and data protection; human oversight and determination. Others are transparency and explainability, responsibility and accountability, awareness and literacy, multi-stakeholder and adaptive governance, and sustainability. **Philanthropy is not one of them.**
+6. **By gathering protected information as training data** and **by using copyrighted art to create an image**. Using open access databases for test data is not an infringement, and neither is appointing its output as Nice Agreement classified.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Art. 3 (1) AI Act**: a machine-based system, varying autonomy, possibly adaptive after deployment, inferring from input how to generate predictions, content, recommendations or decisions influencing physical or virtual environments. The US definition in 15 U. S. Code § 9401 (3) shares the machine-based, environment-influencing and prediction elements but not adaptiveness; the UNESCO definition works from information-processing technologies producing a capacity to learn and perform cognitive tasks.
+- Nesting: **AI**, then **machine learning**, then **deep learning**, then **generative AI**. The three data classes in the ML process are **training, validation and test data**.
+- **UNESCO SHS/BIO/PI/2021**, adopted 23 November 2021, published 2022, is a **recommendation, not regulation**. Principles: proportionality and do no harm, safety and security, fairness and non-discrimination, privacy and data protection, responsibility and accountability, human oversight and determination, transparency and explainability, awareness and literacy, multi-stakeholder and adaptive governance, sustainability.
+- **US**: Blueprint for an AI Bill of Rights (Oct 2022), voluntary safety pledge (Jul 2023), Executive Order 14110 of 30 October 2023 - all cancelled by the Executive Order of 23 January 2025, with an action plan promised within 180 days, so AI use and deployment is not regulated by US law today. **China**: the Next Generation AI Development Plan of 20 July 2017, with legal and ethical frameworks targeted for 2025 and 2030.
+- The **EU AI Act of 13 March 2024**, the first regulatory act on AI worldwide. Art. 1 No. 1: innovation, the internal market, and human-centric trustworthy AI, protecting health, safety and Charter rights including democracy, the rule of law and environmental protection.
+- **Four tiers**: unacceptable risk **not permitted** (Art. 5, social scoring, manipulative AI); high risk **permitted with compliance and ex ante conformity assessment** (Arts. 6 and 7 for classification, Art. 8 and following for the requirements - risk management, data governance, technical documentation, record-keeping, information to deployers, human oversight, accuracy and cybersecurity); limited or transparency risk **permitted with information duties** (Art. 50, chatbots, emotion recognition and biometrics, deep fakes, published AI text on public-interest matters); minimal risk **permitted without restrictions**.
+- **Roles decide duties**: provider (Art. 3 (3), duties in Art. 16), deployer (Art. 3 (4), duties in Art. 26), importer (Art. 3 (6), Art. 23), distributor (Art. 3 (7), Art. 24), all together called operators. Enforcement lives in Arts. 64 to 94, innovation support in Arts. 57 to 63.
+- **IP**: copyright arises automatically over the individual creation and needs a precisely and objectively identifiable creation in the EU, or under the Beijing Internet Court 2023 criteria, literature, art or science, originality, a form of expression and an intellectual achievement. An **AI-created image is not treated as protectable**. AI infringes by **taking protected material as training data** and by **using copyrighted art to create images**. Trade marks are territorial, need distinctiveness and classifiable goods and services, and the Nice Classification has 34 goods and 11 service classes without granting rights; EUIPO puts NFTs in Class 9 exclusively while UKIPO adds the class of the physical good.
+- **AI contracts in four steps**: subject matter (goods, services or miscellaneous performances), primary and secondary obligations, individualised or standardised and temporary or permanent, then the **risk assessment** - high risk under Arts. 6 to 8, transparency under Art. 50.
+</Aside>
+
+<Aside type="note">
+**Closing the module.** We started by asking what law even is, and separated public, criminal and civil law by the relationship between the parties, then learned that a rule is a factual element plus a legal consequence. Everything after that was one relationship at a time: the contract you write with a counterparty, the extra layer that appears when the goods cross a border, the duties that attach the moment personal data is involved, the discipline of breaches, documentation and IT security, and the trade secrets, NDAs and cooperation agreements that decide what you can safely share with a partner. Then the IP toolkit - patents, designs, trade marks and copyright - and the communication and negotiation skills without which none of those documents ever gets agreed. This last chapter adds the newest rulebook of all, and it behaves exactly like the others: it attaches definite legal consequences to defined factual elements, it allocates them to named roles, and it leaves it to your contract to say which role you are in.
+</Aside>
+
+*Back to the [course overview →](/learnings/mba/legal-aspects-of-technology-management/).*

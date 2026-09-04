@@ -1,0 +1,539 @@
+---
+title: "Breaches, Documentation and IT Security"
+description: "What counts as a personal data breach under Art. 4 (12) GDPR, the three-level risk decision that decides whether you notify nobody, the supervisory authority within 72 hours, or the data subjects without delay, the contents of a Data Breach Notice and the exceptions in Art. 34 (3), the records of processing activities under Art. 30, technical and organisational measures and the state-of-the-art test in Artt. 25 and 32, when video surveillance is proportionate and how it must be signposted, and how a real data protection impact assessment for a container depot is built."
+sidebar:
+  label: "5 · Breaches & IT Security"
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The previous blocks explained what personal data is, who the actors are and on what basis you are allowed to process anything at all. This block is about the day the system fails, and about everything you should have written down long before that day arrived. The session timetable itself puts these two topics side by side, and that pairing is the lesson: a breach is handled well or badly depending almost entirely on paperwork that already existed.
+
+Two ideas run through everything here. The first is **risk to the rights and freedoms of the data subject**. It is not the size of the incident, not the embarrassment, not the number of files, but the risk to the people whose data it was, and that single assessment decides who has to be told and how fast. The second is **accountability made visible**. The GDPR does not just ask you to be compliant, it asks you to be able to show it, and the way you show it is documentation: records of processing activities, impact assessments, contracts, confidentiality commitments and an internal record of every incident, including the ones you decided not to report.
+
+The block then moves from the legal duty to the engineering that prevents the duty from being triggered - IT security and the technical and organisational measures - and finishes with the one processing activity that concentrates every theme in this chapter at once: **video surveillance**, which is intrusive enough to need its own justification, its own signage, its own storage limit and its own impact assessment.
+
+<Aside type="tip">
+**The one idea to carry through.** Every question in this chapter is answered by the same test: **what is the risk to the rights and freedoms of the affected people?** Low risk means document internally and report nothing. Normal risk means notify the supervisory authority within 72 hours. High risk means notify the authority and tell the data subjects without delay. The same test decides which security measures are appropriate, whether a camera is proportionate, and whether you need an impact assessment before you start.
+</Aside>
+
+## 1 · What counts as a personal data breach
+
+The GDPR definition is deliberately broad. Under **Art. 4 (12) GDPR** a personal data breach is a breach of security that leads to the accidental or unlawful **destruction, loss, alteration, unauthorised disclosure of, or access to** personal data that is transmitted, stored or otherwise processed. Notice what is included: losing data counts, altering it counts, and simply letting the wrong person see it counts. Nobody has to steal anything and nothing has to be published.
+
+The deck backs this up with statistics from the GDD Practice Report 2021 on data protection violations, and the numbers are the most useful slide in the block because they contradict the mental image most people have of a breach.
+
+| Cause of the breach | Share |
+|---|--:|
+| Transmission to the wrong recipients | 47 percent |
+| Cyber attacks | 14 percent |
+| System or configuration error | 10 percent |
+| Theft | 9 percent |
+| Loss of data carriers or documents | 7 percent |
+| Incorrect authorisations | 7 percent |
+| Other | 6 percent |
+
+Almost half of all reported breaches are somebody sending something to the wrong address. Cyber attacks are 14 percent. If you are designing a control environment from this table, you spend far more on habits, templates, address checks and access rights than on the firewall, and you accept that the incident you will actually have to handle is an email.
+
+## 2 · The decision tree: one assessment, three outcomes
+
+This is the central slide of the block. The moment an incident is discovered, one assessment is made - the **risk to the rights and freedoms of the data subject** - and the answer sends you down one of three routes.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier"><div class="sc-tier-head">Unlikely or low risk <span class="n">no obligation to report</span></div>Nothing goes to the supervisory authority and nothing goes to the data subjects. The incident is still <strong>documented</strong>, because documentation applies to every data breach without exception.</div>
+    <div class="sc-tier"><div class="sc-tier-head">Normal risk <span class="n">supervisory authority, within 72 hours</span></div>A Data Breach Notice goes to the competent supervisory authority under <strong>Art. 33 GDPR</strong>. The data subjects are not notified at this level.</div>
+    <div class="sc-tier"><div class="sc-tier-head">High risk <span class="n">authority and data subjects, without delay</span></div>The supervisory authority is notified and, in addition, the affected people are informed under <strong>Art. 34 GDPR</strong>, without delay.</div>
+  </div>
+  <figcaption>One assessment, three routes. The slide is emphatic on one point: the 72 hours is a mere response period, not a comfortable window to think in.</figcaption>
+</div>
+
+Around that decision the deck sets out the internal chain of events, and it is worth learning as a sequence rather than as a list, because each step has a different owner.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Employee or supervisor<span class="sub">must report the incident immediately, using the internal reporting form</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Person responsible, company and DPO<span class="sub">assess the risk to the rights and freedoms of the data subject and decide the route</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Notification<span class="sub">Data Breach Notice to the authority, plus the data subjects if the risk is high</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Afterwards<span class="sub">subsequent measures to prevent the situation getting worse, which are obligatory, then an assessment of suitable technical and organisational measures to prevent similar breaches in future</span></div>
+  </div>
+  <figcaption>The internal path from discovery to fix. The last box is the one people forget: stopping the bleeding is obligatory, and reviewing the TOM afterwards is the part that stops it happening twice.</figcaption>
+</div>
+
+The quiz slides sharpen two details. First, the **data protection officer must always be notified** of a data breach, not only when the risk is high. Second, the DPO is informed **immediately and in as much detail as possible, ideally through the designated form** - not summarised, not delayed until someone is free to talk. And the thing that decides whether the authority or the data subjects have to be told is the resulting **risk for the rights and freedoms of the data subjects being moderate or high**, not whether damage has already materialised and not the controller's own preference.
+
+## 3 · Notifying the supervisory authority: Art. 33 GDPR
+
+**Art. 33 (1) GDPR** sets the duty on the controller: in the case of a personal data breach, notify the competent supervisory authority **without undue delay and, where feasible, not later than 72 hours after having become aware of it**, unless the breach is unlikely to result in a risk to the rights and freedoms of natural persons. Two halves of that sentence are easy to lose. The clock starts at **awareness**, not at the moment the incident happened. And the exemption is phrased as an exception, so the default position is that you notify.
+
+If the notification is **not made within 72 hours**, Art. 33 (1) does not make it impossible, but it must then be **accompanied by reasons for the delay**. Lateness therefore has to be explained in writing to the regulator, which is a very uncomfortable way to open a conversation.
+
+**Art. 33 (2)** covers the supply chain: a **processor** must notify the **controller** without undue delay after becoming aware of a breach. The processor does not go to the authority; it goes to the controller, who owns the decision.
+
+**Art. 33 (3)** says what the notification must contain, as a minimum:
+
+| Element | What has to be in it |
+|---|---|
+| Nature of the breach | A description of what happened, including where possible the categories and approximate number of **data subjects** concerned, and the categories and approximate number of **personal data records** concerned |
+| Contact point | The name and contact details of the **data protection officer**, or of another contact point where more information can be obtained |
+| Likely consequences | A description of the likely consequences of the breach |
+| Measures | The measures taken or proposed to address the breach, including where appropriate measures to **mitigate its possible adverse effects** |
+
+Two safety valves follow. Under **Art. 33 (4)**, where it is not possible to provide all of this at once, the information may be given **in phases** without undue further delay - so incomplete knowledge is not a reason to stay silent. And under **Art. 33 (5)** the controller must **document any personal data breach**, including the facts, its effects and the remedial action taken, in a form that lets the supervisory authority verify compliance. That is the legal anchor for the deck's rule that documentation happens for every breach, including the ones you decided not to report.
+
+## 4 · Telling the affected people: Art. 34 GDPR and its exceptions
+
+The threshold here is higher. Under **Art. 34 (1)**, only when the breach is likely to result in a **high risk** to the rights and freedoms of natural persons must the controller communicate it to the data subject, and then **without undue delay**. There is no 72-hour figure in Art. 34; the standard is speed.
+
+**Art. 34 (2)** sets the form and content: the communication must describe the nature of the breach **in clear and plain language** and contain at least the contact point, the likely consequences and the measures taken - that is, points (b), (c) and (d) of Art. 33 (3). The category counts that the authority receives are not required here; the person needs to understand what happened to them and what to do about it.
+
+<div class="sc-quad">
+  <div class="q green">
+    <div class="qh">Exception (a) <small>the data was already protected</small></div>
+    <ul>
+      <li>The controller had implemented appropriate technical and organisational protection measures</li>
+      <li>Those measures were actually <strong>applied to the affected data</strong></li>
+      <li>In particular, measures that render the data <strong>unintelligible to anyone not authorised</strong> to access it, such as <strong>encryption</strong></li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Exception (b) <small>the risk was neutralised afterwards</small></div>
+    <ul>
+      <li>The controller has taken subsequent measures</li>
+      <li>Those measures ensure the high risk is <strong>no longer likely to materialise</strong></li>
+      <li>This is the payoff for acting fast: containment can remove the duty to inform</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Exception (c) <small>disproportionate effort</small></div>
+    <ul>
+      <li>Individual communication would involve disproportionate effort</li>
+      <li>Then there must instead be a <strong>public communication or similar measure</strong></li>
+      <li>The people must be informed in an <strong>equally effective manner</strong>, so this is a change of channel, not a way out</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">The authority still decides <small>Art. 34 (4)</small></div>
+    <ul>
+      <li>If the controller has not communicated the breach to the data subjects, the supervisory authority may <strong>require</strong> it to do so</li>
+      <li>It considers the likelihood of a high risk itself</li>
+      <li>Or it may decide that one of the three conditions above is met</li>
+    </ul>
+  </div>
+</div>
+
+<Aside type="note" title="The rights the affected person can exercise anyway">
+The deck puts the catalogue of data subject rights immediately after the breach block, and it is worth having in mind when you write a communication, because a person who has just been told about a breach is likely to use one of them. They are: the **right of access** (Art. 15), the **right to rectification** (Art. 16), the **right to erasure** (Art. 17), the **right to data portability** (Art. 20), the **right to object** (Art. 21), the **withdrawal of data protection consent** (Art. 7 para. 3) and the **right to lodge a complaint with a supervisory authority** (Art. 77).
+</Aside>
+
+## 5 · Documentation duties: accountability you can hand over
+
+The documentation slide splits the obligations into two families. One is the **information you owe to people**, under Artt. 12 to 14 GDPR - what you tell them about the processing of their data. The other is the **internal record set** that proves the organisation knows what it is doing.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Information on data processing <small>Artt. 12-14 GDPR, given to the people</small></div>
+      <ul>
+        <li>Applicants</li>
+        <li>Employees</li>
+        <li>Customers</li>
+        <li>Website visitors</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Further documentation <small>kept by the organisation</small></div>
+      <ul>
+        <li>Records of processing activities</li>
+        <li>Data Protection Impact Assessment (DPIA)</li>
+        <li>Contract between joint controllers</li>
+        <li>Contract for order processing</li>
+        <li>Commitment to confidentiality</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Outward-facing transparency on the left, inward-facing evidence on the right. Both are documentation duties, and both are asked for when something goes wrong.</figcaption>
+</div>
+
+The deck then shows three concrete documents that most companies actually produce, and the difference between them is not their subject but **what the employee does with them**.
+
+| Document | What it does | How it is handled |
+|---|---|---|
+| **Data privacy guideline** | The managing director commits the company to data privacy and defines the goals, purpose and responsibilities | Presented to employees for their information |
+| **Data protection information for employees** | Management informs employees about how their own personal data is processed | Presented to employees for their information |
+| **Commitment to confidentiality** | Employees undertake to maintain data secrecy and confidentiality regarding personal data and other confidential data | Presented to employees **for signature** |
+
+Only the third is signed, and that is the point of the slide: a commitment to confidentiality is an obligation being accepted, while the other two are transparency being delivered.
+
+## 6 · Records of processing activities: Art. 30 GDPR
+
+The records of processing activities, RPAs, are the backbone of data protection documentation. The exercise behind them is to **identify every type of processing** that happens in the company - the deck's examples are personnel file management and online banking - and then to write one record for each. Sample templates are used for this, and the scale surprises people: depending on the size and business activity of a company, somewhere **between 20 and 300** such records are needed.
+
+The deck lists four things that are documented among others, and this short list is the one to memorise:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Type of personal data</span>
+  <span class="sc-chip violet">Storage period</span>
+  <span class="sc-chip amber">Legal basis</span>
+  <span class="sc-chip amber">Purpose</span>
+</div>
+
+The stated result is that it becomes **comprehensible in which processes and for what purpose data processing takes place**. That is exactly the accountability principle in operational form: not a promise that you are lawful, but a map that lets somebody check.
+
+**Art. 30 (1) GDPR** itself is longer, and since the deck cites the article, the full list of what a controller's record must contain is worth having:
+
+| Art. 30 (1) | Content required |
+|---|---|
+| (a) | Name and contact details of the controller, and where applicable the joint controller, the controller's representative and the data protection officer |
+| (b) | The purposes of the processing |
+| (c) | A description of the categories of data subjects and of the categories of personal data |
+| (d) | The categories of recipients to whom the data has been or will be disclosed, including recipients in third countries or international organisations |
+| (e) | Where applicable, transfers to a third country or international organisation, identifying it and, for transfers under the second subparagraph of Art. 49 (1), documenting suitable safeguards |
+| (f) | Where possible, the envisaged time limits for erasure of the different categories of data |
+| (g) | Where possible, a general description of the technical and organisational security measures referred to in Art. 32 (1) |
+
+Three more rules sit around that list. **Processors** keep their own record under Art. 30 (2), covering the categories of processing they carry out for each controller, third-country transfers and a general description of their security measures. Records must be **in writing, including in electronic form**, and must be **made available to the supervisory authority on request** - which is the moment the whole exercise pays for itself. And Art. 30 (5) exempts an enterprise employing **fewer than 250 persons**, but the exemption falls away if the processing is likely to result in a risk to rights and freedoms, if the processing is not occasional, or if it involves special categories of data under Art. 9 (1) or criminal conviction data under Art. 10. In practice most companies fall back into the duty through one of those three doors.
+
+The classroom example is the record for the **application and recruitment process**, and it names the elements the declaration has to contain: the name and contact details of the controller, the contact details of the controller and, where applicable, of the data protection officer, the purposes and legal basis, where relevant the recipients of the data, third-country transfers, the rights of the data subject including the right to complain, and, where processing rests on consent, the right to withdraw it. The deck also lists accounting processes as everyday candidates for their own records:
+
+<div class="sc-chips">
+  <span class="sc-chip">Travel expenses and expense reports</span>
+  <span class="sc-chip">Payroll accounting</span>
+  <span class="sc-chip">Financial accounting</span>
+  <span class="sc-chip">Online bank transfers</span>
+</div>
+
+## 7 · Service providers: two different pieces of paper
+
+Whenever somebody outside the company touches your premises or your systems, the deck distinguishes two situations, and the distinction is about whether processing personal data is the point of their job.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Contract for order processing <small>they process data for you</small></div>
+      <ul>
+        <li>Used with service providers who process personal data <strong>on a controller's behalf</strong></li>
+        <li>Requires submission of a description of the <strong>technical and organisational measures</strong> in place</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Obligation of confidentiality <small>they are simply near the data</small></div>
+      <ul>
+        <li>Used with service providers who mainly have other tasks and are <strong>not supposed to process</strong> personal data, for example logistics or cleaning</li>
+        <li>May bind them to confidentiality in the same way as employees, which is optional</li>
+        <li>Recommended in order to reduce the risk of liability</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The cleaner is not a processor, but the cleaner walks past unlocked screens. The confidentiality obligation is cheap insurance for exactly that gap.</figcaption>
+</div>
+
+## 8 · IT security is not the same thing as data protection
+
+The deck spends a whole slide separating two words that get used as synonyms, and the distinction is about **what is being protected**, not about how.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">IT security and data security <small>protects the systems</small></div>
+      <ul>
+        <li>Protects <strong>IT systems</strong> against unauthorised or unlawful processing, including access and disclosure</li>
+        <li>And against accidental loss, damage or destruction</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Data protection <small>protects the people</small></div>
+      <ul>
+        <li>Protects <strong>personal data</strong></li>
+        <li>And the <strong>rights and freedoms of natural persons</strong></li>
+        <li>Delivered through technical and organisational measures</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Same toolbox, different beneficiary. IT security keeps the machine safe; data protection keeps the person safe. The overlap is where the TOM live.</figcaption>
+</div>
+
+The threats the slide names are the ordinary ones, which fits the breach statistics from section 1:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Malware</span>
+  <span class="sc-chip amber">Ransomware</span>
+  <span class="sc-chip violet">Phishing</span>
+  <span class="sc-chip violet">Man in the middle attack</span>
+</div>
+
+## 9 · Choosing the measures: state of the art, risk and cost
+
+The deck's method slide for deciding **which** technical and organisational measures to implement puts three things in a line, and tells you to read Art. 25 GDPR.
+
+First, the **protection goals**: confidentiality, integrity, availability and authenticity. Second, the standard: **reasonable assurance according to the state of the art**, where state of the art means measures that correspond to current scientific and technical knowledge, are **feasible**, and are **available on the market**. That definition matters because it rules out both extremes: you cannot hide behind a laboratory technology nobody can buy, and you cannot stand still while the market moves. Third, the calibration: a **risk assessment** together with a **cost against benefit assessment**. Any **deviation from the state of the art is only permitted in exceptional cases, and it must be documented**.
+
+**Art. 32 (1) GDPR** phrases the same balance and then names concrete controls. The factors to take into account are the state of the art, the costs of implementation, the nature, scope, context and purposes of processing, and the risk of varying likelihood and severity for the rights and freedoms of natural persons. The measures it names as appropriate include:
+
+<ul>
+<li>Pseudonymisation and <strong>encryption</strong> of personal data</li>
+<li>The ability to ensure the ongoing <strong>confidentiality, integrity, availability and resilience</strong> of processing systems and services</li>
+<li>The ability to <strong>restore</strong> availability and access to personal data in a timely manner after a physical or technical incident</li>
+<li>A process for <strong>regularly testing, assessing and evaluating</strong> the effectiveness of the measures</li>
+</ul>
+
+Art. 32 (2) adds which risks to look at in particular - accidental or unlawful destruction, loss, alteration, unauthorised disclosure of or access to personal data - which is the Art. 4 (12) breach definition read backwards. Art. 32 (3) allows adherence to an approved code of conduct or certification mechanism to be used as an element of demonstrating compliance. Art. 32 (4) closes the human loop: anyone acting under the controller's or processor's authority who has access to personal data must not process it **except on instructions**, unless required to by law.
+
+Alongside this sits the pair of principles in **Artt. 25 and 32 GDPR**:
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Privacy by design <small>data protection by technology</small></div>
+      <ul>
+        <li>The controller implements TOM according to the <strong>state of the art</strong></li>
+        <li>The <strong>cost of implementation</strong></li>
+        <li>The <strong>nature, scope, context and purposes</strong> of processing</li>
+        <li>The <strong>likelihood and severity</strong> of the risks</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Privacy by default <small>data protection friendly default settings</small></div>
+      <ul>
+        <li><strong>Minimisation</strong> of processing</li>
+        <li>Processing only of data that is <strong>absolutely necessary</strong></li>
+        <li><strong>Rapid pseudonymisation</strong></li>
+        <li><strong>Transparency</strong></li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>By design is about the choices made when the system is built; by default is about what the system does when nobody changes a setting. Art. 25 (2) is explicit that the default must cover the amount of data, the extent of processing, the storage period and accessibility.</figcaption>
+</div>
+
+## 10 · Video surveillance: the hardest ordinary case
+
+The block opens the topic with two blunt questions: for what purposes may video recordings be made at all, and may the recordings be analysed to check whether **employees** behaved correctly? Everything that follows is the answer.
+
+**Two justifications** are available. Inside the **employment relationship** the basis is **Section 26 BDSG**, for example at factory gates or in a salesroom. For the **protection of the public** it is **Section 4 BDSG**, for example a public car park, a salesroom, or the entrance to an office building. The permitted **purposes** are preventing access by unauthorised persons, which is the exercise of domiciliary rights, and the prevention and prosecution of criminal offences such as theft and other property offences, whether committed by customers or by the company's own employees. The purpose must be **precisely named and documented in advance** - deciding afterwards what the camera was for is not available. And the GDPR simply does not apply to **cameras that are switched off**, so an authority cannot demand that they be dismantled, which the Higher Administrative Court of Rhineland-Palatinate held in its judgement of 25.06.2021, 10 A 10302/21.
+
+Whatever the basis, the surveillance must be **proportionate**, and the deck breaks that into the standard test:
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Suitable</div>
+    <ul>
+      <li>The surveillance must actually be capable of achieving the stated objective</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">No milder means</div>
+    <ul>
+      <li>There must be no other, less drastic measure that would work</li>
+      <li>Generally <strong>no secret filming or spying</strong></li>
+      <li><strong>No full evaluation</strong> of the footage, only the sequences actually in question</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Reasonable</div>
+    <ul>
+      <li>No excessive burden for the person concerned, which means real restrictions such as a limited <strong>storage period</strong> and a controlled <strong>camera orientation</strong></li>
+      <li>Inappropriate: complete monitoring of all training areas in a gym, Administrative Court Ansbach, judgement of 23.03.2022, AN 14 K 20.83</li>
+      <li>Reasonable: lawfully filmed property offences against employers, and employees may be <strong>openly</strong> filmed during checkout procedures, Federal Labour Court, judgment of 23.08.2018, 2 AZR 133/18</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Balanced and limited</div>
+    <ul>
+      <li>Is the surveillance limited in <strong>time, space and to certain groups of people</strong>?</li>
+      <li>Have the interests of the data subjects been weighed against the benefits?</li>
+      <li>Permissible where necessary for the exercise of <strong>domiciliary rights</strong> or of <strong>legitimate interests for specifically defined purposes</strong>, Section 4 (1) FDPA new</li>
+    </ul>
+  </div>
+</div>
+
+The two Ansbach and Federal Labour Court cases are worth remembering as a pair, because they mark the ends of the same line. Filming every training area of a gym is disproportionate because there is no escape from the camera. Openly filming a checkout is proportionate because the area is narrow, the purpose is a genuine property-offence risk, and the employees know.
+
+The **documentation** requirements for surveillance are a checklist, and the deck is explicit that missing them is itself a breach:
+
+<ul>
+<li>Labelling with a <strong>pictogram</strong></li>
+<li>Data protection <strong>information accessible</strong> to the data subjects</li>
+<li>A <strong>record of processing activities</strong> plus a description of the TOM</li>
+<li>Because of the severity of the intrusion, also a <strong>data protection impact assessment</strong></li>
+<li>A <strong>contract for commissioned processing</strong> with any service provider involved</li>
+<li>A <strong>limitation of storage</strong>: footage is kept until the purpose is fulfilled, judged objectively, with an obligation to review quickly. Storage for weeks or months may be necessary</li>
+</ul>
+
+There is also a hard duty to **delete once the purpose has been achieved**, under Section 4 (5) FDPA, and a **clearly recognisable notice before entering the monitored area**. The consequences are not theoretical: the deck notes that even one-off violations without continuation can trigger high fines, and gives the current case of the data protection commissioner of Lower Saxony against VW, with a fine of EUR 1 million.
+
+<Aside type="caution">
+**On the employee question the deck answers narrowly.** Surveillance in the employment relationship is possible under Section 26 BDSG, employees may be openly filmed during checkout procedures, and lawfully filmed property offences against the employer may be used. But there is generally no secret filming, and **no full evaluation** of the material - only the sequences in question. So the honest answer to may the recordings be analysed to see whether employees behaved correctly is: not as general behaviour monitoring, and only within a purpose that was defined and documented before the camera was switched on.
+</Aside>
+
+## 11 · The data protection impact assessment: Art. 35 GDPR
+
+A DPIA is required, under **Art. 35 (1)**, where a type of processing, in particular one using **new technologies**, is likely to result in a **high risk** to the rights and freedoms of natural persons. The assessment happens **prior to the processing**, and one assessment may cover a set of similar operations presenting similar risks. **Art. 35 (2)** requires the controller to seek the advice of the data protection officer where one is designated.
+
+**Art. 35 (3)** names three cases where a DPIA is required in particular: a systematic and extensive **evaluation of personal aspects** based on automated processing, including profiling, on which decisions with legal or similarly significant effects are based; processing **on a large scale of special categories** of data under Art. 9 (1) or of criminal conviction data under Art. 10; and **systematic monitoring of a publicly accessible area on a large scale**. Supervisory authorities publish lists of processing operations that do and do not require one.
+
+**Art. 35 (7)** sets the minimum contents, and the container example in the next section maps onto it almost line by line:
+
+| Art. 35 (7) | What must be in the assessment |
+|---|---|
+| (a) | A systematic description of the envisaged processing operations and purposes, including where applicable the **legitimate interest** pursued by the controller |
+| (b) | An assessment of the **necessity and proportionality** of the operations in relation to the purposes |
+| (c) | An assessment of the **risks to the rights and freedoms** of data subjects |
+| (d) | The **measures envisaged to address the risks**, including safeguards, security measures and mechanisms to protect the data and demonstrate compliance |
+
+Two follow-ups matter. Under **Art. 35 (11)** the controller must review, where necessary, whether processing is still being performed in line with the assessment, at least when the risk changes. And under **Art. 36 (1)**, if the DPIA indicates that the processing **would result in a high risk in the absence of mitigating measures**, the controller must consult the supervisory authority **before** processing. Reading those two together gives the practical rule: the DPIA is not a form you file, it is the document that decides whether you are allowed to start.
+
+## Worked example
+
+An incident of the most common kind, run against the deck's own timetable. The 72 hours is stated exactly as Art. 33 (1) gives it: **without undue delay and, where feasible, not later than 72 hours after having become aware of it.**
+
+**The incident.** On **Tuesday at 09:40**, an HR assistant sends the monthly payroll export to an external accounting firm and attaches the wrong file. The attachment is the full salary list for 140 employees, including names, bank account numbers and salary bands, and it goes to a distribution address at a supplier who has no business relationship with HR at all. The assistant notices at **10:15** when a reply arrives asking what the file is. Awareness for the purposes of Art. 33 (1) is therefore **Tuesday 10:15**, and the outer limit is **Friday 10:15**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Tue 10:15 - discovery<span class="sub">the assistant reports immediately to her supervisor and fills in the internal reporting form; the DPO is informed at once and in full detail</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Tue 10:40 - containment<span class="sub">recall attempted, the recipient asked in writing to delete and confirm, and the subsequent measures to prevent the situation getting worse are started, because those are obligatory</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Tue 12:00 - risk assessment<span class="sub">bank details and salaries for 140 identified employees, sent unencrypted, to an uncontrolled mailbox; this is not unlikely to result in a risk, and identity and payment fraud make a high risk plausible</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Tue 16:00 - Data Breach Notice drafted<span class="sub">nature of the breach, category and approximate number of data subjects and records, DPO contact point, likely consequences, and the measures taken and proposed</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Wed 09:00 - notified to the supervisory authority<span class="sub">well inside the 72 hours; anything still unknown is flagged and supplied in phases under Art. 33 (4)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Wed 11:00 - data subjects informed<span class="sub">because the risk is high, Art. 34 applies: plain language, contact point, likely consequences, measures, plus what each employee should watch for on their account</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Following weeks - TOM review<span class="sub">assessment of suitable technical and organisational measures to prevent similar breaches, and a review of the record of processing activities for payroll</span></div>
+  </div>
+  <figcaption>Discovery to notification to prevention. Note that containment starts before the risk assessment finishes - if it succeeds, it can bring the case within the Art. 34 (3) (b) exception.</figcaption>
+</div>
+
+| Hour | Question being answered | Owner | Output |
+|---|---|---|---|
+| Tue 10:15 | Has a breach occurred within Art. 4 (12)? | Employee and supervisor | Internal reporting form, DPO notified immediately and in detail |
+| Tue 10:40 | Can the exposure still be stopped or reduced? | IT and HR | Recall, written deletion request, confirmation sought |
+| Tue 12:00 | What is the risk to the rights and freedoms of the data subjects? | Person responsible, company and DPO | Route chosen: high risk, so Art. 33 and Art. 34 both apply |
+| Tue 16:00 | Do we have the four Art. 33 (3) elements? | DPO | Draft Data Breach Notice, gaps marked for phased delivery |
+| Wed 09:00 | Is the notice with the competent authority inside 72 hours of awareness? | Controller | Notification filed, no reasons for delay needed |
+| Wed 11:00 | Do the affected people need to act themselves? | Controller and HR | Communication in clear and plain language to 140 employees |
+| Later | Why was this possible, and what stops the next one? | Controller, DPO, IT | TOM assessment, updated RPA, training and address controls |
+
+**What goes into the internal record**, under Art. 33 (5) and the deck's rule that documentation applies to **every** data breach: the facts of what happened and when it was discovered, the categories and approximate numbers of data subjects and records affected, the risk assessment and the reasoning behind the level chosen, the remedial action taken, the effects observed, the notification itself with its timestamp, the communication sent to the data subjects, and the follow-up measures. If the assessment had instead come out as **unlikely or low risk**, everything above still gets written down; only the two notifications would fall away, and the record would then have to explain why the risk was judged low.
+
+## Case corner
+
+**The container depot camera, as a data protection impact assessment.** The class works from a filled Art. 35 template for a company in the container business, and it is a good specimen precisely because the processing is modest and the document still does the full analysis.
+
+**What the processing is.** A camera system for **real-time surveillance** of the depot premises. Images are transmitted live to a monitor in the interchange container, where the staff who handle the trucks sit and stay in radio contact with the stack driver loading and unloading containers. There is **no video recording**, no micro SD cards are used, and the role assignment in the system makes it impossible for those employees to record anything. The live picture shows customer trucks with their registration numbers, without the driver visible in the cabin, and every area where people usually move is **greyed out**. Pan and tilt are disabled; zoom is allowed by instruction only for loading or unloading. One of the three cameras is described down to the model, a dome network camera mounted on the maintenance and repair building, at 1,280 by 720 pixels and 30 frames per second, aimed exclusively at the depot premises with viewing angles of about 90 degrees in front of the workshop and about 80 degrees to the side, with public ground such as the street not covered. Screenshots and technical settings are attached as an appendix.
+
+**Purposes and legal basis.** Three purposes: optimising the loading process and operational procedure so dispatch staff can see how many trucks are ready and where the forklifts are, checking the **safe storage** of sea containers so there is no damage or danger to life and limb, and protecting property from break-ins, theft and vandalism. The legal basis is **legitimate interest based on the domiciliary right, Art. 6 (1) f GDPR**.
+
+**The risk situation with evidence.** This is the section that makes the document credible. Before the cameras, trucks queued on the public road for hours, and the tailbacks were a danger for rear-end collisions because drivers sometimes saw the end of the jam too late. That is a documented, specific harm, not a general wish for more security.
+
+**Necessity and proportionality.** Suitability: staff can see how many trucks wait and whether to load or unload, damage or fire on the containers becomes visible, forklifts are deployed accordingly, and at peak times customers are asked to arrive later, so backups on the public road are avoided. Milder means were tried first and are listed: fencing, security patrols, a large entrance gate controlling access, no-entry signs, bright lighting at night, and employees physically walking out to count trucks and dispatch them one by one. They did not solve it - backlogs persisted because counting the trucks did not tell anyone where on the site loading could happen, and on an 80,000 square metre site the security service repeatedly failed to catch the people damaging containers with graffiti.
+
+**The restrictions, which are the heart of the document.** Data minimisation through real-time monitoring only, with recording and storage functions switched off. Areas where people move blacked out or greyed out. Cameras fixed on the depot area and not panned. Zoom restricted by instruction to stored containers, never to persons. No remote access. Access to the live images limited to the staff in the interchange container. Anonymisation in the sense that only registration numbers are visible on customer trucks and cannot be assigned to a person. And signage at several points before entering, using the signs specified by the data protection authorities, plus a pictogram with a large camera sign on the ground.
+
+**Weighing of interests and risk.** The rights potentially affected are named explicitly: the right to protection from image transmissions, the right to one's own image, the general right of personality and freedom of movement. Against them stand faster handling without backlogs on the public road, detection and prevention of arson and damage, and safe container storage. The document notes that only truck drivers and the company's own employees in the depot area are affected, that there are **no behavioural or performance checks** of employees, that everyone can withdraw to unmonitored parts of the site, and that there are no walkways, break areas or similar retreat spaces in the monitored zone. Severity is therefore assessed as minor or negligible, probability as almost non-existent, and the overall prognosis as **low risk**.
+
+**Measures and the consultation question.** The guarantees repeat the restrictions and add the general TOM plus specific ones: a limited number of staff per shift in the interchange container, other people admitted only so that they cannot see the live images, an instruction to turn the monitor away from visitors and not to use the recording function, and a decision not to use the manufacturer's mobile apps. Safety precautions include regular camera software updates, a key held only by the interchange container staff, and the recording function disabled. Because these measures bring the risk down to a normal level, the document concludes there is **no obligation to consult the supervisory authority under Art. 36 GDPR**. Finally, verification is scheduled as **regular annual audits with corresponding documentation**, which answers the Art. 35 (11) review duty.
+
+**What makes it good, and where it is thin.** It is strong because the risk section cites a real, evidenced problem, because the milder means were actually tried and their failure is described, because the restrictions are technical and enforceable rather than promises, and because it reaches an explicit conclusion on Art. 36 instead of trailing off. It is weaker in two places worth noticing in an exam answer: the claim that truck registration numbers **cannot be assigned to any person** is asserted rather than argued, when a plate is exactly the kind of indirect identifier Art. 4 (1) has in mind; and the assurance that there is no performance or behaviour monitoring rests on instructions to staff and on a greyed-out overlay, both of which are settings someone could change, so the annual audit is doing a lot of work.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Write the list of your processing activities before anything happens.** Go function by function - recruitment, employees, customers, website, payroll, travel expenses, online banking - and open one record for each. Expect somewhere between 20 and 300, and use a template rather than inventing a format.
+
+2. **Fill each record with at least the four basics** - type of personal data, storage period, legal basis and purpose - then complete it against the Art. 30 (1) list, including recipients, third-country transfers, erasure deadlines and a general description of your security measures.
+
+3. **Decide who the responsible person is, and whether you have a DPO.** The breach chain only works if a name sits in the middle box, and the DPO must always be told about a breach, immediately and in detail.
+
+4. **Build the internal reporting form now, not on the day.** It should capture what happened, when it was discovered, which data and how many people are affected, what has already been done, and who was informed, because those are the Art. 33 (3) fields in disguise.
+
+5. **Write the risk rubric in advance.** Define what your organisation treats as unlikely or low, normal, and high risk to the rights and freedoms of data subjects, so that the assessment on the day is a judgement against a standard rather than an argument.
+
+6. **Rehearse the clock.** The limit runs from **awareness**, not from the incident, so practise a case and check you could file a Data Breach Notice inside 72 hours, knowing that lateness has to be explained with reasons for the delay and that partial information can be supplied in phases.
+
+7. **Encrypt what you can, and note why.** Under Art. 34 (3) (a), protection measures actually applied to the affected data, such as encryption that makes it unintelligible to unauthorised people, can remove the duty to inform the data subjects at all. That is the highest-return control on this list.
+
+8. **Paper the supply chain.** A contract for order processing, including a description of the TOM, for anyone processing personal data on your behalf, and a confidentiality obligation for the cleaners, logistics providers and others who are merely near the data.
+
+9. **Check whether anything you plan triggers Art. 35.** New technology with a high risk, systematic evaluation and profiling, large-scale special category data, or systematic monitoring of a publicly accessible area. If yes, do the DPIA before you start, seek the DPO's advice, and consult the supervisory authority if a high risk would remain without your mitigations.
+
+10. **If a camera is anywhere in your plan, do the whole checklist.** Name and document the purpose in advance, test suitability, milder means and reasonableness, restrict time, space and the people covered, put up the pictogram and accessible information, write the record of processing activities and the DPIA, set a storage limit tied to the purpose, and delete when the purpose is achieved.
+
+11. **Schedule the review.** Annual audits with documentation, plus a re-assessment of the TOM after every incident, and a re-check of the DPIA whenever the risk changes.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Personal data breach | A security breach leading to accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to personal data, under Art. 4 (12) GDPR |
+| Risk to rights and freedoms | The test that decides everything: how badly the incident or the processing could hurt the affected people, graded as unlikely or low, normal, or high |
+| Data Breach Notice | The notification sent to the supervisory authority under Art. 33 GDPR when a breach is not unlikely to result in a risk |
+| The 72 hours | Notification to the authority without undue delay and, where feasible, no later than 72 hours after becoming **aware** of the breach; if later, reasons for the delay must accompany it |
+| Communication to the data subject | Telling the affected people themselves, required under Art. 34 only when the breach is likely to result in a **high** risk, and then without undue delay and in clear and plain language |
+| Art. 34 (3) exceptions | No need to tell the individuals if the data was protected, for example encrypted; if later measures made the high risk unlikely to materialise; or if it would take disproportionate effort, in which case a public communication is used instead |
+| Documentation of the breach | The internal record of the facts, effects and remedial action, kept for **every** breach including unreported ones, under Art. 33 (5) |
+| Accountability in practice | Not being compliant but being able to prove it, which in daily work means records, contracts, assessments and signed commitments |
+| Records of processing activities (RPA) | One record per type of processing, listing at least the type of data, storage period, legal basis and purpose, plus the fuller Art. 30 (1) contents; roughly 20 to 300 per company |
+| Commitment to confidentiality | The document employees actually **sign**, undertaking to keep personal and other confidential data secret |
+| Contract for order processing | The contract with a service provider who processes personal data on your behalf, which includes a description of their technical and organisational measures |
+| TOM | Technical and organisational measures, the concrete controls that protect data, chosen against the state of the art, cost, the nature of the processing and the likelihood and severity of risk |
+| State of the art | Measures matching current scientific and technical knowledge that are feasible and available on the market; deviating from it is exceptional and must be documented |
+| Privacy by design | Building data protection into the technology itself, Art. 25, judged on state of the art, cost of implementation, nature, scope, context and purposes, and likelihood and severity of risks |
+| Privacy by default | Data protection friendly default settings: minimised processing, only absolutely necessary data, rapid pseudonymisation and transparency |
+| Proportionality (video) | The camera must be suitable, have no milder alternative, and be reasonable, meaning limited in time, space and covered persons, with interests balanced |
+| Data protection impact assessment (DPIA) | The assessment done **before** high-risk processing starts, containing a description of the processing, a necessity and proportionality assessment, a risk assessment and the measures against those risks |
+| Prior consultation | Going to the supervisory authority before processing when the DPIA shows a high risk would remain without the controller's mitigating measures, Art. 36 |
+
+## Test yourself
+
+1. Give the Art. 4 (12) definition of a personal data breach, and name the single most common cause of reported breaches with its share.
+2. **State the notification deadline for the supervisory authority exactly as the GDPR gives it**, say when the clock starts, and say what must happen if the notification is late.
+3. A breach occurs and you assess the risk as low. What, if anything, do you have to do?
+4. What are the four minimum contents of a notification to the supervisory authority, and which of them drop out when you communicate to the data subject instead?
+5. Name the three exceptions in Art. 34 (3) that remove the duty to inform the affected individuals.
+6. List the documentation requirements the deck sets out for video surveillance, and say what makes surveillance disproportionate, using one of the two cases.
+
+<Aside type="note" title="Answers">
+1. A breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to personal data transmitted, stored or otherwise processed. The most common cause is **transmission to the wrong recipients at 47 percent**, well ahead of cyber attacks at 14 percent.
+2. Without undue delay and, where feasible, **not later than 72 hours after having become aware of it**, unless the breach is unlikely to result in a risk to the rights and freedoms of natural persons. The clock starts on **awareness**, not on the incident. If the notification is not made within 72 hours it must be **accompanied by reasons for the delay**.
+3. You notify nobody - not the authority, not the data subjects - but you still **document** the breach, because documentation applies to every data breach. The record covers the facts, the effects and the remedial action, and it has to let the authority verify your reasoning. The obligatory subsequent measures to prevent the situation getting worse, and the assessment of suitable TOM to prevent similar breaches, still apply.
+4. The nature of the breach including the categories and approximate numbers of data subjects and of records concerned; the name and contact details of the DPO or another contact point; the likely consequences; and the measures taken or proposed, including mitigation. For the data subject, Art. 34 (2) requires only points (b), (c) and (d), so the category and volume figures fall away, and it must be in clear and plain language.
+5. First, appropriate technical and organisational protection measures were in place and were applied to the affected data, in particular ones that make it unintelligible to unauthorised persons, such as encryption. Second, the controller has since taken measures ensuring the high risk is no longer likely to materialise. Third, individual communication would involve disproportionate effort, in which case a public communication or similar measure must inform people in an equally effective way.
+6. A pictogram, data protection information accessible to data subjects, a record of processing activities plus a description of the TOM, a data protection impact assessment because of the severity of the intrusion, a contract for commissioned processing with any service provider, and a storage limit running until the purpose is fulfilled with an obligation to review quickly, though weeks or months may be necessary. Missing documentation is itself a breach and even one-off violations can bring high fines, as in the case of the Lower Saxony authority against VW at EUR 1 million. On disproportionality, the Administrative Court Ansbach held that complete monitoring of all training areas in a gym was inappropriate; by contrast the Federal Labour Court accepted that employees may be openly filmed during checkout procedures.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- A **personal data breach** is any security breach causing accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to personal data, Art. 4 (12). Most of them are mundane: **47 percent** are transmissions to the wrong recipient, cyber attacks only 14 percent.
+- One assessment drives everything: the **risk to the rights and freedoms of the data subject**. Low means no report but still document. Normal means the **supervisory authority within 72 hours**, Art. 33. High means the authority **and** the data subjects **without delay**, Art. 34.
+- The 72 hours runs from **awareness**, is a mere response period, and a late notification must carry **reasons for the delay**. A processor tells the controller, not the authority.
+- The notice must give the nature of the breach with category and approximate numbers, the DPO or contact point, the likely consequences and the measures taken or proposed. Information may be supplied **in phases**.
+- The **DPO is always informed** of a breach, immediately and in as much detail as possible, ideally on the designated form. Subsequent measures to stop things getting worse are obligatory, followed by a TOM review.
+- Art. 34 (3) removes the duty to tell individuals if the data was protected, for example **encrypted**, if later measures made the high risk unlikely, or if the effort would be disproportionate, in which case a **public communication** replaces it.
+- **Documentation is accountability made checkable**: information to applicants, employees, customers and website visitors under Artt. 12 to 14, plus records of processing activities, DPIAs, joint-controller contracts, order-processing contracts and signed confidentiality commitments.
+- **Records of processing activities**, Art. 30: one per type of processing, at least type of data, storage period, legal basis and purpose, and between **20 and 300** of them depending on the company. Kept in writing and produced to the authority on request.
+- **IT security** protects the systems; **data protection** protects the personal data and the people. Same measures, different beneficiary, against malware, ransomware, phishing and man-in-the-middle attacks.
+- **TOM** are chosen for confidentiality, integrity, availability and authenticity, at the **state of the art**, meaning current knowledge that is feasible and available on the market, balanced by risk and cost, with any deviation documented. Art. 32 names pseudonymisation and encryption, ongoing confidentiality, integrity, availability and resilience, timely restoration, and regular testing.
+- **Privacy by design and by default**, Artt. 25 and 32: build protection into the technology, and make the default setting the minimal one.
+- **Video surveillance** needs a justification, Section 26 BDSG in employment or Section 4 BDSG for public protection, a purpose named and documented in advance, proportionality with no milder means and no full evaluation, a pictogram and accessible information, an RPA, a DPIA, a storage limit and deletion once the purpose is achieved.
+- A **DPIA** is required before high-risk processing and must contain a description of the processing and purposes, a necessity and proportionality assessment, a risk assessment and the measures against the risks. If a high risk would remain without your mitigations, consult the authority first under Art. 36.
+</Aside>
+
+*Next: [Liability & International Transfers →](/learnings/mba/legal-aspects-of-technology-management/06-liability-and-international-transfers/) - who carries the risk, and what happens when data leaves the EU.*

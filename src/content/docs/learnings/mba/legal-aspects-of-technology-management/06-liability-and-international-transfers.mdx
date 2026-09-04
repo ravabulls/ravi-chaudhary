@@ -1,0 +1,532 @@
+---
+title: "Liability, Accountability and International Transfers"
+description: "Who actually carries data protection liability inside a company - overall responsibility with the board, management or partners, the obligation of legality, the two-step organise-then-review procedure, when an employee is personally liable and when the law lets them off, the two GDPR fine ceilings of 10 million or 2 per cent and 20 million or 4 per cent of worldwide turnover, the accountability duty to be able to demonstrate compliance, the eleven duties that make up the evidence file, the concrete daily habits from clean desk to e-mail, and the international transfer problem - adequacy decisions, standard contractual clauses and what Schrems II decided about the Privacy Shield."
+sidebar:
+  label: "6 · Liability & Transfers"
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The previous chapter was about what happens when something goes wrong. This one is about who pays for it, and about the far less dramatic question that decides most cases in practice: can you prove you were doing the right thing before it went wrong? Data protection law does not really ask whether you meant well. It asks the organisation to be arranged in such a way that violations do not happen, and it asks you to produce the paperwork showing that arrangement exists.
+
+The session works through that in three layers. First the **allocation of responsibility**: the board or management carries the overall duty, a compliance organisation has to exist, individual employees carry a graded and mostly quite mild personal exposure, and the person or body legally on the hook towards the outside world is the **controller**. Second the **evidence layer**: the eleven things a company has to have in place, plus a long list of very ordinary habits, the ones about locking your screen, filling in the recipient field last, and not telling a caller anything over the phone. Third the layer that goes beyond the company's own walls: what happens when the personal data leaves the European Union altogether.
+
+That last layer is where the seminar hands out a court judgement rather than a slide. **Schrems II**, decided by the Court of Justice on 16 July 2020, killed the EU-US Privacy Shield, kept standard contractual clauses alive, and in doing so shifted a large piece of work onto every company that signs a cloud contract: you now have to look at the destination country's surveillance law yourself, before you transfer anything.
+
+<Aside type="tip">
+**The one idea to carry through.** Responsibility in data protection is **organisational before it is personal**. The company must be organised and supervised so that no violations occur, and the controller must be able to **demonstrate** that, because the burden of proof sits on the controller and not on the person complaining. Everything else in this chapter - the fine ceilings, the eleven duties, the clean desk, the transfer assessment - is a different answer to the same question: what evidence can you put on the table?
+</Aside>
+
+## 1 · Where responsibility sits: board, management, partners
+
+The deck opens the liability block with a very short and very blunt slide. Overall responsibility does **not** sit with the IT department, and it does not sit with whoever happened to touch the data. It sits at the top.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Overall responsibility<span class="sub">lies with the board, the management or the partners</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Obligation of legality<span class="sub">the company has to be organised and supervised in such a way that no violations of the law occur</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Organisational duty<span class="sub">only fulfilled if a compliance organisation designed for loss prevention and risk control is established</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Personal liability towards the company<span class="sub">board members are liable for damages towards the stock corporation under § 93 (2) sentence 1 AktG; for the management of a limited liability company, § 43 (1) of the Limited Liability Company Act</span></div>
+  </div>
+  <figcaption>The chain the deck draws. Note the middle step: the duty is not discharged by intending lawful conduct, it is discharged by building an organisation for loss prevention and risk control.</figcaption>
+</div>
+
+Two things are worth underlining here. First, the phrase **lawful conduct** is doing real work: the standard is that the enterprise is set up and supervised so that violations of the law do not occur, which is an organisational standard rather than a personal one. Second, the liability provisions cited run **towards the company**, not towards the outside world. A director who fails to organise the company properly can be made to answer to the corporation itself for the damage, which is a separate track from the fines and the compensation claims in section 5.
+
+## 2 · The two-step procedure: organise and prevent, then review
+
+The deck turns the lawful-conduct requirement into a two-step procedure, and it is worth learning as two steps rather than as one long checklist, because the second step is the one companies forget.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Step 1: organisation and prevention <small>build it</small></div>
+      <ul>
+        <li>Determine responsibilities - who owns what</li>
+        <li>Check the actual state - what is really happening today</li>
+        <li>Carry out a risk assessment</li>
+        <li>Define measures, for example <strong>anonymisation</strong>, an <strong>ISMS</strong> (information security management system), and an <strong>emergency and incident response concept</strong></li>
+        <li>Documentation</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Step 2: review <small>check that it is still true</small></div>
+      <ul>
+        <li>Compliance with the measures that were defined</li>
+        <li>Controls and audits, for example <strong>stress tests</strong></li>
+        <li>Reporting</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The two-step procedure the deck derives from the lawful-conduct ruling. Step 1 without step 2 is a folder of good intentions; the review is what turns it into evidence.</figcaption>
+</div>
+
+## 3 · How the data protection organisation is wired
+
+The deck gives a structure diagram for the data protection organisation inside a company. The labels on it are: **Controller (Management)** at the top, a **delegation** line running downwards, **data protection coordinators**, several **coordination** links, **consulting** links, and a **report** line running back up.
+
+Read as a shape, that says something quite specific. The controller, which the deck identifies with management, stays legally responsible and **delegates** operational work downwards to coordinators sitting in the business units. Those coordinators **coordinate** sideways with each other. Advice flows as **consulting**, and information flows back up as a **report**. Delegation moves the work; it does not move the responsibility, which is exactly why the overall duty in section 1 stays at the top of the chart.
+
+<Aside type="caution">
+That slide is a diagram, and what came through to me is the set of labels rather than the arrows. I have described the roles the labels name and the direction the words themselves imply, and I have not drawn in any reporting line the slide does not label.
+</Aside>
+
+## 4 · When is an employee personally liable?
+
+This is the slide most people in the room actually want, and the answer is more generous to employees than they expect. The deck sets out three degrees of fault, each with its own consequence.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Simple careless action <span class="n">slight negligence</span></div>
+    The employee is <strong>exempt from liability</strong> in the event of damage.
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Contributory negligence <span class="n">the middle band</span></div>
+    The employee may be liable <strong>on a pro-rata basis</strong>, according to the amount of his or her contribution to the damage.
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Gross negligence or wilful intent <span class="n">the top band</span></div>
+    The employee is <strong>usually liable</strong>.
+  </div>
+</div>
+
+The logic is that the employer sets up the working conditions, chooses the systems and gives the instructions, so it also carries the ordinary operating risk of a person making an ordinary mistake. The further your conduct moves away from an ordinary mistake and towards deliberately ignoring what you were told, the more of the damage comes back to you.
+
+<Aside type="note" title="How I read the slide">
+Page 44 is a three-column figure: the three degrees of fault sit as headings and the three consequences sit underneath them. I have paired each degree with the consequence that belongs under it. Everything in the table above is the slide's own wording rephrased; I have not added a fourth category or any monetary cap, because the deck gives none.
+</Aside>
+
+This is also where the **instruction** point bites. Two of the daily-work slides say the same thing in the same words: violating internal specifications, the example given being the use of unauthorised software, **can trigger joint liability**. So the training and the internal rules are not decoration. They are what turns a mistake into something that can be characterised as more than simple carelessness, and they are the reason **data protection trainings** appear in the list of duties in section 8.
+
+## 5 · What the controller faces: two directions at once
+
+The deck defines the **controller** in a footnote, and it is a definition worth memorising because it decides who is exposed: the controller is **whoever determines the purposes and means of the data processing**. Once you are the controller, a violation of the data protection rules can come at you from two directions simultaneously.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">From the data subject <small>a private-law claim</small></div>
+      <ul>
+        <li>Compensation for damages</li>
+        <li>Compensation for pain and suffering</li>
+        <li>And the sting: the <strong>controller bears the burden of proof</strong> and must excuse himself</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">From the authority <small>a public-law response</small></div>
+      <ul>
+        <li>A substantial fine</li>
+        <li>Further powers: <strong>instructions</strong></li>
+        <li>Further powers: <strong>data protection audits</strong></li>
+        <li>Further powers: <strong>warnings</strong></li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Consequences for the controller. The two tracks are independent - being fined does not settle the individual's compensation claim, and paying compensation does not stop the authority ordering an audit.</figcaption>
+</div>
+
+The reversed burden of proof is the single most practical line on that slide. In an ordinary claim you would expect the person complaining to prove the company did something wrong. Here it runs the other way: the controller has to demonstrate that it is not responsible. **Art. 82 GDPR**, which the deck lists as the liability article, says exactly that - anyone who has suffered material or non-material damage from an infringement has a right to compensation from the controller or processor, and the controller or processor is exempt only if it **proves** it is not in any way responsible for the event that caused the damage. That is why the evidence file in section 8 matters more than any single control.
+
+## 6 · The GDPR liability framework: the two fine ceilings
+
+Since the GDPR came into force, the deck notes, very high penalties can be imposed for breaches of data protection rules. There are two ceilings, and which one applies depends on which kind of obligation you broke. Each is expressed as a fixed euro amount **or** a percentage of turnover, whichever is higher in the case of a company.
+
+| What was breached | The ceiling | Example the deck gives |
+|---|---|---|
+| **General obligations** | Up to **10 million EUR**, or for companies up to **2 per cent** of the total annual turnover achieved worldwide | Having no appropriate technical and organisational measures in accordance with the current state of the art |
+| **The processing principles of Art. 5 GDPR** | Up to **20 million EUR**, or for companies up to **4 per cent** of the total annual turnover achieved worldwide | Transparency, lawfulness, purpose limitation, data minimisation |
+
+Notice the ranking that is built into those two numbers. Failing to secure the data properly is expensive. Processing it on a wrong basis, for a purpose you did not declare, in quantities you did not need, is twice as expensive - because that is not a control that failed, that is the whole permission to process being wrong. The deck points you at **Artt. 83 and 84 GDPR** for the turnover rules, and the quiz reinforces the point by asking which scopes penalty fees may arise to, with **up to 10 million EUR**, **up to 20 million EUR** and **up to 4 per cent of the total worldwide annual turnover of the preceding financial year** as the correct options, and the two answers beginning with *starting from* as the traps.
+
+## 7 · What the fines have actually looked like
+
+The deck backs the ceilings with real numbers, from a DLA Piper International LLP report titled *GDPR fines and data breach survey: January 2021*. First a country ranking of the fines imposed between 2018 and 2021.
+
+| Country | Total fines imposed, 2018 to 2021 |
+|---|---|
+| Italy | EUR 69,328,716 |
+| Germany | EUR 69,085,000 |
+| France | EUR 54,436,300 |
+| United Kingdom | EUR 44,221,000 |
+| Spain | EUR 14,490,094 |
+| Sweden | EUR 11,500,000 |
+| Bulgaria | EUR 3,186,975 |
+| Netherlands | EUR 2,540,000 |
+| Poland | EUR 1,705,683 |
+| Hungary | EUR 980,000 |
+
+Then the individual cases, which are more instructive than the totals because you can see what kind of behaviour attracts what size of penalty.
+
+| Fine | Year | Company | What happened |
+|---|---|---|---|
+| EUR 225 million | 2021 | WhatsApp | Violation of information obligations, in particular regarding data transfer to other Facebook companies |
+| EUR 60 million | 2022 | Facebook | No option to reject cookies on the Facebook website as easily as accepting them |
+| EUR 35 million | 2020 | H&M Hennes and Mauritz | Since 2014, private circumstances of the service centre workers had been extensively recorded and permanently stored on a drive |
+| EUR 6.3 million | 2021 | Grindr (dating app) | Personal data (GPS location, profile information) and special category personal data (sexual orientation) unlawfully transferred to various third parties for advertising purposes |
+| EUR 901 thousand | 2021 | Vattenfall Europe Sales GmbH | Non-transparent data matching in contract enquiries for new customer special contracts, in roughly 500 thousand cases |
+| EUR 170 thousand | 2019 | A school authority | Access data of 35,000 students and employees at the city's schools were openly accessible because of inadequate security measures |
+
+Read the incident column as a list of the things that get you fined and a pattern appears. Two of the six are about **telling people what you do** - the information obligation and the cookie rejection option. Two are about **collecting far more than you need for far longer than you need it**. One is about **passing special category data on** without a basis. One is about **not securing it**. Those are the Art. 5 principles, one failure each.
+
+<Aside type="caution">
+The original slide table also has a **Country** column, but the country values did not come through in the copy I worked from, so I have left that column out rather than guess which regulator issued which fine.
+</Aside>
+
+## 8 · Accountability: being able to demonstrate it
+
+The deck's own principles slide lists legality, transparency, purpose limitation, data minimisation, accuracy, storage limitation, and integrity and confidentiality - and it tells you to read **Art. 5 GDPR** for yourself. When you do, you find one more paragraph that is not on the slide but is the hinge of this whole chapter: **Art. 5 (2) GDPR** provides that the controller is responsible for the principles in paragraph 1 **and must be able to demonstrate compliance with them**. That is the accountability principle, and it is the legal source of the reversed burden of proof in section 5.
+
+**Art. 24 GDPR**, one of the articles the seminar's freeform assignment tells you to read, spells out what that means operationally: taking into account the nature, scope, context and purposes of the processing and the risks for people's rights and freedoms, the controller has to implement appropriate technical and organisational measures **to ensure and to be able to demonstrate** that processing is performed in accordance with the Regulation, and those measures have to be reviewed and updated where necessary. Where it is proportionate, they include implementing appropriate data protection policies. Adherence to an approved code of conduct or an approved certification mechanism can be used as **an element** by which to demonstrate compliance.
+
+So what is the evidence? The deck answers with a numbered list of the duties arising under the GDPR, and this list is the single most exam-friendly thing in the whole block. Learn it as the contents page of the folder you would hand an inspector.
+
+| No. | The duty |
+|---|---|
+| 0 | Data protection management system |
+| 1 | Appointment of a data protection officer |
+| 2 a) | Data protection guideline |
+| 2 b) | Obligation to maintain confidentiality |
+| 3 | Duties to provide information (privacy policy) |
+| 4 | Declarations of consent |
+| 5 | Records of processing activities |
+| 6 | Contracts with service providers |
+| 7 | Data protection violations (documentation) |
+| 8 | Security in IT and TOMs |
+| 9 | Exercise of rights of data subjects |
+| 10 | Data protection trainings |
+
+Three of those are documents the deck describes elsewhere, and they are easy to mix up, so here is the distinction. The **data privacy guideline** is the document with which the managing director commits to data privacy and defines the goals, purpose and responsibility. The **data protection information for employees** is the document with which management tells employees how their own personal data is processed. The **commitment to confidentiality** is the document with which employees undertake to maintain data secrecy and confidentiality regarding personal data and other confidential data. And on the service provider side, a **contract for order processing** is used with providers who process personal data on the controller's behalf, and it includes a description of the technical and organisational measures in place, whereas an **obligation of confidentiality** is used with providers whose main job is something else and who are not supposed to process personal data at all - logistics, cleaning and so on. That second one may bind them in the same way as employees, it is optional, and the deck recommends it precisely because it **reduces the risk of liability**.
+
+## 9 · A typical working day
+
+Now the section changes register completely. Having spent six slides on millions of euros, the deck spends the next twelve on locking your screen. That contrast is the pedagogical point: the fines in section 7 were nearly all caused by behaviour at this level.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Breaks<span class="sub">lock the screen with the Windows key plus L; set up an automatic screen saver with password lock</span></div>
+    <div class="sc-node violet">Meetings<span class="sub">keep USB sticks safe, encrypt them, delete after use; at the end, wipe the whiteboard and the flipchart</span></div>
+    <div class="sc-node slate">Printing<span class="sub">if no security kit is installed, monitor the printing process, prevent unauthorised access, and empty the output trays</span></div>
+    <div class="sc-node green">End of the workday<span class="sub">lock the office door; dispose of documents by shredder or document destruction container</span></div>
+  </div>
+  <figcaption>Data protection across one working day. Every item is about the moment personal data sits unattended somewhere: on a screen, on a flipchart, in a printer tray, on a desk overnight.</figcaption>
+</div>
+
+The deck then names seven areas where it wants specific habits, and the rest of this block works through them.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Clean desk</span>
+  <span class="sc-chip violet">Password</span>
+  <span class="sc-chip amber">Mobile work</span>
+  <span class="sc-chip amber">Videoconferencing</span>
+  <span class="sc-chip amber">Screen sharing</span>
+  <span class="sc-chip green">Information to authorities</span>
+  <span class="sc-chip green">E-mails</span>
+</div>
+
+## 10 · Clean desk, passwords, mobile working
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Clean desk policy <small>nothing left lying about</small></div>
+    <ul>
+      <li>Never leave documents containing personal data on your desk</li>
+      <li>Always store documents with confidential content somewhere safe, for example lockable cupboards and drawers</li>
+      <li>Handle storage media such as USB sticks with care and do not leave them out in the open</li>
+      <li>No password Post-its. If you absolutely have to write a password down, keep it only in a locked drawer or cabinet - and the slide adds telephone numbers, names and so on in brackets, as things that get written down the same careless way</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Password policy <small>one per application</small></div>
+    <ul>
+      <li>One password per application - avoid using the same one in several places</li>
+      <li>Change the password if you suspect it has been disclosed</li>
+      <li>Secrecy: do not pass passwords on, neither verbally nor in writing</li>
+      <li>Only use secure password managers that the company has tested</li>
+      <li>Manage and save passwords securely</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Mobile devices <small>phone, notebook, tablet</small></div>
+    <ul>
+      <li>Use privacy screen protectors so people cannot read your screen from the side</li>
+      <li>Only install secure apps that the company has approved</li>
+      <li>Bluetooth and Wi-Fi: generally deactivated, switched on only to use a service</li>
+      <li>Use encrypted Wi-Fi connections</li>
+      <li>Connect to the company network only through a VPN, a virtual private network</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Devices when not in use <small>the three places they get lost</small></div>
+    <ul>
+      <li>Car: store the device out of sight, for example in the boot</li>
+      <li>Hotel room: use the room safe when you leave the room without the device</li>
+      <li>Travelling by taxi, train or plane: check before you get out</li>
+    </ul>
+  </div>
+</div>
+
+**Videoconferencing and screen sharing** share the same opening rule, and the deck states it twice on purpose. Use only tools and systems approved by IT, the example given being MS Teams, because for those approved tools all the necessary data protection documentation - the records of processing activities, the contracts with the service providers, and the settings - has been checked and made secure. And then the sentence that connects this back to section 4: **violating the internal specifications, for instance by using unauthorised software, can trigger joint liability.**
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Videoconferencing <small>recording and framing</small></div>
+      <ul>
+        <li>Recording images, sound or chat histories is permitted <strong>only with the express consent of all participants</strong></li>
+        <li>That consent must be <strong>documented for evidence purposes</strong></li>
+        <li>Without consent: delete everything after the conference ends</li>
+        <li>Field of view: pay attention to what is actually visible to the camera, and therefore to the people you are talking to</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Screen sharing <small>what else is on your screen</small></div>
+      <ul>
+        <li>Make sure the transmission is encrypted</li>
+        <li>Switch other applications off during the conference</li>
+        <li>Close files that are not needed, so nothing unwanted gets shown</li>
+        <li>Disable e-mail notifications and other push messages and pop-ups</li>
+        <li>Share a <strong>single application window</strong>, never the entire screen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The two conferencing slides. Consent has to be documented, not merely obtained, because accountability means proving it later.</figcaption>
+</div>
+
+## 11 · Authorities on the phone, and e-mail
+
+The deck sets up a case: an authority, for example the police or the public order office, calls and asks for data. There are two halves to the answer - when disclosure is permissible at all, and how you handle the call regardless.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Permissible grounds <small>the authority must state purpose plus legal basis</small></div>
+      <ul>
+        <li>Information given on the basis of a legal provision, for example in tax or social law</li>
+        <li>The interest of the person concerned, the prevention of danger, national security, the prosecution of criminal offences, traffic offences, or the exercise of public law powers</li>
+        <li>Data exchange in order to implement the employment contract, for instance with the tax office, health insurance or social security</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Principles for handling the call <small>whatever the ground</small></div>
+      <ul>
+        <li><strong>No information on the phone</strong></li>
+        <li>Choose a secure way to transfer the data</li>
+        <li>Always ask for the purpose</li>
+        <li>If you are uncertain, consult the data protection officer</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Two conditions the authority must supply, purpose and legal basis, and four rules you follow regardless. Nobody who is genuinely entitled to the data will object to receiving it through a secure channel instead of over the telephone.</figcaption>
+</div>
+
+E-mail gets two slides, one for sending and one for receiving, because the risks run in opposite directions. Sending, the risk is that you disclose data to the wrong person. Receiving, the risk is that someone gets into your systems.
+
+| Sending e-mails | Receiving e-mails |
+|---|---|
+| Check the attachments before sending: are they actually attached, and are they the right ones for **this** recipient? If necessary, label attachments with the name of the recipient company | Be cautious with e-mails that ask you to open file attachments such as pdfs, docs, zips or exe files |
+| Only pass confidential information to external service providers **with whom a confidentiality agreement exists** | Be cautious with e-mails that ask you to click on links |
+| Only pass confidential information in encrypted form, or split it between different channels - the deck's example is the user name by e-mail and the password by telephone | Be cautious with e-mails that ask you to enter login data after clicking a link, for instance to OneDrive or Google Drive |
+| **Fill in the recipient field last** | Be cautious with e-mails that ask you to install programmes |
+| Check the recipient addresses before sending | Slow down: stay calm even with urgent-sounding e-mails, and take the time to decide whether it is trustworthy |
+
+The receiving slide then makes a point that is easy to nod at and hard to actually do. Stay sceptical about attachments and links **even if** the sender, including an internal one, is apparently known; even if the e-mail is worded correctly; even if the sender's address appears correct and matches the name; even if the signature is correct; and even if the message history and conversation thread look authentic. Every one of those is a signal an attacker can fake, so none of them is a reason to trust.
+
+The deck's conclusion on e-mail is four rules:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Do not open attachments or links if you were not expecting documents from that contact</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">If in doubt, ask by telephone</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Or send a fresh e-mail to the contact to check that the message is genuine - and do <strong>not</strong> use the reply-to button</div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Have the attachments and links checked by the anti-virus software</div>
+  </div>
+  <figcaption>Why the reply button is banned: replying goes back to whatever address the attacker put in the message, so a fake conversation verifies itself. A fresh e-mail goes to the address you already had.</figcaption>
+</div>
+
+## 12 · Sending personal data out of the EU
+
+Now the boundary problem. Everything so far assumed the data stays inside a legal system where the GDPR applies. The moment it leaves, the Regulation's protection would evaporate unless something is done about it, and **Art. 44 GDPR** is the provision that does something about it: a transfer to a third country may take place only if the conditions of that chapter are met by the controller and the processor, **including for onward transfers** from that third country to another, and all of those provisions must be applied so that the level of protection guaranteed by the Regulation **is not undermined**.
+
+So the whole architecture of international transfers is built to answer one question: how do we keep the European level of protection attached to the data after the data has left Europe? There are, in the order you check them, three answers.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Adequacy decision <span class="n">Art. 45 GDPR</span></div>
+      The Commission decides that a third country, a territory, a specified sector within it, or an international organisation ensures an <strong>adequate level of protection</strong>. If it has, the transfer may take place and needs <strong>no specific authorisation</strong>. The implementing act must provide for a periodic review at least every four years.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Appropriate safeguards <span class="n">Art. 46 GDPR</span></div>
+      In the absence of an adequacy decision, it falls to the controller or processor established in the EU to <strong>provide appropriate safeguards</strong>, together with enforceable rights and effective legal remedies for the data subjects. <strong>Standard data protection clauses adopted by the Commission</strong> are the route in Art. 46 (2) (c) - what everyone calls standard contractual clauses, or SCCs.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Derogations <span class="n">Art. 49 GDPR</span></div>
+      That article sets out the conditions under which a transfer may take place <strong>even without</strong> an adequacy decision under Art. 45 (3) or appropriate safeguards under Art. 46. The Court relies on its existence to say that striking down an adequacy decision does not create a legal vacuum.
+    </div>
+  </div>
+  <figcaption>The three routes out of the EU, in the order you test them. Route one is a decision somebody else made; route two is work you have to do yourself.</figcaption>
+</div>
+
+**What does adequate mean?** This is the definition that decides the whole Schrems II case. The Court says that although a third country is not required to ensure a level of protection **identical** to the EU's, the term adequate must be understood as requiring the third country to ensure in fact, by reason of its domestic law or its international commitments, a level of protection of fundamental rights and freedoms that is **essentially equivalent** to the one guaranteed inside the EU by the GDPR read in the light of the Charter. Anything weaker and the whole purpose of the chapter falls away.
+
+**What does the Commission look at?** Art. 45 (2) lists the elements, and they matter because Schrems II later says the same list applies when **you** assess a country under Art. 46:
+
+<ul>
+  <li>The rule of law, respect for human rights and fundamental freedoms; the relevant legislation, both general and sectoral, <strong>including legislation on public security, defence, national security and criminal law and on the access of public authorities to personal data</strong>, and how that legislation is actually implemented; the data protection rules, professional rules and security measures; the rules for onward transfer to another third country; the case-law; and effective, enforceable data subject rights with effective administrative and judicial redress</li>
+  <li>The existence and effective functioning of one or more <strong>independent supervisory authorities</strong> in that country, with adequate enforcement powers, able to assist and advise data subjects and to cooperate with the supervisory authorities of the Member States</li>
+  <li>The <strong>international commitments</strong> the country has entered into, and other obligations from legally binding conventions or instruments or from participation in multilateral or regional systems, in particular regarding the protection of personal data</li>
+</ul>
+
+**And what do standard contractual clauses actually do?** They are a set of clauses the Commission has adopted, which the EU exporter and the non-EU importer both sign. Under them the exporter, the recipient and any processor mutually undertake that the processing, including the transfer, has been and will continue to be carried out in accordance with the applicable data protection law, which for a European exporter includes the GDPR read in the light of the Charter. The recipient also undertakes to inform the controller **promptly** of any inability to comply with the clauses.
+
+And here is the structural weakness that the next section is entirely about. Standard clauses are, by their nature, **contractual**. They bind the two companies that signed them. They **cannot bind the public authorities of the third country**, because those authorities never signed anything. The clauses are also designed to apply uniformly in every third country, which means they are written without reference to the level of protection in any particular one.
+
+## Case corner
+
+**Schrems II** - Case C-311/18, *Data Protection Commissioner v Facebook Ireland Ltd and Maximillian Schrems*, judgment of the Court of Justice (Grand Chamber) of 16 July 2020.
+
+**Who brought it, and against what.** Mr Schrems, an Austrian national living in Austria, had used Facebook since 2008. Anyone in the EU who wants to use Facebook has to contract with **Facebook Ireland**, a subsidiary of Facebook Inc., which is established in the United States, and some or all of the personal data of EU-resident users is transferred to Facebook Inc.'s servers in the US and processed there. On 25 June 2013 Mr Schrems complained to the Irish Data Protection Commissioner, asking that the transfer of his data to the US be prohibited, on the ground that US law and practice did not protect data held there against the surveillance activities of the public authorities. That first complaint was rejected because the Commission had at the time decided the US ensured adequate protection. In a judgment of 6 October 2015 the Court declared **that** decision invalid, which is the case now known as Schrems I. Facebook Ireland then explained that a large part of the data was being transferred under the **standard data protection clauses** instead, so Mr Schrems reformulated his complaint on 1 December 2015: US law requires Facebook Inc. to make the transferred data available to authorities such as the NSA and the FBI, the data is used in surveillance programmes in a way incompatible with Articles 7, 8 and 47 of the Charter, and therefore the SCC decision cannot justify the transfer. He asked the Commissioner to prohibit or suspend it.
+
+**How it reached the Court.** The Commissioner published a draft decision on 24 May 2016 taking the provisional view that EU citizens' data transferred to the US was likely to be consulted and processed by US authorities incompatibly with Articles 7 and 8 of the Charter, that US law gave those citizens no remedies compatible with Article 47, and that the standard clauses could not cure this because they confer only **contractual** rights against the exporter and importer and do not bind the United States authorities. On 31 May 2016 she brought an action before the **High Court (Ireland)**, which by order of 4 May 2018 referred questions to the Court of Justice.
+
+**What the High Court had already found about US law.** The referring court's findings, which the Court of Justice worked from, were that the intelligence activities rest on **Section 702 of the FISA** and on **Executive Order 12333**. Section 702 lets the Attorney General and the Director of National Intelligence jointly authorise, after approval by the FISC, surveillance of people who are not US citizens and are located outside the US, in order to obtain foreign intelligence information, and it is the basis of the **PRISM** and **UPSTREAM** programmes. Under PRISM, internet service providers must supply the NSA with all communications to and from a selector, some of which also go to the FBI and the CIA. Under UPSTREAM, telecommunications undertakings running the internet backbone - the cables, switches and routers - must let the NSA copy and filter traffic flows, giving access to both metadata and content. E.O. 12333 lets the NSA reach data **in transit** by accessing underwater cables on the floor of the Atlantic, collecting and retaining it before it even arrives in the US and becomes subject to the FISA, and activities under it are not governed by statute. As for limits, non-US persons are covered only by **PPD-28**, which says only that intelligence activities should be as tailored as feasible. On remedies, the Fourth Amendment, the most important cause of action against unlawful surveillance in US law, does not apply to EU citizens; there are substantial obstacles such as locus standi; and NSA activity under E.O. 12333 is not subject to judicial oversight and is not justiciable.
+
+**What the Court held on the Privacy Shield.** It held the **Privacy Shield Decision invalid**. The reasoning has two strands. On **surveillance**, neither Section 702 of the FISA nor E.O. 12333 is circumscribed in a way that satisfies requirements essentially equivalent to the Charter's minimum safeguards under the principle of proportionality. Section 702 does not indicate any limitation on the power it confers or any guarantee for the non-US people it can be used against; PPD-28 does not itself define the scope of the limitation on the right in a way the person could rely on, and does not grant data subjects rights actionable against the US authorities in court. On **redress**, the ombudsperson mechanism does not supply a cause of action before a body offering guarantees essentially equivalent to Article 47 of the Charter: although described as independent from the intelligence community, the ombudsperson is appointed by the Secretary of State, is an integral part of the State Department and reports directly to the Secretary of State; nothing in the decision indicates that dismissal or revocation of the appointment carries any particular guarantee; and nothing indicates the ombudsperson can adopt decisions **binding** on the intelligence services, nor is any legal safeguard attached to the political commitment that violations will be corrected. Therefore, in finding in Article 1 (1) of the decision that the US ensures an adequate level of protection, the Commission disregarded Art. 45 (1) GDPR read in the light of Articles 7, 8 and 47 of the Charter. Article 1 is inseparable from Articles 2 and 6 and the annexes, so the invalidity brings the **whole decision** down. The Court added that annulment does not create a legal vacuum, because Art. 49 GDPR provides for transfers in the absence of adequacy or safeguards.
+
+**What the Court held on the standard contractual clauses.** It examined Commission Decision 2010/87 and found **nothing that affects its validity**. The clauses survive. But the reason they survive is also the reason they are now more work: their validity depends on the decision containing effective mechanisms that make it possible in practice to ensure the EU level of protection is complied with, and that transfers are **suspended or prohibited** where the clauses are breached or cannot be honoured. The mechanism is built on the responsibility of the exporter, and in the alternative of the supervisory authority.
+
+**What a company has to do differently afterwards.** Three duties, and they are the practical output of the case.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Assess the destination country, case by case<span class="sub">it is above all for the controller or processor to verify, on a case-by-case basis and where appropriate together with the data recipient, whether the law of the third country of destination ensures protection adequate under EU law</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Add supplementary measures where the clauses do not reach<span class="sub">because the clauses cannot give guarantees beyond a contractual obligation, they may require supplementary measures depending on the prevailing position in the particular third country; recital 109 encourages adding other clauses or additional safeguards</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">If no adequate additional measures are possible, stop<span class="sub">the controller or processor must suspend or end the transfer, in particular where the third country's law imposes obligations on the recipient that are contrary to the clauses</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">And if you do not, the regulator must<span class="sub">under Art. 58 (2) (f) and (j), absent a valid adequacy decision, the competent supervisory authority is required to suspend or prohibit the transfer where the clauses are not or cannot be complied with and protection cannot be ensured by other means</span></div>
+  </div>
+  <figcaption>The post-Schrems-II sequence. The obligation to look at the destination country's surveillance law was moved onto the exporting company, which is why a transfer impact assessment became a standard document.</figcaption>
+</div>
+
+The Court also confirmed, on the first question, that the GDPR **applies** to a transfer of personal data for commercial purposes from an operator in a Member State to an operator in a third country, regardless of whether the data may then be processed by that country's authorities for public security, defence or State security. You cannot argue your way out of the Regulation by pointing at somebody else's national security.
+
+<Aside type="caution">
+The seminar's own slides do not cover international transfers at all: there is no slide on Chapter V of the GDPR, on adequacy decisions, on standard contractual clauses, or on Schrems II. Everything in section 12 and in this case corner comes from the judgment handed out with the session, read alongside the GDPR articles the judgment itself cites. I have also **not** written a catalogue of supplementary measures such as particular encryption or key-holding arrangements, because neither the judgment nor the deck contains one - the judgment says supplementary measures may be necessary and leaves their content to the controller's case-by-case assessment.
+</Aside>
+
+## Worked example
+
+A European company wants to move its customer relationship system to a cloud provider whose servers sit outside the EU. The personal data of EU customers would be stored and processed there. The assessment runs in a fixed order, and each answer decides whether you continue.
+
+| # | The question | Applied to this transfer | Why it matters |
+|---|---|---|---|
+| 1 | Is this a transfer to a third country at all? | Yes. Personal data undergoing processing is sent to servers outside the EU, and the provider may use subcontractors, so onward transfers are in scope too | Art. 44 catches transfers **and** onward transfers, and requires that the protection guaranteed by the GDPR is not undermined |
+| 2 | Is there a Commission adequacy decision for that country? | If yes, the transfer may take place with no specific authorisation and the assessment stops here. In the US case, the answer stopped being yes on 16 July 2020, when the Privacy Shield Decision was declared invalid | Art. 45 (1). An adequacy decision is a finding that the country ensures protection **essentially equivalent** to the EU level, not identical |
+| 3 | If there is no adequacy decision, which mechanism applies? | Appropriate safeguards under Art. 46, in practice the Commission's **standard contractual clauses** under Art. 46 (2) (c), signed by us as exporter and the provider as importer | Schrems II examined the SCC Decision and disclosed nothing affecting its validity. The clauses remain a lawful route |
+| 4 | What does the destination country's law let its authorities do? | This is the case-by-case assessment, done with the provider's help. Look at the surveillance legislation, whether it limits the power it confers, whether it covers non-nationals, and whether data in transit can be intercepted before it even arrives | The assessment must consider both the contractual clauses **and** the relevant aspects of the destination country's legal system regarding public authority access, using the Art. 45 (2) factors non-exhaustively |
+| 5 | Can the data subject enforce anything there? | Ask whether an independent supervisory authority exists and functions, and whether an EU customer could bring a real action before an independent and impartial court to get access to, rectification of, or erasure of their data | Art. 46 (1) requires **enforceable rights and effective legal remedies**. A complaints body that reports to the executive and cannot bind the intelligence services was held not to satisfy Article 47 of the Charter |
+| 6 | Do the clauses alone close the gap? | Not if the provider's own national law obliges it to hand data over in a way that contradicts what it just promised us. The clauses are contractual; they do not bind that country's authorities, and they are written to apply uniformly everywhere | This is precisely the gap the Court identified: a contractual guarantee cannot survive a statutory obligation pointing the other way |
+| 7 | What supplementary measures could close it? | Whatever, in this particular country, actually restores the EU level of protection - to be identified case by case, and where appropriate together with the provider, adding clauses or additional safeguards on top of the standard ones | Recital 109 expressly permits adding other clauses or additional safeguards, and encourages the controller to do so |
+| 8 | What is the decision? | If adequate additional measures **can** be taken, sign and transfer, and keep the assessment on file as accountability evidence. If they **cannot**, do not sign, and suspend or end any transfer already running | If the exporter does not stop it, the supervisory authority is required to suspend or prohibit it under Art. 58 (2) (f) and (j) |
+
+Notice what this does to a procurement timetable. Questions 4 to 7 are legal research about a foreign country, they need the provider's cooperation to answer honestly, and their outcome can be that you cannot use the product at all. That is not a box to tick the week before go-live.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Establish whether personal data is involved at all.** If the data really is anonymised statistics with no identified or identifiable natural person behind it, the transfer chapter does not apply. Be honest about identifiability, direct or indirect, before you rely on this.
+
+2. **Find out where the data will physically be, and who else can reach it.** Ask for the hosting locations, the subprocessor list and the support locations. Remote administration from a third country counts; so does an onward transfer from the first third country to a second one.
+
+3. **Check for an adequacy decision covering that country, territory or sector.** If one exists and covers your situation, the transfer needs no specific authorisation. Record which decision you relied on, and remember that adequacy decisions are subject to periodic review at least every four years and can be struck down, as the Privacy Shield was.
+
+4. **If there is no adequacy decision, pick the safeguard.** For a normal cloud purchase that is the Commission's standard contractual clauses. Get them into the contract itself, not into a side letter nobody signs.
+
+5. **Assess the destination country's law, in writing, with the provider.** What may the authorities demand, from whom, on what legal basis, with what limits, and with what oversight? Use the Art. 45 (2) factors as your headings. Ask the provider directly whether any law obliges it to do something the clauses forbid.
+
+6. **Check whether your customers would have a real remedy there.** Enforceable rights and effective legal remedies are part of the test, not an optional extra. A body that is not independent of the executive, or that cannot issue binding decisions, does not count.
+
+7. **Decide whether supplementary measures can close the gap you found, and write down what they are.** If the answer is that nothing available to you restores an essentially equivalent level of protection, the transfer must not start, or must be suspended or ended if it already has.
+
+8. **Make sure the contract lets you act on the answer.** You need the provider's undertaking to tell you promptly if it becomes unable to comply, and you need a right to suspend and to get the data back or deleted. A transfer you cannot stop is a transfer you cannot lawfully run.
+
+9. **File the whole assessment as accountability evidence.** Put it with the record of processing activities and the processing contract. Under Art. 5 (2) and Art. 24 the question you will be asked is not whether you thought about it but whether you can demonstrate it.
+
+10. **Diarise a review.** The destination country's law changes, the subprocessor list changes, and adequacy decisions get annulled. An assessment with no review date is a snapshot pretending to be a control.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Controller | Whoever determines the purposes and the means of the data processing - the party legally on the hook towards data subjects and the authority |
+| Obligation of legality | The duty to organise and supervise the company so that violations of the law do not occur |
+| Compliance organisation | The structure for loss prevention and risk control whose existence is what actually discharges the organisational duty |
+| Two-step procedure | Step 1 organise and prevent - responsibilities, actual state, risk assessment, measures, documentation. Step 2 review - compliance, controls and audits, reporting |
+| ISMS | An information security management system, listed by the deck among the measures you define in step 1 |
+| Data protection coordinator | The role sitting below the controller in the organisation chart, to whom operational work is delegated and who coordinates across units |
+| Employee liability grading | Simple carelessness means exemption; contributory negligence means pro-rata liability by share of the damage; gross negligence or wilful intent means the employee is usually liable |
+| Joint liability | The exposure the deck warns can be triggered by violating internal specifications, for example using unauthorised software |
+| Burden of proof reversal | The controller has to excuse itself, and is exempt from liability only by proving it is not in any way responsible for the event causing the damage |
+| The two fine ceilings | Up to 10 million EUR or 2 per cent of worldwide annual turnover for general obligations; up to 20 million EUR or 4 per cent for breaching the Art. 5 processing principles |
+| Accountability | Art. 5 (2) GDPR - the controller is responsible for the processing principles and must be able to **demonstrate** compliance with them |
+| Commitment to confidentiality | The document by which employees undertake to maintain data secrecy and confidentiality about personal and other confidential data |
+| Contract for order processing | The contract with a service provider that processes personal data on the controller's behalf, including a description of the technical and organisational measures in place |
+| Third country | Any country outside the EU, to which transfers are allowed only on the conditions of the GDPR's transfer chapter, onward transfers included |
+| Adequacy decision | A Commission decision that a third country, territory or sector ensures an adequate level of protection, so transfers there need no specific authorisation |
+| Essentially equivalent | The standard behind adequate - not identical to EU protection, but genuinely of the same level in fundamental rights terms, judged against the GDPR read with the Charter |
+| Standard contractual clauses | Commission-adopted clauses signed by exporter and importer as appropriate safeguards under Art. 46 (2) (c); contractual only, so they cannot bind a third country's public authorities |
+| Supplementary measures | The additional safeguards a controller must add on top of the standard clauses where the destination country's position means the clauses alone do not deliver the required level of protection |
+| Schrems II | Case C-311/18, judgment of 16 July 2020: the Privacy Shield Decision is invalid, the SCC Decision is not, and the exporter must assess the destination country and suspend the transfer if it cannot fix the gap |
+
+## Test yourself
+
+1. Where does overall responsibility for data protection sit inside a company, and what exactly does the organisational duty require before it counts as fulfilled?
+2. Set out the two-step procedure for organising, preventing and controlling risks, with the items in each step.
+3. An employee causes a data protection incident. In which three situations is the employee exempt, partly liable, and usually liable?
+4. Name the two GDPR fine ceilings, say what triggers each, and explain why the higher one attaches to the Art. 5 principles.
+5. What is the accountability principle, and what evidence does the deck say a company must be able to produce?
+6. What did Schrems II decide about the Privacy Shield and about standard contractual clauses, and what does a company have to do differently as a result?
+
+<Aside type="note" title="Answers">
+1. Overall responsibility lies with the **board, the management or the partners**. The obligation of legality means the company must be organised and supervised so that no violations of the law occur, and the organisational duty is only fulfilled once a **compliance organisation designed for loss prevention and risk control** has been established. Directors are additionally liable for damages towards the company under § 93 (2) sentence 1 AktG, and management of a limited liability company under § 43 (1) of the Limited Liability Company Act.
+2. **Step 1, organisation and prevention:** determine responsibilities, check the actual state, run a risk assessment, define measures such as anonymisation, an ISMS and an emergency and incident response concept, and document it. **Step 2, review:** compliance with the measures, controls and audits such as stress tests, and reporting.
+3. **Simple careless action:** the employee is exempt from liability for the damage. **Contributory negligence:** the employee may be liable pro rata, according to the size of his or her contribution to the damage. **Gross negligence or wilful intent:** the employee is usually liable. Violating internal specifications, for example using unauthorised software, can also trigger joint liability.
+4. Breaching **general obligations**, such as having no appropriate technical and organisational measures in line with the current state of the art, is punishable by up to **10 million EUR or 2 per cent** of total worldwide annual turnover. Breaching the **processing principles of Art. 5** - transparency, lawfulness, purpose limitation, data minimisation - is punishable by up to **20 million EUR or 4 per cent**. The higher band applies because a failed principle means the processing had no proper basis at all, not merely that a control failed.
+5. Under **Art. 5 (2) GDPR** the controller is responsible for the processing principles and must be **able to demonstrate compliance** with them, which is also why the controller bears the burden of proof and must excuse itself. **Art. 24** requires appropriate technical and organisational measures to ensure and to be able to demonstrate compliance, reviewed and updated as necessary. The evidence file the deck lists is: a data protection management system; appointment of a data protection officer; a data protection guideline; the obligation to maintain confidentiality; duties to provide information via a privacy policy; declarations of consent; records of processing activities; contracts with service providers; documentation of data protection violations; security in IT and TOMs; the exercise of data subject rights; and data protection trainings.
+6. The Court declared the **Privacy Shield Decision invalid**, because neither Section 702 of the FISA nor E.O. 12333 limits US surveillance in a way essentially equivalent to the Charter's requirements, and because the ombudsperson mechanism, being appointed by and part of the State Department and unable to bind the intelligence services, gives no remedy equivalent to Article 47 of the Charter. It found **nothing affecting the validity** of the standard contractual clauses decision. Afterwards the exporter must verify **case by case**, where appropriate with the recipient, whether the destination country's law ensures adequate protection, add **supplementary measures** where the clauses cannot reach, and **suspend or end the transfer** if adequate measures are not possible; failing that, the supervisory authority is required to suspend or prohibit it under Art. 58 (2) (f) and (j).
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- **Overall responsibility sits with the board, management or partners.** The obligation of legality means organising and supervising the company so no violations occur, and it is only fulfilled once a **compliance organisation for loss prevention and risk control** exists. Directors answer to the company under § 93 (2) sentence 1 AktG, management under § 43 (1) of the Limited Liability Company Act.
+- **Two-step procedure.** Organise and prevent (responsibilities, actual state, risk assessment, measures such as anonymisation, ISMS and an incident response concept, documentation), then review (compliance, controls and audits including stress tests, reporting).
+- **The organisation chart:** the controller, identified with management, delegates downwards to data protection coordinators, who coordinate across units, with consulting and reporting lines. Delegation moves work, not responsibility.
+- **Employee exposure is graded.** Simple carelessness: exempt. Contributory negligence: pro rata by contribution. Gross negligence or wilful intent: usually liable. Breaking internal rules, for example unauthorised software, can trigger joint liability.
+- **The controller is hit from two sides.** The data subject can claim compensation for damages and for pain and suffering, with the **controller bearing the burden of proof**; the authority can impose a substantial fine and also issue instructions, run data protection audits and give warnings.
+- **Two fine ceilings:** up to **10 million EUR or 2 per cent** of worldwide annual turnover for general obligations such as missing technical and organisational measures; up to **20 million EUR or 4 per cent** for breaching the **Art. 5** principles.
+- **Accountability, Art. 5 (2) and Art. 24 GDPR:** be responsible for the principles **and be able to demonstrate** it. The evidence file is the deck's eleven duties, from a data protection management system and a DPO through to records of processing activities, contracts with service providers, IT security and TOMs, and data protection trainings.
+- **Daily work is the actual risk surface.** Lock the screen, encrypt and delete USB sticks, wipe the flipchart, empty the printer tray, lock the door, shred. Clean desk, one password per application, VPN and approved apps only, approved conferencing tools only, consent to record documented, share one window not the screen, never give information to an authority on the phone, fill in the recipient field last, and never verify a suspicious e-mail with the reply button.
+- **Leaving the EU: Art. 44** says the protection must not be undermined, onward transfers included. **Art. 45** adequacy decision - protection **essentially equivalent**, not identical. **Art. 46** appropriate safeguards including **standard contractual clauses**, which are contractual and therefore cannot bind a third country's authorities. **Art. 49** derogations.
+- **Schrems II, 16 July 2020, Case C-311/18.** The Privacy Shield Decision is **invalid**: Section 702 FISA and E.O. 12333 are not limited proportionately, PPD-28 gives non-US persons no actionable rights, and the ombudsperson is not independent of the executive and cannot bind the intelligence services. The SCC Decision is **valid**. But the exporter must assess the destination country's law **case by case**, apply **supplementary measures** where needed, and **suspend or end** the transfer if it cannot - and if it does not, the supervisory authority must.
+</Aside>
+
+*Next: [Trade Secrets & NDAs →](/learnings/mba/legal-aspects-of-technology-management/07-trade-secrets-and-ndas/) - protecting what is not registered.*

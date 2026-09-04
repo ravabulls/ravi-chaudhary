@@ -1,0 +1,404 @@
+---
+title: "Data Protection Foundations"
+description: "Why data protection is a commercial risk and not a legal footnote - the Merck NotPetya insurance case, what personal data and processing actually mean, the split between controller and processor that decides who carries which duty, the seven Article 5 principles, the lawful bases in Article 6 with consent under Article 7, special categories under Article 9, the data subject rights in Articles 12 to 21, the life cycle of personal data, and when a data protection officer must be appointed."
+sidebar:
+  label: "4 · Data Protection Foundations"
+  order: 4
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+The session does not open with a definition. It opens with a company losing more than a billion dollars and then losing the argument with its own insurers. That ordering is deliberate. Data protection and IT security are usually taught as compliance topics, something the legal department worries about after the product is built, and the opening slide is there to break that framing before it forms. The Merck NotPetya case is a story about balance sheets, insurance wording and contract interpretation, and only incidentally about malware.
+
+Once that point has landed, the deck moves to the machinery. It sets out where the rules come from, which is a stack of European and German law rather than a single statute, and then works through the vocabulary that the whole rest of the course depends on: what counts as **personal data**, what counts as **processing**, who is the **controller** and who is merely a **processor**, who the **data subject** is, what **principles** every processing operation has to satisfy, and what makes a processing operation **lawful** in the first place.
+
+The practical value of this chapter is that it gives you a checklist you can run over any product feature, any vendor contract and any internal process. If you can answer whose data this is, what is being done with it, who decided to do it, why, and on what legal footing, you have already done most of the work. If you cannot answer those five questions, the feature is not ready, whatever the engineering says.
+
+<Aside type="tip">
+**The one idea to carry through.** Data protection is not a rule about secrecy, it is a rule about **justification**. Any operation performed on data about an identifiable person is forbidden by default and only becomes lawful when you can point to a specific legal basis and show that the operation stays inside the principles. The burden sits with the organisation that decided to do it, which is why identifying the **controller** is always the first move.
+</Aside>
+
+## 1 · Why this is a commercial problem before it is a legal one
+
+The deck makes the business case with three separate pieces of evidence, and they build on each other.
+
+The first is the **Merck NotPetya case**, set out in full in the Case corner below. The short version: a 2017 malware attack, forty thousand computers, more than 1.4 billion dollars of loss, and insurers who then refused to pay by invoking the hostile or warlike action exclusion in the policy. Both the trial court and the New Jersey Appellate Division rejected that argument. The lesson for a manager is not that the courts will always side with the insured, it is that a cyber loss of that size turns immediately into a dispute about the exact wording of a clause somebody signed years earlier without reading it closely.
+
+The second is the **Allianz Risk Barometer 2022**, which ranks the most important global business risks for that year:
+
+| Rank | Risk | Share | Examples the deck gives |
+|---|---|--:|---|
+| 1 | Cyber incidents | 44 percent | Cyber crime, IT failure and outage, data breaches, fines and penalties |
+| 2 | Business interruption | 42 percent | Including supply chain disruption |
+| 3 | Natural catastrophes | 25 percent | Storm, flood, earthquake, wildfire, weather events |
+
+Cyber incidents sit at the top of the list, ahead of business interruption and well ahead of natural catastrophes. Note also what the deck folds into the cyber category: fines and penalties are listed as a species of cyber incident, alongside the technical failures. Regulatory exposure and technical exposure are treated as one risk, because in practice they arrive together.
+
+The third is the regulator's own toolkit. The slide on what may happen states penalty fines of up to **2 million euro or 4 percent of the annual worldwide turnover**, and points you to Articles 84 and 83 of the GDPR, along with the public fine database run by the GDPR portal. Reading Article 83 itself, the fines come in two tiers and the amounts are larger than the slide's headline figure: infringements of the controller's and processor's obligations attract up to **10 000 000 euro or 2 percent** of total worldwide annual turnover of the preceding financial year, whichever is higher (Article 83(4)), while infringements of the basic principles for processing including the conditions for consent under Articles 5, 6, 7 and 9, and infringements of the data subjects' rights under Articles 12 to 22, attract up to **20 000 000 euro or 4 percent**, whichever is higher (Article 83(5)). Article 84 is the provision that leaves any other penalties to national law, requiring them to be effective, proportionate and dissuasive.
+
+Alongside the fine there is a separate private route. Article 82 gives any person who has suffered material or non-material damage from an infringement the right to compensation from the controller or processor. A controller is liable for damage caused by processing that infringes the Regulation; a processor is liable only where it has not complied with obligations aimed specifically at processors, or where it acted outside or contrary to the controller's lawful instructions. That asymmetry is the first hint of why the controller and processor labels matter so much.
+
+## 2 · Where the rules come from
+
+The deck spends several slides on the legal stack, and it is worth taking seriously, because a question in practice is rarely answered by the GDPR alone.
+
+<div class="sc-tiers" style="overflow-x:auto;">
+  <div class="sc-tier">
+    <div class="sc-tier-head">EU primary law<span class="n">the constitutional layer</span></div>
+    <div class="sc-node violet soft">Charter of Fundamental Rights and the EU Treaty<span class="sub">data protection as a fundamental right, which is why everything below it is read restrictively</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">EU secondary law<span class="n">regulations and directives</span></div>
+    <div class="sc-node amber soft">The GDPR<span class="sub">a regulation, so it applies directly in the member states and takes priority over national law</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">National law, general<span class="n">Germany</span></div>
+    <div class="sc-node green soft">Federal Data Protection Act (FDPA) and financial regulation<span class="sub">fills the gaps the GDPR leaves open to member states</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">National law, special<span class="n">sector by sector</span></div>
+    <div class="sc-node slate soft">Telecommunications and Telemedia Data Protection Act, Social Code V and X, and others<span class="sub">plus the federal states with their own State Data Protection Act, State Budget Act, State Hospital Act and state school regulations</span></div>
+  </div>
+</div>
+
+The organising rule the deck states for this stack is that **EU law applies uniformly across the member states and takes precedence over national law**. So you start from the GDPR, and you go looking in the FDPA only where the GDPR has left a door open.
+
+The German timeline the deck draws is short and worth remembering. From **1994** the old Federal Data Protection Act and the European Data Protection Guideline applied. The GDPR came into effect on **25 May 2016**, followed by a **two-year implementation phase**. On **25 May 2018** the GDPR became directly applicable in the EU member states and the new FDPA came into effect in Germany. Between **2021 and 2024** a follow-up version of the FDPA was drafted but did not pass legislative finalisation on time.
+
+The deck also gives a shortlist of the provisions that carry most of the weight in daily practice, and it is effectively the syllabus for this chapter:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">GDPR Art. 4 definitions</span>
+  <span class="sc-chip violet">Art. 5 principles</span>
+  <span class="sc-chip amber">Art. 6 legality</span>
+  <span class="sc-chip amber">Art. 7 consent</span>
+  <span class="sc-chip amber">Art. 9 special data</span>
+  <span class="sc-chip green">Art. 12 to 14 information</span>
+  <span class="sc-chip green">Art. 15 to 21 rights</span>
+  <span class="sc-chip">Art. 82 liability</span>
+  <span class="sc-chip">Art. 83 fines</span>
+  <span class="sc-chip">FDPA § 4 video surveillance</span>
+  <span class="sc-chip">FDPA § 22 special data</span>
+  <span class="sc-chip">FDPA § 26 employment</span>
+</div>
+
+Notice how the German provisions map onto the European ones. FDPA § 22 is the national counterpart to GDPR Article 9 on special categories, and FDPA § 26 governs the employment context, which is where most of a technology manager's own processing actually happens.
+
+## 3 · When the GDPR applies at all
+
+Before asking whether a processing operation is lawful, you have to ask whether the Regulation reaches it. Two articles do that work.
+
+**Material scope, Article 2.** The Regulation applies to the processing of personal data wholly or partly by automated means, and also to non-automated processing where the data form part of a filing system or are intended to. Article 2(2) then carves out four situations: activity falling outside the scope of Union law, member state activity under the common foreign and security policy chapter of the TEU, processing by a natural person in the course of a purely personal or household activity, and processing by competent authorities for the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties including safeguarding against threats to public security.
+
+**Territorial scope, Article 3.** Three limbs, and the second is the one that catches technology companies. The Regulation applies to processing in the context of the activities of an establishment of a controller or processor in the Union, whether or not the processing itself happens in the Union. It also applies to a controller or processor **not** established in the Union where the processing relates to data subjects who are in the Union and the activity is either the offering of goods or services to them, irrespective of whether payment is required, or the monitoring of their behaviour as far as that behaviour takes place within the Union. A third limb covers a controller not established in the Union but in a place where member state law applies by virtue of public international law.
+
+The practical reading of Article 3(2) is that a free app with no European office, no European servers and no European revenue is still fully inside the Regulation the moment it has European users whose behaviour it tracks.
+
+## 4 · Personal data, and what counts as processing
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Personal data <small>Art. 4(1) GDPR</small></div>
+      <ul>
+        <li>All information concerning an <strong>identified</strong> natural person, or concerning an <strong>identifiable</strong> one, who is called the <strong>data subject</strong></li>
+        <li>Identifiable means the person can be identified <strong>directly or indirectly</strong>, in particular by reference to an identifier</li>
+        <li>The article names as identifiers a name, an identification number, location data, an online identifier, or one or more factors specific to that person's physical, physiological, genetic, mental, economic, cultural or social identity</li>
+        <li>The deck's own examples: name, e-mail, online identifier, customer number, telephone number, location data, credit card number</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Processing <small>Art. 4(2) GDPR</small></div>
+      <ul>
+        <li>Any operation or set of operations performed on personal data, <strong>whether or not by automated means</strong></li>
+        <li>The article's own list: collection, recording, organisation, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction</li>
+        <li>So merely <strong>looking at</strong> a record is processing, and so is deleting it</li>
+        <li>There is no threshold of seriousness and no exception for small volumes</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Both definitions are drafted as wide as language allows. That is the design: the Regulation catches almost everything, and the filtering is then done by the lawful bases and the principles rather than by the definitions.</figcaption>
+</div>
+
+Two consequences follow that beginners consistently get wrong. First, personal data does not mean **sensitive** data or **private** data. A customer number is personal data. So is an IP address used as an online identifier. Second, the test is identifiability, not identification: you do not have to know who the person is, it is enough that they could be picked out directly or indirectly.
+
+Article 4 also defines two techniques that sit between personal and non-personal data. **Pseudonymisation** (Article 4(5)) means processing personal data so that they can no longer be attributed to a specific data subject without additional information, provided that additional information is kept separately and protected by technical and organisational measures. Pseudonymised data are still personal data. **Profiling** (Article 4(4)) means any automated processing that uses personal data to evaluate personal aspects of a person, in particular to analyse or predict performance at work, economic situation, health, personal preferences, interests, reliability, behaviour, location or movements.
+
+## 5 · The actors, and why the labels decide who carries the duty
+
+The deck presents this as a map of roles around a single set of personal data, all of them defined in Article 4.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Data subject <small>Art. 4(1)</small></div>
+    <ul>
+      <li>The identified or identifiable natural person the data are about</li>
+      <li>Deck examples: an applicant, a customer</li>
+      <li>Only a natural person, so a company is never a data subject</li>
+      <li>Holds the rights in Articles 15 to 21</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Data controller <small>Art. 4(7)</small></div>
+    <ul>
+      <li>The natural or legal person, public authority, agency or other body which, alone or jointly with others, <strong>determines the purposes and means</strong> of the processing</li>
+      <li>Deck example: the managing director or the board, that is the organisation acting through its leadership</li>
+      <li>Where Union or member state law determines the purposes and means, that law may name the controller</li>
+      <li>Carries the accountability duty and the primary liability</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Processor <small>Art. 4(8)</small></div>
+    <ul>
+      <li>A natural or legal person, public authority, agency or other body which processes personal data <strong>on behalf of</strong> the controller</li>
+      <li>Deck examples: a recruiter, a web agency</li>
+      <li>Decides nothing about purpose; executes instructions</li>
+      <li>Liable under Art. 82 only for processor-specific duties or for acting outside the controller's lawful instructions</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Third party and recipient <small>Art. 4(9) &amp; 4(10)</small></div>
+    <ul>
+      <li>A <strong>recipient</strong> is anyone to whom personal data are disclosed, whether a third party or not; public authorities receiving data in a particular inquiry under law are not counted as recipients</li>
+      <li>A <strong>third party</strong> is anyone other than the data subject, controller, processor and the people authorised to process under the direct authority of either</li>
+      <li>Deck examples: the tax office, a freight forwarder</li>
+    </ul>
+  </div>
+</div>
+
+The fifth actor on the slide sits outside the box: the **supervisory authority**, defined in Article 4(21) as an independent public authority established by a member state under Article 51. In Germany the deck names the data protection authorities of the federal states.
+
+The controller and processor distinction is the one to internalise, because it allocates duties rather than merely describing a relationship. The question is never who physically touches the data, it is **who decided why and how**. A cloud provider that stores your customer database has all the data and none of the decisions, so it is a processor. A payroll bureau that decides for itself to reuse employee data for its own analytics has started determining purposes, and to that extent it has become a controller in its own right and carries a controller's duties. This is also why the label cannot simply be assigned by contract: the contract records the arrangement, but the facts about who decides determine the label.
+
+## 6 · The principles: Article 5
+
+Every processing operation, no matter how small or how well justified, has to satisfy all of these at once. The deck lists them on the same slide as legitimacy, and Article 5 gives them their names.
+
+| Principle | Article 5 wording, in my words | What it demands in practice |
+|---|---|---|
+| **Lawfulness, fairness and transparency** | Data are processed lawfully, fairly and in a transparent manner in relation to the data subject | You need a basis from Article 6, the processing must not be a trick played on the person, and they must be told what is happening |
+| **Purpose limitation** | Collected for specified, explicit and legitimate purposes and not further processed in a way incompatible with those purposes | Write the purpose down before you collect. Reusing the data for something new needs a compatibility assessment or a fresh basis |
+| **Data minimisation** | Adequate, relevant and limited to what is necessary in relation to the purposes | Every field on the form has to earn its place. Collecting a date of birth because it might be handy later fails this test |
+| **Accuracy** | Accurate and, where necessary, kept up to date, with every reasonable step taken to erase or rectify inaccurate data without delay | Correction has to be an actual workflow in the system, not a favour someone does manually |
+| **Storage limitation** | Kept in a form permitting identification for no longer than is necessary for the purposes | Set a retention period per data category and enforce deletion. This is the principle behind the deletion stage of the life cycle in section 9 |
+| **Integrity and confidentiality** | Processed in a way that ensures appropriate security, including protection against unauthorised or unlawful processing and against accidental loss, destruction or damage, using appropriate technical or organisational measures | The deck summarises this as state-of-the-art security. It is the bridge from data protection law into IT security |
+| **Accountability** | Article 5(2): the controller is responsible for, and must be able to **demonstrate** compliance with, all of the above | It is not enough to comply. You must hold the evidence that you comply, which is why documentation is its own topic later in the session |
+
+Purpose limitation carries more weight than its plain wording suggests, because Article 6(4) tells you how to test whether a new purpose is compatible with the original one. The factors are the link between the old and new purposes, the context of collection and in particular the relationship between data subject and controller, the nature of the data and especially whether special categories under Article 9 or criminal conviction data under Article 10 are involved, the possible consequences for the data subject, and the existence of appropriate safeguards such as encryption or pseudonymisation.
+
+Two further exceptions run through several principles: further processing for archiving in the public interest, scientific or historical research, or statistical purposes is not treated as incompatible under purpose limitation, and the same categories permit longer storage under storage limitation, in both cases subject to the safeguards in Article 89(1).
+
+## 7 · Legitimacy: the lawful bases
+
+The deck labels this **legitimacy, the justification of data processing**, which is a good name for it, because the underlying logic is that processing is prohibited unless justified. Article 6(1) says processing is lawful only if and to the extent that at least one of six grounds applies. The deck's own list of justifications maps onto them directly.
+
+| Basis | Article 6(1) | When it is available |
+|---|---|---|
+| **Consent** | (a) | The data subject has consented to processing for one or more specific purposes. Conditions in Article 7 apply |
+| **Contract** | (b) | Processing is necessary to perform a contract to which the data subject is a party, or to take steps at the data subject's request before entering into one |
+| **Legal obligation** | (c) | Processing is necessary to comply with a legal obligation to which the controller is subject |
+| **Vital interests** | (d) | Processing is necessary to protect the vital interests of the data subject or of another natural person |
+| **Public interest** | (e) | Processing is necessary for a task carried out in the public interest or in the exercise of official authority vested in the controller |
+| **Legitimate interests** | (f) | Processing is necessary for the legitimate interests of the controller or a third party, except where those interests are overridden by the interests or fundamental rights and freedoms of the data subject, in particular where the data subject is a child. The deck's example of such an interest is market research |
+
+Three details that get tested. First, the word **necessary** appears in five of the six bases. If the purpose can be achieved without the data, the basis fails, whatever the business rationale. Second, legitimate interests under point (f) is expressly **not available to public authorities** in the performance of their tasks, per the final subparagraph of Article 6(1). Third, points (c) and (e) must be grounded in Union law or member state law under Article 6(3), so you cannot simply assert a legal obligation without naming the provision that creates it.
+
+**Consent, and its conditions in Article 7.** Consent is defined in Article 4(11) as any freely given, specific, informed and unambiguous indication of the data subject's wishes, given by a statement or by a clear affirmative action, signifying agreement to the processing. Article 7 then adds four operational conditions:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Demonstrable<span class="sub">Art. 7(1): the controller must be able to show that the data subject actually consented</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Clearly separated<span class="sub">Art. 7(2): where consent sits inside a wider written declaration it must be clearly distinguishable from the other matters, intelligible, easily accessible, and in clear and plain language. Any infringing part is not binding</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Withdrawable<span class="sub">Art. 7(3): withdrawal at any time, as easy to withdraw as to give, the person must be told before consenting, and withdrawal does not retroactively invalidate what was lawful beforehand</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Freely given<span class="sub">Art. 7(4): utmost account is taken of whether performance of a contract, including provision of a service, is made conditional on consent to processing that is not necessary for that contract</span></div>
+  </div>
+  <figcaption>Consent looks like the easiest basis and is usually the weakest, because it can be pulled at any moment and because Article 7(4) attacks exactly the bundling that makes it commercially attractive.</figcaption>
+</div>
+
+Article 8 adds a rule for children. Where consent under Article 6(1)(a) is used for information society services offered directly to a child, processing is lawful where the child is at least **16 years old**; below that, consent must be given or authorised by the holder of parental responsibility, and the controller must make reasonable efforts to verify this using available technology. Member states may set a lower age, but not below **13 years**.
+
+## 8 · Special categories: Article 9
+
+Some data are treated differently because the harm from misuse is qualitatively worse. Article 9(1) **prohibits** processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health, and data concerning a person's sex life or sexual orientation.
+
+The structure is important. Article 9(1) is a prohibition, not a stricter standard. Processing only becomes possible if one of the exceptions in Article 9(2) applies, and satisfying Article 9(2) does **not** remove the need for a basis under Article 6. You need both.
+
+The Article 9(2) exceptions in short: explicit consent, unless Union or member state law says the prohibition cannot be lifted that way; obligations and rights in employment, social security and social protection law where authorised by law or a collective agreement with appropriate safeguards; protection of vital interests where the person is physically or legally incapable of consenting; legitimate activities of a not-for-profit body with a political, philosophical, religious or trade union aim, limited to members and regular contacts and with no disclosure outside without consent; data manifestly made public by the data subject; establishment, exercise or defence of legal claims, or courts acting judicially; reasons of substantial public interest on the basis of proportionate law; preventive or occupational medicine, assessment of working capacity, medical diagnosis, provision of health or social care or treatment, or management of health systems, subject to the professional secrecy condition in Article 9(3); public interest in the area of public health; and archiving in the public interest, scientific or historical research or statistical purposes under Article 89(1). Article 9(4) lets member states add further conditions or limitations for genetic data, biometric data and health data, which is what German law does through FDPA § 22.
+
+Article 10 sits next to this and handles personal data relating to criminal convictions and offences: such processing based on Article 6(1) may only be carried out under the control of official authority or where authorised by Union or member state law with appropriate safeguards, and any comprehensive register of criminal convictions may be kept only under the control of official authority. Note that Article 4 defines three of the special categories precisely: **genetic data** (4(13)), **biometric data** (4(14)) and **data concerning health** (4(15)).
+
+## 9 · The data subject and the rights they hold
+
+The deck groups these as Articles 12 to 14 for information and Articles 15 to 21 for rights. The split is between what you must tell people without being asked, and what they can demand from you.
+
+| Article | The right or duty | Plain reading |
+|---|---|---|
+| **Art. 12** | Transparent information, communication and modalities for exercising rights | Information under Articles 13 and 14 has to be given in a usable form, and requests have to be handled through a workable process |
+| **Art. 13** | Information where data are collected **from** the data subject | The privacy notice at the point of collection |
+| **Art. 14** | Information where data have **not** been obtained from the data subject | You bought or received the data, so the person still has to be told |
+| **Art. 15** | Right of access | Confirmation of whether their data are being processed, access to the data, and the accompanying information starting with the purposes of the processing |
+| **Art. 16** | Right to rectification | Correction of inaccurate data without undue delay, and completion of incomplete data including by a supplementary statement |
+| **Art. 17** | Right to erasure, the right to be forgotten | Erasure without undue delay in the listed situations, with a matching obligation on the controller |
+| **Art. 18** | Right to restriction of processing | Freeze rather than delete, for example while a contested accuracy claim is being verified |
+| **Art. 19** | Notification obligation | Rectification, erasure or restriction must be passed on to each recipient the data were disclosed to, unless impossible or disproportionate, and the data subject can ask who those recipients are |
+| **Art. 20** | Right to data portability | Receive the data they provided in a structured, commonly used and machine-readable format, and transmit it to another controller without hindrance |
+| **Art. 21** | Right to object | Object on grounds relating to their particular situation to processing based on Article 6(1)(e) or (f), including profiling on those bases. Processing must stop unless the controller demonstrates compelling legitimate grounds overriding the person's interests, or grounds for legal claims. For direct marketing the right to object is separate |
+
+Article 19 is the one people forget, and it is the one that turns a single deletion request into an engineering problem: if you have shared the record onward, you have to chase it. Note also the interaction between sections 7 and 9. Article 21 attaches specifically to the public interest and legitimate interests bases, so the basis you pick determines which rights the person can then exercise against you. Choosing a lawful basis is therefore also choosing your future obligations.
+
+## 10 · The life cycle of personal data
+
+The deck closes the introduction with a simple picture that ties the principles to an operational reality: personal data have a birth, a life and a death, and each stage has its own duties.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Collection<span class="sub">the birth. Send information to the data subjects, for example customers or applicants, which is the Article 13 duty in action</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Processing<span class="sub">the life. Save, share, invite to interview, decide</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Deletion<span class="sub">the death. Set the storage duration up front, and erase once the purpose of use no longer applies</span></div>
+  </div>
+  <figcaption>The value of the picture is that deletion is planned at collection time, not improvised later. A storage duration that nobody set is a storage-limitation breach waiting to be found.</figcaption>
+</div>
+
+## 11 · The data protection officer
+
+The deck's session plan puts the question of who is liable inside the company on the agenda, and the GDPR's answer to part of it is a named role. Article 37(1) requires the controller **and** the processor to designate a data protection officer in three cases: where the processing is carried out by a public authority or body, except courts acting judicially; where the **core activities** consist of processing operations that by their nature, scope or purposes require **regular and systematic monitoring of data subjects on a large scale**; and where the core activities consist of processing on a large scale of special categories under Article 9 or criminal conviction data under Article 10.
+
+Outside those three cases, appointment is voluntary unless Union or member state law requires it, per Article 37(4). A group of undertakings may appoint a single officer provided that officer is easily accessible from each establishment. The officer must be designated on the basis of professional qualities, in particular expert knowledge of data protection law and practice, may be either a staff member or an external service provider, and their contact details must be published and communicated to the supervisory authority.
+
+Article 38 requires the controller and processor to involve the officer properly and in a timely manner in all issues relating to the protection of personal data, and to support them with the resources and access needed to do the job. Article 39(1) then lists the tasks: inform and advise the controller, processor and processing staff of their obligations; monitor compliance including the assignment of responsibilities, awareness-raising, staff training and related audits; advise on and monitor the data protection impact assessment under Article 35; cooperate with the supervisory authority; and act as the contact point for that authority, including for the prior consultation under Article 36. Article 39(2) adds that the officer must have due regard to the risk associated with processing operations, taking into account their nature, scope, context and purposes.
+
+The management point is that the officer **advises and monitors** but does not become the controller. Designating someone does not transfer the accountability duty in Article 5(2) away from the organisation.
+
+## Case corner
+
+**Merck and the NotPetya war clause.**
+
+**The facts.** In 2017 Merck was the victim of a **NotPetya** malware attack. The malware spread to **40 000 Merck computers** and caused **more than 1.4 billion dollars in losses**, hurting the company's revenues.
+
+**What the insurers argued.** Merck's insurers denied coverage, citing the **hostile or warlike action exclusion** in the policy. The commercial logic of such a clause is that insurers do not underwrite the consequences of war, and NotPetya was widely attributed to a state actor. So the insurers' position was that this was an act of war by another name.
+
+**What the courts held.** In **December 2021** the trial court determined that the exclusion precludes only a **physical act of warfare** rather than a malware hack, holding that a hostile or warlike action means traditional war involving, in the court's words, hostilities between armed forces of two or more nations or states. On appeal, the **New Jersey Appellate Division affirmed** that decision. The deck quotes the appellate reasoning twice. First, that in considering the plain language of the exclusion, and the context and history of its application, the court concluded the insurers did not demonstrate the exclusion applied in the circumstances of the case. Second, that the plain language of the exclusion did not include a cyberattack on a non-military company, regardless of whether the attack was instigated by a private actor or by a government or sovereign power.
+
+**Why it is the opening slide.** Three things a technology manager should take from it.
+
+The first is about **magnitude**. A single malware event produced a loss on the scale of a large acquisition. The Allianz Risk Barometer ranking in section 1 is not an abstraction; this is what a 44 percent risk category looks like when it lands on one company.
+
+The second is about **contract wording**. The dispute was not decided on whether the attack happened, who launched it, or whether Merck's security was adequate. It was decided on how the words in a clause written for a different era should be read. That is a contract-interpretation problem, and it belongs to the same course as the data protection rules, because both are exercises in reading a text carefully against a set of facts. If you buy cyber cover, the question to ask the broker is what the exclusions say and how they have been construed, not what the headline limit is.
+
+The third is about the **limits of insurance as a control**. Merck won, eventually, after years of litigation. Winning a coverage dispute is not the same as being protected: the cash was out of the door long before the appellate ruling. Insurance is a way of financing a loss that has already occurred, and it is not a substitute for the integrity and confidentiality principle in Article 5(1)(f) or for the technical and organisational measures that implement it.
+
+## Worked example
+
+The process: **an online job application** handled through a careers portal, which is the example the deck itself uses in the actors slide and in the life cycle slide.
+
+| Question | Answer for this process | Why |
+|---|---|---|
+| **Who is the controller** | The hiring company, acting through its management | It determines the purposes and means: it decides to recruit, defines the role, sets the selection criteria and decides how long applications are kept. Article 4(7) |
+| **Who is the processor** | The web agency operating the careers portal, and an external recruiter sourcing candidates on instruction | They process on the company's behalf without setting the purpose. Article 4(8). If the recruiter starts building its own candidate database for resale it becomes a controller for that activity |
+| **Who is the data subject** | The applicant | An identified natural person, one of the deck's two named examples |
+| **Who else receives data** | Interviewers inside the company act under the controller's authority. A payroll provider or the tax office only enters the picture once someone is hired | Article 4(9) and 4(10). Recipients and third parties are distinguished by whether they sit under the controller's or processor's direct authority |
+| **What personal data** | Name, e-mail address, telephone number, CV content, interview notes and the hiring decision. Application forms should avoid special-category data | The first four map directly onto the identifier examples on the deck's Article 4(1) slide |
+| **What is the purpose** | Assessing the applicant's suitability for the specific advertised role, and running the selection process to a decision | Must be specified, explicit and legitimate before collection. Article 5(1)(b) |
+| **Which lawful basis** | Article 6(1)(b), processing necessary to take steps at the request of the data subject **prior to entering into a contract** | The applicant asked to be considered for an employment contract, so the processing is the very thing they requested. Consent would be a poor fit here, because it is withdrawable mid-process and because Article 7(4) casts doubt on consent given inside an imbalanced relationship |
+| **Which principles bite hardest** | Data minimisation, storage limitation, transparency, accuracy | See the commentary below |
+
+**Commentary.** The interesting work is in the last row. **Data minimisation** rules out the standard form fields that nobody can justify against this purpose: date of birth, marital status, a photograph. **Storage limitation** forces a decision that recruitment processes usually dodge, namely how long a rejected applicant's file is kept and on what reasoning; the life cycle slide says to set the storage duration and erase once the purpose of use no longer applies, so keeping every CV forever in case something suitable turns up is a breach unless a separate basis and retention period are set for a talent pool. **Transparency** means the Article 13 information has to be delivered at the point of collection in the portal, not buried in a footer. **Accuracy** matters because interview notes are opinions about a person and are still personal data, reachable by the Article 15 right of access. And because the basis is Article 6(1)(b) rather than (e) or (f), the Article 21 right to object does not attach, which is a concrete illustration of how the choice of basis shapes the rights that follow. Finally, in Germany this sits in the employment context, so FDPA § 26 is the national provision to read alongside the GDPR.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Write down the processing operation in one sentence, in verbs.** Use the Article 4(2) vocabulary: are you collecting, storing, sharing, combining, retrieving, or erasing? If no verb from that list applies, the Regulation may not be engaged at all.
+
+2. **Check whether the data are personal data at all.** Can any natural person be identified directly or indirectly from what you hold, alone or combined with something else you can reach? Remember that pseudonymised data still count. If the answer is genuinely no, stop here.
+
+3. **Confirm the GDPR reaches you.** Run Article 2 for material scope and Article 3 for territorial scope. The usual trigger for a technology product is Article 3(2): European users being offered goods or services, or having their behaviour monitored.
+
+4. **Name the controller and every processor, in writing.** Ask who decides the purposes and means, not who touches the data. Where a vendor is involved, decide honestly whether they are executing your instructions or making their own decisions, because that determines who carries the duty and who bears the liability under Article 82.
+
+5. **State the purpose before you state the data.** Specified, explicit and legitimate. If the purpose can only be written vaguely, that is a sign the processing has not been thought through, and purpose limitation will fail later when someone reuses the data.
+
+6. **Pick exactly one lawful basis from Article 6(1) and write down why it fits.** Test the word necessary against your own purpose. Do not default to consent because it feels safest; if you do use consent, check it against all four conditions in Article 7 and remember it can be withdrawn at any time.
+
+7. **Screen for special categories.** Does anything in the data reveal racial or ethnic origin, political opinions, religious or philosophical beliefs or trade union membership, or is it genetic data, identifying biometric data, health data or data on sex life or sexual orientation? If so, Article 9(1) prohibits the processing until you have an Article 9(2) exception **in addition to** the Article 6 basis, and you should also check FDPA § 22.
+
+8. **Walk each of the seven Article 5 principles against the design.** For each one, name the concrete feature that implements it: the field list for minimisation, the retention job for storage limitation, the notice text for transparency, the correction workflow for accuracy, the encryption and access control for integrity and confidentiality.
+
+9. **Plan the life cycle to its end.** Set the storage duration at collection time and build the deletion. Then check that the data subject rights in Articles 15 to 21 are technically deliverable, including the Article 19 duty to pass rectification, erasure and restriction on to every recipient you disclosed to.
+
+10. **Decide whether a data protection officer is required,** by testing your core activities against Article 37(1): public authority, large-scale regular and systematic monitoring, or large-scale special-category or criminal-conviction data. If one is appointed, involve them early under Article 38 rather than presenting them with a finished design.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Personal data | Any information about a natural person who is identified, or who could be picked out directly or indirectly using an identifier such as a name, customer number, telephone number, online identifier or location data |
+| Data subject | The living natural person the data are about, for example an applicant or a customer. Never a company |
+| Processing | Practically anything you do with personal data, automated or not: collecting, storing, sharing, consulting, combining, restricting, erasing, destroying |
+| Filing system | Any structured set of personal data accessible by specific criteria, which is what brings non-automated paper records inside the Regulation |
+| Controller | Whoever determines the purposes and means of the processing, alone or jointly. The one who decides, and therefore the one accountable |
+| Processor | Whoever processes personal data on the controller's behalf, following instructions and setting no purposes of their own |
+| Recipient | Anyone the data are disclosed to, whether a third party or not |
+| Third party | Anyone other than the data subject, the controller, the processor and the staff authorised under their direct authority |
+| Supervisory authority | The independent public authority set up by a member state to enforce the rules, in Germany the data protection authorities of the federal states |
+| Pseudonymisation | Splitting off the key that links data to a person and protecting it separately. Reduces risk, but the data remain personal data |
+| Profiling | Automated processing that evaluates or predicts personal aspects such as work performance, economic situation, health, preferences, reliability, behaviour or location |
+| Legitimacy | The justification of processing: at least one of the six Article 6(1) grounds must apply, otherwise the processing is unlawful |
+| Consent | A freely given, specific, informed and unambiguous indication of wishes by statement or clear affirmative action, demonstrable by the controller and withdrawable at any time |
+| Purpose limitation | Purposes must be fixed before collection, and reuse for a new purpose needs a compatibility check or a new basis |
+| Data minimisation | Only data that are adequate, relevant and limited to what the purpose actually requires |
+| Storage limitation | Keep identifiable data no longer than the purpose needs, which means setting a retention period and deleting |
+| Accountability | The controller must not only comply but be able to demonstrate compliance, which is why documentation exists |
+| Special categories | The Article 9 list whose processing is prohibited unless an Article 9(2) exception applies on top of an Article 6 basis |
+| Data protection officer | The internal or external expert who advises, monitors compliance, advises on impact assessments and is the contact point for the supervisory authority |
+
+## Test yourself
+
+1. Summarise the Merck NotPetya dispute in four sentences: what happened, what the insurers argued, what both courts decided, and on what reasoning.
+2. Give the Article 4(1) definition of personal data in your own words, and explain why a customer number counts while a company's registration number does not.
+3. A vendor hosts your customer database and does exactly what your contract tells it to do. Is it a controller or a processor, and why does the answer matter for liability?
+4. List the seven principles in Article 5 and give one concrete design decision that each one forces.
+5. Name the six lawful bases in Article 6(1). Why is consent usually the weakest choice for a business process, and which two conditions in Article 7 explain that?
+6. What does Article 9 do differently from Article 6, and what two things must you have before you may process health data?
+
+<Aside type="note" title="Answers">
+1. In 2017 Merck was hit by the NotPetya malware, which spread to 40 000 of its computers and caused more than 1.4 billion dollars of loss. Merck's insurers denied coverage under the hostile or warlike action exclusion. The trial court held in December 2021 that the exclusion covers only a physical act of warfare, meaning traditional war involving hostilities between the armed forces of two or more nations or states, and the New Jersey Appellate Division affirmed. The appellate reasoning was that on the plain language of the exclusion, read with the context and history of its application, the insurers had not shown it applied, because that plain language did not cover a cyberattack on a non-military company regardless of whether a private actor or a government or sovereign power instigated it.
+2. Personal data is any information about a natural person who is either identified or identifiable, where identifiable means they can be singled out directly or indirectly, in particular by an identifier such as a name, identification number, location data or an online identifier, or by factors specific to their physical, physiological, genetic, mental, economic, cultural or social identity. A customer number counts because it is an identifier pointing indirectly at a specific human being. A company registration number does not, because the Regulation protects natural persons only, and a company is not a data subject.
+3. It is a processor under Article 4(8), because it processes on your behalf and determines no purposes of its own. You remain the controller under Article 4(7). It matters because Article 82 makes the controller liable for damage caused by infringing processing, while the processor is liable only where it breached obligations aimed specifically at processors or acted outside or contrary to your lawful instructions. And the label follows the facts: if the vendor started deciding its own purposes for the data, it would become a controller for that activity.
+4. Lawfulness, fairness and transparency, which forces a written basis and a privacy notice at the point of collection. Purpose limitation, which forces the purpose to be written down before any field is designed. Data minimisation, which forces every form field to be justified against that purpose. Accuracy, which forces a real correction workflow. Storage limitation, which forces a retention period and an automated deletion job. Integrity and confidentiality, which forces state-of-the-art technical and organisational security such as encryption and access control. Accountability under Article 5(2), which forces documentation, because you must be able to demonstrate all of the above.
+5. Consent, contract or pre-contractual steps, compliance with a legal obligation, vital interests, public interest or official authority, and legitimate interests. Consent is weakest because Article 7(3) lets the data subject withdraw at any time, as easily as they gave it, which means a process built on consent can lose its legal footing without warning, and because Article 7(4) directs that utmost account be taken of whether a service was made conditional on consent to processing that was not necessary for that service, which undermines exactly the bundled consent businesses tend to rely on. Article 7(1) also puts the burden of proving consent on the controller.
+6. Article 6 is a permission structure: satisfy one ground and the processing is lawful. Article 9(1) is a prohibition on a defined list of especially sensitive data, which is lifted only by an exception in Article 9(2). So to process health data you need both an Article 9(2) exception, such as explicit consent or one of the medical and public health grounds, and a lawful basis under Article 6. In Germany you should also check FDPA § 22, since Article 9(4) allows member states to impose further conditions on genetic, biometric and health data.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- The session opens commercially, not legally. **Merck**, 2017, **NotPetya**, **40 000 computers**, **more than 1.4 billion dollars** of loss, insurers denying cover under the **hostile or warlike action** exclusion, and both the trial court and the **New Jersey Appellate Division** holding that the exclusion means traditional warfare between states and does not cover a cyberattack on a non-military company.
+- The **Allianz Risk Barometer 2022** puts cyber incidents first at **44 percent**, ahead of business interruption at 42 percent and natural catastrophes at 25 percent, and counts fines and penalties as part of the cyber category.
+- Fines: the slide says up to 2 million euro or 4 percent of annual worldwide turnover and points to **Articles 84 and 83**. Article 83 itself sets two tiers, **10 000 000 euro or 2 percent** for controller and processor obligations, and **20 000 000 euro or 4 percent** for breaches of the basic principles, consent conditions and data subject rights, whichever is higher. **Article 82** adds a private right to compensation.
+- The legal stack runs EU primary law, then the **GDPR** as a directly applicable regulation, then German general law in the **FDPA**, then special laws and state law. EU law is uniform across member states and takes priority. The GDPR came into effect 25 May 2016 and became directly applicable, with the new FDPA, on **25 May 2018**.
+- **Personal data** (Art. 4(1)) is any information about an identified or identifiable natural person; **processing** (Art. 4(2)) is essentially any operation on it, automated or not, from collection to erasure.
+- **Controller** (Art. 4(7)) determines purposes and means, **processor** (Art. 4(8)) acts on the controller's behalf. The label follows who decides, not who touches, and it allocates the duties and the liability.
+- **Article 5 principles**: lawfulness, fairness and transparency; purpose limitation; data minimisation; accuracy; storage limitation; integrity and confidentiality; and **accountability**, the duty to demonstrate compliance.
+- **Article 6(1) lawful bases**: consent, contract and pre-contractual steps, legal obligation, vital interests, public interest, legitimate interests. Five of the six turn on **necessity**, and legitimate interests is closed to public authorities in their tasks.
+- **Consent** must be freely given, specific, informed and unambiguous (Art. 4(11)), demonstrable, clearly separated, withdrawable as easily as given, and not bundled into a service that does not need it (Art. 7). Children's consent under Art. 8 needs the age of 16, or a member state floor of 13.
+- **Article 9** prohibits special-category processing outright and requires an Art. 9(2) exception on top of an Art. 6 basis. Germany adds FDPA § 22, and FDPA § 26 governs employment.
+- **Rights**: Articles 12 to 14 for information duties, and Articles 15 to 21 for access, rectification, erasure, restriction, downstream notification, portability and objection.
+- The **life cycle** runs collection, processing, deletion, with the storage duration set at the start and erasure once the purpose no longer applies.
+- A **data protection officer** is mandatory under Art. 37(1) for public authorities, for large-scale regular and systematic monitoring, and for large-scale special-category or criminal-conviction processing. They advise, monitor, support impact assessments and liaise with the supervisory authority, but the accountability stays with the controller.
+</Aside>
+
+*Next: [Breaches, Documentation & IT Security →](/learnings/mba/legal-aspects-of-technology-management/05-breaches-documentation-and-it-security/) - what you must do when something goes wrong.*
