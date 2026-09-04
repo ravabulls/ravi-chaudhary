@@ -1,0 +1,467 @@
+---
+title: "Recht der Künstlichen Intelligenz"
+description: "Die juristischen Definitionen von KI im Vergleich, die Definition des EU AI Act in Art. 3 (1), die risikobasierte Pyramide von unannehmbarem Risiko über hohes Risiko und begrenztes Transparenzrisiko hinunter zu minimalem Risiko, die verbotenen Praktiken des Art. 5, der Weg ins hohe Risiko über Art. 6 und Anhang III, die Transparenzpflichten des Art. 50, wer als Anbieter, Betreiber, Einführer und Händler gilt, die UNESCO-Ethikempfehlung mit den US-amerikanischen und chinesischen Rahmenwerken daneben, was KI mit Urheberrecht und Marken macht, und die vier Schritte zur Einordnung eines KI-Vertrags."
+sidebar:
+  label: "13 · Recht der KI"
+  order: 13
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Die letzte Sitzung des Moduls beginnt mit einem Bildschirm, auf dem überhaupt kein Rechtstext steht: ein Link auf einen Beitrag auf X, erreicht über einen deutschen Nachrichtenbericht über einen **Deepfake von Kamala Harris**, der während des US-Wahlkampfs kursierte. Nichts wird erklärt. Der Punkt ist, dass jeder im Raum in einem einzigen Videoclip bereits drei oder vier verschiedene Rechtsprobleme sehen kann und keines davon sauber in eine der Schubladen passt, die wir in den vorangegangenen Kapiteln gebaut haben. Das ist die ehrliche Ausgangslage für KI und Recht.
+
+Von dort aus läuft der Tag geradeaus. Zuerst, was KI eigentlich ist, technisch und dann juristisch, denn drei verschiedene Rechtsordnungen haben drei verschiedene Definitionen davon geschrieben. Dann die rechtlichen und ethischen Herausforderungen, in zwei Gruppen von der Klasse erarbeitet. Dann die Rahmenwerke, die KI zu steuern versuchen, eine UNESCO-Empfehlung, ein Bündel US-amerikanischer Instrumente, ein chinesischer Entwicklungsplan, und danach jenes, das eine echte Verordnung mit Zähnen ist, der **EU AI Act** (KI-Verordnung) vom 13. März 2024, aufgebaut um das Risiko herum. Danach, was KI mit dem geistigen Eigentum macht, und dort beginnen Urheberrecht und Markenrecht zu knirschen. Und schließlich, wie man einen KI-Vertrag einordnet, wenn man selbst derjenige ist, der das System kauft oder verkauft.
+
+Der Grund, warum das hier das Modul abschließt statt es zu eröffnen, ist, dass beinahe jedes frühere Kapitel hier wieder auftaucht. Der EU AI Act ist ein Stück EU-Regulierung, das mitgliedstaatliches Recht harmonisiert. Seine Transparenzpflichten sind Informationspflichten, so wie jene im Datenschutz. Sein Trainingsdatenproblem ist ein urheberrechtliches Problem. Seine Verteilung der Verantwortung zwischen derjenigen Partei, die das System baut, und derjenigen, die es betreibt, ist ein Vertragsproblem. KI ist weniger ein neues Rechtsgebiet als ein Belastungstest für alle alten.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Der EU AI Act reguliert nicht Technologie, er reguliert das **Risiko für Menschen**. Dasselbe Modell kann verboten, streng reguliert, leicht reguliert oder vollkommen frei sein, je nachdem, **wofür und an wem** es eingesetzt wird. Die erste Frage zu einem KI-System ist deshalb nie, welcher Algorithmus darin steckt, sondern in welcher Stufe der Pyramide der Anwendungsfall landet und ob man dabei **Anbieter** oder **Betreiber** ist.
+</Aside>
+
+## 1 · Eine sehr kurze Geschichte, und warum der Raum sie zuerst liest
+
+Die Klasse soll zwei Artikel zur Geschichte der KI lesen, bevor irgendetwas diskutiert wird, einen von Britannica und einen von Coursera, und dann zusammenfassen und diskutieren. Der Zeitstrahl, den die Folien geben, aus Coursera bezogen, lohnt sich zu behalten, weil er erklärt, warum die Regulierung erst jetzt eintrifft.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node soft">1950er Jahre<span class="sub">Machine Learning wird geboren; Alan Turing stellt sich Maschinen vor, die Menschen über ihre vorgegebene Funktion hinaus nachahmen. Auf der Dartmouth-Konferenz von 1956 wird die Behauptung aufgestellt, dass Lernen und jedes andere Merkmal menschlicher Intelligenz so genau beschrieben werden können, dass eine Maschine sie simulieren kann, und John McCarthy prägt den Begriff künstliche Intelligenz</span></div>
+    <div class="sc-node soft">1960 bis 1974<span class="sub">die Innovation nimmt Gestalt an: das MIT baut den ersten Chatbot ELIZA, der ein therapeutisches Gespräch simuliert (1966), und Stanford baut Shakey the Robot, der selbstständig in realistischen Umgebungen agieren soll (1966 bis 1972)</span></div>
+    <div class="sc-node slate">1974 bis in die 1990er Jahre<span class="sub">der KI-Winter (1984): die Technologie kann nicht liefern, was das Machine Learning verspricht. Dennoch erscheint 1986 das erste fahrerlose Auto, und IBMs Schachprogramm Deep Blue gewinnt 1996 nur eine von sechs Partien gegen Kasparow, 1997 aber jede einzelne Revanche</span></div>
+    <div class="sc-node amber">2000 bis 2019<span class="sub">die Blütezeit: KISMET vom MIT ahmt menschliche Emotionen nach (ab 2000), NASA-Rover navigieren mit KI-Hilfe über die Marsoberfläche (2004), Siri und Alexa starten als Assistenten für natürliche Sprache, Geoffrey Hinton führt neuronale Netze und Deep Learning ein, und Hanson Robotics in Hongkong bringt den Humanoiden SOPHIA heraus (2016), dem Saudi-Arabien 2017 die Staatsbürgerschaft verleiht</span></div>
+    <div class="sc-node green">ab 2020<span class="sub">der Hype geht weiter: OpenAI veröffentlicht den Chatbot GPT-3 (2020), einen generativ vortrainierten Transformer und ein großes Sprachmodell, trainiert auf 175 Milliarden Parametern, danach DALL-E (2021), das Text in Bild verwandelt; GPT-4 folgt und wird von Microsoft in Bing integriert, und Google veröffentlicht Bard</span></div>
+  </div>
+  <figcaption>Siebzig Jahre KI in einer Zeile. Die rechtliche Reaktion beginnt erst nach dem letzten Kasten, und genau deshalb ist jedes Rahmenwerk in diesem Kapitel auf 2021 oder später datiert.</figcaption>
+</div>
+
+## 2 · Was KI technisch ist
+
+Die Arbeitsbeschreibung, die die Folien von IBM übernehmen, lautet, dass KI eine Technologie ist, die Computer und Maschinen in die Lage versetzt, menschliches Lernen, Verstehen, Problemlösen, Entscheiden, Kreativität und Autonomie zu simulieren. Darunter liegen vier ineinander verschachtelte Schichten.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Künstliche Intelligenz <span class="n">der äußere Ring</span></div>
+      Menschliche Intelligenz, die von Maschinen gezeigt wird.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Machine Learning <span class="n">ML</span></div>
+      KI-Systeme, die aus vorab definierten Daten lernen.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Deep Learning <span class="n">DL</span></div>
+      ML-Modelle, die menschliche Kognition nachahmen und sich an nicht definierte Daten anpassen können.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Generative AI <span class="n">der innere Ring</span></div>
+      DL-Modelle, die selbstständig Daten sammeln, um originäre Inhalte zu erzeugen.
+    </div>
+  </div>
+  <figcaption>Vier verschachtelte Schichten, jede enger als die darüber. Jedes Generative-AI-System ist zugleich ein Deep-Learning-System, ein Machine-Learning-System und ein KI-System.</figcaption>
+</div>
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Wie Deep Learning lernt <small>vier Modi</small></div>
+    <ul>
+      <li><strong>Unüberwachtes oder teilüberwachtes</strong> Lernen, das mit gelabelten und ungelabelten Daten arbeitet</li>
+      <li><strong>Selbstüberwachtes</strong> Lernen, das aus unstrukturierten Daten implizite Label oder Klassifikationen erzeugt</li>
+      <li><strong>Bestärkendes</strong> Lernen, durch Versuch und Irrtum und über Belohnungen statt durch das Auffinden verborgener Muster</li>
+      <li><strong>Transferlernen</strong>, bei dem Wissen aus einer bestimmten Aufgabe auf unbekannte Aufgaben oder Daten angewendet wird</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Wie Generative AI erzeugt <small>drei Architekturen</small></div>
+    <ul>
+      <li><strong>Variational Autoencoder</strong>, die gesammelte Inhalte auf Grundlage von Prompts variieren</li>
+      <li><strong>Diffusionsmodelle</strong>, die Bildern so lange Rauschen hinzufügen, bis sie unkenntlich sind, und es dann wieder entfernen, um originäre Inhalte zu schaffen</li>
+      <li><strong>Transformer</strong>, zum Beispiel GPT-4, trainiert auf sequenzierten Daten, um ausgedehnte Inhaltssequenzen zu erzeugen</li>
+    </ul>
+  </div>
+</div>
+
+## 3 · Was KI juristisch ist: drei Definitionen im Vergleich
+
+Der Klasse wird eine Übung gestellt: die Definitionen von KI in drei Instrumenten zu finden, aufzulisten und zu vergleichen, nämlich **UNESCO SHS/BIO/PI/2021, Kapitel 1 Nr. 2 lit. a**, **15 U. S. Code § 9401 (3)** und **Art. 3 (1) des EU AI Act**. In meinen eigenen Worten umformuliert sagen sie Folgendes.
+
+| Instrument | Was dort als KI gilt |
+|---|---|
+| **UNESCO SHS/BIO/PI/2021**, Kap. 1 Nr. 2 lit. a | Informationsverarbeitende Technologien, die Modelle und Algorithmen so verbinden, dass eine Fähigkeit zum Lernen und zur Ausführung kognitiver Aufgaben entsteht, die zu Ergebnissen wie Vorhersage und Entscheidung in materiellen und virtuellen Umgebungen führt, ausgelegt darauf, mit unterschiedlichen Graden von Autonomie zu arbeiten, und zwar über Wissensmodellierung und Wissensrepräsentation sowie durch die Auswertung von Daten und die Berechnung von Korrelationen. Die genannten Methoden sind, ohne abschließend zu sein, Machine Learning einschließlich Deep Learning und bestärkendem Lernen sowie maschinelles Schlussfolgern einschließlich Planung, Ablaufplanung, Wissensrepräsentation und Schlussfolgern, Suche und Optimierung |
+| **15 U. S. Code § 9401 (3)** | Ein maschinengestütztes System, das für eine gegebene Menge menschlich definierter Ziele Vorhersagen, Empfehlungen oder Entscheidungen treffen kann, die reale oder virtuelle Umgebungen beeinflussen. Solche Systeme verwenden maschinelle und menschliche Eingaben, um (A) reale und virtuelle Umgebungen wahrzunehmen, (B) diese Wahrnehmungen durch automatisierte Analyse zu Modellen zu abstrahieren und (C) mittels Modellinferenz Optionen für Informationen oder Handlungen zu formulieren |
+| **Art. 3 (1) EU AI Act** | Ein maschinengestütztes System, das für einen Betrieb mit unterschiedlichen Graden von Autonomie ausgelegt ist, das nach der Inbetriebnahme Anpassungsfähigkeit zeigen kann und das aus den erhaltenen Eingaben für explizite oder implizite Ziele ableitet, wie Ausgaben wie Vorhersagen, Inhalte, Empfehlungen oder Entscheidungen erzeugt werden, die physische oder virtuelle Umgebungen beeinflussen können |
+
+Die Folien kochen die Fassung des EU AI Act dann auf eine Zusammenfassung in vier Zeilen herunter: Software, entwickelt mit Deep-Learning-Techniken sowie logik- und wissenschaftsbasierten Konzepten, die Ergebnisse wie Inhalte, Vorhersagen, Empfehlungen oder Entscheidungen hervorbringt, und zwar im Hinblick auf von Menschen gesetzte Ziele.
+
+<Aside type="note" title="Der Vergleich, so wie das Quiz ihn entscheidet">
+Die gemeinsamen Nenner der US-amerikanischen und der EU-Definition sind, dass beide **maschinengestützte Systeme** beschreiben, dass es beiden um die **Beeinflussung realer oder virtueller Umgebungen** geht und dass beide Systeme erfassen, die **Vorhersagen, Empfehlungen oder Entscheidungen liefern können**. Was *nicht* geteilt wird: **Anpassungsfähigkeit** taucht nur im EU-Wortlaut auf, und keine der beiden Definitionen verlangt eine **vom Menschen gegebene Eingabe** als Voraussetzung. Der letzte Punkt wiegt schwerer, als er aussieht: Ein System entkommt dem EU AI Act nicht dadurch, dass es ohne Menschen in der Schleife läuft.
+</Aside>
+
+## 4 · Der Machine-Learning-Prozess und die drei Datenklassen
+
+Die Folien gehen den Prozess Schritt für Schritt durch, und der Grund, warum ein Rechtskurs das tut, ist, dass jeder Schritt eine Stelle ist, an der eine Pflicht oder eine Verletzung ansetzen kann.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Aufgabe definieren und Modell auswählen<span class="sub">Schritt 1</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Datenbeschaffung, dann Datenaufbereitung<span class="sub">Daten sammeln, ohne sie zu verarbeiten oder zu transformieren (1a), dann extrahieren, transformieren und auswählen, um die Trainingsdaten zu erzeugen (1b)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Algorithmenentwicklung<span class="sub">die Parameter auf Grundlage der Trainingsdaten setzen (2)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Datentrennung<span class="sub">noch nicht genutzte Teilmengen der Trainingsdaten werden als Validierungsdaten abgetrennt (3)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Modelltraining<span class="sub">das Modell Muster vorhersagen lassen, Bewertungsmetriken festlegen, die Leistung auf dem Validierungssatz interpretieren und beurteilen (4)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Modellbewertung<span class="sub">weitere Teilmengen als Testdaten abtrennen, um die Genauigkeit zu analysieren und das Modell nachzujustieren (5)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Inbetriebnahme<span class="sub">das Modell wird in Entscheidungsabläufe eingebettet; die Bewertung auf den Testdaten fließt in die Feinjustierung ein (6)</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Modell-Scoring, dann Leistungsüberwachung<span class="sub">neue Werte und Eingaben werden erzeugt, um zu beurteilen, wie das Modell funktioniert (7), gefolgt von wiederholtem Testen und Nachjustieren (8)</span></div>
+  </div>
+  <figcaption>Die acht Schritte. Die drei Datenklassen, auf die es ankommt, und zugleich die Quizantwort, sind Trainingsdaten, Validierungsdaten und Testdaten. Bewertungsdaten und sequenzierte Daten sind in diesem Prozess keine Datenklassen.</figcaption>
+</div>
+
+**Exkurs: Legal Tech.** Vor den Herausforderungen wird der Raum gefragt, ob KI dem Anwaltsberuf, den Rechtsdienstleistungen, der Justiz und dem öffentlichen Zugang zu ihnen nützen könnte. Die eigenen Beispiele der Folien sind KI-Agenten, die Verträge entwerfen und prüfen, KI-Fallstudien, die von Anwältinnen und Anwälten geprüfte Präzedenzfälle nach der Rechtsargumentation sammeln und analysieren, die man aufbauen will, und sogenannte KI-Anwälte, die auf Webrecherche gestützte Beratung, das Entwerfen von Klagen und Anträgen sowie Dokumentenverwaltung und Vereinfachung für Praktiker, Studierende und Verbraucher anbieten.
+
+## 5 · Die Gruppenarbeit: rechtliche und ethische Herausforderungen
+
+Die Klasse teilt sich in zwei Gruppen. **Gruppe A** sammelt die **rechtlichen** Risiken und Herausforderungen, **Gruppe B** die **ethischen**, in beiden Fällen Risiken für individuelle und kollektive Rechte, für Freiheiten oder für öffentliche Interessen. Drei Fragen steuern das Brainstorming, und eine Frage schließt es ab.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Wie könnte KI Gesellschaft, Regierungen und Einzelne beeinflussen?</span>
+  <span class="sc-chip green">Welche Chancen und Vorteile bringt KI-basierte Innovation mit sich?</span>
+  <span class="sc-chip amber">Schaut euch den Blueprint for an AI Bill of Rights des Weißen Hauses (Okt. 2022) und NIST.AI.100-1 an: was sind die Kernbotschaften?</span>
+  <span class="sc-chip">Was könnte eine Lösung für die Herausforderungen sein?</span>
+</div>
+
+<Aside type="caution">
+**NIST.AI.100-1 ist als Lektüre aufgegeben, nicht unterrichtet.** Die Folien nennen das NIST-Dokument als etwas, das die Gruppen nachschlagen sollen, fassen seinen Inhalt aber an keiner Stelle zusammen. Deshalb habe ich bewusst nichts darüber geschrieben, was das NIST-Rahmenwerk sagt: Alles, was ich hier hinschriebe, wäre Erfindung statt Notizen.
+</Aside>
+
+## 6 · KI im Völkerrecht: die UNESCO-Empfehlung
+
+**UNESCO, Empfehlung zur Ethik der KI (SHS/BIO/PI/2021)**, angenommen am **23. November 2021** und veröffentlicht **2022**. Ihr Rechtscharakter ist das Erste, was man festhalten sollte: Sie ist eine **Empfehlung an alle Mitgliedstaaten**, die von ihr skizzierten Grundsätze, vorgeschlagenen Maßnahmen und Governance-Regime zu übernehmen. Sie ist **keine Regulierung als solche**, was die Folien als typisch für das Völkerrecht kennzeichnen. Die Grundsätze für den ethischen Einsatz von KI-Technologie stehen auf den Seiten 20 bis 23 des Dokuments.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Verhältnismäßigkeit und Schadensvermeidung <small>dazu Sicherheit und Gefahrenabwehr</small></div>
+    <ul>
+      <li>Die gewählte KI-Methode muss <strong>im Kontext angemessen</strong> und <strong>verhältnismäßig</strong> zu einem legitimen Ziel sein, was Massenüberwachung und Scoring ausschließt</li>
+      <li>Alle Risiken für Menschen sind <strong>im Voraus</strong> zu bewerten und auszuschließen</li>
+      <li>Risiken für die Sicherheit von Menschen, Umwelt und Ökosystemen müssen erkannt werden, damit sie verhindert und schließlich beseitigt werden können</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Fairness und Nichtdiskriminierung <small>soziale Gerechtigkeit</small></div>
+    <ul>
+      <li>KI-Innovation muss zugänglich und verfügbar sein und dabei lokal relevante Inhalte, Mehrsprachigkeit und Inklusion achten, unabhängig von Geschlecht, Kultur, Alter, Ethnie und sozioökonomischen Faktoren</li>
+      <li>Technologisch fortgeschrittene Länder tragen eine <strong>Verantwortung zur Solidarität</strong>, um globale digitale und Wissensklüfte zu überwinden</li>
+      <li>Es muss einen <strong>wirksamen Rechtsbehelf</strong> gegen diskriminierende und verzerrte algorithmische Festlegungen geben</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Privatheit, Verantwortung und Rechenschaft <small>die Datenhälfte</small></div>
+    <ul>
+      <li>Privatheit ist unabdingbar für Menschenwürde und Autonomie; nationales und internationales Datenschutzrecht muss unter Beteiligung mehrerer Interessengruppen aufgebaut, über den gesamten Lebenszyklus eines KI-Systems geachtet und von den Gerichten geschützt werden</li>
+      <li>Das umfasst die rechtmäßige Erhebung, Nutzung und Offenlegung personenbezogener Daten, die Möglichkeit betroffener Personen, ihre Rechte auszuüben, sowie ein legitimes Ziel und eine gültige Rechtsgrundlage für die Verarbeitung einschließlich der informierten Einwilligung</li>
+      <li>Algorithmische Systeme brauchen angemessene <strong>Datenschutz-Folgenabschätzungen</strong> einschließlich gesellschaftlicher und ethischer Erwägungen sowie <strong>Privacy by Design</strong></li>
+      <li>KI-Akteure sind für Entwurf und Umsetzung verantwortlich und rechenschaftspflichtig; Systeme müssen durch technische und institutionelle Gestaltung <strong>prüfbar und nachvollziehbar</strong> sein, wobei die Staaten Aufsicht, Folgenabschätzung, Prüfung und Sorgfaltsmechanismen einschließlich des Schutzes von Hinweisgebern sicherstellen</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Menschliche Aufsicht, Transparenz, Kompetenz, Governance <small>die Menschenhälfte</small></div>
+    <ul>
+      <li><strong>Menschliche Aufsicht</strong>, wo angebracht einschließlich inklusiver öffentlicher Aufsicht: ethische und rechtliche Verantwortung muss stets natürlichen Personen oder identifizierbaren juristischen Personen zurechenbar sein</li>
+      <li><strong>Menschliche Letztentscheidung</strong>: KI darf menschliches Entscheiden und Handeln niemals vollständig ersetzen, und Entscheidungen über Leben und Tod dürfen niemals an KI abgegeben werden</li>
+      <li><strong>Transparenz und Erklärbarkeit</strong> sind Voraussetzungen für Menschenrechte und ethische Grundsätze; ohne sie verlieren Haftungsregime ihre Wirksamkeit und die Möglichkeit, KI-gestützte Entscheidungen anzugreifen, und damit auch das Recht auf ein faires Verfahren und einen wirksamen Rechtsbehelf. Erklärbarkeit bedeutet, algorithmische Vorgänge und Festlegungen verständlich zu machen und Einblick in ihr Ergebnis zu geben</li>
+      <li><strong>Bewusstsein und Kompetenz</strong>, gefördert durch offene Bildung, bürgerschaftliches Engagement, digitale Fähigkeiten und Schulung in KI-Ethik, wobei Regierungen, zwischenstaatliche Organisationen, Medien, Wissenschaft, Gemeinschaftsvertreter und private Akteure informierte Entscheidungen und den Schutz vor unzulässiger Beeinflussung sicherstellen</li>
+      <li><strong>Multi-Stakeholder-Governance und anpassungsfähige Governance</strong>: Völkerrecht, Menschenrechte und nationale Souveränität werden bei der Nutzung von Daten geachtet, mit offenen Standards und Interoperabilität im Interesse aller Akteure einschließlich marginalisierter Gruppen</li>
+      <li><strong>Nachhaltigkeit</strong>: soziale, kulturelle, wirtschaftliche und ökologische Auswirkungen werden fortlaufend an den Zielen für nachhaltige Entwicklung der Vereinten Nationen gemessen</li>
+    </ul>
+  </div>
+</div>
+
+Das Quiz macht einen negativen Punkt ausdrücklich: **Philanthropie ist kein** UNESCO-Grundsatz zur Ethik der KI, während das Recht auf Privatheit und Datenschutz, Nachhaltigkeit, menschliche Aufsicht und Letztentscheidung sowie Bewusstsein und Kompetenz allesamt Grundsätze sind.
+
+## 7 · Die anderen Regelwerke: die Vereinigten Staaten und China
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Vereinigte Staaten <small>eine Abfolge, dann eine Kehrtwende</small></div>
+    <ul>
+      <li>Der <strong>Blueprint for an AI Bill of Rights</strong> des Weißen Hauses (Okt. 2022), unverbindlich, mit Grundsätzen wie Hinweis und Erklärung, Schutz vor algorithmischer Diskriminierung sowie menschlichen Alternativen, Prüfung und Rückfalloptionen</li>
+      <li>Eine <strong>freiwillige Selbstverpflichtung zur KI-Sicherheit</strong> (Juli 2023), unterzeichnet von großen Technologieunternehmen darunter OpenAI, Meta, Alphabet, Microsoft, IBM, Stability AI, Adobe und Amazon</li>
+      <li><strong>Executive Order 14110 vom 30. Oktober 2023</strong> über die sichere, geschützte und vertrauenswürdige Entwicklung und Nutzung von KI, mit dem Ziel, Sicherheit, Schutz und Datenschutz zu gewährleisten, Gleichheit und Bürgerrechte voranzubringen, für Verbraucher, Patienten, Studierende und Beschäftigte als schutzbedürftige Betroffene einzutreten, Innovation und Wettbewerb zu fördern und eine verantwortliche und wirksame Nutzung von KI durch die Regierung sicherzustellen</li>
+      <li><strong>Pro</strong>: die erste wirksame US-Regulierung zu KI, die die Risiken einer unregulierten Nutzung und Inbetriebnahme sowie die Rechenschaft von Technologieunternehmen ausdrücklich anerkennt und angeht</li>
+      <li><strong>Contra</strong>: ein sehr weiter Anwendungsbereich, keine Einteilung von KI-Systemen nach ihrer Wirkung auf individuelle Rechte, kein spezifisches Verbot und keine spezifische Regulierung hochriskanter Modelle, und eine Rechenschaft, die vor der Offenlegung von Modellen und Datenquellen haltmacht</li>
+      <li>All das wurde durch eine Executive Order vom <strong>23. Januar 2025</strong> <strong>aufgehoben</strong> und soll binnen <strong>180 Tagen</strong> durch einen Aktionsplan ersetzt werden, der die weltweite KI-Dominanz Amerikas für menschliches Aufblühen, wirtschaftliche Wettbewerbsfähigkeit und nationale Sicherheit erhalten und ausbauen (Sect. 4, 2) und Hindernisse für amerikanische KI-Innovation beseitigen soll (Sect. 1). Das Fazit der Folien: Nach heutigem Stand sind Nutzung und Inbetriebnahme von KI <strong>durch US-Recht nicht reguliert</strong></li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">China <small>ein Plan, kein Gesetz</small></div>
+    <ul>
+      <li><strong>Ein Entwicklungsplan für KI der nächsten Generation</strong>, erlassen vom Staatsrat am <strong>20. Juli 2017</strong></li>
+      <li>Es handelt sich um einen strategischen Aufriss für die chinesische Marktdominanz bei der KI-Technologie, mit den zugrunde liegenden ideologischen und dogmatischen Grundsätzen und einer Entwicklungsagenda, die bis <strong>2030</strong> erreicht werden soll und ausdrücklich die Vorteile eines sozialistischen Systems nutzt</li>
+      <li>Bis <strong>2025</strong>: erste KI-Gesetze und -Regelungen, ethische Normen und Politiksysteme sowie der Aufbau von Fähigkeiten zur Sicherheitsbewertung und -kontrolle bei KI</li>
+      <li>Bis <strong>2030</strong>: weltweit führende Zentren für KI-Technologieinnovation und Personalausbildung, dazu umfassendere KI-Gesetze und -Regelungen, ethische Normen und ein Politiksystem</li>
+    </ul>
+  </div>
+</div>
+
+Liest man die beiden Spalten nebeneinander, wird die Position der EU offensichtlich. Eine Rechtsordnung hat dereguliert, eine andere hat einen Entwicklungsplan, dessen Rechtsinstrumente noch immer versprochen sind, und dazwischen hat die EU eine tatsächliche Verordnung erlassen. Deshalb geht es im Rest des Kapitels um den EU AI Act.
+
+## 8 · Der EU AI Act: Zweck und Aufbau
+
+Der **EU AI Act vom 13. März 2024** wird in den Folien als der **weltweit erste Regulierungsakt zu KI** beschrieben. Sein Zweck ist nach **Art. 1 Nr. 1**, Vorschriften festzulegen, die Innovation unterstützen, das Funktionieren des Binnenmarkts verbessern und die Verbreitung **menschenzentrierter und vertrauenswürdiger KI** fördern, und dabei ein hohes Schutzniveau gegen die schädlichen Auswirkungen von KI für **Gesundheit**, **Sicherheit** und die **in der EU-Grundrechtecharta verankerten Grundrechte** zu gewährleisten, ausdrücklich einschließlich **Demokratie**, **Rechtsstaatlichkeit** und **Umweltschutz**.
+
+Er **harmonisiert die Rechtsvorschriften der Mitgliedstaaten**, und Art. 1 Nr. 2 legt fest, was er tatsächlich enthält.
+
+| Baustein | Wo er steht |
+|---|---|
+| **Praktiken mit unannehmbarem Risiko sind verboten** - Social Scoring und manipulative KI sind die Beispiele der Folien | **Art. 5** |
+| **Hochrisiko-KI-Systeme**: Einstufungsregeln und dann strenge Anforderungen | **Art. 6 und 7** für die Einstufung, **Art. 8 ff.** für die Anforderungen |
+| **Transparenzpflichten** für KI-Systeme, die mit Menschen interagieren, gerichtet an Anbieter und Betreiber, soweit nicht öffentlich | **Art. 50**, dazu **Art. 2 Nr. 1** und **Art. 3 (2), (3)** zu Anwendungsbereich und Akteuren |
+| Regeln zu **Marktbeobachtung, Marktüberwachung, Governance und Durchsetzung** | **Kapitel VII bis IX**, also **Art. 64 bis 94** |
+| **Maßnahmen zur Innovationsförderung** | **Art. 57 bis 63**, das Kapitel, das mit KI-Reallaboren beginnt |
+
+Der Transparenzblock lohnt zweimaliges Lesen, denn er benennt seine Adressaten: **Emotionserkennungs- und biometrische Systeme**, **Bild-, Ton- oder Videomanipulation, also Deep Fakes**, und **KI-erzeugte oder KI-manipulierte Texte, die zur Information der Öffentlichkeit über Angelegenheiten von öffentlichem Interesse veröffentlicht werden**. Die daran anknüpfende Pflicht besteht darin, **die natürlichen Personen, die dem System ausgesetzt sind, über dessen Funktionsweise zu informieren, sofern das nicht offensichtlich ist** (Art. 50 (1) Satz 1), und sie gilt nicht, soweit die genannten Zwecke gesetzlich erlaubt sind (Art. 50 (1) Satz 2 und Art. 50 (2)). Gegen die Verordnung geprüft verlangt Art. 50 außerdem von Anbietern, synthetische Audio-, Bild-, Video- oder Textinhalte in einem **maschinenlesbaren** Format zu kennzeichnen, das als künstlich erzeugt erkennbar ist, verlangt von Betreibern von Deep-Fake-Systemen, die Manipulation offenzulegen, und verlangt, dass die Information die Menschen **klar und unterscheidbar spätestens zum Zeitpunkt der ersten Interaktion oder Exposition** erreicht.
+
+## 9 · Die Risikopyramide, Stufe für Stufe
+
+Das ist das mit Abstand nützlichste Bild des Moduls. Die Quelle ist die Darstellung der Europäischen Kommission selbst.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Unannehmbares Risiko <span class="n">nicht erlaubt</span></div>
+      Zum Beispiel Social Scoring. Die Praktik ist schlichtweg verboten, Art. 5.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Hohes Risiko <span class="n">erlaubt, aber nur unter Bedingungen</span></div>
+      Zum Beispiel Recruiting- und Medizinlösungen. Erlaubt, sofern die KI-Anforderungen eingehalten werden und eine <strong>vorherige Konformitätsbewertung</strong> durchgeführt wird.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Begrenztes oder Transparenzrisiko <span class="n">erlaubt mit Informationspflichten</span></div>
+      Zum Beispiel Chatbots. Erlaubt, sofern die Informations- und Transparenzpflichten eingehalten werden, Art. 50.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Minimales Risiko oder kein Risiko <span class="n">erlaubt ohne Beschränkungen</span></div>
+      Alles, was in keiner der Stufen darüber landet. Nach dem Rechtsakt knüpfen daran keine Pflichten an.
+    </div>
+  </div>
+  <figcaption>Vier Stufen, vier vollkommen verschiedene Rechtsfolgen. Quelle: Europäische Kommission, digital-strategy.ec.europa.eu.</figcaption>
+</div>
+
+**Was tatsächlich verboten ist (Art. 5).** Prüft man die Verordnung gegen die beiden Beispiele der Folien, umfasst die Liste der verbotenen Praktiken: unterschwellige, absichtlich manipulative oder täuschende Techniken, die das Verhalten wesentlich verzerren und erheblichen Schaden verursachen; die Ausnutzung von Schwächen aufgrund von Alter, Behinderung oder einer besonderen sozialen oder wirtschaftlichen Lage, wiederum dort, wo das Verhalten wesentlich verzerrt wird und erheblicher Schaden entsteht; **Social Scoring**, also die Bewertung oder Einstufung von Menschen über einen Zeitraum hinweg nach ihrem Sozialverhalten oder ihren persönlichen Eigenschaften, wenn die Bewertung zu einer Schlechterstellung in Zusammenhängen führt, die mit den ursprünglichen Daten nichts zu tun haben, oder zu einer ungerechtfertigten oder unverhältnismäßigen Behandlung; die Vorhersage des Risikos, dass eine Person eine Straftat begeht, allein auf Grundlage von Profiling oder Persönlichkeitsmerkmalen; den Aufbau oder die Erweiterung von Gesichtserkennungsdatenbanken durch ungezieltes Auslesen von Gesichtsbildern aus dem Internet oder aus Videoüberwachung; das Ableiten von Emotionen am Arbeitsplatz oder in Bildungseinrichtungen, außer aus medizinischen oder Sicherheitsgründen; biometrische Kategorisierung, die auf Rasse, politische Meinungen, Gewerkschaftszugehörigkeit, religiöse oder weltanschauliche Überzeugungen, Sexualleben oder sexuelle Orientierung schließt; und die biometrische Fernidentifizierung in Echtzeit in öffentlich zugänglichen Räumen zu Strafverfolgungszwecken, außer in den eng aufgezählten Fällen mit vorheriger Genehmigung.
+
+**Wie ein System zum Hochrisikosystem wird (Art. 6 und 7).** Es gibt zwei Wege. Entweder ist das System eine **Sicherheitskomponente eines Produkts** oder selbst ein Produkt, das von den aufgeführten Harmonisierungsrechtsvorschriften der Union erfasst wird und einer Konformitätsbewertung durch Dritte unterliegt; oder es fällt in einen der **in Anhang III aufgeführten Bereiche**: Biometrie, kritische Infrastruktur, allgemeine und berufliche Bildung, Beschäftigung und Personalmanagement, Zugang zu wesentlichen privaten und öffentlichen Diensten und Leistungen, Strafverfolgung, Migration, Asyl und Grenzkontrolle sowie Rechtspflege und demokratische Prozesse. Art. 6 (3) eröffnet einen Ausweg dort, wo das System kein erhebliches Schadensrisiko birgt, weil es nur eine eng umgrenzte Verfahrensaufgabe erfüllt, das Ergebnis einer abgeschlossenen menschlichen Tätigkeit verbessert, Entscheidungsmuster erkennt, ohne die menschliche Bewertung zu ersetzen, oder vorbereitende Arbeit leistet. Ein System, das jedoch **natürliche Personen einem Profiling unterzieht, ist stets ein Hochrisikosystem**, und ein Anbieter, der sich auf die Ausnahme beruft, muss diese Bewertung dokumentieren, bevor er das System in Verkehr bringt. Art. 7 ist der Mechanismus zur Änderung von Anhang III, mit einer Liste von Kriterien wie Zweckbestimmung, Autonomie und menschlicher Übersteuerung, Abhängigkeit der betroffenen Personen, Machtungleichgewicht und der Frage, ob das Ergebnis umkehrbar ist.
+
+**Was hohes Risiko kostet (Art. 8 ff.).** Die Anforderungen, die die Verordnung aufstellt, sind ein **Risikomanagementsystem** (Art. 9), **Daten und Daten-Governance** (Art. 10), **technische Dokumentation** (Art. 11), **Aufzeichnungspflichten** (Art. 12), **Transparenz und Bereitstellung von Informationen für die Betreiber** (Art. 13), **menschliche Aufsicht** (Art. 14) sowie **Genauigkeit, Robustheit und Cybersicherheit** (Art. 15).
+
+## 10 · Wer ist wer: Anbieter, Betreiber, Einführer, Händler
+
+Die Folien richten die Transparenzpflichten an **Anbieter und Betreiber** und verweisen auf die Definitionen in Art. 3 und den Anwendungsbereich in Art. 2. Gegen die Verordnung selbst geprüft lauten die Definitionen in Art. 3 wie folgt, und der Sammelbegriff für sie alle ist **Akteur**.
+
+| Rolle | Wer das ist | Was der Rechtsakt für ein Hochrisikosystem von ihnen verlangt |
+|---|---|---|
+| **Anbieter**, Art. 3 (3) | Wer ein KI-System oder ein KI-Modell mit allgemeinem Verwendungszweck entwickelt oder entwickeln lässt und es **unter eigenem Namen oder eigener Marke** in Verkehr bringt oder in Betrieb nimmt, entgeltlich oder unentgeltlich | Art. 16: die Anforderungen einhalten, Name und Kontaktanschrift auf dem System anbringen, ein Qualitätsmanagementsystem betreiben, die Dokumentation und die automatisch erzeugten Protokolle aufbewahren, die Konformitätsbewertung vor dem Inverkehrbringen abschließen, die EU-Konformitätserklärung ausstellen, die CE-Kennzeichnung anbringen, registrieren, Korrekturmaßnahmen ergreifen, auf begründetes Verlangen die Konformität nachweisen und die Barrierefreiheitsanforderungen erfüllen |
+| **Betreiber**, Art. 3 (4) | Wer ein KI-System **in eigener Verantwortung** verwendet, es sei denn, die Verwendung ist eine persönliche, nicht berufliche Tätigkeit | Art. 26: das System entsprechend der Betriebsanleitung verwenden, die menschliche Aufsicht Personen übertragen, die die nötige Kompetenz, Schulung und Befugnis dafür haben, sicherstellen, dass die Eingabedaten relevant und hinreichend repräsentativ sind, soweit sie darüber Kontrolle haben, den Betrieb überwachen, die Verwendung aussetzen und Anbieter sowie Marktüberwachungsbehörde informieren, wenn ein Risiko auftritt, und schwerwiegende Vorfälle melden |
+| **Einführer**, Art. 3 (6) | Eine Person in der EU, die ein System in Verkehr bringt, das den Namen oder die Marke einer in einem **Drittland** niedergelassenen Person trägt | Art. 23: vor dem Inverkehrbringen prüfen, dass die Konformitätsbewertung durchgeführt und die technische Dokumentation erstellt wurde, dass CE-Kennzeichnung, Konformitätserklärung und Betriebsanleitung vorhanden sind und ein Bevollmächtigter benannt wurde; ein nicht konformes oder gefälschtes System nicht in Verkehr bringen; den eigenen Namen und die eigenen Kontaktdaten hinzufügen; dafür sorgen, dass Lagerung und Transport die Konformität nicht beeinträchtigen |
+| **Händler**, Art. 3 (7) | Jede Person in der Lieferkette außer dem Anbieter oder dem Einführer, die ein System auf dem Unionsmarkt **bereitstellt** | Art. 24: CE-Kennzeichnung, Konformitätserklärung und Betriebsanleitung prüfen sowie prüfen, dass Anbieter und Einführer ihre Pflichten erfüllt haben; ein nicht konformes System zurückhalten; die Konformität während Lagerung und Transport wahren; Korrekturmaßnahmen, Rücknahme oder Rückruf ergreifen oder veranlassen; die Behörden informieren und auf begründetes Verlangen die Dokumentation herausgeben |
+
+Zum Anwendungsbereich erfasst Art. 2 (1) Anbieter, die Systeme auf dem EU-Markt in Verkehr bringen, gleich wo sie niedergelassen sind, in der EU niedergelassene Betreiber, Anbieter **und** Betreiber in Drittländern, soweit die **Ausgabe in der Union verwendet** wird, Einführer und Händler, Produkthersteller, Bevollmächtigte sowie betroffene Personen, die sich in der EU befinden.
+
+<Aside type="caution">
+**Wo diese Notizen aufhören.** Die Folien selbst nennen nur **Anbieter und Betreiber**. Die Zeilen zu Einführer und Händler oben stammen aus dem Definitionsartikel, auf den die Folien verweisen, Art. 3, und aus den entsprechenden Pflichtenartikeln, und ich habe sie als solche gekennzeichnet, statt so zu tun, als hätte die Sitzung sie behandelt.
+</Aside>
+
+## 11 · Drei Dinge, die diese Folien nicht klären
+
+<Aside type="caution">
+Drei Punkte, die mein Wiederholungsplan erwartet hat, sind **nicht in der Quelle enthalten**, deshalb habe ich sie weggelassen, statt zu raten:
+
+- **KI-Modelle mit allgemeinem Verwendungszweck.** Die Folien erreichen Kapitel V der Verordnung nie, deshalb steht hier nichts zu den Pflichten der Anbieter von GPAI-Modellen oder zu Modellen mit systemischem Risiko.
+- **Der Zeitplan der Anwendung.** Die Folien datieren den Rechtsakt auf den 13. März 2024 und hören dort auf. Sie geben keine gestaffelten Anwendungszeitpunkte an, deshalb sind in diesen Notizen keine Fristen aufgeschrieben.
+- **Sanktionen.** Die Folien verweisen für Marktbeobachtung, Marktüberwachung, Governance und Durchsetzung auf die Kapitel VII bis IX, nennen aber nie eine Geldbuße, einen Prozentsatz des Umsatzes oder eine Bußgeldobergrenze. Ich habe keine aufgeschrieben.
+
+Für alle drei Punkte gehe man zur Verordnung selbst und nicht zu dieser Seite.
+</Aside>
+
+## 12 · KI und geistiges Eigentum
+
+Die IP-Hälfte der Sitzung beginnt damit, die Landkarte neu zu zeichnen, und fragt dann, was KI mit ihr macht.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Marke<span class="sub">geschäftlicher Ruf</span></div>
+    <div class="sc-node violet">Urheberrecht<span class="sub">ausschließliche Schöpfung</span></div>
+    <div class="sc-node green">Patente<span class="sub">ausschließliche Innovation</span></div>
+    <div class="sc-node slate">Geschäftsgeheimnisse<span class="sub">wirtschaftlich wertvolle Informationen</span></div>
+    <div class="sc-node soft">Open Access, Open Source und Creative-Commons-Lizenzen<span class="sub">die permissive Schicht neben den vier Rechten</span></div>
+  </div>
+  <figcaption>Die Rechte, die geistiges Eigentum schützen, so wie die Sitzung sie aufzählt. Das Quiz bestätigt, dass eine eingetragene Marke, das Urheberrecht, Patente und Geschäftsgeheimnisse Rechte des geistigen Eigentums sind, während eine nicht eingetragene Marke nicht dazu gezählt wird.</figcaption>
+</div>
+
+**Urheberrecht.** Es erlaubt der Schöpferin, dem Urheber oder dem Rechteinhaber, die eigene individuelle Schöpfung zu schützen, also **Auswahl, Anordnung und Zusammenstellung**, und anderen die Vervielfältigung des Werks ohne Erlaubnis zu untersagen, und es **entsteht automatisch mit der Schöpfung**. Nach EU-Recht ist eine Schöpfung schutzfähig, wenn sie **genau und objektiv identifizierbar** ist. Die Folien geben außerdem einen außereuropäischen Maßstab, nämlich die Kriterien, die nach chinesischem Recht vom **Beijing Internet Court im Jahr 2023** angewendet wurden: Das Werk muss (a) den Bereichen Literatur, Kunst oder Wissenschaft angehören, (b) **Originalität** besitzen, (c) eine **Ausdrucksform** haben und (d) das Ergebnis einer **geistigen Leistung** sein.
+
+**Marken.** Eine Marke hält Wettbewerber davon ab, das eigene Zeichen oder ein ähnliches ohne Erlaubnis zu benutzen, und erlaubt es, die Marke zu verkaufen und zu lizenzieren; die Folien zitieren dafür **Art. 9** der EU-Markenverordnung und geben die Verordnungsnummer auf jener Folie mit (EU) 2017/1007 und auf den Folien zur Unterscheidungskraft mit (EU) 2017/1001 an, weshalb ich beide festgehalten habe, statt eine auszuwählen. Eingetragen werden können nur **bestimmte und klassifizierbare Waren und Dienstleistungen** (Art. 31 § 1 c), wobei der Umfang der Angabe in Art. 33 § 2 geregelt ist). Der Schutz ist **territorial**, die Marke muss also bei der zuständigen Behörde eingetragen werden, UKIPO, USPTO, EUIPO, und der Schutzumfang ist entsprechend begrenzt. **Unterscheidungskraft** nach Art. 7 bedeutet, dass die Waren und Dienstleistungen nicht bloß beschreibend sein dürfen, und sie wird beurteilt nach (1) der Wahrnehmung der maßgeblichen Zielgruppe, (2) dem angemessen informierten, aufmerksamen und verständigen Durchschnittskunden für diese konkreten Waren und Dienstleistungen, (3) einer dynamischen Wahrnehmung, die die üblichen Gepflogenheiten und das Wissen in diesem Marktsegment berücksichtigt, und (4) marktspezifischen Abweichungen. Die genannten US-Entsprechungen sind die **Schwelle der Originalität** und der **Erschöpfungsgrundsatz**, die First-Sale-Doktrin.
+
+**Die Nizza-Klassifikation.** Ein internationales Abkommen, das von den meisten Ländern einschließlich der EU ratifiziert und genutzt wird, um die Klassifikation von Waren und Dienstleistungen einheitlich zu halten. Es hat **34 Klassen für Waren und 11 für Dienstleistungen**, und es **verleiht für sich genommen keine durchsetzbaren Rechte**.
+
+<Aside type="note" title="Exkurs: virtuelle Waren, und wo die Ämter uneins sind">
+Die Klasse wird mit einer Frage in den Nizza-Katalog geschickt: Was geht schief, wenn man virtuelle Waren und Dienstleistungen klassifiziert? Und welchen Unterschied macht es, ob der Gegenstand rein virtuell ist (ein NYAN-Cat-NFT), ein virtueller Zwilling von etwas Physischem (ein Sneaker und sein zugehöriges NFT) oder eine Dienstleistung, die vollständig abstrakt ist (Virtual Reality) statt nur teilweise abstrakt (Augmented Reality)?
+
+Klasse 9 erfasst Apparate und Instrumente zum Aufzeichnen, Übertragen, Wiedergeben oder Verarbeiten von Ton, Bild oder Daten, bespielte und herunterladbare Medien, Computersoftware und unbespielte Aufzeichnungsträger. Klasse 18 erfasst Leder und Lederimitationen. An dieser Stelle trennen sich die beiden Ämter: Das **EUIPO** ordnet NFT stets **ausschließlich der Klasse 9** zu, während das **UKIPO** sagt, dass bei einem NFT, das eine physische Ware repräsentiert, die entsprechende Klasse, also Klasse 18 für einen Schuh, **ebenfalls** gilt.
+</Aside>
+
+**Algorithmische Rechtsverletzung.** Die Übung besteht darin, den Machine-Learning-Prozess noch einmal rückwärts durchzugehen und bei jedem Schritt zu fragen, welche Rechte die Arbeitsweise eines Algorithmus verletzen könnte und wie, und dann zu fragen, welche Maßnahmen man bei der Entwicklung eines eigenen KI-Systems ergreifen würde, damit während seines Lernprozesses kein Recht des geistigen Eigentums verletzt wird. Vier Präzedenzfälle werden angeboten, falls die Zeit reicht: **Getty Images v Stability AI** vor dem britischen High Court of Justice, nach Civil Procedure Rules Part 17 Rule 17.3 und Part 24 sowie den Sections 16, 17 und 20 des Copyright, Designs and Patents Act 1988; **Gemini Data v Google**, 11. September 2024; **Center for Investigative Reporting, Inc. v. OpenAI, Inc., et al.**, 27. Juni 2024; und **Andersen v Stability AI**, ND Cal, August 2024, Richter Orrick.
+
+**Die Quizantworten, die die eigentliche Position der Sitzung sind.** Zu der Frage, was durch geistiges Eigentum geschützt werden kann: Ein **virtuelles McDonald's-Restaurant** kann es, und ein **Betriebssystem** kann es. Die Art, wie du deine Uhr gerne verkehrt herum trägst, kann es nicht, ein Hemd mit dem aufgedruckten Kopf eines Lego-Männchens kann es nicht, und, das ist der wichtige Punkt, **ein von KI erzeugtes Bild vom Hund deines Nachbarn kann es nicht**. Liest man das gegen die urheberrechtlichen Kriterien, wird der Grund sichtbar: Der Schutz ist um eine individuelle Schöpfung herum gebaut, die eine geistige Leistung mit Originalität ist, und ein KI-erzeugtes Bild wird nicht so behandelt, als erfülle es das. Zu der Frage, wie eine KI verletzen könnte: **durch das Sammeln geschützter Informationen als Trainingsdaten** und **durch die Verwendung urheberrechtlich geschützter Kunst zur Erzeugung eines Bildes**. Eine Marke selbstständig zu lizenzieren, die eigene Ausgabe nach dem Nizzaer Abkommen zu klassifizieren und Open-Access-Datenbanken für Testdaten zu verwenden, sind allesamt als **keine** Rechtsverletzungen gekennzeichnet.
+
+<Aside type="caution">
+Die Folien entscheiden über diese Quizantwort, ob eine KI-Ausgabe schutzfähig ist, und sie entscheiden das Trainingsdatenproblem über die Verletzungsantwort und die vier Fälle. Sie sagen **nichts darüber, wem eine KI-Ausgabe gehören würde**, wenn sie schutzfähig wäre, und **nichts zur Erfindereigenschaft** bei KI-gestützten Patenten. Diese beiden Fragen bleiben in meinen Notizen offen, weil sie in der Quelle offen bleiben.
+</Aside>
+
+## 13 · KI-Verträge: die vierstufige Einordnung
+
+Die letzte Folie des Moduls ist eine Methode und keine Klauselliste. Wenn ein KI-System beschafft oder geliefert wird, arbeite vier Schritte der Reihe nach ab.
+
+<Steps>
+
+1. **Bestimme den Vertragsgegenstand.** Vereinbart ihr (a) **Waren**, also KI-Systeme oder Software mit KI-Komponenten, (b) **Dienstleistungen**, die KI-Technologie nutzen oder verwalten, oder (c) **sonstige Leistungen**, wofür das Beispiel der Folien medizinische Studien oder eine Behandlung ist, bei der die Diagnostik mit Hilfe von KI erfolgt?
+
+2. **Halte die Haupt- und Nebenpflichten beider oder aller Parteien fest.** Bei Waren heißt das **Bereitstellung, Inbetriebnahme oder Vertrieb** und die Frage, ob das Erworbene **(Teil-)Eigentum**, eine **bestimmte Lizenz** oder eine **Miete** ist. Die Nebenebene umfasst die **Einbettung in die bestehende IT-Infrastruktur**, die **Wartung** und besondere Regelungen wie ein **NDA**.
+
+3. **Entscheide, ob die Software oder das KI-System individualisiert oder standardisiert ist**, und dort, wo es darauf ankommt, ob die Überlassung **befristet oder dauerhaft** ist.
+
+4. **Führe die Risikobewertung durch.** Handelt es sich um ein **Hochrisiko-KI-System** nach Art. 6 bis 8 des EU AI Act? Greifen die **Transparenzpflichten** des Art. 50?
+
+</Steps>
+
+Schritt 4 ist derjenige, der das ganze Kapitel verbindet. Sobald man die Stufe kennt, kennt man die bestehenden Pflichten, und jede Pflicht aus Abschnitt 9 und Abschnitt 10 oben muss im Vertrag bei einer benannten Partei landen, denn der Rechtsakt weist die Pflichten Rollen zu, und es ist der Vertrag, der entscheidet, welche Rolle jede Seite spielt.
+
+<Aside type="caution">
+Das Vertragsmaterial der Folien besteht aus dieser vierstufigen Einordnung und aus nichts weiter. Sie geben **keinen** Klauselwortlaut für Haftungsobergrenzen, Zusicherungen zu Genauigkeit oder Leistung, Rechte an Daten und Trainingsdaten oder Dokumentationslieferungen, deshalb habe ich auch keinen geschrieben. Was die Quelle trägt, ist der Punkt oben: Die Verantwortung folgt der Rolle, und die Rolle wird durch das Geschäft festgelegt.
+</Aside>
+
+## Durchgerechnetes Beispiel
+
+Drei Systeme, die ein Unternehmen einem realistischerweise in derselben Woche vorlegen könnte, eingeordnet nach der Pyramide.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Unannehmbar <span class="n">System C</span></div>
+      Verboten. Es gibt keinen Weg zur Rechtskonformität.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Hohes Risiko <span class="n">System A</span></div>
+      Erlaubt, aber nur mit dem vollständigen Anforderungssatz und einer vorherigen Konformitätsbewertung.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Begrenztes oder Transparenzrisiko <span class="n">System B</span></div>
+      Erlaubt, vorbehaltlich der Informations- und Transparenzpflichten.
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Minimales Risiko <span class="n">heute nichts davon</span></div>
+      Erlaubt ohne Beschränkungen. Die meiste gewöhnliche Unternehmenssoftware landet hier.
+    </div>
+  </div>
+  <figcaption>Dasselbe Unternehmen, dieselbe Woche, drei vollkommen verschiedene rechtliche Antworten.</figcaption>
+</div>
+
+| Das System | Kategorie und warum | Was daraus in der Praxis folgt |
+|---|---|---|
+| **A.** Ein Modell, das Bewerbungen filtert und Kandidaten für das HR-Team in eine Rangfolge bringt | **Hohes Risiko**. Es fällt in den Anhang-III-Bereich Beschäftigung und Personalmanagement, konkret Einstellung und Auswahl, also greift Art. 6 (2). Die Ausnahme des Art. 6 (3) steht nicht zur Verfügung, weil es mehr tut als eine eng umgrenzte Verfahrensaufgabe und weil es Bewerber einem Profiling unterzieht | Die Anforderungen des Art. 8 ff.: ein Risikomanagementsystem, Daten-Governance, technische Dokumentation, Aufzeichnungen, Informationen für den Betreiber, menschliche Aufsicht sowie Genauigkeit, Robustheit und Cybersicherheit, dazu eine **vorherige Konformitätsbewertung**. Baut das Unternehmen es selbst und bringt es unter eigenem Namen heraus, ist es **Anbieter** und Art. 16 gilt. Kauft es das System und betreibt es, ist es **Betreiber** und Art. 26 gilt: der Betriebsanleitung folgen, kompetente und befugte Menschen mit der Aufsicht betrauen, die Eingabedaten relevant und repräsentativ halten, überwachen, aussetzen und melden |
+| **B.** Ein Kundenservice-Chatbot auf der Unternehmenswebsite, der außerdem Antwortmails entwirft | **Begrenztes oder Transparenzrisiko**. Er interagiert unmittelbar mit natürlichen Personen und erzeugt synthetischen Text, deshalb greift der Block des Art. 50 und nicht der Hochrisikoblock | Den Nutzern sagen, dass sie es mit einem KI-System zu tun haben, sofern das für eine angemessen informierte und aufmerksame Person nicht offensichtlich ist, und diese Information klar und spätestens bei der ersten Interaktion geben. Erzeugte Inhalte maschinenlesbar und erkennbar kennzeichnen. Wird er je genutzt, um veröffentlichten Text zur Information der Öffentlichkeit über eine Angelegenheit von öffentlichem Interesse zu erzeugen, ist die künstliche Erzeugung offenzulegen |
+| **C.** Ein Werkzeug, das Kunden über die Zeit hinweg nach ihrem allgemeinen Sozialverhalten bewertet und ihnen bei niedriger Bewertung damit nicht zusammenhängende Leistungen verweigert | **Unannehmbares Risiko**. Das ist Social Scoring nach Art. 5: Bewertung oder Einstufung von Menschen über einen Zeitraum hinweg auf Grundlage ihres Sozialverhaltens oder abgeleiteter persönlicher Eigenschaften, wobei die Bewertung zu einer Schlechterstellung in Zusammenhängen führt, die nichts mit der Herkunft der Daten zu tun haben, oder zu einer unverhältnismäßigen Behandlung | Nichts zu verhandeln und kein Konformitätsweg, dem man folgen könnte. Die Praktik ist **verboten**, und der richtige Rat lautet, das Projekt zu beenden, statt es zu dokumentieren |
+
+## Wende es auf dein Projekt an
+
+<Steps>
+
+1. **Schreibe auf, was das System mit Menschen macht, nicht was darin steckt.** Die Stufe hängt vom Anwendungsfall und davon ab, wer betroffen ist, eine Beschreibung in Begriffen der Modellarchitektur lässt sich also überhaupt nicht einordnen.
+
+2. **Prüfe zuerst die Liste des Art. 5.** Manipulation, Ausnutzung von Schutzbedürftigkeit, Social Scoring, vorhersagende Polizeiarbeit allein auf Grundlage von Profiling, ungezieltes Auslesen von Gesichtsbildern, Ableiten von Emotionen am Arbeitsplatz oder in der Bildung, sensible biometrische Kategorisierung, biometrische Fernidentifizierung in Echtzeit zu Strafverfolgungszwecken. Bist du dort drin, hör auf.
+
+3. **Gehe die beiden Wege ins hohe Risiko durch.** Ist das System eine Sicherheitskomponente eines regulierten Produkts oder das Produkt selbst, das eine Konformitätsbewertung durch Dritte braucht? Oder liegt der Anwendungsfall in einem Anhang-III-Bereich, also Biometrie, kritische Infrastruktur, Bildung, Beschäftigung, wesentliche Dienste, Strafverfolgung, Migration, Rechtspflege und demokratische Prozesse?
+
+4. **Greift Anhang III, dann prüfe die Ausnahme des Art. 6 (3) ehrlich**, und denke daran, dass alles, was **natürliche Personen einem Profiling unterzieht, stets hohes Risiko ist**. Berufst du dich auf die Ausnahme, dokumentiere die Bewertung, **bevor** das System in den Markt geht.
+
+5. **Entscheide, in welcher Rolle du bist.** Anbieter, Betreiber, Einführer oder Händler. Diese eine Antwort entscheidet, welchen Pflichtenartikel du lesen musst, und sie hängt daran, was du mit dem System tust, nicht daran, wie groß du bist.
+
+6. **Prüfe Art. 50 gesondert.** Auch ein System, das kein Hochrisikosystem ist, kann Transparenzpflichten schulden, wenn es mit Menschen interagiert, Emotionen erkennt oder Biometrie betreibt, Deep Fakes erzeugt oder veröffentlichten Text zu Angelegenheiten von öffentlichem Interesse produziert.
+
+7. **Gehe den Machine-Learning-Prozess auf IP-Risiken durch.** Woher kamen die Trainingsdaten, ist etwas darin geschützt, und wäre ihre Nutzung ein Sammeln geschützter Informationen als Trainingsdaten oder eine Verwendung urheberrechtlich geschützter Kunst zur Erzeugung einer Ausgabe?
+
+8. **Stelle die ethischen Fragen neben die rechtlichen.** Verhältnismäßigkeit und Schadensvermeidung, Fairness und Nichtdiskriminierung, Privatheit, menschliche Aufsicht mit einer Verantwortung, die identifizierbaren Personen zurechenbar ist, Transparenz und Erklärbarkeit sowie Nachhaltigkeit.
+
+9. **Dann ordne den Vertrag ein**: Vertragsgegenstand, Haupt- und Nebenpflichten, individualisiert oder standardisiert und für wie lange, und zuletzt die **Risikobewertung**, denn die Stufe entscheidet, wofür der Vertrag jemanden verantwortlich machen muss.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| KI-System (Art. 3 (1) EU AI Act) | Ein maschinengestütztes System mit unterschiedlichen Graden von Autonomie, möglicherweise nach der Inbetriebnahme anpassungsfähig, das aus seinen Eingaben ableitet, wie es Vorhersagen, Inhalte, Empfehlungen oder Entscheidungen erzeugt, die physische oder virtuelle Umgebungen beeinflussen |
+| Machine Learning | KI-Systeme, die aus vorab definierten Daten lernen |
+| Deep Learning | Machine-Learning-Modelle, die menschliche Kognition nachahmen und sich an nicht definierte Daten anpassen können |
+| Generative AI | Deep-Learning-Modelle, die selbstständig Daten sammeln, um originäre Inhalte zu erzeugen |
+| Trainings-, Validierungs- und Testdaten | Die drei Datenklassen im Machine-Learning-Prozess: woraus das Modell lernt, woran es beurteilt wird und womit die Genauigkeit analysiert und das Modell nachjustiert wird |
+| Risiko (Art. 3 (2)) | Die Kombination aus der Wahrscheinlichkeit eines Schadens und seiner Schwere |
+| Anbieter | Wer ein KI-System entwickelt oder entwickeln lässt und es unter eigenem Namen oder eigener Marke in Verkehr bringt oder in Betrieb nimmt |
+| Betreiber | Wer ein KI-System in eigener Verantwortung verwendet, außerhalb rein persönlicher, nicht beruflicher Nutzung |
+| Einführer und Händler | Die Partei innerhalb der EU, die ein aus einem Drittland stammendes, fremdmarkiertes System in Verkehr bringt, und jede weitere Person in der Kette, die ein System bereitstellt |
+| Akteur | Der Oberbegriff für Anbieter, Produkthersteller, Betreiber, Bevollmächtigten, Einführer und Händler |
+| Unannehmbares Risiko | Die verbotene Stufe, Art. 5. Social Scoring und manipulative KI sind die stehenden Beispiele |
+| Hohes Risiko | Nur mit dem vollständigen Anforderungssatz und einer vorherigen Konformitätsbewertung erlaubt; erreicht entweder über regulierte Produkte oder über die Anhang-III-Bereiche |
+| Begrenztes oder Transparenzrisiko | Erlaubt vorbehaltlich der Informations- und Transparenzpflichten nach Art. 50; Chatbots sind das Beispiel |
+| Minimales Risiko | Nach dem Rechtsakt ohne Beschränkungen erlaubt |
+| Vorherige Konformitätsbewertung | Die Prüfung, die abgeschlossen sein muss, **bevor** ein Hochrisikosystem auf den Markt kommt, nicht danach |
+| Erklärbarkeit | Algorithmische Vorgänge und Festlegungen verständlich machen und Einblick in das Ergebnis geben, damit Entscheidungen angegriffen werden können |
+| Menschliche Letztentscheidung | Der UNESCO-Grundsatz, dass KI menschliches Entscheiden niemals vollständig ersetzen darf und dass Entscheidungen über Leben und Tod niemals an KI abgegeben werden dürfen |
+| Nizza-Klassifikation | Das internationale Abkommen, das die Klassen von Waren und Dienstleistungen für Marken vereinheitlicht, 34 für Waren und 11 für Dienstleistungen, und das selbst keine durchsetzbaren Rechte verleiht |
+
+## Teste dich selbst
+
+1. Gib die Definition eines KI-Systems nach Art. 3 (1) in eigenen Worten wieder und nenne die beiden Dinge, die die EU- und die US-Definition teilen, sowie das eine Element, das nur in der EU-Fassung auftaucht.
+2. Nenne die vier Risikostufen des EU AI Act und die Rechtsfolge, die an jede geknüpft ist.
+3. **Ordne das ein:** Eine Bank setzt ein Modell ein, das die Kreditwürdigkeit von Antragstellern bewertet und die niedrig Bewerteten automatisch ablehnt. Welche Stufe, auf welcher Grundlage, und was muss die Bank tun?
+4. Worin liegt der Unterschied zwischen Anbieter und Betreiber, und warum entscheidet dieser Unterschied darüber, welchen Artikel man liest?
+5. Welchen Rechtscharakter hat die UNESCO-Empfehlung zur Ethik der KI, und nenne fünf ihrer Grundsätze.
+6. Wie könnte ein KI-System nach der Sitzung Rechte des geistigen Eigentums verletzen, und welche zwei der Quizoptionen sind **keine** Verletzungen?
+
+<Aside type="note" title="Lösungen">
+1. Ein maschinengestütztes System, das für einen Betrieb mit unterschiedlichen Graden von Autonomie ausgelegt ist, nach der Inbetriebnahme möglicherweise Anpassungsfähigkeit zeigt und das für explizite oder implizite Ziele aus seinen Eingaben ableitet, wie Ausgaben wie Vorhersagen, Inhalte, Empfehlungen oder Entscheidungen erzeugt werden, die physische oder virtuelle Umgebungen beeinflussen können. Geteilt mit der US-Definition: Beide sind **maschinengestützte Systeme**, beide **beeinflussen reale oder virtuelle Umgebungen**, und beide erfassen **Vorhersagen, Empfehlungen oder Entscheidungen**. Nur die EU-Fassung erwähnt **Anpassungsfähigkeit**; keine von beiden verlangt eine vom Menschen gegebene Eingabe.
+2. **Unannehmbares Risiko** - nicht erlaubt. **Hohes Risiko** - erlaubt, sofern die KI-Anforderungen eingehalten werden und eine vorherige Konformitätsbewertung erfolgt. **Begrenztes oder Transparenzrisiko** - erlaubt, sofern die Informations- und Transparenzpflichten eingehalten werden. **Minimales Risiko oder kein Risiko** - erlaubt ohne Beschränkungen.
+3. **Hohes Risiko.** Die Bewertung der Kreditwürdigkeit natürlicher Personen oder die Feststellung ihres Kreditscores ist einer der Anhang-III-Bereiche, nämlich Zugang zu wesentlichen privaten und öffentlichen Diensten, also greift Art. 6 (2), und die Ausnahme des Art. 6 (3) steht nicht zur Verfügung, weil das System Menschen einem Profiling unterzieht und das Ergebnis wesentlich beeinflusst. Als **Betreiber** schuldet die Bank die Pflichten des Art. 26: das System entsprechend der Betriebsanleitung verwenden, die menschliche Aufsicht kompetenten und befugten Beschäftigten übertragen, die von ihr kontrollierten Eingabedaten relevant und repräsentativ halten, den Betrieb überwachen, die Verwendung aussetzen und Anbieter sowie Marktüberwachungsbehörde informieren, wenn ein Risiko auftritt, und schwerwiegende Vorfälle melden. Wer das Modell unter eigenem Namen in Verkehr gebracht hat, ist **Anbieter** und schuldet die Pflichten des Art. 16 zuzüglich der Anforderungen des Art. 8 ff.
+4. Der **Anbieter** entwickelt das System oder lässt es entwickeln und bringt es unter eigenem Namen oder eigener Marke in Verkehr oder nimmt es in Betrieb. Der **Betreiber** verwendet es in eigener Verantwortung, außerhalb persönlicher, nicht beruflicher Nutzung. Der Rechtsakt weist die Pflichten nach Rollen zu, dieselbe Organisation liest also Art. 16 als Anbieter und Art. 26 als Betreiber, und ein Unternehmen, das ein System kauft und mit eigener Marke versieht, kann sich in der ersten statt in der zweiten Spalte wiederfinden.
+5. Sie ist eine **Empfehlung an die Mitgliedstaaten**, die von ihr aufgestellten Grundsätze, vorgeschlagenen Maßnahmen und Governance-Regime zu übernehmen, und keine Regulierung als solche, was für das Völkerrecht typisch ist. Fünf ihrer Grundsätze: Verhältnismäßigkeit und Schadensvermeidung; Sicherheit und Gefahrenabwehr; Fairness und Nichtdiskriminierung; das Recht auf Privatheit und Datenschutz; menschliche Aufsicht und Letztentscheidung. Weitere sind Transparenz und Erklärbarkeit, Verantwortung und Rechenschaft, Bewusstsein und Kompetenz, Multi-Stakeholder-Governance und anpassungsfähige Governance sowie Nachhaltigkeit. **Philanthropie gehört nicht dazu.**
+6. **Durch das Sammeln geschützter Informationen als Trainingsdaten** und **durch die Verwendung urheberrechtlich geschützter Kunst zur Erzeugung eines Bildes**. Open-Access-Datenbanken für Testdaten zu verwenden, ist keine Verletzung, und die eigene Ausgabe nach dem Nizzaer Abkommen einzuordnen, ebenfalls nicht.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- **Art. 3 (1) EU AI Act**: ein maschinengestütztes System, unterschiedliche Grade von Autonomie, nach der Inbetriebnahme möglicherweise anpassungsfähig, das aus den Eingaben ableitet, wie Vorhersagen, Inhalte, Empfehlungen oder Entscheidungen erzeugt werden, die physische oder virtuelle Umgebungen beeinflussen. Die US-Definition in 15 U. S. Code § 9401 (3) teilt die Elemente maschinengestützt, umgebungsbeeinflussend und Vorhersage, nicht aber die Anpassungsfähigkeit; die UNESCO-Definition setzt bei informationsverarbeitenden Technologien an, die eine Fähigkeit zum Lernen und zur Ausführung kognitiver Aufgaben hervorbringen.
+- Verschachtelung: **KI**, dann **Machine Learning**, dann **Deep Learning**, dann **Generative AI**. Die drei Datenklassen im ML-Prozess sind **Trainings-, Validierungs- und Testdaten**.
+- **UNESCO SHS/BIO/PI/2021**, angenommen am 23. November 2021, veröffentlicht 2022, ist eine **Empfehlung, keine Regulierung**. Grundsätze: Verhältnismäßigkeit und Schadensvermeidung, Sicherheit und Gefahrenabwehr, Fairness und Nichtdiskriminierung, Privatheit und Datenschutz, Verantwortung und Rechenschaft, menschliche Aufsicht und Letztentscheidung, Transparenz und Erklärbarkeit, Bewusstsein und Kompetenz, Multi-Stakeholder-Governance und anpassungsfähige Governance, Nachhaltigkeit.
+- **USA**: Blueprint for an AI Bill of Rights (Okt. 2022), freiwillige Sicherheitsverpflichtung (Juli 2023), Executive Order 14110 vom 30. Oktober 2023, alles aufgehoben durch die Executive Order vom 23. Januar 2025, mit einem binnen 180 Tagen versprochenen Aktionsplan, sodass Nutzung und Inbetriebnahme von KI heute durch US-Recht nicht reguliert sind. **China**: der Entwicklungsplan für KI der nächsten Generation vom 20. Juli 2017, mit rechtlichen und ethischen Rahmenwerken als Ziel für 2025 und 2030.
+- Der **EU AI Act vom 13. März 2024**, der weltweit erste Regulierungsakt zu KI. Art. 1 Nr. 1: Innovation, Binnenmarkt und menschenzentrierte, vertrauenswürdige KI, mit Schutz von Gesundheit, Sicherheit und Chartarechten einschließlich Demokratie, Rechtsstaatlichkeit und Umweltschutz.
+- **Vier Stufen**: unannehmbares Risiko **nicht erlaubt** (Art. 5, Social Scoring, manipulative KI); hohes Risiko **erlaubt mit Compliance und vorheriger Konformitätsbewertung** (Art. 6 und 7 für die Einstufung, Art. 8 ff. für die Anforderungen, also Risikomanagement, Daten-Governance, technische Dokumentation, Aufzeichnungen, Informationen für Betreiber, menschliche Aufsicht, Genauigkeit und Cybersicherheit); begrenztes oder Transparenzrisiko **erlaubt mit Informationspflichten** (Art. 50, Chatbots, Emotionserkennung und Biometrie, Deep Fakes, veröffentlichter KI-Text zu Angelegenheiten von öffentlichem Interesse); minimales Risiko **erlaubt ohne Beschränkungen**.
+- **Rollen entscheiden über Pflichten**: Anbieter (Art. 3 (3), Pflichten in Art. 16), Betreiber (Art. 3 (4), Pflichten in Art. 26), Einführer (Art. 3 (6), Art. 23), Händler (Art. 3 (7), Art. 24), alle zusammen Akteure genannt. Die Durchsetzung steht in Art. 64 bis 94, die Innovationsförderung in Art. 57 bis 63.
+- **Geistiges Eigentum**: Das Urheberrecht entsteht automatisch an der individuellen Schöpfung und verlangt in der EU eine genau und objektiv identifizierbare Schöpfung, oder nach den Kriterien des Beijing Internet Court von 2023 Literatur, Kunst oder Wissenschaft, Originalität, eine Ausdrucksform und eine geistige Leistung. Ein **KI-erzeugtes Bild wird nicht als schutzfähig behandelt**. KI verletzt, indem sie **geschütztes Material als Trainingsdaten nimmt** und **urheberrechtlich geschützte Kunst zur Erzeugung von Bildern verwendet**. Marken sind territorial, brauchen Unterscheidungskraft und klassifizierbare Waren und Dienstleistungen, und die Nizza-Klassifikation hat 34 Waren- und 11 Dienstleistungsklassen, ohne selbst Rechte zu verleihen; das EUIPO ordnet NFT ausschließlich der Klasse 9 zu, während das UKIPO die Klasse der physischen Ware hinzunimmt.
+- **KI-Verträge in vier Schritten**: Vertragsgegenstand (Waren, Dienstleistungen oder sonstige Leistungen), Haupt- und Nebenpflichten, individualisiert oder standardisiert und befristet oder dauerhaft, dann die **Risikobewertung**, also hohes Risiko nach Art. 6 bis 8, Transparenz nach Art. 50.
+</Aside>
+
+<Aside type="note">
+**Der Abschluss des Moduls.** Wir haben damit begonnen zu fragen, was Recht überhaupt ist, und haben öffentliches Recht, Strafrecht und Zivilrecht nach der Beziehung zwischen den Beteiligten getrennt, und dann gelernt, dass eine Regel aus einem Tatbestand plus einer Rechtsfolge besteht. Alles danach war eine Beziehung nach der anderen: der Vertrag, den man mit einer Gegenpartei schreibt, die zusätzliche Schicht, die auftaucht, wenn die Ware eine Grenze überquert, die Pflichten, die in dem Moment ansetzen, in dem personenbezogene Daten im Spiel sind, die Disziplin von Verstößen, Dokumentation und IT-Sicherheit, und die Geschäftsgeheimnisse, NDAs und Kooperationsverträge, die entscheiden, was man mit einem Partner gefahrlos teilen kann. Dann der Werkzeugkasten des geistigen Eigentums, also Patente, Designs, Marken und Urheberrecht, und die Kommunikations- und Verhandlungsfähigkeiten, ohne die keines dieser Dokumente je vereinbart wird. Dieses letzte Kapitel fügt das neueste Regelwerk von allen hinzu, und es verhält sich genau wie die anderen: Es knüpft an definierte Tatbestände bestimmte Rechtsfolgen, es weist sie benannten Rollen zu, und es überlässt es deinem Vertrag zu sagen, in welcher Rolle du bist.
+</Aside>
+
+*Zurück zur [Kursübersicht →](/de/learnings/mba/legal-aspects-of-technology-management/).*

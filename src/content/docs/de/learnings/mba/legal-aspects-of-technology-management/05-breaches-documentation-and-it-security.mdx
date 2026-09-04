@@ -1,0 +1,539 @@
+---
+title: "Datenpannen, Dokumentation und IT-Sicherheit"
+description: "Was nach Art. 4 (12) DSGVO als Verletzung des Schutzes personenbezogener Daten gilt, die dreistufige Risikoentscheidung darüber, ob man niemanden, die Aufsichtsbehörde binnen 72 Stunden oder die betroffenen Personen unverzüglich benachrichtigt, der Inhalt einer Data Breach Notice und die Ausnahmen des Art. 34 (3), das Verzeichnis von Verarbeitungstätigkeiten nach Art. 30, technische und organisatorische Maßnahmen und der Test am Stand der Technik in Artt. 25 und 32, wann Videoüberwachung verhältnismäßig ist und wie sie ausgeschildert sein muss, und wie eine echte Datenschutz-Folgenabschätzung für ein Containerdepot aufgebaut ist."
+sidebar:
+  label: "5 · Datenpannen & IT-Sicherheit"
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Die vorangegangenen Blöcke haben erklärt, was personenbezogene Daten sind, wer die Akteure sind und auf welcher Grundlage man überhaupt etwas verarbeiten darf. In diesem Block geht es um den Tag, an dem das System versagt, und um alles, was man längst vor diesem Tag hätte aufschreiben sollen. Der Sitzungsplan selbst stellt diese beiden Themen nebeneinander, und genau darin liegt die Lektion: Ob eine Datenpanne gut oder schlecht bewältigt wird, hängt fast vollständig an Papieren, die es vorher schon gab.
+
+Zwei Gedanken ziehen sich durch alles hier. Der erste ist das **Risiko für die Rechte und Freiheiten der betroffenen Person**. Es geht nicht um die Größe des Vorfalls, nicht um die Peinlichkeit, nicht um die Zahl der Dateien, sondern um das Risiko für die Menschen, deren Daten es waren, und diese eine Bewertung entscheidet, wer informiert werden muss und wie schnell. Der zweite ist **sichtbar gemachte Rechenschaftspflicht**. Die DSGVO verlangt nicht nur, dass man rechtskonform ist, sie verlangt, dass man es nachweisen kann, und der Nachweis besteht in Dokumentation: Verzeichnis von Verarbeitungstätigkeiten, Folgenabschätzungen, Verträge, Vertraulichkeitsverpflichtungen und eine interne Aufzeichnung jedes Vorfalls, auch derjenigen, die man bewusst nicht gemeldet hat.
+
+Der Block bewegt sich dann von der rechtlichen Pflicht zu der Technik, die verhindert, dass die Pflicht überhaupt ausgelöst wird - IT-Sicherheit und die technischen und organisatorischen Maßnahmen - und endet mit der einen Verarbeitungstätigkeit, in der sich alle Themen dieses Kapitels gleichzeitig bündeln: der **Videoüberwachung**, die eingriffsintensiv genug ist, um eine eigene Rechtfertigung, eine eigene Beschilderung, eine eigene Speicherbegrenzung und eine eigene Folgenabschätzung zu brauchen.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Jede Frage in diesem Kapitel wird mit derselben Prüfung beantwortet: **Wie hoch ist das Risiko für die Rechte und Freiheiten der betroffenen Personen?** Geringes Risiko heißt intern dokumentieren und nichts melden. Normales Risiko heißt Meldung an die Aufsichtsbehörde binnen 72 Stunden. Hohes Risiko heißt Meldung an die Behörde und unverzügliche Benachrichtigung der betroffenen Personen. Dieselbe Prüfung entscheidet, welche Sicherheitsmaßnahmen angemessen sind, ob eine Kamera verhältnismäßig ist und ob man vor dem Start eine Folgenabschätzung braucht.
+</Aside>
+
+## 1 · Was als Verletzung des Schutzes personenbezogener Daten gilt
+
+Die Definition der DSGVO ist bewusst weit gefasst. Nach **Art. 4 (12) DSGVO** ist eine Verletzung des Schutzes personenbezogener Daten eine Verletzung der Sicherheit, die zur unbeabsichtigten oder unrechtmäßigen **Vernichtung, zum Verlust, zur Veränderung oder zur unbefugten Offenlegung von beziehungsweise zum unbefugten Zugang zu** personenbezogenen Daten führt, die übermittelt, gespeichert oder auf sonstige Weise verarbeitet wurden. Man beachte, was alles darunterfällt: Daten zu verlieren zählt, sie zu verändern zählt, und schon die falsche Person sehen zu lassen zählt. Niemand muss etwas stehlen, und nichts muss veröffentlicht werden.
+
+Die Folien untermauern das mit Statistiken aus dem GDD Practice Report 2021 zu Datenschutzverstößen, und diese Zahlen sind die nützlichste Folie des Blocks, weil sie dem Bild widersprechen, das die meisten Menschen von einer Datenpanne im Kopf haben.
+
+| Ursache der Verletzung | Anteil |
+|---|--:|
+| Übermittlung an die falschen Empfänger | 47 Prozent |
+| Cyberangriffe | 14 Prozent |
+| System- oder Konfigurationsfehler | 10 Prozent |
+| Diebstahl | 9 Prozent |
+| Verlust von Datenträgern oder Dokumenten | 7 Prozent |
+| Fehlerhafte Berechtigungen | 7 Prozent |
+| Sonstiges | 6 Prozent |
+
+Fast die Hälfte aller gemeldeten Verletzungen besteht darin, dass jemand etwas an die falsche Adresse schickt. Cyberangriffe machen 14 Prozent aus. Wer aus dieser Tabelle ein Kontrollsystem entwirft, gibt weit mehr für Gewohnheiten, Vorlagen, Adresskontrollen und Zugriffsrechte aus als für die Firewall - und akzeptiert, dass der Vorfall, den man tatsächlich bewältigen muss, eine E-Mail ist.
+
+## 2 · Der Entscheidungsbaum: eine Bewertung, drei Ergebnisse
+
+Das ist die zentrale Folie des Blocks. In dem Moment, in dem ein Vorfall entdeckt wird, erfolgt eine einzige Bewertung - das **Risiko für die Rechte und Freiheiten der betroffenen Person** - und die Antwort schickt einen auf eine von drei Routen.
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier"><div class="sc-tier-head">Unwahrscheinlich oder geringes Risiko <span class="n">keine Meldepflicht</span></div>Nichts geht an die Aufsichtsbehörde und nichts an die betroffenen Personen. Der Vorfall wird trotzdem <strong>dokumentiert</strong>, denn die Dokumentation gilt ausnahmslos für jede Datenpanne.</div>
+    <div class="sc-tier"><div class="sc-tier-head">Normales Risiko <span class="n">Aufsichtsbehörde, binnen 72 Stunden</span></div>Eine Data Breach Notice geht nach <strong>Art. 33 DSGVO</strong> an die zuständige Aufsichtsbehörde. Die betroffenen Personen werden auf dieser Stufe nicht benachrichtigt.</div>
+    <div class="sc-tier"><div class="sc-tier-head">Hohes Risiko <span class="n">Behörde und betroffene Personen, unverzüglich</span></div>Die Aufsichtsbehörde wird benachrichtigt und zusätzlich werden die betroffenen Menschen nach <strong>Art. 34 DSGVO</strong> unverzüglich informiert.</div>
+  </div>
+  <figcaption>Eine Bewertung, drei Routen. Die Folie ist in einem Punkt unmissverständlich: Die 72 Stunden sind eine bloße Reaktionsfrist und kein bequemes Zeitfenster zum Nachdenken.</figcaption>
+</div>
+
+Um diese Entscheidung herum legen die Folien die interne Kette der Ereignisse fest, und man lernt sie besser als Abfolge denn als Liste, weil jeder Schritt einen anderen Verantwortlichen hat.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Beschäftigte oder Vorgesetzte<span class="sub">müssen den Vorfall sofort melden, und zwar über das interne Meldeformular</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Verantwortliche Person, Unternehmen und Datenschutzbeauftragter<span class="sub">bewerten das Risiko für die Rechte und Freiheiten der betroffenen Person und entscheiden über die Route</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Meldung<span class="sub">Data Breach Notice an die Behörde, dazu die betroffenen Personen, wenn das Risiko hoch ist</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Danach<span class="sub">Folgemaßnahmen, damit sich die Lage nicht verschlimmert, die verpflichtend sind, anschließend eine Bewertung geeigneter technischer und organisatorischer Maßnahmen, um ähnliche Verletzungen künftig zu verhindern</span></div>
+  </div>
+  <figcaption>Der interne Weg von der Entdeckung bis zur Behebung. Der letzte Kasten ist der, den man vergisst: die Blutung zu stoppen ist Pflicht, und die anschließende Überprüfung der TOM ist der Teil, der eine Wiederholung verhindert.</figcaption>
+</div>
+
+Die Quizfolien schärfen zwei Details. Erstens muss der **Datenschutzbeauftragte immer über eine Datenpanne informiert werden**, nicht nur dann, wenn das Risiko hoch ist. Zweitens wird der Datenschutzbeauftragte **sofort und so detailliert wie möglich informiert, idealerweise über das dafür vorgesehene Formular** - nicht zusammengefasst und nicht verschoben, bis jemand Zeit zum Reden hat. Und darüber, ob die Behörde oder die betroffenen Personen informiert werden müssen, entscheidet allein, ob das resultierende **Risiko für die Rechte und Freiheiten der betroffenen Personen mittel oder hoch** ist, und nicht, ob bereits ein Schaden eingetreten ist, und auch nicht die eigene Präferenz des Verantwortlichen.
+
+## 3 · Meldung an die Aufsichtsbehörde: Art. 33 DSGVO
+
+**Art. 33 (1) DSGVO** legt die Pflicht auf den Verantwortlichen: Im Fall einer Verletzung des Schutzes personenbezogener Daten meldet er sie der zuständigen Aufsichtsbehörde **unverzüglich und möglichst binnen 72 Stunden, nachdem ihm die Verletzung bekannt wurde**, es sei denn, die Verletzung führt voraussichtlich nicht zu einem Risiko für die Rechte und Freiheiten natürlicher Personen. Zwei Hälften dieses Satzes gehen leicht verloren. Die Uhr startet mit der **Kenntnis**, nicht mit dem Moment des Vorfalls. Und die Befreiung ist als Ausnahme formuliert, der Normalfall ist also, dass man meldet.
+
+Erfolgt die Meldung **nicht binnen 72 Stunden**, macht Art. 33 (1) sie nicht unmöglich, sie muss dann aber **zusammen mit einer Begründung für die Verzögerung** erfolgen. Verspätung muss also schriftlich gegenüber der Aufsichtsbehörde erklärt werden, was ein sehr unangenehmer Gesprächseinstieg ist.
+
+**Art. 33 (2)** deckt die Lieferkette ab: Ein **Auftragsverarbeiter** meldet dem **Verantwortlichen** unverzüglich, nachdem ihm eine Verletzung bekannt wurde. Der Auftragsverarbeiter geht nicht zur Behörde, er geht zum Verantwortlichen, bei dem die Entscheidung liegt.
+
+**Art. 33 (3)** sagt, was die Meldung mindestens enthalten muss:
+
+| Element | Was darin stehen muss |
+|---|---|
+| Art der Verletzung | Eine Beschreibung dessen, was passiert ist, soweit möglich mit den Kategorien und der ungefähren Zahl der betroffenen **Personen** sowie den Kategorien und der ungefähren Zahl der betroffenen **personenbezogenen Datensätze** |
+| Anlaufstelle | Name und Kontaktdaten des **Datenschutzbeauftragten** oder einer sonstigen Anlaufstelle für weitere Informationen |
+| Wahrscheinliche Folgen | Eine Beschreibung der wahrscheinlichen Folgen der Verletzung |
+| Maßnahmen | Die ergriffenen oder vorgeschlagenen Maßnahmen zur Behebung der Verletzung, gegebenenfalls einschließlich Maßnahmen zur **Abmilderung ihrer möglichen nachteiligen Auswirkungen** |
+
+Zwei Sicherheitsventile folgen. Nach **Art. 33 (4)** können die Informationen, soweit sie nicht auf einmal bereitgestellt werden können, **schrittweise** ohne unangemessene weitere Verzögerung nachgereicht werden - unvollständiges Wissen ist also kein Grund zu schweigen. Und nach **Art. 33 (5)** muss der Verantwortliche **jede Verletzung des Schutzes personenbezogener Daten dokumentieren**, einschließlich der Fakten, ihrer Auswirkungen und der ergriffenen Abhilfemaßnahmen, und zwar so, dass die Aufsichtsbehörde die Einhaltung überprüfen kann. Das ist der rechtliche Anker für die Regel der Folien, dass für jede Verletzung dokumentiert wird, auch für die, die man bewusst nicht gemeldet hat.
+
+## 4 · Benachrichtigung der betroffenen Personen: Art. 34 DSGVO und seine Ausnahmen
+
+Die Schwelle liegt hier höher. Nach **Art. 34 (1)** muss der Verantwortliche die betroffene Person nur dann benachrichtigen, wenn die Verletzung voraussichtlich ein **hohes Risiko** für die Rechte und Freiheiten natürlicher Personen zur Folge hat, und dann **unverzüglich**. In Art. 34 steht keine 72-Stunden-Zahl; der Maßstab ist Schnelligkeit.
+
+**Art. 34 (2)** regelt Form und Inhalt: Die Benachrichtigung muss die Art der Verletzung **in klarer und einfacher Sprache** beschreiben und mindestens die Anlaufstelle, die wahrscheinlichen Folgen und die ergriffenen Maßnahmen enthalten - also die Punkte (b), (c) und (d) des Art. 33 (3). Die Kategorienzahlen, die die Behörde erhält, sind hier nicht erforderlich; die Person muss verstehen, was mit ihr passiert ist und was sie dagegen tun kann.
+
+<div class="sc-quad">
+  <div class="q green">
+    <div class="qh">Ausnahme (a) <small>die Daten waren bereits geschützt</small></div>
+    <ul>
+      <li>Der Verantwortliche hatte geeignete technische und organisatorische Schutzmaßnahmen umgesetzt</li>
+      <li>Diese Maßnahmen wurden tatsächlich <strong>auf die betroffenen Daten angewandt</strong></li>
+      <li>Insbesondere Maßnahmen, die die Daten für alle <strong>Unbefugten unzugänglich machen</strong>, etwa <strong>Verschlüsselung</strong></li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Ausnahme (b) <small>das Risiko wurde nachträglich beseitigt</small></div>
+    <ul>
+      <li>Der Verantwortliche hat nachfolgende Maßnahmen ergriffen</li>
+      <li>Diese Maßnahmen stellen sicher, dass das hohe Risiko <strong>aller Wahrscheinlichkeit nach nicht mehr eintritt</strong></li>
+      <li>Das ist der Lohn für schnelles Handeln: Eindämmung kann die Benachrichtigungspflicht entfallen lassen</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Ausnahme (c) <small>unverhältnismäßiger Aufwand</small></div>
+    <ul>
+      <li>Die individuelle Benachrichtigung wäre mit unverhältnismäßigem Aufwand verbunden</li>
+      <li>Dann muss es stattdessen eine <strong>öffentliche Bekanntmachung oder ähnliche Maßnahme</strong> geben</li>
+      <li>Die Menschen müssen <strong>vergleichbar wirksam</strong> informiert werden, das ist also ein Kanalwechsel und kein Ausweg</li>
+    </ul>
+  </div>
+  <div class="q blue">
+    <div class="qh">Die Behörde entscheidet trotzdem <small>Art. 34 (4)</small></div>
+    <ul>
+      <li>Hat der Verantwortliche die betroffenen Personen nicht benachrichtigt, kann die Aufsichtsbehörde ihn dazu <strong>verpflichten</strong></li>
+      <li>Sie beurteilt die Wahrscheinlichkeit eines hohen Risikos selbst</li>
+      <li>Oder sie stellt fest, dass eine der drei obigen Bedingungen erfüllt ist</li>
+    </ul>
+  </div>
+</div>
+
+<Aside type="note" title="Die Rechte, die die betroffene Person ohnehin ausüben kann">
+Die Folien stellen den Katalog der Betroffenenrechte unmittelbar hinter den Block zur Datenpanne, und man sollte ihn beim Verfassen einer Benachrichtigung im Kopf haben, denn wer gerade von einer Verletzung erfahren hat, wird sehr wahrscheinlich eines davon nutzen. Es sind: das **Auskunftsrecht** (Art. 15), das **Recht auf Berichtigung** (Art. 16), das **Recht auf Löschung** (Art. 17), das **Recht auf Datenübertragbarkeit** (Art. 20), das **Widerspruchsrecht** (Art. 21), der **Widerruf der datenschutzrechtlichen Einwilligung** (Art. 7 Abs. 3) und das **Recht auf Beschwerde bei einer Aufsichtsbehörde** (Art. 77).
+</Aside>
+
+## 5 · Dokumentationspflichten: Rechenschaft, die man vorlegen kann
+
+Die Folie zur Dokumentation teilt die Pflichten in zwei Familien. Die eine sind die **Informationen, die man den Menschen schuldet**, nach Artt. 12 bis 14 DSGVO - das, was man ihnen über die Verarbeitung ihrer Daten mitteilt. Die andere ist der **interne Aktenbestand**, der belegt, dass die Organisation weiß, was sie tut.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Information über die Datenverarbeitung <small>Artt. 12-14 DSGVO, an die Menschen gerichtet</small></div>
+      <ul>
+        <li>Bewerberinnen und Bewerber</li>
+        <li>Beschäftigte</li>
+        <li>Kundinnen und Kunden</li>
+        <li>Website-Besucher</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Weitere Dokumentation <small>von der Organisation geführt</small></div>
+      <ul>
+        <li>Verzeichnis von Verarbeitungstätigkeiten</li>
+        <li>Datenschutz-Folgenabschätzung (DSFA)</li>
+        <li>Vertrag zwischen gemeinsam Verantwortlichen</li>
+        <li>Vertrag zur Auftragsverarbeitung</li>
+        <li>Verpflichtung auf die Vertraulichkeit</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Nach außen gerichtete Transparenz links, nach innen gerichtete Nachweise rechts. Beides sind Dokumentationspflichten, und beides wird abgefragt, wenn etwas schiefgeht.</figcaption>
+</div>
+
+Die Folien zeigen dann drei konkrete Dokumente, die die meisten Unternehmen tatsächlich erstellen, und der Unterschied zwischen ihnen liegt nicht im Thema, sondern darin, **was die Beschäftigten damit machen**.
+
+| Dokument | Was es tut | Wie damit umgegangen wird |
+|---|---|---|
+| **Datenschutzrichtlinie** | Die Geschäftsführung verpflichtet das Unternehmen auf den Datenschutz und legt Ziele, Zweck und Verantwortlichkeiten fest | Wird den Beschäftigten zur Kenntnis gegeben |
+| **Datenschutzinformation für Beschäftigte** | Die Geschäftsleitung informiert die Beschäftigten darüber, wie ihre eigenen personenbezogenen Daten verarbeitet werden | Wird den Beschäftigten zur Kenntnis gegeben |
+| **Verpflichtung auf die Vertraulichkeit** | Beschäftigte verpflichten sich zur Wahrung des Datengeheimnisses und der Vertraulichkeit personenbezogener und sonstiger vertraulicher Daten | Wird den Beschäftigten **zur Unterschrift** vorgelegt |
+
+Nur das dritte wird unterschrieben, und genau darum geht es auf dieser Folie: Eine Verpflichtung auf die Vertraulichkeit ist eine Pflicht, die angenommen wird, während die beiden anderen Transparenz sind, die geliefert wird.
+
+## 6 · Verzeichnis von Verarbeitungstätigkeiten: Art. 30 DSGVO
+
+Das Verzeichnis von Verarbeitungstätigkeiten, kurz VVT, ist das Rückgrat der Datenschutzdokumentation. Die Übung dahinter besteht darin, **jede Art von Verarbeitung zu identifizieren**, die im Unternehmen stattfindet - die Beispiele der Folien sind die Verwaltung der Personalakten und das Online-Banking - und dann für jede einen Eintrag zu schreiben. Dafür werden Mustervorlagen verwendet, und der Umfang überrascht die Leute: Je nach Größe und Geschäftstätigkeit eines Unternehmens braucht es irgendwo **zwischen 20 und 300** solcher Einträge.
+
+Die Folien nennen vier Dinge, die unter anderem dokumentiert werden, und diese kurze Liste sollte man auswendig können:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Art der personenbezogenen Daten</span>
+  <span class="sc-chip violet">Speicherdauer</span>
+  <span class="sc-chip amber">Rechtsgrundlage</span>
+  <span class="sc-chip amber">Zweck</span>
+</div>
+
+Das angegebene Ergebnis ist, dass **nachvollziehbar wird, in welchen Prozessen und zu welchem Zweck Datenverarbeitung stattfindet**. Genau das ist der Rechenschaftsgrundsatz in operativer Form: kein Versprechen, dass man rechtmäßig handelt, sondern eine Karte, mit der jemand das nachprüfen kann.
+
+**Art. 30 (1) DSGVO** selbst ist länger, und da die Folien den Artikel zitieren, lohnt sich die vollständige Liste dessen, was das Verzeichnis eines Verantwortlichen enthalten muss:
+
+| Art. 30 (1) | Erforderlicher Inhalt |
+|---|---|
+| (a) | Name und Kontaktdaten des Verantwortlichen und gegebenenfalls des gemeinsam Verantwortlichen, des Vertreters des Verantwortlichen sowie des Datenschutzbeauftragten |
+| (b) | Die Zwecke der Verarbeitung |
+| (c) | Eine Beschreibung der Kategorien betroffener Personen und der Kategorien personenbezogener Daten |
+| (d) | Die Kategorien von Empfängern, gegenüber denen die Daten offengelegt worden sind oder noch offengelegt werden, einschließlich Empfängern in Drittländern oder internationalen Organisationen |
+| (e) | Gegebenenfalls Übermittlungen in ein Drittland oder an eine internationale Organisation unter Angabe derselben und, bei Übermittlungen nach Art. 49 (1) Unterabsatz 2, die Dokumentation geeigneter Garantien |
+| (f) | Wenn möglich, die vorgesehenen Fristen für die Löschung der verschiedenen Datenkategorien |
+| (g) | Wenn möglich, eine allgemeine Beschreibung der technischen und organisatorischen Sicherheitsmaßnahmen nach Art. 32 (1) |
+
+Um diese Liste herum stehen drei weitere Regeln. **Auftragsverarbeiter** führen nach Art. 30 (2) ihr eigenes Verzeichnis über die Kategorien der Verarbeitungen, die sie für jeden Verantwortlichen durchführen, über Drittlandübermittlungen und über eine allgemeine Beschreibung ihrer Sicherheitsmaßnahmen. Verzeichnisse sind **schriftlich zu führen, auch in einem elektronischen Format**, und der **Aufsichtsbehörde auf Anfrage zur Verfügung zu stellen** - das ist der Moment, in dem sich die ganze Übung auszahlt. Und Art. 30 (5) nimmt Unternehmen mit **weniger als 250 Beschäftigten** aus, aber die Ausnahme entfällt, wenn die Verarbeitung ein Risiko für die Rechte und Freiheiten mit sich bringt, wenn die Verarbeitung nicht nur gelegentlich erfolgt oder wenn sie besondere Datenkategorien nach Art. 9 (1) oder Daten über strafrechtliche Verurteilungen nach Art. 10 umfasst. In der Praxis fallen die meisten Unternehmen durch eine dieser drei Türen wieder in die Pflicht zurück.
+
+Das Beispiel im Unterricht ist der Eintrag für den **Bewerbungs- und Einstellungsprozess**, und es benennt die Elemente, die die Erklärung enthalten muss: Name und Kontaktdaten des Verantwortlichen, die Kontaktdaten des Verantwortlichen und gegebenenfalls des Datenschutzbeauftragten, die Zwecke und die Rechtsgrundlage, soweit einschlägig die Empfänger der Daten, Drittlandübermittlungen, die Rechte der betroffenen Person einschließlich des Beschwerderechts und, wenn die Verarbeitung auf einer Einwilligung beruht, das Recht auf deren Widerruf. Die Folien listen außerdem Buchhaltungsprozesse als alltägliche Kandidaten für eigene Einträge:
+
+<div class="sc-chips">
+  <span class="sc-chip">Reisekosten und Spesenabrechnungen</span>
+  <span class="sc-chip">Lohn- und Gehaltsabrechnung</span>
+  <span class="sc-chip">Finanzbuchhaltung</span>
+  <span class="sc-chip">Online-Überweisungen</span>
+</div>
+
+## 7 · Dienstleister: zwei verschiedene Papiere
+
+Immer wenn jemand von außerhalb des Unternehmens die eigenen Räume oder Systeme berührt, unterscheiden die Folien zwei Situationen, und die Unterscheidung dreht sich darum, ob die Verarbeitung personenbezogener Daten der Sinn ihrer Tätigkeit ist.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Vertrag zur Auftragsverarbeitung <small>sie verarbeiten Daten für dich</small></div>
+      <ul>
+        <li>Wird mit Dienstleistern verwendet, die personenbezogene Daten <strong>im Auftrag eines Verantwortlichen</strong> verarbeiten</li>
+        <li>Erfordert die Vorlage einer Beschreibung der vorhandenen <strong>technischen und organisatorischen Maßnahmen</strong></li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Verpflichtung auf die Vertraulichkeit <small>sie sind den Daten lediglich nahe</small></div>
+      <ul>
+        <li>Wird mit Dienstleistern verwendet, die überwiegend andere Aufgaben haben und personenbezogene Daten <strong>nicht verarbeiten sollen</strong>, zum Beispiel Logistik oder Reinigung</li>
+        <li>Kann sie in gleicher Weise wie Beschäftigte auf die Vertraulichkeit verpflichten, was optional ist</li>
+        <li>Empfohlen, um das Haftungsrisiko zu senken</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Die Reinigungskraft ist keine Auftragsverarbeiterin, aber sie geht an unverschlossenen Bildschirmen vorbei. Die Vertraulichkeitsverpflichtung ist eine billige Versicherung für genau diese Lücke.</figcaption>
+</div>
+
+## 8 · IT-Sicherheit ist nicht dasselbe wie Datenschutz
+
+Die Folien widmen eine ganze Seite der Trennung zweier Wörter, die als Synonyme verwendet werden, und die Unterscheidung dreht sich darum, **was geschützt wird**, nicht darum, wie.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">IT-Sicherheit und Datensicherheit <small>schützt die Systeme</small></div>
+      <ul>
+        <li>Schützt <strong>IT-Systeme</strong> vor unbefugter oder unrechtmäßiger Verarbeitung, einschließlich Zugriff und Offenlegung</li>
+        <li>Und vor unbeabsichtigtem Verlust, Beschädigung oder Zerstörung</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Datenschutz <small>schützt die Menschen</small></div>
+      <ul>
+        <li>Schützt <strong>personenbezogene Daten</strong></li>
+        <li>Und die <strong>Rechte und Freiheiten natürlicher Personen</strong></li>
+        <li>Umgesetzt durch technische und organisatorische Maßnahmen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Derselbe Werkzeugkasten, ein anderer Begünstigter. IT-Sicherheit hält die Maschine sicher, Datenschutz hält den Menschen sicher. Die Überschneidung ist der Ort, an dem die TOM leben.</figcaption>
+</div>
+
+Die Bedrohungen, die die Folie nennt, sind die gewöhnlichen, was zu der Verletzungsstatistik aus Abschnitt 1 passt:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Malware</span>
+  <span class="sc-chip amber">Ransomware</span>
+  <span class="sc-chip violet">Phishing</span>
+  <span class="sc-chip violet">Man-in-the-Middle-Angriff</span>
+</div>
+
+## 9 · Die Auswahl der Maßnahmen: Stand der Technik, Risiko und Kosten
+
+Die Methodenfolie dafür, **welche** technischen und organisatorischen Maßnahmen umzusetzen sind, reiht drei Dinge auf und verweist auf Art. 25 DSGVO.
+
+Erstens die **Schutzziele**: Vertraulichkeit, Integrität, Verfügbarkeit und Authentizität. Zweitens der Maßstab: **angemessene Sicherheit nach dem Stand der Technik**, wobei Stand der Technik Maßnahmen bedeutet, die dem aktuellen wissenschaftlichen und technischen Kenntnisstand entsprechen, **umsetzbar** sind und **am Markt verfügbar** sind. Diese Definition ist wichtig, weil sie beide Extreme ausschließt: Man kann sich weder hinter einer Labortechnologie verstecken, die niemand kaufen kann, noch stehenbleiben, während sich der Markt bewegt. Drittens die Kalibrierung: eine **Risikobewertung** zusammen mit einer **Kosten-Nutzen-Abwägung**. Jede **Abweichung vom Stand der Technik ist nur in Ausnahmefällen zulässig, und sie muss dokumentiert werden**.
+
+**Art. 32 (1) DSGVO** formuliert dieselbe Abwägung und benennt dann konkrete Maßnahmen. Zu berücksichtigen sind der Stand der Technik, die Implementierungskosten, Art, Umfang, Umstände und Zwecke der Verarbeitung sowie das Risiko unterschiedlicher Eintrittswahrscheinlichkeit und Schwere für die Rechte und Freiheiten natürlicher Personen. Als angemessen genannte Maßnahmen sind unter anderem:
+
+<ul>
+<li>Pseudonymisierung und <strong>Verschlüsselung</strong> personenbezogener Daten</li>
+<li>Die Fähigkeit, <strong>Vertraulichkeit, Integrität, Verfügbarkeit und Belastbarkeit</strong> der Systeme und Dienste im Zusammenhang mit der Verarbeitung auf Dauer sicherzustellen</li>
+<li>Die Fähigkeit, die Verfügbarkeit und den Zugang zu den personenbezogenen Daten nach einem physischen oder technischen Zwischenfall rasch <strong>wiederherzustellen</strong></li>
+<li>Ein Verfahren zur <strong>regelmäßigen Überprüfung, Bewertung und Evaluierung</strong> der Wirksamkeit der Maßnahmen</li>
+</ul>
+
+Art. 32 (2) ergänzt, welche Risiken insbesondere zu betrachten sind - die unbeabsichtigte oder unrechtmäßige Vernichtung, der Verlust, die Veränderung oder die unbefugte Offenlegung von beziehungsweise der unbefugte Zugang zu personenbezogenen Daten - was die Definition der Verletzung aus Art. 4 (12) rückwärts gelesen ist. Art. 32 (3) erlaubt, die Einhaltung genehmigter Verhaltensregeln oder eines Zertifizierungsverfahrens als Faktor zum Nachweis der Einhaltung heranzuziehen. Art. 32 (4) schließt den menschlichen Kreis: Wer dem Verantwortlichen oder dem Auftragsverarbeiter untersteht und Zugang zu personenbezogenen Daten hat, darf diese **nur auf Anweisung** verarbeiten, es sei denn, er ist gesetzlich dazu verpflichtet.
+
+Daneben steht das Prinzipienpaar aus **Artt. 25 und 32 DSGVO**:
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Privacy by Design <small>Datenschutz durch Technikgestaltung</small></div>
+      <ul>
+        <li>Der Verantwortliche setzt TOM nach dem <strong>Stand der Technik</strong> um</li>
+        <li>Die <strong>Implementierungskosten</strong></li>
+        <li><strong>Art, Umfang, Umstände und Zwecke</strong> der Verarbeitung</li>
+        <li>Die <strong>Eintrittswahrscheinlichkeit und Schwere</strong> der Risiken</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Privacy by Default <small>datenschutzfreundliche Voreinstellungen</small></div>
+      <ul>
+        <li><strong>Minimierung</strong> der Verarbeitung</li>
+        <li>Verarbeitung nur der <strong>unbedingt erforderlichen</strong> Daten</li>
+        <li><strong>Rasche Pseudonymisierung</strong></li>
+        <li><strong>Transparenz</strong></li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>By Design betrifft die Entscheidungen beim Bau des Systems, by Default betrifft das, was das System tut, wenn niemand eine Einstellung ändert. Art. 25 (2) ist ausdrücklich: Die Voreinstellung muss die Menge der Daten, den Umfang der Verarbeitung, die Speicherfrist und die Zugänglichkeit erfassen.</figcaption>
+</div>
+
+## 10 · Videoüberwachung: der schwierigste Normalfall
+
+Der Block eröffnet das Thema mit zwei unverblümten Fragen: Zu welchen Zwecken dürfen Videoaufnahmen überhaupt gemacht werden, und dürfen die Aufnahmen ausgewertet werden, um zu prüfen, ob sich **Beschäftigte** korrekt verhalten haben? Alles Folgende ist die Antwort darauf.
+
+**Zwei Rechtfertigungen** stehen zur Verfügung. Innerhalb des **Beschäftigungsverhältnisses** ist die Grundlage **§ 26 BDSG**, zum Beispiel an Werkstoren oder in einem Verkaufsraum. Zum **Schutz der Öffentlichkeit** ist es **§ 4 BDSG**, zum Beispiel ein öffentlicher Parkplatz, ein Verkaufsraum oder der Eingang eines Bürogebäudes. Die zulässigen **Zwecke** sind die Verhinderung des Zutritts Unbefugter, also die Ausübung des Hausrechts, sowie die Verhinderung und Verfolgung von Straftaten wie Diebstahl und anderen Eigentumsdelikten, egal ob sie von Kunden oder von eigenen Beschäftigten begangen werden. Der Zweck muss **vorab genau benannt und dokumentiert** sein - hinterher zu entscheiden, wofür die Kamera da war, ist keine Option. Und die DSGVO ist auf **ausgeschaltete Kameras** schlicht nicht anwendbar, sodass eine Behörde deren Abbau nicht verlangen kann, was das Oberverwaltungsgericht Rheinland-Pfalz in seinem Urteil vom 25.06.2021, 10 A 10302/21, entschieden hat.
+
+Unabhängig von der Grundlage muss die Überwachung **verhältnismäßig** sein, und die Folien zerlegen das in die übliche Prüfung:
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Geeignet</div>
+    <ul>
+      <li>Die Überwachung muss das genannte Ziel tatsächlich erreichen können</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Kein milderes Mittel</div>
+    <ul>
+      <li>Es darf keine andere, weniger einschneidende Maßnahme geben, die funktionieren würde</li>
+      <li>Grundsätzlich <strong>kein heimliches Filmen oder Ausspähen</strong></li>
+      <li><strong>Keine Vollauswertung</strong> des Materials, sondern nur der tatsächlich fraglichen Sequenzen</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Angemessen</div>
+    <ul>
+      <li>Keine übermäßige Belastung für die betroffene Person, was echte Einschränkungen bedeutet, etwa eine begrenzte <strong>Speicherdauer</strong> und eine kontrollierte <strong>Kameraausrichtung</strong></li>
+      <li>Unangemessen: die vollständige Überwachung aller Trainingsbereiche in einem Fitnessstudio, Verwaltungsgericht Ansbach, Urteil vom 23.03.2022, AN 14 K 20.83</li>
+      <li>Angemessen: rechtmäßig gefilmte Eigentumsdelikte zulasten des Arbeitgebers, und Beschäftigte dürfen bei Kassiervorgängen <strong>offen</strong> gefilmt werden, Bundesarbeitsgericht, Urteil vom 23.08.2018, 2 AZR 133/18</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Abgewogen und begrenzt</div>
+    <ul>
+      <li>Ist die Überwachung in <strong>Zeit, Raum und auf bestimmte Personengruppen</strong> begrenzt?</li>
+      <li>Wurden die Interessen der betroffenen Personen gegen den Nutzen abgewogen?</li>
+      <li>Zulässig, soweit erforderlich zur Wahrnehmung des <strong>Hausrechts</strong> oder <strong>berechtigter Interessen für konkret festgelegte Zwecke</strong>, § 4 Abs. 1 BDSG neu</li>
+    </ul>
+  </div>
+</div>
+
+Die beiden Entscheidungen aus Ansbach und vom Bundesarbeitsgericht merkt man sich am besten als Paar, denn sie markieren die Enden derselben Linie. Jeden Trainingsbereich eines Fitnessstudios zu filmen ist unverhältnismäßig, weil es der Kamera kein Entkommen gibt. Eine Kasse offen zu filmen ist verhältnismäßig, weil der Bereich eng ist, der Zweck ein echtes Eigentumsdeliktsrisiko ist und die Beschäftigten es wissen.
+
+Die **Dokumentationsanforderungen** für die Überwachung sind eine Checkliste, und die Folien sagen ausdrücklich, dass ihr Fehlen selbst ein Verstoß ist:
+
+<ul>
+<li>Kennzeichnung mit einem <strong>Piktogramm</strong></li>
+<li>Für die betroffenen Personen <strong>zugängliche Datenschutzinformationen</strong></li>
+<li>Ein <strong>Verzeichnis von Verarbeitungstätigkeiten</strong> samt einer Beschreibung der TOM</li>
+<li>Wegen der Schwere des Eingriffs zusätzlich eine <strong>Datenschutz-Folgenabschätzung</strong></li>
+<li>Ein <strong>Vertrag zur Auftragsverarbeitung</strong> mit jedem beteiligten Dienstleister</li>
+<li>Eine <strong>Begrenzung der Speicherung</strong>: Das Material wird bis zur objektiv beurteilten Zweckerfüllung aufbewahrt, mit der Pflicht zur zügigen Prüfung. Eine Speicherung über Wochen oder Monate kann erforderlich sein</li>
+</ul>
+
+Dazu kommt eine harte Pflicht zur **Löschung nach Zweckerreichung**, nach § 4 Abs. 5 BDSG, sowie ein **deutlich erkennbarer Hinweis vor Betreten des überwachten Bereichs**. Die Folgen sind nicht theoretisch: Die Folien halten fest, dass schon einmalige Verstöße ohne Fortsetzung hohe Bußgelder auslösen können, und nennen den aktuellen Fall der Landesbeauftragten für den Datenschutz Niedersachsen gegen VW mit einem Bußgeld von 1 Million Euro.
+
+<Aside type="caution">
+**Bei der Beschäftigtenfrage antworten die Folien eng.** Überwachung im Beschäftigungsverhältnis ist nach § 26 BDSG möglich, Beschäftigte dürfen bei Kassiervorgängen offen gefilmt werden, und rechtmäßig gefilmte Eigentumsdelikte zulasten des Arbeitgebers dürfen verwertet werden. Aber es gibt grundsätzlich kein heimliches Filmen und **keine Vollauswertung** des Materials, sondern nur der fraglichen Sequenzen. Die ehrliche Antwort auf die Frage, ob die Aufnahmen ausgewertet werden dürfen, um korrektes Verhalten von Beschäftigten zu prüfen, lautet also: nicht als allgemeine Verhaltenskontrolle und nur innerhalb eines Zwecks, der festgelegt und dokumentiert war, bevor die Kamera eingeschaltet wurde.
+</Aside>
+
+## 11 · Die Datenschutz-Folgenabschätzung: Art. 35 DSGVO
+
+Eine DSFA ist nach **Art. 35 (1)** erforderlich, wenn eine Form der Verarbeitung, insbesondere bei Verwendung **neuer Technologien**, voraussichtlich ein **hohes Risiko** für die Rechte und Freiheiten natürlicher Personen zur Folge hat. Die Abschätzung erfolgt **vor der Verarbeitung**, und eine einzige Abschätzung kann eine Reihe ähnlicher Verarbeitungsvorgänge mit ähnlichen Risiken abdecken. **Art. 35 (2)** verlangt, dass der Verantwortliche den Rat des Datenschutzbeauftragten einholt, sofern ein solcher benannt ist.
+
+**Art. 35 (3)** nennt drei Fälle, in denen eine DSFA insbesondere erforderlich ist: eine systematische und umfassende **Bewertung persönlicher Aspekte** auf der Grundlage automatisierter Verarbeitung einschließlich Profiling, die als Grundlage für Entscheidungen mit rechtlicher oder ähnlich erheblicher Wirkung dient; die **umfangreiche Verarbeitung besonderer Datenkategorien** nach Art. 9 (1) oder von Daten über strafrechtliche Verurteilungen nach Art. 10; und die **systematische umfangreiche Überwachung öffentlich zugänglicher Bereiche**. Die Aufsichtsbehörden veröffentlichen Listen von Verarbeitungsvorgängen, die eine DSFA erfordern und die keine erfordern.
+
+**Art. 35 (7)** legt den Mindestinhalt fest, und das Containerbeispiel im nächsten Abschnitt bildet ihn fast Zeile für Zeile ab:
+
+| Art. 35 (7) | Was in der Abschätzung stehen muss |
+|---|---|
+| (a) | Eine systematische Beschreibung der geplanten Verarbeitungsvorgänge und Zwecke, gegebenenfalls einschließlich des von dem Verantwortlichen verfolgten **berechtigten Interesses** |
+| (b) | Eine Bewertung der **Notwendigkeit und Verhältnismäßigkeit** der Verarbeitungsvorgänge in Bezug auf die Zwecke |
+| (c) | Eine Bewertung der **Risiken für die Rechte und Freiheiten** der betroffenen Personen |
+| (d) | Die **zur Bewältigung der Risiken geplanten Maßnahmen**, einschließlich Garantien, Sicherheitsvorkehrungen und Verfahren zum Schutz der Daten und zum Nachweis der Einhaltung |
+
+Zwei Anschlussregeln sind wichtig. Nach **Art. 35 (11)** muss der Verantwortliche erforderlichenfalls überprüfen, ob die Verarbeitung weiterhin gemäß der Abschätzung erfolgt, zumindest wenn sich das Risiko ändert. Und nach **Art. 36 (1)** muss der Verantwortliche die Aufsichtsbehörde **vor** der Verarbeitung konsultieren, wenn die DSFA ergibt, dass die Verarbeitung **ohne Maßnahmen zur Eindämmung ein hohes Risiko zur Folge hätte**. Liest man beide zusammen, ergibt sich die praktische Regel: Die DSFA ist kein Formular, das man ablegt, sie ist das Dokument, das darüber entscheidet, ob man überhaupt anfangen darf.
+
+## Durchgerechnetes Beispiel
+
+Ein Vorfall der häufigsten Art, durchgespielt am Zeitplan der Folien selbst. Die 72 Stunden sind genau so angegeben, wie Art. 33 (1) sie formuliert: **unverzüglich und möglichst binnen 72 Stunden, nachdem die Verletzung bekannt wurde.**
+
+**Der Vorfall.** Am **Dienstag um 09:40 Uhr** schickt eine Assistenz aus der Personalabteilung den monatlichen Gehaltsexport an eine externe Steuerkanzlei und hängt die falsche Datei an. Der Anhang ist die vollständige Gehaltsliste für 140 Beschäftigte, einschließlich Namen, Bankverbindungen und Gehaltsbändern, und er geht an eine Verteileradresse bei einem Lieferanten, der überhaupt keine Geschäftsbeziehung zur Personalabteilung hat. Die Assistenz bemerkt es um **10:15 Uhr**, als eine Rückfrage eintrifft, was diese Datei sei. Die Kenntnis im Sinne von Art. 33 (1) ist damit **Dienstag 10:15 Uhr**, und die äußerste Frist ist **Freitag 10:15 Uhr**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Di 10:15 - Entdeckung<span class="sub">die Assistenz meldet sofort an ihre Vorgesetzte und füllt das interne Meldeformular aus; der Datenschutzbeauftragte wird umgehend und in vollem Umfang informiert</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Di 10:40 - Eindämmung<span class="sub">Rückruf der Nachricht versucht, der Empfänger wird schriftlich zur Löschung und Bestätigung aufgefordert, und die Folgemaßnahmen gegen eine Verschlimmerung werden gestartet, weil sie verpflichtend sind</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Di 12:00 - Risikobewertung<span class="sub">Bankdaten und Gehälter von 140 identifizierten Beschäftigten, unverschlüsselt an ein unkontrolliertes Postfach gesendet; ein Risiko ist damit nicht unwahrscheinlich, und Identitäts- und Zahlungsbetrug machen ein hohes Risiko plausibel</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Di 16:00 - Data Breach Notice entworfen<span class="sub">Art der Verletzung, Kategorie und ungefähre Zahl der betroffenen Personen und Datensätze, Anlaufstelle beim Datenschutzbeauftragten, wahrscheinliche Folgen sowie die ergriffenen und vorgeschlagenen Maßnahmen</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Mi 09:00 - Meldung an die Aufsichtsbehörde<span class="sub">deutlich innerhalb der 72 Stunden; alles noch Unbekannte wird gekennzeichnet und nach Art. 33 (4) schrittweise nachgeliefert</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Mi 11:00 - betroffene Personen benachrichtigt<span class="sub">weil das Risiko hoch ist, greift Art. 34: klare und einfache Sprache, Anlaufstelle, wahrscheinliche Folgen, Maßnahmen sowie der Hinweis, worauf jede beschäftigte Person bei ihrem Konto achten sollte</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Folgende Wochen - TOM-Überprüfung<span class="sub">Bewertung geeigneter technischer und organisatorischer Maßnahmen gegen ähnliche Verletzungen sowie eine Überprüfung des Verzeichniseintrags für die Gehaltsabrechnung</span></div>
+  </div>
+  <figcaption>Von der Entdeckung über die Meldung zur Prävention. Man beachte, dass die Eindämmung beginnt, bevor die Risikobewertung fertig ist - gelingt sie, kann sie den Fall unter die Ausnahme des Art. 34 (3) (b) bringen.</figcaption>
+</div>
+
+| Uhrzeit | Beantwortete Frage | Zuständigkeit | Ergebnis |
+|---|---|---|---|
+| Di 10:15 | Liegt eine Verletzung im Sinne von Art. 4 (12) vor? | Beschäftigte und Vorgesetzte | Internes Meldeformular, Datenschutzbeauftragter sofort und detailliert informiert |
+| Di 10:40 | Lässt sich die Offenlegung noch stoppen oder verringern? | IT und Personalabteilung | Rückruf, schriftliche Löschaufforderung, Bestätigung angefordert |
+| Di 12:00 | Wie hoch ist das Risiko für die Rechte und Freiheiten der betroffenen Personen? | Verantwortliche Person, Unternehmen und Datenschutzbeauftragter | Route gewählt: hohes Risiko, also greifen Art. 33 und Art. 34 zugleich |
+| Di 16:00 | Haben wir die vier Elemente des Art. 33 (3)? | Datenschutzbeauftragter | Entwurf der Data Breach Notice, Lücken für die schrittweise Nachlieferung markiert |
+| Mi 09:00 | Liegt die Meldung binnen 72 Stunden nach Kenntnis bei der zuständigen Behörde? | Verantwortlicher | Meldung eingereicht, keine Begründung für eine Verzögerung nötig |
+| Mi 11:00 | Müssen die betroffenen Menschen selbst handeln? | Verantwortlicher und Personalabteilung | Benachrichtigung in klarer und einfacher Sprache an 140 Beschäftigte |
+| Später | Warum war das möglich, und was verhindert den nächsten Fall? | Verantwortlicher, Datenschutzbeauftragter, IT | TOM-Bewertung, aktualisiertes VVT, Schulung und Adresskontrollen |
+
+**Was in die interne Aufzeichnung gehört**, nach Art. 33 (5) und nach der Regel der Folien, dass die Dokumentation für **jede** Datenpanne gilt: die Fakten dazu, was passiert ist und wann es entdeckt wurde, die Kategorien und ungefähren Zahlen der betroffenen Personen und Datensätze, die Risikobewertung samt der Begründung für die gewählte Stufe, die ergriffenen Abhilfemaßnahmen, die beobachteten Auswirkungen, die Meldung selbst mit Zeitstempel, die an die betroffenen Personen versandte Benachrichtigung und die Folgemaßnahmen. Wäre die Bewertung stattdessen als **unwahrscheinlich oder geringes Risiko** ausgefallen, würde alles Obige trotzdem aufgeschrieben; nur die beiden Meldungen fielen weg, und die Aufzeichnung müsste dann erklären, warum das Risiko als gering eingestuft wurde.
+
+## Fallstudien-Ecke
+
+**Die Kamera im Containerdepot, als Datenschutz-Folgenabschätzung.** Der Kurs arbeitet mit einer ausgefüllten Vorlage nach Art. 35 für ein Unternehmen aus dem Containergeschäft, und sie ist gerade deshalb ein gutes Muster, weil die Verarbeitung bescheiden ist und das Dokument trotzdem die vollständige Analyse leistet.
+
+**Was verarbeitet wird.** Ein Kamerasystem zur **Echtzeitüberwachung** des Depotgeländes. Die Bilder werden live auf einen Monitor im Interchange-Container übertragen, wo die Mitarbeitenden sitzen, die die Lkw abfertigen und in Funkkontakt mit dem Staplerfahrer stehen, der Container auflädt und ablädt. Es gibt **keine Videoaufzeichnung**, es werden keine Micro-SD-Karten verwendet, und die Rollenvergabe im System macht es diesen Beschäftigten unmöglich, irgendetwas aufzuzeichnen. Das Livebild zeigt Kunden-Lkw mit ihren Kennzeichen, ohne dass der Fahrer in der Kabine sichtbar wäre, und jeder Bereich, in dem sich üblicherweise Menschen bewegen, ist **ausgegraut**. Schwenken und Neigen sind deaktiviert; Zoomen ist nur auf Anweisung und nur für das Auf- oder Abladen erlaubt. Eine der drei Kameras wird bis zum Modell beschrieben, eine Dome-Netzwerkkamera am Wartungs- und Reparaturgebäude, mit 1.280 mal 720 Pixeln und 30 Bildern pro Sekunde, ausschließlich auf das Depotgelände gerichtet, mit Blickwinkeln von etwa 90 Grad vor der Werkstatt und etwa 80 Grad zur Seite, wobei öffentlicher Grund wie die Straße nicht erfasst wird. Screenshots und technische Einstellungen sind als Anhang beigefügt.
+
+**Zwecke und Rechtsgrundlage.** Drei Zwecke: die Optimierung des Ladevorgangs und des Betriebsablaufs, damit das Abfertigungspersonal sieht, wie viele Lkw bereitstehen und wo sich die Stapler befinden, die Kontrolle der **sicheren Lagerung** von Seecontainern, damit es keine Schäden und keine Gefahr für Leib und Leben gibt, und der Schutz des Eigentums vor Einbruch, Diebstahl und Vandalismus. Rechtsgrundlage ist das **berechtigte Interesse auf Basis des Hausrechts, Art. 6 (1) f DSGVO**.
+
+**Die Risikolage mit Belegen.** Das ist der Abschnitt, der das Dokument glaubwürdig macht. Vor den Kameras stauten sich Lkw stundenlang auf der öffentlichen Straße, und die Rückstaus waren eine Gefahr für Auffahrunfälle, weil Fahrer das Stauende manchmal zu spät sahen. Das ist ein dokumentierter, konkreter Schaden und kein allgemeiner Wunsch nach mehr Sicherheit.
+
+**Notwendigkeit und Verhältnismäßigkeit.** Eignung: Die Mitarbeitenden sehen, wie viele Lkw warten und ob auf- oder abgeladen werden soll, Schäden oder Feuer an den Containern werden sichtbar, Stapler werden entsprechend eingesetzt, und zu Spitzenzeiten werden Kunden gebeten, später zu kommen, sodass Rückstaus auf der öffentlichen Straße vermieden werden. Mildere Mittel wurden zuerst versucht und sind aufgeführt: Einzäunung, Sicherheitsstreifen, ein großes Eingangstor zur Zutrittskontrolle, Betretungsverbotsschilder, helle Beleuchtung bei Nacht sowie Beschäftigte, die körperlich hinausgingen, um Lkw zu zählen und einzeln abzufertigen. Sie haben das Problem nicht gelöst - die Rückstaus blieben, weil das Zählen der Lkw niemandem sagte, an welcher Stelle des Geländes geladen werden konnte, und auf einem 80.000 Quadratmeter großen Gelände gelang es dem Sicherheitsdienst wiederholt nicht, diejenigen zu erwischen, die Container mit Graffiti beschädigten.
+
+**Die Einschränkungen, die das Herz des Dokuments sind.** Datenminimierung durch reine Echtzeitüberwachung, mit abgeschalteten Aufzeichnungs- und Speicherfunktionen. Bereiche, in denen sich Menschen bewegen, sind geschwärzt oder ausgegraut. Die Kameras sind fest auf das Depotgelände gerichtet und werden nicht geschwenkt. Zoomen ist per Anweisung auf gelagerte Container beschränkt und nie auf Personen. Kein Fernzugriff. Der Zugang zu den Livebildern ist auf die Mitarbeitenden im Interchange-Container begrenzt. Anonymisierung in dem Sinne, dass an Kunden-Lkw nur Kennzeichen sichtbar sind und keiner Person zugeordnet werden können. Und Beschilderung an mehreren Stellen vor dem Betreten, mit den von den Datenschutzbehörden vorgegebenen Schildern, dazu ein Piktogramm mit einem großen Kamerazeichen auf dem Boden.
+
+**Interessenabwägung und Risiko.** Die möglicherweise betroffenen Rechte werden ausdrücklich benannt: das Recht auf Schutz vor Bildübertragungen, das Recht am eigenen Bild, das allgemeine Persönlichkeitsrecht und die Bewegungsfreiheit. Dem stehen die schnellere Abfertigung ohne Rückstau auf der öffentlichen Straße, die Erkennung und Verhinderung von Brandstiftung und Beschädigung sowie die sichere Containerlagerung gegenüber. Das Dokument hält fest, dass nur Lkw-Fahrer und die eigenen Beschäftigten im Depotbereich betroffen sind, dass es **keine Verhaltens- oder Leistungskontrolle** der Beschäftigten gibt, dass sich alle in unüberwachte Teile des Geländes zurückziehen können und dass es in der überwachten Zone keine Wege, Pausenbereiche oder ähnliche Rückzugsräume gibt. Die Schwere wird deshalb als gering oder vernachlässigbar bewertet, die Wahrscheinlichkeit als nahezu nicht vorhanden und die Gesamtprognose als **geringes Risiko**.
+
+**Maßnahmen und die Konsultationsfrage.** Die Garantien wiederholen die Einschränkungen und ergänzen die allgemeinen TOM um spezifische: eine begrenzte Zahl von Beschäftigten pro Schicht im Interchange-Container, der Zutritt anderer Personen nur so, dass sie die Livebilder nicht sehen können, eine Anweisung, den Monitor von Besuchern wegzudrehen und die Aufzeichnungsfunktion nicht zu nutzen, sowie die Entscheidung, die Mobil-Apps des Herstellers nicht einzusetzen. Zu den Sicherheitsvorkehrungen gehören regelmäßige Updates der Kamerasoftware, ein Schlüssel, den nur die Beschäftigten im Interchange-Container haben, und die deaktivierte Aufzeichnungsfunktion. Weil diese Maßnahmen das Risiko auf ein normales Maß senken, kommt das Dokument zu dem Schluss, dass **keine Pflicht zur Konsultation der Aufsichtsbehörde nach Art. 36 DSGVO** besteht. Schließlich ist die Überprüfung als **regelmäßige jährliche Audits mit entsprechender Dokumentation** vorgesehen, was der Überprüfungspflicht aus Art. 35 (11) entspricht.
+
+**Was daran gut ist, und wo es dünn wird.** Es ist stark, weil der Risikoabschnitt ein reales, belegtes Problem anführt, weil die milderen Mittel tatsächlich versucht wurden und ihr Scheitern beschrieben wird, weil die Einschränkungen technisch und durchsetzbar sind statt bloße Versprechen, und weil es zu einem ausdrücklichen Ergebnis zu Art. 36 kommt, statt einfach auszulaufen. Schwächer ist es an zwei Stellen, die in einer Prüfungsantwort auffallen sollten: Die Behauptung, Lkw-Kennzeichen ließen sich **keiner Person zuordnen**, wird behauptet statt begründet, obwohl ein Kennzeichen genau die Art indirekter Kennung ist, die Art. 4 (1) im Blick hat; und die Zusicherung, es gebe keine Leistungs- oder Verhaltenskontrolle, stützt sich auf Anweisungen an die Beschäftigten und auf eine ausgegraute Überblendung, und beides sind Einstellungen, die jemand ändern könnte, sodass das jährliche Audit sehr viel Arbeit leisten muss.
+
+## Wende es auf dein Projekt an
+
+<Steps>
+
+1. **Schreibe die Liste deiner Verarbeitungstätigkeiten auf, bevor irgendetwas passiert.** Gehe Funktion für Funktion vor - Recruiting, Beschäftigte, Kunden, Website, Gehaltsabrechnung, Reisekosten, Online-Banking - und lege für jede einen Eintrag an. Rechne mit irgendwo zwischen 20 und 300 und benutze eine Vorlage, statt ein Format zu erfinden.
+
+2. **Fülle jeden Eintrag mindestens mit den vier Basisangaben** - Art der personenbezogenen Daten, Speicherdauer, Rechtsgrundlage und Zweck - und vervollständige ihn dann an der Liste des Art. 30 (1) entlang, einschließlich Empfängern, Drittlandübermittlungen, Löschfristen und einer allgemeinen Beschreibung deiner Sicherheitsmaßnahmen.
+
+3. **Lege fest, wer die verantwortliche Person ist und ob es einen Datenschutzbeauftragten gibt.** Die Meldekette funktioniert nur, wenn im mittleren Kasten ein Name steht, und der Datenschutzbeauftragte muss über jede Datenpanne informiert werden, sofort und detailliert.
+
+4. **Baue das interne Meldeformular jetzt, nicht am Tag des Vorfalls.** Es sollte erfassen, was passiert ist, wann es entdeckt wurde, welche Daten und wie viele Menschen betroffen sind, was bereits getan wurde und wer informiert wurde, denn das sind die Felder aus Art. 33 (3) in Verkleidung.
+
+5. **Schreibe das Risikoraster im Voraus.** Definiere, was deine Organisation als unwahrscheinlich oder gering, normal und hoch für die Rechte und Freiheiten der betroffenen Personen behandelt, damit die Bewertung am Tag des Vorfalls ein Urteil an einem Maßstab ist und keine Diskussion.
+
+6. **Übe die Uhr.** Die Frist läuft ab der **Kenntnis**, nicht ab dem Vorfall, also spiele einen Fall durch und prüfe, ob du binnen 72 Stunden eine Data Breach Notice einreichen könntest, im Wissen, dass Verspätung mit einer Begründung erklärt werden muss und dass Teilinformationen schrittweise nachgeliefert werden dürfen.
+
+7. **Verschlüssele, was du verschlüsseln kannst, und halte fest, warum.** Nach Art. 34 (3) (a) können Schutzmaßnahmen, die tatsächlich auf die betroffenen Daten angewandt wurden, etwa eine Verschlüsselung, die sie für Unbefugte unzugänglich macht, die Pflicht zur Benachrichtigung der betroffenen Personen ganz entfallen lassen. Das ist die Maßnahme mit dem höchsten Ertrag auf dieser Liste.
+
+8. **Papiere die Lieferkette.** Ein Vertrag zur Auftragsverarbeitung samt Beschreibung der TOM für alle, die personenbezogene Daten in deinem Auftrag verarbeiten, und eine Vertraulichkeitsverpflichtung für Reinigungskräfte, Logistikdienstleister und andere, die den Daten lediglich nahe sind.
+
+9. **Prüfe, ob irgendetwas, das du planst, Art. 35 auslöst.** Neue Technologie mit hohem Risiko, systematische Bewertung und Profiling, umfangreiche Verarbeitung besonderer Datenkategorien oder systematische Überwachung eines öffentlich zugänglichen Bereichs. Wenn ja, mache die DSFA vor dem Start, hole den Rat des Datenschutzbeauftragten ein und konsultiere die Aufsichtsbehörde, wenn ohne deine Eindämmungsmaßnahmen ein hohes Risiko bliebe.
+
+10. **Wenn irgendwo in deinem Plan eine Kamera vorkommt, arbeite die ganze Checkliste ab.** Zweck vorab benennen und dokumentieren, Eignung, mildere Mittel und Angemessenheit prüfen, Zeit, Raum und erfasste Personen begrenzen, Piktogramm und zugängliche Informationen anbringen, Verzeichnis von Verarbeitungstätigkeiten und DSFA schreiben, eine an den Zweck gebundene Speicherfrist setzen und nach Zweckerreichung löschen.
+
+11. **Plane die Überprüfung ein.** Jährliche Audits mit Dokumentation, dazu eine Neubewertung der TOM nach jedem Vorfall und eine erneute Prüfung der DSFA, wann immer sich das Risiko ändert.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Verletzung des Schutzes personenbezogener Daten | Eine Verletzung der Sicherheit, die zur unbeabsichtigten oder unrechtmäßigen Vernichtung, zum Verlust, zur Veränderung oder zur unbefugten Offenlegung von beziehungsweise zum unbefugten Zugang zu personenbezogenen Daten führt, Art. 4 (12) DSGVO |
+| Risiko für die Rechte und Freiheiten | Die Prüfung, die alles entscheidet: wie schwer der Vorfall oder die Verarbeitung den betroffenen Menschen schaden könnte, abgestuft in unwahrscheinlich oder gering, normal und hoch |
+| Data Breach Notice | Die Meldung an die Aufsichtsbehörde nach Art. 33 DSGVO, wenn eine Verletzung nicht voraussichtlich risikolos ist |
+| Die 72 Stunden | Meldung an die Behörde unverzüglich und möglichst binnen 72 Stunden, nachdem die Verletzung **bekannt** wurde; erfolgt sie später, muss eine Begründung für die Verzögerung beiliegen |
+| Benachrichtigung der betroffenen Person | Die Information der betroffenen Menschen selbst, nach Art. 34 nur erforderlich, wenn die Verletzung voraussichtlich ein **hohes** Risiko zur Folge hat, und dann unverzüglich und in klarer und einfacher Sprache |
+| Ausnahmen des Art. 34 (3) | Keine Benachrichtigung der Einzelnen, wenn die Daten geschützt waren, etwa verschlüsselt; wenn spätere Maßnahmen das hohe Risiko unwahrscheinlich gemacht haben; oder wenn der Aufwand unverhältnismäßig wäre, wobei dann eine öffentliche Bekanntmachung an ihre Stelle tritt |
+| Dokumentation der Verletzung | Die interne Aufzeichnung der Fakten, Auswirkungen und Abhilfemaßnahmen, geführt für **jede** Verletzung einschließlich der nicht gemeldeten, nach Art. 33 (5) |
+| Rechenschaftspflicht in der Praxis | Nicht rechtskonform zu sein, sondern es beweisen zu können, was im Alltag Verzeichnisse, Verträge, Abschätzungen und unterschriebene Verpflichtungen bedeutet |
+| Verzeichnis von Verarbeitungstätigkeiten (VVT) | Ein Eintrag je Verarbeitungsart, mit mindestens Art der Daten, Speicherdauer, Rechtsgrundlage und Zweck, dazu die vollständigen Inhalte des Art. 30 (1); grob 20 bis 300 je Unternehmen |
+| Verpflichtung auf die Vertraulichkeit | Das Dokument, das Beschäftigte tatsächlich **unterschreiben**, mit der Zusage, personenbezogene und sonstige vertrauliche Daten geheim zu halten |
+| Vertrag zur Auftragsverarbeitung | Der Vertrag mit einem Dienstleister, der personenbezogene Daten in deinem Auftrag verarbeitet, einschließlich einer Beschreibung seiner technischen und organisatorischen Maßnahmen |
+| TOM | Technische und organisatorische Maßnahmen, die konkreten Kontrollen zum Schutz der Daten, ausgewählt am Stand der Technik, an den Kosten, an der Art der Verarbeitung sowie an Eintrittswahrscheinlichkeit und Schwere des Risikos |
+| Stand der Technik | Maßnahmen, die dem aktuellen wissenschaftlichen und technischen Kenntnisstand entsprechen, umsetzbar und am Markt verfügbar sind; eine Abweichung ist Ausnahme und muss dokumentiert werden |
+| Privacy by Design | Datenschutz in die Technik selbst einbauen, Art. 25, beurteilt nach Stand der Technik, Implementierungskosten, Art, Umfang, Umständen und Zwecken sowie Eintrittswahrscheinlichkeit und Schwere der Risiken |
+| Privacy by Default | Datenschutzfreundliche Voreinstellungen: minimierte Verarbeitung, nur unbedingt erforderliche Daten, rasche Pseudonymisierung und Transparenz |
+| Verhältnismäßigkeit (Video) | Die Kamera muss geeignet sein, es darf kein milderes Mittel geben, und sie muss angemessen sein, also in Zeit, Raum und erfassten Personen begrenzt, mit abgewogenen Interessen |
+| Datenschutz-Folgenabschätzung (DSFA) | Die Abschätzung **vor** dem Start einer risikoreichen Verarbeitung, mit einer Beschreibung der Verarbeitung, einer Bewertung von Notwendigkeit und Verhältnismäßigkeit, einer Risikobewertung und den Maßnahmen gegen diese Risiken |
+| Vorherige Konsultation | Der Gang zur Aufsichtsbehörde vor der Verarbeitung, wenn die DSFA zeigt, dass ohne die Eindämmungsmaßnahmen des Verantwortlichen ein hohes Risiko bliebe, Art. 36 |
+
+## Teste dich selbst
+
+1. Gib die Definition der Verletzung des Schutzes personenbezogener Daten nach Art. 4 (12) wieder und nenne die häufigste Ursache gemeldeter Verletzungen mit ihrem Anteil.
+2. **Nenne die Meldefrist gegenüber der Aufsichtsbehörde genau so, wie die DSGVO sie formuliert**, sage, wann die Uhr startet, und sage, was passieren muss, wenn die Meldung verspätet ist.
+3. Eine Verletzung tritt ein, und du bewertest das Risiko als gering. Was, wenn überhaupt, musst du tun?
+4. Was sind die vier Mindestinhalte einer Meldung an die Aufsichtsbehörde, und welche davon entfallen, wenn du stattdessen die betroffene Person benachrichtigst?
+5. Nenne die drei Ausnahmen des Art. 34 (3), die die Pflicht zur Information der betroffenen Einzelpersonen entfallen lassen.
+6. Liste die Dokumentationsanforderungen auf, die die Folien für die Videoüberwachung aufstellen, und sage anhand einer der beiden Entscheidungen, was eine Überwachung unverhältnismäßig macht.
+
+<Aside type="note" title="Lösungen">
+1. Eine Verletzung der Sicherheit, die zur unbeabsichtigten oder unrechtmäßigen Vernichtung, zum Verlust, zur Veränderung oder zur unbefugten Offenlegung von beziehungsweise zum unbefugten Zugang zu personenbezogenen Daten führt, die übermittelt, gespeichert oder auf sonstige Weise verarbeitet wurden. Die häufigste Ursache ist die **Übermittlung an die falschen Empfänger mit 47 Prozent**, weit vor Cyberangriffen mit 14 Prozent.
+2. Unverzüglich und möglichst **binnen 72 Stunden, nachdem die Verletzung bekannt wurde**, es sei denn, die Verletzung führt voraussichtlich nicht zu einem Risiko für die Rechte und Freiheiten natürlicher Personen. Die Uhr startet mit der **Kenntnis**, nicht mit dem Vorfall. Erfolgt die Meldung nicht binnen 72 Stunden, muss ihr eine **Begründung für die Verzögerung** beigefügt sein.
+3. Du meldest niemandem etwas - weder der Behörde noch den betroffenen Personen - aber du **dokumentierst** die Verletzung trotzdem, denn die Dokumentation gilt für jede Datenpanne. Die Aufzeichnung umfasst die Fakten, die Auswirkungen und die Abhilfemaßnahmen, und sie muss der Behörde die Überprüfung deiner Begründung ermöglichen. Die verpflichtenden Folgemaßnahmen gegen eine Verschlimmerung der Lage und die Bewertung geeigneter TOM zur Verhinderung ähnlicher Verletzungen gelten weiterhin.
+4. Die Art der Verletzung einschließlich der Kategorien und ungefähren Zahlen der betroffenen Personen und Datensätze; Name und Kontaktdaten des Datenschutzbeauftragten oder einer sonstigen Anlaufstelle; die wahrscheinlichen Folgen; und die ergriffenen oder vorgeschlagenen Maßnahmen einschließlich Abmilderung. Gegenüber der betroffenen Person verlangt Art. 34 (2) nur die Punkte (b), (c) und (d), die Kategorien- und Mengenangaben entfallen also, und es muss in klarer und einfacher Sprache geschehen.
+5. Erstens: Es waren geeignete technische und organisatorische Schutzmaßnahmen vorhanden und wurden auf die betroffenen Daten angewandt, insbesondere solche, die sie für Unbefugte unzugänglich machen, etwa Verschlüsselung. Zweitens: Der Verantwortliche hat seither Maßnahmen ergriffen, die sicherstellen, dass das hohe Risiko aller Wahrscheinlichkeit nach nicht mehr eintritt. Drittens: Die individuelle Benachrichtigung wäre mit unverhältnismäßigem Aufwand verbunden, wobei dann eine öffentliche Bekanntmachung oder ähnliche Maßnahme die Menschen vergleichbar wirksam informieren muss.
+6. Ein Piktogramm, für die betroffenen Personen zugängliche Datenschutzinformationen, ein Verzeichnis von Verarbeitungstätigkeiten samt Beschreibung der TOM, eine Datenschutz-Folgenabschätzung wegen der Schwere des Eingriffs, ein Vertrag zur Auftragsverarbeitung mit jedem Dienstleister und eine Speicherbegrenzung bis zur Zweckerfüllung mit der Pflicht zur zügigen Prüfung, wobei Wochen oder Monate erforderlich sein können. Fehlende Dokumentation ist selbst ein Verstoß, und schon einmalige Verstöße können hohe Bußgelder nach sich ziehen, wie im Fall der niedersächsischen Aufsichtsbehörde gegen VW mit 1 Million Euro. Zur Unverhältnismäßigkeit: Das Verwaltungsgericht Ansbach entschied, dass die vollständige Überwachung aller Trainingsbereiche in einem Fitnessstudio unangemessen war; das Bundesarbeitsgericht akzeptierte demgegenüber, dass Beschäftigte bei Kassiervorgängen offen gefilmt werden dürfen.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Eine **Verletzung des Schutzes personenbezogener Daten** ist jede Sicherheitsverletzung, die zur unbeabsichtigten oder unrechtmäßigen Vernichtung, zum Verlust, zur Veränderung oder zur unbefugten Offenlegung von beziehungsweise zum unbefugten Zugang zu personenbezogenen Daten führt, Art. 4 (12). Die meisten davon sind banal: **47 Prozent** sind Übermittlungen an den falschen Empfänger, Cyberangriffe nur 14 Prozent.
+- Eine Bewertung steuert alles: das **Risiko für die Rechte und Freiheiten der betroffenen Person**. Gering heißt keine Meldung, aber trotzdem dokumentieren. Normal heißt **Aufsichtsbehörde binnen 72 Stunden**, Art. 33. Hoch heißt die Behörde **und** die betroffenen Personen **unverzüglich**, Art. 34.
+- Die 72 Stunden laufen ab der **Kenntnis**, sind eine bloße Reaktionsfrist, und eine verspätete Meldung muss eine **Begründung für die Verzögerung** enthalten. Ein Auftragsverarbeiter meldet dem Verantwortlichen, nicht der Behörde.
+- Die Meldung muss die Art der Verletzung mit Kategorien und ungefähren Zahlen, den Datenschutzbeauftragten oder eine Anlaufstelle, die wahrscheinlichen Folgen und die ergriffenen oder vorgeschlagenen Maßnahmen angeben. Informationen dürfen **schrittweise** nachgeliefert werden.
+- Der **Datenschutzbeauftragte wird immer** über eine Datenpanne informiert, sofort und so detailliert wie möglich, idealerweise über das dafür vorgesehene Formular. Folgemaßnahmen gegen eine Verschlimmerung sind verpflichtend, danach folgt eine TOM-Überprüfung.
+- Art. 34 (3) lässt die Pflicht zur Information der Einzelnen entfallen, wenn die Daten geschützt waren, etwa **verschlüsselt**, wenn spätere Maßnahmen das hohe Risiko unwahrscheinlich gemacht haben, oder wenn der Aufwand unverhältnismäßig wäre, wobei dann eine **öffentliche Bekanntmachung** an ihre Stelle tritt.
+- **Dokumentation ist überprüfbar gemachte Rechenschaft**: Informationen an Bewerber, Beschäftigte, Kunden und Website-Besucher nach Artt. 12 bis 14, dazu Verzeichnis von Verarbeitungstätigkeiten, DSFA, Verträge zwischen gemeinsam Verantwortlichen, Verträge zur Auftragsverarbeitung und unterschriebene Vertraulichkeitsverpflichtungen.
+- **Verzeichnis von Verarbeitungstätigkeiten**, Art. 30: ein Eintrag je Verarbeitungsart, mindestens Art der Daten, Speicherdauer, Rechtsgrundlage und Zweck, und zwischen **20 und 300** davon je nach Unternehmen. Schriftlich geführt und der Behörde auf Anfrage vorzulegen.
+- **IT-Sicherheit** schützt die Systeme, **Datenschutz** schützt die personenbezogenen Daten und die Menschen. Dieselben Maßnahmen, ein anderer Begünstigter, gegen Malware, Ransomware, Phishing und Man-in-the-Middle-Angriffe.
+- **TOM** werden für Vertraulichkeit, Integrität, Verfügbarkeit und Authentizität ausgewählt, nach dem **Stand der Technik**, also nach aktuellem Kenntnisstand, umsetzbar und am Markt verfügbar, abgewogen nach Risiko und Kosten, mit dokumentierter Abweichung. Art. 32 nennt Pseudonymisierung und Verschlüsselung, dauerhafte Vertraulichkeit, Integrität, Verfügbarkeit und Belastbarkeit, rasche Wiederherstellung sowie regelmäßige Überprüfung.
+- **Privacy by Design und by Default**, Artt. 25 und 32: Schutz in die Technik einbauen und die Voreinstellung zur minimalen machen.
+- **Videoüberwachung** braucht eine Rechtfertigung, § 26 BDSG im Beschäftigungsverhältnis oder § 4 BDSG zum Schutz der Öffentlichkeit, einen vorab benannten und dokumentierten Zweck, Verhältnismäßigkeit ohne milderes Mittel und ohne Vollauswertung, ein Piktogramm und zugängliche Informationen, ein VVT, eine DSFA, eine Speicherbegrenzung und die Löschung nach Zweckerreichung.
+- Eine **DSFA** ist vor risikoreicher Verarbeitung erforderlich und muss eine Beschreibung der Verarbeitung und der Zwecke, eine Bewertung von Notwendigkeit und Verhältnismäßigkeit, eine Risikobewertung und die Maßnahmen gegen die Risiken enthalten. Bliebe ohne deine Eindämmungsmaßnahmen ein hohes Risiko, konsultiere zuerst die Behörde nach Art. 36.
+</Aside>
+
+*Weiter: [Haftung & internationale Datentransfers →](/de/learnings/mba/legal-aspects-of-technology-management/06-liability-and-international-transfers/) - wer trägt das Risiko, und was passiert, wenn Daten die EU verlassen.*

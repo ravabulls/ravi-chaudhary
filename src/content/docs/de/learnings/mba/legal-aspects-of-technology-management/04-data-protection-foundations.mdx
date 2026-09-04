@@ -1,0 +1,404 @@
+---
+title: "Grundlagen des Datenschutzes"
+description: "Warum Datenschutz ein wirtschaftliches Risiko ist und keine juristische Fußnote - der Merck-NotPetya-Versicherungsfall, was personenbezogene Daten und Verarbeitung tatsächlich bedeuten, die Trennung zwischen Verantwortlichem und Auftragsverarbeiter, die entscheidet, wer welche Pflicht trägt, die sieben Grundsätze des Artikel 5, die Erlaubnistatbestände in Artikel 6 mit der Einwilligung nach Artikel 7, die besonderen Kategorien nach Artikel 9, die Rechte der betroffenen Person in den Artikeln 12 bis 21, der Lebenszyklus personenbezogener Daten und wann ein Datenschutzbeauftragter zu benennen ist."
+sidebar:
+  label: "4 · Grundlagen des Datenschutzes"
+  order: 4
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Legal Aspects of Technology Management - NIT Northern Institute of Technology Management, Hamburg · Teil meines Technology-Management-MBA · meine eigenen Notizen zur Wiederholung, in eigenen Worten.*
+
+---
+
+Die Sitzung beginnt nicht mit einer Definition. Sie beginnt damit, dass ein Unternehmen mehr als eine Milliarde Dollar verliert und anschließend den Streit mit den eigenen Versicherern verliert. Diese Reihenfolge ist Absicht. Datenschutz und IT-Sicherheit werden üblicherweise als Compliance-Themen unterrichtet, als etwas, worüber sich die Rechtsabteilung Gedanken macht, nachdem das Produkt fertig gebaut ist, und die Eröffnungsfolie ist dazu da, diesen Rahmen zu zerbrechen, bevor er sich festsetzt. Der Merck-NotPetya-Fall ist eine Geschichte über Bilanzen, Versicherungsformulierungen und Vertragsauslegung, und nur nebenbei eine über Schadsoftware.
+
+Sobald dieser Punkt gesessen hat, geht die Präsentation zur Mechanik über. Sie zeigt, woher die Regeln kommen, nämlich aus einem Stapel europäischen und deutschen Rechts statt aus einem einzigen Gesetz, und arbeitet dann das Vokabular durch, auf dem der gesamte Rest des Kurses aufbaut: was als **personenbezogene Daten** gilt, was als **Verarbeitung** gilt, wer **Verantwortlicher** und wer bloß **Auftragsverarbeiter** ist, wer die **betroffene Person** ist, welche **Grundsätze** jede Verarbeitung erfüllen muss und was eine Verarbeitung überhaupt erst **rechtmäßig** macht.
+
+Der praktische Wert dieses Kapitels liegt darin, dass es eine Checkliste liefert, die sich über jedes Produktfeature, jeden Lieferantenvertrag und jeden internen Prozess legen lässt. Wer beantworten kann, wessen Daten das sind, was mit ihnen geschieht, wer entschieden hat, das zu tun, warum und auf welcher Rechtsgrundlage, hat den größten Teil der Arbeit bereits erledigt. Wer diese fünf Fragen nicht beantworten kann, hat kein fertiges Feature, was auch immer die Technik sagt.
+
+<Aside type="tip">
+**Die eine Idee, die man mitnehmen sollte.** Datenschutz ist keine Regel über Geheimhaltung, sondern eine Regel über **Rechtfertigung**. Jeder Vorgang mit Daten über eine identifizierbare Person ist im Grundsatz verboten und wird erst dann rechtmäßig, wenn man auf eine konkrete Rechtsgrundlage zeigen und belegen kann, dass der Vorgang innerhalb der Grundsätze bleibt. Die Last liegt bei der Organisation, die entschieden hat, das zu tun, und genau deshalb ist die Bestimmung des **Verantwortlichen** immer der erste Zug.
+</Aside>
+
+## 1 · Warum das ein wirtschaftliches Problem ist, bevor es ein rechtliches wird
+
+Die Folien führen den wirtschaftlichen Beleg mit drei getrennten Belegstücken, und sie bauen aufeinander auf.
+
+Das erste ist der **Merck-NotPetya-Fall**, unten in der Fallstudien-Ecke vollständig dargestellt. Die Kurzfassung: ein Schadsoftwareangriff im Jahr 2017, vierzigtausend Computer, ein Schaden von mehr als 1,4 Milliarden Dollar und Versicherer, die daraufhin die Zahlung verweigerten und sich auf den Ausschluss für feindliche oder kriegerische Handlungen in der Police beriefen. Sowohl das erstinstanzliche Gericht als auch die New Jersey Appellate Division wiesen dieses Argument zurück. Die Lehre für eine Führungskraft ist nicht, dass Gerichte immer zugunsten des Versicherungsnehmers entscheiden, sondern dass sich ein Cyberschaden dieser Größenordnung sofort in einen Streit über den genauen Wortlaut einer Klausel verwandelt, die jemand vor Jahren unterschrieben hat, ohne sie genau zu lesen.
+
+Das zweite ist das **Allianz Risk Barometer 2022**, das die wichtigsten globalen Geschäftsrisiken jenes Jahres ordnet:
+
+| Rang | Risiko | Anteil | Beispiele aus den Folien |
+|---|---|--:|---|
+| 1 | Cybervorfälle | 44 Prozent | Cyberkriminalität, IT-Ausfälle und Störungen, Datenschutzverletzungen, Bußgelder und Sanktionen |
+| 2 | Betriebsunterbrechung | 42 Prozent | einschließlich Störungen in der Lieferkette |
+| 3 | Naturkatastrophen | 25 Prozent | Sturm, Überschwemmung, Erdbeben, Waldbrand, Wetterereignisse |
+
+Cybervorfälle stehen an der Spitze der Liste, vor der Betriebsunterbrechung und deutlich vor den Naturkatastrophen. Bemerkenswert ist auch, was die Folien in die Cyberkategorie hineinnehmen: Bußgelder und Sanktionen werden als eine Spielart des Cybervorfalls geführt, neben den technischen Ausfällen. Regulatorisches und technisches Risiko werden als ein einziges Risiko behandelt, weil sie in der Praxis gemeinsam eintreffen.
+
+Das dritte ist das Instrumentarium der Aufsicht selbst. Die Folie zu den möglichen Folgen nennt Bußgelder von bis zu **2 Millionen Euro oder 4 Prozent des weltweiten Jahresumsatzes** und verweist auf die Artikel 84 und 83 der DSGVO sowie auf die öffentliche Bußgelddatenbank des GDPR-Portals. Liest man Artikel 83 selbst, so kommen die Bußgelder in zwei Stufen, und die Beträge sind größer als die Schlagzahl der Folie: Verstöße gegen die Pflichten des Verantwortlichen und des Auftragsverarbeiters werden mit bis zu **10 000 000 Euro oder 2 Prozent** des gesamten weltweit erzielten Jahresumsatzes des vorangegangenen Geschäftsjahrs geahndet, je nachdem, welcher Betrag höher ist (Artikel 83(4)), während Verstöße gegen die Grundsätze der Verarbeitung einschließlich der Bedingungen für die Einwilligung nach den Artikeln 5, 6, 7 und 9 sowie Verstöße gegen die Rechte der betroffenen Personen nach den Artikeln 12 bis 22 mit bis zu **20 000 000 Euro oder 4 Prozent** geahndet werden, je nachdem, welcher Betrag höher ist (Artikel 83(5)). Artikel 84 ist die Vorschrift, die alle übrigen Sanktionen dem nationalen Recht überlässt und dabei verlangt, dass sie wirksam, verhältnismäßig und abschreckend sind.
+
+Neben dem Bußgeld gibt es einen eigenen privatrechtlichen Weg. Artikel 82 gibt jeder Person, der wegen eines Verstoßes ein materieller oder immaterieller Schaden entstanden ist, einen Schadensersatzanspruch gegen den Verantwortlichen oder den Auftragsverarbeiter. Der Verantwortliche haftet für Schäden aus einer Verarbeitung, die gegen die Verordnung verstößt; der Auftragsverarbeiter haftet nur dann, wenn er speziell an Auftragsverarbeiter gerichtete Pflichten nicht erfüllt hat oder wenn er außerhalb oder entgegen der rechtmäßigen Weisungen des Verantwortlichen gehandelt hat. Diese Asymmetrie ist der erste Hinweis darauf, warum die Bezeichnungen Verantwortlicher und Auftragsverarbeiter so viel Gewicht haben.
+
+## 2 · Woher die Regeln kommen
+
+Die Folien verwenden mehrere Seiten auf den Rechtsstapel, und das lohnt sich, denn eine Frage aus der Praxis wird nur selten allein durch die DSGVO beantwortet.
+
+<div class="sc-tiers" style="overflow-x:auto;">
+  <div class="sc-tier">
+    <div class="sc-tier-head">EU-Primärrecht<span class="n">die Verfassungsebene</span></div>
+    <div class="sc-node violet soft">Grundrechtecharta und EU-Vertrag<span class="sub">Datenschutz als Grundrecht, weshalb alles darunter eng ausgelegt wird</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">EU-Sekundärrecht<span class="n">Verordnungen und Richtlinien</span></div>
+    <div class="sc-node amber soft">Die DSGVO<span class="sub">eine Verordnung, also unmittelbar in den Mitgliedstaaten anwendbar und dem nationalen Recht vorgehend</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Nationales Recht, allgemein<span class="n">Deutschland</span></div>
+    <div class="sc-node green soft">Bundesdatenschutzgesetz (BDSG) und Finanzaufsichtsrecht<span class="sub">füllt die Lücken, die die DSGVO den Mitgliedstaaten offenlässt</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Nationales Recht, besonders<span class="n">Sektor für Sektor</span></div>
+    <div class="sc-node slate soft">Telekommunikation-Telemedien-Datenschutz-Gesetz, Sozialgesetzbuch V und X und weitere<span class="sub">dazu die Bundesländer mit eigenem Landesdatenschutzgesetz, eigener Landeshaushaltsordnung, eigenem Landeskrankenhausgesetz und eigenen Schulverordnungen</span></div>
+  </div>
+</div>
+
+Die Ordnungsregel, die die Folien für diesen Stapel nennen, lautet: **EU-Recht gilt einheitlich in allen Mitgliedstaaten und geht dem nationalen Recht vor**. Man beginnt also bei der DSGVO und sucht erst dort im BDSG weiter, wo die DSGVO eine Tür offengelassen hat.
+
+Der deutsche Zeitstrahl, den die Folien zeichnen, ist kurz und merkenswert. Ab **1994** galten das alte Bundesdatenschutzgesetz und die europäische Datenschutzrichtlinie. Die DSGVO trat am **25. Mai 2016** in Kraft, gefolgt von einer **zweijährigen Umsetzungsphase**. Am **25. Mai 2018** wurde die DSGVO in den EU-Mitgliedstaaten unmittelbar anwendbar, und in Deutschland trat das neue BDSG in Kraft. Zwischen **2021 und 2024** wurde eine Folgefassung des BDSG entworfen, die den Gesetzgebungsprozess jedoch nicht rechtzeitig abschloss.
+
+Die Folien geben außerdem eine Auswahlliste der Vorschriften, die im Alltag das meiste Gewicht tragen, und sie ist faktisch der Lehrplan dieses Kapitels:
+
+<div class="sc-chips">
+  <span class="sc-chip violet">DSGVO Art. 4 Begriffsbestimmungen</span>
+  <span class="sc-chip violet">Art. 5 Grundsätze</span>
+  <span class="sc-chip amber">Art. 6 Rechtmäßigkeit</span>
+  <span class="sc-chip amber">Art. 7 Einwilligung</span>
+  <span class="sc-chip amber">Art. 9 besondere Daten</span>
+  <span class="sc-chip green">Art. 12 bis 14 Information</span>
+  <span class="sc-chip green">Art. 15 bis 21 Rechte</span>
+  <span class="sc-chip">Art. 82 Haftung</span>
+  <span class="sc-chip">Art. 83 Bußgelder</span>
+  <span class="sc-chip">BDSG § 4 Videoüberwachung</span>
+  <span class="sc-chip">BDSG § 22 besondere Daten</span>
+  <span class="sc-chip">BDSG § 26 Beschäftigung</span>
+</div>
+
+Man beachte, wie sich die deutschen Vorschriften auf die europäischen abbilden. § 22 BDSG ist das nationale Gegenstück zu Artikel 9 DSGVO über die besonderen Kategorien, und § 26 BDSG regelt den Beschäftigungskontext, in dem die meiste Verarbeitung einer Technologiemanagerin oder eines Technologiemanagers tatsächlich stattfindet.
+
+## 3 · Wann die DSGVO überhaupt gilt
+
+Bevor man fragt, ob eine Verarbeitung rechtmäßig ist, muss man fragen, ob die Verordnung sie überhaupt erfasst. Zwei Artikel erledigen diese Arbeit.
+
+**Sachlicher Anwendungsbereich, Artikel 2.** Die Verordnung gilt für die ganz oder teilweise automatisierte Verarbeitung personenbezogener Daten sowie für die nichtautomatisierte Verarbeitung, wenn die Daten in einem Dateisystem gespeichert sind oder gespeichert werden sollen. Artikel 2(2) nimmt dann vier Situationen aus: Tätigkeiten außerhalb des Anwendungsbereichs des Unionsrechts, Tätigkeiten der Mitgliedstaaten im Rahmen des Kapitels über die gemeinsame Außen- und Sicherheitspolitik des EUV, die Verarbeitung durch eine natürliche Person zur Ausübung ausschließlich persönlicher oder familiärer Tätigkeiten sowie die Verarbeitung durch die zuständigen Behörden zur Verhütung, Ermittlung, Aufdeckung oder Verfolgung von Straftaten oder zur Strafvollstreckung einschließlich des Schutzes vor Gefahren für die öffentliche Sicherheit.
+
+**Räumlicher Anwendungsbereich, Artikel 3.** Drei Tatbestände, und der zweite ist derjenige, der Technologieunternehmen erfasst. Die Verordnung gilt für die Verarbeitung im Rahmen der Tätigkeiten einer Niederlassung eines Verantwortlichen oder Auftragsverarbeiters in der Union, unabhängig davon, ob die Verarbeitung selbst in der Union stattfindet. Sie gilt außerdem für einen Verantwortlichen oder Auftragsverarbeiter, der **nicht** in der Union niedergelassen ist, wenn die Verarbeitung betroffene Personen betrifft, die sich in der Union befinden, und die Tätigkeit entweder darin besteht, ihnen Waren oder Dienstleistungen anzubieten, unabhängig davon, ob eine Zahlung verlangt wird, oder ihr Verhalten zu beobachten, soweit dieses Verhalten in der Union erfolgt. Ein dritter Tatbestand erfasst einen Verantwortlichen, der nicht in der Union niedergelassen ist, aber an einem Ort, an dem aufgrund des Völkerrechts das Recht eines Mitgliedstaats gilt.
+
+Die praktische Lesart von Artikel 3(2) lautet: Eine kostenlose App ohne europäisches Büro, ohne europäische Server und ohne europäischen Umsatz fällt in dem Moment vollständig unter die Verordnung, in dem sie europäische Nutzer hat, deren Verhalten sie beobachtet.
+
+## 4 · Personenbezogene Daten, und was als Verarbeitung zählt
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Personenbezogene Daten <small>Art. 4(1) DSGVO</small></div>
+      <ul>
+        <li>Alle Informationen, die sich auf eine <strong>identifizierte</strong> natürliche Person beziehen oder auf eine <strong>identifizierbare</strong>, die als <strong>betroffene Person</strong> bezeichnet wird</li>
+        <li>Identifizierbar heißt, dass die Person <strong>direkt oder indirekt</strong> identifiziert werden kann, insbesondere mittels einer Kennung</li>
+        <li>Der Artikel nennt als Kennungen einen Namen, eine Kennnummer, Standortdaten, eine Online-Kennung oder ein oder mehrere besondere Merkmale, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser Person sind</li>
+        <li>Die Beispiele der Folien selbst: Name, E-Mail, Online-Kennung, Kundennummer, Telefonnummer, Standortdaten, Kreditkartennummer</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Verarbeitung <small>Art. 4(2) DSGVO</small></div>
+      <ul>
+        <li>Jeder Vorgang oder jede Vorgangsreihe im Zusammenhang mit personenbezogenen Daten, <strong>ob automatisiert oder nicht</strong></li>
+        <li>Die Aufzählung des Artikels selbst: Erheben, Erfassen, Organisation, Ordnen, Speicherung, Anpassung oder Veränderung, Auslesen, Abfragen, Verwendung, Offenlegung durch Übermittlung, Verbreitung oder eine andere Form der Bereitstellung, Abgleich oder Verknüpfung, Einschränkung, Löschen oder Vernichtung</li>
+        <li>Also ist schon das bloße <strong>Ansehen</strong> eines Datensatzes eine Verarbeitung, und das Löschen ebenso</li>
+        <li>Es gibt keine Erheblichkeitsschwelle und keine Ausnahme für kleine Datenmengen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Beide Definitionen sind so weit gefasst, wie es die Sprache zulässt. Das ist so gewollt: Die Verordnung erfasst nahezu alles, und gefiltert wird danach über die Erlaubnistatbestände und die Grundsätze, nicht über die Definitionen.</figcaption>
+</div>
+
+Daraus folgen zwei Dinge, die Anfänger regelmäßig falsch machen. Erstens bedeuten personenbezogene Daten nicht **sensible** oder **private** Daten. Eine Kundennummer ist ein personenbezogenes Datum. Eine IP-Adresse, die als Online-Kennung dient, ebenfalls. Zweitens ist der Test die Identifizierbarkeit, nicht die Identifizierung: Man muss nicht wissen, wer die Person ist, es genügt, dass sie direkt oder indirekt herausgegriffen werden könnte.
+
+Artikel 4 definiert außerdem zwei Techniken, die zwischen personenbezogenen und nicht personenbezogenen Daten liegen. **Pseudonymisierung** (Artikel 4(5)) bedeutet die Verarbeitung personenbezogener Daten in einer Weise, dass sie ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt und durch technische und organisatorische Maßnahmen geschützt werden. Pseudonymisierte Daten sind weiterhin personenbezogene Daten. **Profiling** (Artikel 4(4)) bedeutet jede automatisierte Verarbeitung, die personenbezogene Daten verwendet, um persönliche Aspekte einer Person zu bewerten, insbesondere um Arbeitsleistung, wirtschaftliche Lage, Gesundheit, persönliche Vorlieben, Interessen, Zuverlässigkeit, Verhalten, Aufenthaltsort oder Ortswechsel zu analysieren oder vorherzusagen.
+
+## 5 · Die Akteure, und warum die Bezeichnungen entscheiden, wer die Pflicht trägt
+
+Die Folien zeigen das als Landkarte der Rollen um einen einzigen Datenbestand herum, alle in Artikel 4 definiert.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Betroffene Person <small>Art. 4(1)</small></div>
+    <ul>
+      <li>Die identifizierte oder identifizierbare natürliche Person, auf die sich die Daten beziehen</li>
+      <li>Beispiele der Folien: eine Bewerberin, eine Kundin</li>
+      <li>Immer nur eine natürliche Person, ein Unternehmen ist also nie betroffene Person</li>
+      <li>Trägt die Rechte aus den Artikeln 15 bis 21</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Verantwortlicher <small>Art. 4(7)</small></div>
+    <ul>
+      <li>Die natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die allein oder gemeinsam mit anderen über die <strong>Zwecke und Mittel</strong> der Verarbeitung entscheidet</li>
+      <li>Beispiel der Folien: die Geschäftsführung oder der Vorstand, also die Organisation, die durch ihre Leitung handelt</li>
+      <li>Bestimmt das Unionsrecht oder das Recht eines Mitgliedstaats die Zwecke und Mittel, kann dieses Recht den Verantwortlichen benennen</li>
+      <li>Trägt die Rechenschaftspflicht und die primäre Haftung</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Auftragsverarbeiter <small>Art. 4(8)</small></div>
+    <ul>
+      <li>Eine natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die personenbezogene Daten <strong>im Auftrag</strong> des Verantwortlichen verarbeitet</li>
+      <li>Beispiele der Folien: ein Personalvermittler, eine Webagentur</li>
+      <li>Entscheidet nichts über den Zweck, sondern führt Weisungen aus</li>
+      <li>Haftet nach Art. 82 nur für speziell an Auftragsverarbeiter gerichtete Pflichten oder für Handeln außerhalb der rechtmäßigen Weisungen des Verantwortlichen</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Dritter und Empfänger <small>Art. 4(9) &amp; 4(10)</small></div>
+    <ul>
+      <li>Ein <strong>Empfänger</strong> ist jeder, dem personenbezogene Daten offengelegt werden, ob Dritter oder nicht; Behörden, die Daten im Rahmen eines bestimmten gesetzlichen Untersuchungsauftrags erhalten, gelten nicht als Empfänger</li>
+      <li>Ein <strong>Dritter</strong> ist jeder außer der betroffenen Person, dem Verantwortlichen, dem Auftragsverarbeiter und den Personen, die unter der unmittelbaren Verantwortung eines von beiden zur Verarbeitung befugt sind</li>
+      <li>Beispiele der Folien: das Finanzamt, ein Spediteur</li>
+    </ul>
+  </div>
+</div>
+
+Der fünfte Akteur auf der Folie steht außerhalb des Kastens: die **Aufsichtsbehörde**, in Artikel 4(21) definiert als eine von einem Mitgliedstaat nach Artikel 51 eingerichtete unabhängige staatliche Stelle. Für Deutschland nennen die Folien die Datenschutzbehörden der Bundesländer.
+
+Die Unterscheidung zwischen Verantwortlichem und Auftragsverarbeiter ist diejenige, die man verinnerlichen muss, denn sie verteilt Pflichten und beschreibt nicht bloß eine Beziehung. Die Frage lautet nie, wer die Daten physisch anfasst, sondern **wer entschieden hat, warum und wie**. Ein Cloud-Anbieter, der die Kundendatenbank speichert, hat alle Daten und keine der Entscheidungen und ist deshalb Auftragsverarbeiter. Ein Lohnbüro, das von sich aus beschließt, Beschäftigtendaten für eigene Auswertungen weiterzuverwenden, hat begonnen, Zwecke festzulegen, und ist insoweit selbst Verantwortlicher geworden und trägt die Pflichten eines Verantwortlichen. Auch deshalb lässt sich die Bezeichnung nicht einfach vertraglich zuweisen: Der Vertrag hält die Abrede fest, aber die Tatsachen darüber, wer entscheidet, bestimmen die Bezeichnung.
+
+## 6 · Die Grundsätze: Artikel 5
+
+Jede Verarbeitung, wie klein oder wie gut begründet auch immer, muss all diese Grundsätze gleichzeitig erfüllen. Die Folien führen sie auf derselben Seite wie die Rechtmäßigkeit auf, und Artikel 5 gibt ihnen ihre Namen.
+
+| Grundsatz | Wortlaut des Artikel 5, in meinen Worten | Was er in der Praxis verlangt |
+|---|---|---|
+| **Rechtmäßigkeit, Verarbeitung nach Treu und Glauben, Transparenz** | Daten werden rechtmäßig, nach Treu und Glauben und in einer für die betroffene Person nachvollziehbaren Weise verarbeitet | Man braucht eine Grundlage aus Artikel 6, die Verarbeitung darf kein Trick auf Kosten der Person sein, und ihr muss gesagt werden, was geschieht |
+| **Zweckbindung** | Erhoben für festgelegte, eindeutige und legitime Zwecke und nicht in einer mit diesen Zwecken unvereinbaren Weise weiterverarbeitet | Den Zweck vor der Erhebung aufschreiben. Eine Weiterverwendung für etwas Neues braucht eine Vereinbarkeitsprüfung oder eine frische Grundlage |
+| **Datenminimierung** | Dem Zweck angemessen und erheblich sowie auf das für den Zweck notwendige Maß beschränkt | Jedes Feld im Formular muss seinen Platz verdienen. Ein Geburtsdatum zu erheben, weil es später einmal nützlich sein könnte, fällt durch diesen Test |
+| **Richtigkeit** | Sachlich richtig und erforderlichenfalls auf dem neuesten Stand, mit allen angemessenen Maßnahmen zur unverzüglichen Löschung oder Berichtigung unrichtiger Daten | Berichtigung muss ein tatsächlicher Arbeitsablauf im System sein und kein Gefallen, den jemand von Hand erledigt |
+| **Speicherbegrenzung** | In einer Form gespeichert, die die Identifizierung nur so lange ermöglicht, wie es für die Zwecke erforderlich ist | Pro Datenkategorie eine Aufbewahrungsfrist festlegen und die Löschung durchsetzen. Das ist der Grundsatz hinter der Löschstufe im Lebenszyklus in Abschnitt 9 |
+| **Integrität und Vertraulichkeit** | So verarbeitet, dass eine angemessene Sicherheit gewährleistet ist, einschließlich Schutz vor unbefugter oder unrechtmäßiger Verarbeitung und vor unbeabsichtigtem Verlust, unbeabsichtigter Zerstörung oder Schädigung, durch geeignete technische oder organisatorische Maßnahmen | Die Folien fassen das als Sicherheit nach dem Stand der Technik zusammen. Das ist die Brücke vom Datenschutzrecht in die IT-Sicherheit |
+| **Rechenschaftspflicht** | Artikel 5(2): Der Verantwortliche ist für die Einhaltung all dessen verantwortlich und muss sie **nachweisen** können | Einhalten genügt nicht. Man muss den Nachweis der Einhaltung in der Hand haben, weshalb Dokumentation später in der Sitzung ein eigenes Thema ist |
+
+Die Zweckbindung wiegt schwerer, als ihr schlichter Wortlaut vermuten lässt, denn Artikel 6(4) sagt, wie zu prüfen ist, ob ein neuer Zweck mit dem ursprünglichen vereinbar ist. Die Kriterien sind die Verbindung zwischen altem und neuem Zweck, der Zusammenhang der Erhebung und insbesondere die Beziehung zwischen betroffener Person und Verantwortlichem, die Art der Daten und vor allem die Frage, ob besondere Kategorien nach Artikel 9 oder Daten über strafrechtliche Verurteilungen nach Artikel 10 betroffen sind, die möglichen Folgen für die betroffene Person sowie das Vorhandensein geeigneter Garantien wie Verschlüsselung oder Pseudonymisierung.
+
+Zwei weitere Ausnahmen ziehen sich durch mehrere Grundsätze: Eine Weiterverarbeitung zu im öffentlichen Interesse liegenden Archivzwecken, zu wissenschaftlichen oder historischen Forschungszwecken oder zu statistischen Zwecken gilt bei der Zweckbindung nicht als unvereinbar, und dieselben Kategorien erlauben bei der Speicherbegrenzung eine längere Speicherung, in beiden Fällen vorbehaltlich der Garantien nach Artikel 89(1).
+
+## 7 · Rechtmäßigkeit: die Erlaubnistatbestände
+
+Die Folien nennen das **Rechtmäßigkeit, die Rechtfertigung der Datenverarbeitung**, was ein guter Name dafür ist, denn die zugrunde liegende Logik lautet: Verarbeitung ist verboten, solange sie nicht gerechtfertigt ist. Artikel 6(1) sagt, dass die Verarbeitung nur rechtmäßig ist, wenn und soweit mindestens einer von sechs Tatbeständen zutrifft. Die Liste der Rechtfertigungen auf den Folien bildet sich direkt darauf ab.
+
+| Grundlage | Artikel 6(1) | Wann sie zur Verfügung steht |
+|---|---|---|
+| **Einwilligung** | (a) | Die betroffene Person hat in die Verarbeitung für einen oder mehrere bestimmte Zwecke eingewilligt. Es gelten die Bedingungen des Artikel 7 |
+| **Vertrag** | (b) | Die Verarbeitung ist für die Erfüllung eines Vertrags erforderlich, dessen Vertragspartei die betroffene Person ist, oder für vorvertragliche Maßnahmen auf ihre Anfrage hin |
+| **Rechtliche Verpflichtung** | (c) | Die Verarbeitung ist zur Erfüllung einer rechtlichen Verpflichtung erforderlich, der der Verantwortliche unterliegt |
+| **Lebenswichtige Interessen** | (d) | Die Verarbeitung ist erforderlich, um lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person zu schützen |
+| **Öffentliches Interesse** | (e) | Die Verarbeitung ist für eine Aufgabe erforderlich, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die dem Verantwortlichen übertragen wurde |
+| **Berechtigte Interessen** | (f) | Die Verarbeitung ist zur Wahrung der berechtigten Interessen des Verantwortlichen oder eines Dritten erforderlich, sofern nicht die Interessen oder Grundrechte und Grundfreiheiten der betroffenen Person überwiegen, insbesondere wenn es sich um ein Kind handelt. Das Beispiel der Folien für ein solches Interesse ist die Marktforschung |
+
+Drei Details, die gern geprüft werden. Erstens taucht das Wort **erforderlich** in fünf der sechs Grundlagen auf. Lässt sich der Zweck ohne die Daten erreichen, scheitert die Grundlage, wie plausibel die geschäftliche Begründung auch sein mag. Zweitens steht das berechtigte Interesse nach Buchstabe (f) nach dem letzten Unterabsatz des Artikel 6(1) ausdrücklich **nicht Behörden** in Erfüllung ihrer Aufgaben zur Verfügung. Drittens müssen die Buchstaben (c) und (e) nach Artikel 6(3) im Unionsrecht oder im Recht eines Mitgliedstaats verankert sein, man kann also nicht einfach eine rechtliche Verpflichtung behaupten, ohne die Vorschrift zu benennen, die sie schafft.
+
+**Die Einwilligung und ihre Bedingungen in Artikel 7.** Die Einwilligung ist in Artikel 4(11) definiert als jede freiwillig für den bestimmten Fall, in informierter Weise und unmissverständlich abgegebene Willensbekundung der betroffenen Person in Form einer Erklärung oder einer sonstigen eindeutigen bestätigenden Handlung, mit der sie zu verstehen gibt, dass sie mit der Verarbeitung einverstanden ist. Artikel 7 fügt dann vier operative Bedingungen hinzu:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Nachweisbar<span class="sub">Art. 7(1): Der Verantwortliche muss zeigen können, dass die betroffene Person tatsächlich eingewilligt hat</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Klar getrennt<span class="sub">Art. 7(2): Steht die Einwilligung in einer umfassenderen schriftlichen Erklärung, muss sie von den anderen Sachverhalten klar unterscheidbar, verständlich, leicht zugänglich und in klarer und einfacher Sprache abgefasst sein. Ein verstoßender Teil ist nicht verbindlich</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Widerrufbar<span class="sub">Art. 7(3): Widerruf jederzeit, so einfach wie die Erteilung, die Person muss vor der Einwilligung darüber informiert werden, und der Widerruf macht die vorher rechtmäßige Verarbeitung nicht rückwirkend unrechtmäßig</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Freiwillig<span class="sub">Art. 7(4): Es ist in größtmöglichem Umfang zu berücksichtigen, ob die Erfüllung eines Vertrags, einschließlich der Erbringung einer Dienstleistung, von der Einwilligung in eine für diesen Vertrag nicht erforderliche Verarbeitung abhängig gemacht wird</span></div>
+  </div>
+  <figcaption>Die Einwilligung sieht wie die einfachste Grundlage aus und ist meist die schwächste, weil sie jederzeit entzogen werden kann und weil Artikel 7(4) genau die Bündelung angreift, die sie wirtschaftlich attraktiv macht.</figcaption>
+</div>
+
+Artikel 8 ergänzt eine Regel für Kinder. Wird die Einwilligung nach Artikel 6(1)(a) für Dienste der Informationsgesellschaft genutzt, die einem Kind direkt angeboten werden, ist die Verarbeitung rechtmäßig, wenn das Kind mindestens **16 Jahre alt** ist; darunter muss die Einwilligung durch den Träger der elterlichen Verantwortung erteilt oder genehmigt werden, und der Verantwortliche muss unter Berücksichtigung der verfügbaren Technik angemessene Anstrengungen unternehmen, dies zu überprüfen. Die Mitgliedstaaten dürfen ein niedrigeres Alter festlegen, aber nicht unter **13 Jahren**.
+
+## 8 · Besondere Kategorien: Artikel 9
+
+Manche Daten werden anders behandelt, weil der Schaden aus einem Missbrauch qualitativ schwerer wiegt. Artikel 9(1) **verbietet** die Verarbeitung personenbezogener Daten, aus denen die rassische oder ethnische Herkunft, politische Meinungen, religiöse oder weltanschauliche Überzeugungen oder die Gewerkschaftszugehörigkeit hervorgehen, sowie die Verarbeitung genetischer Daten, biometrischer Daten zur eindeutigen Identifizierung einer natürlichen Person, von Gesundheitsdaten und von Daten zum Sexualleben oder zur sexuellen Orientierung einer Person.
+
+Der Aufbau ist wichtig. Artikel 9(1) ist ein Verbot, kein strengerer Maßstab. Eine Verarbeitung wird erst möglich, wenn eine der Ausnahmen des Artikel 9(2) greift, und die Erfüllung von Artikel 9(2) macht eine Grundlage nach Artikel 6 **nicht** entbehrlich. Man braucht beides.
+
+Die Ausnahmen des Artikel 9(2) in Kürze: ausdrückliche Einwilligung, sofern nicht das Unionsrecht oder das Recht eines Mitgliedstaats bestimmt, dass das Verbot so nicht aufgehoben werden kann; Pflichten und Rechte aus dem Arbeitsrecht, dem Recht der sozialen Sicherheit und dem Sozialschutzrecht, soweit durch Gesetz oder Kollektivvereinbarung mit geeigneten Garantien zugelassen; Schutz lebenswichtiger Interessen, wenn die Person körperlich oder rechtlich außerstande ist, einzuwilligen; rechtmäßige Tätigkeiten einer nicht gewinnorientierten Einrichtung mit politischer, weltanschaulicher, religiöser oder gewerkschaftlicher Zielrichtung, beschränkt auf Mitglieder und regelmäßige Kontakte und ohne Offenlegung nach außen ohne Einwilligung; Daten, die die betroffene Person offensichtlich öffentlich gemacht hat; Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen sowie Gerichte im Rahmen ihrer justiziellen Tätigkeit; Gründe eines erheblichen öffentlichen Interesses auf der Grundlage eines verhältnismäßigen Gesetzes; Gesundheitsvorsorge oder Arbeitsmedizin, Beurteilung der Arbeitsfähigkeit, medizinische Diagnostik, Versorgung oder Behandlung im Gesundheits- oder Sozialbereich oder Verwaltung von Systemen des Gesundheitswesens, vorbehaltlich der Berufsgeheimnisbedingung in Artikel 9(3); öffentliches Interesse im Bereich der öffentlichen Gesundheit; sowie im öffentlichen Interesse liegende Archivzwecke, wissenschaftliche oder historische Forschungszwecke oder statistische Zwecke nach Artikel 89(1). Artikel 9(4) erlaubt es den Mitgliedstaaten, für genetische Daten, biometrische Daten und Gesundheitsdaten zusätzliche Bedingungen oder Beschränkungen einzuführen, und genau das tut das deutsche Recht mit § 22 BDSG.
+
+Artikel 10 steht daneben und behandelt personenbezogene Daten über strafrechtliche Verurteilungen und Straftaten: Eine solche Verarbeitung auf Grundlage des Artikel 6(1) darf nur unter behördlicher Aufsicht vorgenommen werden oder wenn sie nach dem Unionsrecht oder dem Recht eines Mitgliedstaats mit geeigneten Garantien zulässig ist, und ein umfassendes Register strafrechtlicher Verurteilungen darf nur unter behördlicher Aufsicht geführt werden. Man beachte, dass Artikel 4 drei der besonderen Kategorien genau definiert: **genetische Daten** (4(13)), **biometrische Daten** (4(14)) und **Gesundheitsdaten** (4(15)).
+
+## 9 · Die betroffene Person und die Rechte, die sie hält
+
+Die Folien gruppieren das als Artikel 12 bis 14 für die Information und Artikel 15 bis 21 für die Rechte. Die Trennlinie verläuft zwischen dem, was man Menschen ungefragt sagen muss, und dem, was sie von einem verlangen können.
+
+| Artikel | Das Recht oder die Pflicht | In einfachen Worten |
+|---|---|---|
+| **Art. 12** | Transparente Information, Kommunikation und Modalitäten der Rechteausübung | Die Information nach den Artikeln 13 und 14 muss in brauchbarer Form gegeben werden, und Anfragen müssen über einen funktionierenden Prozess bearbeitet werden |
+| **Art. 13** | Information, wenn die Daten **bei** der betroffenen Person erhoben werden | Der Datenschutzhinweis am Punkt der Erhebung |
+| **Art. 14** | Information, wenn die Daten **nicht** bei der betroffenen Person erhoben wurden | Man hat die Daten gekauft oder erhalten, die Person muss trotzdem informiert werden |
+| **Art. 15** | Auskunftsrecht | Bestätigung, ob ihre Daten verarbeitet werden, Zugang zu den Daten und die begleitenden Informationen, beginnend mit den Verarbeitungszwecken |
+| **Art. 16** | Recht auf Berichtigung | Berichtigung unrichtiger Daten unverzüglich und Vervollständigung unvollständiger Daten, auch mittels einer ergänzenden Erklärung |
+| **Art. 17** | Recht auf Löschung, das Recht auf Vergessenwerden | Löschung unverzüglich in den aufgezählten Fällen, mit einer entsprechenden Pflicht des Verantwortlichen |
+| **Art. 18** | Recht auf Einschränkung der Verarbeitung | Einfrieren statt löschen, etwa während eine bestrittene Richtigkeit überprüft wird |
+| **Art. 19** | Mitteilungspflicht | Berichtigung, Löschung oder Einschränkung müssen an jeden Empfänger weitergegeben werden, dem die Daten offengelegt wurden, sofern das nicht unmöglich oder unverhältnismäßig aufwendig ist, und die betroffene Person kann fragen, wer diese Empfänger sind |
+| **Art. 20** | Recht auf Datenübertragbarkeit | Die bereitgestellten Daten in einem strukturierten, gängigen und maschinenlesbaren Format erhalten und ungehindert an einen anderen Verantwortlichen übermitteln |
+| **Art. 21** | Widerspruchsrecht | Widerspruch aus Gründen der besonderen Situation gegen eine Verarbeitung auf Grundlage von Artikel 6(1)(e) oder (f), einschließlich eines darauf gestützten Profilings. Die Verarbeitung muss enden, sofern der Verantwortliche nicht zwingende schutzwürdige Gründe nachweist, die die Interessen der Person überwiegen, oder Gründe der Rechtsverteidigung. Für Direktwerbung gilt ein eigenes Widerspruchsrecht |
+
+Artikel 19 ist derjenige, den man vergisst, und derjenige, der aus einem einzelnen Löschverlangen ein technisches Problem macht: Wer den Datensatz weitergegeben hat, muss ihm hinterherlaufen. Man beachte auch das Zusammenspiel von Abschnitt 7 und Abschnitt 9. Artikel 21 knüpft speziell an die Grundlagen öffentliches Interesse und berechtigte Interessen an, die gewählte Grundlage bestimmt also, welche Rechte die Person anschließend gegen einen ausüben kann. Die Wahl der Rechtsgrundlage ist damit zugleich die Wahl der künftigen Pflichten.
+
+## 10 · Der Lebenszyklus personenbezogener Daten
+
+Die Folien schließen die Einführung mit einem einfachen Bild, das die Grundsätze mit der betrieblichen Wirklichkeit verbindet: Personenbezogene Daten haben eine Geburt, ein Leben und einen Tod, und jede Stufe hat ihre eigenen Pflichten.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Erhebung<span class="sub">die Geburt. Informationen an die betroffenen Personen senden, etwa Kunden oder Bewerber, also die Pflicht aus Artikel 13 in Aktion</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Verarbeitung<span class="sub">das Leben. Speichern, teilen, zum Gespräch einladen, entscheiden</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Löschung<span class="sub">der Tod. Die Speicherdauer von vornherein festlegen und löschen, sobald der Verwendungszweck entfällt</span></div>
+  </div>
+  <figcaption>Der Wert des Bildes liegt darin, dass die Löschung zum Zeitpunkt der Erhebung geplant und nicht später improvisiert wird. Eine Speicherdauer, die niemand festgelegt hat, ist ein Verstoß gegen die Speicherbegrenzung, der nur darauf wartet, gefunden zu werden.</figcaption>
+</div>
+
+## 11 · Der Datenschutzbeauftragte
+
+Der Sitzungsplan der Folien setzt die Frage, wer im Unternehmen haftet, auf die Tagesordnung, und die Antwort der DSGVO auf einen Teil davon ist eine benannte Rolle. Artikel 37(1) verlangt vom Verantwortlichen **und** vom Auftragsverarbeiter die Benennung eines Datenschutzbeauftragten in drei Fällen: wenn die Verarbeitung von einer Behörde oder öffentlichen Stelle durchgeführt wird, ausgenommen Gerichte im Rahmen ihrer justiziellen Tätigkeit; wenn die **Kerntätigkeit** in Verarbeitungsvorgängen besteht, die aufgrund ihrer Art, ihres Umfangs oder ihrer Zwecke eine **umfangreiche regelmäßige und systematische Überwachung betroffener Personen** erforderlich machen; und wenn die Kerntätigkeit in der umfangreichen Verarbeitung besonderer Kategorien nach Artikel 9 oder von Daten über strafrechtliche Verurteilungen nach Artikel 10 besteht.
+
+Außerhalb dieser drei Fälle ist die Benennung nach Artikel 37(4) freiwillig, sofern nicht das Unionsrecht oder das Recht eines Mitgliedstaats sie vorschreibt. Eine Unternehmensgruppe darf einen einzigen Beauftragten benennen, sofern dieser von jeder Niederlassung aus leicht erreichbar ist. Der Beauftragte ist auf der Grundlage seiner beruflichen Qualifikation zu benennen, insbesondere seines Fachwissens auf dem Gebiet des Datenschutzrechts und der Datenschutzpraxis, kann Beschäftigter oder externer Dienstleister sein, und seine Kontaktdaten müssen veröffentlicht und der Aufsichtsbehörde mitgeteilt werden.
+
+Artikel 38 verlangt vom Verantwortlichen und vom Auftragsverarbeiter, den Beauftragten ordnungsgemäß und frühzeitig in alle Fragen des Schutzes personenbezogener Daten einzubinden und ihn mit den Ressourcen und Zugängen zu unterstützen, die er für seine Arbeit braucht. Artikel 39(1) listet dann die Aufgaben auf: den Verantwortlichen, den Auftragsverarbeiter und die verarbeitenden Beschäftigten über ihre Pflichten unterrichten und beraten; die Einhaltung überwachen, einschließlich der Zuweisung von Zuständigkeiten, der Sensibilisierung, der Schulung der Beschäftigten und der zugehörigen Überprüfungen; zur Datenschutz-Folgenabschätzung nach Artikel 35 beraten und ihre Durchführung überwachen; mit der Aufsichtsbehörde zusammenarbeiten; und als Anlaufstelle für diese Behörde dienen, auch für die vorherige Konsultation nach Artikel 36. Artikel 39(2) ergänzt, dass der Beauftragte dem mit den Verarbeitungsvorgängen verbundenen Risiko gebührend Rechnung tragen muss, unter Berücksichtigung von Art, Umfang, Umständen und Zwecken der Verarbeitung.
+
+Der Managementpunkt lautet, dass der Beauftragte **berät und überwacht**, aber nicht zum Verantwortlichen wird. Jemanden zu benennen verlagert die Rechenschaftspflicht aus Artikel 5(2) nicht von der Organisation weg.
+
+## Fallstudien-Ecke
+
+**Merck und die NotPetya-Kriegsklausel.**
+
+**Der Sachverhalt.** Im Jahr 2017 wurde Merck Opfer eines **NotPetya**-Schadsoftwareangriffs. Die Schadsoftware breitete sich auf **40 000 Merck-Computer** aus und verursachte **einen Schaden von mehr als 1,4 Milliarden Dollar**, was die Umsätze des Unternehmens beschädigte.
+
+**Was die Versicherer vortrugen.** Mercks Versicherer verweigerten die Deckung und beriefen sich auf den **Ausschluss für feindliche oder kriegerische Handlungen** in der Police. Die wirtschaftliche Logik einer solchen Klausel lautet, dass Versicherer die Folgen von Krieg nicht zeichnen, und NotPetya wurde weithin einem staatlichen Akteur zugerechnet. Die Position der Versicherer war also, dass es sich um einen Kriegsakt unter anderem Namen handelte.
+
+**Wie die Gerichte entschieden.** Im **Dezember 2021** stellte das erstinstanzliche Gericht fest, dass der Ausschluss nur eine **physische Kriegshandlung** erfasst und nicht einen Schadsoftware-Hack, und hielt fest, dass eine feindliche oder kriegerische Handlung den herkömmlichen Krieg meint, der nach den Worten des Gerichts Feindseligkeiten zwischen den Streitkräften zweier oder mehrerer Nationen oder Staaten umfasst. In der Berufung **bestätigte die New Jersey Appellate Division** diese Entscheidung. Die Folien zitieren die Begründung der Berufungsinstanz zweimal. Erstens, dass das Gericht bei Betrachtung des klaren Wortlauts des Ausschlusses sowie des Zusammenhangs und der Geschichte seiner Anwendung zu dem Schluss kam, dass die Versicherer nicht dargelegt hätten, dass der Ausschluss unter den Umständen des Falls greift. Zweitens, dass der klare Wortlaut des Ausschlusses einen Cyberangriff auf ein nichtmilitärisches Unternehmen nicht erfasst, unabhängig davon, ob der Angriff von einem privaten Akteur oder von einer Regierung oder Hoheitsmacht ausgelöst wurde.
+
+**Warum das die Eröffnungsfolie ist.** Drei Dinge, die eine Technologiemanagerin oder ein Technologiemanager daraus mitnehmen sollte.
+
+Das erste betrifft die **Größenordnung**. Ein einziges Schadsoftwareereignis erzeugte einen Verlust in der Größenordnung einer großen Übernahme. Die Rangliste des Allianz Risk Barometer aus Abschnitt 1 ist keine Abstraktion; so sieht eine Risikokategorie mit 44 Prozent aus, wenn sie bei einem einzelnen Unternehmen landet.
+
+Das zweite betrifft den **Vertragswortlaut**. Der Streit wurde nicht danach entschieden, ob der Angriff stattfand, wer ihn startete oder ob Mercks Sicherheit ausreichte. Er wurde danach entschieden, wie die Worte einer für eine andere Zeit geschriebenen Klausel zu lesen sind. Das ist ein Problem der Vertragsauslegung, und es gehört in denselben Kurs wie die Datenschutzregeln, denn beides sind Übungen im sorgfältigen Lesen eines Textes gegen einen Sachverhalt. Wer Cyberdeckung einkauft, sollte den Makler danach fragen, was die Ausschlüsse sagen und wie sie ausgelegt wurden, und nicht danach, wie hoch die Deckungssumme in der Überschrift ist.
+
+Das dritte betrifft die **Grenzen der Versicherung als Steuerungsinstrument**. Merck gewann, irgendwann, nach Jahren des Rechtsstreits. Einen Deckungsstreit zu gewinnen ist nicht dasselbe wie geschützt zu sein: Das Geld war längst aus dem Haus, bevor die Berufungsentscheidung erging. Versicherung ist eine Art, einen bereits eingetretenen Schaden zu finanzieren, und sie ersetzt weder den Grundsatz der Integrität und Vertraulichkeit aus Artikel 5(1)(f) noch die technischen und organisatorischen Maßnahmen, die ihn umsetzen.
+
+## Ausgearbeitetes Beispiel
+
+Der Prozess: **eine Online-Bewerbung**, abgewickelt über ein Karriereportal, also genau das Beispiel, das die Folien selbst auf der Akteursfolie und auf der Lebenszyklusfolie verwenden.
+
+| Frage | Antwort für diesen Prozess | Warum |
+|---|---|---|
+| **Wer ist der Verantwortliche** | Das einstellende Unternehmen, handelnd durch seine Leitung | Es bestimmt Zwecke und Mittel: Es entscheidet, zu rekrutieren, definiert die Stelle, legt die Auswahlkriterien fest und entscheidet, wie lange Bewerbungen aufbewahrt werden. Artikel 4(7) |
+| **Wer ist Auftragsverarbeiter** | Die Webagentur, die das Karriereportal betreibt, und ein externer Personalvermittler, der weisungsgemäß Kandidaten sucht | Sie verarbeiten im Auftrag des Unternehmens, ohne den Zweck festzulegen. Artikel 4(8). Beginnt der Vermittler, eine eigene Kandidatendatenbank zum Weiterverkauf aufzubauen, wird er für diese Tätigkeit Verantwortlicher |
+| **Wer ist die betroffene Person** | Die Bewerberin oder der Bewerber | Eine identifizierte natürliche Person, eines der beiden auf den Folien genannten Beispiele |
+| **Wer erhält sonst noch Daten** | Interviewende im Unternehmen handeln unter der Verantwortung des Verantwortlichen. Ein Lohnabrechnungsdienstleister oder das Finanzamt kommen erst ins Bild, sobald jemand eingestellt ist | Artikel 4(9) und 4(10). Empfänger und Dritte unterscheiden sich danach, ob sie unter der unmittelbaren Verantwortung des Verantwortlichen oder des Auftragsverarbeiters stehen |
+| **Welche personenbezogenen Daten** | Name, E-Mail-Adresse, Telefonnummer, Lebenslaufinhalte, Gesprächsnotizen und die Einstellungsentscheidung. Bewerbungsformulare sollten Daten besonderer Kategorien vermeiden | Die ersten vier bilden sich direkt auf die Kennungsbeispiele der Folie zu Artikel 4(1) ab |
+| **Was ist der Zweck** | Die Eignung der bewerbenden Person für die konkret ausgeschriebene Stelle beurteilen und das Auswahlverfahren bis zu einer Entscheidung führen | Muss vor der Erhebung festgelegt, eindeutig und legitim sein. Artikel 5(1)(b) |
+| **Welche Rechtsgrundlage** | Artikel 6(1)(b), Verarbeitung erforderlich für Maßnahmen auf Anfrage der betroffenen Person **vor Vertragsschluss** | Die bewerbende Person hat darum gebeten, für einen Arbeitsvertrag berücksichtigt zu werden, die Verarbeitung ist also genau das, worum sie gebeten hat. Die Einwilligung passte hier schlecht, weil sie mitten im Verfahren widerrufen werden kann und weil Artikel 7(4) Zweifel an einer Einwilligung in einem ungleichgewichtigen Verhältnis weckt |
+| **Welche Grundsätze greifen am härtesten** | Datenminimierung, Speicherbegrenzung, Transparenz, Richtigkeit | Siehe den Kommentar unten |
+
+**Kommentar.** Die interessante Arbeit steckt in der letzten Zeile. Die **Datenminimierung** schließt die üblichen Formularfelder aus, die niemand gegen diesen Zweck rechtfertigen kann: Geburtsdatum, Familienstand, ein Foto. Die **Speicherbegrenzung** erzwingt eine Entscheidung, um die sich Recruiting-Prozesse gern drücken, nämlich wie lange die Akte einer abgelehnten Person aufbewahrt wird und mit welcher Begründung; die Lebenszyklusfolie sagt, die Speicherdauer festzulegen und zu löschen, sobald der Verwendungszweck entfällt, jeden Lebenslauf für alle Fälle ewig aufzuheben ist also ein Verstoß, solange für einen Talentpool nicht eine eigene Grundlage und eine eigene Aufbewahrungsfrist festgelegt sind. **Transparenz** heißt, dass die Information nach Artikel 13 am Punkt der Erhebung im Portal geliefert werden muss und nicht in einer Fußzeile vergraben. **Richtigkeit** zählt, weil Gesprächsnotizen Meinungen über eine Person sind und trotzdem personenbezogene Daten, erreichbar über das Auskunftsrecht aus Artikel 15. Und weil die Grundlage Artikel 6(1)(b) ist und nicht (e) oder (f), greift das Widerspruchsrecht aus Artikel 21 nicht, was eine sehr konkrete Illustration dafür ist, wie die Wahl der Grundlage die nachfolgenden Rechte formt. Schließlich sitzt das in Deutschland im Beschäftigungskontext, § 26 BDSG ist also die nationale Vorschrift, die neben der DSGVO zu lesen ist.
+
+## Wende es auf dein Projekt an
+
+<Steps>
+
+1. **Schreibe die Verarbeitung in einem Satz auf, in Verben.** Nutze das Vokabular aus Artikel 4(2): Erhebst, speicherst, teilst, verknüpfst, liest du aus oder löschst du? Passt kein Verb aus dieser Liste, ist die Verordnung womöglich gar nicht berührt.
+
+2. **Prüfe, ob es überhaupt personenbezogene Daten sind.** Lässt sich aus dem, was du hältst, allein oder in Verbindung mit etwas anderem, an das du herankommst, eine natürliche Person direkt oder indirekt identifizieren? Denk daran, dass pseudonymisierte Daten weiterhin zählen. Lautet die Antwort ehrlich nein, hör hier auf.
+
+3. **Bestätige, dass die DSGVO dich erfasst.** Gehe Artikel 2 für den sachlichen und Artikel 3 für den räumlichen Anwendungsbereich durch. Der übliche Auslöser für ein Technologieprodukt ist Artikel 3(2): europäische Nutzer, denen Waren oder Dienstleistungen angeboten werden oder deren Verhalten beobachtet wird.
+
+4. **Benenne den Verantwortlichen und jeden Auftragsverarbeiter, schriftlich.** Frage, wer über Zwecke und Mittel entscheidet, nicht, wer die Daten anfasst. Ist ein Dienstleister beteiligt, entscheide ehrlich, ob er deine Weisungen ausführt oder eigene Entscheidungen trifft, denn das bestimmt, wer die Pflicht trägt und wer nach Artikel 82 haftet.
+
+5. **Nenne den Zweck, bevor du die Daten nennst.** Festgelegt, eindeutig und legitim. Lässt sich der Zweck nur vage formulieren, ist das ein Zeichen dafür, dass die Verarbeitung nicht zu Ende gedacht wurde, und die Zweckbindung wird später scheitern, sobald jemand die Daten weiterverwendet.
+
+6. **Wähle genau eine Rechtsgrundlage aus Artikel 6(1) und schreibe auf, warum sie passt.** Prüfe das Wort erforderlich gegen deinen eigenen Zweck. Greife nicht reflexhaft zur Einwilligung, weil sie sich am sichersten anfühlt; nutzt du sie doch, prüfe sie gegen alle vier Bedingungen des Artikel 7 und denke daran, dass sie jederzeit widerrufen werden kann.
+
+7. **Screene auf besondere Kategorien.** Geht aus irgendetwas in den Daten die rassische oder ethnische Herkunft, eine politische Meinung, eine religiöse oder weltanschauliche Überzeugung oder die Gewerkschaftszugehörigkeit hervor, oder handelt es sich um genetische Daten, identifizierende biometrische Daten, Gesundheitsdaten oder Daten zum Sexualleben oder zur sexuellen Orientierung? Dann verbietet Artikel 9(1) die Verarbeitung, bis du **zusätzlich zur** Grundlage aus Artikel 6 eine Ausnahme nach Artikel 9(2) hast, und du solltest außerdem § 22 BDSG prüfen.
+
+8. **Gehe jeden der sieben Grundsätze des Artikel 5 gegen den Entwurf durch.** Benenne für jeden das konkrete Feature, das ihn umsetzt: die Feldliste für die Datenminimierung, den Löschjob für die Speicherbegrenzung, den Hinweistext für die Transparenz, den Berichtigungsablauf für die Richtigkeit, die Verschlüsselung und die Zugriffskontrolle für Integrität und Vertraulichkeit.
+
+9. **Plane den Lebenszyklus bis zu seinem Ende.** Lege die Speicherdauer zum Zeitpunkt der Erhebung fest und baue die Löschung. Prüfe dann, ob die Rechte der betroffenen Person aus den Artikeln 15 bis 21 technisch lieferbar sind, einschließlich der Pflicht aus Artikel 19, Berichtigung, Löschung und Einschränkung an jeden Empfänger weiterzugeben, dem du offengelegt hast.
+
+10. **Entscheide, ob ein Datenschutzbeauftragter erforderlich ist,** indem du deine Kerntätigkeit gegen Artikel 37(1) prüfst: Behörde, umfangreiche regelmäßige und systematische Überwachung oder umfangreiche Verarbeitung besonderer Kategorien oder von Daten über strafrechtliche Verurteilungen. Wird einer benannt, binde ihn nach Artikel 38 früh ein, statt ihm einen fertigen Entwurf vorzulegen.
+
+</Steps>
+
+## Schlüsselbegriffe
+
+| Begriff | Was er in einfachen Worten bedeutet |
+|---|---|
+| Personenbezogene Daten | Alle Informationen über eine natürliche Person, die identifiziert ist oder die sich direkt oder indirekt anhand einer Kennung wie Name, Kundennummer, Telefonnummer, Online-Kennung oder Standortdaten herausgreifen lässt |
+| Betroffene Person | Die lebende natürliche Person, auf die sich die Daten beziehen, etwa eine Bewerberin oder eine Kundin. Niemals ein Unternehmen |
+| Verarbeitung | Praktisch alles, was man mit personenbezogenen Daten tut, automatisiert oder nicht: erheben, speichern, teilen, abfragen, verknüpfen, einschränken, löschen, vernichten |
+| Dateisystem | Jede strukturierte Sammlung personenbezogener Daten, die nach bestimmten Kriterien zugänglich ist, und genau das holt nichtautomatisierte Papierakten in die Verordnung hinein |
+| Verantwortlicher | Wer allein oder gemeinsam über Zwecke und Mittel der Verarbeitung entscheidet. Derjenige, der entscheidet, und damit derjenige, der rechenschaftspflichtig ist |
+| Auftragsverarbeiter | Wer personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet, Weisungen folgt und keine eigenen Zwecke festlegt |
+| Empfänger | Jeder, dem die Daten offengelegt werden, ob Dritter oder nicht |
+| Dritter | Jeder außer der betroffenen Person, dem Verantwortlichen, dem Auftragsverarbeiter und den unter deren unmittelbarer Verantwortung befugten Beschäftigten |
+| Aufsichtsbehörde | Die unabhängige staatliche Stelle, die ein Mitgliedstaat zur Durchsetzung der Regeln einrichtet, in Deutschland die Datenschutzbehörden der Bundesländer |
+| Pseudonymisierung | Den Schlüssel abtrennen, der die Daten mit einer Person verbindet, und ihn gesondert schützen. Senkt das Risiko, aber die Daten bleiben personenbezogen |
+| Profiling | Automatisierte Verarbeitung, die persönliche Aspekte wie Arbeitsleistung, wirtschaftliche Lage, Gesundheit, Vorlieben, Zuverlässigkeit, Verhalten oder Aufenthaltsort bewertet oder vorhersagt |
+| Rechtmäßigkeit | Die Rechtfertigung der Verarbeitung: Mindestens einer der sechs Tatbestände des Artikel 6(1) muss greifen, sonst ist die Verarbeitung unrechtmäßig |
+| Einwilligung | Eine freiwillig, für den bestimmten Fall, in informierter Weise und unmissverständlich abgegebene Willensbekundung durch Erklärung oder eindeutige bestätigende Handlung, vom Verantwortlichen nachweisbar und jederzeit widerrufbar |
+| Zweckbindung | Zwecke müssen vor der Erhebung feststehen, und eine Weiterverwendung für einen neuen Zweck braucht eine Vereinbarkeitsprüfung oder eine neue Grundlage |
+| Datenminimierung | Nur Daten, die dem Zweck angemessen und erheblich sowie auf das tatsächlich Erforderliche beschränkt sind |
+| Speicherbegrenzung | Identifizierbare Daten nicht länger halten, als der Zweck es braucht, was bedeutet, eine Aufbewahrungsfrist zu setzen und zu löschen |
+| Rechenschaftspflicht | Der Verantwortliche muss die Regeln nicht nur einhalten, sondern die Einhaltung auch nachweisen können, und deshalb gibt es Dokumentation |
+| Besondere Kategorien personenbezogener Daten | Die Liste aus Artikel 9, deren Verarbeitung verboten ist, solange nicht zusätzlich zu einer Grundlage aus Artikel 6 eine Ausnahme nach Artikel 9(2) greift |
+| Datenschutzbeauftragter | Die interne oder externe Fachperson, die berät, die Einhaltung überwacht, zur Folgenabschätzung berät und Anlaufstelle für die Aufsichtsbehörde ist |
+
+## Teste dich selbst
+
+1. Fasse den Merck-NotPetya-Streit in vier Sätzen zusammen: was geschah, was die Versicherer vortrugen, wie beide Gerichte entschieden und mit welcher Begründung.
+2. Gib die Definition personenbezogener Daten aus Artikel 4(1) in eigenen Worten wieder und erkläre, warum eine Kundennummer dazuzählt, die Registernummer eines Unternehmens aber nicht.
+3. Ein Dienstleister hostet deine Kundendatenbank und tut genau das, was dein Vertrag ihm vorgibt. Ist er Verantwortlicher oder Auftragsverarbeiter, und warum ist die Antwort für die Haftung wichtig?
+4. Nenne die sieben Grundsätze aus Artikel 5 und gib je eine konkrete Designentscheidung an, die jeder von ihnen erzwingt.
+5. Nenne die sechs Erlaubnistatbestände aus Artikel 6(1). Warum ist die Einwilligung für einen Geschäftsprozess meist die schwächste Wahl, und welche zwei Bedingungen des Artikel 7 erklären das?
+6. Was macht Artikel 9 anders als Artikel 6, und welche zwei Dinge musst du haben, bevor du Gesundheitsdaten verarbeiten darfst?
+
+<Aside type="note" title="Lösungen">
+1. Im Jahr 2017 traf Merck die NotPetya-Schadsoftware, die sich auf 40 000 seiner Computer ausbreitete und einen Schaden von mehr als 1,4 Milliarden Dollar verursachte. Mercks Versicherer verweigerten die Deckung unter dem Ausschluss für feindliche oder kriegerische Handlungen. Das erstinstanzliche Gericht entschied im Dezember 2021, dass der Ausschluss nur eine physische Kriegshandlung erfasst, also den herkömmlichen Krieg mit Feindseligkeiten zwischen den Streitkräften zweier oder mehrerer Nationen oder Staaten, und die New Jersey Appellate Division bestätigte das. Die Begründung der Berufungsinstanz lautete, dass die Versicherer nach dem klaren Wortlaut des Ausschlusses, gelesen im Zusammenhang und in der Geschichte seiner Anwendung, dessen Anwendbarkeit nicht dargelegt hätten, weil dieser klare Wortlaut einen Cyberangriff auf ein nichtmilitärisches Unternehmen nicht erfasst, unabhängig davon, ob ein privater Akteur oder eine Regierung oder Hoheitsmacht ihn ausgelöst hat.
+2. Personenbezogene Daten sind alle Informationen über eine natürliche Person, die entweder identifiziert oder identifizierbar ist, wobei identifizierbar bedeutet, dass sie direkt oder indirekt herausgegriffen werden kann, insbesondere mittels einer Kennung wie Name, Kennnummer, Standortdaten oder Online-Kennung oder anhand besonderer Merkmale ihrer physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität. Eine Kundennummer zählt dazu, weil sie eine Kennung ist, die indirekt auf einen bestimmten Menschen zeigt. Eine Unternehmensregisternummer nicht, weil die Verordnung ausschließlich natürliche Personen schützt und ein Unternehmen keine betroffene Person ist.
+3. Er ist Auftragsverarbeiter nach Artikel 4(8), weil er in deinem Auftrag verarbeitet und keine eigenen Zwecke festlegt. Du bleibst Verantwortlicher nach Artikel 4(7). Das ist wichtig, weil Artikel 82 den Verantwortlichen für Schäden aus einer verstoßenden Verarbeitung haften lässt, während der Auftragsverarbeiter nur haftet, wenn er speziell an Auftragsverarbeiter gerichtete Pflichten verletzt oder außerhalb oder entgegen deinen rechtmäßigen Weisungen gehandelt hat. Und die Bezeichnung folgt den Tatsachen: Begänne der Dienstleister, eigene Zwecke für die Daten festzulegen, würde er für diese Tätigkeit Verantwortlicher.
+4. Rechtmäßigkeit, Verarbeitung nach Treu und Glauben und Transparenz, was eine schriftlich festgehaltene Grundlage und einen Datenschutzhinweis am Punkt der Erhebung erzwingt. Zweckbindung, die erzwingt, den Zweck aufzuschreiben, bevor ein einziges Feld entworfen wird. Datenminimierung, die erzwingt, jedes Formularfeld gegen diesen Zweck zu rechtfertigen. Richtigkeit, die einen echten Berichtigungsablauf erzwingt. Speicherbegrenzung, die eine Aufbewahrungsfrist und einen automatisierten Löschjob erzwingt. Integrität und Vertraulichkeit, die technische und organisatorische Sicherheit nach dem Stand der Technik erzwingt, etwa Verschlüsselung und Zugriffskontrolle. Rechenschaftspflicht nach Artikel 5(2), die Dokumentation erzwingt, weil man all das nachweisen können muss.
+5. Einwilligung, Vertrag oder vorvertragliche Maßnahmen, Erfüllung einer rechtlichen Verpflichtung, lebenswichtige Interessen, öffentliches Interesse oder öffentliche Gewalt sowie berechtigte Interessen. Die Einwilligung ist am schwächsten, weil Artikel 7(3) der betroffenen Person erlaubt, jederzeit und so einfach wie bei der Erteilung zu widerrufen, sodass ein auf Einwilligung gebauter Prozess ohne Vorwarnung seine Rechtsgrundlage verlieren kann, und weil Artikel 7(4) anordnet, in größtmöglichem Umfang zu berücksichtigen, ob eine Dienstleistung von der Einwilligung in eine für sie nicht erforderliche Verarbeitung abhängig gemacht wurde, was genau die gebündelte Einwilligung untergräbt, auf die Unternehmen gern setzen. Artikel 7(1) legt die Beweislast für die Einwilligung außerdem dem Verantwortlichen auf.
+6. Artikel 6 ist eine Erlaubnisstruktur: Ist ein Tatbestand erfüllt, ist die Verarbeitung rechtmäßig. Artikel 9(1) ist ein Verbot für eine definierte Liste besonders sensibler Daten, das nur durch eine Ausnahme nach Artikel 9(2) aufgehoben wird. Um Gesundheitsdaten zu verarbeiten, brauchst du also beides: eine Ausnahme nach Artikel 9(2), etwa die ausdrückliche Einwilligung oder einen der medizinischen und gesundheitsbezogenen Tatbestände, und eine Rechtsgrundlage nach Artikel 6. In Deutschland solltest du zusätzlich § 22 BDSG prüfen, da Artikel 9(4) den Mitgliedstaaten erlaubt, für genetische, biometrische und Gesundheitsdaten weitere Bedingungen aufzustellen.
+</Aside>
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Die Ein-Minuten-Zusammenfassung**
+
+- Die Sitzung beginnt wirtschaftlich, nicht juristisch. **Merck**, 2017, **NotPetya**, **40 000 Computer**, **mehr als 1,4 Milliarden Dollar** Schaden, Versicherer, die die Deckung unter dem Ausschluss für **feindliche oder kriegerische Handlungen** verweigern, und sowohl das erstinstanzliche Gericht als auch die **New Jersey Appellate Division**, die entscheiden, dass der Ausschluss herkömmliche Kriegführung zwischen Staaten meint und einen Cyberangriff auf ein nichtmilitärisches Unternehmen nicht erfasst.
+- Das **Allianz Risk Barometer 2022** setzt Cybervorfälle mit **44 Prozent** an die erste Stelle, vor die Betriebsunterbrechung mit 42 Prozent und die Naturkatastrophen mit 25 Prozent, und zählt Bußgelder und Sanktionen zur Cyberkategorie.
+- Bußgelder: Die Folie nennt bis zu 2 Millionen Euro oder 4 Prozent des weltweiten Jahresumsatzes und verweist auf die **Artikel 84 und 83**. Artikel 83 selbst setzt zwei Stufen fest, **10 000 000 Euro oder 2 Prozent** für die Pflichten von Verantwortlichem und Auftragsverarbeiter und **20 000 000 Euro oder 4 Prozent** für Verstöße gegen die Grundsätze, die Einwilligungsbedingungen und die Rechte der betroffenen Personen, je nachdem, welcher Betrag höher ist. **Artikel 82** ergänzt einen privatrechtlichen Schadensersatzanspruch.
+- Der Rechtsstapel verläuft vom EU-Primärrecht über die **DSGVO** als unmittelbar anwendbare Verordnung zum allgemeinen deutschen Recht im **BDSG** und dann zu den Spezialgesetzen und dem Landesrecht. EU-Recht gilt einheitlich in allen Mitgliedstaaten und geht vor. Die DSGVO trat am 25. Mai 2016 in Kraft und wurde zusammen mit dem neuen BDSG am **25. Mai 2018** unmittelbar anwendbar.
+- **Personenbezogene Daten** (Art. 4(1)) sind alle Informationen über eine identifizierte oder identifizierbare natürliche Person; **Verarbeitung** (Art. 4(2)) ist im Grunde jeder Vorgang damit, automatisiert oder nicht, von der Erhebung bis zur Löschung.
+- Der **Verantwortliche** (Art. 4(7)) bestimmt Zwecke und Mittel, der **Auftragsverarbeiter** (Art. 4(8)) handelt im Auftrag des Verantwortlichen. Die Bezeichnung folgt dem, wer entscheidet, nicht dem, wer anfasst, und sie verteilt Pflichten und Haftung.
+- **Grundsätze des Artikel 5**: Rechtmäßigkeit, Verarbeitung nach Treu und Glauben und Transparenz; Zweckbindung; Datenminimierung; Richtigkeit; Speicherbegrenzung; Integrität und Vertraulichkeit; und die **Rechenschaftspflicht**, also die Pflicht, die Einhaltung nachzuweisen.
+- **Erlaubnistatbestände des Artikel 6(1)**: Einwilligung, Vertrag und vorvertragliche Maßnahmen, rechtliche Verpflichtung, lebenswichtige Interessen, öffentliches Interesse, berechtigte Interessen. Fünf der sechs hängen an der **Erforderlichkeit**, und das berechtigte Interesse steht Behörden in Erfüllung ihrer Aufgaben nicht offen.
+- Die **Einwilligung** muss freiwillig, für den bestimmten Fall, informiert und unmissverständlich sein (Art. 4(11)), nachweisbar, klar getrennt, so einfach widerrufbar wie erteilt und nicht in eine Dienstleistung gebündelt, die sie nicht braucht (Art. 7). Die Einwilligung von Kindern nach Art. 8 verlangt das Alter von 16 Jahren oder eine mitgliedstaatliche Untergrenze von 13.
+- **Artikel 9** verbietet die Verarbeitung besonderer Kategorien rundheraus und verlangt zusätzlich zu einer Grundlage aus Art. 6 eine Ausnahme nach Art. 9(2). Deutschland ergänzt § 22 BDSG, und § 26 BDSG regelt die Beschäftigung.
+- **Rechte**: Artikel 12 bis 14 für die Informationspflichten und Artikel 15 bis 21 für Auskunft, Berichtigung, Löschung, Einschränkung, nachgelagerte Mitteilung, Datenübertragbarkeit und Widerspruch.
+- Der **Lebenszyklus** verläuft von der Erhebung über die Verarbeitung zur Löschung, mit einer zu Beginn festgelegten Speicherdauer und der Löschung, sobald der Zweck entfällt.
+- Ein **Datenschutzbeauftragter** ist nach Art. 37(1) zwingend für Behörden, für umfangreiche regelmäßige und systematische Überwachung sowie für die umfangreiche Verarbeitung besonderer Kategorien oder von Daten über strafrechtliche Verurteilungen. Er berät, überwacht, unterstützt Folgenabschätzungen und hält Kontakt zur Aufsichtsbehörde, aber die Rechenschaftspflicht bleibt beim Verantwortlichen.
+</Aside>
+
+*Weiter: [Datenpannen, Dokumentation & IT-Sicherheit →](/de/learnings/mba/legal-aspects-of-technology-management/05-breaches-documentation-and-it-security/) - was zu tun ist, wenn etwas schiefgeht.*
