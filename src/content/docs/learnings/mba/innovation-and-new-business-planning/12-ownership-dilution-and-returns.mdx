@@ -1,0 +1,785 @@
+---
+title: "Ownership, Dilution and Returns"
+description: "How a cheque turns into a percentage of the company - implied valuation, pre-money and post-money, the number and price of new shares, the option pool and the fully diluted base, dilution across rounds, cash-on-cash, IRR and NPV, and how founders split the pie among themselves."
+sidebar:
+  label: "12 · Ownership & Returns"
+  order: 12
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+This session is the arithmetic session. Everything before it was about whether the venture is worth backing; this one is about what actually happens on the paper when somebody backs it. An investor hands over a sum of money and receives, in exchange, a slice of the company. Fixing the size of that slice and putting a number on the company are the same act described from two sides, and almost every other quantity in a funding round - the price per share, the number of new shares, how much the existing owners lose, what the investor eventually earns - falls out of that single relationship.
+
+The chapter therefore reads like a chain of small equations rather than a set of arguments. Start from the identity that the investment equals the ownership fraction times the valuation, and you can derive the post-money valuation, then the pre-money valuation, then the price per share, then the number of shares that have to be created, then everybody's diluted percentage at the next round, and finally the multiple and the annual rate of return the investor books at exit. None of the steps is difficult on its own. The difficulty is only ever in keeping track of which valuation, which round and whose shares you are talking about.
+
+The four learning goals the deck sets out are exactly this chain: understand how investment amount, ownership shares, valuation, dilution and returns hang together; derive the allocation and the prices of shares as well as the pre-money and post-money valuations; analyse investor returns using alternative measures; and understand how founders allocate ownership shares within their own team. The last one is a reminder that the first deal a founder negotiates is not with an investor at all, it is with the co-founders.
+
+<Aside type="tip">
+**The one idea to carry through.** The whole session hangs on one identity: **investment equals ownership fraction times post-money valuation**. Read left to right it tells you how much of the company the money buys. Read right to left it tells you what the company is implicitly worth. Every other number in a round - price per share, new shares issued, everybody's dilution, the investor's eventual multiple - is that identity rearranged.
+</Aside>
+
+## 1 · The meaning of ownership: valuation does two jobs
+
+Deciding ownership stakes and putting a value on the company are described as a central part of structuring an investment, not a side calculation. The deck makes the point sharp by listing the two distinct effects a valuation has.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Effect one <small>it sets the split</small></div>
+      <ul>
+        <li>The valuation determines <strong>what percentage of the company's equity the investor receives</strong> in exchange for contributing the investment</li>
+        <li>This is a decision about control and about who owns the upside, taken today</li>
+        <li>It is also what the founders give away permanently, so it is the founders' side of the bargain</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Effect two <small>it sets the expected return</small></div>
+      <ul>
+        <li>The valuation <strong>allows investors to estimate the returns they expect to make</strong> on their investment</li>
+        <li>Given a guess about the exit value, the price paid today fixes the multiple earned tomorrow</li>
+        <li>This is the investor's side of the bargain, and it is why the two sides argue about the number</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The same valuation number is doing two jobs at once. That is why negotiating it is not a formality - one number simultaneously fixes the ownership split and the return the investor can hope for.</figcaption>
+</div>
+
+## 2 · Mechanics of ownership and valuation: implied valuation
+
+The first pair of equations is almost a definition. A valuation is **implied** by what an investor is willing to pay for a stake: if somebody puts in a certain sum and accepts a certain fraction in return, they have told you what they think the whole company is worth, whether or not anybody wrote that number down.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1) Implied valuation</span>
+    <code>Investment = Ownership × Valuation      →      I = F(inv) × V(post)</code>
+  </div>
+  <div>
+    <span class="name">(2) The same thing rearranged</span>
+    <code>Valuation = Investment ÷ Ownership      →      V(post) = I ÷ F(inv)</code>
+  </div>
+</div>
+
+The notation the deck uses is deliberately plain, and it is worth memorising because every later equation is built from it.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">I = investment</span>
+  <span class="sc-chip violet">F = ownership share</span>
+  <span class="sc-chip amber">V = valuation</span>
+  <span class="sc-chip amber">S = number of shares</span>
+  <span class="sc-chip green">PRE = pre-money</span>
+  <span class="sc-chip green">POST = post-money</span>
+</div>
+
+Read equation (2) as the practical one. Somebody offers 500,000 for 20 percent; you have just been valued at 2.5 million, post-money, and that is the number the term sheet is really about.
+
+## 3 · Pre-money and post-money valuation
+
+The second pair separates the value of the company **before** the money arrives from the value **once it has arrived**. The difference between the two is exactly the cheque, because cash in the bank is itself part of what the company is worth the moment it lands.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(3) Pre-money</span>
+    <code>Pre-money valuation = Post-money valuation - Investment      →      V(pre) = V(post) - I</code>
+  </div>
+  <div>
+    <span class="name">(4) Post-money</span>
+    <code>Post-money valuation = Pre-money valuation + Investment      →      V(post) = V(pre) + I</code>
+  </div>
+</div>
+
+Two consequences follow that beginners always get wrong. First, the ownership fraction in equations (1) and (2) is always measured against the **post-money** valuation, never the pre-money one, because the investor owns a share of a company that already contains their own money. Second, at a first round the pre-money valuation is the value of everything the founders built before any external cash existed, which is why the deck calls it **sweat equity**: an idea, a prototype, a team and a market position, priced as if it were capital.
+
+## 4 · The number and the price of shares
+
+Percentages are convenient for talking, but a real deal is executed by issuing shares. At the very first round the total number of shares can be chosen freely, because it is nothing but a scaling factor - one million shares or ten million shares describe the same company, only the price per share changes. From the second round onwards it is no longer free, because the existing share count is already fixed.
+
+Written in shares, equation (4) becomes an accounting of who holds what:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(5) Shares after the round</span>
+    <code>S(post) = S(pre) + S(inv)      PRE = pre-deal owners, POST = post-deal owners, INV = the new investors</code>
+  </div>
+  <div>
+    <span class="name">(6) What the investment buys</span>
+    <code>I = P × S(inv)      the investment is simply the price P times the number of new shares</code>
+  </div>
+  <div>
+    <span class="name">(7) Post-money in shares</span>
+    <code>V(post) = P × S(post)</code>
+  </div>
+  <div>
+    <span class="name">(8) Pre-money in shares</span>
+    <code>V(pre) = P × S(pre)</code>
+  </div>
+  <div>
+    <span class="name">(9) Ownership fractions</span>
+    <code>F(pre) = S(pre) ÷ S(post)      and      F(inv) = S(inv) ÷ S(post)</code>
+  </div>
+</div>
+
+Notice the elegance of (7) and (8): **one single price per share values everything**. The same P multiplies the old shares to give the pre-money value and the total share count to give the post-money value. That is the sanity check to run on any deal you are shown - if the price per share implied by the new money does not reproduce the stated pre-money valuation when multiplied by the old share count, something in the numbers is wrong.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node violet">Agree the two headline numbers<span class="sub">the investment I and the ownership fraction F(inv) the investor wants</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">Post-money falls out<span class="sub">V(post) = I ÷ F(inv), and then V(pre) = V(post) - I</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Price per share falls out<span class="sub">P = V(pre) ÷ S(pre), the old shares carry the pre-money value</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">New shares fall out<span class="sub">S(inv) = I ÷ P, and the cap table is now complete</span></div>
+  </div>
+  <figcaption>The order in which a round is actually computed. Two negotiated numbers at the top, four derived numbers below them, no further judgement required.</figcaption>
+</div>
+
+## 5 · The stock options pool and the fully diluted base
+
+Startups cannot pay senior people what large firms pay, so they pay partly in equity. Stock compensation is used to **attract and retain talent** and to **defer cash payments** to key employees and board members. Stock can be granted directly, or through stock options, and those options are issued in a **pool**, typically set up at the first round, commonly worth **10 to 20 percent of total ownership**.
+
+A pool is a third category of owner, so the equations gain a term:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(5 SOP) Three groups now</span>
+    <code>S(post) = S(pre) + S(inv) + S(sop)</code>
+  </div>
+  <div>
+    <span class="name">(8 SOP) Pre-money includes the pool</span>
+    <code>V(pre) = P × (S(pre) + S(sop))</code>
+  </div>
+  <div>
+    <span class="name">(9 SOP) Three fractions</span>
+    <code>F(pre) = S(pre) ÷ S(post)      F(inv) = S(inv) ÷ S(post)      F(sop) = S(sop) ÷ S(post)</code>
+  </div>
+</div>
+
+Two conventions come with the pool. Share numbers are expressed on a **fully diluted** basis, meaning all the shares sitting in the pool are counted as if they had already been converted into common stock, even though most of them have not been granted to anybody yet. And, as equation (8 SOP) shows, the pre-money valuation then covers the **founders' shares plus the option holders' shares together**.
+
+<Aside type="caution">
+**The negotiating trap founders must see.** Because the pool sits inside the pre-money valuation, agreeing to enlarge the pool before a round does not dilute the incoming investor at all - it dilutes only the founders and the other existing holders, while keeping the headline pre-money number unchanged. The deck says it plainly: founders need to be aware of this when negotiating. A generous-sounding pre-money valuation with a large pool carved out of it can be worth less to the founders than a lower one with a small pool.
+</Aside>
+
+## 6 · The capitalisation table
+
+The **cap table** is the spreadsheet that stores all of this. For each shareholder, at each round, it keeps track of three things:
+
+- the **number of shares** owned
+- the **amount invested**
+- the **ownership fraction**
+
+Shares corresponding to stock options and to convertible securities are shown on a fully diluted basis. The table is organised in **blocks, one per funding round** or Series, and each row reports one owner, usually grouped into founders, investors and other parties. Here is the seed round of the case the deck works through, with the people replaced by their roles.
+
+| First round (seed), price per share 2.00 | Shares purchased | Shares owned | Invested in round | Total invested | Ownership |
+|---|--:|--:|--:|--:|--:|
+| Founder 1 | | 200,000 | 0 | 0 | 16.0% |
+| Founder 2 | | 200,000 | 0 | 0 | 16.0% |
+| Founder 3 | | 200,000 | 0 | 0 | 16.0% |
+| Founder 4 | | 200,000 | 0 | 0 | 16.0% |
+| Seed investor A | 125,000 | 125,000 | 250,000 | 250,000 | 10.0% |
+| Seed investor B | 125,000 | 125,000 | 250,000 | 250,000 | 10.0% |
+| Other party: an individual backer | | 50,000 | 0 | 0 | 4.0% |
+| Other party: a university | | 50,000 | 0 | 0 | 4.0% |
+| Stock options pool | | 100,000 | 0 | 0 | 8.0% |
+| **Total** | **250,000** | **1,250,000** | **500,000** | **500,000** | **100%** |
+
+Every equation above can be verified on this one table. The pre-deal holders own 1,000,000 shares, so at 2.00 per share the pre-money valuation is 2,000,000. The two investors put in 500,000 together, so the post-money valuation is 2,500,000, which is also 2.00 times the 1,250,000 total shares. And 500,000 divided by 2,500,000 is the 20 percent the two investors hold between them.
+
+## 7 · Dilution across multiple rounds
+
+Ventures rarely raise once. They raise over multiple rounds, which is called **multistage financing**, and every time new investors buy newly issued shares the existing shareholders' position changes. The definition to memorise is precise:
+
+<Aside type="note" title="Dilution">
+**Dilution** is the reduction in the ownership fraction of current shareholders caused by the issuance of new shares at a new financing round. Note what it is not: nobody takes shares away from you. You keep exactly the shares you had. The denominator simply grows underneath you.
+</Aside>
+
+The notation adds a round index. Rounds run r = 1, 2, up to R. The letter i marks the round in which a particular investor contributed. And **F(i at r)** means the ownership fraction, measured at round r, of an investor who invested back at round i. With that, the whole set of equations is restated round by round.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1 MR) The new round's own stake</span>
+    <code>I(r) = F(r at r) × V(post, r)</code>
+  </div>
+  <div>
+    <span class="name">(3 MR) Pre-money this round</span>
+    <code>V(pre, r) = V(post, r) - I(r)</code>
+  </div>
+  <div>
+    <span class="name">(5 MR) Share count grows</span>
+    <code>S(post, r) = S(post, r-1) + S(r at r)</code>
+  </div>
+  <div>
+    <span class="name">(6 MR) This round's price</span>
+    <code>I(r) = P(r) × S(r at r)</code>
+  </div>
+  <div>
+    <span class="name">(7 MR) Post-money this round</span>
+    <code>V(post, r) = P(r) × S(post, r)</code>
+  </div>
+  <div>
+    <span class="name">(8 MR) Pre-money this round</span>
+    <code>V(pre, r) = P(r) × S(post, r-1)      the previous round's total share count carries the pre-money value</code>
+  </div>
+  <div>
+    <span class="name">(9 MR) Anybody's fraction</span>
+    <code>F(i at r) = S(i at r) ÷ S(post, r)</code>
+  </div>
+</div>
+
+Combining (5 MR) and (9 MR) gives the single most useful formula in the chapter, because it lets you compute dilution without touching share counts at all:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(10 MR) The dilution formula</span>
+    <code>F(i at r) = F(i at r-1) × (1 - F(r at r))      your old percentage, shrunk by whatever fraction the new round takes</code>
+  </div>
+</div>
+
+If a new round sells 25 percent of the company, then **everybody** who was there before is multiplied by 0.75, founders, angels, the option pool and the university alike. Dilution is democratic. The Series A block of the case shows it working.
+
+| Second round (Series A), price per share 4.80 | Shares purchased | Shares owned | Invested in round | Total invested | Ownership |
+|---|--:|--:|--:|--:|--:|
+| Founder 1 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Founder 2 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Founder 3 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Founder 4 | 0 | 200,000 | 0 | 0 | 12.0% |
+| Seed investor A | 41,667 | 166,667 | 200,000 | 450,000 | 10.0% |
+| Seed investor B | 0 | 125,000 | 0 | 250,000 | 7.5% |
+| Series A lead | 208,333 | 208,333 | 1,000,000 | 1,000,000 | 12.5% |
+| Series A co-investor | 166,667 | 166,667 | 800,000 | 800,000 | 10.0% |
+| Other party: an individual backer | 0 | 50,000 | 0 | 0 | 3.0% |
+| Other party: a university | 0 | 50,000 | 0 | 0 | 3.0% |
+| Stock options pool | 0 | 100,000 | 0 | 0 | 6.0% |
+| **Total** | **416,667** | **1,666,667** | **2,000,000** | **2,500,000** | **100%** |
+
+Check it against the formulas. The round raises 2,000,000 and the two new investors take 22.5 percent between them, but the round as a whole issues shares worth 25 percent of the post-money company, because one of the seed investors bought in again. Post-money is 4.80 times 1,666,667, that is 8,000,000; pre-money is 4.80 times the previous 1,250,000 shares, that is 6,000,000; and 6,000,000 plus 2,000,000 gives the 8,000,000 back, as equation (4) demands. Every pre-existing holder was multiplied by 0.75: the founders slid from 16 to 12 percent, the option pool from 8 to 6, the two other parties from 4 to 3. Seed investor B did nothing and fell from 10 to 7.5 percent. Seed investor A put in another 200,000, bought 41,667 fresh shares and thereby **defended the 10 percent position** - which is precisely why investors negotiate pro-rata follow-on rights in the first place.
+
+## 8 · Risk and return before the formulas
+
+Before measuring returns the deck restates the basic principle that higher returns are earned by accepting more risk, with a deliberately simple example. Two investments each need 40 dollars of capital. A yields 50 dollars for certain. B yields 100 dollars with probability 60 percent and nothing with probability 40 percent, so its expected outcome is 60 dollars against A's 50. B is worth more in expectation and yet the choice between them depends entirely on the investor's **degree of risk aversion**.
+
+Investors are typically risk averse, meaning they demand a higher return as compensation for any extra risk. The mirror image of that statement is the mechanism that actually sets prices: if investment C yields 10 percent with a certain amount of risk, a risk-averse investor will happily **pay more** for investment D which offers the same return at lower risk, and paying more mechanically **reduces** D's return. Safety is bought by accepting a lower yield.
+
+Two features make entrepreneurial finance different from ordinary corporate finance.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Risk is extreme <small>skewed, in statistical language</small></div>
+      <ul>
+        <li>Most entrepreneurial projects simply <strong>fail</strong></li>
+        <li>A few generate a <strong>moderate</strong> return</li>
+        <li>Very few generate <strong>very high</strong> returns, and those carry the whole portfolio</li>
+        <li>So the average outcome is a bad description of any single deal</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Liquidity risk <small>you cannot simply sell</small></div>
+      <ul>
+        <li>Selling shares in a private venture <strong>takes time</strong></li>
+        <li>A buyer may only be found at a <strong>very low price</strong></li>
+        <li>This is the opposite of a traded stock, which can be sold today at a quoted price</li>
+        <li>It is why the holding period is not a free variable for a venture investor</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The two features that make venture returns hard to compare with quoted-market returns: an extremely skewed distribution of outcomes, and money that cannot be withdrawn on demand.</figcaption>
+</div>
+
+The deck is careful to reject the caricature: **venture investors are not risk lovers**. They handle risk in two ways rather than enjoying it. They **diversify** across several ventures, so the skewed distribution has enough draws to produce the rare winner, and they believe they can **reduce** risk by becoming actively involved with the company. The right description is therefore a **risk-tolerant investor who works at reducing the risk** of the companies they hold.
+
+Finally, the deck separates two kinds of return before computing anything. **Realized returns** are backward-looking and objective, a record of what an investment actually yielded, and investors look back at them precisely in order to learn for the next decision. **Expected returns** are forward-looking expectations. The formulas below are written for realized returns and then reused for expectations.
+
+## 9 · Three measures of investor return
+
+What matters for the calculation is not the whole exit value of the company but the part of it that belongs to the investor:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(11) The investor's exit value</span>
+    <code>X(inv) = F(inv) × X      where X is the company's exit value and F(inv) the investor's fraction</code>
+  </div>
+</div>
+
+Three standard measures are then compared: **net present value**, **internal rate of return** and **cash on cash**. Two of them need the time value of money, which the deck states first. One euro today is worth more than one euro tomorrow, simply because today's euro can be invested and earn a return overnight. Writing FV for future value, PV for present value and d for the rate of return, also called the discount rate:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Time value of money, one period</span>
+    <code>FV(I) = I + I×d = I(1 + d)            PV(I) = I ÷ (1 + d)</code>
+  </div>
+  <div>
+    <span class="name">Time value of money, T years</span>
+    <code>FV(I) = I(1 + d)^T            PV(I) = I ÷ (1 + d)^T</code>
+  </div>
+</div>
+
+Now the three measures themselves.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(12) Net present value</span>
+    <code>NPV = X(inv) ÷ (1 + d)^T - I      d = discount rate, T = time to exit</code>
+  </div>
+  <div>
+    <span class="name">(13) Cash-on-cash multiple</span>
+    <code>CCM = X(inv) ÷ I      how many times the invested capital comes back at exit</code>
+  </div>
+  <div>
+    <span class="name">(14) Internal rate of return</span>
+    <code>I × (1 + IRR)^T = X(inv)      the discount rate at which the NPV would be exactly zero</code>
+  </div>
+</div>
+
+Each has a characteristic strength and a characteristic blind spot.
+
+| Measure | What it is | Strength | Blind spot |
+|---|---|---|---|
+| **NPV** | The exit proceeds discounted back to today, minus what was put in | The main tool for capital budgeting; it accounts for the **time horizon**, so investments with different horizons can be compared | Needs a discount rate d, which is hard to find in entrepreneurial finance because there are few benchmark companies |
+| **CCM** | The number of times the money comes back | Simplicity, and it needs no assumption at all | Ignores the **time value of money** and ignores the **risk** taken |
+| **IRR** | The annualised rate implied by turning I into X(inv) over T years | The most common measure among practitioners; accounts for the time value of money and so for the **timing** of cash flows | Says nothing about the **level** of the return in money terms, nor about the risk taken |
+
+Combining (13) and (14) gives the bridge between the two practitioner measures:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(15) CCM and IRR are the same fact</span>
+    <code>CCM = (1 + IRR)^T      so IRR = CCM^(1÷T) - 1</code>
+  </div>
+</div>
+
+The deck prints the conversion as a grid. Read the columns as multiples and the rows as holding periods; the cells are the annual rate of return that multiple corresponds to.
+
+| Time (years) | CCM 0.5 | CCM 1 | CCM 2 | CCM 3 | CCM 4 | CCM 5 | CCM 10 |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| 0.5 | -75% | 0% | 300% | 800% | 1500% | 2400% | 9900% |
+| 1 | -50% | 0% | 100% | 200% | 300% | 400% | 900% |
+| 2 | -29% | 0% | 41% | 73% | 100% | 124% | 216% |
+| 3 | -21% | 0% | 26% | 44% | 59% | 71% | 115% |
+| 4 | -16% | 0% | 19% | 32% | 41% | 50% | 78% |
+| 5 | -13% | 0% | 15% | 25% | 32% | 38% | 58% |
+| 6 | -11% | 0% | 12% | 20% | 26% | 31% | 47% |
+| 8 | -8% | 0% | 9% | 15% | 19% | 22% | 33% |
+| 10 | -7% | 0% | 7% | 12% | 15% | 17% | 26% |
+| 15 | -5% | 0% | 5% | 8% | 10% | 11% | 17% |
+| 20 | -3% | 0% | 4% | 6% | 7% | 8% | 12% |
+
+The lesson of the grid is the one sentence underneath it: **the CCM does not vary with the time horizon, but the IRR does**. Doubling your money is always a CCM of 2, whether it took six months or twenty years, while the same doubling is an IRR of 300 percent in the first case and 4 percent in the second. That also creates a comparison problem in the other direction. Two projects can show the identical IRR over very different horizons - 41 percent appears in the grid both as a multiple of 2 held for two years and as a multiple of 4 held for four years - and the usual way out is to assume the shorter project can simply be extended. But can that rate really be sustained for more years? Nobody knows, which is the honest answer.
+
+This is why NPV is described as the conceptually stronger measure. Its key advantage is precisely that it accounts for the time horizon and therefore allows investments with different horizons to be compared; its downside is the need to estimate an appropriate discount rate, which is difficult. The practical conclusion the deck reaches is a division of labour: **use NPV for decision-making, and understand IRR and CCM as the common reporting measures**.
+
+Two closing remarks are easy to miss and easy to be examined on. First, **entrepreneur returns make little conceptual sense**, because a return is a ratio to an investment and entrepreneurs do not contribute an investment; their gains have to be measured in money, not in percentages. Second, **company-level returns** are obtained by simply replacing X(inv) with X, the whole exit value, in the same formulas.
+
+## 10 · Returns when there have been several rounds
+
+Once there are multiple rounds, an investor's fraction at exit is not the fraction they bought, it is whatever survived all the subsequent dilutions. Writing R for the exit round:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(16) The fraction that counts</span>
+    <code>F(i at EXIT) = F(i at R)      what you own at exit is your round-i stake diluted down to round R</code>
+  </div>
+  <div>
+    <span class="name">(17) The money that counts</span>
+    <code>X(i) = F(i at R) × X</code>
+  </div>
+</div>
+
+The holding period also has to be measured per investor, not per company. Denoting the date of round r by t(r), the gap between two dates is τ(i, r) = t(r) - t(i). So τ(1, 4) is the period between the first and the fourth round, and τ(i, R) is the period from an investor's own entry round to the exit. The three measures are then written per investor:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(12 MR) NPV per investor</span>
+    <code>NPV = X(i) ÷ (1 + d)^τ(i,R) - I(i)</code>
+  </div>
+  <div>
+    <span class="name">(13 MR) CCM per investor</span>
+    <code>CCM = X(i) ÷ I(i)</code>
+  </div>
+  <div>
+    <span class="name">(14 MR) IRR per investor</span>
+    <code>I(i) × (1 + IRR(i))^τ(i,R) = X(i)</code>
+  </div>
+</div>
+
+The practical consequence is that two investors in the same successful company can report wildly different numbers. The seed investor has the higher multiple, because they bought cheaply, but they held for far longer, so their IRR may well be lower than that of a later investor who paid more and waited less.
+
+## 11 · How valuation, exit value and returns pull against each other
+
+The last block of theory connects the return measures back to the valuation, using the CCM because it is the simplest; the deck notes the results generalise to the other measures. Substituting (2) into (13), at company level, gives:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(18) Return as a function of valuation</span>
+    <code>CCM = X ÷ V(post)      exit value divided by what the company was valued at when the money went in</code>
+  </div>
+</div>
+
+Two insights follow immediately, and together they are the oldest advice in finance.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Insight 1 <small>investor side</small></div>
+    <ul>
+      <li>For a given valuation, a <strong>higher exit value</strong> gives a higher realized investor return</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Insight 2 <small>investor side</small></div>
+    <ul>
+      <li>For a given exit value, a <strong>higher valuation</strong> gives a lower realized investor return - in three words, buy low, sell high</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Insight 3 <small>entrepreneur side</small></div>
+    <ul>
+      <li>For a given valuation, a <strong>higher exit value</strong> gives higher entrepreneurial gains</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Insight 4 <small>entrepreneur side</small></div>
+    <ul>
+      <li>For a given exit value, a <strong>higher valuation</strong> gives higher entrepreneurial gains - the exact opposite of Insight 2</li>
+    </ul>
+  </div>
+</div>
+
+The entrepreneur's side needs its own equation, because as noted above an entrepreneur has no investment to divide by and so has gains rather than returns. Combining (1) and (16), and using the fact that the entrepreneurs keep whatever the investors do not own, F(ent) = 1 - F(inv):
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(19) The entrepreneur's money at exit</span>
+    <code>X(ent) = [1 - (I ÷ V(post))] × X</code>
+  </div>
+</div>
+
+Insights 2 and 4 are in direct **tension**, and that tension is the negotiation. Both sides want the exit value X to be as large as possible, which is why they can genuinely cooperate. But for any given X, every point of valuation the founders win is a point of return the investor loses. There is no clever framing that removes this; it is arithmetic.
+
+Restating (18) in expected terms, with the superscript e for expected, turns the relation into a pricing rule that investors actually use:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(20) Valuation from a required return</span>
+    <code>V(post) = X(e) ÷ CCM(e)      expected exit value divided by the multiple the investor requires</code>
+  </div>
+</div>
+
+**Insight 5:** for a given required return, a higher expected exit value leads to a higher valuation. **Insight 6:** for a given expected exit value, a higher required return leads to a lower valuation. That is the whole logic of venture pricing in one line - an investor who needs to make ten times their money on the deals that work will offer a much lower valuation than one who needs three times, even when both believe the same story about the exit.
+
+### The economic determinants of valuation
+
+The deck names four things that actually move the number, plus one technical caveat.
+
+| Determinant | Direction of the effect |
+|---|---|
+| **The opportunity itself** | A better opportunity supports higher valuations and higher expected exits |
+| **The market context** | Hot markets, as opposed to cold stock markets, support higher valuations and higher expected exits |
+| **Deal competition** | More investors competing for the same deal pushes valuations up |
+| **Investor quality** | High-quality investors achieve **lower** valuations to buy in, and founders still accept, because the outlook with them on board is better |
+
+The caveat: the **type of equity** used can inflate the headline valuation. Preferred shares carry rights that ordinary shares do not, so a valuation quoted for preferred stock is not comparable, one to one, with a valuation quoted for common stock. The mechanics of those rights belong to the term-sheet discussion.
+
+## 12 · The first deal: how founders split ownership among themselves
+
+Before any investor appears, the founders have to divide the company among themselves, and the deck calls this **the first deal**. It should be agreed before reaching out to investors, and the approaches differ both in **timing**, early decision versus late decision, and in the **criteria** used. The forum for it is the **founder agreement**, which may be a formal document or an informal moment where the decisions are taken.
+
+A founder agreement addresses five main issues:
+
+- **who are the founders** in the first place
+- **salaries** and other forms of compensation
+- the **obligations and rights of the company towards the founders**
+- the **ownership allocation** itself
+- the **contingencies** under which some founders obtain stronger or weaker rights, for example the vesting of stock
+
+On the allocation itself there is a basic fork, and the deck refuses to declare a winner.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Equal split <small>the egalitarian approach</small></div>
+      <ul>
+        <li>Everybody takes the same slice</li>
+        <li>What makes it work is that all involved genuinely <strong>share the same perceptions</strong> of the situation</li>
+        <li>Fast, avoids an awkward conversation, and signals that the team is one unit</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Unequal split <small>rewarding differential contributions</small></div>
+      <ul>
+        <li>Slices reflect that people are not contributing the same things</li>
+        <li>What makes it work is <strong>providing the right incentives</strong></li>
+        <li>Harder to negotiate, but it prices reality rather than politeness</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>An important and far-reaching decision, and one that is very hard to revisit later, since revisiting it means asking somebody to give shares back.</figcaption>
+</div>
+
+Which principles should guide it? Two, pulling in different directions in time.
+
+- **Backward-looking, and objective:** who has contributed what already - the idea, funding, intellectual property, or other resources.
+- **Forward-looking, and about incentives:** who can contribute more in the period ahead.
+
+The economics behind the forward-looking view comes from the Nobel-recognised work on the economics of incentives and contract theory awarded in 2016, which stressed incentives **within teams**. The argument runs that **relative productivity inside the team** should guide the share allocation, because that rewards and motivates the people most valuable to the venture; that relative productivity depends on **capabilities**, such as prior experience and education, and on **roles** in the company, such as being the CEO; and that incentives should nevertheless be **balanced enough to keep everybody on board**, which matters especially when contributions are interdependent and nobody in the team is redundant.
+
+### The FAST tool
+
+**FAST** stands for **Founder Allocation of Shares Tool**, and it turns the argument into a procedure.
+
+<Steps>
+
+1. **Define the team members and their roles.**
+
+2. **Define the time periods and their weights**, so that past contribution and future contribution can be traded off explicitly.
+
+3. **Allocate points to founders** for their contributions in each period.
+
+4. **Identify net transfers** across founders, that is, money one founder has actually put in or taken out relative to the others.
+
+5. **Recommend ownership stakes and contingencies**, meaning how much of each founder's allocation is granted upfront and how much has to be earned.
+
+</Steps>
+
+The worked version in the deck weights the past at **20 percent** and each of the next two years at **40 percent** each, so two thirds of the allocation is decided by what people are expected to do rather than by what they have already done. Within each period, points come from productive work days, achievements, and outside options given up.
+
+| Period, weight | Line | F1 | F2 | F3 | F4 | F5 | Total | Granted as |
+|---|---|--:|--:|--:|--:|--:|--:|---|
+| | Experience, qualifications, talent | 0 | 0 | 0 | 0 | 0 | 0 | |
+| | Roles and responsibilities | 0.1 | 0 | 0 | 0 | 0 | 0.1 | |
+| | Productivity points | 1.1 | 1 | 1 | 1 | 0 | 4.1 | |
+| | Productivity factor | 0.27 | 0.24 | 0.24 | 0.24 | 0.00 | 1.00 | |
+| The past, 20% | Work days | 80 | 40 | 60 | 40 | 0 | 220 | |
+| The past, 20% | Productive work | 21.46 | 9.76 | 14.63 | 9.76 | 0.00 | 55.61 | Upfront |
+| The past, 20% | Achievements | 10 | 5 | 10 | 5 | 0 | 30 | Upfront |
+| The past, 20% | Outside options | 0 | 0 | 0 | 0 | 0 | 0 | Upfront |
+| The past, 20% | Total, then normalized | 31.46 → 7.35 | 14.76 → 3.45 | 24.63 → 5.75 | 14.76 → 3.45 | 0 → 0 | 85.61 → 20.00 | |
+| Next year, 40% | Work days | 365 | 365 | 182.5 | 365 | 0 | 1278 | |
+| Next year, 40% | Productive work | 97.93 | 89.02 | 44.51 | 89.02 | 0.00 | 320 | Vesting |
+| Next year, 40% | Achievements | 0 | 0 | 30 | 15 | 0 | 45 | Conditional |
+| Next year, 40% | Outside options | 10 | 30 | 0 | 20 | 0 | 60 | Upfront |
+| Next year, 40% | Total, then normalized | 107.93 → 10.15 | 119.02 → 11.19 | 74.51 → 7.00 | 124.02 → 11.66 | 0 → 0 | 425 → 40.00 | |
+| Year after, 40% | Work days | 365 | 365 | 182.5 | 365 | 0 | 1277.5 | |
+| Year after, 40% | Productive work | 97.93 | 89.02 | 44.51 | 89.02 | 0.00 | 320 | Vesting |
+| Year after, 40% | Achievements | 0 | 0 | 30 | 0 | 0 | 30 | Conditional |
+| Year after, 40% | Outside options | 10 | 30 | 0 | 20 | 0 | 60 | Upfront |
+| Year after, 40% | Total, then normalized | 107.93 → 10.52 | 119.02 → 11.60 | 74.51 → 7.26 | 109.02 → 10.62 | 0 → 0 | 410 → 40.00 | |
+
+The three periods are then added up, adjusted for money actually transferred between founders, and converted into a recommendation.
+
+| Across all periods | F1 | F2 | F3 | F4 | F5 | Total |
+|---|--:|--:|--:|--:|--:|--:|
+| Total normalized points | 28.01 | 26.24 | 20.02 | 25.73 | 0.00 | 100.00 |
+| Net transfers | 0 | 98,913 | -12,500 | 10,000 | 0 | 96,413 |
+| Transfer points | 0.00 | 6.58 | -0.83 | 0.67 | 0.00 | 6.41 |
+| Normalized plus transfer points | 28.01 | 32.81 | 19.19 | 26.40 | 0.00 | 106.41 |
+| **Recommended ownership share** | **26.33%** | **30.84%** | **18.03%** | **24.81%** | **0.00%** | **100.00%** |
+| **Recommended share allocation** | **210,604** | **246,690** | **144,264** | **198,442** | **0** | **800,000** |
+
+The valuation before transfers is 1,503,587 and after transfers 1,600,000, the difference being the 96,413 of net transfers. Notice how much work the transfers do: founder 2 put in roughly 99,000 of real money and that alone lifts them from 26.24 points to 32.81, overtaking founder 1 who did more of the work. Notice too that founder 5 scores zero everywhere and is recommended zero shares, which is the tool's polite way of saying that somebody on the founder list is not actually a founder.
+
+Finally, the recommendation is split into shares that are granted immediately and shares that must be earned, which is where **vesting** enters.
+
+| Contingencies | F1 | F2 | F3 | F4 |
+|---|--:|--:|--:|--:|
+| Recommended share allocation | 210,604 | 246,690 | 144,264 | 198,442 |
+| Number of **vesting** shares | 140,950 | 160,267 | 61,408 | 131,449 |
+| Number of **milestone** shares | 0 | 0 | 41,387 | 10,875 |
+| Number of **upfront** shares | 69,653 | 86,423 | 41,469 | 56,117 |
+| Vesting points, next year | 9.21 | 8.37 | 4.18 | 8.37 |
+| Vesting points, year after | 9.54 | 8.67 | 4.34 | 8.67 |
+| Fraction of vesting points | 66.93% | 64.97% | 42.57% | 66.24% |
+| Milestone points, next year | 0.00 | 0.00 | 2.82 | 1.41 |
+| Milestone points, year after | 0.00 | 0.00 | 2.92 | 0.00 |
+| Fraction of milestone points | 0.00% | 0.00% | 28.69% | 5.48% |
+
+The logic is consistent with where the points came from. Points earned for **past** work, for **outside options** given up, and for **past achievements** are granted upfront, because they have already been delivered. Points earned for **future productive work** are put on **vesting**, so they are earned by staying and working. Points earned for **future achievements** become **milestone** shares, conditional on the achievement actually happening. Founder 3 is the interesting case: they work half-time, so their vesting fraction is the lowest at 42.57 percent, but almost 29 percent of their allocation hangs on hitting specific milestones.
+
+## Worked example
+
+A complete round-by-round walk-through with clean numbers, so the whole chain can be redone on paper.
+
+**The starting point.** Two founders and an option pool exist before any external money. Founder A holds 480,000 shares, Founder B holds 320,000, and the stock options pool holds 200,000, all on a fully diluted basis. So S(pre) at the first round is 1,000,000 shares, and the current split is 48 percent, 32 percent and 20 percent.
+
+**Step 1, the seed round is negotiated.** An investor agrees to put in 500,000 for 20 percent of the company. Those two numbers are the only inputs; everything else is derived.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Step 1 - post-money, from equation (2)</span>
+    <code>V(post) = I ÷ F(inv) = 500,000 ÷ 0.20 = 2,500,000</code>
+  </div>
+  <div>
+    <span class="name">Step 2 - pre-money, from equation (3)</span>
+    <code>V(pre) = V(post) - I = 2,500,000 - 500,000 = 2,000,000</code>
+  </div>
+  <div>
+    <span class="name">Step 3 - price per share, from equation (8)</span>
+    <code>P = V(pre) ÷ S(pre) = 2,000,000 ÷ 1,000,000 = 2.00 per share</code>
+  </div>
+  <div>
+    <span class="name">Step 4 - new shares, from equation (6)</span>
+    <code>S(inv) = I ÷ P = 500,000 ÷ 2.00 = 250,000 new shares</code>
+  </div>
+  <div>
+    <span class="name">Step 5 - the check, from equations (5), (7) and (9)</span>
+    <code>S(post) = 1,000,000 + 250,000 = 1,250,000 ; P × S(post) = 2.00 × 1,250,000 = 2,500,000 = V(post) ✓ ; 250,000 ÷ 1,250,000 = 20% ✓</code>
+  </div>
+</div>
+
+**Step 2, a Series A eighteen months later.** A new investor puts in 2,000,000 for 25 percent, and this time the share count is no longer free - the existing 1,250,000 shares are a fact.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Round 2 - valuations, from (1 MR) and (3 MR)</span>
+    <code>V(post,2) = 2,000,000 ÷ 0.25 = 8,000,000 ; V(pre,2) = 8,000,000 - 2,000,000 = 6,000,000</code>
+  </div>
+  <div>
+    <span class="name">Round 2 - price per share, from (8 MR)</span>
+    <code>P(2) = V(pre,2) ÷ S(post,1) = 6,000,000 ÷ 1,250,000 = 4.80 per share</code>
+  </div>
+  <div>
+    <span class="name">Round 2 - new shares, from (6 MR) and (5 MR)</span>
+    <code>S(2 at 2) = 2,000,000 ÷ 4.80 = 416,667 ; S(post,2) = 1,250,000 + 416,667 = 1,666,667</code>
+  </div>
+  <div>
+    <span class="name">Round 2 - the dilution factor, from (10 MR)</span>
+    <code>1 - F(2 at 2) = 1 - 0.25 = 0.75      every pre-existing holder is multiplied by 0.75</code>
+  </div>
+</div>
+
+Every stake before and after, in one table. The share counts of the old holders never change; only the denominator does.
+
+| Holder | Shares | Before seed | Shares after seed | After seed | Shares after Series A | After Series A |
+|---|--:|--:|--:|--:|--:|--:|
+| Founder A | 480,000 | 48.0% | 480,000 | 38.4% | 480,000 | 28.8% |
+| Founder B | 320,000 | 32.0% | 320,000 | 25.6% | 320,000 | 19.2% |
+| Stock options pool | 200,000 | 20.0% | 200,000 | 16.0% | 200,000 | 12.0% |
+| Seed investor | - | - | 250,000 | 20.0% | 250,000 | 15.0% |
+| Series A investor | - | - | - | - | 416,667 | 25.0% |
+| **Total** | **1,000,000** | **100%** | **1,250,000** | **100%** | **1,666,667** | **100%** |
+
+Check the dilution formula on any row: the seed investor goes 20 percent times 0.75 equals 15 percent, Founder A goes 38.4 times 0.75 equals 28.8, the pool goes 16 times 0.75 equals 12. Nobody was singled out.
+
+**Step 3, the exit.** The company is sold for **40,000,000** exactly **five years** after the seed round went in. The seed investor still holds 15 percent, and nothing further happened in between.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Exit value to the seed investor, from (17)</span>
+    <code>X(seed) = F(seed at R) × X = 0.15 × 40,000,000 = 6,000,000</code>
+  </div>
+  <div>
+    <span class="name">Cash-on-cash multiple, from (13 MR)</span>
+    <code>CCM = X(seed) ÷ I(seed) = 6,000,000 ÷ 500,000 = 12.0 times the money</code>
+  </div>
+  <div>
+    <span class="name">Internal rate of return, from (14 MR) and (15)</span>
+    <code>IRR = CCM^(1÷T) - 1 = 12^(1÷5) - 1 = 1.644 - 1 = about 64% per year</code>
+  </div>
+  <div>
+    <span class="name">Net present value at a required 30%, from (12 MR)</span>
+    <code>NPV = 6,000,000 ÷ (1.30)^5 - 500,000 = 6,000,000 ÷ 3.713 - 500,000 = 1,616,000 - 500,000 = about 1,116,000</code>
+  </div>
+</div>
+
+And the comparison that makes section 10 concrete. The Series A investor entered at year 2 and so held for only three years, keeping 25 percent, worth 10,000,000 at exit on an investment of 2,000,000.
+
+| Investor | Invested | Stake at exit | Value at exit | CCM | Holding period | IRR |
+|---|--:|--:|--:|--:|--:|--:|
+| Seed | 500,000 | 15.0% | 6,000,000 | 12.0 | 5 years | about 64% |
+| Series A | 2,000,000 | 25.0% | 10,000,000 | 5.0 | 3 years | about 71% |
+
+The seed investor has by far the better multiple, and the later investor still has the better annual rate, because they had their money at work for two fewer years. This is exactly why the deck insists on reporting both, and on using NPV when an actual decision has to be made.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Write down your fully diluted share count today**, including every founder, every advisor share and the whole option pool, granted or not. If you do not have shares yet, invent a clean number such as 1,000,000 and split it by percentage - at a first round the number is only a scaling factor anyway.
+
+2. **Decide the option pool before you talk to anybody.** Ten to twenty percent of total ownership is the normal band. Put it in now, so that you know it sits inside your pre-money valuation rather than discovering that later.
+
+3. **Write down the two numbers you would actually negotiate:** the amount you need to raise, I, and the fraction you are willing to give up, F(inv). Everything else is derived, so do not negotiate anything else.
+
+4. **Derive the round.** Post-money is I divided by F(inv); pre-money is post-money minus I; the price per share is pre-money divided by your current share count; the new shares are I divided by that price. Check that price times total shares reproduces your post-money.
+
+5. **Apply the dilution factor to every existing holder.** Multiply each current percentage by one minus F(inv), and write the before-and-after column next to each name, including your own. That column, not the valuation, is the number you will actually feel.
+
+6. **Repeat for a second round you can imagine** at a higher valuation, and see what two rounds of dilution do. Two rounds selling 20 and 25 percent leave you with 0.80 times 0.75 equals 60 percent of what you started with.
+
+7. **Work out what the investor needs.** Guess an exit value and a holding period, and use CCM equals exit value divided by post-money to see what multiple your valuation implies for them. If that multiple looks small to you, your valuation ask is too high for that investor's requirement, and equation (20) tells you exactly which valuation would satisfy it.
+
+8. **Now do the founder split honestly**, using the FAST logic. List the roles, weight the past against the next two years, score productive work days, achievements and outside options given up, and add any real money anybody has put in as a transfer. Then split each founder's result into upfront shares, vesting shares and milestone shares, and agree it in writing before you ever meet an investor. This is the first deal, and it is far harder to fix afterwards than any term sheet.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Ownership fraction (F) | The share of the company somebody holds, always measured against the total fully diluted share count |
+| Valuation (V) | The price put on the whole company in a round, from which every other number is derived |
+| Implied valuation | The valuation you can back out of a deal, because paying I for a fraction F means believing the company is worth I divided by F |
+| Post-money valuation | The value of the company once the new money is inside it; the investor's percentage is always measured against this |
+| Pre-money valuation | The value of the company just before the money arrives, that is post-money minus the investment |
+| Sweat equity | The name given to the pre-money valuation at a first round, since it prices what the founders built with no external cash |
+| Price per share (P) | One single number that values everything: pre-money divided by old shares, and also the investment divided by new shares |
+| Stock options pool | Shares set aside to attract and retain talent and to defer cash pay, typically created at the first round at 10 to 20 percent of ownership |
+| Fully diluted | A share count that treats every option in the pool and every convertible security as if already converted into common stock |
+| Cap table | The spreadsheet that records, per shareholder and per round, shares owned, amount invested and ownership fraction |
+| Dilution | The fall in existing shareholders' ownership fraction caused by issuing new shares in a new round; you keep your shares, the denominator grows |
+| Dilution factor | One minus the fraction sold in the new round; multiply every old percentage by it |
+| Multistage financing | Raising money over several rounds rather than all at once, which is what makes dilution a recurring event |
+| Realized return | A backward-looking, objective record of what an investment actually yielded |
+| Expected return | A forward-looking expectation of what an investment will yield |
+| Cash-on-cash multiple (CCM) | How many times the invested money comes back at exit; simple, but blind to time and to risk |
+| Internal rate of return (IRR) | The annual rate that turns the investment into the exit proceeds over the holding period; the discount rate at which NPV is zero |
+| Net present value (NPV) | Exit proceeds discounted to today minus the investment; conceptually strongest because it handles different time horizons, but it needs a discount rate |
+| Liquidity risk | The risk that private shares can only be sold slowly, or quickly only at a very low price |
+| Founder agreement | The first deal, made among the founders before investors appear, covering who the founders are, pay, rights and obligations, the ownership split and contingencies |
+| Vesting | Shares that have to be earned over time by staying and working, rather than being granted upfront |
+| FAST | Founder Allocation of Shares Tool, which scores contributions by period, adjusts for transfers, and recommends stakes plus contingencies |
+
+## Test yourself
+
+1. An investor puts in 600,000 for a 30 percent stake. The founders currently hold 700,000 shares in total. Work out the post-money valuation, the pre-money valuation, the number of new shares issued and the price per share, and then verify your price against the pre-money valuation.
+2. A business angel owns 12 percent of a company. The next round issues new shares amounting to 20 percent of the post-round company, and the angel does not participate. What is the angel's stake afterwards, and what would have been true if instead the round had been described as selling 20 percent of the pre-money company?
+3. An investor put in 250,000 and, four years later, their stake at exit is worth 1,000,000. Compute the cash-on-cash multiple and the internal rate of return, and say which of the two you would report to a limited partner and why.
+4. Explain, using equations (18) and (20), why an investor who requires a multiple of ten will offer a lower valuation than one who requires a multiple of three, even when both expect the same exit value.
+5. A founder is offered a pre-money valuation of 4,000,000 with a 20 percent option pool to be created before the round, or 3,600,000 with a 10 percent pool. Explain which side of the table the pool dilutes and why the second offer might be better for the founders.
+6. Name the five issues a founder agreement should settle, and explain why FAST puts some shares upfront, some on vesting and some on milestones.
+
+<Aside type="note" title="Answers">
+1. Post-money is 600,000 divided by 0.30 equals **2,000,000**. Pre-money is 2,000,000 minus 600,000 equals **1,400,000**. The investor must end up with 30 percent, so the founders' 700,000 shares must represent 70 percent, meaning the post-round total is 1,000,000 shares and the new shares are **300,000**. Price per share is 600,000 divided by 300,000 equals **2.00**. Check with equation (8): 2.00 times 700,000 equals 1,400,000, which is the pre-money valuation. ✓
+2. Apply equation (10 MR): 12 percent times one minus 0.20 equals 12 times 0.80 equals **9.6 percent**. If instead the round sold shares equal to 20 percent of the pre-money company, the new investors would own 0.20 divided by 1.20 equals 16.67 percent of the post-money company, the dilution factor would be 0.8333, and the angel would keep 10 percent. The lesson is that a fraction only means something once you say whether it is measured pre-money or post-money.
+3. CCM equals 1,000,000 divided by 250,000 equals **4.0**. IRR equals 4 to the power of one quarter, minus one, which is 1.414 minus 1, that is about **41 percent** - the same figure that appears in the deck's grid at four years and a multiple of four. You would report both, but for a decision you would prefer NPV, since CCM ignores the time value of money and IRR ignores the size of the gain and the risk taken.
+4. Equation (18) says CCM equals X divided by V(post), and equation (20) rearranges it to V(post) equals expected X divided by required CCM. With the same expected exit value in the numerator, dividing by ten instead of by three gives a valuation roughly a third as large. The required return is a divisor applied to the same expected outcome, which is Insight 6.
+5. The pool sits inside the pre-money valuation, per equation (8 SOP), so it dilutes the **founders and existing holders only**, not the incoming investor. Offer one leaves the founders with 80 percent of a 4,000,000 pre-money, that is an effective 3,200,000 of founder value; offer two leaves them 90 percent of 3,600,000, that is 3,240,000. The lower headline number is worth slightly more to the founders, and the gap widens further with every point of pool.
+6. Who the founders are; salaries and other compensation; the obligations and rights of the company towards the founders; the ownership allocation; and the contingencies under which founders gain or lose rights, such as vesting. FAST grants upfront whatever has already been delivered - past work, past achievements and outside options given up - puts future productive work on vesting so that it is earned by staying, and makes future achievements conditional milestone shares so that they are earned by delivering.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- Valuation does **two jobs**: it fixes what percentage of the equity the investor gets for the money, and it lets the investor estimate the return they can expect.
+- The master identity is **(1) I = F(inv) × V(post)**, rearranged as **(2) V(post) = I ÷ F(inv)**. The ownership fraction is always measured against **post-money**.
+- **(3) V(pre) = V(post) - I** and **(4) V(post) = V(pre) + I**. At a first round the pre-money is called **sweat equity**.
+- In shares: **(5) S(post) = S(pre) + S(inv)**, **(6) I = P × S(inv)**, **(7) V(post) = P × S(post)**, **(8) V(pre) = P × S(pre)**, **(9) F = S ÷ S(post)**. One price per share values both the old shares and the whole company.
+- A **stock options pool** of typically 10 to 20 percent adds a third owner category, is counted **fully diluted**, and sits **inside the pre-money**, so enlarging it dilutes only the founders.
+- The **cap table** records, per holder and per round, shares owned, amount invested and ownership fraction.
+- **Dilution** is the fall in existing holders' fraction when new shares are issued. The formula is **(10 MR) F(i at r) = F(i at r-1) × (1 - F(r at r))** - multiply everybody's old percentage by one minus the fraction the new round takes.
+- Venture risk is **skewed**, most projects fail and very few pay for everything, and it carries **liquidity risk**. Venture investors are not risk lovers; they **diversify** and get **actively involved**, so treat them as risk tolerant.
+- Three measures: **(12) NPV = X(inv) ÷ (1+d)^T - I**, **(13) CCM = X(inv) ÷ I**, **(14) I × (1+IRR)^T = X(inv)**, linked by **(15) CCM = (1+IRR)^T**. CCM ignores time and risk, IRR ignores level and risk, NPV handles horizons but needs a discount rate. **NPV for decisions, CCM and IRR for reporting.**
+- CCM does **not** change with the horizon, IRR does. Doubling your money is a 300 percent IRR over six months and 4 percent over twenty years.
+- Entrepreneur **returns** make little sense because entrepreneurs invest nothing; use gains, **(19) X(ent) = [1 - (I ÷ V(post))] × X**. Company returns replace X(inv) with X.
+- **(18) CCM = X ÷ V(post)** gives the six insights: higher exit value helps both sides; a higher valuation **helps founders and hurts investors**, which is the whole tension. **(20) V(post) = expected X ÷ required CCM** prices the round from the investor's hurdle.
+- Valuation is driven by the **opportunity**, the **market context**, **deal competition** and **investor quality**, where the best investors buy in at lower valuations; **preferred shares** can inflate a headline valuation.
+- The founders' **first deal** comes before any investor. A founder agreement settles who the founders are, pay, company obligations, the ownership split and contingencies such as vesting. Split equally only if everybody truly shares the same perception; split unequally to reward differential contribution and set incentives.
+- Allocate on a **backward-looking** basis, who contributed what, and a **forward-looking** basis, who can contribute more, guided by relative productivity in the team while keeping incentives balanced enough that nobody leaves. **FAST** operationalises this in five steps and ends with upfront, vesting and milestone shares.
+</Aside>
+
+*Next: [Valuation Methods →](/learnings/mba/innovation-and-new-business-planning/13-valuation-methods/) - where the valuation number actually comes from.*

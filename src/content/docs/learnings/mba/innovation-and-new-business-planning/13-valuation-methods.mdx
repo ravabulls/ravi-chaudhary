@@ -1,0 +1,896 @@
+---
+title: "Valuation Methods"
+description: "How a number gets put on a venture that has no history - why both sides value at all, the four things that make venture valuation hard, the simplicity versus complexity trade-off, and the three working methods: discounted cash flow with its terminal value and CAPM discount rate, the venture capital model from exit value back to ownership fraction, and the comparables method with its multiples and its caveats, plus the probability-based extensions."
+sidebar:
+  label: "13 · Valuation Methods"
+  order: 13
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Up to this point the course treated valuation as an input. We worked out ownership fractions and investor returns while simply assuming somebody had already agreed what the company was worth. This session opens that box. The defining feature of the problem, and the reason it cannot be solved the way a bank values an office building, is the **uncertainty wrapped around the venture's future**.
+
+The deck is honest about the awkwardness of the exercise. Valuing an entrepreneurial company is genuinely difficult and it eats time, so the first slide asks the fair question: why do it at all? The answer is that a number is the price of admission to a negotiation. Both sides need an informed opinion before they sit down, not because the opinion is correct but because it tells each of them **how flexible they can afford to be on price**. For the investor, valuation is one step inside a wider decision process about whether to invest at all. For the founder, doing the work is what makes you investor-ready, because a founder who cannot explain where a number came from has already lost the room.
+
+What follows are three practical methods plus a fourth family of more sophisticated ones. They approach the same question from completely different directions: one models the company's own cash flows, one models the investor's cash flows, and one ignores modelling altogether and asks what the market pays for things that look similar. Running all three is not duplicated effort, it is triangulation.
+
+<Aside type="tip">
+**The one idea to carry through.** Every method is the same three ingredients in a different order: **a number far in the future, a rate that shrinks it back to today, and a claim about comparability**. None of them is a measurement. The valuation you can defend is the one where you can name all three ingredients out loud and say why each is reasonable, so the real deliverable is not the number, it is the argument behind it.
+</Aside>
+
+## 1 · Why anybody bothers valuing a venture
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">For the investor <small>valuation is part of deciding</small></div>
+      <ul>
+        <li>The number feeds a decision-making process that is bigger than the number: invest or pass, at what size, on what terms</li>
+        <li>It sets the ceiling above which the deal stops clearing the fund's required return</li>
+        <li>It fixes the ownership fraction the money has to buy</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">For the entrepreneur <small>valuation is how you become investor-ready</small></div>
+      <ul>
+        <li>Forces the financial plan, the exit story and the assumptions into one consistent object</li>
+        <li>Tells you your own walk-away point before somebody anchors you</li>
+        <li>Lets you answer the question every investor asks, which is not what is your valuation but how did you get to it</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The shared reason sits underneath both columns: neither party can negotiate without an informed opinion, and neither can know how much room they have on price without one.</figcaption>
+</div>
+
+## 2 · Four reasons it is hard, and one trade-off
+
+The deck lists four specific challenges. They are worth memorising as a set, because each one kills a different standard valuation technique.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">A high degree of uncertainty <small>not the same thing as risk</small></div>
+    <ul>
+      <li>Risk means you know the possible outcomes and roughly their probabilities, so you can average over them</li>
+      <li>This is the deeper version, where even the list of outcomes and their probabilities is unknown</li>
+      <li>Nothing you can do with a spreadsheet makes that go away, which is why every method here ends up burying the uncertainty inside a single large discount rate</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Asymmetric information <small>the two sides do not know the same things</small></div>
+    <ul>
+      <li>The founder knows the technology, the pipeline and the problems; the investor knows the market, the comparable deals and the exit routes</li>
+      <li>Neither can fully verify the other, so part of the price gap is really an information gap</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">Lack of value-relevant objective information <small>no history to lean on</small></div>
+    <ul>
+      <li>No long track record, no stable margins, often no revenue at all</li>
+      <li>Private markets publish little, so even the comparable transactions are partly invisible</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Inadequate accounting for intangibles <small>including human capital</small></div>
+    <ul>
+      <li>Almost everything valuable in a young company sits outside the balance sheet: code, brand, data, patents, and above all the team</li>
+      <li>Book value is therefore close to meaningless as a valuation anchor</li>
+    </ul>
+  </div>
+</div>
+
+**The trade-off between simplicity and complexity.** The deck makes an elegant point here: the same uncertainty argues in both directions at once. On one reading, so much is unknown that a **simple, reasonable** approach is all that is honest, because elaborate machinery only dresses up guesses. On the other reading, precisely because so much is unknown, you need a **precise, complex methodology** that models the uncertainty explicitly instead of hiding it. The deck does not resolve this and says plainly that different people take different views. In practice this is why an investor may present a one-line venture capital calculation while a corporate finance team presents a fifty-tab model, and both think the other is being unserious.
+
+## 3 · The map of methods
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1. Discounted cash flow<span class="sub">from theory and practice · models the company's cash flows · can become complicated and relies on demanding assumptions · gives an intrinsic, absolute valuation</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">2. Venture capital model<span class="sub">from practice · models the investor's cash flows · simple and consistent · the most common method in venture deals</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">3. Comparables<span class="sub">from practice · uses market information · gives an extrinsic, relative valuation</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">4. Probabilistic approaches<span class="sub">scenario analysis, simulation and PROFEX · model the uncertainty explicitly instead of burying it in the discount rate</span></div>
+  </div>
+  <figcaption>Intrinsic means the value comes out of the company's own economics. Extrinsic or relative means the value is imported from what the market pays for other companies.</figcaption>
+</div>
+
+## 4 · Method 1: discounted cash flow
+
+DCF is the main model of corporate finance and it is theoretically the most defensible of the three, yet it is the **least popular in practice** for ventures. The reason is stated directly: it models company cash flows, and doing that requires detailed assumptions and real knowledge of the business. The uncertainty of an entrepreneurial venture makes it less applicable, **except at later stages** when the company has enough history to project from. The deck also simplifies by ignoring debt financing, since ventures rarely use it.
+
+The logic itself is not complicated. Estimate a terminal value some years ahead, then discount it and every interim cash flow back to today.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1) The DCF model</span>
+    <code>V_PRE(DCF) = sum over t = 1 to T of [ FCF_t / (1 + d)^t ]  +  TV_T / (1 + d)^T  +  Cash_0</code>
+  </div>
+  <div>
+    <span class="name">Reading the symbols</span>
+    d is the discount rate, T is the time to exit, FCF is free cash flow net of fundraising, TV is the terminal value, and Cash_0 is the cash the company already holds. The result is a <strong>pre-money</strong> valuation.
+  </div>
+</div>
+
+### The three base ingredients
+
+**Time horizon T.** Not an arbitrary window. It is the point from which the company reaches **stable growth**, and in practice it usually comes out similar in length to the time to exit.
+
+**Free cash flow.** The deck gives one definition and it is the one to memorise.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Free cash flow</span>
+    <code>FCF = Net income - change in net working capital - Capex + Depreciation</code>
+  </div>
+</div>
+
+Depreciation is added back because it was subtracted to get net income but no cash left the building. Capex and working capital are subtracted because cash really does leave the building for them, even though neither is an expense on the income statement. For a growing venture the working capital line is brutal: every extra euro of revenue drags inventory and receivables along with it.
+
+**Terminal value.** This is where most of the answer lives.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(2) Terminal value</span>
+    <code>TV_T = FCF_T x (1 + g) / (d - g)</code>
+  </div>
+  <div>
+    <span class="name">where</span>
+    g is the growth rate of free cash flow after the horizon, and the formula only makes sense while d is larger than g.
+  </div>
+</div>
+
+The deck's warning about this is the single most important sentence in the DCF section: **the terminal value is the main component of a DCF valuation** for an entrepreneurial company, because the interim cash flows are mostly negative. Those early years are investment years. So the honest description of a venture DCF is that you spend weeks projecting cash flows that subtract from the answer, and then the answer is decided by two numbers you guessed at the end, d and g.
+
+### Worked figures from the deck: the WorkHorse DCF
+
+Inputs: discount rate 15 percent, company growth rate 5 percent. Amounts in dollars, negatives in parentheses.
+
+| Year ending Jan | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 |
+|---|--:|--:|--:|--:|--:|--:|
+| EBIT | (408,812) | (416,784) | 1,068,426 | 1,968,550 | 4,034,335 | 7,583,253 |
+| Taxes | 0 | 0 | (160,264) | (295,283) | (605,150) | (1,137,488) |
+| Depreciation | 1,412 | 15,424 | 23,157 | 25,300 | 25,300 | 34,300 |
+| Capital expenditure | 29,000 | 98,000 | 3,000 | 15,000 | 0 | 45,000 |
+| Change in net working capital | 0 | (978,016) | (1,340,531) | (1,660,351) | (2,645,636) | (4,626,105) |
+| **Free cash flow** | **(436,400)** | **(1,477,376)** | **(412,212)** | **23,217** | **808,850** | **1,808,960** |
+| Discount factor | 0.870 | 0.756 | 0.658 | 0.572 | 0.497 | 0.432 |
+| **Discounted FCF** | **(379,478)** | **(1,117,109)** | **(271,036)** | **13,274** | **402,141** | **782,063** |
+
+The terminal value is computed off the final year and discounted with the same year-6 factor.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Terminal value</span>
+    <code>TV = 1,808,960 x 1.05 / (0.15 - 0.05) = 18,994,081</code>
+  </div>
+  <div>
+    <span class="name">Discounted terminal value</span>
+    <code>18,994,081 x 0.432 = 8,211,665</code>
+  </div>
+  <div>
+    <span class="name">Net present value</span>
+    <code>-379,478 - 1,117,109 - 271,036 + 13,274 + 402,141 + 782,063 + 8,211,665 = 7,641,521</code>
+  </div>
+</div>
+
+Look at what that arithmetic says. The six years of operating cash flow contribute about minus 570,000 dollars in total. The terminal value contributes 8.2 million. **More than the whole valuation is the terminal value**, and the operating projections actively reduce it. That is the deck's point made in numbers.
+
+### The sensitivity grid, which is the real lesson
+
+The deck then reprices the same company across discount and growth rates. Blank cells are combinations where growth is not below the discount rate, so the formula breaks.
+
+**Net present value, in dollars**
+
+| Discount rate | g = 0% | g = 5% | g = 10% | g = 15% | g = 20% |
+|---|--:|--:|--:|--:|--:|
+| 5% | 26,916,296 | | | | |
+| 10% | 9,844,709 | 21,076,928 | | | |
+| 15% | 4,641,286 | 7,639,196 | 16,632,925 | | |
+| 20% | 2,307,643 | 3,519,278 | 5,942,546 | 13,212,351 | |
+| 30% | 343,672 | 668,476 | 1,155,682 | 1,967,691 | 3,591,709 |
+| 40% | (396,304) | (276,180) | (116,014) | 108,218 | 444,566 |
+| 50% | (719,029) | (666,092) | (599,920) | (514,843) | (401,406) |
+
+**Terminal value, in dollars**
+
+| Discount rate | g = 0% | g = 5% | g = 10% | g = 15% | g = 20% |
+|---|--:|--:|--:|--:|--:|
+| 5% | 36,179,202 | | | | |
+| 10% | 18,089,601 | 37,988,162 | | | |
+| 15% | 12,059,734 | 18,994,081 | 39,797,122 | | |
+| 20% | 9,044,801 | 12,662,721 | 19,898,561 | 41,606,083 | |
+| 30% | 6,029,867 | 7,597,632 | 9,949,281 | 13,868,694 | 21,707,521 |
+| 40% | 4,522,400 | 5,426,880 | 6,632,854 | 8,321,217 | 10,853,761 |
+| 50% | 3,617,920 | 4,220,907 | 4,974,640 | 5,943,726 | 7,235,840 |
+
+The same company, the same cash flows, is worth 26.9 million dollars or minus 0.7 million depending on two assumptions nobody can verify. A venture investor discounting at 40 to 50 percent gets a **negative** valuation from exactly the projections the founder used to justify 7.6 million. This is not a flaw in the arithmetic, it is the honest signature of the method, and it explains why practitioners drifted to something simpler.
+
+## 5 · Where the discount rate comes from, and why it is so high
+
+The deck derives d from the **capital asset pricing model**, a cornerstone of modern finance developed in the 1960s and recognised with a Nobel prize in 1990.
+
+The key intuition is that risk splits in two. Risk that is **specific** to one company, sometimes called idiosyncratic, can be eliminated by holding many companies at once, because one firm's bad year offsets another's good year. That is diversifiable risk, and the market does not pay you for carrying it, since you could have removed it for free. Risk that is **common to all companies**, called systematic, cannot be diversified away, and a recession is the standard example. The financial risk premium is the extra return investors demand for bearing exactly that.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Required discount rate under CAPM</span>
+    <code>d = Riskless rate + Beta x (Market rate - Riskless rate)</code>
+  </div>
+  <div>
+    <span class="name">Beta</span>
+    how strongly this company's returns move with the market as a whole. Beta of 1.0 means it moves with the market, above 1.0 means it amplifies market swings.
+  </div>
+</div>
+
+For a young venture the CAPM number on its own is nowhere near high enough, and the next section explains why: an investor in a private company is also carrying illiquidity, a very real chance of total failure, and the cost of the work they will personally do. Those are not systematic risks, so CAPM does not price them, but the investor still charges for them.
+
+## 6 · Method 2: the venture capital model
+
+This is the one investors actually use. Its trick is to stop modelling the company and model the **investor's** cash flows instead, which are almost trivially simple: put money in at the start, wait, receive a share of an exit. The whole method is three equations.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1) Post-money valuation</span>
+    <code>V_POST = X_e / (1 + rho)^T</code>
+  </div>
+  <div>
+    <span class="name">(2) Pre-money valuation</span>
+    <code>V_PRE = V_POST - I</code>
+  </div>
+  <div>
+    <span class="name">(3) The investor's ownership fraction</span>
+    <code>F_INV = I / V_POST</code>
+  </div>
+</div>
+
+Read in order they tell a complete story. Guess what the company sells for at exit. Shrink that back to today at the return the investor demands, and call the result the post-money value. Subtract the money being put in to get the pre-money value, which is what the existing shareholders are being credited with. Finally, the investor's share is simply their cheque divided by the post-money value. That is the entire method.
+
+### The four inputs
+
+| Input | What it is | Where it comes from |
+|---|---|---|
+| **I**, investment amount | How much money the venture needs and, just as important, when it needs it | Recovered from the financial plan, which needs knowledge of the business model and the economics of the sector |
+| **T**, time to exit | Years from the investment to the liquidity event | Needs knowledge of exit markets, that is acquisitions and IPOs, but cannot really be planned in advance; different investors and founders hold different horizons, so it should be discussed openly at the time of the deal |
+| **X_e**, exit value | The value **if the company succeeds** | Either a DCF terminal value, or an estimate built from exits of comparable companies |
+| **rho**, required rate of return | The target rate, hurdle rate or required return the investor charges | Built up from five components, see below |
+
+The subtlety about **X_e** is worth a moment. It is an exit valuation estimate, **not an expected value in the statistical sense**. The venture capital model assumes the venture either succeeds or fails outright, so the only value worth carrying in the numerator is the success value. The probability of failure does not get netted off the exit value; it is charged for inside the discount rate instead. Mixing the two, by using a probability-weighted exit value **and** a venture-level discount rate, double counts the failure risk and produces a nonsense number.
+
+### The required rate of return has five parts
+
+<div class="sc-fig">
+  <div class="sc-tiers">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Riskless rate <span class="n">financial</span></div>
+      The pure time value of money, what a government bond pays for doing nothing
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Financial risk premium <span class="n">financial</span></div>
+      Compensation for systematic risk, the part CAPM prices with beta
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Illiquidity premium <span class="n">financial</span></div>
+      These are long-term investments with almost no secondary market, so the money is locked in and the investor charges for that
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Failure rate premium <span class="n">non-financial</span></div>
+      Reflects the high mortality of new ventures, and it is usually the largest single component
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Service premium <span class="n">non-financial</span></div>
+      Payment for what the investor does beyond writing the cheque: monitoring, advice, mentoring, networking
+    </div>
+  </div>
+  <figcaption>Three financial and two non-financial components. Stack them and a required return of 40 to 60 percent a year stops looking greedy and starts looking arithmetic.</figcaption>
+</div>
+
+The service premium is the one founders forget, and it is the most negotiable of the five, because it is the one you can argue about by asking what the investor will actually do for you.
+
+### Turning a failure probability into a discount rate
+
+The deck gives two crude ways to set the failure rate premium, plus one elegant middle path. The crude ways are to **input a large number based on past experience**, or to **build a full model of uncertainty**. The middle path converts an annual failure probability directly into a required return.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Notation</span>
+    z is the annual failure probability, d is the ordinary discount rate. The probability of surviving all the way to exit at T is therefore (1 - z)^T.
+  </div>
+  <div>
+    <span class="name">Expected exit value</span>
+    <code>X_e x (1 - z)^T</code>
+  </div>
+  <div>
+    <span class="name">Discounted at the ordinary rate</span>
+    <code>V_POST = X_e x (1 - z)^T / (1 + d)^T</code>
+  </div>
+  <div>
+    <span class="name">Set equal to the venture capital form</span>
+    <code>X_e x (1 - z)^T / (1 + d)^T = X_e / (1 + rho)^T</code>
+  </div>
+  <div>
+    <span class="name">Which collapses to</span>
+    <code>(1 - z)^T / (1 + d)^T = 1 / (1 + rho)^T</code>
+  </div>
+  <div>
+    <span class="name">And therefore</span>
+    <code>rho = (d + z) / (1 - z)</code>
+  </div>
+</div>
+
+This one formula is the bridge between the two methods. A perfectly ordinary discount rate of 14 percent combined with a 20 percent annual chance of dying gives rho equal to 0.34 divided by 0.80, which is **42.5 percent**. Nothing exotic happened. The venture capital model's frightening hurdle rates are just a normal cost of capital plus a mortality rate, and the formula lets you argue about the mortality rate directly instead of arguing about the hurdle rate in the abstract.
+
+### Handling later rounds: the recursive version
+
+A single round is rarely the truth. When more rounds are coming, the model is applied **recursively, from one period back to the previous one**. The exit value is discounted back to the last round, that round's pre-money becomes the target value for the round before it, and so on.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(1-MR) Post-money at round r</span>
+    <code>V_POST(r) = V_PRE(r+1) / CCM_r</code>
+  </div>
+  <div>
+    <span class="name">(2-MR) Pre-money at round r</span>
+    <code>V_PRE(r) = V_POST(r) - I(r)</code>
+  </div>
+  <div>
+    <span class="name">(3-MR) Ownership fraction at round r</span>
+    <code>F_INV(r) = I(r) / V_POST(r)</code>
+  </div>
+  <div>
+    <span class="name">The cash-on-cash multiple between two rounds</span>
+    <code>CCM_r = (1 + rho)^tau, where tau is the number of years between round r and round r+1</code>
+  </div>
+</div>
+
+This is how **expected dilution is handled**, and it is handled implicitly rather than with a separate dilution adjustment. Because round one is now valued off round two's **pre-money** value rather than off the exit, and because that pre-money already has the later investment subtracted from it, the anticipated future rounds automatically push the current round's valuation down and the current investor's ownership fraction up. The first investor ends up owning a larger slice of a smaller number, which is exactly the compensation they need for the dilution that is coming.
+
+### Worked figures from the deck: the WorkHorse venture capital model
+
+All amounts in millions of dollars. Exit value 25, required return 50 percent in both scenarios.
+
+| | Single round | Two rounds |
+|---|--:|--:|
+| Exit value X | 25 | 25 |
+| Required return rho | 0.5 | 0.5 |
+| Years from the last round to exit, T | 5 | 4 |
+| Investment at that round, I | 2.5 | 2 |
+| Cash-on-cash multiple | 7.594 | 5.063 |
+| Post-money at that round | 3.292 | 4.938 |
+| Pre-money at that round | 0.792 | 2.938 |
+| Years between round 1 and round 2 | | 1 |
+| First-round investment I1 | | 0.5 |
+| First-round CCM | | 1.500 |
+| First-round post-money | | 1.959 |
+| First-round pre-money | | 1.459 |
+
+Trace the two-round column, because it is the recursion in action. The multiple over four years at 50 percent is 1.5 to the power 4, which is 5.063. Twenty-five divided by 5.063 gives a second-round post-money of 4.938, and taking out the 2 invested leaves a pre-money of 2.938. That pre-money is then the target for round one: discount it one year at 1.5 to get a first-round post-money of 1.959, and take out the 0.5 invested to get a first-round pre-money of **1.459**. The ownership fractions follow: the second investor takes 2 divided by 4.938, about **40.5 percent**, and the first takes 0.5 divided by 1.959, about **25.5 percent**.
+
+### Three variations the deck allows
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Time-varying rho, falling as the venture matures and becomes less risky</span>
+  <span class="sc-chip amber">Quote a cash-on-cash multiple instead of rho, since CCM equals (1 + rho)^T</span>
+  <span class="sc-chip green">Forecast only to the next round, which just pushes the need to estimate the exit value down the road</span>
+</div>
+
+## 7 · Method 3: comparables
+
+The comparables method is the most popular of all among practitioners, and the deck's description of it is nicely blunt: it is **short on modelling and long on using market valuations** as an indication of what a valuation could be. The logic is one sentence. Find companies the market has already priced, decide what makes them comparable, and carry their pricing across. It comes in two flavours.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Investment comparables <small>private deals</small></div>
+      <ul>
+        <li>Compare the venture's valuation directly with <strong>similar deals done by investors</strong></li>
+        <li>Conceptually simple, because you are comparing the same type of company at the same stage</li>
+        <li>Practically difficult on two fronts. Similar has to mean similar in business model, stage, sector and amount raised, all at once</li>
+        <li>And the information barely exists in public. Investors hold part of it, founders usually do not</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Exit comparables <small>public markets</small></div>
+      <ul>
+        <li>A different logic: look at how the markets value <strong>comparable mature companies</strong>, then apply that pricing to your projected exit</li>
+        <li>Two crucial choices, and they carry the whole result: the <strong>set of comparable companies</strong>, and the <strong>comparison metric</strong></li>
+        <li>Data is abundant because the peers are listed</li>
+        <li>But the honest question is whether a listed, mature, diversified company is comparable to a venture at all</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Different reference points, private deals against public markets. Different valuation criteria, expected performance against actual present valuation. And different treatment: exit comparables reach a venture valuation derivatively, through a projected exit, while investment comparables read it off directly.</figcaption>
+</div>
+
+### The arithmetic of a multiple
+
+<div class="sc-formula">
+  <div>
+    <span class="name">(7) The multiple for one comparable company j</span>
+    <code>M_j(comp) = V_j(comp) / PM_j(comp)</code>
+  </div>
+  <div>
+    <span class="name">(8) The multiple for the peer set</span>
+    <code>M(comp) = average of the M_j(comp)</code>
+  </div>
+  <div>
+    <span class="name">(9) The resulting valuation</span>
+    <code>X_e = PM_e x M(comp)</code>
+  </div>
+  <div>
+    <span class="name">where</span>
+    PM is the performance metric, V is the observed valuation, and PM_e is your own venture's projected value of that same metric at exit.
+  </div>
+</div>
+
+### Choosing the performance metric
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Earnings, but they may be negative or volatile</span>
+  <span class="sc-chip green">Cash flow, which has a clear economic interpretation</span>
+  <span class="sc-chip violet">Revenues, which work even when cash flow is negative</span>
+  <span class="sc-chip">Operating measures, which have only a tenuous link to income</span>
+</div>
+
+The ranking is really a compromise between economic meaning and availability. Cash flow means the most but young companies rarely have any. Revenue means the least of the three financial metrics but every company has some. Operating measures such as users or subscribers are the last resort, used when there is nothing financial to multiply, and the deck's warning about their tenuous link to income is the reason revenue-per-user arguments collapse so often.
+
+### Worked figures from the deck: investment comparables
+
+Five private deals, amounts in dollars.
+
+| Comparable company | Location | Description | Investment | Post-money |
+|---|---|---|--:|--:|
+| Cavalavoro | Milano, Italy | Advanced lightweight solar panels | 500,000 | 3,000,000 |
+| FoalPlay | Boulder, Colorado, US | Portable hybrid petrol and solar power generators | 200,000 | 6,000,000 |
+| GongZuoMa | Shenzhen, China | Small solar battery packs | 1,500,000 | 5,500,000 |
+| PferdWerk | Johannesburg, South Africa | Small solar battery packs | 100,000 | 800,000 |
+| Trachevail | Montreal, Quebec, Canada | Portable liquefied natural gas generators | 1,000,000 | 2,000,000 |
+| **Average** | | | **660,000** | **3,460,000** |
+| **Median** | | | **500,000** | **3,000,000** |
+| **Highest** | | | **1,500,000** | **6,000,000** |
+| **Lowest** | | | **100,000** | **800,000** |
+
+Note the spread: post-money valuations run from 0.8 million to 6 million, a factor of more than seven, for companies in the same broad space. The average of 3.46 million is dragged upward by FoalPlay, which raised the second smallest amount at the highest valuation. This is precisely why the deck insists on looking at the distribution rather than the mean.
+
+### Worked figures from the deck: exit comparables
+
+Amounts in millions of dollars.
+
+| Comparable | Location and business | Exit type | Age | Funding | Exit value | Revenue | Rev multiple | Net earnings | P/E |
+|---|---|---|--:|--:|--:|--:|--:|--:|--:|
+| BieBie | Nanjing, China, portable diesel engines | Acquisition by a Chinese manufacturer | 23 | 25 | 40 | 30 | 1.33 | 5 | 8.00 |
+| FergieTech | Burnaby BC, Canada, LNG pushback tugs for airlines | IPO on TSX Venture | 6 | 8 | 15 | 12 | 1.25 | 1 | 15.00 |
+| Noodles | Menlo Park CA, US, cloud energy management | IPO on NASDAQ | 5 | 50 | 150 | 12 | 12.50 | -15 | not available |
+| UniCorNio | Tel Aviv, Israel, solar patent portfolio | Acquisition by a US engineering company | 6 | 4 | 15 | 10 | 1.50 | 5 | 3.00 |
+| Zellie | Augsburg, Germany, solar automotive components | Acquisition by a German automotive group | 9 | 6 | 12 | 15 | 0.80 | 2 | 6.00 |
+| **Average** | | | 10 | 18.6 | 46.4 | 15.8 | **3.5** | -0.4 | **8.0** |
+| **Median** | | | 6 | 8.0 | 15.0 | 12.0 | **1.3** | 2.0 | **7.0** |
+| **Highest** | | | 23 | 50.0 | 150.0 | 30.0 | 12.5 | 5.0 | 15.0 |
+| **Lowest** | | | 5 | 4.0 | 12.0 | 10.0 | 0.8 | -15.0 | 3.0 |
+
+Applying those multiples to the venture's own projections, which are an exit at age 5 with cumulative funding of 2,500,000 dollars, revenues at exit of 21,110,000 and net earnings of 3,430,000:
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Exit value on the average revenue multiple</span>
+    <code>21,110,000 x 3.476 = 73,392,433</code>
+  </div>
+  <div>
+    <span class="name">Exit value on the median revenue multiple</span>
+    <code>21,110,000 x 1.333 = 28,146,667</code>
+  </div>
+  <div>
+    <span class="name">Exit value on the average P/E multiple</span>
+    <code>3,430,000 x 8.0 = 27,440,000</code>
+  </div>
+  <div>
+    <span class="name">Exit value on the median P/E multiple</span>
+    <code>3,430,000 x 7.0 = 24,010,000</code>
+  </div>
+</div>
+
+Three of the four answers cluster between 24 and 28 million. The fourth, 73 million, is more than double any of them, and it comes entirely from one peer whose revenue multiple of 12.5 pulls the average from about 1.2 up to 3.5. Change nothing except swapping the average for the median and the company loses 45 million dollars of value. That is the single most useful thing to remember about multiples.
+
+### A second worked example: the listed-peer approach
+
+The deck also prices a subscription clothing company against listed peers at a snapshot date of 17-11-18, using trailing twelve month revenue of 1,037 million dollars and trailing EBITDA of 23 million.
+
+| Comparable | EBITDA multiple | Valuation on EBITDA | Sales multiple | Valuation on sales |
+|---|--:|--:|--:|--:|
+| Lands End | 18.0 | 415,800,000 | 0.5 | 518,350,000 |
+| Guess | 8.8 | 203,280,000 | 0.5 | 518,350,000 |
+| Abercrombie and Fitch | 5.3 | 122,430,000 | 0.3 | 311,010,000 |
+| 1-800-FLOWERS | 8.6 | 198,660,000 | 0.6 | 622,020,000 |
+| Amazon | 43.6 | 1,007,160,000 | 3.5 | 3,628,450,000 |
+| TripAdvisor | 21.5 | 496,650,000 | 2.4 | 2,488,080,000 |
+| Snap | not available | not available | 19.0 | 19,697,300,000 |
+| Blue Apron | not available | not available | 0.6 | 622,020,000 |
+| **Highest** | 43.6 | 1,007,160,000 | 19.0 | 19,697,300,000 |
+| **Lowest** | 5.3 | 122,430,000 | 0.3 | 311,010,000 |
+| **Mean** | 17.6 | 407,330,000 | 3.4 | 3,550,697,500 |
+| **Median** | 13.4 | 309,540,000 | 0.6 | 622,020,000 |
+
+The sales column runs from 311 million to 19.7 billion dollars, a spread of sixty times, purely because a social media company sits in the peer set alongside a catalogue retailer. The mean sales valuation of 3.55 billion is nearly six times the median of 622 million. This table is a warning label, not an answer.
+
+### The caveats on using multiples
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Measure consistently<span class="sub">the multiple has to be defined the same way for every comparable and for your own company, or you are adding apples to oranges</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Look at the whole distribution<span class="sub">not just the average · report the mean, the median, the highest and the lowest, and explain the outliers</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Remember multiples are market prices<span class="sub">so they are prone to herding · the peer set is expensive when the whole sector is fashionable and cheap when it is not</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Choosing peers is the hard part<span class="sub">especially for innovative companies · being innovative is not a similarity, so it cannot be the basis of a peer set</span></div>
+  </div>
+  <figcaption>The last one is the sharpest. Two companies that are both innovative have nothing in common except a word, and a peer set assembled on that basis will produce whatever answer you wanted.</figcaption>
+</div>
+
+One further adjustment the deck flags is the **liquidity discount between public and private firms**. Shares in a listed company can be sold on any trading day; shares in a private venture cannot. That difference alone means a multiple lifted from public markets should be marked down before it is applied to a private company, and it is one of the legitimate reasons an investor's number lands below the one a founder computes from listed peers.
+
+## 8 · The fourth family: modelling uncertainty explicitly
+
+These approaches are, as the deck puts it, conceptually solid but not very popular in practice. They address the one thing both DCF and the venture capital model quietly avoid: neither of them **explicitly models the probability of different events**. Both bury all of it inside a single discount rate.
+
+**Scenario analysis** models a handful of possible trajectories, for example a bad, a middle and a good one. It runs in three steps: identify the scenarios and their probabilities, compute a valuation in each scenario, then average.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Scenario-weighted value</span>
+    <code>V = sum over s of [ p_s x V_s ]</code>
+  </div>
+</div>
+
+The deck's worked case runs four scenarios on the same venture, with a 20 percent discount rate throughout. Amounts in dollars.
+
+| | Quick win | Home run | Long slug | Big flop |
+|---|--:|--:|--:|--:|
+| Exit value | 20,000,000 | 80,000,000 | 40,000,000 | 0 |
+| Total dilution | 75.00% | 37.50% | 30.00% | |
+| Diluted exit value | 15,000,000 | 30,000,000 | 12,000,000 | 0 |
+| Years to exit | 4 | 7 | 9 | |
+| Discount factor | 2.07 | 3.58 | 5.16 | |
+| Discounted diluted exit value | 7,233,796 | 8,372,449 | 2,325,680 | 0 |
+| Scenario probability | 15% | 10% | 15% | 60% |
+| **Probability-weighted value** | **1,085,069** | **837,245** | **348,852** | **0** |
+
+The four weighted values add to an **expected value of 2,271,166 dollars**. Notice how brutal an honest 60 percent failure probability is: the home run scenario, worth 80 million at exit, contributes only 837,000 dollars to the answer once dilution, nine years of discounting and a 10 percent probability have all been applied.
+
+**Simulation** goes further, modelling outcomes continuously rather than in discrete buckets, focusing on a few key parameters and modelling them jointly. The deck's honest reservation is that the challenge is doing this **convincingly**, since a simulation is only as good as the distributions fed into it.
+
+**PROFEX**, short for probability of exit, extends the venture capital model by modelling uncertainty about exit outcomes directly. It computes consistent valuations for all financing rounds, and it represents the company's life as a series of likely crossroads at each of which it can **exit profitably, continue, or fail**. At every crossroad there is a probability distribution and a set of valuations. At each round the post-money valuation is the discounted value of the next round's expected valuation, and the deck notes that **the key round is the first**, when uncertainty is at its highest.
+
+| PROFEX stages, dollars | Stage 1 | Stage 2 | Stage 3 | Stage 4 | Stage 5 |
+|---|--:|--:|--:|--:|--:|
+| Conditional probability of exit | 0% | 30% | 40% | 100% | |
+| Conditional probability of refinancing | 50% | 50% | 60% | 0% | |
+| Conditional probability of liquidation | 50% | 20% | 0% | 0% | |
+| Probability of reaching the stage | 100% | 50.0% | 25.0% | 15.0% | |
+| Investment | 500,000 | 2,000,000 | 12,000,000 | 6,000,000 | |
+| Exit value | 0 | 0 | 20,000,000 | 80,000,000 | 40,000,000 |
+| Stage date, years | 0 | 1 | 4 | 7 | 9 |
+| Discount rate | 20% | 20% | 20% | 20% | 20% |
+| **Post-money valuation** | 2,310,987 | 7,546,368 | 26,080,247 | 27,777,778 | |
+| **Pre-money valuation** | 1,810,987 | 5,546,368 | 14,080,247 | 21,777,778 | |
+
+## 9 · Putting the answers together
+
+The deck does not give a formula for blending three valuations into one. What it gives instead is a comparison of what each method is actually good for, and the implicit instruction is to know which number you are leading with and why.
+
+| Method | Whose cash flows | What it delivers | Its main weakness |
+|---|---|---|---|
+| **Venture capital model** | The investor's | The most common approach in practice, simple and internally consistent, and it produces the ownership fraction directly | Everything hangs on getting the exit value right, and the exit value usually has to be imported from comparables anyway |
+| **Discounted cash flow** | The company's | An intrinsic valuation grounded in the business itself | Requires strong assumptions, and it is not suited to modelling fundamental uncertainty or multiple rounds of financing |
+| **Comparables** | Nobody's, it uses market information external to the company | A relative valuation anchored in observable prices, and it is the natural source of the exit value the other methods need | Exit comparables rely on listed companies that may not be comparable to a venture at all; investment comparables get closer to true peers, but only just, and the data is scarce |
+| **Probability-based models** | Modelled explicitly | A sounder treatment of uncertainty than a single fat discount rate | They swap one set of strong assumptions for another, namely strong assumptions about how to model the probabilities |
+
+Two closing warnings from the deck deserve their own line. First, **all of these methods rest on strong assumptions about what the right discount rate is**, and that single input can swing the answer by an order of magnitude, as the sensitivity grid showed. Second, and more subtly, **all of them assume the investor receives common equity**. That is almost never true. Most venture investors take more complex securities with preferences and protections attached, and working out how those securities change the economics of the deal is a genuinely complex problem requiring sophisticated analysis. It is also the subject of the next chapter.
+
+## Case corner
+
+**OutReach Networks, first venture round.** The setting is November 2011. The founder and CEO of OutReach Networks, a company he started in 2007 after cashing out 50,000 dollars of stock options from his previous employer, is holding an offer from a venture capital firm and is not sure whether to be pleased or insulted.
+
+**The venture.** OutReach sells wireless networking products for the **unlicensed radio frequency spectrum**: high-performance radios, antennas and management tools. The founding insight came from his work as a wireless engineer, where he found that an unlicensed part of the spectrum could carry a wireless signal across a far broader area than the licensed spectrum could. The unlicensed spectrum has two decisive advantages: it is free, and it is available in ample supply. The target is the roughly 75 percent of the world's population that had no internet access in 2011, plus the 30 percent of the United States that had limited or no broadband. The bottleneck everywhere is the **last mile** from the core network to the individual home, which wired solutions can bridge only at great expense and with long lead times.
+
+Combining commodity hardware with proprietary software, OutReach gear cuts the up-front capital expenditure needed to build a last-mile network so far that entirely new kinds of operator become viable. A person with basic networking skills, an elevated site, access to commercial-grade internet and about **5,000 dollars** of OutReach equipment can build a network covering **100 subscribers**, delivering 15 to 20 Mbps against the 3 to 4 Mbps that DSL topped out at. With as few as 20 customers paying 50 dollars a month, the hardware cost including customer premise equipment is covered in the first **five months**. That economics created a growing community of wireless internet service providers, and their demand pulls OutReach equipment through.
+
+**Why this venture is unusual.** It has been **profitable since the beginning**, for two structural reasons. It sells indirectly through channels rather than building a direct sales force, which eliminates the largest cost line most hardware companies carry, and it outsources manufacturing because the product designs are simple, which keeps property, plant and equipment near zero. Fewer than 100 employees in 2011. Operating margins around 30 percent since 2010, projected to stay there. Revenue went from 9 million dollars in 2009, its first full year, to 63 million in 2011. The downside of selling indirectly is limited visibility into future sales and few levers to accelerate them if needed. Only 31 percent of 2011 revenue came from North America, with 26 percent from South America, 35 percent from Europe, the Middle East and Africa, and 9 percent from Asia Pacific. The founder holds 75 percent, the CFO 15 percent, and other senior staff and employees the remaining 10 percent, on 50 million shares outstanding.
+
+**The valuation question.** The venture firm has offered **30 million dollars for 30 percent** of the company. The founder believes that money should buy no more than **15 percent**. He cannot see how the firm arrives at 30 percent, even allowing for the fact that venture investors typically look for a 40 to 60 percent compounded return, and he notes that even when he heavily discounts the projected free cash flows, cutting them to half of their projected values, he still gets a much higher valuation than the offer implies. The firm's answer is that 30 million dollars is large relative to a typical first round, that first-round IT investments over the previous two years averaged around 5 million, and that this single deal would tie up a significant share of the firm's 350 million dollar fund.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">What the offer implies</span>
+    <code>V_POST = 30 / 0.30 = 100 million,  so V_PRE = 100 - 30 = 70 million</code>
+  </div>
+  <div>
+    <span class="name">What the founder's counter implies</span>
+    <code>V_POST = 30 / 0.15 = 200 million,  so V_PRE = 200 - 30 = 170 million</code>
+  </div>
+</div>
+
+**The comparables exercise.** The investor supplied a set of publicly traded comparables, the peers he thought any investor would look at. Amounts in millions of dollars, multiples as of November 2011.
+
+| Company | Market cap | Revenue | Revenue growth, 1 year | EBITDA margin | Debt to capital | TEV to forward EBITDA | Forward P/E | Beta |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| Acme Packet | 2,244 | 295 | 45.6% | 30.1% | not available | 13.7 | 24.3 | 1.50 |
+| Aruba Networks | 2,258 | 433 | 48.2% | 3.0% | not available | 13.3 | 31.5 | 1.95 |
+| Aviat Networks | 108 | 463 | 3.9% | 0.2% | 7.6% | 4.2 | 21.3 | 1.35 |
+| Cisco Systems | 100,206 | 43,724 | 4.7% | 25.3% | 26.3% | 6.4 | 10.3 | 1.20 |
+| **Mean** | 26,204 | 11,229 | 25.6% | 14.6% | 17.0% | **9.4** | **21.8** | **1.50** |
+| **Median** | 2,251 | 448 | 25.2% | 14.1% | 17.0% | **9.9** | **22.8** | **1.43** |
+
+The exhibit also states the two inputs needed for a CAPM discount rate: the ten-year US Treasury rate was assumed to be **5 percent** and the market risk premium **6.0 percent**.
+
+The relevant forward figures for OutReach come from the projections: 2012 revenue of 137 million, EBITDA of 38.84 million and net income of 26.71 million, rising to 2017 revenue of 525 million, EBITDA of 157.85 million and net income of 108.66 million. Since the company carries no debt, its enterprise value and its equity value are the same thing, so the enterprise value multiples can be applied without adjustment.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Value on the peer median forward EBITDA multiple</span>
+    <code>38.84 x 9.85 = 383 million</code>
+  </div>
+  <div>
+    <span class="name">Value on the peer mean forward EBITDA multiple</span>
+    <code>38.84 x 9.4 = 365 million</code>
+  </div>
+  <div>
+    <span class="name">Value on the peer median forward P/E</span>
+    <code>26.71 x 22.8 = 609 million</code>
+  </div>
+  <div>
+    <span class="name">Value on the peer mean forward P/E</span>
+    <code>26.71 x 21.8 = 583 million</code>
+  </div>
+</div>
+
+Now run the comparison in the other direction, which is the more revealing way to read it. Ask what multiples the two negotiating positions imply.
+
+| Implied by | Post-money value | Forward EBITDA multiple | Forward P/E |
+|---|--:|--:|--:|
+| The investor's offer, 30 percent for 30 million | 100 | 2.6 | 3.7 |
+| The founder's counter, 15 percent for 30 million | 200 | 5.1 | 7.5 |
+| Peer median | | 9.9 | 22.8 |
+| Peer mean | | 9.4 | 21.8 |
+| Cheapest single peer | | 4.2 | 10.3 |
+
+Read that table slowly. The offer prices a profitable, fast-growing company at **2.6 times forward EBITDA** when the cheapest listed peer trades at 4.2 and the median at 9.9. Even the founder's own supposedly aggressive counter is below the cheapest peer on both metrics. On the comparables evidence alone, the founder's 15 percent is not an aggressive ask, it is a conservative one.
+
+**Why the peer set does not settle it.** The four peers illustrate every caveat from section 7 at once. Cisco is 45 times the size of the other three combined and drags every mean into meaninglessness, which is why the mean market capitalisation of 26 billion sits eleven times above the median of 2.25 billion. Two of the four are growing at 4 to 5 percent a year, nothing like OutReach's 117 percent, while the other two grow at 46 to 48 percent. EBITDA margins run from 0.2 percent to 30 percent, which makes an EBITDA multiple almost incomparable across the set. And every one of them is **listed**, so a liquidity discount is owed before their multiples touch a private company. All four objections push the same way: the peer-implied values of 365 to 609 million are an upper bound, not a target.
+
+**Cross-checking with the venture capital model.** This is where the investor's logic becomes visible. Take the exit value from the comparables, apply the peer median forward EBITDA multiple to the 2017 projection, and assume an exit five years out at the end of 2016.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Exit value from exit comparables</span>
+    <code>X_e = 157.85 x 9.85 = 1,555 million</code>
+  </div>
+  <div>
+    <span class="name">At a 50 percent required return over 5 years</span>
+    <code>V_POST = 1,555 / 1.5^5 = 1,555 / 7.594 = 205 million,  so F_INV = 30 / 205 = 14.6 percent</code>
+  </div>
+  <div>
+    <span class="name">At a 40 percent required return</span>
+    <code>V_POST = 1,555 / 1.4^5 = 1,555 / 5.378 = 289 million,  so F_INV = 30 / 289 = 10.4 percent</code>
+  </div>
+  <div>
+    <span class="name">At a 60 percent required return, the top of the stated range</span>
+    <code>V_POST = 1,555 / 1.6^5 = 1,555 / 10.486 = 148 million,  so F_INV = 30 / 148 = 20.2 percent</code>
+  </div>
+</div>
+
+Across the entire 40 to 60 percent band that the case itself says venture investors look for, the venture capital model hands back an ownership fraction of 10 to 20 percent. The founder's 15 percent sits in the middle of that range. To justify **30 percent**, the required return has to be far higher.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">The return implied by the offer</span>
+    <code>(1 + rho)^5 = 1,555 / 100 = 15.55,  so rho = 15.55^(1/5) - 1 = 73 percent per year</code>
+  </div>
+  <div>
+    <span class="name">And what failure probability that would need, using rho = (d + z) / (1 - z) with d = 14 percent from CAPM</span>
+    <code>0.73 = (0.14 + z) / (1 - z),  which gives z = 34 percent per year</code>
+  </div>
+</div>
+
+The CAPM rate there comes straight from the exhibit: 5 percent riskless plus a mean peer beta of 1.50 times a 6 percent market risk premium gives **14 percent**. A 34 percent annual chance of failure is a plausible number for a pre-revenue startup. It is not a plausible number for a company with 63 million dollars of revenue, 17 million of EBITDA and a history of profitability since inception. Apply a more defensible 20 percent annual failure rate instead and the formula gives rho equal to 0.34 divided by 0.80, that is **42.5 percent**, which lands squarely in the normal band and implies an ownership fraction near 11 percent.
+
+**What I would conclude.** The offer is not arrived at by valuation, it is arrived at by habit. The investor is applying the ownership fraction a fund typically takes in a first round, and a 30 percent stake for a lead investor is the industry default. The valuation numbers were reverse-engineered to fit it. The genuine arguments on the investor's side are real but small: a private company deserves a liquidity discount against those listed multiples, the projections come from the investor's own model rather than a track record, revenue visibility is poor because the sales model is indirect, the intellectual property is not properly protected, and 30 million dollars is an unusually large first cheque that consumes a meaningful slice of a 350 million dollar fund. None of those adds up to a 73 percent required return. The right move is to negotiate hard with exactly this arithmetic on the table, and the founder's strongest card is the one the whole case rests on: **he does not need the money.** A company profitable since inception can walk away, and that is the only negotiating position in venture capital that never weakens.
+
+## Worked example
+
+A venture of my own, valued three ways. Call it a small industrial sensor analytics company, currently at 1.2 million euros of revenue, raising **2.0 million euros** and holding 0.1 million of cash. All figures in millions of euros.
+
+### Method 1, discounted cash flow
+
+Projected free cash flows, a discount rate of 30 percent reflecting a young private company, and a long-run growth rate of 4 percent.
+
+| Year | 1 | 2 | 3 | 4 | 5 |
+|---|--:|--:|--:|--:|--:|
+| Free cash flow | (0.80) | (0.50) | 0.40 | 1.20 | 2.00 |
+| Discount factor at 30% | 0.769 | 0.592 | 0.455 | 0.350 | 0.269 |
+| Discounted free cash flow | (0.615) | (0.296) | 0.182 | 0.420 | 0.539 |
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Terminal value at the end of year 5</span>
+    <code>TV_5 = 2.00 x 1.04 / (0.30 - 0.04) = 2.08 / 0.26 = 8.00</code>
+  </div>
+  <div>
+    <span class="name">Discounted terminal value</span>
+    <code>8.00 x 0.269 = 2.154</code>
+  </div>
+  <div>
+    <span class="name">Sum of discounted operating cash flows</span>
+    <code>-0.615 - 0.296 + 0.182 + 0.420 + 0.539 = 0.230</code>
+  </div>
+  <div>
+    <span class="name">Pre-money valuation</span>
+    <code>V_PRE = 0.230 + 2.154 + 0.10 = 2.48</code>
+  </div>
+</div>
+
+The terminal value is **90 percent** of the discounted total, exactly as the deck predicts. And the sensitivity is savage: raise the discount rate to 40 percent, change nothing else, and the operating cash flows contribute almost exactly zero while the terminal value falls to 2.08 divided by 0.36, that is 5.78, discounted at 0.186 to 1.07. The pre-money valuation drops to **1.18**, less than half, on a change of assumption nobody could prove wrong.
+
+### Method 2, the venture capital model
+
+Assume an exit at 40 million euros in five years and a required return of 50 percent, which the failure-rate formula justifies with an ordinary discount rate of 20 percent and a 20 percent annual failure probability, since 0.40 divided by 0.80 is 0.50.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Cash-on-cash multiple</span>
+    <code>CCM = 1.5^5 = 7.594</code>
+  </div>
+  <div>
+    <span class="name">Post-money valuation</span>
+    <code>V_POST = 40 / 7.594 = 5.27</code>
+  </div>
+  <div>
+    <span class="name">Pre-money valuation</span>
+    <code>V_PRE = 5.27 - 2.00 = 3.27</code>
+  </div>
+  <div>
+    <span class="name">Investor ownership fraction</span>
+    <code>F_INV = 2.00 / 5.27 = 38.0 percent</code>
+  </div>
+</div>
+
+Now handle the round that is really coming: a second round of 3.0 million euros in year 2, three years before the exit. Apply the recursion.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Round 2, three years to exit</span>
+    <code>V_POST(2) = 40 / 1.5^3 = 40 / 3.375 = 11.85,  V_PRE(2) = 11.85 - 3.00 = 8.85,  F_INV(2) = 3.00 / 11.85 = 25.3 percent</code>
+  </div>
+  <div>
+    <span class="name">Round 1, two years earlier, valued off round 2's pre-money</span>
+    <code>V_POST(1) = 8.85 / 1.5^2 = 8.85 / 2.25 = 3.93,  V_PRE(1) = 3.93 - 2.00 = 1.93,  F_INV(1) = 2.00 / 3.93 = 50.8 percent</code>
+  </div>
+  <div>
+    <span class="name">Consistency check on the first investor</span>
+    <code>50.8 percent x (1 - 0.253) = 38.0 percent at exit, worth 0.380 x 40 = 15.2, which is 7.59 times the 2.00 invested</code>
+  </div>
+</div>
+
+That check is the point of the whole method. Anticipating the second round cuts the first-round pre-money from 3.27 to **1.93** and raises the investor's fraction from 38 to **51 percent**, and the two effects exactly cancel so the investor still earns their required 7.59 times multiple. Dilution is not an afterthought bolted onto the model, it is already inside it.
+
+### Method 3, comparables
+
+Two readings. For a **current** value, five recent private financings of similar companies at a similar stage had post-money valuations of 3.0, 4.0, 5.0, 6.5 and 9.0 million euros, a median of 5.0 and a mean of 5.5. For an **exit** value, listed peers in industrial software trade at a median of 3.0 times revenue, and the year-5 revenue projection is 12 million euros.
+
+<div class="sc-formula">
+  <div>
+    <span class="name">Investment comparables, value today</span>
+    <code>V_POST = median post-money of 5.0,  so V_PRE = 5.0 - 2.0 = 3.00 and F_INV = 2.0 / 5.0 = 40 percent</code>
+  </div>
+  <div>
+    <span class="name">Exit comparables, feeding the venture capital model</span>
+    <code>X_e = 12 x 3.0 = 36, close enough to the 40 assumed above to say the exit story is not fantasy</code>
+  </div>
+</div>
+
+### The three answers side by side
+
+| Method | Pre-money, million euros | Investor share for 2.0 million | What actually drives the number |
+|---|--:|--:|---|
+| Discounted cash flow, d = 30% and g = 4% | 2.48 | 44.6% | The terminal value, which is 90 percent of the answer |
+| Discounted cash flow, d = 40% and g = 4% | 1.18 | 62.9% | The same terminal value, discounted harder |
+| Venture capital model, single round | 3.27 | 38.0% | The 40 million exit and the 50 percent required return |
+| Venture capital model, with the second round | 1.93 | 50.8% | The same exit, minus the dilution from a 3.0 million round two |
+| Investment comparables | 3.00 | 40.0% | The median post-money of five similar private deals |
+
+**Why they differ, and which I would lead with.** The spread runs from 1.2 to 3.3 million euros pre-money, a factor of nearly three, and every one of those numbers is defensible. They differ because they are answering slightly different questions. The DCF asks what this company's own cash generation is worth and is dominated by a growth rate five years out. The venture capital model asks what an investor can pay and still hit their fund's return, and is dominated by the exit value and the hurdle rate. Comparables ask what the market is currently paying for things that look like this, and is dominated by whoever ended up in the peer set. The three answers are not competing estimates of one true value, they are three different lenses.
+
+I would lead with the **venture capital model, two-round version, at roughly 1.9 to 2.0 million pre-money**, for three reasons. It is the language the investor is already thinking in, so the negotiation happens on shared terms. It produces an ownership fraction directly, which is the thing actually being negotiated. And it accounts honestly for the round two that everyone knows is coming, which the other two methods ignore. I would then put comparables next to it as the market sanity check, since 3.0 million is what similar companies raised at and that is a real observed price rather than a projection. The DCF I would keep in the appendix and use defensively, because it does not persuade anybody but it does prove I know my own cash flows, and the gap between the 30 percent and 40 percent versions is the most honest thing on the page: it shows what the negotiation is really about, which is not the projections, it is the discount rate.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Decide first what the valuation is for.** A number to open a negotiation, a number to test whether an offer is fair, or a number to prove you are investor-ready. The three uses tolerate very different levels of precision, and only the second one has to survive an investor's scrutiny.
+
+2. **Write down your four venture capital model inputs before anything else,** because these are the ones an investor will ask for: how much you need and when, how many years to a plausible exit, what the company would sell for if it works, and what return the investor will demand. If you cannot state all four, you are not ready to discuss a valuation.
+
+3. **Build the exit value from comparables, not from ambition.** Find real exits in your space, record the exit value and the metric behind it, compute the multiple for each, and report the mean, median, highest and lowest. Then apply the median, not the mean, to your own projected metric.
+
+4. **Justify your required return rather than accepting a folk number.** Build it up from the five components: riskless rate, financial risk premium, illiquidity premium, failure rate premium and service premium. Then sanity-check it with the formula rho equals (d plus z) divided by (1 minus z) by asking what annual failure probability the investor's rate implies. If the implied number is absurd for a company at your stage, you have found your negotiating argument.
+
+5. **Run the recursion for the rounds you know are coming.** Value round two off the exit, then value round one off round two's pre-money. The lower first-round number that comes out is not a defeat, it is the honest price of a plan that needs more money later.
+
+6. **Run a DCF as an internal discipline, not as a pitch document.** Project free cash flow properly as net income minus the change in net working capital minus capex plus depreciation, compute a terminal value, and then immediately build the sensitivity grid across discount and growth rates. The grid, not the point estimate, is the useful output.
+
+7. **Assemble the investment comparables you can actually get.** Similar business model, stage, sector and round size. Record the post-money valuations, not just the amounts raised, and be honest about how thin the sample is.
+
+8. **Put every answer in one table with its driving assumption written next to it,** the way the worked example above does. Never present a single number without the range around it, and never present an average without the median beside it.
+
+9. **Choose the number you will lead with and prepare to defend the two behind it.** Say out loud which method it comes from and why that method fits your stage. An investor is testing your reasoning, not your arithmetic.
+
+10. **Remember what all of this assumes.** Every method here prices common equity. The moment preferences, liquidation rights and anti-dilution enter the term sheet, the headline valuation stops describing what anybody actually owns, which is the subject of the next chapter.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Pre-money valuation | What the company is agreed to be worth immediately before the new money arrives |
+| Post-money valuation | The pre-money value plus the money just invested, and the denominator that fixes ownership fractions |
+| Intrinsic or absolute valuation | A value derived from the company's own economics, which is what a discounted cash flow produces |
+| Extrinsic or relative valuation | A value imported from what the market pays for other companies, which is what comparables produce |
+| Free cash flow | Net income minus the change in net working capital minus capital expenditure plus depreciation, that is the cash the business actually throws off |
+| Terminal value | The value of everything beyond the projection horizon, computed as the final year's cash flow grown by g and divided by d minus g. For ventures it is usually most of the answer |
+| Discount rate d | The annual rate at which future money is shrunk back to today, derived under CAPM as the riskless rate plus beta times the market risk premium |
+| Beta | How strongly a company's returns move with the market as a whole, which is the measure of its undiversifiable risk |
+| Systematic risk | Risk common to all companies, such as a recession, which no amount of diversification removes and which investors must therefore be paid to bear |
+| Idiosyncratic risk | Risk specific to one company, which disappears in a large portfolio and which the market therefore does not pay you to carry |
+| Required rate of return, rho | The hurdle rate a venture investor charges, built from a riskless rate, a financial risk premium, an illiquidity premium, a failure rate premium and a service premium |
+| Illiquidity premium | Extra return demanded because a private stake cannot be sold, there being almost no secondary market |
+| Failure rate premium | Extra return demanded because most new ventures die, converted from an annual failure probability z by rho equals (d plus z) divided by (1 minus z) |
+| Service premium | Extra return charged for the work the investor does beyond the money: monitoring, advice, mentoring and networking |
+| Exit value X_e | What the company sells for if it succeeds, from an acquisition or an IPO. It is a success-case estimate, not a probability-weighted expected value |
+| Cash-on-cash multiple, CCM | The gross multiple of money returned over money invested, equal to (1 plus rho) to the power of the number of years held |
+| Investment comparables | Valuations read off similar private financings, which are the closest true peers but the hardest data to obtain |
+| Exit comparables | Valuations read off listed mature companies, which are easy to observe but questionably comparable to a venture and owed a liquidity discount |
+| Liquidity discount | The markdown applied to a public-market multiple before using it on a private company, because private shares cannot be sold on demand |
+| PROFEX | Probability of exit, an extension of the venture capital model that treats the venture as a series of crossroads at which it can exit, continue or fail |
+
+## Test yourself
+
+1. Valuing a venture is difficult and time consuming. Give the reason the deck gives for doing it anyway, then list the four challenges that make it hard, and explain the trade-off between a simple and a complex approach.
+2. A venture's year 6 free cash flow is 1,808,960 dollars, the discount rate is 15 percent and the long-run growth rate is 5 percent. Compute the terminal value, then discount it back six years using a discount factor of 0.432. If the six years of discounted operating cash flows sum to minus 570,144 dollars, what is the net present value, and what share of it is the terminal value?
+3. An investor is putting 3 million euros into a venture, expects an exit at 30 million euros in four years, and requires a 45 percent annual return. Compute the cash-on-cash multiple, the post-money valuation, the pre-money valuation and the investor's ownership fraction.
+4. Using the peer figures from the case, a peer median forward EBITDA multiple of 9.85 and a peer median forward price to earnings ratio of 22.8, value a company whose forward EBITDA is 38.84 million dollars and whose forward net income is 26.71 million dollars. Then say what multiples an offer of 30 million dollars for 30 percent would imply, and comment.
+5. An ordinary discount rate for a company is 25 percent and its annual probability of failure is 15 percent. Compute the required rate of return a venture investor should charge, and explain in one sentence why this formula matters in a negotiation.
+6. Give the two crucial choices in the exit comparables method and the four caveats on using multiples, then explain why the mean and the median of a peer set can differ so violently.
+
+<Aside type="note" title="Answers">
+1. It is done because both parties need an informed opinion to enter the negotiation and to know how flexible they can be on price. For the investor it is part of the decision-making process; for the entrepreneur it is what makes them investor-ready. The four challenges are a high degree of uncertainty of the deep kind where the outcomes themselves are not known, asymmetric information between founder and investor, a lack of value-relevant objective information because there is no history, and inadequate accounting for intangible assets including human capital. The trade-off is that the same uncertainty argues both ways: it calls for a simple reasonable approach because elaborate models only dress up guesses, and it also calls for a precise complex methodology because uncertainty is exactly what needs modelling. Different people take different views and the deck does not resolve it.
+2. Terminal value is 1,808,960 times 1.05 divided by 0.10, which is **18,994,081**. Discounted it is 18,994,081 times 0.432, which is **8,211,665**. Net present value is 8,211,665 minus 570,144, which is **7,641,521**. The terminal value is 8,211,665 divided by 7,641,521, that is about **107 percent** of the answer, because the operating cash flows are net negative. This is the deck's point that terminal value is the main component of a venture DCF.
+3. CCM equals 1.45 to the power 4, which is **4.42**. Post-money is 30 divided by 4.42, which is **6.79 million euros**. Pre-money is 6.79 minus 3.00, which is **3.79 million euros**. The ownership fraction is 3.00 divided by 6.79, which is **44.2 percent**.
+4. On the EBITDA multiple, 38.84 times 9.85 gives about **383 million dollars**. On the P/E, 26.71 times 22.8 gives about **609 million dollars**. An offer of 30 million for 30 percent implies a post-money value of 100 million, which is 100 divided by 38.84, that is **2.6 times forward EBITDA**, and 100 divided by 26.71, that is **3.7 times forward earnings**. Both are far below even the cheapest listed peer at 4.2 and 10.3 respectively, so the offer cannot be justified from the comparables and must be coming from somewhere else, most likely from a standard target ownership fraction combined with a liquidity discount and doubts about the projections.
+5. rho equals (0.25 plus 0.15) divided by (1 minus 0.15), that is 0.40 divided by 0.85, which is **47.1 percent**. It matters because it converts an argument about an unverifiable hurdle rate into an argument about an annual failure probability, which is something both sides can actually debate with evidence about the company's stage, revenue and profitability.
+6. The two crucial choices are the set of comparable companies and the comparison metric. The four caveats are: measure the multiple consistently across all comparables and the focal company; look at the whole distribution rather than only the average; remember that multiples are market valuations and are therefore prone to herding; and accept that finding and choosing comparable companies is genuinely hard for innovative firms, since being innovative is not a similarity. Mean and median diverge because peer sets almost always contain an outlier, as when one peer's revenue multiple of 12.5 lifts a set whose typical multiple is about 1.2 to an average of 3.5, or when a single very large listed company dominates a set of small ones.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- Valuation is difficult and time consuming, but both sides need an **informed opinion** to negotiate and to know how flexible they can be on price. For investors it is part of the decision process; for founders it is how you become **investor-ready**.
+- Four challenges: **deep uncertainty** where even the outcomes are unknown, **asymmetric information**, **lack of value-relevant objective information**, and **inadequate accounting for intangibles** including human capital.
+- The same uncertainty argues for a **simple reasonable** approach and for a **precise complex** one. Different people take different views.
+- **DCF**, from theory and practice, models the company's cash flows and gives an intrinsic, absolute value: `V_PRE = sum of FCF_t/(1+d)^t + TV_T/(1+d)^T + Cash_0`, with `FCF = Net income - change in NWC - Capex + Depreciation`, `TV_T = FCF_T x (1+g)/(d-g)`, and `d = riskless + beta x (market rate - riskless)` from CAPM. **Terminal value is most of the answer** because interim venture cash flows are negative, and the sensitivity grid shows the same company worth 26.9 million dollars or minus 0.7 million on two unverifiable assumptions.
+- **The venture capital model**, from practice, simple and consistent, models the investor's cash flows: `V_POST = X_e/(1+rho)^T`, `V_PRE = V_POST - I`, `F_INV = I/V_POST`. Four inputs: I, T, X_e and rho. X_e is a **success-case** estimate, not a statistical expectation, because the model assumes the venture either works or dies.
+- **rho has five parts**: riskless rate, financial risk premium and illiquidity premium on the financial side; failure rate premium and service premium on the non-financial side. The bridge formula is `rho = (d + z)/(1 - z)`, so 14 percent plus a 20 percent annual failure rate gives 42.5 percent.
+- **Later rounds** are handled by recursion, not by a bolt-on: `V_POST(r) = V_PRE(r+1)/CCM_r`, which pushes the current valuation down and the current investor's fraction up by exactly enough to offset the coming dilution.
+- **Comparables**, from practice, use market information for an extrinsic, relative value: `M_j = V_j/PM_j`, `M = average of M_j`, `X_e = PM_e x M`. **Investment comparables** use private deals and are the closer peers but the scarcer data; **exit comparables** use listed companies and are abundant but questionably comparable, and owe a **liquidity discount**.
+- Metrics in order of economic meaning: **cash flow** best, **revenues** most available, **earnings** may be negative or volatile, **operating measures** only tenuously linked to income. Four caveats: measure consistently, read the whole distribution, remember multiples herd, and accept that being **innovative is not a similarity**.
+- **Probability-based methods** model uncertainty explicitly: **scenario analysis** with `V = sum of p_s x V_s`, **simulation**, and **PROFEX**, which treats the venture as a series of crossroads where it can exit, continue or fail, and where the key round is the first.
+- Nothing blends the three answers automatically. Lead with the method that fits your stage and audience, show the others as the range, and remember that all of them assume the investor takes **common equity**, which is almost never true.
+</Aside>
+
+*Next: [Term Sheets →](/learnings/mba/innovation-and-new-business-planning/14-term-sheets/) - the clauses that decide who really controls the company.*

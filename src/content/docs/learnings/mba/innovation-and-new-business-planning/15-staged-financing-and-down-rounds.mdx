@@ -1,0 +1,619 @@
+---
+title: "Staged Financing and Down Rounds"
+description: "Why investors release money in instalments rather than all at once - the entrepreneur's saving on dilution against the investor's option value of waiting, power of the purse and easy exit, the decision-tree arithmetic that prices staging, tranching versus staging, insider and outsider rounds, the retention rate, who wants a high price and who wants a low one, pre-emption, pay-to-play and anti-dilution, and the full mechanics of a down round with full ratchet against weighted average."
+sidebar:
+  label: "15 · Staged Financing"
+  order: 15
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Innovation & New Business Planning - TUHH Institute of Innovation Marketing & Institute of Entrepreneurship, Hamburg · part of my Technology Management MBA · my own study notes, rewritten in my words for revision.*
+
+---
+
+Every previous finance chapter treated a financing round as a single event: money goes in, shares come out, everybody's percentage moves. Real venture money almost never arrives that way. It arrives in instalments, each one negotiated separately, each one at a new price, and each one conditional on the company having done something since the last time. This chapter is about why that is, and about what it does to everybody's ownership when the plan works and, more painfully, when it does not.
+
+The session is built on a single running arithmetic example. A company needs money in three chunks: **2 million dollars for a prototype, 3 million to start commercialisation, and 10 million to scale up**, 15 million dollars in total. It can raise all 15 upfront, or split it into two rounds of 5 and 10, or into three rounds of 2, 3 and 10. The deck then works out what each of those choices does to ownership, and then what each does to value once you take the probability of failure seriously. The answers are not small differences. The entrepreneur ends up with somewhere between roughly 20 percent and roughly 59 percent of the same company depending only on how the money was sliced.
+
+The second half of the session is the unhappy case. If a later round happens at a **lower share price** than an earlier one, everything that looked like a technicality in the term sheet suddenly has teeth. Anti-dilution clauses fire, old investors get free shares, founders get squeezed, option holders get washed out, and the negotiation moves from being between the company and the investor to being between the investors themselves.
+
+<Aside type="tip">
+**The one idea to carry through.** Staging exists because **information arrives over time and money does not have to**. Every instalment the investor withholds is an option they still hold, and every instalment they hold back is dilution the entrepreneur has not yet suffered. That is why both sides can genuinely prefer staging to a single cheque. The whole clause architecture - pre-emption, pay-to-play, tranching, anti-dilution - is just the contractual machinery for handling the gap between one instalment and the next.
+</Aside>
+
+## 1 · What the session is trying to settle
+
+Four questions frame everything that follows, and it is worth reading them as a checklist before revising the detail.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1. Why is equity in entrepreneurial companies so often staged?<span class="sub">what each side gains from receiving the money in instalments</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">2. What are the bargaining dynamics between old and new investors?<span class="sub">insiders and outsiders want different prices, and the difference is measurable</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">3. Which term-sheet clauses relate specifically to staged investments?<span class="sub">pre-emption, right of first refusal, pay-to-play, tranching, anti-dilution, the liquidation stack</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">4. What happens when a company experiences a down round?<span class="sub">the price falls, the clauses fire, and somebody pays for it</span></div>
+  </div>
+  <figcaption>The four learning goals. Goals 1 and 2 are economics, goal 3 is contract law made operational, and goal 4 is where the first three collide.</figcaption>
+</div>
+
+## 2 · Why financing is staged: two different motives that happen to agree
+
+The deck splits the motivation cleanly by party, and the split is worth memorising exactly as given, because the entrepreneur has one reason and the investor has three.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">For the entrepreneur <small>one motive</small></div>
+      <ul>
+        <li>Staging <strong>reduces the cost of fundraising and the associated dilution</strong></li>
+        <li>The logic: you only sell shares at today's low price for the money you need today. The rest you sell later, at a higher price, once the risk has come down</li>
+        <li>Money raised early is the most expensive money you will ever take, because it is priced against the biggest remaining uncertainty</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">For the investor <small>three motives</small></div>
+      <ul>
+        <li>Staging creates the <strong>option value of waiting</strong>: the right, not the obligation, to put in the next instalment once more is known</li>
+        <li>Staging increases control through the <strong>power of the purse</strong>: the company has to come back, and it has to come back with something to show</li>
+        <li>Staging <strong>facilitates termination of investing</strong>, and the deck sharpens this into a distinction between <strong>refusal</strong> and <strong>getting back</strong></li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The two columns are not in tension. Both sides prefer instalments, for reasons that have nothing to do with each other.</figcaption>
+</div>
+
+The refusal-versus-getting-back distinction is the sharpest idea on the slide. Once money is inside a company it is extremely hard to pull out: you would have to force a sale, or litigate, or persuade the other shareholders. Money you have simply **not yet committed** costs nothing to withhold. Staging therefore converts the near-impossible act of recovering an investment into the trivially easy act of declining to make the next one. Termination becomes a decision instead of a fight.
+
+## 3 · The arithmetic of staging: same 15 million dollars, three different outcomes
+
+Start with the mechanical version, before any probabilities. The entrepreneur holds 10 million shares throughout. Valuations rise between rounds because the company has progressed.
+
+| Structure | Round | New capital, million dollars | Post-money, million dollars | Pre-money, million dollars | Price per share, dollars | New shares, million | Total shares, million | Investors own | Entrepreneur owns |
+|---|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **Single round** | 1 | 15 | 25 | 10 | 1.00 | 15 | 25 | 60.00% | **40.00%** |
+| **Two rounds** | 1 | 5 | 15 | 10 | 1.00 | 5 | 15 | 33.33% | 66.67% |
+| | 2 | 10 | 55 | 45 | 3.00 | 3.33 | 18.33 | 45.45% | **54.55%** |
+| **Three rounds** | 1 | 2 | 12 | 10 | 1.00 | 2 | 12 | 16.67% | 83.33% |
+| | 2 | 3 | 24.6 | 21.6 | 1.80 | 1.67 | 13.67 | 26.83% | 73.17% |
+| | 3 | 10 | 51 | 41 | 3.00 | 3.33 | 17.00 | 41.18% | **58.82%** |
+
+Read the bold column downwards. The identical company, financed to the identical total of 15 million dollars, leaves its founder with **40 percent, 54.55 percent or 58.82 percent** purely as a function of how finely the money was sliced. Nothing else changed. That is the entrepreneur's motive from section 2, expressed as a number.
+
+The deck then adds a fourth variation to the same table, and this is the one to remember, because it is the first appearance of a down round in the course. Everything is as in the three-round case except that **round 2 goes badly**: instead of the price rising from 1.00 to 1.80 dollars, it falls to 0.60 dollars.
+
+| Down-round variation | New capital, million dollars | Post-money, million dollars | Pre-money, million dollars | Price per share, dollars | New shares, million | Total shares, million | Entrepreneur owns |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| Round 1 | 2 | 12 | 10 | 1.00 | 2 | 12 | 83.33% |
+| Round 2 **(down)** | 3 | 10.2 | 7.2 | **0.60** | 5 | 17.00 | 58.82% |
+| Round 3 | 10 | 61 | 51 | 3.00 | 3.33 | 20.33 | **49.18%** |
+
+The same 3 million dollars now buys **5 million shares instead of 1.67 million**, because each share is cheap. That single bad round costs the entrepreneur **9.64 percentage points** by the end, 49.18 percent instead of 58.82 percent, even though round 3 recovers to exactly the same 3.00 dollars per share as in the healthy path. A down round is not a temporary embarrassment that later good news erases. The extra shares it issues are permanent.
+
+## 4 · Putting a price on the option value of waiting
+
+The table above assumes every round happens. The next step in the deck takes failure seriously, models the project as a **binary outcome** with an explicit probability of success, and solves a **decision tree backwards**. The exit value is 200 dollars if the venture succeeds, the discount rate is 20 percent, and the total horizon is five periods.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Post-money at any stage</div>
+    <code>VPOST = probability of reaching the next stage * value at that stage / discount factor</code>
+  </div>
+  <div>
+    <div class="name">Pre-money</div>
+    <code>VPRE = VPOST - investment at this stage</code>
+  </div>
+</div>
+
+| | Single round | Two rounds | Three rounds |
+|---|---|---|---|
+| Timing | t equals 0, exit at 5 | t equals 0 and 2, exit at 5 | t equals 0, 1 and 2, exit at 5 |
+| Conditional probability of reaching the stage | 10% | 20%, then 50% | 40%, then 50%, then 50% |
+| Unconditional probability | 10% | 20%, then 10% | 40%, 20%, then 10% |
+| Investment, dollars | 15 | 5, then 10 | 2, 3, then 10 |
+| Time to next stage | 5 | 2, then 3 | 1, 1, then 3 |
+| Discount factor at 20% | 2.49 | 1.44, then 1.73 | 1.20, 1.20, then 1.73 |
+| Post-money, dollars | 8.04 | 6.65, then 57.87 | 5.65, 19.95, then 57.87 |
+| Pre-money, dollars | **-6.96** | **1.65**, then 47.87 | **3.65**, 16.95, then 47.87 |
+
+Notice what happens in the single-round column. Post-money is 200 times 10 percent divided by 2.49, which is 8.04 dollars, and the investor is being asked to put in 15. The pre-money valuation is therefore **minus 6.96 dollars**. The deal is not merely unattractive, it is arithmetically impossible: nobody funds a company whose pre-money value is negative. Full funding upfront is not a worse deal, it is **not a deal at all**.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Option value of staging, two rounds</div>
+    <code>1.65 - (-6.96) = 8.61</code>
+  </div>
+  <div>
+    <div class="name">Option value of staging, three rounds</div>
+    <code>3.65 - (-6.96) = 10.61</code>
+  </div>
+</div>
+
+That difference in pre-money value is the **flexibility to abandon an unsuccessful venture**, expressed in dollars. Splitting into two rounds is worth 8.61 dollars of value; splitting into three is worth 10.61. It is created purely by the right to stop after each instalment.
+
+Once you re-run the ownership table with these probability-adjusted valuations, the entrepreneur's position changes dramatically, because early shares are now priced at what they are really worth.
+
+| Structure | Round | Capital, million dollars | Probability of success | Post-money | Pre-money | Price per share, dollars | New shares, million | Total shares, million | Entrepreneur owns |
+|---|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **Single round** | 1 | 15 | 10% | 8.04 | -6.96 | not financeable | - | - | **no deal** |
+| **Two rounds** | 1 | 5 | 20% | 6.65 | 1.65 | 0.16 | 30.33 | 40.33 | 24.80% |
+| | 2 | 10 | 50% | 57.87 | 47.87 | 1.19 | 8.42 | 48.75 | **20.51%** |
+| **Three rounds** | 1 | 2 | 40% | 5.65 | 3.65 | 0.36 | 5.48 | 15.48 | 64.59% |
+| | 2 | 3 | 50% | 19.95 | 16.95 | 1.09 | 2.74 | 18.22 | 54.88% |
+| | 3 | 10 | 50% | 57.87 | 47.87 | 2.63 | 3.81 | 22.03 | **45.40%** |
+
+Three rounds leaves the entrepreneur with **45.40 percent** against **20.51 percent** for two rounds. The reason is visible in the price column: raising only 2 million dollars at the very first, riskiest moment means selling only 5.48 million cheap shares. Raising 5 million at that moment means selling 30.33 million of them.
+
+<Aside type="note" title="PROFEX, recapped from the valuation chapter">
+The same multi-stage logic is what the **PROFEX** model formalises. The name stands for **PRobability OF EXit**, and it extends the venture capital method by modelling the uncertainty about exit outcomes rather than burying it in a very high discount rate. It computes consistent valuations for all financing rounds, and it models the company as passing a series of likely cross-roads at which it can **exit profitably, continue, or fail**. At each cross-road there is a probability distribution and a set of valuations for each outcome, and at each round the post-money value is the discounted value of the next round's expected valuation. The payoff is that you can then use discount rates that no longer contain idiosyncratic failure risk, because the failure risk is already inside the probability-weighted valuations.
+
+Applied to the WorkHorse example the stages run: 0.5 invested at t equals 0 on a pre-money of 1.8 and a post-money of 2.3; 2 invested at t equals 1 on a pre of 5.5 and a post of 7.5; 12 invested at t equals 4 on a pre of 14.1 and a post of 26.1; 6 invested at t equals 7 on a pre of 21.8 and a post of 27.8; and exit at t equals 9. The branch probabilities tighten as the venture advances, from a 50 percent chance of failure at the second stage down to a certain exit at the last.
+</Aside>
+
+## 5 · Milestones, and tranching as staging's automatic cousin
+
+Each instalment is gated. The deck's own example defines the stages by **what the money buys**: 2 million dollars gets you a prototype, 3 million gets commercialisation started, 10 million funds the scale-up. Those deliverables are the milestones, and the decision tree shows what a milestone is really for: reaching one **changes the probability of reaching the next**, from 40 percent to 50 percent to 50 percent in the three-round case. A milestone that would not move that number is not doing any work.
+
+**Tranching** is the intermediate arrangement between one big cheque and a full new round. It is a contractual arrangement that specifies **a total round amount and the share price**, then divides that amount into tranches, typically two. The second tranche is **conditional on achieving a milestone**, and the deck notes that the conditionality can be either **automatic** or **at the investor's discretion**.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Staging <small>a genuinely new round</small></div>
+      <ul>
+        <li>Requires <strong>negotiation</strong> each time</li>
+        <li>Entails <strong>uncertainty about its outcome</strong>: you do not know the price, or whether it happens at all</li>
+        <li>Upside for the entrepreneur if things went well, because the price can rise a lot</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Tranching <small>one round, paid in two</small></div>
+      <ul>
+        <li>Largely <strong>automatic</strong> once the milestone is hit</li>
+        <li>Price is fixed in advance for both tranches, so there is no repricing risk in either direction</li>
+        <li>Certainty for both sides, paid for by giving up the upside of a re-rating</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Both split one payment into two, but only one of them re-opens the price. Staging buys the chance of a better valuation; tranching buys certainty of release.</figcaption>
+</div>
+
+The WorkHorse comparison makes the trade-off concrete. In all three variants the founder starts with 800,000 of 1,666,667 shares, that is 48 percent, and the company needs 5 million dollars in total.
+
+| | Full financing | Staged financing | Tranched financing |
+|---|--:|--:|--:|
+| B round investment | 5,000,000 | 2,000,000 | 2,000,000 |
+| B round price per share | 8.00 | 10.00 | 10.00 |
+| B round pre-money | 13,333,333 | 16,666,667 | 16,666,667 |
+| B round post-money | 18,333,333 | 18,666,667 | 18,666,667 |
+| New shares issued | 625,000 | 200,000 | 200,000 |
+| Founder percentage after B | 34.91% | 42.86% | 42.86% |
+| B-plus investment | - | 3,000,000 | 3,000,000 |
+| B-plus price per share | - | **12.00** | **10.00** |
+| B-plus pre-money | - | 22,400,000 | 18,666,667 |
+| New shares issued | - | 250,000 | 300,000 |
+| Total shares at the end | 2,291,667 | 2,116,667 | 2,166,667 |
+| **Founder percentage at the end** | **34.91%** | **37.80%** | **36.92%** |
+
+Full financing is clearly worst for the founder, because the whole 5 million dollars is sold at the low early price of 8 dollars. Staging is best at 37.80 percent, because the second 3 million is sold at 12 dollars after the company has proved itself. Tranching lands in between at 36.92 percent: the price stays locked at 10 dollars, so the founder gives up the re-rating from 10 to 12, but in exchange the second tranche arrives automatically and does not have to be re-negotiated. The gap between 37.80 and 36.92 percent is the price of that certainty.
+
+## 6 · Old investors and new investors
+
+A new round typically involves both **old investors, the insiders**, and **new investors, the outsiders**, and they are not interchangeable. The deck asks directly what the best composition is, and gives the honest answer that each pure form has a defect.
+
+<div class="sc-quad">
+  <div class="q blue">
+    <div class="qh">Insider round <small>only the existing investors put money in</small></div>
+    <ul>
+      <li>Advantage: <strong>knowledge</strong>. They already know the company, the team and the numbers, so the round can be fast and cheap</li>
+      <li>Risk of <strong>exploitation</strong>: nobody independent is setting the price, so the insiders can set it in their own favour</li>
+      <li>Risk of <strong>limited contribution</strong>: no new expertise, no new network, no new money beyond what the existing funds hold</li>
+    </ul>
+  </div>
+  <div class="q violet">
+    <div class="qh">Outsider round <small>a new lead investor prices the round</small></div>
+    <ul>
+      <li>Advantage: fresh <strong>expertise</strong>, a genuinely independent price, and new networks</li>
+      <li>The uncomfortable question it raises: <strong>why do the insiders stay out?</strong></li>
+      <li>An outsider will read insider absence as the people who know most declining to buy more</li>
+    </ul>
+  </div>
+  <div class="q amber">
+    <div class="qh">What decides which one you get</div>
+    <ul>
+      <li><strong>Deep pockets</strong>: whether the existing funds still have reserves allocated to this company</li>
+      <li><strong>Expertise and networks</strong>: whether what the company needs next is money or capability</li>
+      <li><strong>Signaling effects</strong>: what each configuration tells the market</li>
+    </ul>
+  </div>
+  <div class="q green">
+    <div class="qh">Retention rate</div>
+    <ul>
+      <li>The extent to which an investor's stake is reduced if they do <strong>not</strong> re-invest</li>
+      <li>Formally, the ratio between the final post-deal ownership fraction of the inside investors and their current ownership</li>
+      <li>It lets an investor estimate the return they will eventually get, <strong>after allowing for future dilution</strong></li>
+    </ul>
+  </div>
+</div>
+
+The retention rate is the number that makes future dilution plannable rather than a nasty surprise. If you own 20 percent today and you know that two more rounds are coming in which you will not participate, the retention rate tells you what fraction of that 20 percent survives to the exit, and therefore what exit value you actually need for your money to work.
+
+## 7 · Who wants a high price and who wants a low one
+
+Here is where the bargaining gets genuinely interesting, because an existing investor is playing both roles at once. **As an insider** already holding shares, they want a **high** valuation, so their existing stake is not diluted. **As an outsider** buying new shares in this round, they want a **low** valuation, so their new money buys more. Which force prevails?
+
+The deck's answer is a clean rule built on **pro rata**, defined as the investment that exactly keeps your ownership fraction constant. Anything less is a **below pro rata** investment, anything more is **above pro rata**.
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Investing below pro rata<span class="sub">your stake will shrink either way, so you are mostly a seller: you want the price HIGH</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node soft">Investing exactly pro rata<span class="sub">your percentage is unchanged whatever the price, so you are INDIFFERENT</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Investing above pro rata<span class="sub">you are net buying, so you want the price LOW</span></div>
+  </div>
+  <figcaption>Pro rata is the pivot. It is the exact point at which an investor stops caring about the price of the round.</figcaption>
+</div>
+
+The WorkHorse table proves it. The company raises 10 million dollars in a B round and the class is asked to compare a **high-price round at 10.00 dollars** with a **low-price round at 8.00 dollars**. Before the round there are 1,666,667 shares at 4.80 dollars, an 8 million dollar company.
+
+| Holder | Before the B round | Low price, 8.00 dollars | High price, 10.00 dollars | Their B-round cheque | Prefers |
+|---|--:|--:|--:|--:|---|
+| Founders | 48.0% | 27.43% | 30.00% | none | high price |
+| The angel, common shares | 7.5% | 4.29% | 4.69% | none | high price |
+| Other common | 19.5% | 11.14% | 12.19% | none | high price |
+| The angel, Series A | 2.5% | 1.86% | 1.94% | 100,000, below pro rata | high price |
+| Eagle-I Ventures | 12.5% | **12.50%** | **12.50%** | 1,250,000, exactly pro rata | **indifferent** |
+| Coyo-T Capital | 10.0% | 16.43% | 15.63% | 2,500,000, above pro rata | low price |
+| JetLuck, new | 0% | 17.14% | 15.00% | 4,000,000, all new | low price |
+| GestuetenTechnik, new | 0% | 9.21% | 8.06% | 2,150,000, all new | low price |
+| Total shares | 1,666,667 | 2,916,667 | 2,666,667 | 10,000,000 | |
+| Post-money | 8,000,000 | 23,333,333 | 26,666,667 | | |
+
+Eagle-I Ventures held 12.5 percent and wrote a cheque for 1,250,000 dollars, which is exactly 12.5 percent of the 10 million being raised. It ends at **exactly 12.50 percent under both prices**. That is the pro-rata pivot, visible in a real table. Coyo-T held 10 percent but invested 2.5 million, far above its pro rata share, so the cheap round suits it. Everybody holding common and writing no cheque - the founders and the employees - is unambiguously on the high-price side, which is why founders and new investors are the two poles of the price negotiation and the existing funds sit somewhere in the middle depending on how big a cheque they are writing.
+
+## 8 · The term-sheet clauses that exist because money arrives in stages
+
+Several clauses only make sense once you accept that there will be a next round. This is the set the deck singles out.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Pre-emption rights<span class="n">protects percentage</span></div>
+    <div class="sc-node violet">The right to participate in future rounds by purchasing new shares up to a <strong>pro rata</strong> amount<span class="sub">so an investor can hold their percentage steady through as many rounds as they can afford</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Right of first refusal<span class="n">protects who the shareholders are</span></div>
+    <div class="sc-node amber">Allows the <strong>company</strong> to purchase shares that an investor or founder is selling, on the same terms as offered by a third party. It aims at preserving insiders' ownership, and if the company does not exercise the right, the investors can<span class="sub">it keeps unwanted outsiders off the register</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Why both exist<span class="n">two motivations</span></div>
+    <div class="sc-node soft">Both protect an investor's <strong>percentage</strong> ownership, first so they keep their share in the upside, and second because <strong>a certain percentage may be a necessary condition for board rights or information rights</strong><span class="sub">fall below the threshold and you lose your seat, not just some value</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Pay-to-play<span class="n">the entrepreneur's clause</span></div>
+    <div class="sc-node green">Entrepreneurs need protection too. A <strong>duty to participate pro rata</strong> keeps old investors contributing <strong>money and signal</strong>, enforced by a contractual penalty: an investor who does not pay <strong>forfeits rights</strong>, typically anti-dilution, information rights and others<span class="sub">it turns the pre-emption right into an obligation, so insiders cannot quietly abandon the company at the worst moment</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Liquidation stack<span class="n">seniority between rounds</span></div>
+    <div class="sc-node slate">The order of seniority of the different investors, organised by Series. <strong>Seniority often increases with rounds</strong>, so Series B is paid before Series A. The alternative is <strong>pari passu</strong>, where A and B are paid equally<span class="sub">this negotiation is largely between the investors, not with the company, and the deck warns there is no simple general rule because investor composition across Series creates a variety of situations</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Anti-dilution<span class="n">protects value, not percentage</span></div>
+    <div class="sc-node violet">Adjusts the <strong>price</strong> at which an earlier round converts, if a later round is priced below it<span class="sub">the full mechanics are section 9 and the worked example</span></div>
+  </div>
+</div>
+
+Two contrasts are worth fixing in memory, because they are exactly the kind of distinction an exam asks for. **Convertible preferred protects against a disappointing exit; anti-dilution protects against a disappointing future round.** And **pre-emption rights preserve percentage ownership; anti-dilution preserves the value owned.** The two pairs are complementary, not substitutes, which is why a well-drafted term sheet carries both.
+
+## 9 · Down rounds
+
+The definitions first, because they are precise.
+
+<div class="sc-chips">
+  <span class="sc-chip violet">Down round - price falls below the last round</span>
+  <span class="sc-chip amber">Flat round - price does not increase</span>
+  <span class="sc-chip green">Up round - price rises</span>
+</div>
+
+Note that the definition is about **price per share**, not about the post-money valuation. In the deck's own down-round variation the post-money still rose from 12 to 10.2 to 61 million dollars across the rounds, and it was still unambiguously a down round, because the price fell from 1.00 to 0.60 dollars. This trips people up constantly.
+
+**Anti-dilution compensates investors for having paid a share price that turns out to have been too high.** It does this by specifying a rule for **adjusting the past round's price** downwards, which means the old investor's money converts into more shares than it originally bought. There are two families of rule.
+
+<div class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Full ratchet <small>the brutal version</small></div>
+      <ul>
+        <li>The earlier round is simply <strong>re-priced at the new, lower price</strong></li>
+        <li>The old investor is treated as if they had always paid what the new investor is paying</li>
+        <li>Ignores how small the down round is: a tiny cheap issue re-prices the entire earlier round</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Weighted average <small>the usual version</small></div>
+      <ul>
+        <li>The earlier round is re-priced to a <strong>blend</strong> of the old and new prices, weighted by how many shares each represents</li>
+        <li>A small down round moves the old price only slightly; a large one moves it a lot</li>
+        <li>Comes in <strong>narrow-based</strong> and <strong>broad-based</strong> flavours, which differ only in what counts as the existing share base</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>The only difference is how far the old price is dragged down. Full ratchet ignores the size of the cheap issue; weighted average scales the adjustment to it.</figcaption>
+</div>
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Weighted-average adjusted price for round 1</div>
+    <code>P1WA = P1 * (SBase + I2/P1) / (SBase + I2/P2)</code>
+  </div>
+  <div>
+    <div class="name">Where</div>
+    <code>P1 = old price, P2 = new price, I2 = new investment, SBase = existing shares</code>
+  </div>
+  <div>
+    <div class="name">Narrow based</div>
+    <code>SBase = the Series A shares only</code>
+  </div>
+  <div>
+    <div class="name">Broad based</div>
+    <code>SBase = all existing shares, including the entrepreneur's</code>
+  </div>
+</div>
+
+Read the formula in words. The numerator asks how many shares the new money **would** have bought at the old price; the denominator asks how many it **actually** buys at the new price. The ratio is therefore always less than one in a down round, and it pulls the old price down by exactly as much as the cheap issue matters relative to the existing base. Because **broad-based** uses a bigger base, the cheap issue is a smaller fraction of the whole, so the adjustment is **milder** and the founders keep more. Narrow-based uses only the Series A shares, so the same cheap issue looms much larger and the adjustment bites harder.
+
+Structuring a down round is hard for reasons that go well beyond the arithmetic. The deck lists four:
+
+<div class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Consent of inside shareholders<span class="sub">who are the ones being diluted, and who have to approve it</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node violet">Keeping founders motivated<span class="sub">the people you need most have just lost a large part of their stake</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node slate">Stock options washing out<span class="sub">employee options struck above the new price are worthless overnight, so the whole team is affected</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-node green">Finding willing outside investors<span class="sub">someone must still believe in the company's potential at a moment when the evidence says otherwise</span></div>
+  </div>
+  <figcaption>The signalling problem is the thread through all four. A down round is a public statement that the last price was wrong, and every constituency reads it.</figcaption>
+</div>
+
+## 10 · Who pays for the option pool
+
+The same who-pays question shows up in a quieter place, and it is a staging question because option pools are usually replenished at each round. The WorkHorse example compares three ways of handling a 200,000-share top-up at the B round.
+
+| | No option pool | Pool at constant price | Pool at constant valuation |
+|---|--:|--:|--:|
+| Price per share | 8.00 | 8.00 | **7.14** |
+| New stock options issued | 0 | 200,000 | 200,000 |
+| Total shares after the round | 2,916,667 | 3,116,667 | 3,266,667 |
+| Post-money | 23,333,333 | 24,933,333 | 23,333,333 |
+| Founders | 27.43% | 25.67% | **24.49%** |
+| Eagle-I Ventures, Series A | 12.50% | 11.70% | 11.73% |
+| JetLuck, new Series B | 17.14% | 16.04% | **17.14%** |
+| New options | 0% | 6.42% | 6.12% |
+
+The two right-hand columns are the whole lesson. At a **constant price**, the pool is issued on top of everything and the post-money rises to 24.9 million dollars, so **everyone** is diluted a little, including the incoming Series B investor whose stake falls from 17.14 to 16.04 percent. At a **constant valuation** the post-money is held at 23.3 million and the price is pushed down to 7.14 dollars, and the new investor lands on **exactly the same 17.14 percent it would have had with no pool at all**. The pool has come entirely out of the pre-money, which means the **founders paid for all of it**, dropping to 24.49 percent. In practice investors ask for the pool to be created pre-money, and this table is why.
+
+## 11 · When it goes badly: wash-outs and turnarounds
+
+If a company has **lost traction but still has valuable assets** such as technology, people or customers, new investors may come in with a **wash-out** and re-start the project as a turnaround. Valuation drops materially, especially in wash-outs, there is **substantial dilution and losses**, and old and new investors **often conflict and may end up in litigation**.
+
+Turnarounds have a recognisable shape. They **often result in bitter disputes, even among the investors themselves**, and they are executed either by the **inside investors, often installing a new management team**, or by **specialised investors** who do this for a living. The reason the disputes are between investors rather than with the company is the liquidation stack from section 8: once the pie has shrunk below the total of everyone's preferences, the only real question left is the order of payment.
+
+## 12 · Dynamic strategies on both sides of the table
+
+The session closes by stepping back from any single round and asking what a rational player does across the whole sequence.
+
+**Investors make four choices**: when to make their first investment in a company; whether to re-invest and if so how much; whom to co-invest with, and how to split the investment; and how to structure the staging to achieve a good exit.
+
+| Decision | The drivers the deck gives |
+|---|---|
+| **When to invest first** | **Financial resources**, deep or shallow pockets, since different stages require very different amounts. **Expertise and ability to add value**, since what a company needs also varies by stage. **Risk attitude**, since a venture's risk is highest at the earliest stages and gradually reduces into later ones |
+| **Whether and how much to re-invest** | The **portfolio strategy**, meaning how much exposure the investor wants to the technology, market and geography risk this company represents. The investor's **confidence in the potential** of the company. The extent to which the investor **can or wants to share** the company with co-investors |
+
+Those drivers resolve into one of three re-investment approaches: **never re-invest**, which suits shallow-pocket investors; **typically re-invest**; or an **opportunity-driven, case-by-case decision**. The deck is careful to say that none of these produces better performance in all situations, and that the choice depends partly on investor preferences rather than on optimisation.
+
+**Entrepreneurs also have four choices**: what investors to choose; how much money to raise and when; **what valuation profile to build**; and what kind of exit to seek. The third one closes the loop with the down-round material. Entrepreneurs naturally prefer to **start with a high valuation**, but they have to reckon with the need to **keep increasing it over time** in order to attract investors and employees and to get good press. **Perceptions matter and have to be managed.** A first round priced as high as the market will bear is a first round that has quietly committed you to beating it later, and the down-round arithmetic in section 3 is what happens when you cannot.
+
+## Case corner
+
+**OptiGuard, Inc.: the Series A term sheet.** A cybersecurity venture founded in 2013 in Baltimore, building software that protects what is on a mobile device **screen** rather than what is on the network. Its three features are **device security**, which blurs the display when the authorised user looks or walks away and recognises faces automatically; **eavesdropping detection**, which scans behind the user and pops up a video window showing a second face that is looking at the screen; and **intruder guard**, which photographs anyone attempting to log in while the user is away. Everything is timestamped into an audit log, which is what makes it saleable to regulated industries such as health care.
+
+**The market.** Total global security products and services revenue was forecast to grow from about **55 billion dollars in 2015 to about 70 billion by 2019**, a compound rate of 6.3 percent. OptiGuard's products sit in **security and vulnerability management**, the fastest-growing segment at a 10.9 percent compound rate, growing from 5.4 to 7.9 billion dollars. The obstacle is not market size but budget priority: firms allocate scarce IT security budgets to the most critical known threats, and screen eavesdropping has to displace something already funded.
+
+**The financing history.** Twenty-five venture firms turned the company down, mainly because the management team had no entrepreneurial experience. The company then raised a **seed round of 315,000 dollars in October 2014, selling 140,000 common shares at 2.25 dollars**, roughly 7.8 percent of the equity. By September 2015 cash was short again, and it took a **350,000 dollar bridge loan** which required repayment of **700,000 dollars** on completion of a Series A within six months. Burn was running at roughly **200,000 dollars a month** including product development, legal and technology costs, of which about 100,000 was payroll and rent.
+
+**The offer on the table.** In November 2015 the bridge lender offered a Series A term sheet: **5.0 million dollars of convertible preferred at 4.00 dollars per share**, with the entire 700,000 dollar bridge converting into Series A shares at the same 4.00 dollars in place of repayment.
+
+**The decision the case asks for.** Two questions, both of which are this chapter's material. First, **is 5.0 million dollars enough in exchange for more than 40 percent of the company?** Second, **how will the proposed contract terms play out in the likely event of subsequent funding**, since on this amount of money the company will need to raise again in roughly two years.
+
+**Working the first question.** The pre-Series A cap table, in shares:
+
+| Holder | Common | Granted options | Fully diluted | Share fully diluted |
+|---|--:|--:|--:|--:|
+| Founder and CEO | 1,000,000 | 100,000 | 1,100,000 | 61.1% |
+| Co-founder | 400,000 | 40,000 | 440,000 | 24.4% |
+| Seed investors | 140,000 | - | 140,000 | 7.8% |
+| Other investors | 100,000 | 20,000 | 120,000 | 6.7% |
+| **Total** | **1,640,000** | **160,000** | **1,800,000** | **100%** |
+
+A further **248,000 options are reserved but not yet granted**. Now the round: 5,000,000 dollars at 4.00 buys **1,250,000 shares**, and the converting bridge of 700,000 dollars buys another **175,000**, so the Series A holder takes **1,425,000 shares** for an effective 5.7 million dollars.
+
+- Total fully diluted after the round, on granted options: 1,800,000 plus 1,425,000 equals **3,225,000 shares**. The Series A holds **44.2 percent**, so the case's phrase about more than 40 percent is correct even before the reserved pool.
+- Counting the 248,000 reserved options as well: 3,473,000 shares, Series A at **41.0 percent**. The pool softens it, but it is still over 40.
+- Implied **pre-money is 1,800,000 times 4.00 equals 7.2 million dollars**, or 8.19 million counting the reserve; **post-money is 12.9 million**, or 13.89 million counting the reserve.
+- The CEO's fully diluted stake falls from **61.1 percent to 34.1 percent**, or 31.7 percent counting the reserve.
+
+Now benchmark it. Series A rounds in cybersecurity in 2015 ran to **161 deals** with **652.4 million dollars invested**, a **median cheque of 3.0 million**, a **median pre-money of 11.67 million** and a **median post-money of 17.83 million**. OptiGuard is being offered an above-median cheque at a **pre-money roughly 40 percent below the median**. The CEO's instinct that the valuation looks low is supported by the data, and the explanation is equally visible in the case: no proof of concept, no signed customers yet, a team with no entrepreneurial track record, and a lender who already holds a bridge that must be repaid or converted. The company's alternatives are weak, and the price reflects it.
+
+The adequacy question answers itself against the burn rate: **5.0 million divided by 200,000 a month is 25 months**, which matches the case's own expectation of needing more money in about two years, and leaves no reserve if the two health-care contracts under negotiation slip.
+
+**Working the second question, which is the whole point of this chapter.** The staging clauses in the offered term sheet, read against sections 8 and 9:
+
+- **Anti-dilution is weighted average**, not full ratchet. This is the single most founder-friendly term in the document, and the worked example below shows exactly how much it is worth. The conversion price is adjusted whenever shares are issued below it, but explicitly **not** for conversions of preferred and **not** for the 248,000 reserved employee shares, so the option pool cannot accidentally trigger a repricing.
+- **A right of first refusal on new issues** gives any investor holding at least 20,000 Series A shares the right to buy a **pro rata percentage** of any new offering, terminating at a qualified IPO. This is the pre-emption right of section 8, and it means the incumbent can defend its percentage in the next round.
+- **Board representation is gated on a percentage**: seven directors, of whom the preferred elects three and the common four, **so long as at least 25 percent of the preferred remains outstanding**. This is the deck's second motivation for pre-emption rights made literal, since falling under the threshold costs board seats and not merely value.
+- **The liquidation preference is participating**: the preferred first takes back the original purchase price plus declared unpaid dividends, and then the remaining assets are shared with the common on an as-converted basis. In a later round the new Series B will argue about where it sits relative to this, which is the liquidation-stack negotiation of section 8 and, as the deck says, one conducted largely between the investors.
+- **Redemption** lets a majority of the preferred force repayment in three equal annual instalments from year six. That is the power of the purse extended past the round, and in a difficult situation it is a lever aimed at the company.
+- **Vesting** runs 1/36th per month over 36 months with a company repurchase option at cost, which is the standard answer to the deck's worry about keeping founders motivated after dilution.
+
+The term sheet contains **no pay-to-play clause**. Given that this investor is a single lead with a fund of 80 million dollars whose experience is mostly in life sciences rather than technology, the founder's strongest negotiating ask is precisely that: a duty to participate pro rata in the next round, so that the insider either supplies money and a positive signal at the Series B, or forfeits its anti-dilution and information rights. That, plus pushing for **broad-based** rather than narrow-based weighted average, is where the real value is, and the numbers below show why.
+
+**A down-round stress test.** The case gives no Series B terms, so this is a scenario I ran rather than a case fact: suppose the two health-care deals slip and the Series B two years later prices at **3.00 dollars** for **8 million dollars**, below the 4.00 dollar Series A. Applying the weighted-average formula with a broad base of all 3,225,000 existing shares:
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Adjusted Series A price, broad based</div>
+    <code>P1WA = 4.00 * (3,225,000 + 8,000,000/4.00) / (3,225,000 + 8,000,000/3.00)</code>
+  </div>
+  <div>
+    <div class="name">Arithmetic</div>
+    <code>= 4.00 * 5,225,000 / 5,891,667 = 4.00 * 0.8869 = 3.55</code>
+  </div>
+</div>
+
+The Series A's 5.7 million dollars now converts at 3.55 rather than 4.00, giving **1,606,782 shares instead of 1,425,000**, a gift of about **181,800 shares**. Series B issues 2,666,667 shares. Total becomes 6,073,449 and the CEO's stake falls to **18.1 percent**. Without any anti-dilution the CEO would hold 18.7 percent; under **full ratchet** the Series A would convert at 3.00 flat, take 1,900,000 shares, and the CEO would be down to **17.3 percent**. Weighted average costs the founder about 0.6 points where full ratchet would cost about 1.4. That gap, on this company, is the reason to read clause five of the term sheet before signing anything else.
+
+## Worked example
+
+The deck's own down-round example, worked step by step. A company raises two rounds. The **Series A** takes 5 million dollars at **1.00 dollar** a share, on a pre-money of 10 million and a post-money of 15 million. The entrepreneur holds 10 million shares. Then things go wrong, and the **Series B** takes 10 million dollars at **0.75 dollars** a share, a pre-money of 11.25 million and a post-money of 21.25 million. Note again that the post-money valuation went **up** while the price per share went **down**, and it is the price that defines a down round.
+
+**Step 1, the base case with no protection.** Series B buys 10 divided by 0.75 equals **13.33 million shares**. Total shares become 15 plus 13.33 equals **28.33 million**. The entrepreneur's 10 million shares are now 35.3 percent, the Series A's 5 million are 17.6 percent.
+
+**Step 2, full ratchet.** The Series A price is simply re-set to **0.75 dollars**. Its 5 million dollars now buys 5 divided by 0.75 equals **6.67 million shares** instead of 5 million.
+
+**Step 3, weighted average.** Apply the formula, with P1 equal to 1.00, P2 equal to 0.75 and I2 equal to 10 million.
+
+<div class="sc-formula">
+  <div>
+    <div class="name">Broad based, SBase equals all 15 million existing shares</div>
+    <code>P1WA = 1 * (15 + 10/1) / (15 + 10/0.75) = 25 / 28.33 = 0.88</code>
+  </div>
+  <div>
+    <div class="name">Narrow based, SBase equals the 5 million Series A shares only</div>
+    <code>P1WA = 1 * (5 + 10/1) / (5 + 10/0.75) = 15 / 18.33 = 0.82</code>
+  </div>
+  <div>
+    <div class="name">Series A shares, broad based</div>
+    <code>5 / 0.88 = 5.67 million shares</code>
+  </div>
+  <div>
+    <div class="name">Series A shares, narrow based</div>
+    <code>5 / 0.82 = 6.11 million shares</code>
+  </div>
+</div>
+
+**Step 4, put them side by side.** Share counts in millions.
+
+| | Before the B round | No protection | Full ratchet, 0.75 | Weighted average narrow, 0.82 | Weighted average broad, 0.88 |
+|---|--:|--:|--:|--:|--:|
+| Entrepreneur, shares | 10.00 | 10.00 | 10.00 | 10.00 | 10.00 |
+| Series A, shares | 5.00 | 5.00 | **6.67** | **6.11** | **5.67** |
+| Series B, shares | - | 13.33 | 13.33 | 13.33 | 13.33 |
+| **Total shares** | 15.00 | 28.33 | 30.00 | 29.44 | 29.00 |
+| Entrepreneur, restated share after round 1 | 66.7% | 66.7% | 60.0% | 62.1% | 63.8% |
+| Series A, restated share after round 1 | 33.3% | 33.3% | 40.0% | 37.9% | 36.2% |
+| **Entrepreneur after round 2** | | **35.3%** | **33.3%** | **34.0%** | **34.5%** |
+| **Series A after round 2** | | **17.6%** | **22.2%** | **20.8%** | **19.5%** |
+| **Series B after round 2** | | **47.1%** | **44.4%** | **45.3%** | **46.0%** |
+
+**What the table says.** Against the unprotected case, full ratchet costs the founder **2.0 percentage points**, narrow-based weighted average costs **1.3**, and broad-based weighted average costs only **0.8**. The Series A investor's recovery mirrors it exactly: it goes from 17.6 percent up to 22.2, 20.8 or 19.5 percent depending on the clause. Broad-based is the mildest because the base of 15 million shares includes the entrepreneur's 10 million, so the cheap issue is a smaller fraction of the whole and the price barely moves, from 1.00 only to 0.88.
+
+**Who pays for it.** The protection creates **new shares out of nothing**, so the total share count rises from 28.33 million to as much as 30.00 million, and every share that is **not** protected is diluted by the increase. In this arithmetic that means both the entrepreneur, who drops from 35.3 to 33.3 percent, and the incoming Series B investor, who drops from 47.1 to 44.4 percent, because its 13.33 million shares are held fixed. In a real negotiation the new investor will not accept that, and will instead insist on a fixed post-money percentage, which pushes the entire cost of the ratchet onto the common shareholders: the founders and the employees. Either way the money comes from somebody who is not the protected investor. This is the concrete reason founders fight for **broad-based weighted average** and resist full ratchet, and the reason a **pay-to-play** clause is such a useful counterweight: it says that an old investor only keeps its anti-dilution protection if it also puts fresh money into the very round that triggered it.
+
+## Apply it to your project
+
+<Steps>
+
+1. **Split your total funding need into what each chunk buys.** Follow the deck's own pattern - so much for a prototype, so much to start commercialising, so much to scale - rather than naming one round-number total. If you cannot say what a chunk buys, it is not a stage, it is a wish.
+
+2. **Attach a milestone to each boundary and check it moves a probability.** Ask what an investor would believe about your chance of reaching the next stage before and after that milestone. If the answer is the same number, pick a different milestone.
+
+3. **Build the ownership table for at least two structures.** One round against two, or two against three, using the section 3 layout: capital, post-money, pre-money, price, new shares, total shares, your percentage. The gap between the bottom-right cells is what staging is worth to you.
+
+4. **Re-run it with probabilities.** Take the section 4 approach: assign a conditional probability of reaching each stage, an exit value and a discount rate, then work backwards. This is where a single big round often reveals itself as unfinanceable rather than merely expensive.
+
+5. **Decide staging against tranching for the next round specifically.** Tranching gives you a locked price and near-automatic release against a milestone; staging gives you the chance of a re-rating and the risk of no round at all. Ask whether your next milestone is one you would bet a repricing on.
+
+6. **Map your existing investors onto the pro-rata line.** For each of them, work out the cheque that would exactly hold their percentage. Anyone writing less than that wants a high price, anyone writing more wants a low one, and anyone writing exactly it is indifferent. That tells you in advance who will argue for what.
+
+7. **Ask each incumbent, early, whether they are in.** An insider who declines sends a signal that an outsider will read, and you would rather learn that months before the round than during it. If reserves are the issue, that is a different conversation from confidence being the issue.
+
+8. **Read your own term sheet for the staging clauses only.** Pre-emption, right of first refusal, pay-to-play, tranching conditions, anti-dilution type and base, liquidation seniority, and any percentage threshold that gates board or information rights. Write next to each one what it does if the next round is cheaper.
+
+9. **Stress-test with an actual down round.** Take your realistic next-round price, cut it by a third, and re-run the cap table three times: no protection, full ratchet, broad-based weighted average. Now you know the price of the clause you are being asked to sign.
+
+10. **Check the collateral damage, not just your own percentage.** Where does the employee option pool strike, and would those options be underwater at the lower price? Who has to consent to the down round, and would they? Can you keep the team motivated afterwards? These are the four difficulties from section 9, and they kill more down rounds than the arithmetic does.
+
+11. **Set your valuation profile deliberately.** Do not take the highest price on offer for round one without asking what price you will need at round two to make it an up round. A high first price is a commitment to beat it.
+
+</Steps>
+
+## Key terms
+
+| Term | What it means in plain words |
+|---|---|
+| Staged financing | Releasing the total investment in separate rounds, each negotiated at a new price and conditional on progress |
+| Option value of waiting | The value of the investor's right, but not obligation, to fund the next instalment once more is known. In the deck's example, 8.61 dollars for two rounds and 10.61 for three |
+| Power of the purse | The control an investor gains simply because the company has to come back for the next instalment |
+| Refusal versus getting back | Declining to invest more is easy; recovering money already invested is nearly impossible. Staging turns the second problem into the first |
+| Tranching | One round with one agreed price, paid out in two parts, the second released on a milestone either automatically or at the investor's discretion |
+| Pre-emption right | The right to buy your pro-rata share of any new issue, so your percentage does not fall |
+| Right of first refusal | The company's right to buy shares an investor or founder is selling, on the same terms as an outside buyer, so unwanted outsiders stay off the register |
+| Pay-to-play | A duty on old investors to participate pro rata, with forfeiture of rights such as anti-dilution and information rights as the penalty for not doing so |
+| Pro rata | The investment that leaves your ownership percentage exactly unchanged. Below it you want a high price, above it you want a low one, at it you are indifferent |
+| Retention rate | The ratio of an investor's final post-deal ownership to their current ownership if they do not re-invest, used to estimate the return that survives future dilution |
+| Insider round | A round funded only by the existing investors: fast and informed, but with no independent price and no new capability |
+| Outsider round | A round led by a new investor: independent pricing and fresh expertise, but it raises the question of why the insiders stayed out |
+| Liquidation stack | The order in which the different Series are paid on an exit. Seniority often rises with later rounds, or the Series can rank pari passu |
+| Down round | A round priced **below the previous round's share price**, regardless of what the post-money valuation does |
+| Flat round | A round where the price does not increase |
+| Anti-dilution | A clause that re-prices an earlier round downwards when a later round is cheaper, so the earlier investor's money converts into more shares |
+| Full ratchet | Anti-dilution that re-prices the earlier round all the way down to the new price, however small the new issue |
+| Weighted average | Anti-dilution that re-prices to a blend of old and new prices, weighted by share counts. Broad-based includes all existing shares and is mild; narrow-based counts only the protected Series and bites harder |
+| Wash-out | A re-start financing at a drastically reduced valuation, where the company has lost traction but still holds valuable technology, people or customers |
+| Option pool at constant valuation | Creating the employee pool inside the pre-money, so the founders rather than the new investors pay for it |
+
+## Test yourself
+
+1. Give the entrepreneur's motive for staging and the investor's three motives, and explain what the deck means by the distinction between refusal and getting money back.
+2. In the deck's example a company needs 15 million dollars. State the entrepreneur's final ownership under a single round, two rounds and three rounds, and explain in one sentence why the numbers differ.
+3. Why is the single-round structure described as not financeable once probabilities are introduced, and what is the option value of staging into two and into three rounds?
+4. What is the difference between staging and tranching, and what did each cost or save the founder in the WorkHorse comparison?
+5. Three existing investors take part in a new round: one invests below its pro rata, one exactly pro rata, one above. Which of them wants a high price, which wants a low price, and which does not care, and why?
+6. A company has 10 million entrepreneur shares and 5 million Series A shares bought at 1.00 dollar. A Series B invests 10 million dollars at 0.75 dollars. Calculate the adjusted Series A price under broad-based and narrow-based weighted average, and give the entrepreneur's final percentage under no protection, full ratchet, and both weighted-average variants.
+
+<Aside type="note" title="Answers">
+1. For the entrepreneur, staging **reduces the cost of fundraising and the associated dilution**, because shares are only sold at today's low price for the money needed today. For the investor, staging creates the **option value of waiting**, increases **control through the power of the purse**, and **facilitates termination of investing**. The refusal-versus-getting-back distinction is that recovering money already inside a company requires a forced sale or litigation and is close to impossible, while simply declining to write the next cheque costs nothing. Staging converts the hard problem into the easy one.
+2. Single round **40.00 percent**, two rounds **54.55 percent**, three rounds **58.82 percent**. The finer the slicing, the smaller the amount that has to be sold at the earliest and therefore lowest share price, so less of the company is given away for the same total capital.
+3. With a 10 percent chance of reaching a 200 dollar exit five periods out at a 20 percent discount rate, the post-money is 200 times 0.10 divided by 2.49, that is **8.04 dollars**, against an investment of 15, so the pre-money is **minus 6.96 dollars**. A negative pre-money means no investor can fund it at all. The option value of staging is the improvement in pre-money: **1.65 minus minus 6.96 equals 8.61** for two rounds, and **3.65 minus minus 6.96 equals 10.61** for three.
+4. **Staging** is a genuinely new round: it requires fresh negotiation and carries uncertainty about the outcome, including whether it happens and at what price. **Tranching** fixes one total amount and one share price in advance and splits the payment, with the second tranche released largely automatically on a milestone. In the WorkHorse comparison the founder ended at **34.91 percent** with full financing of 5 million at 8 dollars, **37.80 percent** with staging where the second 3 million priced at 12 dollars, and **36.92 percent** with tranching where the second 3 million stayed locked at 10 dollars. Tranching therefore cost about 0.9 points against staging, and that was the price of certainty.
+5. The one investing **below pro rata** wants a **high** price: their percentage will fall either way, so they are effectively a seller. The one investing **above pro rata** wants a **low** price, because they are net buying and cheap shares get them more. The one investing **exactly pro rata** is **indifferent**, since their percentage is unchanged at any price. Eagle-I Ventures showed this in the WorkHorse table, holding exactly 12.50 percent under both the 8 dollar and the 10 dollar round.
+6. Series B buys 10 divided by 0.75 equals **13.33 million shares**. Broad based: P1WA equals 1 times (15 plus 10) divided by (15 plus 13.33) equals 25 divided by 28.33 equals **0.88 dollars**, so Series A converts into 5 divided by 0.88 equals **5.67 million shares**. Narrow based: 1 times (5 plus 10) divided by (5 plus 13.33) equals 15 divided by 18.33 equals **0.82 dollars**, so Series A gets 5 divided by 0.82 equals **6.11 million shares**. Full ratchet re-prices to 0.75, so Series A gets 5 divided by 0.75 equals **6.67 million shares**. Entrepreneur's final percentage, with 10 million shares throughout: no protection 10 divided by 28.33 equals **35.3 percent**; broad-based weighted average 10 divided by 29.00 equals **34.5 percent**; narrow-based weighted average 10 divided by 29.44 equals **34.0 percent**; full ratchet 10 divided by 30.00 equals **33.3 percent**.
+</Aside>
+
+## Revision summary
+
+<Aside type="tip">
+**The one-minute recap**
+
+- Financing is staged because both sides want it. The **entrepreneur** saves on the **cost of fundraising and the associated dilution**; the **investor** gains the **option value of waiting**, **control through the power of the purse**, and an easy exit, since **refusing** to invest more is trivial where **getting money back** is nearly impossible.
+- Same 15 million dollars, three structures, three outcomes: the entrepreneur keeps **40.00 percent** with one round, **54.55 percent** with two, **58.82 percent** with three. If round two is a down round at 0.60 instead of 1.80 dollars, that last figure collapses to **49.18 percent** and never recovers.
+- Once probabilities enter, a single 15 million dollar round has a post-money of **8.04 dollars** and a pre-money of **minus 6.96**, so it is not financeable at all. The **option value of staging** is **8.61 dollars** for two rounds and **10.61** for three, and probability-adjusted ownership goes **20.51 percent** for two rounds against **45.40 percent** for three.
+- **Milestones** gate the stages, and their job is to move the probability of reaching the next one. **Tranching** fixes the amount and price and releases the second part on a milestone, automatically or at the investor's discretion; **staging** requires a new negotiation with an uncertain outcome. Founder outcomes in the WorkHorse example: **34.91 percent** full financing, **37.80 percent** staged, **36.92 percent** tranched.
+- New rounds mix **insiders**, who bring knowledge but risk exploitation and limited contribution, with **outsiders**, who bring expertise but raise the question of why the insiders stayed out. The determinants are **deep pockets, expertise and networks, and signalling effects**, and the **retention rate** measures how much of an investor's stake survives if they do not re-invest.
+- **Pro rata** is the pivot in the price fight. Below pro rata you want a high price, above it you want a low one, exactly at it you are indifferent - Eagle-I Ventures held exactly **12.50 percent** at both 8 and 10 dollars.
+- Staging-specific clauses: **pre-emption rights** and the **right of first refusal** protect percentage ownership, partly for the upside and partly because percentages gate **board and information rights**; **pay-to-play** protects the entrepreneur by obliging old investors to keep contributing money and signal, on pain of forfeiting rights; the **liquidation stack** ranks the Series, usually with later rounds senior, or **pari passu**.
+- A **down round** is defined by the **share price falling**, not by the valuation. **Anti-dilution** compensates an investor for having paid too much by re-pricing the earlier round: **full ratchet** all the way down, **weighted average** to a blend using P1WA equals P1 times (SBase plus I2/P1) divided by (SBase plus I2/P2), **broad based** on all shares and **narrow based** on the protected Series alone.
+- On the deck's numbers, a Series A at 1.00 dollar followed by a Series B at 0.75 leaves the founder at **35.3 percent** unprotected, **34.5 percent** under broad-based weighted average at 0.88, **34.0 percent** under narrow-based at 0.82, and **33.3 percent** under full ratchet. The extra shares dilute everyone who is not protected.
+- Down rounds are hard for four non-financial reasons: **consent of the diluted insiders**, **keeping founders motivated**, **stock options washing out**, and **finding outside investors who still believe**. Worse cases become **wash-outs** and **turnarounds**, with substantial dilution, conflict between old and new investors, and sometimes litigation.
+- Investors choose **when to invest first, whether to re-invest, whom to co-invest with, and how to structure staging for a good exit**; entrepreneurs choose **which investors, how much and when, what valuation profile, and what exit**. The last one matters most: a valuation set too high in round one is a promise to beat it in round two.
+</Aside>
+
+<Aside type="note">
+**And that closes the module.** It began with a customer who could see the value and still would not buy, and the answer was that adoption is blocked by perceived costs and risks that communication, targeting and channel choice have to dismantle one at a time. It moved on to capture: what to charge, how to differentiate the price, how to sell value rather than features, and which channel actually reaches the buyer. Those decisions are not marketing decorations, they are the inputs to the revenue line in the financial plan, which in turn drives the cash need, the burn rate and the amount you have to raise. From there the finance half took over: what the venture is worth, who owns how much of it, what the clauses in a term sheet really do, and finally why the money arrives in instalments and what happens when a later instalment is priced lower than the last. The plan is one argument in two languages, and the last chapter is where the two meet - because the ownership you keep at the end depends on the customers you won at the beginning.
+</Aside>
+
+*Back to the [course overview →](/learnings/mba/innovation-and-new-business-planning/).*
