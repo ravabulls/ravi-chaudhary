@@ -1,0 +1,350 @@
+---
+title: "Planung 2 - Den Projektplan erstellen"
+description: "Die fünf Elemente eines Projektplans, Zeit- versus Aufwandsschätzung, Aufgaben- und Projektpuffer, der Planungsfehlschluss, Kapazitätsplanung, wie man den kritischen Pfad findet und wie man ein Gantt-Diagramm baut."
+sidebar:
+  label: "C3·2 - Den Plan erstellen"
+  order: 11
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Kurs 3: Projektplanung - Alles zusammenführen*
+
+---
+
+In der Planung werden aus den Versprechen der Charta datierte, zugewiesene und geschätzte Arbeitspakete. Dieses Modul baut den **Projektplan**, und in seinem Zentrum steht der **Projektzeitplan**: jede Aufgabe, wer sie verantwortet und wann sie beginnt und endet.
+
+Der größte Teil des Moduls dreht sich in Wahrheit um eine schwierige Fähigkeit - **Zeit ehrlich zu schätzen**. Schlechte Schätzungen sind die Ursache hinter einem großen Anteil gescheiterter Projekte, deshalb stecken die Videos ihre Energie darin, wo Schätzungen schieflaufen (Optimismus), wie man sich davor schützt (Puffer) und wie man bessere Zahlen von den Menschen bekommt, die die Arbeit tatsächlich machen. Anschließend verwandelt das Modul diese Schätzungen in ein Bild: **Abhängigkeiten**, den **kritischen Pfad** und schließlich das **Gantt-Diagramm**, das du in einer Tabellenkalkulation baust.
+
+<Aside type="note">
+**Wo das hingehört:** Der vorherige Abschnitt behandelte Kickoff-Meetings, Milestones und Aufgaben. Dieser nimmt diese Aufgaben, versieht sie mit Dauern und Abhängigkeiten und setzt daraus einen Plan zusammen, an dem du den Fortschritt wirklich messen kannst.
+</Aside>
+
+---
+
+## Was ein Projektplan ist und was hineingehört
+
+Ein Projektplan dokumentiert **Scope, Aufgaben, Milestones und die Gesamtaktivitäten** eines Projekts. Er funktioniert für jedes Projekt, ob groß oder klein. In seinem Zentrum steht der **Projektzeitplan**, der zwei Aufgaben erfüllt: Er schätzt, wie lange das Ganze dauern wird, und er gibt dem Team eine Möglichkeit, den Fortschritt am Ziel zu messen.
+
+Die Inhalte unterscheiden sich von Unternehmen zu Unternehmen, aber die meisten Pläne enthalten diese fünf Grundelemente.
+
+| Element | Was es bedeutet | Warum es seinen Platz verdient |
+| --- | --- | --- |
+| **Aufgaben** | Aktivitäten, die innerhalb eines festgelegten Zeitraums fertig werden sollen, zugewiesen nach Rolle und Fähigkeit | Klare Verantwortlichkeit schafft persönliche Zuständigkeit und gibt dem PM Freiraum zum Managen |
+| **Milestones** | Bedeutende Punkte im Zeitplan, die Fortschritt markieren | Signalisieren meist ein abgeschlossenes Deliverable oder eine abgeschlossene Phase |
+| **Menschen** | Teammitglieder und ihre Rollen | Alle müssen wissen, welche Aufgaben ihre sind |
+| **Dokumentation** | Links zum RACI-Diagramm, zur Charta, zum Budget, zum Risikomanagementplan | Ein Ort zum Nachschlagen, statt E-Mails zu durchwühlen |
+| **Zeit** | Geschätzte Start- und Endtermine für Aufgaben, Milestones und das Projekt selbst | Das ist der Zeitplan, der Anker des ganzen Plans; er entscheidet außerdem, welche Ressourcen du wann brauchst |
+
+### Die größeren Teile, mit denen der Plan verbunden ist
+
+Der Plan ist ein **lebendiges Artefakt** - die Roadmap des Teams für das gesamte Projekt. Rund um den Zeitplan werden vier weitere Bestandteile verlinkt.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Scope &amp; Ziele<span class="sub">aus der Charta</span></div>
+    <div class="sc-node violet">WBS<span class="sub">Milestones + Aufgaben, priorisiert</span></div>
+    <div class="sc-node green">Budget<span class="sub">über den gesamten Lebenszyklus überwacht</span></div>
+    <div class="sc-node slate">Managementpläne<span class="sub">Änderung, Risiko, Kommunikation</span></div>
+  </div>
+  <figcaption>Vier Bestandteile, die prägen, wie Aufgaben, Milestones, Menschen, Dokumentation und Zeit strukturiert werden.</figcaption>
+</figure>
+
+- **Scope und Ziele** werden zuerst in der Charta festgehalten; verlinke die Charta, damit das Team prüfen kann, ob eine neue Anfrage über das Vereinbarte hinausgeht.
+- **Die WBS** zerlegt die Arbeit in handhabbare Stücke. Im Plan sollten die Aufgaben an einer Stelle stehen, mit klaren Beschreibungen, Verantwortlichen und Fälligkeitsterminen, dazu Milestones und Status, damit der Fortschritt sichtbar ist. Ein RACI-Diagramm daneben klärt Rollen und Verantwortlichkeiten.
+- **Das Budget** wird verlinkt, weil es stark vom Rest des Plans abhängt. In einer großen Organisation verwaltet womöglich eine andere Abteilung die Mittel; dann vereinbarst du regelmäßige Abstimmungen mit ihr, statt es selbst zu überwachen.
+- **Managementpläne** - Änderung, Risiko und Kommunikation - halten das Projekt organisiert und gehören ebenfalls in den Plan.
+
+<Aside type="tip">
+Keine zwei Projektpläne sind identisch. Kenne deine Endziele und das, was dein Team wirklich braucht, und stelle dann die relevanten Teile zusammen, statt ein Template um seiner selbst willen auszufüllen.
+</Aside>
+
+---
+
+## Zeitschätzung versus Aufwandsschätzung
+
+Der PM erledigt nicht jede Aufgabe selbst. Der PM **identifiziert Aufgaben und hilft, sie zuzuweisen**, und **schätzt dann, wie lange sie dauern werden** - und diese Schätzungen summieren sich zum Zeitplan.
+
+<Aside type="note">
+**Zeitschätzung** - eine Vorhersage der *gesamten* Zeit, die zur Fertigstellung einer Aufgabe nötig ist, von Anfang bis Ende, inklusive inaktiver Zeit.
+<br />**Aufwandsschätzung** - eine Vorhersage der *Menge und Schwierigkeit der aktiven Arbeit*, also wie lange eine Person tatsächlich daran arbeitet.
+</Aside>
+
+Das klassische Beispiel: Eine Wand zu streichen kostet **30 Minuten Aufwand**, aber **24 Stunden Zeit**, weil 23 und eine halbe dieser Stunden Trocknungszeit sind. Beides auseinanderzuhalten macht dich effizient im Umgang mit Ressourcen - trägt eine Aufgabe Leerlaufzeit in sich, kann die zugewiesene Person währenddessen etwas anderes tun, etwa den Briefkasten oder die Fensterrahmen streichen, während die Wand trocknet.
+
+### Warum Schätzungen schieflaufen
+
+Der übliche Fehler ist die **Unterschätzung**, und der übliche Schuldige ist **Optimismus**. Optimismus ist eine gute Eigenschaft bei einem PM, aber zu viel davon lässt dich Risiken übersehen und annehmen, dass Aufgaben exakt nach Plan laufen. Es besteht immer die Möglichkeit von Rückschlägen.
+
+Die Verteidigung besteht darin, **mit der Kollegin oder dem Kollegen zu sprechen, der die Aufgabe zugewiesen bekommt**. Sie verstehen die Arbeit und ihre Feinheiten am besten. Es bringt außerdem **Teilaufgaben** ans Licht - die kleineren Stücke, die eine größere Aufgabe tatsächlich erfordert.
+
+Nimm den Aufbau einer Kontaktliste der Top-Kunden für den Plant-Pals-Start. Das sieht nach einem Ein-Tages-Job aus, bis du die Teilaufgaben auflistest: das globale Vertriebsteam treffen, um Kunden zu identifizieren, Kontaktdaten sammeln, Sprachpräferenzen der Kunden klären, die Tabelle bauen, die all das aufnimmt. Die Schätzung der verantwortlichen Person kommt mit **zwei Tagen** zurück, dem Doppelten der Vermutung. Du kannst immer noch nachfragen oder behutsam widersprechen, aber du startest von einer echten Zahl aus.
+
+Schätzungen bleiben Schätzungen. Ist das Vertriebsteam auf einem Teambuilding-Tag und kann sich erst nach dem Wochenende treffen, ist die Zwei-Tages-Schätzung bereits veraltet. Genau dafür gibt es Puffer.
+
+---
+
+## Puffer
+
+<Aside type="note">
+**Puffer** - zusätzliche Zeit am Ende einer Aufgabe oder eines Projekts, um unerwartete Verzögerungen abzufangen. Er ist der Spielraum, der das Projekt auf Kurs hält, wenn Schätzungen zu knapp waren.
+</Aside>
+
+| | **Aufgabenpuffer** | **Projektpuffer** |
+| --- | --- | --- |
+| **Was** | Zusätzliche Zeit, die an eine bestimmte Aufgabe angehängt wird | Zusätzliche Zeit am Ende des Gesamtzeitplans |
+| **Wofür** | Aufgaben **außerhalb der Kontrolle des Teams** - Dienstleister, Lieferanten, alles, worauf du wartest | Das gewöhnliche Verrutschen abfangen, wenn hier und da ein Termin gerissen wird |
+| **Innerhalb des Teams** | Sparsam einsetzen - nur bei schwierigen Aufgaben oder solchen mit echter Unvorhersehbarkeit, etwa wie lange Pflanzen zum Wachsen brauchen | Typischerweise zwei oder drei Tage, die bei Bedarf über das Projekt hinweg gezogen werden |
+| **Beispiel** | Einen Pflanzenlieferanten bis Montag um eine Kostenschätzung bitten, obwohl du sie erst am Donnerstag brauchst | Hält den Endtermin sicher, wenn ein Teammitglied einen Tag verliert |
+
+<Aside type="caution">
+Puffere nicht **jede** Aufgabe. Alles aufzupolstern bläht den Zeitplan auf und beschert dir, dem Team und den Stakeholdern einen unrealistischen Zeitrahmen. Das ist das Spiegelbild-Risiko zur Unterschätzung - Überpolsterung wirkt sicher, erzeugt aber einen Plan, den niemand glaubt, und einen Liefertermin, den niemand brauchte.
+</Aside>
+
+Ein Praxisbeispiel von Google: Ein neuer Mitarbeiter, der gut programmierte, aber ständig Termine riss, ließ sich keinen Puffer für das **Testen**. Die Frage nach seiner aktuellen Arbeitslast und der Komplexität seiner Aufgaben brachte ans Licht, wo Puffer nötig war. Der Sinn des Ganzen ist ein **realistischer Zeitrahmen** - das Projektziel zwei Monate zu spät zu erreichen, gilt womöglich überhaupt nicht als Erfolg.
+
+---
+
+## Fallstudie: schnell laufen, später zahlen
+
+Kendra gewann eine umkämpfte Ausschreibung und sah sofort, dass der Zeitrahmen nahezu unmöglich war. Statt das anzusprechen, blieb sie still, hetzte durch die Planungsphase und schrieb alle Planungsdokumente allein. Als das Team sagte, der Zeitrahmen lasse keinen Raum für ihre Arbeit oder für Reviews, notierte sie die Bedenken und forderte die Leute auf, schneller zu arbeiten. Das Projekt lief dann in Nacharbeit, in Aufgaben, die niemand eingeplant hatte, in gestresste Menschen und besorgte Stakeholder - und riss seinen Termin.
+
+| Fehltritt | Was sie hätte tun sollen |
+| --- | --- |
+| Ein bekanntes Zeitplanproblem für sich behalten | **Eskalieren** - Belege für das Bedenken sammeln und es zum Management tragen |
+| Beschleunigen, statt für die Planung langsamer zu werden | **Sorgfältig** durch die Planung arbeiten, um einen realistischen Plan zu bauen |
+| Allein planen | **Input einholen** von Team, Kolleginnen und Kollegen und Management - und auf deren Bedenken reagieren |
+
+Sorgfältige Planung mit dem Team hätte auch zeitsparende Maßnahmen sichtbar gemacht: **Aufgaben streichen**, die gar nicht nötig waren, **die Teamgröße erhöhen**, indem man Ressourcen früh anfordert statt unterbesetzt zu starten, und **Aktivitäten straffen**, indem man einige Aufgaben parallel statt nacheinander laufen lässt.
+
+<Aside type="tip">
+Ein Schmerzpunkt wie ein zweifelhafter Zeitrahmen ist meist eine **Gelegenheit**, flexibel zu sein und den Plan zu ändern, und nichts, was man schlucken sollte. Sei realistisch, bewerte Risiken, sprich mit dem Team und scheue dich nicht zu eskalieren.
+</Aside>
+
+---
+
+## Der Planungsfehlschluss
+
+<Aside type="note">
+**Planungsfehlschluss** (planning fallacy) - unsere Neigung, die Zeit für eine Aufgabe zu unterschätzen, ebenso ihre Kosten und Risiken, wegen des Optimismus-Bias. Eingeführt von **Daniel Kahneman und Amos Tversky** in einem Aufsatz von 1977.
+<br />**Optimismus-Bias** - der Glaube, dass dir ein negatives Ereignis mit geringerer Wahrscheinlichkeit zustößt als anderen.
+</Aside>
+
+Die Alltagsversion: einen Hundespaziergang zwischen zwei Meetings quetschen. Der Optimismus-Bias sagt dir, du schaffst es rechtzeitig zurück. Er ignoriert das Wetter, den anderen Hund, der zum Spielen auftaucht, und das ganze Schnüffeln. Der Fehlschluss trifft unabhängig von der Erfahrung - auch dein hundertster Spaziergang verlangt, dieselben Faktoren zu bedenken.
+
+**Das Hausbeispiel.** David plant einen Hausbau mit einer WBS, die Fundament, Bau und Fertigstellung abdeckt. Seine Dauer-Übersicht sieht in Ordnung aus:
+
+| Aufgabe | Geschätzte Dauer |
+| --- | --- |
+| Fundament | 2 Wochen |
+| Bau | 4 Wochen |
+| Anpassungen | 4 Wochen |
+| **Gesamt** | **10 Wochen** - exakt die geforderte Lieferzeit |
+
+Zehn Wochen erfüllen die Anforderung, also würde ein ahnungsloser PM das für solide halten. David, der den Fehlschluss kennt, prüft die Schätzungen erneut, denkt an Wetterverzögerungen und an Bautrupp-Mitglieder, die sich krankmelden, und trifft Teammitglieder und Stakeholder, um weitere Risiken aufzudecken. Dann **ergänzt er Aufgabenpuffer** bei den Aufgaben, die ein echtes Risiko tragen.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Nach Was-wäre-wenn-Fällen suchen, bevor der Plan freigegeben ist</span>
+  <span class="sc-chip amber">Das Team als Risiko-Findungsressource nutzen</span>
+  <span class="sc-chip amber">Optimistisch realistisch sein</span>
+</div>
+
+**Optimistisch realistisch** ist die Formel, die man sich merken sollte: auf das beste Ergebnis hinarbeiten und trotzdem die angemessene Zeit für jede Aufgabe einplanen.
+
+---
+
+## Kapazität und Kapazitätsplanung
+
+<Aside type="note">
+**Kapazität** - die Menge an Arbeit, die die Menschen oder Ressourcen eines Projekts in einem festgelegten Zeitraum vernünftigerweise erledigen können.
+<br />**Kapazitätsplanung** - Menschen und Ressourcen auf Aufgaben verteilen und beurteilen, ob du genug davon hast, um rechtzeitig fertig zu werden.
+</Aside>
+
+Die Kapazitätsplanung zeigt oft, dass du **mehr** Ressourcen brauchst, um den Zeitrahmen zu halten - eine zweite Webentwicklerin, einen dritten Texter. Die Rechnung ist einfach. Plant Pals muss über fünf Tage an 100 Kunden liefern. Ein Fahrer schafft im Schnitt vier Lieferungen an einem Acht-Stunden-Tag, also deckt ein Fahrer 20 Lieferungen über die Woche ab, und du brauchst **mindestens fünf Fahrer**. Selbst wer 100 Prozent seiner Zeit für dein Projekt aufwendet, hat begrenzte Kapazität - Meetings, dringende Unterbrechungen und der gewöhnliche Zuschnitt eines Arbeitstags zehren daran.
+
+### Vier Faktoren, die die Kapazität prägen
+
+| Faktor | Definition | Warum es zählt |
+| --- | --- | --- |
+| **Parallele Aufgaben** | Aufgaben, die gleichzeitig mit anderen laufen können | Schafft Effizienz, verkürzt den Zeitplan. Beispiel: Fahrer einstellen und die Website bauen haben keinerlei Beziehung zueinander |
+| **Sequenzielle Aufgaben** | Aufgaben, die in einer bestimmten Reihenfolge geschehen müssen | Sagt dir, was früh Priorität hat. Beispiel: Budgetfreigabe vor der Beauftragung eines Lieferanten |
+| **Fester Starttermin** | Der Termin, an dem du eine Aufgabe starten *musst*, um das Ziel zu erreichen | Sind 100 Pflanzen für einen bestimmten Termin vertraglich zugesagt, hat ihre Abholung einen festen Start einen Tag davor |
+| **Frühester Starttermin** | Der früheste Termin, an dem die Arbeit an einer Aufgabe beginnen kann | Setzt ehrliche Erwartungen gegenüber Lieferanten. Dauern Verträge und Bestellungen drei Wochen, ist das der früheste Start des Lieferanten ab dem Kickoff |
+
+<Aside type="note">
+**Float** (auch **Slack** oder Pufferzeit genannt) - wie lange du den Start einer Aufgabe verschieben kannst, bevor es den Zeitplan trifft und das Ergebnis gefährdet. Aufgaben auf dem kritischen Pfad haben **null Float**; alles mit Float liegt nicht auf dem kritischen Pfad. Eine Lieferung an einen Vorzugskunden, der einen bestimmten Liefertermin verlangt hat, hat null Float.
+</Aside>
+
+---
+
+## Der kritische Pfad
+
+<Aside type="note">
+**Kritischer Pfad** - die Milestones, die du erreichen musst, um das Projektziel termingerecht zu erfüllen, plus die zwingend nötigen Aufgaben, die in jeden Milestone einfließen. Alles andere liegt außerhalb des kritischen Pfads.
+</Aside>
+
+Betrachte ihn als das Gerüst, das dir sagt, wo du bist, wohin du unterwegs bist und wann du ankommst. Er identifiziert die wesentliche Arbeit und ihre Dauer, zeigt an, welche verspäteten Aufgaben den Fertigstellungstermin verschieben würden, und hilft, Ressourcen, Baselines und die Stellen zu bestimmen, an denen du tatsächlich Spielraum hast.
+
+Bei Plant Pals enthält der Pfad Dinge wie das Beauftragen von Pflanzenlieferanten, das Entwickeln der Website und das Erfüllen der Lieferungen; Blumen ins Sortiment aufzunehmen ist ein Nice-to-have, betrifft den Start nicht und liegt daher außerhalb. Der kritische Pfad ist die **absolute Mindestmenge** an Aufgaben und Milestones, die zum Erreichen des Ziels nötig ist, und verfehlt das Team eine davon, verzögert sich das Projekt.
+
+### Wie man ihn aufbaut
+
+<Steps>
+
+1. **Alle Aufgaben erfassen.** Arbeite aus der WBS heraus, damit kein erforderliches Arbeitspaket fehlt. Konzentriere dich auf die *Need-to-do*-Aufgaben, nicht auf die *Nice-to-do*-Aufgaben.
+
+2. **Abhängigkeiten festlegen.** Eine **Abhängigkeit** ist eine Aufgabe, die nicht beginnen kann, bevor eine andere fertig ist - du kannst ein Haus nicht von außen streichen, bevor das Haus gebaut ist. Stelle zu jeder Aufgabe drei Fragen: Welche Aufgabe muss *davor* geschehen, welche Aufgabe kann *gleichzeitig* fertig werden und welche Aufgabe muss *unmittelbar danach* geschehen.
+
+3. **Ein Netzplandiagramm erstellen.** Ordne die Aufgaben nach Abhängigkeit. Es zeigt den Weg von der ersten bis zur letzten Aufgabe, welche Aufgaben parallel und welche sequenziell laufen und welche nicht wesentlichen Aufgaben außerhalb des Pfads liegen.
+
+4. **Zeitschätzungen erstellen.** Ziehe die Menschen und Stakeholder zu Rate, die es wissen. Dieser Schritt ist entscheidend: Liegen die Schätzungen deutlich daneben, ändert sich die Länge des kritischen Pfads. Schätzungen können im Projektverlauf überarbeitet werden.
+
+5. **Den kritischen Pfad finden.** Addiere die Dauern der wesentlichen Aufgaben und nimm den **längstmöglichen Pfad** durch das Diagramm. Zähle nur Aufgaben mit, die den Endtermin verschieben würden, wenn sie unfertig blieben.
+
+</Steps>
+
+### Das durchgearbeitete Hausbau-Beispiel
+
+| Aufgabe | Dauer | Hängt ab von |
+| --- | --- | --- |
+| A) Aushub | 1 Tag | - |
+| B) Fundament | 3 Tage | A |
+| C) Rohbau/Gerüst | 15 Tage | B |
+| D) Dach | 3 Tage | C |
+| E) Sanitär | 4 Tage | C |
+| F) Heizung/Lüftung (HVAC) | 3 Tage | C |
+| G) Elektrik | 3 Tage | C |
+| H) Dämmung | 2 Tage | E, F, G |
+| I) Trockenbau + Anstrich | 15 Tage | H |
+| J) Bodenbelag | 7 Tage | I |
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">A Aushub 1d &nbsp;·&nbsp; B Fundament 3d &nbsp;·&nbsp; C Rohbau 15d<span class="sub">streng sequenzielle Eröffnungskette</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-flow">
+      <div class="sc-node violet">E Sanitär 4d<span class="sub">längster Zweig</span></div>
+      <div class="sc-node soft">F Heizung/Lüftung 3d</div>
+      <div class="sc-node soft">G Elektrik 3d</div>
+      <div class="sc-node soft">D Dach 3d<span class="sub">Nebenzweig, endet hier</span></div>
+    </div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">H Dämmung 2d &nbsp;·&nbsp; I Trockenbau + Anstrich 15d &nbsp;·&nbsp; J Bodenbelag 7d<span class="sub">sequenzieller Lauf bis zum Ende</span></div>
+  </div>
+  <figcaption>Sanitär, Heizung/Lüftung und Elektrik laufen nach dem Rohbau parallel, aber die Dämmung wartet auf alle drei, sodass der längste Zweig das Tempo bestimmt. Die Kette addiert sich zu 1 + 3 + 15 + 4 + 2 + 15 + 7 = 47 Tage.</figcaption>
+</figure>
+
+Nicht wesentliche Aufgaben desselben Hausprojekts - Einfahrt pflastern, Garten anlegen, Zierleisten, Geräte - liegen außerhalb des Pfads. Verzögern sie sich, verschiebt sich der Fertigstellungstermin des Rohbaus nicht.
+
+### Vorwärtsrechnung und Rückwärtsrechnung
+
+| Vorgehen | Wie es funktioniert | Wann es hilft |
+| --- | --- | --- |
+| **Vorwärtsrechnung** (forward pass) | Bei der ersten Aufgabe beginnen, die allem anderen vorausgehen muss, und die Dauern vorwärts bis zum Ende addieren | **Früheste** Starttermine und die Gesamtlänge finden |
+| **Rückwärtsrechnung** (backward pass) | Bei der letzten Aufgabe oder dem letzten Milestone beginnen und rückwärts zum kürzesten Weg bis zur Fertigstellung gehen | Arbeiten auf eine **harte Deadline**; zeigt, welche Aufgaben wirklich kritisch sind und welche gestrichen oder später erledigt werden können |
+
+Beide Rechnungen sind auch der Weg, um die **spätesten** Starttermine und den Slack jeder Aufgabe zu ermitteln.
+
+---
+
+## Belastbare Schätzungen aus dem Team herausbekommen
+
+Zeitschätzung, Aufwandsschätzung und Kapazitätsplanung hängen allesamt vom Team ab. Die Person, die die Aufgabe erledigt, hat das beste Gespür sowohl für ihre Dauer als auch für die eigene Kapazität, aber das erreicht dich nur über ein Gespräch in beide Richtungen - und das bedeutet **Soft Skills**, also die persönlichen Eigenschaften, die es Menschen erlauben, gut mit anderen zusammenzuarbeiten.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Die richtigen Fragen stellen<span class="sub">offen, nicht Ja oder Nein</span></div>
+    <div class="sc-node violet">Wirksam verhandeln<span class="sub">ein Ergebnis finden, das für beide passt</span></div>
+    <div class="sc-node green">Empathie üben<span class="sub">Arbeitslast, Urlaub, Work-Life-Balance</span></div>
+  </div>
+  <figcaption>Drei Soft Skills, die aus einer Vermutung eine brauchbare Schätzung machen.</figcaption>
+</figure>
+
+**Die richtigen Fragen stellen.** Behandle das Schätzgespräch wie ein Interview. *Kannst du die Mock-ups in einer Woche fertigstellen?* ist geschlossen und liefert ein Ja oder Nein, das dir nichts beibringt. *Wie lange brauchst du typischerweise, um ein Design wie dieses zu entwerfen?* ist **offen** und liefert Details. Frage nach, wie komplex die Schritte sind, welche Risiken die Aufgabe trägt und wann die Person meint, dass es fertig sein kann. Mit der Zeit sorgen diese Gespräche dafür, dass du für Schätzungen weniger auf andere angewiesen bist.
+
+**Wirksam verhandeln.** Deine Aufgabe ist es, die übergeordneten Projektziele mit dem Alltag des Teams zu verbinden, und dein Projekt ist womöglich nicht deren einzige Priorität. Sagt die Designerin zwei Wochen und du hattest auf eine gehofft, hake nach: Deckt die Schätzung mehrere Seiten ab, und könnten ein oder zwei Seiten früher kommen? Das sagt dir, ob die Schätzung flexibel ist oder ob du eine zweite Designerin brauchst. Gutes Verhandeln erzeugt **geteilte Verantwortung** für das Ergebnis.
+
+**Empathie üben.** Frage nach der gesamten Arbeitslast, auch nach Arbeit außerhalb deines Projekts, nach der Work-Life-Balance, nach gebuchtem Urlaub und wichtigen Feiertagen. Baut deine Designerin zugleich eine Website für ein anderes Team mit überlappendem Zeitplan, kannst du mit dessen PM zusammenarbeiten, um die Last auszugleichen, statt eine Person zu überladen. Und zeige Wertschätzung - Menschen mögen es, wenn ihre Arbeit gewürdigt wird.
+
+<Aside type="tip">
+Die Sicht eines Google-Programmmanagers: Soft Skills sind größtenteils **emotionale Intelligenz** - das Team lesen und sich selbst kennen samt der eigenen Wirkung auf andere. Frage bewusst die stilleren Menschen, die selten die Hand heben, denn sie denken oft intensiv mit und haben Einsichten, die dir sonst entgehen. Bei Schätzungen ersetze *schneller machen* durch bessere Fragen: Wie viel schneller könntest du sein, wenn ich dir dies gäbe, was hält dich auf, welche Teams müssten hinzugezogen werden? Manchmal bringt schon das **laute Durchsprechen der eigenen Schätzung** Einsparungen ans Licht. Die Methode reist mit - dieselben Fähigkeiten funktionieren bei Etikettiermaschinen, Lokomotivmotoren und Sperrholz.
+</Aside>
+
+---
+
+## Den Zeitplan bauen: Gantt-Diagramme
+
+<Aside type="note">
+**Gantt-Diagramm** - ein horizontales Balkendiagramm, das einen Projektzeitplan abbildet. Benannt nach dem amerikanischen Ingenieur **Henry Gantt**, der es Anfang des 20. Jahrhunderts bekannt machte.
+</Aside>
+
+Es ist nützlich, weil es **stark visuell** ist: Aufgaben, Verantwortliche und Fälligkeiten in einem einzigen Bild. Für viele Menschen macht eine visuelle Hilfe zusätzlich zu schriftlichen Anweisungen es weit leichter aufzunehmen, was sie bis wann tun müssen und wie ihr Teil mit dem aller anderen zusammenhängt.
+
+Gantt-Diagramme verhalten sich ein wenig wie Kalender. Jede Aufgabe hat einen Start- und einen Endtermin, und die Länge ihres Balkens entspricht der dafür aufgewendeten Zeit. Schreibt Leon eine Projektcharta und Kylie prüft und überarbeitet sie danach, zeigen farbige Balken, wie Leon Freitag, Montag und Dienstag belegt und Kylie den Mittwoch für die Überarbeitungen nimmt. Die Balken **staffeln sich nach unten** über die Seite und zeigen so den Zeitverlauf und die Blöcke, in denen gearbeitet wird.
+
+### Eines in einer Tabellenkalkulation bauen
+
+1. **Richte die linken Spalten ein** für Aufgabentitel, Verantwortliche, Startdatum, Fälligkeitsdatum, Dauer und Prozent fertig.
+2. **Fülle die Zeilen** mit den Aufgaben und Milestones, die bereits in der WBS identifiziert wurden, sortiert nach Startdatum.
+3. **Richte die rechten Spalten** als die Wochen ein, die für das Projekt von Anfang bis Ende geschätzt sind.
+4. **Zeichne die Balken** in den Zeilen darunter, über die Termine hinweg, an denen die jeweilige Aufgabe stattfindet.
+
+Eine Tabellenkalkulation enthält mehr als nur das Diagramm selbst. Zusätzliche **Tabs** können das RACI-Diagramm, die Charta sowie den Risikomanagement- und den Kommunikationsplan beherbergen oder verlinken, sodass jedes Projektdokument in einer Datei lebt - das spart Zeit, hält alle organisiert und erspart die Suche in E-Mails. Ein digitales Dokument, das auf alles verlinkt, funktioniert als Alternative.
+
+<Aside type="caution">
+Ein Gantt-Diagramm ist nicht die einzige Möglichkeit, und es gibt gute Gründe, warum es zu deinem Team vielleicht nicht passt. Ein einfaches Projekt fährt womöglich besser mit einem schlichten digitalen Dokument, das Aufgaben, Verantwortliche, Fälligkeiten und Links auflistet. Manche Teams bevorzugen **Kanban-Boards**. Der Prüfstein ist nicht das Format: Trägt der Plan die Ziele, Aufgaben, Verantwortlichen, Start- und Endtermine und die relevante Dokumentation, bleiben alle auf demselben Stand.
+</Aside>
+
+---
+
+## Fünf Best Practices für einen starken Projektplan
+
+1. **Prüfe Deliverables, Milestones und Aufgaben sorgfältig.** Pläne werden feingliedriger als die Charta. Ein Deliverable *neue Website* zerfällt in Milestones wie den Kickoff mit der Webentwicklerin und die Freigabe durch die Stakeholder, und diese zerfallen in Aufgaben wie ein Design entwerfen und eine Landing-Page entwickeln, jeweils mit Verantwortlichen und Terminen. Mach das für **jedes** Deliverable.
+2. **Gib dir Zeit zum Planen.** Die Planung ist aus gutem Grund eine eigene Phase - sie ist zeitintensiv, besonders bei mehreren Deliverables. Sie ist der Raum, in dem du und das Team realistisch darüber nachdenkt, was machbar ist und was nicht. Niemand ist eine Maschine. Aufwandsschätzung und Kapazitätsplanung machen das realistisch, und Pufferzeit macht es überlebbar.
+3. **Plane für das Unvermeidliche.** Auch bei gründlicher Planung wird etwas schiefgehen. Du kannst nicht jedes Problem vorhersehen, aber das Team kann die **wahrscheinlichsten Risiken** benennen und planen, sie zu verhindern oder abzumildern. Puffer ist das Werkzeug für Verzögerungen.
+4. **Bleib neugierig.** Du bist womöglich die einzige Person, die das Projekt als Ganzes überblickt, aber du bist keine Expertin für jede einzelne Aufgabe. Stelle während der Planung viele Fragen - das ergibt einen stärkeren Plan und baut Vertrauen auf. Dehne die Neugier auf Stakeholder und Lieferanten aus: ihre Erwartungen, Prioritäten, Risikoeinschätzungen, Kommunikationspräferenzen und Verfügbarkeit.
+5. **Wirb für deinen Plan.** Frage dich, ob dein Team das Tool, in dem du ihn gebaut hast, überhaupt nutzen kann, ob er für Stakeholder klar genug ist und ob er allen als **Single Source of Truth** Zeit spart. Und dann verkaufe ihn - sag dem Team, warum es ihm nützt, den Plan im Blick zu behalten, damit es ihn aktuell hält.
+
+---
+
+## Kanban-Boards
+
+<Aside type="note">
+**Kanban-Board** - ein visuelles Werkzeug zum Managen von Aufgaben und Arbeitsabläufen. Aufgaben werden auf Karten geschrieben, und die Karten stehen in Spalten, die den Fortschritt abbilden. Es kann ein Whiteboard, eine Magnet- oder Pinnwand oder Software sein.
+</Aside>
+
+Kanban funktioniert bei allen Arten von Projekten, passt aber am besten zu **Agile**-Teams, da Agile ein iteratives Vorgehen ist, das auf kontinuierlichen Releases und Kundenfeedback in jeder Iteration beruht. Boards werden genutzt, um Arbeitsdetails und kritische Aufgabeninformationen schnell visuell zu erfassen, um **Übergaben zu erleichtern** zwischen Stakeholdern wie Entwicklung und Test und um Kennzahlen zu erheben und Arbeitsabläufe zu verbessern.
+
+Bevor du eines baust, sammle die Aufgaben, Status, Termine und Dauern. Ein typisches Board läuft über **To do, In progress, Testing, Done**, und eine Karte wandert mit dem Arbeitsfortschritt nach rechts. Die Spalten sind anpassbar, und Zeilen können Ressourcen abbilden - ein Team oder eine Person - sodass du siehst, wer woran arbeitet.
+
+| Kartenvorderseite | Kartenrückseite |
+| --- | --- |
+| **Titel und eindeutige Kennung** zum schnellen Nachschlagen | **Startdatum**, genutzt für Kennzahlen, Nachverfolgung und die Überprüfung deiner Schätzung |
+| **Beschreibung der Arbeit** - kurz, im Format einer Karteikarte | **Blockierte Tage** - Tage, an denen die Aufgabe nicht vorankommt, etwa während des Wartens auf eine nicht gelieferte Abhängigkeit |
+| **Aufwandsschätzung** - klein, mittel oder groß | **Enddatum** - wann die Aufgabe fällig ist, damit du siehst, ob das Projekt noch im Plan liegt |
+| **Wer zugewiesen ist** - idealerweise eine Person pro Karte | |
+
+Software-Optionen für Kanban sind unter anderem **Asana** und **Trello**. Es gibt viele, prüfe also, was zum Projekt passt.
+
+---
+
+<Aside type="tip">
+## Wiederholungs-Zusammenfassung
+
+- Der **Projektplan** dokumentiert Scope, Aufgaben, Milestones und Aktivitäten; seine fünf Grundelemente sind **Aufgaben, Milestones, Menschen, Dokumentation und Zeit**, mit dem **Zeitplan** im Zentrum.
+- Der Plan verlinkt außerdem **Scope und Ziele** (Charta), die **WBS**, das **Budget** und die **Managementpläne** - Änderung, Risiko und Kommunikation.
+- **Zeitschätzung** = Gesamtdauer inklusive Leerlaufzeit. **Aufwandsschätzung** = nur aktive Arbeit. Eine Wand streichen: 30 Minuten Aufwand, 24 Stunden Zeit. Unterschätzung kommt von **Optimismus**; das Gegenmittel ist, die verantwortliche Person zu fragen und die **Teilaufgaben** aufzulisten.
+- **Puffer** fangen Verzögerungen ab. **Aufgabenpuffer** kommen auf Aufgaben außerhalb der Kontrolle des Teams; **Projektpuffer** hängen zwei oder drei Tage ans Ende des Zeitplans. Alles zu puffern macht den Zeitrahmen unrealistisch.
+- **Schnell laufen, später zahlen:** Kendra verschwieg einen schlechten Zeitrahmen, plante allein und forderte das Team auf, schneller zu arbeiten - stattdessen: eskalieren, sorgfältig planen, Input einholen.
+- **Planungsfehlschluss** (Kahneman und Tversky, 1977): Zeit, Kosten und Risiko werden durch den **Optimismus-Bias** unterschätzt. Sei **optimistisch realistisch**.
+- **Kapazität** ist das, was Menschen in einem Zeitraum vernünftigerweise schaffen; die **Kapazitätsplanung** verteilt sie und prüft, ob die Zahlen aufgehen - 100 Lieferungen in fünf Tagen bei vier pro Fahrer und Tag brauchen fünf Fahrer. Ihre Faktoren: **parallele** vs. **sequenzielle** Aufgaben, **feste** und **früheste Starttermine** sowie **Float/Slack** (Aufgaben auf dem kritischen Pfad haben **null Float**).
+- **Kritischer Pfad** = das Minimum an Milestones und zwingenden Aufgaben, um das Ziel termingerecht zu erreichen. Fünf Schritte: Aufgaben erfassen, Abhängigkeiten festlegen, ein Netzplandiagramm zeichnen, Dauern schätzen, den **längsten Pfad** nehmen. Die **Vorwärtsrechnung** addiert die Dauern vom Start aus; die **Rückwärtsrechnung** arbeitet von einer harten Deadline zurück, um zu finden, was wirklich kritisch ist.
+- Schätzungen bekommst du über Soft Skills: **offene Fragen**, **wirksames Verhandeln** und **Empathie** für Arbeitslast und Urlaub.
+- **Gantt-Diagramm** (Henry Gantt, Anfang des 20. Jahrhunderts): horizontale Balken über einem Kalender, die Aufgaben, Verantwortliche und Termine zeigen. Bau es in einer Tabellenkalkulation - Aufgabe, Verantwortliche, Start, Fälligkeit, Dauer, Prozent fertig links; Wochen oben quer; Balken im Raster; weitere Dokumente auf zusätzlichen Tabs.
+- **Fünf Best Practices:** Deliverables bis auf Aufgabenebene prüfen, sich Zeit zum Planen geben, damit planen, dass etwas schiefgeht, neugierig bleiben, für den Plan werben.
+- **Kanban-Boards** visualisieren den Arbeitsablauf in Spalten (To do, In progress, Testing, Done); Karten tragen vorn Titel, Beschreibung, Aufwandsgröße und Verantwortliche, hinten Startdatum, blockierte Tage und Enddatum. Tools: Asana, Trello.
+</Aside>
+
+---
+
+*Weiter: [Budget & Beschaffung →](/de/learnings/online/project-management/planning-3-budget/) - den Plan kalkulieren und einkaufen, was er braucht.*

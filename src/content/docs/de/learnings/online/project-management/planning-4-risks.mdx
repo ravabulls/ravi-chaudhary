@@ -1,0 +1,361 @@
+---
+title: "Planung 4 - Risiken managen"
+description: "Was ein Risiko von einem Problem unterscheidet, der fünfphasige Risikomanagement-Prozess, Risiken über Brainstorming und Ursache-Wirkungs-Diagramme finden, sie in einer Matrix aus Eintrittswahrscheinlichkeit und Auswirkung bewerten, inhärentes Risiko und Risikobereitschaft, die gängigen Risikoarten einschließlich Einzelfehlerstellen und Abhängigkeiten, die vier Mitigationsstrategien und wie der Risikomanagementplan bei den Stakeholdern ankommt."
+sidebar:
+  label: "C3·4 - Risiken managen"
+  order: 13
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Kurs 3: Projektplanung - Alles zusammenführen*
+
+---
+
+Kein Projekt läuft exakt nach Plan. Selbst die erfahrenste Projektmanagerin baut einen perfekten Zeitplan, und dann meldet sich jemand krank, oder die Gäste kommen und niemand hat Eis besorgt. Weil das schlicht die Natur von Projekten ist, besteht die vernünftige Reaktion nicht darin, auf das Beste zu hoffen, sondern **vorwegzunehmen**, was schiefgehen könnte, und im Voraus zu entscheiden, was du dann tun würdest.
+
+Dieses Vorwegnehmen ist **Risikomanagement**, und dieses Modul behandelt es als eigenständige Planungsarbeit. Die Logik läuft in einer Schleife: Risiken finden, beurteilen, wie wahrscheinlich und wie schädlich jedes ist, entscheiden, welche Aufmerksamkeit verdienen, eine Reaktion planen, weiter beobachten. Der Werkzeugkasten ist klein - Brainstorming mit einem vielfältigen Team, das Ursache-Wirkungs-Diagramm, das Risikoregister, die Matrix aus Eintrittswahrscheinlichkeit und Auswirkung sowie vier Standard-Mitigationsschritte. Was tatsächlich entsteht, ist ein **Risikomanagementplan**: ein lebendiges Dokument, das die übergeordneten Risiken und die jeweilige Mitigation auflistet und mit Team und Stakeholdern geteilt wird, damit niemand unvorbereitet getroffen wird.
+
+<Aside type="note">
+**Wo das hingehört:** immer noch *Planung*, neben Zeitplan und Budget. Aber Risikoarbeit endet nicht mit der Planung - sie läuft durch die Ausführung weiter, weshalb der Plan darauf ausgelegt ist, aktualisiert und nicht abgeheftet zu werden.
+</Aside>
+
+---
+
+## Risiko, Problem und Risikomanagement
+
+<Aside type="note">
+**Risiko** - ein potenzielles Ereignis, das eintreten *könnte* und dein Projekt beeinflusst. Risiken sind hypothetisch: Niemand sagt, dass sie eintreten werden, nur dass sie es könnten, und diese Möglichkeit macht sie zu deiner Verantwortung.
+<br />**Problem (Issue)** - ein bekanntes, reales Problem, das die Fähigkeit, eine Aufgabe abzuschließen, bereits beeinträchtigt.
+<br />**Risikomanagement** - der Prozess, die potenziellen Risiken und Probleme zu identifizieren und zu bewerten, die ein Projekt beeinflussen könnten.
+</Aside>
+
+Die Verbindung zwischen den ersten beiden ist das, was man sich merken sollte: **Ein Risiko, das tatsächlich eintritt, wird zum Problem**. Risiken sind die großen „Was wäre wenn“; Probleme sind das, was dir gerade jetzt wehtut.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Risiko<span class="sub">könnte eintreten</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Es tritt ein<span class="sub">das Was-wäre-wenn wird real</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Problem<span class="sub">ein reales Problem, jetzt zu lösen</span></div>
+  </div>
+  <figcaption>Risikomanagement ist die Arbeit, die du auf der linken Seite dieses Bildes leistest, damit die rechte Seite überlebbar bleibt.</figcaption>
+</figure>
+
+Risikomanagement ist **keine einmalige Übung**. Du führst es wiederholt durch, weil sich das Bild ständig ändert.
+
+### Warum sich der Aufwand lohnt
+
+Gut gemacht liefert es dir ein Verständnis davon, was schiefgehen könnte, eine Liste, **wen man zu welchem Risiko konsultieren** sollte, und einen Überblick, **wie sich jedes mitigieren ließe**. Es zu überspringen kostet dich:
+
+- **Verfehlte Ziele, Termine oder Erfolgskriterien.** Wenn die Research-Analystin auf halber Strecke kündigt und es keinen Ersatzplan gibt, verfehlt der Bericht seine Deadline.
+- **Kein Gefühl dafür, wie flexibel der Plan ist.** Es gibt selten nur einen Weg zu einem Projektziel. Risiken im Voraus durchzudenken zeigt, wo der Plan nachgeben kann, sodass du umschwenken und trotzdem erfolgreich sein kannst - ein Ersatzlieferant macht aus einer gescheiterten Bestellung eine Unannehmlichkeit statt einer Krise.
+- **Volle Ausgesetztheit gegenüber dem Unvorhersehbaren.** Lieferanten haben zu wenig auf Lager; Budgets werden ohne Vorwarnung gekürzt. Der Prozess verringert die Wirkung von Überraschungen und macht Ressourcen für Arbeit frei, die dem Projekt tatsächlich nützt.
+
+Für den laufenden **Plant Pals**-Service bei Office Green zwei Kandidaten für Risiken: Die neue Service-Webseite ist zum Start nicht live, und dem Pflanzenlieferanten gehen die Kakteen und Farne aus, die das Projekt braucht. Keines ist sicher; beide verdienen einen Plan.
+
+<Aside type="tip">
+Es werden weiterhin Probleme auftauchen, die du nicht eingeplant hast oder nicht einplanen konntest, und das ist in Ordnung. Wenn es so weit ist: Ruhe bewahren, die **Grundursache** finden und eine Lösung bauen. Ein hier interviewter Programmmanager sagt dasselbe über sein erstes Projekt - er war davon besessen, jedes Detail auf Anhieb richtig zu machen, und lernte, dass dir das selten gelingt. Veränderungen passieren; entscheidend ist, wie du reagierst, und ruhig und gefasst zu bleiben, während du herausfindest, was kaputtgegangen ist, ist die eigentliche Kunst.
+</Aside>
+
+---
+
+## Der Risikomanagement-Prozess
+
+Risikomanagement ist eine fortlaufende Praxis über den gesamten Lebenszyklus und verläuft meist in einer Variante dieser fünf Phasen.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1 · Risiko identifizieren<span class="sub">potenzielle Risiken gemeinsam mit dem Team definieren - managen kannst du nur, wovon du weißt</span></div>
+    <div class="sc-node amber">2 · Risiko analysieren<span class="sub">Eintrittswahrscheinlichkeit und mögliche Auswirkung jedes Risikos bestimmen</span></div>
+    <div class="sc-node violet">3 · Risiko bewerten<span class="sub">anhand der Analyse entscheiden, welche Risiken Priorität bekommen</span></div>
+    <div class="sc-node green">4 · Risiko behandeln<span class="sub">die Reaktion planen: kleine Risiken lassen sich ignorieren, ernste brauchen detaillierte Mitigation</span></div>
+    <div class="sc-node slate">5 · Überwachen und steuern<span class="sub">Personen benennen, die jedes Risiko verfolgen und bei Bedarf mitigieren</span></div>
+  </div>
+  <figcaption>Ernste Risiken mit hoher Eintrittswahrscheinlichkeit stellen die größte Bedrohung dar und verdienen die detaillierten Pläne.</figcaption>
+</figure>
+
+---
+
+## Risiken können auch Chancen sein
+
+Ein Risiko ist nicht automatisch eine schlechte Nachricht. Eine **Chance** ist ein potenziell *positives* Ergebnis eines Risikos, und sie zu nutzen lässt dich das Ziel schneller, günstiger oder mit weniger Aufwand erreichen.
+
+<div class="sc-chips">
+  <span class="sc-chip green">Ein Milestone wird früher als geplant erreicht</span>
+  <span class="sc-chip green">Vergünstigte Materialien</span>
+  <span class="sc-chip green">Zusätzlich verfügbare Ressourcen: Menschen, Investitionen, Ausrüstung</span>
+</div>
+
+Das Nützliche daran ist, dass **dieselben fünf Phasen gelten**. Identifiziere, analysiere, bewerte, behandle und steuere Chancen genau so wie Bedrohungen, mit demselben Brainstorming und demselben Blick zurück auf die Projekthistorie, und halte im Risikomanagementplan fest, wie du die jeweilige Chance nutzen würdest. Wisse, was zu tun ist, wenn etwas schiefgeht, aber plane auch, das zu ergreifen, was unerwartet gut läuft.
+
+---
+
+## Risiken identifizieren
+
+### Brainstorming mit den richtigen Leuten
+
+**Brainstorming** ist die wirksamste Technik, um Risiken mit einem Team zutage zu fördern, weil sie eine Gruppe Ideen spontan und **ohne Bewertung** teilen lässt. Deine Aufgabe ist es, diese Gruppe einzuberufen - halte das **RACI-Diagramm** bereit, wenn du entscheidest, wen du einlädst.
+
+Mache die Gruppe **vielfältig**. Unterschiedliche Rollen, Hintergründe und Erfahrungen bringen Risiken hervor, auf die du allein nie kommen würdest: Wer schon mehrere Projekte hinter sich hat, erkennt Muster, während ein neueres Teammitglied eine frische Perspektive aus früheren Teams mitbringt.
+
+<Aside type="caution">
+Rechne mit einer langen Liste und akzeptiere, dass du und das Team nicht jedes einzelne Problem berücksichtigen können. Genau deshalb folgt als Nächstes die Bewertung - du brauchst eine Methode, um zu entscheiden, an welchen Risiken tatsächlich gearbeitet wird.
+</Aside>
+
+### Das Ursache-Wirkungs-Diagramm (Fischgrätendiagramm)
+
+<Aside type="note">
+**Ursache-Wirkungs-Diagramm**, auch **Fischgrätendiagramm** oder **Ishikawa-Diagramm** genannt - eine visuelle Methode, die möglichen Ursachen eines Ereignisses oder Risikos auszubreiten. Entwickelt vom japanischen Organisationstheoretiker Kaoru Ishikawa in den 1960er-Jahren für die Qualitätskontrolle im Schiffbau und benannt nach seiner Ähnlichkeit mit einem Fischskelett.
+</Aside>
+
+Der Kniff besteht darin, ein potenzielles Risiko als **Wirkung** zu formulieren (den Fischkopf, zum Beispiel *ein Lieferant hält seine Termine nicht ein*) und *rückwärts* zu den Ursachen zu arbeiten, die es hervorbringen könnten, sortiert in Kategorien entlang der Wirbelsäule. Kategorisieren und anschließendes weiteres Aufschlüsseln legt die Bereiche offen, die zu einem Problem führen könnten, etwa zu einer Budgetüberschreitung, oder die **Scope Creep** (unkontrollierte Änderungen und Zuwächse, die den Scope nach Projektbeginn betreffen) den Zeitplan auffressen lassen.
+
+Ein verwandter Begriff, für dessen Auffinden es gebaut ist: die **Grundursache**, die anfängliche Ursache einer Situation, die das Problem oder Risiko einführt. Nicht jede Ursache, die du auflistest, ist die Grundursache.
+
+<Steps>
+
+1. **Definiere das Problem.** Formuliere es klar und setze es an den Fischkopf. Miguel, Projektmanager bei Office Supply Inc., plant eine Sommeraktion mit kostenloser Lieferung, und sein Unternehmen hat Schwierigkeiten, pünktlich an Bürogebäude in der Innenstadt zu liefern - sein Problem lautet also *Schwierigkeiten, Produkte pünktlich an Bürogebäude in der Innenstadt zu liefern*.
+
+2. **Bestimme die Kategorien.** Sie ändern sich mit dem Problem und der Branche. Gängige sind: Menschen, Technologie, Materialien, Transport, Geld, Zeit, Umfeld, Verfahren. Miguel wählt Menschen, Technologie, Materialien, Transport und Umfeld.
+
+3. **Sammle die Ursachen im Brainstorming.** Fülle jede Kategorie mit den Ideen des Teams. Miguels Diagramm enthält am Ende Menschen (fehlende Schulung, Ablenkungen, zu wenig Personal), Technologie (zu kompliziert, veraltet), Materialien (fragile Verpackung, fehlende Gabelstapler), Transport (zu kleine Lkw, zu große Lkw, zu wenige Lkw) und Umfeld (Stadtverkehr, überlastete Aufzüge, lange Wege).
+
+4. **Analysiere die Ursachen.** Prüfe, welche wirklich die Grundursache ist. Mehr Gabelstapler würden das Beladen beschleunigen, aber als Miguel Be- und Entladen misst, ist die Ersparnis vernachlässigbar - Gabelstapler sind also *eine* Ursache, nicht *die* Ursache. Was heraussticht: Es gibt keinen festen Lieferplan, und das Problem tritt nur in der Stadt auf, nicht in den Vororten, sodass der Verkehr in Verdacht gerät und die lohnende Lösung darin besteht, die Abfahrten vor die Hauptverkehrszeit zu legen.
+
+</Steps>
+
+<Aside type="tip">
+Zwei Profi-Tipps. Halte das Brainstorming als **bewertungsfreie Zone**: Fördere den Ideenfluss, widerstehe dem Ausschließen, und wenn menschliche Faktoren zur Sprache kommen, benenne **Verhaltensweisen, niemals Personen**. Und das Diagramm funktioniert in jeder Phase - in der Planung jagst du den Ursachen eines Problems nach, das eintreten kann oder auch nicht, während du in der Ausführung der Grundursache eines Problems nachjagst, das bereits eingetreten ist.
+</Aside>
+
+### Eine erste Liste von einem Gen-KI-Tool bekommen
+
+Eine Projektcharta nennt womöglich nur wenige Risiken. Ein Gen-KI-Tool wie Gemini kann diese Liste schnell erweitern. Schildere die Lage mit echten Details - *handle als Projektmanager, der die Entwicklung einer Hunde-Wellness-App für ein mittelgroßes Unternehmen mit Gassi-Service, Training und Tierbedarf verantwortet; prüfe diese Projektdetails und identifiziere nur größere Risiken, die den Zeitplan oder das Budget beeinflussen könnten* - und füge dann die Charta ein (oder lade sie, je nach Tool, hoch).
+
+| Tun | Warum |
+| --- | --- |
+| **Viel Kontext geben** | Je mehr Projektdetails im Prompt stecken, desto weniger generisch fallen die zurückkommenden Risiken aus |
+| **Fragen, was schiefgehen könnte**, nicht nur, was besser laufen könnte | Gen-KI ist stark im Brainstorming, und genau das ist hier die Aufgabe |
+| **Um eine Umformatierung bitten** | Sie erzeugt schnell Text, also fordere sie heraus, umzustrukturieren, bis das Format dir und dem Team passt |
+| **Mit dem eigenen Urteil prüfen** | Eine lange Liste kann Irrelevantes enthalten und trotzdem Schlüsselbereiche auslassen - sie ist ein Ausgangspunkt |
+| **Später wiederkommen** | Tauchen im Projektverlauf neue Risiken auf, komm mit den Details zurück und entwickle Mitigationspläne im Brainstorming |
+
+Wie ein Mensch kann auch ein Gen-KI-Tool nicht verhindern, dass ein Risiko zu einem Problem wird, das das Projekt entgleisen lässt. Es hilft dir nur, Risiken früher einen Schritt voraus zu sein.
+
+---
+
+## Risiken einschätzen und priorisieren
+
+Ist das Brainstorming abgeschlossen, listest du die Ergebnisse in einem **Risikoregister** auf - einer Tabelle oder Übersicht mit deiner Liste der Risiken - und schätzt sie anschließend ein.
+
+<Aside type="note">
+**Risikoeinschätzung** - die Phase des Risikomanagements, in der die Eigenschaften eines Risikos geschätzt oder gemessen werden. In der Praxis sind die relevanten Eigenschaften, wie **wahrscheinlich** ein Eintritt ist und wie viel **Auswirkung** er hätte.
+</Aside>
+
+### Die Matrix aus Eintrittswahrscheinlichkeit und Auswirkung
+
+Eine **Matrix aus Eintrittswahrscheinlichkeit und Auswirkung** ist ein Werkzeug zur Priorisierung von Projektrisiken. Zwei Skalen, jeweils bewertet mit hoch, mittel oder niedrig:
+
+| Dimension | Definition | So liest du die Skala |
+| --- | --- | --- |
+| **Auswirkung** | Der Schaden, den ein Risiko bei Eintritt verursachen würde | **Hoch** verändert das Projekt erheblich · **Niedrig** ist ein geringfügiger Effekt, der kaum etwas entgleisen lässt |
+| **Eintrittswahrscheinlichkeit** | Die Wahrscheinlichkeit, dass das Risiko eintritt | **Hoch** bedeutet sehr wahrscheinlich · **Niedrig** bedeutet, es könnte passieren, wird es aber vermutlich nicht |
+
+Setzt man beides zusammen, ergibt sich die Bewertung des **inhärenten Risikos**.
+
+<Aside type="note">
+**Inhärentes Risiko** - das Maß eines Risikos, berechnet aus seiner Eintrittswahrscheinlichkeit und seiner Auswirkung, bewertet als hoch, mittel oder niedrig. Es ist die Methode, die ein Risiko mit einem anderen vergleichbar macht.
+</Aside>
+
+<figure class="sc-fig">
+  <div class="sc-quad">
+    <div class="q amber">
+      <div class="qh">Hohe Auswirkung · Niedrige Wahrscheinlichkeit <small>mittleres inhärentes Risiko</small></div>
+      <ul>
+        <li>Unwahrscheinlich, aber es würde wehtun - trotzdem ein schriftlicher Mitigationsplan lohnt sich</li>
+      </ul>
+    </div>
+    <div class="q violet">
+      <div class="qh">Hohe Auswirkung · Hohe Wahrscheinlichkeit <small>hohes inhärentes Risiko</small></div>
+      <ul>
+        <li>Kann das Projekt entgleisen lassen: detaillierte Mitigation, benannte verantwortliche Person, enge Beobachtung</li>
+      </ul>
+    </div>
+    <div class="q green">
+      <div class="qh">Niedrige Auswirkung · Niedrige Wahrscheinlichkeit <small>niedriges inhärentes Risiko</small></div>
+      <ul>
+        <li>Notieren und weitergehen - nicht die Sorte, über die man sich viele Gedanken macht</li>
+      </ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Niedrige Auswirkung · Hohe Wahrscheinlichkeit <small>mittleres inhärentes Risiko</small></div>
+      <ul>
+        <li>Wahrscheinlich, aber ein kleiner Rückschlag: beobachten und eine leichte Behelfslösung bereithalten</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Mittlere und hohe inhärente Risiken sind diejenigen, die detaillierte Mitigationspläne verdienen. Niedrig und niedrig ist der Quadrant, den du weitgehend in Ruhe lassen kannst.</figcaption>
+</figure>
+
+<Aside type="caution">
+**Baue die Matrix barrierefrei.** Nutze **sowohl Farbe als auch klar unterscheidbare Formen oder Text**, um Risikostufen zu vermitteln, und formatiere sie so, dass alle sie leicht und schnell lesen können. Farbe allein schließt Menschen aus.
+</Aside>
+
+### Risikobereitschaft
+
+**Risikobereitschaft** ist die Bereitschaft einer Organisation, die möglichen Folgen eines Risikos zu akzeptieren. Wie du ein Risiko siehst und managst, hängt davon ab, und **du, dein Team und deine Stakeholder können für dasselbe Risiko jeweils eine andere Bereitschaft haben**. Niedrigstufige Risiken, die kleine Rückschläge verursachen, sind weit erträglicher als hochstufige, die das Projekt vollständig entgleisen lassen könnten. Ist die Einschätzung abgeschlossen, gehe zurück und **aktualisiere das Risikoregister** mit den Bewertungen hoch, mittel und niedrig.
+
+---
+
+## Risikoarten
+
+### Die drei großen
+
+| Art | Was es ist | Warum es zählt |
+| --- | --- | --- |
+| **Zeitrisiko** | Projektaufgaben dauern länger als erwartet | Zeit ist Geld - schlechtes Zeitmanagement zehrt das Budget auf und verärgert Stakeholder durch Verzögerungen |
+| **Budgetrisiko** | Kosten steigen durch schlechte Planung oder wachsenden Scope | Das Budget ist die Grundlage der Kostenkontrolle; bei Überschreitung kannst du womöglich Lieferanten nicht bezahlen, was dem Ruf des Unternehmens schadet |
+| **Scope-Risiko** | Das Projekt liefert nicht die in den Zielen festgelegten Ergebnisse | Deliverables, die Stakeholder oder Kunden nicht abnehmen, machen den Sinn des ganzen Projekts zunichte |
+
+### Externe Risiken
+
+**Externe Risiken** ergeben sich aus Faktoren außerhalb des Unternehmens, über die du wenig oder gar keine Kontrolle hast - ein **umweltbezogenes** Risiko wie ein schwerer Sturm oder ein **rechtliches** Risiko wie eine Änderung regulatorischer Anforderungen. Es gibt unendlich viele Risikoarten, und es wird nie ein Rezept geben, das jede einzelne abdeckt; einen Plan zu haben ist das, was dich auf alles, was auftaucht, besser vorbereitet.
+
+### Einzelfehlerstellen
+
+<Aside type="note">
+**Einzelfehlerstelle (Single Point of Failure)** - ein Risiko mit dem Potenzial, katastrophal zu wirken und die Arbeit im gesamten Projekt zum Stillstand zu bringen. Niemand kommt bei seinen Aufgaben voran, bis das Problem gelöst ist.
+</Aside>
+
+Das Office-Green-Beispiel ist ein Stromausfall, der die interne Datenbank lahmlegt, in der sämtliche Projektinformationen liegen: Bis sie wieder läuft, kann niemand seine Arbeit tun. Eine günstige Mitigation besteht darin, einen **separaten Cloud-Dienst** als Backup für die gesamte Projektdokumentation einzuplanen.
+
+Die andere häufige Form sind Menschen statt Systeme. Projekte stützen sich auf **Fachexpertinnen und Fachexperten** (SMEs), Teammitglieder mit tiefem Verständnis einer bestimmten Tätigkeit, eines Prozesses, einer Abteilung, Funktion, Technologie, Maschine, eines Materials oder einer Ausrüstungsart, die über den gesamten Lebenszyklus beraten. **Nur eine einzige SME** zu haben, die ein kritisches System kennt, ist eine Einzelfehlerstelle - eine Perspektive, niemand, der eine zweite beisteuert. Erkenne und beobachte diese früh, denn sie treffen Zeitplan, Budget und Scope gleichermaßen.
+
+### Abhängigkeiten
+
+<Aside type="note">
+**Abhängigkeit** - eine Beziehung zwischen zwei Projektaufgaben, bei der der Beginn oder Abschluss der einen vom Beginn oder Abschluss der anderen abhängt. Eine Abhängigkeit muss geklärt sein, bevor ihre Aufgabe abgeschlossen werden oder die nächste Aufgabe beginnen kann.
+</Aside>
+
+Weil sie die Verbindungen von einer Aufgabe zur nächsten sind, sind Abhängigkeiten eine große Risikoquelle. Beauftrage ein Teammitglied damit, einen Pflanzenlieferanten zu gewinnen, und niemand kann bestellen, bis dieser Vertrag unterschrieben ist - und wenn die Person ihre Frist verpasst und dann eine Woche in den Urlaub geht, rutscht der Zeitplan. Eine praktische Gegenmaßnahme besteht darin, alle zu bitten, ihre **Abwesenheitsplanung zu Projektbeginn zu teilen**, damit Ersatzpläne um bekannte Abwesenheiten herum gebaut werden können.
+
+| Art | Bedeutung | Beispiel |
+| --- | --- | --- |
+| **Interne Abhängigkeit** | Innerhalb des Projekts, in der Kontrolle deines Teams | Das Website-Design muss freigegeben sein, bevor die Entwicklung beginnen kann |
+| **Externe Abhängigkeit** | Außerhalb deiner Kontrolle | Eine schwächere Regenzeit auf der Farm des Lieferanten bedeutet weniger Pflanzen zum Verkaufen |
+
+Vier Abhängigkeitsbeziehungen lohnt es sich beim Namen zu kennen:
+
+| Typ | Regel | Alltagsbeispiel |
+| --- | --- | --- |
+| **Ende-Anfang (FS)** | Aufgabe A muss enden, bevor Aufgabe B beginnt. Der häufigste Typ, ein natürlicher Ablauf | Erst Socken an, dann Schuhe an |
+| **Ende-Ende (FF)** | Aufgabe A muss enden, bevor Aufgabe B enden kann. Selten | Erst die Glasur fertigstellen, dann kann das Verzieren der Torte fertig werden |
+| **Anfang-Anfang (SS)** | Aufgabe B kann nicht beginnen, bevor Aufgabe A begonnen hat, sodass beide parallel laufen | Erst die Zugfahrt bezahlen, dann in den Zug einsteigen |
+| **Anfang-Ende (SF)** | Aufgabe A muss beginnen, bevor Aufgabe B abgeschlossen werden kann | Dein Freund kann seine Schicht nicht beenden, bevor seine Kollegin ihre beginnt |
+
+Ein **Abhängigkeitsdiagramm** zeichnet diese Beziehungen, sodass du den Arbeitsfluss siehst und das Risiko, das sich darin versteckt. Sandwiches machen: Zutaten holen (A), dann Marmelade auf die eine Scheibe (B) und Erdnussbutter auf die andere (C) parallel, beide müssen fertig sein, bevor die Scheiben zusammengedrückt werden (D), und erst danach wird serviert (E). Alles, was auf zwei Vorgänger wartet, wie D, ist die Stelle, an der sich Verzögerungsrisiko konzentriert.
+
+---
+
+## Mitigationsstrategien
+
+<Aside type="note">
+**Risikomitigationsplanung** - Wege finden, die Auswirkung potenzieller Risiken zu beseitigen oder zu verringern. Vier gängige Schritte: **vermeiden**, **akzeptieren**, **reduzieren oder kontrollieren** und **übertragen**.
+</Aside>
+
+| Strategie | Was du tust | Office-Green-Beispiel |
+| --- | --- | --- |
+| **Vermeiden** | Der Situation komplett aus dem Weg gehen | Ein Auftragnehmer hat einen schlechten Ruf bei der Termintreue, also beauftragst du einen anderen |
+| **Akzeptieren** | Zugestehen, dass das Risiko eintreten kann, es beobachten und bereit sein, damit zu leben. Passt zu Risiken, die in Wahrscheinlichkeit und Auswirkung niedrig sind | Ein Pflanzgefäß-Modell ist nachbestellt, und ein Nachschubproblem könnte Kundenlieferungen um zwei Tage verzögern; einen neuen Lieferanten aufzunehmen würde zwei Wochen dauern, also ist Akzeptieren das günstigere Ärgernis |
+| **Reduzieren oder kontrollieren** | Die riskante Option behalten, aber Kontrollen ergänzen, die den Schaden verkleinern | Den unpünktlichen Auftragnehmer trotzdem beauftragen, weil die Arbeit exzellent ist, und dann tägliche Check-in-Meetings ergänzen, damit nichts abdriftet |
+| **Übertragen** | Die Verantwortung für das Risiko auf eine andere Partei verlagern | Statt Pflanzen selbst vor Ort zu ziehen, wo schlechtes Wetter oder Schädlinge das Produkt ruinieren könnten, die Produktion an lokale Lieferanten auslagern, sodass du bei Qualitätsproblemen den Lieferanten wechseln kannst |
+
+<Aside type="tip">
+Ein **Entscheidungsbaum** - ein Flussdiagramm, das hilft, die weitergehende Wirkung einer Entscheidung auf den Rest des Projekts sichtbar zu machen - ist ein praktisches Mittel, um einen Reduzieren-oder-kontrollieren-Plan zu bauen, weil er die Folgewirkungen jeder Option zeigt, bevor du dich festlegst.
+</Aside>
+
+### Dieselben vier Strategien an einer Einzelfehlerstelle
+
+Office Green kauft die meisten Samen bei einem südamerikanischen Lieferanten, und die Regierung dieses Landes kündigt eine Exportsteuer an, die den Preis unerreichbar macht. Hier gefasst als **vermeiden, minimieren, übertragen, akzeptieren**, bietet jede Strategie einen Ausweg:
+
+- **Vermeiden** - auf eine andere Samensorte umsteigen, die an mehreren Orten breit verfügbar ist.
+- **Minimieren** - beim ursprünglichen Lieferanten *und* bei einem im Nachbarland kaufen, da eine einzelne Steueränderung unwahrscheinlich beide trifft. Mitigationen dieser Art heißen oft **Behelfslösungen (Workarounds)**, und sie beginnen damit, sich das Risiko einzugestehen.
+- **Übertragen** - über einen nordamerikanischen Lieferanten kaufen, der aus mehreren südamerikanischen Ländern bezieht, und ihm damit das regulatorische Risiko und die Kosten überlassen.
+- **Akzeptieren** - es als normale Kosten des Geschäfts behandeln, entweder **aktiv**, indem du zusätzliche Mittel zurücklegst, um dich aus der Klemme zu kaufen, oder **passiv**, indem du nichts tust.
+
+<Aside type="caution">
+**Passives Akzeptieren** (der Nichts-tun-Ansatz) kann bei kleineren Risiken vernünftig sein, ist aber für die meisten Einzelfehlerstellen nicht zu empfehlen. Mitigiere wo immer möglich proaktiv - das erspart dir womöglich, Risiken überhaupt akzeptieren zu müssen. Hier würde die Projektmanagerin sinnvollerweise die Stakeholder treffen, um die Steuererhöhung und ihre Kostenwirkung zu besprechen, bevor sie sich entscheidet.
+</Aside>
+
+---
+
+## Der Risikomanagementplan
+
+<Aside type="note">
+**Risikomanagementplan** - ein lebendiges Dokument mit den übergeordneten Risiken und dem jeweiligen Mitigationsplan. Es gibt Teammitgliedern und Stakeholdern ein klares, gemeinsames Verständnis der möglichen Probleme und des Plans, sie anzugehen.
+</Aside>
+
+Weil Risikomanagement durch Planung *und* Ausführung läuft, wird der Plan **regelmäßig aktualisiert**: neu identifizierte Risiken ergänzen, nicht mehr relevante Risiken entfernen und Mitigationspläne anpassen, wenn sie sich ändern.
+
+### Was hineingehört
+
+| Abschnitt | Was er enthält |
+| --- | --- |
+| **Unternehmens- und Projektname** | Ganz oben im Dokument |
+| **Autorin oder Autor des Dokuments** | Damit alle, die den Plan prüfen, genau wissen, wen sie bei Fragen ansprechen |
+| **Dokumentstatus** | *In Bearbeitung*, während du daran baust, *final*, sobald es fertig ist |
+| **Erstellungs- und Aktualisierungsdatum** | Kleine Details, aber Transparenz über Daten sagt Stakeholdern, wie aktuell das Dokument ist |
+| **Ziel des Dokuments** | Eine Zeile, zum Beispiel: Mitigationspläne für das Projekt Plant Pals darlegen |
+| **Zusammenfassung für die Leitung** | Eine kurze Einführung in die normalen Bedingungen des Projekts plus ein Überblick über die potenziellen Risiken |
+| **Risikoregister** | Die zentrale Tabelle: jedes Risiko, seine Bewertung des inhärenten Risikos und sein Mitigationsplan |
+| **Anhang** | Die Diagramme zu Eintrittswahrscheinlichkeit und Auswirkung sowie die für die Einschätzung genutzte Matrix |
+
+Eine ausgefüllte Registerzeile aus dem Plant-Pals-Beispiel: Das Risiko ist, **dass der Lieferant bei einem Termin in Verzug gerät**, die Bewertung des inhärenten Risikos ist **mittel**, und die Mitigation sind **tägliche Meetings mit dem Lieferanten**, um ihm zu helfen, im Plan zu bleiben.
+
+Ist der Plan ausgefüllt, **teile ihn mit deinem Team und deinen Stakeholdern**, um ihren Input zu bekommen und zu bestätigen, dass alle auf einer Linie sind.
+
+---
+
+## Risiken an Stakeholder kommunizieren
+
+Es reicht nicht, dass du und das Team die größten Risiken kennen. Stakeholder müssen sie ebenfalls kennen, denn wenn sie nichts davon wissen, sind sie **schlechter gerüstet, dir zu helfen**, wenn etwas schiefgeht - sie können für ein Problem, von dem sie nie gehört haben, kein zusätzliches Budget und keine zusätzlichen Ressourcen freigeben. Schlimmer noch: Ein Stakeholder, den ein Problem überrumpelt, wird fragen, ob du wusstest, dass es passieren könnte, und warum du nicht früher etwas gesagt hast, und das **untergräbt das Vertrauen** in dich als Führungsperson des Projekts.
+
+Früh und häufig über mittlere und hohe Risiken zu kommunizieren setzt Erwartungen für die Ausführungsphase, zeigt, dass du Mitigationen bereits geplant hast, und lässt dich vorschlagen, wie Stakeholder helfen könnten, wenn ein Risiko eintritt. Passe den Kanal an die Schwere an:
+
+| Schwere | Wie kommunizieren |
+| --- | --- |
+| **Niedrig** | Eine E-Mail genügt - führe ein paar relevante niedrigstufige Risiken im wöchentlichen Planungsupdate auf, mit einer kurzen Notiz, wie du sie angehen würdest |
+| **Mittel** | Eine direkte E-Mail an die Stakeholder mit mehr Details und einer ausführlichen Erläuterung der Mitigation, mit Link zum Risikomanagementplan. Setze *dringend* in die Betreffzeile, wenn es das rechtfertigt |
+| **Hoch** | Gründlich und direkt: Ergänze einen Tagesordnungspunkt im Projektplan-Meeting, stelle das Risiko und deine Mitigation vor, sammle dann Feedback ein und frage, wie sie damit umgehen würden |
+
+<Aside type="tip">
+Risiken durchzusprechen ist kein einseitiges Berichten - es **deckt Risiken auf, die du nicht bedacht hattest**. Eine Google-Programmmanagerin beschreibt, wie sie einem Stakeholder aus einem anderen Team ein mögliches neues Produkt vorstellte, der darauf hinwies, dass die Lösung Zeit- und Ressourcenrisiken für *sein* Team erzeugen würde. Dieses Gespräch legte die Betroffenheit einer Kollegin und einen Nutzerbedarf offen und führte dazu, die Projektsponsoren um mehr Budget und Ressourcen zu bitten. Stakeholder haben oft frühere Erfahrung mit ähnlichen Risiken und Strategien, an die du nicht gedacht hast.
+<br />Ein leitender Programmmanager fasst die ganze Disziplin so zusammen: Man ist die Person auf dem Schiff, die nach vorne auf die Felsen achtet. Projekte entstehen nie im luftleeren Raum - andere Teams verlassen sich darauf, dass du lieferst -, also schaust du voraus, entschärfst Risiken und kommunizierst sie an die passenden Stakeholder, um deine Zusagen einzuhalten. Beginne damit, die Probleme zu identifizieren und die richtigen Leute hinzuzuziehen, damit die Liste vollständig ist, und erarbeite dann gemeinsam, wie sie zu managen sind, denn alle im Team müssen gleichermaßen daran interessiert sein, dass das Projekt gelingt.
+</Aside>
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+- **Risiko vs. Problem** - ein Risiko ist ein potenzielles Ereignis, das eintreten könnte; sobald es eintritt, wird es zum Problem. Risiken sind die Was-wäre-wenn-Fragen, Probleme sind das, was dir jetzt wehtut.
+- **Risikomanagement** - potenzielle Risiken und Probleme identifizieren und bewerten. Fortlaufend, nicht einmalig; sagt dir, was schiefgehen könnte, wen du konsultieren solltest und wie sich mitigieren lässt.
+- **Fünf Phasen** - identifizieren, analysieren, bewerten, behandeln, überwachen und steuern. Ernste Risiken mit hoher Wahrscheinlichkeit stellen die größte Bedrohung dar.
+- **Chancen** - das potenziell positive Ergebnis eines Risikos (früher Milestone, vergünstigte Materialien, zusätzliche Ressourcen). Führe sie durch dieselben fünf Phasen.
+- **Risiken identifizieren** - bewertungsfrei mit einer bewusst vielfältigen Gruppe brainstormen, ausgewählt anhand des RACI-Diagramms, und das Ergebnis in einem **Risikoregister** festhalten (einer Tabelle oder Übersicht deiner Risiken).
+- **Fischgräte / Ishikawa** - das Risiko als Wirkung formulieren und rückwärts über Kategorien (Menschen, Technologie, Materialien, Transport, Umfeld und so weiter) zu den Ursachen arbeiten. Vier Schritte: Problem definieren, Kategorien bestimmen, Ursachen sammeln, Ursachen analysieren, um die **Grundursache** zu finden. Nicht jede Ursache ist die Grundursache.
+- **Matrix aus Eintrittswahrscheinlichkeit und Auswirkung** - Auswirkung ist der Schaden, Eintrittswahrscheinlichkeit die Wahrscheinlichkeit, beide bewertet mit hoch, mittel, niedrig. Zusammen ergeben sie die Bewertung des **inhärenten Risikos**. Mittel und hoch bekommen detaillierte Mitigationspläne. Baue sie barrierefrei mit Farbe *plus* Form oder Text.
+- **Risikobereitschaft** - die Bereitschaft der Organisation, die Folgen eines Risikos zu akzeptieren; du, das Team und die Stakeholder können sich jeweils unterscheiden.
+- **Wichtigste Risikoarten** - Zeit (Zeit ist Geld), Budget (Kostenkontrolle und Ruf), Scope (nicht abnahmefähige Deliverables), dazu externe Risiken wie umweltbezogene und rechtliche.
+- **Einzelfehlerstelle** - ein katastrophales Risiko, das das ganze Projekt stoppt: die Projektdatenbank fällt aus, oder es gibt nur eine einzige SME für ein kritisches System.
+- **Abhängigkeiten** - Verbindungen zwischen Aufgaben und eine wesentliche Risikoquelle. Intern (in deiner Kontrolle) vs. extern (nicht). Vier Typen: Ende-Anfang, Ende-Ende, Anfang-Anfang, Anfang-Ende, gezeichnet in einem Abhängigkeitsdiagramm.
+- **Vier Mitigationsstrategien** - vermeiden, akzeptieren, reduzieren oder kontrollieren, übertragen. Akzeptieren ist aktiv (Geld zurücklegen) oder passiv (nichts tun, bei einer Einzelfehlerstelle selten klug). Ein Entscheidungsbaum hilft, die Reduzieren-oder-kontrollieren-Option zu planen.
+- **Risikomanagementplan** - lebendiges Dokument: Unternehmen und Projekt, Autorin oder Autor, Status, Daten, Ziel, Zusammenfassung für die Leitung, Risikoregister und die Matrix im Anhang. Ständig aktualisieren und dann zur Abstimmung teilen.
+- **Risiken kommunizieren** - an die Schwere anpassen: E-Mail bei niedrig, ausführliche direkte E-Mail bei mittel, ein Tagesordnungspunkt und Diskussion bei hoch. Uninformierte Stakeholder können dir nicht helfen, und Überraschungen untergraben Vertrauen.
+</Aside>
+
+---
+
+*Weiter: [Kommunikation & Dokumentation →](/de/learnings/online/project-management/planning-5-communication/) - alle informiert halten und den Plan auffindbar machen.*
