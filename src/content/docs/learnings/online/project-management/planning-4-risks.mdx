@@ -1,0 +1,361 @@
+---
+title: "Planning 4 - Managing Risks"
+description: "What separates a risk from an issue, the five-phase risk management process, finding risks through brainstorming and fishbone diagrams, rating them on a probability and impact matrix, inherent risk and risk appetite, the common risk types including single points of failure and dependencies, the four mitigation strategies, and how the risk management plan reaches stakeholders."
+sidebar:
+  label: "C3·4 - Managing Risks"
+  order: 13
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Course 3: Project Planning - Putting It All Together*
+
+---
+
+No project runs exactly to plan. Even the most experienced project manager builds a perfect schedule and then somebody calls in sick, or the guests arrive and nobody bought ice. Because that is simply the nature of projects, the sensible response is not to hope for the best but to **anticipate** what could go wrong and decide, in advance, what you would do about it.
+
+That anticipating is **risk management**, and this module treats it as planning work in its own right. The logic loops: find the risks, judge how likely and how damaging each is, decide which deserve attention, plan a response, keep watching. The toolkit is small - brainstorming with a diverse team, the fishbone diagram, the risk register, the probability and impact matrix, and four standard mitigation moves. What you actually produce is a **risk management plan**: a living document listing the high-level risks and the mitigation for each, shared with the team and stakeholders so nobody is caught off guard.
+
+<Aside type="note">
+**Where this sits:** still *planning*, alongside the schedule and the budget. But risk work does not stop when planning ends - it runs on through execution, which is why the plan is built to be updated rather than filed away.
+</Aside>
+
+---
+
+## Risk, issue, and risk management
+
+<Aside type="note">
+**Risk** - a potential event that *could* occur and affect your project. Risks are hypothetical: nobody says they will happen, only that they might, and that possibility makes them your responsibility.
+<br />**Issue** - a known, real problem already affecting the ability to complete a task.
+<br />**Risk management** - the process of identifying and evaluating the potential risks and issues that could impact a project.
+</Aside>
+
+The link between the first two is the thing to remember: **a risk that actually happens becomes an issue**. Risks are the big what-ifs; issues are what is hurting you right now.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Risk<span class="sub">might happen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">It occurs<span class="sub">the what-if lands</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Issue<span class="sub">a real problem to solve now</span></div>
+  </div>
+  <figcaption>Risk management is the work you do on the left of this picture so the right-hand side stays survivable.</figcaption>
+</figure>
+
+Risk management is **not a one-time exercise**. You run it repeatedly, because the picture keeps changing.
+
+### Why it is worth the effort
+
+Done well it gives you an understanding of what could go wrong, a list of **who to consult** about each risk, and a view of **how each could be mitigated**. Skipping it costs you:
+
+- **Missed goals, timelines, or success criteria.** If the research analyst quits halfway through and there is no backup plan, the report misses its deadline.
+- **No sense of how flexible the plan is.** There is rarely only one route to a project goal. Thinking risks through in advance shows where the plan can bend so you can pivot and still succeed - a standby supplier turns a failed order into an inconvenience rather than a crisis.
+- **Full exposure to the unforeseeable.** Suppliers run short of stock; budgets get cut without warning. The process reduces the impact of surprises and frees resources for work that actually benefits the project.
+
+For the running **Plant Pals** service at Office Green, two candidate risks: the new service web page is not live in time for launch, and the plant supplier runs low on the cacti and ferns the project needs. Neither is certain; both deserve a plan.
+
+<Aside type="tip">
+Issues will still arrive that you did not or could not have planned for, and that is fine. When one does: stay calm, find the **root cause**, and build a solution. A program manager interviewed here says the same of his first project - he was consumed with getting every detail right first time and learned that you rarely will. Changes happen; it is how you react that counts, and staying cool and collected while you work out what broke is the real skill.
+</Aside>
+
+---
+
+## The risk management process
+
+Risk management is an ongoing practice across the whole life cycle, and usually takes some variation of these five phases.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1 · Identify the risk<span class="sub">define potential risks with the team - you can only manage what you know about</span></div>
+    <div class="sc-node amber">2 · Analyze the risk<span class="sub">determine each risk's likelihood and potential impact</span></div>
+    <div class="sc-node violet">3 · Evaluate the risk<span class="sub">use the analysis to decide which risks to prioritise</span></div>
+    <div class="sc-node green">4 · Treat the risk<span class="sub">plan the response: minor risks can be ignored, serious ones need detailed mitigation</span></div>
+    <div class="sc-node slate">5 · Monitor and control<span class="sub">assign people to track each risk and mitigate if the need arises</span></div>
+  </div>
+  <figcaption>Serious risks with a high probability of occurring pose the greatest threat, and earn the detailed plans.</figcaption>
+</figure>
+
+---
+
+## Risks can be opportunities too
+
+Risk is not automatically bad news. An **opportunity** is a potential *positive* outcome of a risk, and capitalising on one lets you reach the goal faster, more cheaply, or with less effort.
+
+<div class="sc-chips">
+  <span class="sc-chip green">Completing a milestone ahead of schedule</span>
+  <span class="sc-chip green">Discounted materials</span>
+  <span class="sc-chip green">Extra resources becoming available: people, investment, equipment</span>
+</div>
+
+The useful part is that **the same five phases apply**. Identify, analyse, evaluate, treat, and control opportunities exactly as you do threats, using the same brainstorming and the same look back at project history, and record in the risk management plan how you would take advantage of each. Know what to do if things go wrong, but plan to seize what goes unexpectedly right.
+
+---
+
+## Identifying risks
+
+### Brainstorming with the right people
+
+**Brainstorming** is the most effective technique for surfacing risks with a team, because it lets a group share ideas spontaneously and **without judgment**. Your job is to convene that group - have the **RACI chart** to hand when deciding who to invite.
+
+Make the group **diverse**. Different roles, backgrounds, and experience produce risks you would never reach alone: a veteran of several projects sees patterns, while a newer teammate brings a fresh perspective from previous teams.
+
+<Aside type="caution">
+Expect a long list, and accept that you and the team cannot account for every single problem. That is precisely why assessment comes next - you need a way to decide which risks to actually work on.
+</Aside>
+
+### The cause-and-effect (fishbone) diagram
+
+<Aside type="note">
+**Cause-and-effect diagram**, also called a **fishbone** or **Ishikawa** diagram - a visual way of laying out the possible causes of an event or risk. Developed by the Japanese organisational theorist Kaoru Ishikawa in the 1960s for quality control in shipbuilding, and named for its resemblance to a fish skeleton.
+</Aside>
+
+The move is to state a potential risk as the **effect** (the fish's head, for example *a supplier missing its deadlines*) and work *backwards* into the causes that could produce it, sorted into categories along the spine. Categorising and then breaking each down further exposes the areas that could lead to a problem such as exceeding the budget, or letting **scope creep** (uncontrolled changes and growth affecting scope after the project begins) eat the timeline.
+
+A related idea it is built to find: the **root cause**, the initial cause of a situation that introduces the problem or risk. Not every cause you list is the root cause.
+
+<Steps>
+
+1. **Define the problem.** State it clearly, put it at the head of the fish. Miguel, a project manager at Office Supply Inc., is planning a summer promotion with free delivery, and his company has struggled to deliver to downtown office buildings on time - so his problem is *trouble delivering products to downtown office buildings on time*.
+
+2. **Identify the categories.** They change with the problem and the industry. Common ones: people, technology, materials, transportation, money, time, environment, procedures. Miguel picks people, technology, materials, transportation, and environment.
+
+3. **Brainstorm the causes.** Fill each category with the team's ideas. Miguel's diagram ends up with people (lack of training, distractions, not enough people), technology (overcomplicated, outdated), materials (fragile packaging, lack of forklifts), transportation (trucks too small, trucks too big, not enough trucks), and environment (city traffic, busy elevators, long distances).
+
+4. **Analyse the causes.** Test which is truly the root. More forklifts would speed loading, but when Miguel times loading and unloading the saving is negligible - so forklifts are *a* cause, not *the* cause. What stands out is that there is no set delivery schedule and the problem only appears in the city, not the suburbs, so traffic is implicated and moving departures ahead of rush hour is the fix worth making.
+
+</Steps>
+
+<Aside type="tip">
+Two pro tips. Keep brainstorming a **judgment-free zone**: encourage the flow of ideas, resist ruling things out, and when human factors come up name **behaviours, never individuals**. And the diagram works in any phase - in planning you are chasing the causes of a problem that may or may not occur, while in execution you are chasing the root cause of an issue that already has.
+</Aside>
+
+### Getting a first list from a gen-AI tool
+
+A project charter may name only a few risks. A gen-AI tool such as Gemini can widen that list fast. Set the scene with real detail - *act as a project manager overseeing development of a dog wellness app for a mid-size company offering dog walking, training, and pet supplies; review these project details and identify only major risks that could affect the timeline or budget* - then paste in (or, with some tools, upload) the charter.
+
+| Do | Why |
+| --- | --- |
+| **Give lots of context** | The more project detail in the prompt, the less generic the risks that come back |
+| **Ask what could go wrong**, not just what could go better | Gen AI is strong at brainstorming, and this is a brainstorming job |
+| **Ask it to reformat** | It generates text quickly, so challenge it to restructure until the format suits you and the team |
+| **Review with your own judgment** | A long list may carry irrelevant items and still miss key areas - it is a starting point |
+| **Come back later** | As new risks appear during the project, return with the specifics and brainstorm mitigation plans |
+
+Like a human, a gen-AI tool cannot stop a risk becoming a problem that derails the project. It only helps you get ahead of risks sooner.
+
+---
+
+## Assessing and prioritising risks
+
+Once the brainstorm is done, list the outcomes in a **risk register** - a table or chart containing your list of risks - and then assess them.
+
+<Aside type="note">
+**Risk assessment** - the stage of risk management where the qualities of a risk are estimated or measured. In practice the qualities that matter are how **likely** it is to occur and how much **impact** it would have.
+</Aside>
+
+### The probability and impact matrix
+
+A **probability and impact matrix** is a tool used to prioritise project risks. Two scales, each rated high, medium, or low:
+
+| Dimension | Definition | Read the scale as |
+| --- | --- | --- |
+| **Impact** | The damage a risk would cause if it occurs | **High** substantially alters the project · **Low** is a slight effect, not likely to derail anything |
+| **Probability** | The likelihood that the risk occurs | **High** means very likely · **Low** means it could happen but probably will not |
+
+Put the two together and you get the **inherent risk** rating.
+
+<Aside type="note">
+**Inherent risk** - the measure of a risk calculated by its probability and its impact, and rated high, medium, or low. It is the method that makes one risk comparable with another.
+</Aside>
+
+<figure class="sc-fig">
+  <div class="sc-quad">
+    <div class="q amber">
+      <div class="qh">High impact · Low probability <small>medium inherent risk</small></div>
+      <ul>
+        <li>Unlikely, but it would hurt - still worth a written mitigation plan</li>
+      </ul>
+    </div>
+    <div class="q violet">
+      <div class="qh">High impact · High probability <small>high inherent risk</small></div>
+      <ul>
+        <li>Could derail the project: detailed mitigation, named owner, watched closely</li>
+      </ul>
+    </div>
+    <div class="q green">
+      <div class="qh">Low impact · Low probability <small>low inherent risk</small></div>
+      <ul>
+        <li>Log it and move on - not the type to worry much about</li>
+      </ul>
+    </div>
+    <div class="q amber">
+      <div class="qh">Low impact · High probability <small>medium inherent risk</small></div>
+      <ul>
+        <li>Likely, but a minor setback: monitor and keep a light workaround ready</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Medium and high inherent risks are the ones that earn detailed mitigation plans. Low and low is the quadrant you can largely leave alone.</figcaption>
+</figure>
+
+<Aside type="caution">
+**Build the matrix accessibly.** Use **both colour and distinct shapes or text** to communicate risk levels, and format it so everyone can read it easily and quickly. Colour on its own excludes people.
+</Aside>
+
+### Risk appetite
+
+**Risk appetite** is the willingness of an organisation to accept the possible outcomes of a risk. How you view and manage each risk depends on it, and **you, your team, and your stakeholders may each have a different appetite** for the same risk. Low-level risks that cause minor setbacks are far more tolerable than high-level ones that could completely derail the project. When the assessment is done, go back and **update the risk register** with the high, medium, and low ratings.
+
+---
+
+## Types of risk
+
+### The three big ones
+
+| Type | What it is | Why it matters |
+| --- | --- | --- |
+| **Time risk** | Project tasks take longer than anticipated | Time is money - poor time management depletes the budget and upsets stakeholders through delays |
+| **Budget risk** | Costs rise through poor planning or expanding scope | The budget is the basis of cost control; overspend and you may not be able to pay suppliers, which damages the company's reputation |
+| **Scope risk** | The project does not produce the results set out in the goals | Deliverables stakeholders or customers will not accept defeat the purpose of the whole project |
+
+### External risks
+
+**External risks** result from factors outside the company that you have little or no control over - an **environmental** risk such as a major storm, or a **legal** risk such as a change in regulatory requirements. There are endless types of risk and there will never be a prescription covering every one; having a plan is what makes you readier for whatever turns up.
+
+### Single points of failure
+
+<Aside type="note">
+**Single point of failure** - a risk with the potential to be catastrophic and halt work across a project. Nobody can make progress on their tasks until the issue is resolved.
+</Aside>
+
+The Office Green example is a power outage taking down the internal database that holds every piece of project information: until it is back up, nobody can do their job. A cheap mitigation is budgeting for a **separate cloud service** as a backup for all project documentation.
+
+The other common form is people rather than systems. Projects lean on **subject matter experts** (SMEs), team members with deep understanding of a particular job, process, department, function, technology, machine, material, or type of equipment, who advise throughout the life cycle. Having **only one SME** familiar with a critical system is a single point of failure - one perspective, nobody to offer another. Identify and monitor these early, because they hit timeline, budget, and scope alike.
+
+### Dependencies
+
+<Aside type="note">
+**Dependency** - a relationship between two project tasks where the start or completion of one depends on the start or completion of the other. A dependency must be addressed before its task can complete or before the next task can begin.
+</Aside>
+
+Because they are the links connecting one task to another, dependencies are a large source of risk. Task a teammate with hiring a plant supplier and nobody can place orders until that contract is signed - and if they miss the deadline and then go on holiday for a week, the timeline slips. A practical countermeasure is asking everyone to **share their out-of-office plans at the start of the project**, so backup plans can be built around known absences.
+
+| Kind | Meaning | Example |
+| --- | --- | --- |
+| **Internal dependency** | Within the project, in your team's control | Website design must be approved before development can begin |
+| **External dependency** | Outside your control | A lighter rain season at the vendor's farm means fewer plants to sell |
+
+Four dependency relationships are worth knowing by name:
+
+| Type | Rule | Everyday example |
+| --- | --- | --- |
+| **Finish to Start (FS)** | Task A must finish before Task B starts. The most common type, a natural progression | Socks on before shoes on |
+| **Finish to Finish (FF)** | Task A must finish before Task B can finish. Uncommon | Finish the icing before you can finish decorating the cake |
+| **Start to Start (SS)** | Task B cannot begin until Task A begins, so the two run in parallel | Pay for the train ride, then board the train |
+| **Start to Finish (SF)** | Task A must begin before Task B can be completed | Your friend cannot finish his shift until his coworker starts hers |
+
+A **dependency graph** draws these relationships so you can see the flow of work, and the risk hiding in it. Making sandwiches: gather materials (A), then jelly on one slice (B) and peanut butter on the other (C) run in parallel, both must finish before the slices are pressed together (D), and only then do you serve (E). Anything waiting on two predecessors, like D, is where delay risk concentrates.
+
+---
+
+## Mitigation strategies
+
+<Aside type="note">
+**Risk mitigation planning** - finding ways to eliminate or reduce the impact of potential risks. Four common moves: **avoid**, **accept**, **reduce or control**, and **transfer**.
+</Aside>
+
+| Strategy | What you do | Office Green example |
+| --- | --- | --- |
+| **Avoid** | Sidestep the situation altogether | A contractor has a poor reputation for meeting deadlines, so you hire a different one |
+| **Accept** | Agree the risk may happen, monitor it, and be prepared to live with it. Suits risks low in both probability and impact | A planter style is back-ordered and a restock problem could delay client deliveries by two days; onboarding a new supplier would take two weeks, so accepting is the cheaper headache |
+| **Reduce or control** | Keep the risky option but add controls that shrink the damage | Hire the deadline-slipping contractor anyway because the work is excellent, then add daily check-in meetings so nothing drifts |
+| **Transfer** | Shift responsibility for the risk to another party | Rather than growing plants on site, where bad weather or pests could ruin the product, outsource production to local suppliers so you can switch supplier over quality |
+
+<Aside type="tip">
+A **decision tree** - a flowchart that helps visualise the wider impact of a decision on the rest of the project - is a handy way to build a reduce-or-control plan, because it makes the knock-on effects of each option visible before you commit.
+</Aside>
+
+### The same four strategies on a single point of failure
+
+Office Green buys most of its seeds from a South American supplier, and that country's government announces an export tax that pushes the price out of reach. Framed here as **avoid, minimise, transfer, accept**, each strategy offers a way out:
+
+- **Avoid** - switch to a different seed that is widely available in several locations.
+- **Minimise** - buy from the original supplier *and* one in a neighbouring country, since a single tax change is unlikely to hit both. Mitigations like this are often called **workarounds**, and they start with admitting the risk exists.
+- **Transfer** - buy through a North American supplier that sources from several South American countries, handing them the regulatory risk and cost.
+- **Accept** - treat it as a normal cost of doing business, either **actively** by setting aside extra funds to buy your way out of trouble, or **passively** by doing nothing.
+
+<Aside type="caution">
+**Passive acceptance** (the do-nothing approach) can be reasonable for smaller risks but is not recommended for most single points of failure. Mitigate proactively wherever possible - it may save you from having to accept risks at all. Here, the project manager would sensibly meet stakeholders to discuss the tax rise and its cost effect before choosing.
+</Aside>
+
+---
+
+## The risk management plan
+
+<Aside type="note">
+**Risk management plan** - a living document containing the high-level risks and the mitigation plan for each. It gives teammates and stakeholders a clear, shared understanding of the potential problems and the plan to address them.
+</Aside>
+
+Because risk management runs through planning *and* execution, the plan is **updated regularly**: add newly identified risks, remove risks that are no longer relevant, and revise mitigation plans as they change.
+
+### What goes in it
+
+| Section | What it holds |
+| --- | --- |
+| **Company and project name** | Right at the top of the document |
+| **Document author** | So anyone reviewing the plan knows exactly who to contact with questions |
+| **Document status** | *In progress* while you build it, *final* once complete |
+| **Created and last-updated dates** | Small details, but being transparent about dates tells stakeholders how current the document is |
+| **Document objective** | One line, for example: to outline mitigation plans for Project Plant Pals |
+| **Executive summary** | A brief introduction to the normal conditions of the project, plus an outline of the potential risks |
+| **Risk register** | The core table: each risk, its inherent risk rating, and its mitigation plan |
+| **Appendix** | The probability and impact charts, and the probability and impact matrix used for the assessment |
+
+A filled-in register row from the Plant Pals example: the risk is **the vendor falling behind on a deadline**, the inherent risk rating is **medium**, and the mitigation is **daily meetings with the vendor** to help them stay on task.
+
+Once the plan is filled out, **share it with your team and stakeholders** to get their input and confirm everyone is aligned.
+
+---
+
+## Communicating risks to stakeholders
+
+It is not enough for you and the team to know the biggest risks. Stakeholders need to know too, because if they are unaware they are **less equipped to help you** when something goes wrong - they cannot release extra budget or extra resources for a problem they never heard about. Worse, a stakeholder blindsided by an issue will ask whether you knew it could happen and why you did not say so sooner, and that **erodes trust** in you as the project's leader.
+
+Communicating early and often about medium and high risks sets expectations for the execution phase, shows you have already planned mitigations, and lets you suggest how stakeholders might help if a risk arises. Match the channel to the severity:
+
+| Severity | How to communicate |
+| --- | --- |
+| **Low** | An email is enough - list a few relevant low-level risks in the weekly planning update with a brief note on how you would address them |
+| **Medium** | A direct email to the stakeholder with more specifics and a detailed mitigation explanation, linking to the risk management plan. Put *urgent* in the subject line if it warrants it |
+| **High** | Thorough and direct: add an agenda item to the project plan meeting, present the risk and your mitigation, then collect feedback and ask how they would handle it |
+
+<Aside type="tip">
+Talking risks through is not one-way reporting - it **uncovers risks you had not considered**. A Google program manager describes presenting a potential new product to a stakeholder from another team, who flagged that the solution would create time and resource risks for *their* team. That conversation revealed a colleague's exposure and a user need, and led to asking the project sponsors for more budget and resources. Stakeholders often have prior experience of similar risks, and strategies you have not thought of.
+<br />A senior program manager sums the whole discipline up as being the person on the ship watching ahead for rocks. Projects are never done in a silo - other teams depend on you to execute - so you look ahead, de-risk, and communicate risks to the appropriate stakeholders in order to deliver on your commitments. Start by identifying the problems and bringing in the right people so the list is comprehensive, then work out how to manage them collaboratively, because everyone on the team has to be equally invested in the project succeeding.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+- **Risk vs issue** - a risk is a potential event that might happen; once it happens it becomes an issue. Risks are the what-ifs, issues are what is hurting you now.
+- **Risk management** - identifying and evaluating potential risks and issues. Ongoing, not one-off; tells you what could go wrong, who to consult, and how to mitigate.
+- **Five phases** - identify, analyze, evaluate, treat, monitor and control. Serious risks with high probability pose the greatest threat.
+- **Opportunities** - a risk's potential positive outcome (early milestone, discounted materials, extra resources). Run them through the same five phases.
+- **Identifying risks** - brainstorm judgment-free with a deliberately diverse group, chosen using the RACI chart, and log the output in a **risk register** (a table or chart of your risks).
+- **Fishbone / Ishikawa** - state the risk as the effect, work backwards through categories (people, technology, materials, transportation, environment and so on) to the causes. Four steps: define the problem, identify categories, brainstorm causes, analyse causes to find the **root cause**. Not every cause is the root cause.
+- **Probability and impact matrix** - impact is the damage, probability is the likelihood, both scored high, medium, low. Together they give the **inherent risk** rating. Medium and high get detailed mitigation plans. Build it accessibly with colour *plus* shape or text.
+- **Risk appetite** - the organisation's willingness to accept a risk's outcomes; you, the team, and stakeholders may each differ.
+- **Main risk types** - time (time is money), budget (cost control and reputation), scope (unacceptable deliverables), plus external risks such as environmental and legal.
+- **Single point of failure** - a catastrophic risk that halts the whole project: the project database going down, or having just one SME on a critical system.
+- **Dependencies** - links between tasks, and a major source of risk. Internal (in your control) vs external (not). Four types: Finish to Start, Finish to Finish, Start to Start, Start to Finish, drawn on a dependency graph.
+- **Four mitigation strategies** - avoid, accept, reduce or control, transfer. Acceptance is active (set money aside) or passive (do nothing, rarely wise for a single point of failure). A decision tree helps plan the reduce-or-control option.
+- **Risk management plan** - living document: company and project, author, status, dates, objective, executive summary, risk register, and the matrix in the appendix. Update it constantly, then share it for alignment.
+- **Communicating risks** - tailor to severity: email for low, detailed direct email for medium, an agenda item and discussion for high. Uninformed stakeholders cannot help you, and surprises erode trust.
+</Aside>
+
+---
+
+*Next: [Communication & Documentation →](/learnings/online/project-management/planning-5-communication/) - keeping everyone informed and the plan findable.*

@@ -411,6 +411,26 @@ export default defineConfig({
 											{ label: '4 · Resources & Tools', translations: { de: '4 · Ressourcen & Tools' }, link: 'learnings/online/project-management/initiation-4-resources-tools' },
 										],
 									},
+									{
+										label: 'Course 3 - Project Planning', translations: { de: 'Kurs 3 - Projektplanung' },
+										collapsed: true,
+										items: [
+											{ label: '1 · Begin Planning', translations: { de: '1 · Planung beginnen' }, link: 'learnings/online/project-management/planning-1-begin' },
+											{ label: '2 · Building the Plan', translations: { de: '2 · Den Plan bauen' }, link: 'learnings/online/project-management/planning-2-build-plan' },
+											{ label: '3 · Budget & Procurement', translations: { de: '3 · Budget & Beschaffung' }, link: 'learnings/online/project-management/planning-3-budget' },
+											{ label: '4 · Managing Risks', translations: { de: '4 · Risiken managen' }, link: 'learnings/online/project-management/planning-4-risks' },
+											{ label: '5 · Communication & Docs', translations: { de: '5 · Kommunikation & Doku' }, link: 'learnings/online/project-management/planning-5-communication' },
+										],
+									},
+									{
+										label: 'Course 4 - Project Execution', translations: { de: 'Kurs 4 - Projektdurchführung' },
+										collapsed: true,
+										items: [
+											{ label: '1 · Tracking & Status', translations: { de: '1 · Tracking & Status' }, link: 'learnings/online/project-management/execution-1-tracking' },
+											{ label: '2 · Quality Management', translations: { de: '2 · Qualitätsmanagement' }, link: 'learnings/online/project-management/execution-2-quality' },
+											{ label: '3 · Data & Reporting', translations: { de: '3 · Daten & Reporting' }, link: 'learnings/online/project-management/execution-3-data' },
+										],
+									},
 								],
 							},
 							{

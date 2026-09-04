@@ -1,0 +1,350 @@
+---
+title: "Planning 2 - Building the Project Plan"
+description: "Recall the five elements of a project plan, time versus effort estimation, task and project buffers, the planning fallacy, capacity planning, how to find the critical path, and how to build a Gantt chart."
+sidebar:
+  label: "C3·2 - Building the Plan"
+  order: 11
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Course 3: Project Planning - Putting It All Together*
+
+---
+
+Planning is where the charter's promises turn into dated, owned, estimated work. This module builds the **project plan**, and at its centre sits the **project schedule**: every task, who owns it, and when it starts and finishes.
+
+Most of the module is really about one hard skill - **estimating time honestly**. Bad estimates are the root cause behind a large share of failed projects, so the videos spend their energy on where estimates go wrong (optimism), how to protect against that (buffers), and how to get better numbers out of the people who actually do the work. The module then turns those estimates into a picture: **dependencies**, the **critical path**, and finally the **Gantt chart** you build in a spreadsheet.
+
+<Aside type="note">
+**Where this sits:** the previous section covered kickoff meetings, milestones and tasks. This one takes those tasks, puts durations and dependencies on them, and assembles the whole thing into a plan you can actually track against.
+</Aside>
+
+---
+
+## What a project plan is, and what goes in it
+
+A project plan documents the **scope, tasks, milestones and overall activities** of a project. It works for any project, big or small. At the centre of it is the **project schedule**, which does two jobs: it estimates how long the whole thing will take, and it gives the team a way to track progress against the goal.
+
+Contents vary between companies, but most plans hold these five basic elements.
+
+| Element | What it means | Why it earns its place |
+| --- | --- | --- |
+| **Tasks** | Activities to be finished inside a set period, assigned by role and skill | Clear ownership creates personal responsibility and frees the PM to manage |
+| **Milestones** | Significant points in the schedule marking progress | Usually signal a completed deliverable or phase |
+| **People** | Team members and their roles | Everyone must know which tasks are theirs |
+| **Documentation** | Links to the RACI chart, charter, budget, risk management plan | One place to look instead of digging through email |
+| **Time** | Estimated start and finish dates for tasks, milestones and the project itself | This is the schedule, the anchor of the whole plan; it also decides which resources you need and when |
+
+### The wider pieces the plan connects to
+
+The plan is a **living artifact** - the team's roadmap for the whole project. Around the schedule, four more components get linked in.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Scope &amp; goals<span class="sub">from the charter</span></div>
+    <div class="sc-node violet">WBS<span class="sub">milestones + tasks, ranked</span></div>
+    <div class="sc-node green">Budget<span class="sub">monitored all life cycle</span></div>
+    <div class="sc-node slate">Management plans<span class="sub">change, risk, communication</span></div>
+  </div>
+  <figcaption>Four components that shape how tasks, milestones, people, documentation and time get structured.</figcaption>
+</figure>
+
+- **Scope and goals** are captured first in the charter; link the charter so the team can check whether a new request goes beyond what was agreed.
+- **The WBS** breaks work into manageable pieces. In the plan, tasks should sit in one place with clear descriptions, owners and due dates, plus milestones and statuses so progress is visible. A RACI chart alongside it settles roles and responsibilities.
+- **The budget** is linked because it depends heavily on the rest of the plan. In a large organisation another department may own the funds, in which case you schedule regular check-ins with them rather than monitoring it yourself.
+- **Management plans** - change, risk and communication - keep the project organised and belong in the plan too.
+
+<Aside type="tip">
+No two project plans are identical. Know your end goals and what your team genuinely needs, then pull the relevant pieces together rather than filling in a template for its own sake.
+</Aside>
+
+---
+
+## Time estimation versus effort estimation
+
+The PM does not complete every task. The PM **identifies and helps assign** tasks and then **estimates how long they will take**, and those estimates add up to the schedule.
+
+<Aside type="note">
+**Time estimation** - a prediction of the *total* amount of time needed to complete a task, from start to finish, including inactive time.
+<br />**Effort estimation** - a prediction of the *amount and difficulty of active work* required, that is, how long a person is actually working on it.
+</Aside>
+
+The classic example: painting a wall takes **30 minutes of effort** but **24 hours of time**, because 23 and a half of those hours are drying. Keeping the two apart makes you efficient with resources - if a task carries idle time, the person assigned to it is free to do something else, like painting the mailbox or window trim while the wall dries.
+
+### Why estimates go wrong
+
+The usual failure is **underestimating**, and the usual culprit is **optimism**. Optimism is a fine trait in a PM, but too much of it makes you overlook risks and assume tasks will run exactly to plan. There is always a chance of setbacks.
+
+The defence is to **talk to the teammate assigned to the task**. They understand the work and its nuances best. It also forces **sub-tasks** into view - the smaller pieces a larger task actually requires.
+
+Take building a contact list of top customers for the Plant Pals launch. It looks like a one-day job until you list the sub-tasks: meet the global sales team to identify clients, gather contact details, work out client language preferences, build the spreadsheet to hold it all. The owner's estimate comes back at **two days**, double the guess. You can still ask follow-up questions or gently push back, but you start from a real number.
+
+Estimates remain estimates. If the sales team is away on a team-building day and cannot meet until after the weekend, the two-day estimate is already stale. That is what buffers are for.
+
+---
+
+## Buffers
+
+<Aside type="note">
+**Buffer** - extra time added to the end of a task or a project to absorb unexpected slowdowns or delays. It is the leeway that keeps the project on track when estimates fall short.
+</Aside>
+
+| | **Task buffer** | **Project buffer** |
+| --- | --- | --- |
+| **What** | Extra time tacked onto one specific task | Extra time added at the end of the overall schedule |
+| **Use it for** | Tasks **outside the team's control** - vendors, suppliers, anything you wait on | Absorbing the ordinary drift of a missed deadline here and there |
+| **Inside the team** | Use sparingly - only for difficult tasks or ones with real unpredictability, like how long plants take to grow | Typically two or three days, drawn on as needed across the project |
+| **Example** | Ask a plant vendor for a cost estimate by Monday when you do not need it until Thursday | Keeps the end date safe when a teammate slips by a day |
+
+<Aside type="caution">
+Do not buffer **every** task. Padding everything inflates the schedule and hands you, the team and stakeholders an unrealistic timeline. That is the mirror-image risk to underestimating - over-padding looks safe but produces a plan nobody believes and a delivery date nobody needed.
+</Aside>
+
+A practitioner example from Google: a new hire who coded well but kept missing deadlines was not leaving himself buffer for **testing**. Asking about his current workload and the complexity of his tasks revealed where buffer was needed. The point of all of it is a **realistic timeline** - hitting the project goal two months late may not count as success at all.
+
+---
+
+## Case study: run fast, pay later
+
+Kendra won a competitive bid and immediately saw the timeline was close to impossible. Instead of raising it, she stayed quiet, rushed the planning phase, and wrote all the planning documents alone. When the team said the timeline left no room for their work or for reviews, she noted the concerns and told them to work faster. The project then hit rework, tasks nobody had accounted for, stressed people and worried stakeholders, and missed its deadline.
+
+| Misstep | What she should have done |
+| --- | --- |
+| Kept a known timeline problem to herself | **Escalate** - gather evidence for the concern and take it to management |
+| Sped up instead of slowing down to plan | **Work carefully** through planning to build a realistic plan |
+| Planned alone | **Gather input** from team, peers and management, and act on their concerns |
+
+Careful planning with the team would also have surfaced time-saving moves: **eliminating tasks** that were not actually needed, **increasing team size** by requesting resources early rather than executing short-handed, and **streamlining activities** by running some tasks in parallel instead of in sequence.
+
+<Aside type="tip">
+A pain point like a doubtful timeline is usually an **opportunity** to be flexible and change the plan, not something to swallow. Be realistic, evaluate risks, talk to the team, and do not be afraid to escalate.
+</Aside>
+
+---
+
+## The planning fallacy
+
+<Aside type="note">
+**Planning fallacy** - our tendency to underestimate the time a task will take, along with its costs and risks, because of optimism bias. Introduced by **Daniel Kahneman and Amos Tversky** in a 1977 paper.
+<br />**Optimism bias** - believing you are less likely than others to experience a negative event.
+</Aside>
+
+The everyday version: squeezing a dog walk between meetings. Optimism bias says you will make it back in time. It ignores the weather, another dog turning up to play, and all the sniffing. The fallacy hits regardless of experience - your hundredth walk still needs the same factors considered.
+
+**The house example.** David plans a home build with a WBS covering foundation, construction and finishing. His duration chart looks fine:
+
+| Task | Estimated duration |
+| --- | --- |
+| Foundation | 2 weeks |
+| Construction | 4 weeks |
+| Adjustments | 4 weeks |
+| **Total** | **10 weeks** - exactly the delivery requirement |
+
+Ten weeks meets the requirement, so an unaware PM would call it solid. David, aware of the fallacy, re-examines the estimates, considers weather delays and crew members calling in sick, and meets team members and stakeholders to uncover further risks. He then **adds task buffers** to the tasks that carry real risk.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Hunt for what-ifs before the plan is signed off</span>
+  <span class="sc-chip amber">Use the team as risk-finding resources</span>
+  <span class="sc-chip amber">Be optimistically realistic</span>
+</div>
+
+Being **optimistically realistic** is the phrase to remember: push for the best outcome while still planning the proper time for each task.
+
+---
+
+## Capacity and capacity planning
+
+<Aside type="note">
+**Capacity** - the amount of work the people or resources on a project can reasonably complete in a set period.
+<br />**Capacity planning** - allocating people and resources to tasks and judging whether you have enough of them to finish on time.
+</Aside>
+
+Capacity planning often reveals you need **more** resources to hit the timeline - a second web developer, a third writer. The arithmetic is simple. Plant Pals must deliver to 100 customers over five days. One driver averages four deliveries in an eight-hour day, so a driver covers 20 deliveries across the week, and you need **at least five drivers**. Even someone spending 100 percent of their time on your project has limited capacity - meetings, urgent interruptions and the ordinary shape of a workday eat into it.
+
+### Four factors that shape capacity
+
+| Factor | Definition | Why it matters |
+| --- | --- | --- |
+| **Parallel tasks** | Tasks that can run at the same time as others | Creates efficiency, shortens the schedule. Example: hiring drivers and building the website have no relationship to each other |
+| **Sequential tasks** | Tasks that must happen in a specific order | Tells you what to prioritise early. Example: budget approval before hiring a vendor |
+| **Fixed start date** | The date you *must* start a task to reach the goal | If 100 plants are contracted for a specific date, picking them up has a fixed start of one day before |
+| **Earliest start date** | The earliest date work on a task can begin | Sets honest expectations for vendors. If contracts and purchase orders take three weeks, that is the vendor's earliest start from the kickoff |
+
+<Aside type="note">
+**Float** (also called **slack**) - how long you can delay starting a task before it hits the schedule and threatens the outcome. Tasks on the critical path have **zero float**; anything with float is not on the critical path. A shipment to a priority customer who demanded a specific delivery date has zero float.
+</Aside>
+
+---
+
+## The critical path
+
+<Aside type="note">
+**Critical path** - the milestones you must reach to meet the project goal on schedule, plus the mandatory tasks feeding each milestone. Everything else is off the critical path.
+</Aside>
+
+Think of it as the framework telling you where you are, where you are headed and when you will arrive. It identifies the essential work and its duration, flags which late tasks would push the completion date, and helps define resources, baselines and where you actually have flexibility.
+
+For Plant Pals the path holds things like hiring plant vendors, developing the website and fulfilling deliveries; adding flowers to the product line is nice to have, does not affect launch, and so sits off it. The critical path is the **bare minimum** set of tasks and milestones needed to reach the goal, and if the team misses any of them the project is delayed.
+
+### How to build one
+
+<Steps>
+
+1. **Capture all tasks.** Work from the WBS so no required piece of work is missing. Focus on the *need to do* tasks, not the *nice to do* ones.
+
+2. **Set dependencies.** A **dependency** is a task that cannot begin until another finishes - you cannot paint the outside of a house before the house is built. For each task ask three questions: which task must happen *before* this one, which task can finish *at the same time*, and which task must happen *right after* it.
+
+3. **Create a network diagram.** Sequence the tasks by dependency. It shows the path from first task to last, which tasks run in parallel and which in sequence, and which non-essential tasks sit off the path.
+
+4. **Make time estimates.** Consult the people and stakeholders who know. This step is decisive: if estimates are badly off, the length of the critical path changes. Estimates can be revised throughout the project.
+
+5. **Find the critical path.** Add the durations of the essential tasks and take the **longest possible path** through the diagram. Only count tasks that would move the finish date if left unfinished.
+
+</Steps>
+
+### The house-build worked example
+
+| Task | Duration | Depends on |
+| --- | --- | --- |
+| A) Excavation | 1 day | - |
+| B) Foundation | 3 days | A |
+| C) Framing | 15 days | B |
+| D) Roof | 3 days | C |
+| E) Plumbing | 4 days | C |
+| F) HVAC | 3 days | C |
+| G) Electrical | 3 days | C |
+| H) Insulation | 2 days | E, F, G |
+| I) Drywall + Paint | 15 days | H |
+| J) Flooring | 7 days | I |
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">A Excavation 1d &nbsp;·&nbsp; B Foundation 3d &nbsp;·&nbsp; C Framing 15d<span class="sub">strictly sequential opening chain</span></div>
+    <span class="arrow">↓</span>
+    <div class="sc-flow">
+      <div class="sc-node violet">E Plumbing 4d<span class="sub">longest branch</span></div>
+      <div class="sc-node soft">F HVAC 3d</div>
+      <div class="sc-node soft">G Electrical 3d</div>
+      <div class="sc-node soft">D Roof 3d<span class="sub">side branch, stops here</span></div>
+    </div>
+    <span class="arrow">↓</span>
+    <div class="sc-node amber">H Insulation 2d &nbsp;·&nbsp; I Drywall + Paint 15d &nbsp;·&nbsp; J Flooring 7d<span class="sub">sequential run to finish</span></div>
+  </div>
+  <figcaption>Plumbing, HVAC and electrical run in parallel after framing, but insulation waits for all three, so the longest branch sets the pace. Adding the chain gives 1 + 3 + 15 + 4 + 2 + 15 + 7 = 47 days.</figcaption>
+</figure>
+
+Non-essential tasks in the same house project - driveway paving, landscaping, trim, appliances - sit outside the path. If they slip, the structure completion date does not move.
+
+### Forward pass and backward pass
+
+| Approach | How it works | When it helps |
+| --- | --- | --- |
+| **Forward pass** | Start at the first task that must precede everything else and add durations forward to the end | Finding **earliest** start dates and the total length |
+| **Backward pass** | Start at the final task or milestone and move backwards to the shortest route to completion | Working to a **hard deadline**; shows which tasks are genuinely critical and which can be cut or done later |
+
+Both passes are also how you work out **latest** start dates and the slack on each task.
+
+---
+
+## Getting viable estimates out of your team
+
+Time estimation, effort estimation and capacity planning all depend on the team. The person doing the task has the best sense of both its length and their own capacity, but that only reaches you through a two-way conversation, and that means **soft skills** - the personal characteristics that let people work well with others.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Ask the right questions<span class="sub">open-ended, not yes or no</span></div>
+    <div class="sc-node violet">Negotiate effectively<span class="sub">find an outcome that works for both</span></div>
+    <div class="sc-node green">Practise empathy<span class="sub">workload, leave, work-life balance</span></div>
+  </div>
+  <figcaption>Three soft skills that turn a guess into a usable estimate.</figcaption>
+</figure>
+
+**Ask the right questions.** Treat the estimation conversation as an interview. *Can you finish the mock-ups in one week?* is closed and gets a yes or no that teaches you nothing. *How long does it typically take you to mock up a design like this one?* is **open-ended** and gets detail. Follow up with how complex the steps are, what risks the task carries, and when they think it can be ready. Over time these conversations mean you rely less on others to estimate.
+
+**Negotiate effectively.** Your job is to bridge the project's high-level goals and the team's day-to-day reality, and your project may not be their only priority. If the designer says two weeks and you hoped for one, probe: does the estimate cover multiple pages, and could one or two pages arrive earlier? That tells you whether the estimate is flexible or whether you need a second designer. Good negotiation creates **shared ownership** of the outcome.
+
+**Practise empathy.** Ask about total workload including work outside your project, about work-life balance, about booked leave and important holidays. If your designer is also building a site for another team on an overlapping timeline, you can work with that PM to balance the load rather than overloading one person. And be appreciative - people like their work to be valued.
+
+<Aside type="tip">
+A Google program manager's take: soft skills are largely **emotional intelligence** - reading the team, and knowing yourself and how you are influencing them. Deliberately ask the quieter people who rarely raise a hand, because they are often thinking hard and hold insights you would otherwise miss. On estimates, replace *go faster* with better questions: how much faster could you go if I gave you this, what is stopping you, which teams would you need pulled in. Sometimes just having someone **walk through their estimate out loud** surfaces savings. The method travels - the same skills work on label machines, locomotive engines and plywood.
+</Aside>
+
+---
+
+## Building the schedule: Gantt charts
+
+<Aside type="note">
+**Gantt chart** - a horizontal bar chart that maps out a project schedule. Named after the American engineer **Henry Gantt**, who popularised it in the early 1900s.
+</Aside>
+
+It is useful because it is **highly visual**: tasks, who is responsible, and when the work is due, all in one picture. For many people a visual aid on top of written instructions makes it far easier to absorb what they must do, by when, and how their piece connects to everyone else's.
+
+Gantt charts behave a little like calendars. Each task has a start and an end date, and the length of its bar matches the time devoted to it. If Leon is writing a project charter and Kylie reviews and edits it afterwards, coloured bars show Leon holding Friday, Monday and Tuesday, and Kylie taking Wednesday for revisions. The bars **cascade down** the page, showing time passing and the blocks in which work happens.
+
+### Building one in a spreadsheet
+
+1. **Set up the left columns** for task title, task owner, start date, due date, duration and percent complete.
+2. **Fill the rows** with the tasks and milestones already identified in the WBS, ordered by start date.
+3. **Set up the right columns** as the weeks estimated to run the project from start to finish.
+4. **Draw the bars** in the rows underneath, spanning the dates on which each task takes place.
+
+A spreadsheet holds more than the chart itself. Extra **tabs** can house or link the RACI chart, the charter, and the risk management and communication plans, so every project document lives in one file - which saves time, keeps everyone organised and stops people hunting through email. A digital document that links out to everything works as an alternative.
+
+<Aside type="caution">
+A Gantt chart is not the only option, and there are good reasons it may not suit your team. A simple project may do better with a plain digital document listing tasks, owners, due dates and links. Some teams prefer **Kanban boards**. The test is not the format: if the plan carries the goals, tasks, owners, start and end dates and the relevant documentation, everyone stays on the same page.
+</Aside>
+
+---
+
+## Five best practices for a strong project plan
+
+1. **Review deliverables, milestones and tasks carefully.** Plans get more granular than the charter. A *new website* deliverable breaks into milestones like kicking off with the web developer and gaining stakeholder approval, and those break into tasks like mocking up a design and developing a landing page, each with an owner and dates. Do this for **every** deliverable.
+2. **Give yourself time to plan.** Planning is its own phase for a reason - it is time-intensive, especially with multiple deliverables. It is the space in which you and the team think realistically about what can and cannot be done. Nobody is a machine. Effort estimation and capacity planning are what make that realistic, and buffer time is what makes it survivable.
+3. **Plan for the inevitable.** Things will go wrong even with thorough planning. You cannot foresee every problem, but the team can name the **most likely risks** and plan to prevent or mitigate them. Buffer is the tool for slowdowns.
+4. **Stay curious.** You may be the only expert on the project as a whole, but you are not an expert on every task. Ask lots of questions during planning - it produces a stronger plan and builds trust. Extend the curiosity to stakeholders and vendors: their expectations, priorities, risk views, communication preferences and availability.
+5. **Champion your plan.** Ask whether your team can actually use the tool you built it in, whether it is clear enough for stakeholders, and whether it will save everyone time as a **single source of truth**. Then sell it - tell the team why staying on top of the plan benefits them, so they keep it updated.
+
+---
+
+## Kanban boards
+
+<Aside type="note">
+**Kanban board** - a visual tool for managing tasks and workflows. Tasks are written on cards, and the cards sit in columns representing progress. It can be a whiteboard, a magnetic or poster board, or software.
+</Aside>
+
+Kanban works on all kinds of projects but suits **Agile** teams best, since Agile is an iterative approach built on continuous releases and customer feedback each iteration. Boards are used to give a quick visual read on work details and critical task information, to **ease handoffs** between stakeholders such as development and testing, and to capture metrics and improve workflows.
+
+Before building one, gather the tasks, statuses, dates and durations. A typical board runs **To do, In progress, Testing, Done**, and a card moves rightwards as work proceeds. Columns are customisable, and rows can represent resources - a team or a person - so you can see who is working on what.
+
+| Card front | Card back |
+| --- | --- |
+| **Title and unique identifier** for quick reference | **Start date**, used for metrics, tracking and checking your estimate |
+| **Description of work** - brief, index-card sized | **Blocked days** - days the task cannot progress, for example while waiting on an undelivered dependency |
+| **Estimation of effort** - small, medium or large | **Finish date** - when the task is due, so you can see whether the project is still on track |
+| **Who is assigned** - ideally one person per card | |
+
+Software options for Kanban include **Asana** and **Trello**. There are many, so evaluate which fits the project.
+
+---
+
+<Aside type="tip">
+## Revision summary
+
+- **Project plan** documents scope, tasks, milestones and activities; its five basic elements are **tasks, milestones, people, documentation and time**, with the **schedule** at the centre.
+- The plan also links **scope and goals** (charter), the **WBS**, the **budget** and the **management plans** - change, risk and communication.
+- **Time estimation** = total duration including idle time. **Effort estimation** = active work only. Painting a wall: 30 minutes of effort, 24 hours of time. Underestimating comes from **optimism**; the fix is asking the person who owns the task, and listing the **sub-tasks**.
+- **Buffers** absorb delay. **Task buffers** go on tasks outside the team's control; **project buffers** add two or three days at the end of the schedule. Buffering everything makes the timeline unrealistic.
+- **Run fast, pay later:** Kendra hid a bad timeline, planned alone and told the team to work faster - escalate, plan carefully, gather input instead.
+- **Planning fallacy** (Kahneman and Tversky, 1977): underestimating time, cost and risk through **optimism bias**. Be **optimistically realistic**.
+- **Capacity** is what people can reasonably complete in a period; **capacity planning** allocates them and checks the numbers add up - 100 deliveries in five days at four per driver per day needs five drivers. Its factors: **parallel** vs **sequential** tasks, **fixed** and **earliest start dates**, and **float/slack** (critical-path tasks have **zero float**).
+- **Critical path** = the minimum milestones and mandatory tasks needed to hit the goal on schedule. Five steps: capture tasks, set dependencies, draw a network diagram, estimate durations, take the **longest path**. **Forward pass** adds durations from the start; **backward pass** works back from a hard deadline to find what is truly critical.
+- Get estimates through soft skills: **open-ended questions**, **effective negotiation**, and **empathy** about workload and leave.
+- **Gantt chart** (Henry Gantt, early 1900s): horizontal bars over a calendar showing tasks, owners and dates. Build it in a spreadsheet - task, owner, start, due, duration, percent complete on the left; weeks across the top; bars in the grid; other documents on extra tabs.
+- **Five best practices:** review deliverables down to tasks, give yourself time to plan, plan for things going wrong, stay curious, champion the plan.
+- **Kanban boards** visualise workflow in columns (To do, In progress, Testing, Done); cards carry title, description, effort size and owner on the front, and start date, blocked days and finish date on the back. Tools: Asana, Trello.
+</Aside>
+
+---
+
+*Next: [Budget & Procurement →](/learnings/online/project-management/planning-3-budget/) - costing the plan and buying what it needs.*
