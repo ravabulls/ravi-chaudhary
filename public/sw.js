@@ -1,99 +1,45 @@
-/* Service worker for the site's PWA shell.
+/* Self-destroying service worker.
  *
- * The previous version was cache-first for every request and only ever held
- * "/" and "/resume/". Once a visitor had installed the app those two pages
- * were served from the cache indefinitely, so a new deploy never reached
- * them until CACHE_NAME was bumped by hand.
+ * Earlier versions of this file cached the HTML of "/" and "/resume/" and
+ * served it cache-first with no revalidation. Because the build gives every
+ * stylesheet a content hash and deletes the previous one, that stale HTML
+ * kept pointing at asset filenames that no longer existed on the server, so
+ * visitors saw unstyled pages and months-old content until they hard
+ * refreshed.
  *
- * This version is network-first for page navigations and stale-while-
- * revalidate for static assets, so content stays current while the site
- * still works offline.
+ * This file exists only to undo that. It takes control, deletes every cache
+ * this origin has, unregisters itself, and reloads any page it controls so
+ * the visitor lands on the live version. Once it has run, the browser has no
+ * service worker for this site and pages come straight from the network,
+ * governed by the Cache-Control headers in public/_headers.
+ *
+ * Keep this file in place. Visitors still running a months-old worker only
+ * reach it when their stale page calls register('/sw.js'), so deleting it
+ * would strand them.
  */
 
-const VERSION = 'v2';
-const PAGE_CACHE = `ravi-pages-${VERSION}`;
-const ASSET_CACHE = `ravi-assets-${VERSION}`;
-const OFFLINE_URLS = ['/', '/resume/'];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches
-      .open(PAGE_CACHE)
-      .then((cache) => cache.addAll(OFFLINE_URLS))
-      .catch(() => undefined)
-  );
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  const keep = [PAGE_CACHE, ASSET_CACHE];
   event.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(keys.filter((k) => !keep.includes(k)).map((k) => caches.delete(k)))
-      )
-      .then(() => self.clients.claim())
+    (async () => {
+      const names = await caches.keys();
+      await Promise.all(names.map((n) => caches.delete(n)));
+
+      await self.registration.unregister();
+
+      const clients = await self.clients.matchAll({ type: 'window' });
+      for (const client of clients) {
+        try {
+          client.navigate(client.url);
+        } catch (e) {
+          /* navigate() can be refused; the next load is uncontrolled anyway */
+        }
+      }
+    })()
   );
 });
 
-/* Pages: go to the network first so a deploy is picked up immediately, and
- * fall back to the cached copy only when the network fails. */
-function networkFirst(request) {
-  return fetch(request)
-    .then((response) => {
-      if (response && response.ok) {
-        const copy = response.clone();
-        caches.open(PAGE_CACHE).then((cache) => cache.put(request, copy));
-      }
-      return response;
-    })
-    .catch(() =>
-      caches
-        .match(request)
-        .then((cached) => cached || caches.match('/'))
-    );
-}
-
-/* Static assets are content-hashed by the build, so serving a cached copy is
- * safe; refresh it in the background for next time. */
-function staleWhileRevalidate(request) {
-  return caches.match(request).then((cached) => {
-    const network = fetch(request)
-      .then((response) => {
-        if (response && response.ok) {
-          const copy = response.clone();
-          caches.open(ASSET_CACHE).then((cache) => cache.put(request, copy));
-        }
-        return response;
-      })
-      .catch(() => cached);
-    return cached || network;
-  });
-}
-
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-
-  if (request.method !== 'GET') return;
-
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-
-  // Never cache the search index or the sitemap.
-  if (url.pathname.startsWith('/pagefind/') || url.pathname.includes('sitemap')) return;
-
-  if (request.mode === 'navigate') {
-    event.respondWith(networkFirst(request));
-    return;
-  }
-
-  if (/\.(?:css|js|woff2?|png|jpe?g|svg|webp|ico)$/.test(url.pathname)) {
-    event.respondWith(staleWhileRevalidate(request));
-  }
-});
-
-/* Lets a future page trigger an immediate update if it wants to. */
-self.addEventListener('message', (event) => {
-  if (event.data === 'SKIP_WAITING') self.skipWaiting();
-});
+/* No fetch handler on purpose: every request goes straight to the network. */

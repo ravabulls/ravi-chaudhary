@@ -29,8 +29,14 @@ export default defineConfig({
 					},
 				},
 				{
+					// No service worker is registered any more. An earlier one cached
+					// the HTML of "/" and "/resume/" cache-first and never revalidated,
+					// so visitors were served months-old pages that referenced deleted,
+					// content-hashed stylesheets and therefore rendered unstyled.
+					// This tears down any worker and cache still left on a device.
+					// Freshness is handled by the Cache-Control headers in public/_headers.
 					tag: 'script',
-					content: `if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); }); }`,
+					content: `if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); }).catch(function () {}); } if (window.caches && caches.keys) { caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); }).catch(function () {}); }`,
 				},
 			],
 			sidebar: [
