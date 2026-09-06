@@ -434,6 +434,16 @@ export default defineConfig({
 											{ label: '6 · Closing a Project', translations: { de: '6 · Projektabschluss' }, link: 'learnings/online/project-management/execution-6-closing' },
 										],
 									},
+									{
+										label: 'Glossaries', translations: { de: 'Glossare' },
+										collapsed: true,
+										items: [
+											{ label: 'Course 1 · Foundations', translations: { de: 'Kurs 1 · Grundlagen' }, link: 'learnings/online/project-management/glossary-1-foundations' },
+											{ label: 'Course 2 · Initiation', translations: { de: 'Kurs 2 · Initiierung' }, link: 'learnings/online/project-management/glossary-2-initiation' },
+											{ label: 'Course 3 · Planning', translations: { de: 'Kurs 3 · Planung' }, link: 'learnings/online/project-management/glossary-3-planning' },
+											{ label: 'Course 4 · Execution', translations: { de: 'Kurs 4 · Durchführung' }, link: 'learnings/online/project-management/glossary-4-execution' },
+										],
+									},
 								],
 							},
 							{
