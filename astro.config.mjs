@@ -435,6 +435,14 @@ export default defineConfig({
 										],
 									},
 									{
+										label: 'Course 5 - Agile Project Management', translations: { de: 'Kurs 5 - Agiles Projektmanagement' },
+										collapsed: true,
+										items: [
+											{ label: '1 · Agile Fundamentals', translations: { de: '1 · Agile-Grundlagen' }, link: 'learnings/online/project-management/agile-1-fundamentals' },
+											{ label: '2 · Scrum 101', translations: { de: '2 · Scrum 101' }, link: 'learnings/online/project-management/agile-2-scrum-101' },
+										],
+									},
+									{
 										label: 'Glossaries', translations: { de: 'Glossare' },
 										collapsed: true,
 										items: [
