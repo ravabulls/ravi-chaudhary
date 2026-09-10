@@ -1,0 +1,435 @@
+---
+title: "Agile 1 - Die Grundlagen von Agile"
+description: "Woher Agile kommt und auf welches Problem es antwortete, VUCA als Test für die Wahl des Vorgehens, die vier Werte und zwölf Prinzipien des Agilen Manifests, iterative und inkrementelle Lieferung, Waterfall gegen Agile bei Anforderungen, Dokumentation und Deliverables, dazu Scrum, Kanban, XP, Lean, hybride Mischformen und das Spotify-Modell."
+sidebar:
+  label: "C5·1 - Agile Grundlagen"
+  order: 25
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Kurs 5: Agiles Projektmanagement*
+
+---
+
+Alles bisher in diesem Programm hat die **traditionelle** Art beschrieben, ein Projekt zu führen: initiieren, planen, durchführen, abschließen, in genau dieser Reihenfolge, mit einem vorab festgezurrten Plan und Veränderung als etwas, das kontrolliert werden muss. Das ist Waterfall, und es funktioniert wunderbar, wenn das Ziel bereits bekannt ist. Dieser Kurs wendet sich der Alternative zu, die daneben herangewachsen ist und heute einen großen Teil der Projekte weltweit trägt: **Agile**.
+
+Das Erste, was man klarhaben muss, ist, was Agile eigentlich ist. Es ist **keine eigenständige Methodik**. Es ist ein übergeordneter Ansatz und eine Philosophie, um Kundennutzen zu liefern, ausgedrückt als eine Sammlung von Werten und Prinzipien, und unter diesem Dach sitzen viele konkrete Frameworks und Methoden, von denen Scrum mit Abstand das meistgenutzte ist. Es gibt also zwei Wege, Agile zu *tun*: das Mindset übernehmen und eines der Delivery-Frameworks übernehmen. Die eigentliche Kraft entsteht, wenn man beides tut.
+
+Das Zweite, was man klarhaben muss: Agile ist nicht das Upgrade, das Waterfall überflüssig macht. Beide sind wirksam, beide stiften einen spezifischen Nutzen, und die interessante Frage lautet nie *was ist besser*, sondern *was passt zu diesem Projekt, diesem Team, diesem Umfeld*. Dieses Modul baut das Vokabular auf, um das zu beantworten: die Geschichte, das Manifest, VUCA als Diagnose, die wichtigsten Frameworks und wie man die beiden Welten mischt.
+
+<Aside type="note">
+**Wo das hingehört:** Der frühere Kurs zum Projektlebenszyklus hat Waterfall und Agile oberflächlich nebeneinandergestellt. Dieses Modul geht tiefer auf das *Warum* ein: das Problem, auf das Agile reagierte, die Werte und Prinzipien dahinter und die Bedingungen, die dich zum einen oder zum anderen Ansatz drängen sollten.
+</Aside>
+
+---
+
+## Woher Agile kommt
+
+Das Wort **agil** bedeutet im gewöhnlichen Sprachgebrauch beweglich, schnell und leichtfüßig und damit im weiteren Sinne flexibel, bereit und fähig, sich zu verändern und anzupassen. Die Projektmanagement-Bewegung hat genau diese Bedeutung übernommen.
+
+Agile Methoden entstanden **organisch in den 1990er Jahren**, als die Softwarebranche boomte. Start-ups wetteiferten darum, mehr Software in weniger Zeit auszuliefern, und die etablierten Unternehmen experimentierten mit schnelleren Wegen, bessere Produkte zu bauen und wettbewerbsfähig zu bleiben. In diesem Umfeld reichte es nicht, neue Produkte zu erfinden; Unternehmen mussten die **Prozesse** erneuern, mit denen sie gebaut wurden. (Software ist hier breiter gemeint als Apps und Websites: Es ist auch der Code hinter Landwirtschaft, Medizingeräten und Fertigung.)
+
+**2001** trafen sich die Vordenkerinnen und Vordenker hinter mehreren dieser neuen leichtgewichtigen Prozesse in einem Skiresort in den Wasatch Mountains in Utah. Siebzehn von ihnen, selbsternannte organisatorische Anarchisten, suchten nach Gemeinsamkeiten zwischen ihren Methoden und einigten sich auf das zugrunde liegende Problem:
+
+<Aside type="caution">
+Unternehmen hatten sich so stark auf das **Planen und Dokumentieren** des Projekts konzentriert, dass sie aus dem Blick verloren hatten, worauf es wirklich ankam: die Kundschaft zufriedenzustellen.
+</Aside>
+
+Ihre Antwort war das **Agile Manifest** (Agile Manifesto): eine Orientierung darüber, worauf es bei der Softwareentwicklung wirklich ankommt, nämlich den Prozess flexibel zu halten und **Menschen**, sowohl das Team als auch die Nutzenden, über das Endprodukt oder die Papierarbeit zu stellen. Es sollte die Softwareentwicklung verbessern, doch andere Branchen erkannten den Wert fast sofort.
+
+### Agile ist nicht nur für Software da
+
+Die Werte, Prinzipien und Frameworks sind auf nahezu jede Branche angewendet worden. Agile selbst schöpft stark aus den **Prinzipien der Lean-Fertigung**, die in den **1930er Jahren** in Toyotas Autofabriken entstanden sind, und agile Methoden tauchen heute in der Luftfahrt, im Gesundheitswesen, in der Bildung und im Finanzwesen auf, neben vielen anderen.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">1930er - Lean bei Toyota</span>
+  <span class="sc-chip violet">1990er - leichtgewichtige Softwaremethoden entstehen</span>
+  <span class="sc-chip green">2001 - das Agile Manifest, Utah</span>
+  <span class="sc-chip slate">Seitdem - jede Branche</span>
+</div>
+
+---
+
+## Iterative und inkrementelle Lieferung
+
+Ein agiles Projekt verfolgt einen **iterativen** Ansatz: Die Projektprozesse werden über den Lebenszyklus hinweg wiederholt, oft viele Male. Das Team arbeitet in vielen kürzeren Zeitblöcken, genannt **Iterationen**, und eine einzelne Iteration kann je nach zurückkommendem Feedback wiederholt werden.
+
+Innerhalb jeder Iteration nimmt sich das Team eine **Teilmenge** aller Projektaktivitäten vor und erledigt alles, was zum Abschluss dieser Teilmenge nötig ist. Die Arbeit ist damit im Grunde eine Reihe von **Mini-Waterfalls**, einer je Aktivität, statt eines einzigen riesigen Waterfalls für das gesamte Projekt.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Eine Teilmenge auswählen<span class="sub">die wertvollsten Punkte von der Liste</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Die gesamte Arbeit erledigen<span class="sub">ein Mini-Waterfall für diese Teilmenge</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Etwas Nutzbares releasen<span class="sub">kleines, häufiges Increment</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Feedback einholen, nachjustieren<span class="sub">dann die Schleife wiederholen</span></div>
+  </div>
+  <figcaption>Die Schleife ist der Punkt. In Increments zu liefern erkauft Feedback, und Feedback ist das, was das Team davon abhält, Monate in das Falsche zu stecken.</figcaption>
+</figure>
+
+Der Begriff Agile trägt also drei Ideen auf einmal: **Flexibilität, Wiederholung und Offenheit für Veränderung**. Und **agiles Projektmanagement** ist schlicht ein Ansatz, Projekte und Teams zu führen, der auf dem Agilen Manifest beruht, einer Sammlung von vier Werten und zwölf Prinzipien, die das Mindset definieren, das jedes agile Team anstreben sollte.
+
+---
+
+## Waterfall gegen Agile
+
+Agile entstand **als Antwort auf** den strengen linearen Prozess von Waterfall. Waterfall zielt auf Vorhersagbarkeit und versucht, Veränderung zu vermeiden; Agile akzeptiert als Ausgangstatsache, dass die Welt, die Märkte und die Nutzenden unsicher und unvorhersehbar sind. Das klassische Scheitern, auf das es zielt: Die Kundschaft bittet um Funktion A und merkt erst, als das fertige Ding ankommt, dass sie eigentlich Funktion B wollte. Kundenfeedback schneller zu bekommen ist Agiles Angriff darauf.
+
+### Verschwendung reduzieren
+
+Teil des agilen Mindsets ist die ständige Suche nach effizienteren Arbeitsweisen, was heißt, **Prozesse zu verschlanken, ohne Produktqualität oder Wert zu senken**, und der Schlüssel zum Verschlanken ist, Verschwendung zu reduzieren. Das Modul benennt zwei Formen von Verschwendung: **unnötige Dokumentation** und **das Falsche bauen**, also Wochen oder Monate, die in eine Funktion fließen, die Kundschaft, Nutzende oder Stakeholder am Ende gar nicht wollen. Beide schrumpfen mit derselben Medizin: **mehr Zusammenarbeit** mit Team und Stakeholdern, was weniger Dokumentation und früheres Feedback erkauft.
+
+### Drei konkrete Unterschiede
+
+<figure class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Waterfall - Vorhersagbarkeit</div>
+      <ul>
+        <li>Anforderungen vorab in einem Produktanforderungsdokument festgezurrt</li>
+        <li>Formal freigegebene Pläne, teils ein eigenes Team, das sie schreibt</li>
+        <li>Ein <b>Change Control Board</b>, das jede Änderung an Anforderungen steuert</li>
+        <li>Umfangreiche Dokumentation für Übergaben zwischen Phasen und Teams</li>
+        <li>Ein großes Deliverable, ganz am Ende ausgeliefert</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Agile - Anpassungsfähigkeit</div>
+      <ul>
+        <li>Anforderungen gelten als dynamisch, Veränderung wird erwartet</li>
+        <li>Eine anfängliche Liste, die immer weiter wächst und mit Stakeholdern neu priorisiert wird</li>
+        <li>Veränderung wird begrüßt statt abgewehrt</li>
+        <li>Kurze Dokumente, gerade genug Detail, nur bei Bedarf geschrieben</li>
+        <li>Kleinere, häufigere Releases, die jeweils Feedback einbringen</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Waterfall schützt das Team davor, etwas zu bauen, das die Kundschaft nicht will, indem es die Definition früh festzurrt. Agile schützt vor demselben Risiko, indem es den Abstand zwischen Bauen und Herausfinden verkürzt.</figcaption>
+</figure>
+
+| Aspekt | Waterfall | Agile |
+| --- | --- | --- |
+| **Anforderungen** | Dokumentiert, formal freigegeben, durch Change Control bewacht, um Scope Creep zu verhindern | Dynamisch, laufend mit Stakeholdern priorisiert, die wertvollsten Punkte nach oben auf die Liste |
+| **Dokumentation** | Sehr viel davon, weil die Arbeit in großen Blöcken mit vielen Übergaben läuft | Betonung des direkten Gesprächs in Echtzeit, dazu kurze Dokumente mit gerade genug Detail |
+| **Deliverables** | Meist ein Release ganz am Ende, ein großes Ereignis mit echtem Trara | Kleiner und häufiger, jede Feier weniger formell, in der Summe aber dasselbe |
+
+### Wann welches die richtige Wahl ist
+
+<Aside type="tip">
+**Waterfall passt**, wenn das gewünschte Endprodukt **bekannt und verstanden** ist, zum Beispiel bei einem Projekt, dessen Anforderungen und Ziele durch vorgeschriebene Regulierung gesetzt sind. Formal freigegebene Pläne funktionieren dort gut.
+<br />**Agile passt**, wenn viel **Unsicherheit** im Spiel ist, etwa in einer neuen oder entstehenden Branche oder auf einem neuen Markt, wo stetige Releases dem Team Feedback verschaffen und Lernen unterwegs erlauben. Ohne regelmäßiges Feedback kann das Team etwas liefern, das die Kundschaft nie wollte.
+</Aside>
+
+---
+
+## Das Agile Manifest: vier Werte
+
+Das Manifest beginnt mit der Aussage, dass seine Autoren bessere Wege der Softwareentwicklung erschließen, indem sie es selbst tun und anderen dabei helfen, und dass sie durch diese Arbeit vier Dinge schätzen gelernt haben. Der entscheidende Satz ist der letzte: **Obwohl die Punkte auf der rechten Seite Wert haben, schätzen sie die Punkte auf der linken Seite höher.** Es ist eine Aussage über Gewichtung, kein Verbot.
+
+| Das agile Team neigt zu | ...gegenüber | Was das in der Praxis heißt |
+| --- | --- | --- |
+| **Individuen und Interaktionen** | Prozessen und Werkzeugen | Menschen, die miteinander sprechen, schlagen es, Ergebnisse durch Prozesse erzwingen zu wollen. Eine lange E-Mail-Kette mit Rückfragen hätte oft ein einziges kurzes Gespräch sein können. Werkzeuge sollen gute Steuerung und Zusammenarbeit *erleichtern* und niemals zur Barriere zwischen Menschen werden |
+| **Funktionierende Software** | umfassender Dokumentation | Zeit in das stecken, was Wert schafft, nicht in das Diskutieren, Schreiben und Prüfen von Dokumenten über das Nötige hinaus. Setze dein eigenes Deliverable für das Wort Software ein: einen Schriftsatz, ein Bürolayout, eine Vertriebspräsentation |
+| **Zusammenarbeit mit der Kundschaft** | Vertragsverhandlung | Kundenzufriedenheit hat höchste Priorität, denn wenn es für die Kundschaft nicht wertvoll ist, gibt es kaum einen Grund, es zu bauen. Verträge gibt es weiterhin, aber die Freiheit, früh und oft zusammenzuarbeiten, schlägt das Aushandeln von Konditionen für jede kleine Änderung. Zeige Prototypen, stelle Fragen, lade zum Testen ein |
+| **Reagieren auf Veränderung** | dem Befolgen eines Plans | Veränderung ist unvermeidlich, und je größer, länger und komplexer das Projekt, desto mehr Unsicherheit trägt es. Ein zu Beginn festgezurrter Plan kann durchaus pünktlich und im Budget liefern und trotzdem verfehlen, was die Kundschaft braucht. Agile Projektmanager planen weiterhin, sie kommen nur damit zurecht, den Plan an jedem Punkt zu überarbeiten |
+
+<Aside type="note">
+Jedes Team muss **seine eigene Balance** zwischen den beiden Seiten jeder Aussage finden, feinjustiert auf Branchenbedarf, Teamdynamik und Organisationsziele. Über beide Seiten nachzudenken wird erwartet; die linke Seite konsequent höher zu gewichten ist das, was das Team agil macht.
+</Aside>
+
+---
+
+## Die zwölf Prinzipien, in vier Themen
+
+Aus den vier Werten wurden zwölf Prinzipien entwickelt, die die Botschaft verstärken und klären. Der Kurs gruppiert sie als Merkhilfe in vier Themen; diese Themen sind ein didaktisches Hilfsmittel und nicht Teil des Manifests selbst.
+
+<div class="sc-quad">
+<div class="q amber">
+<div class="qh">Wertlieferung - 5 Prinzipien</div>
+<p>Wie liefern Teams ihrer Kundschaft hochwertige Produkte?</p>
+</div>
+<div class="q violet">
+<div class="qh">Zusammenarbeit mit dem Business - 2 Prinzipien</div>
+<p>Wie arbeiten Teams mit Geschäftspartnern und Stakeholdern zusammen, um Wert zu schaffen?</p>
+</div>
+<div class="q green">
+<div class="qh">Teamdynamik und Kultur - 4 Prinzipien</div>
+<p>Wie baut ein Team die zwischenmenschliche Dynamik auf, die Wert liefert?</p>
+</div>
+<div class="q slate">
+<div class="qh">Retrospektiven - 1 Prinzip</div>
+<p>Wie lernt das Projekt fortlaufend und hebt seine Leistung?</p>
+</div>
+</div>
+
+### Wertlieferung
+
+Liefere so schnell wie möglich, weil Feedback das Risiko mindert, das Falsche zu bauen, und weil **niemand einen Nutzen aus der Arbeit zieht, bevor sie geliefert ist**, weder die Kundschaft noch das Unternehmen. Je länger die Lieferung dauert, desto länger wartest du auf Umsatz und desto mehr Raum haben Wettbewerber, dir davonzuziehen.
+
+<ul>
+<li><strong>1. Stelle die Kundschaft durch frühe und kontinuierliche Lieferung von Wert zufrieden.</strong> Ein stetiger Wertstrom baut Vertrauen und Zuversicht auf und realisiert den Geschäftsnutzen früher.</li>
+<li><strong>2. Heiße sich ändernde Anforderungen willkommen, selbst spät im Projekt.</strong> Agile Prozesse machen Veränderung zum Wettbewerbsvorteil für die Kundschaft, also beobachte laufend das Umfeld und arbeite Änderungen in den Plan ein.</li>
+<li><strong>3. Liefere funktionierende Increments häufig</strong>, in einem Rhythmus von ein paar Wochen bis ein paar Monaten, mit Vorliebe für das kürzere Ende. Kleine, häufige Increments schaffen regelmäßige Gelegenheiten für Feedback.</li>
+<li><strong>7. Ein funktionierendes Produkt ist das wichtigste Fortschrittsmaß.</strong> Sinnvolle Fertigstellung heißt ein vorführbares Stück der Lösung, kein fertiges Dokument. Zu sagen, das Team sei zu 80 Prozent fertig, bedeutet nichts, wenn es nichts zu begutachten gibt.</li>
+<li><strong>10. Einfachheit, die Kunst, die Menge nicht getaner Arbeit zu maximieren, ist essenziell.</strong> Lass Funktionen weg, nach denen weder Nutzende noch Product Owner je gefragt haben, streiche Verfahren, die nicht mehr gebraucht werden, kürze unnötige Dokumentation.</li>
+</ul>
+
+Bei der Einfachheit lohnt es sich zu verweilen: Denk daran, wie viel Entwicklungszeit in Buttons und Funktionen fließt, die die Nutzenden am Ende verwirren. In der Praxis sieht dieses Thema so aus, dass man Feedback zu einem Prototyp einholt, um zu lernen, welche Funktionen wirklich zählen, dass man das Team auf freigegebene Funktionen beschränkt oder dass man rund **zehn Prozent der Teamzeit** für Bugfixing und das Polieren von Prozessen reserviert, damit künftige Iterationen schneller laufen.
+
+### Zusammenarbeit mit dem Business
+
+**Business People** meint hier Menschen aus Vertrieb, Marketing, Kundenbetreuung und Account Management, und **Developer** meint diejenigen, die das Produkt machen und erschaffen.
+
+<ul>
+<li><strong>4. Business People und Developer müssen täglich zusammenarbeiten</strong>, über das gesamte Projekt hinweg. Die Barriere zu entfernen baut Vertrauen auf und hält die Bauenden im Einklang mit den Bedürfnissen der Nutzenden.</li>
+<li><strong>6. Das Gespräch von Angesicht zu Angesicht ist der effizienteste und wirksamste Weg, Informationen zu übermitteln</strong>, zum Team hin und innerhalb des Teams, weil es Signale, Körpersprache und Mimik transportiert, die E-Mail, Chat und Telefon verlieren. Wo das unmöglich ist, kommt es darauf an, in dem verfügbaren Format wirksame Kommunikationsnormen zu vereinbaren.</li>
+</ul>
+
+Praktische Formen davon: Business People nahe beim Entwicklungsteam setzen, idealerweise im selben Büro oder virtuellen Raum, oder einen Tag pro Woche gemeinsam an einem Ort arbeiten, Instant Messaging fördern oder gemeinsame Zeit in den Kalendern blocken. Und statt Kundschaft aus Angst vor Scope Creep von den Entwickelnden fernzuhalten, richte ein **wöchentliches Huddle** ein, in dem Kundschaft und Business People gemeinsam mit dem Team Feedback und neue Ideen erkunden. So entdeckt man oft, dass eine wirklich wertvolle Funktion leicht zu bauen ist, während eine Funktion, die alle für einfach hielten, in Wahrheit sehr schwierig ist.
+
+### Teamdynamik und Kultur
+
+Dieses Thema macht den ersten Wert konkret: Eine wirksame Teamkultur, die inklusiv, unterstützend und ermächtigend ist, ist essenziell für den Projekterfolg.
+
+<ul>
+<li><strong>5. Baue Projekte rund um motivierte Individuen</strong>, gib ihnen das Umfeld und die Unterstützung, die sie brauchen, und vertraue darauf, dass sie die Aufgabe erledigen. Teams bauen bessere Lösungen, wenn sie ermächtigt sind und wenn auch Sponsoren und Führungskräfte ihnen vertrauen.</li>
+<li><strong>8. Agile Prozesse fördern nachhaltige Entwicklung</strong>: Sponsoren, Developer und Nutzende sollten ein gleichmäßiges Tempo unbegrenzt halten können. Überlastung erzeugt Fehler und Burnout, während ein unterausgelastetes Team sich langweilt und seinen kreativen Funken verliert.</li>
+<li><strong>9. Ständige Aufmerksamkeit für technische Exzellenz und gutes Design erhöht die Agilität.</strong> Schnell zu arbeiten ist kein Freibrief, Qualität zu opfern. Eine gut gebaute Lösung kann Feedback schnell aufnehmen, eine minderwertige macht jede Änderung langsam und kompliziert.</li>
+<li><strong>11. Die besten Architekturen, Anforderungen und Designs entstehen in selbstorganisierten Teams.</strong> Die Mitglieder sollten ihre eigenen Arbeitsprozesse gestalten, statt sie von einer Führungskraft diktiert zu bekommen, und sich frei fühlen, Fragen, Bedenken und Feedback zu äußern.</li>
+</ul>
+
+Zwei Beispiele: Frage das Team, welche Ausstattung es für die Arbeit braucht, und gib sie ihm dann auch wirklich; und lass Teams ihre eigenen Prozesse und Vorlagen schreiben, statt ihnen etwas aus der Zentrale aufzudrücken. Teams arbeiten am besten, wenn ihr Beitrag sichtbar wertgeschätzt wird, also besteht die Aufgabe des Projektmanagers darin, ihnen Raum zu geben, die Kultur zu prägen.
+
+### Retrospektiven und kontinuierliches Lernen
+
+<ul>
+<li><strong>12. In regelmäßigen Abständen reflektiert das Team, wie es wirksamer werden kann, und passt sein Verhalten entsprechend an.</strong></li>
+</ul>
+
+Dieses Prinzip steht allein, weil es die Aufmerksamkeit verdient. Nimm dir **nach jeder Iteration** Zeit, die ausschließlich der Frage gilt, wie es besser gehen kann, und nutze sie, um einen Schritt zurückzutreten und zu fragen: Wie geht es dem Team, ist die Kundschaft zufrieden, welche Prozesse ließen sich optimieren, dienen uns die Werkzeuge, leben wir die Werte, und sammeln wir **Schulden** an, also Prozesse oder Technologie, die uns ausbremsen. Kein Team ist perfekt, also muss das Lernen aus Erfolgen wie aus Misserfolgen kontinuierlich sein.
+
+---
+
+## VUCA: entscheiden, wann Agile passt
+
+Bevor du dich für einen Ansatz entscheidest, schau dir das Umfeld und die Bedingungen an, in denen das Projekt sitzt. Das **US-amerikanische War College des Militärs** hat für genau diese Art von Einschätzung ein Konzept entwickelt, das sich sauber auf Projekte übertragen lässt.
+
+<Aside type="note">
+**VUCA** - ein Akronym für die Bedingungen, die Organisationen in einer sich wandelnden und komplexen Welt beeinflussen: **Volatilität, Unsicherheit, Komplexität, Ambiguität** (volatility, uncertainty, complexity, ambiguity). Es existiert, um die Kräfte der Veränderung in Projekte und Geschäfte einzurechnen.
+</Aside>
+
+| Buchstabe | Worauf er sich bezieht | Wie es sich im Projekt anfühlt |
+| --- | --- | --- |
+| **Volatilität** | Das Tempo von Veränderung und Bewegung in einem Geschäft oder einer Situation | Die nächste Störung des Betriebs lauert immer um die Ecke, und nichts pendelt sich je in einen normalen Rhythmus ein |
+| **Unsicherheit** | Fehlende Vorhersagbarkeit, hohes Überraschungspotenzial | Pläne für die Zukunft ruhen auf einem großen Stapel Annahmen, die sich allesamt als falsch erweisen können |
+| **Komplexität** | Eine hohe Zahl miteinander verknüpfter Kräfte, Themen, Organisationen und Faktoren | Ein Produkt hängt an vielfältigen globalen Lieferanten, und alles berührt alles |
+| **Ambiguität** | Die Gefahr, die Bedingungen und die Ursachen von Ereignissen misszuverstehen | Du kannst nicht festmachen, was die Verzögerungen verursacht, also kannst du auch keine Gegenmaßnahmen für das Risiko entwerfen |
+
+**Hohes VUCA ist das Signal, Agile in Betracht zu ziehen.** Agile beseitigt VUCA nicht, aber es gibt dem Team Werkzeuge und Systeme an die Hand, um die Risiken zu mindern, die VUCA erzeugt, und es ist eine bewährte, gut dokumentierte Antwort auf diese Herausforderungen.
+
+Agile funktioniert am besten in Branchen und Projekten, die Veränderung und Unsicherheit ausgesetzt sind oder sie aktiv fördern. Naheliegende Kandidaten: **Biotechnologie** mit neu entstehenden Impfstoffen, Therapien und Technologien, **Medien** mit endlos neuen Wegen, Inhalte zu teilen, **Lebensmittel** mit Starköchinnen und dem jeweils neuesten Trend und **Mode**, eine ganze Branche, die auf wechselnden Trends gebaut ist. Die scheinbar stabilen Branchen wie **Landwirtschaft, Luft- und Raumfahrt, Fertigung und Bergbau** haben strenge Lieferketten und Vorschriften und müssen sich trotzdem an neue Gesetze und Regulierungen, Naturkatastrophen und andere unvorhergesehene Ereignisse anpassen. Die Lehre aus 2020 lautet, dass **keine Branche wirklich immun** gegen Veränderung ist.
+
+### Das durchgehende Beispiel: Virtual Verde
+
+Das Kursszenario führt die früheren Kurse bei **Office Green** fort, einem Unternehmen für gewerbliche Begrünung, das Innenraum-Pflanzendesign für Büros, Restaurants und Hotels macht. Marktforschung erkennt eine große Verschiebung hin zu Menschen, die sich ein **Homeoffice** einrichten, was zugleich ein riesiger neuer Markt und eine Bedrohung für das bestehende Bürogeschäft ist. Die Verschiebung kam plötzlich, es gab also keine Projektpläne als Ausgangspunkt und keine Zeit für viel Vorarbeit, aber die Gelegenheit wollte nicht warten. Office Green stellt ein improvisiertes neues agiles Team zusammen, um einen neuen Service namens **Virtual Verde** zu liefern.
+
+Liest man das gegen VUCA, ist jeder Buchstabe da: **Volatilität** als große disruptive Veränderung des Geschäftsplans, **Unsicherheit**, die konkrete Zukunftspläne unmöglich macht, **Komplexität** durch verknüpfte Faktoren wie Lieferanten und Konjunktur und **Ambiguität**, weil niemand bestimmen oder kontrollieren konnte, was die nächste Veränderung auslösen würde. Statt zuzusehen, wie das Geschäft erodiert, hat Office Green den sich wandelnden Markt angenommen und ist flexibel geblieben, wie das Projekt anzugehen sei.
+
+---
+
+## Scrum
+
+Scrum ist mit Abstand die beliebteste Methodik unter dem Agile-Dach. Im **State of Agile Report 2019 nutzten 72 Prozent** der Teams, die agile Methoden einsetzen, Scrum oder eine Mischform davon; wer im agilen Projektmanagement arbeitet, wird also sehr wahrscheinlich Scrum oder etwas darauf Aufbauendes verwenden.
+
+Der Name ist **kein Akronym**. Er kommt aus dem Rugby, wo ein Scrum die Formation ist, in der sich die Spieler nach vorn lehnen, die Köpfe zusammenschließen und als eine Einheit arbeiten, um den Ball Richtung Punktelinie zu treiben. Die Urheber sahen ihr Team genauso: Köpfe unten, sehr eng zusammenarbeitend, um den Ball über das Feld zu bewegen.
+
+### Die Mechanik
+
+In Scrum stellst du ein Team zusammen, das gemeinsam ein Deliverable schnell und in kurzen Zyklen entwickelt und testet und sich täglich trifft, um die aktuellen Aufgaben zu besprechen und alles aus dem Weg zu räumen, was den Fortschritt blockiert.
+
+| Begriff | Was es ist |
+| --- | --- |
+| **Backlog** | Das zentrale Artefakt von Scrum, in dem jede mögliche Idee, jedes Deliverable, jede Funktion und jede Aufgabe erfasst wird. Vom Team fortlaufend priorisiert und proaktiv gepflegt, über die gesamte Projektlaufzeit |
+| **Sprint** | Der zeitlich begrenzte Zeitraum, in dem gearbeitet wird, zwischen einer und vier Wochen, meist rund zwei. Das ist der Scrum-Name für die **Iteration** |
+| **Daily Scrum** (Stand-up) | Ein Meeting von höchstens 15 Minuten, an jedem Tag des Sprints, in dem das Team den Fortschritt in Richtung seines Ziels überprüft |
+| **Scrum Master** | Sorgt dafür, dass das Team die agilen Werte und Prinzipien lebt, den vereinbarten Prozessen und Praktiken folgt, teilt Informationen mit dem erweiterten Projektteam und hilft dem Team, sich auf seine beste Arbeit zu konzentrieren |
+| **Product Owner** | Maximiert den Wert des Produkts und der Arbeit des Teams. Verantwortet den Bestand an Arbeit und hat das letzte Wort bei der Priorisierung |
+| **Development Team** | Verantwortlich dafür, *wie* das Team das Produkt liefern wird |
+
+### Warum es so beliebt ist und wo es passt
+
+<ul>
+<li>Klare Rollen und Verantwortlichkeiten, bei durchgehender Betonung der Kraft des Teams als Ganzem.</li>
+<li>Regelmäßige, vorhersagbare Meetings und Lieferrhythmen mit vordefinierten Agenden und Ergebnissen, was das Anlernen neuer Leute leicht macht.</li>
+<li>Es stützt die agilen Werte und Prinzipien und fügt zugleich Struktur hinzu, die neuen Teams den Start und erfahrenen Teams die Verbesserung erleichtert.</li>
+<li>Es ist kostenlos und frei nutzbar, mit einer riesigen Menge an Online-Anleitungen, Trainings und Zertifizierungen.</li>
+</ul>
+
+Das ideale Scrum-Team ist **crossfunktional und hat etwa drei bis neun Mitglieder**, manchmal **Pizza-Size-Team** genannt, weil so viele Menschen sich eine große Pizza teilen könnten. Zu klein und es fehlt die Vielfalt an Fähigkeiten, um die Arbeit zu erledigen; zu groß und Informationen lassen sich schwer verteilen. Scrum braucht außerdem ein Team und eine Managementebene, die aufgeschlossen und anpassungsfähig sind und Lust darauf haben, kontinuierlich zu lernen, um ein besseres Team zu werden.
+
+<Aside type="caution">
+**Ein Team zu Scrum zu zwingen scheitert fast immer.** Das Framework lebt von Bereitschaft, nicht von Gehorsam.
+</Aside>
+
+Beachte, dass davon nichts Software erwähnt. Scrum ist aus Softwareprojekten entstanden, aber Menschen haben es auf Hochzeitsplanung, Umzüge und den Bau von Raketen übertragen.
+
+### Woher die Ideen stammen
+
+Das Wort Scrum wurde für diese Art von Arbeit erstmals in einem Aufsatz der **Harvard Business Review von 1986** von **Hirotaka Takeuchi und Ikujiro Nonaka** verwendet, *The New New Product Development Game*, in einem Kapitel mit dem Titel *Moving the Scrum downfield*. Der Aufsatz benennt sechs Merkmale von Teams, denen das gelingt:
+
+| Merkmal | Was es bedeutet |
+| --- | --- |
+| **Eingebaute Instabilität** | Teams erhalten Freiheit, um wichtige Ergebnisse gegen herausfordernde Anforderungen zu erreichen, was das Element an Spannung liefert, das ein strategisch wichtiges Projekt braucht |
+| **Selbstorganisierte Teams** | Jedes arbeitet wie ein eigenes Start-up, mit einer Ordnung ohne echte Hierarchie, und zeigt Autonomie, kontinuierliches Wachstum und Zusammenarbeit |
+| **Überlappende Entwicklungsphasen** | Einzelne synchronisieren ihr Tempo, um Fristen zu halten, bis sich ein kollektives Teamtempo bildet |
+| **Multi-Learning** | Das Framework setzt auf Versuch und Irrtum, und die Mitglieder bleiben bei sich wandelnden Marktbedingungen auf dem Laufenden, um schnell reagieren zu können |
+| **Subtile Kontrolle** | Selbstorganisation heißt nicht strukturlos: Checkpoints im Projektverlauf analysieren Teaminteraktionen und Fortschritt und halten die Kontrolle, ohne Kreativität zu behindern |
+| **Organisationaler Transfer von Wissen** | Alle werden ermutigt, für sie neue Fähigkeiten zu lernen und dabei die anderen Mitglieder zu unterstützen |
+
+Der zentrale Punkt der Autoren gilt weiterhin: Kein einzelnes Element erzeugt für sich Tempo und Flexibilität, es ist erst das ganze Set zusammen, das die Dynamik schafft.
+
+---
+
+## Kanban
+
+Kanban kommt von zwei japanischen Wörtern, **kan** für Zeichen und **ban** für Tafel, und es lässt sich sehr einfach anwenden oder zur Steuerung eines gesamten Projekts nutzen. Das **Kanban-Board** ist sein bekanntestes Merkmal und wurde von den meisten Agile-Begeisterten übernommen, weil es allen, die sich für den Stand der laufenden Arbeit interessieren, transparentes **visuelles Feedback** gibt. Das klassische Board zeigt den Fortschritt als **zu erledigen, in Arbeit, erledigt**, und viele Softwarewerkzeuge erzeugen digitale Versionen davon.
+
+Die weniger sichtbare Hälfte der Methode zählt genauso viel. Kanban stellt sicher, dass das Team nur ein **nachhaltiges** Maß an laufender Arbeit annimmt, indem es ein **WIP-Limit** setzt: eine Obergrenze, **vom Team selbst festgelegt**, wie viele Aufgaben gleichzeitig in Arbeit sein dürfen, basierend darauf, was es in einem gegebenen Zeitraum wirklich schafft.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Das Team setzt sein eigenes WIP-Limit<span class="sub">selbstorganisiert, nachhaltiges Tempo</span></div>
+    <div class="sc-node violet">Eine Aufgabe starten, und sie zu beenden wird zur Teampriorität<span class="sub">keine neue Arbeit obendrauf</span></div>
+    <div class="sc-node green">Die nächste Aufgabe erst ziehen, wenn man unter dem Limit ist<span class="sub">die vorige Aufgabe ist wirklich fertig</span></div>
+    <div class="sc-node slate">Flow<span class="sub">maximierte Effizienz, das Kernprinzip von Kanban</span></div>
+  </div>
+  <figcaption>Das kontraintuitive Ergebnis: Indem man sich auf weniger Arbeit gleichzeitig konzentriert, wird die Arbeit schneller fertig. Dieses Streben nach maximaler Effizienz nennt Kanban Flow.</figcaption>
+</figure>
+
+Das WIP-Limit ist Agile im Kleinen, denn die Teams sind zugleich selbstorganisiert und ermächtigt und arbeiten in einem nachhaltigen Tempo.
+
+---
+
+## Extreme Programming (XP)
+
+XP hat seinen Namen daher, dass es traditionelle Aktivitäten der Softwareentwicklung auf ein **extremes Niveau** treibt, und es entstand ungefähr zeitgleich mit Extremsportarten wie Snowboarden. Sein Ziel ist es, Produktqualität und die Fähigkeit zu verbessern, auf sich ändernde Kundenbedürfnisse zu reagieren, indem es die Best Practices der Entwicklung bis an ihre Grenze treibt.
+
+Das durchgerechnete Beispiel ist **Test-first Development**: Teile des Produkts testen, bevor sie vollständig gebaut werden. Üblicherweise werden nur die größeren Funktionen getestet, was in Ordnung ist, aber Details durchrutschen lässt. XP treibt es ins Extrem, indem es Wege findet, mehr und kleinere Funktionen zu testen, damit das Team noch mehr Feedback sammelt.
+
+XP kommt aus der Software und nutzt Softwarevokabular, lässt sich aber auf Arbeit außerhalb der Software übertragen. Es zielt auf **vier Grundaktivitäten**:
+
+| Aktivität | In der Software | Außerhalb der Software |
+| --- | --- | --- |
+| **Designen** | Ein Designdokument schreiben, das die Teile des Codes beschreibt und wie das Produkt funktionieren wird | Die Bestandteile dessen beschreiben, was auch immer du lieferst. Bei einer Werbekampagne die Gestaltung, den Text und den Mediaplan |
+| **Coden** | Klarer, knapper Code, den andere leicht lesen und verstehen, was die Fehlersuche weit einfacher macht | Klare, knappe Prozesse oder Anleitungen dazu, wie das Produkt gebaut oder benutzt wird |
+| **Testen** | Auf Fehler prüfen, bevor sie ins Endprodukt gelangen, und Funktionen gegen die Kundenanforderungen prüfen | Dieselbe Idee: Fehler in einer Funktion beseitigen, *bevor* sie gebaut wird und man weitergeht. Mehr Testen ist besser |
+| **Zuhören** | Der Kundschaft zuhören und sicherstellen, dass Anforderungen ins Produkt einfließen | Identisch, und es ist die direkte Verbindung zum agilen Wert der Zusammenarbeit mit der Kundschaft und des regelmäßigen Feedbacks |
+
+Beim Designen betont XP die **Einfachheit**: Beginne mit einem einfachen Design, das die grundlegendsten und wichtigsten Anforderungen erfüllt, denn einfache Designs brauchen auch weniger Zeit, und ergänze Funktionen erst, wenn das Grundmodell entworfen und getestet ist.
+
+### XP-Praktiken, die sich überallhin verbreitet haben
+
+| Praktik | Was sie bedeutet |
+| --- | --- |
+| **Pair Programming** | Zwei Teammitglieder arbeiten gleichzeitig gemeinsam an einer Aufgabe, meist nebeneinander, wobei digitale Kollaborationswerkzeuge es auch aus der Ferne ermöglichen |
+| **Continuous Integration und kontinuierliches Refactoring** | Produktänderungen mehrmals täglich in eine gemeinsame Version zusammenführen, um schnelles Feedback zur Qualität des Codes oder des Produkts zu bekommen |
+| **Kein großer Entwurf im Voraus** | Nur so viel designen, dass man loslegen kann, und es dann kontinuierlich verbessern, während das Produkt wächst |
+| **Tests schreiben statt Anforderungen** | Statt eines Anforderungsdokuments plus separatem Testplan lässt man den Testplan beides tun: dem Team sagen, was zu bauen ist, und das Gebaute mit dem vergleichen, was gebaut werden sollte |
+
+---
+
+## Lean
+
+Lean ist älter als Agile, und die Erfinder von Agile wurden direkt dazu inspiriert, Prinzipien der Lean-Fertigung auf die Softwareentwicklung anzuwenden. Wie Agile ist Lean eine Sammlung von Prinzipien und ein Wertesystem, und viele der scheinbaren Unterschiede zwischen beiden sind in Wahrheit Unterschiede in der Wortwahl. Seine **fünf Prinzipien** funktionieren als Rezept, um Projektergebnisse zu verbessern.
+
+<Steps>
+
+1. **Define value** - erkenne, was die Kundschaft will, konzentriere dich darauf und beziehe die Kundschaft in den Prozess ein. Der Wert eines Produkts ist die Summe all dessen, was die Kundschaft will.
+
+2. **Map value stream** - zeichne den Prozess nach, jeden Schritt, der an der Wertschöpfung für die Kundschaft beteiligt ist, und stelle jeden Schritt infrage, der verschwenderisch oder unnötig ist.
+
+3. **Create flow** - sorge dafür, dass sich das Produkt effizient durch den Wertstrom bewegt, beseitige Unterbrechungen, Verzögerungen und Barrieren und eliminiere weiterhin Verschwendung über den gesamten Zyklus.
+
+4. **Establish pull** - wie etwas aus einem Regal ziehen: Sorge dafür, dass die Kundschaft entlang des gesamten Wertstroms nach dem Produkt fragt und Funktionen sowie inkrementelle Lieferungen zieht. Je reibungsloser dein Prozess, desto bereitwilliger kannst du zeigen, woran du gearbeitet hast, oder jederzeit einen Funktionswunsch annehmen.
+
+5. **Pursue perfection** - treibe das Team an, die ersten vier Schritte immer weiter zu verbessern.
+
+</Steps>
+
+---
+
+## Agile und Waterfall mischen
+
+Agiles Projektmanagement enthält die meisten derselben Phasen und Aufgaben wie Waterfall: initiieren, planen, Aufgaben durchführen und abschließen, den Abschluss machen, dazu Ziele und Scope, Terminplanung, Budgetierung und Risikomanagement. Sie werden nur anders erledigt. Und genau deshalb ergibt es oft Sinn, beides zu mischen.
+
+Es heißt außerdem, dass du einen Teil des Nutzens agilen Denkens einfangen kannst, indem du die Werte und Prinzipien aus dem Manifest anwendest, **selbst wenn der Lieferansatz Waterfall sein muss**.
+
+### Gründe zu mischen
+
+<ul>
+<li>Stakeholder, Kundschaft oder Sponsoren fühlen sich mit traditionellen Ansätzen wohler und finden traditionelle Arbeitsergebnisse leichter nachvollziehbar, während das Projektteam bereits in Scrum eingespielt ist und so weitermachen will.</li>
+<li>Regulatorische Anforderungen verlangen bestimmte traditionelle Arbeitsprozesse, etwa umfangreiche Anforderungsdokumente für Zertifizierungen.</li>
+<li>Ein Dienstleister in einem großen Projekt folgt bereits einem traditionellen Ansatz, sodass die Integration der Teams eine gewisse Mischform erfordert.</li>
+</ul>
+
+### Mischen in der Praxis
+
+Zwei alltägliche Beispiele. In einer Sprint-Retrospektive sagt ein Teammitglied, es müsse eine Funktion umsetzen, mit der es wenig Erfahrung hat; jemand anderes im Team ist Expertin darin, also stellst du die beiden zusammen, um sie im nächsten Sprint gemeinsam zu bauen. Das ist **XP-Pair-Programming innerhalb einer Scrum-Retrospektiven-Schleife**. Und die meisten Scrum-Teams verfolgen ihren Sprint-Fortschritt auf einem **Kanban-Board**, eine weitere Mischform, die so verbreitet ist, dass sie niemandem mehr auffällt.
+
+Zurück bei Office Green zeigt sich das Mischen an zwei Stellen von Virtual Verde. Die bestehenden Pflanzenlieferanten sind es gewohnt, mit dem ursprünglichen Bürolieferteam zu arbeiten, und nur einige haben Lust, mit Agile zu experimentieren; also bezieht man diese Lieferanten früh in Gespräche ein, um Zustimmung zu gewinnen und Bedenken aufzugreifen. Und weil Office Green die Kosten genau im Blick behalten muss, nutzt man **traditionelle Budgetsteuerungsinstrumente**, damit das Programm nicht aus dem Ruder läuft.
+
+<Aside type="caution">
+**Achte auf zu viel Veränderung in der Art, wie ihr arbeitet.** Teams arbeiten am besten, wenn sie eine gewisse Beständigkeit aufbauen können, also mische bewusst, statt den Prozess laufend neu zu erfinden.
+</Aside>
+
+Die Faustregel: Nur zu, solange verschiedene Teile des Projekts von bestimmten Prozessen profitieren, **ohne das Projekt als Ganzes zu beeinträchtigen**.
+
+---
+
+## Skalieren: das Spotify-Modell
+
+Spotify ist die Standardreferenz dafür, Agile zu skalieren und dabei flexibel zu bleiben. Die Agile Coaches Henrik Kniberg und Anders Ivarsson bauten einen Ansatz, der Methoden ständig mischt und sich über die Zeit anpasst, mit einem Organisationssystem aus **Squads, Tribes, Chapters und Guilds**, um Innovation, Zusammenarbeit und Produktivität zu fördern und zugleich Autonomie, Qualität und die notwendige Kommunikation zu bewahren.
+
+| Einheit | Was es ist |
+| --- | --- |
+| **Squad** | Wie ein Scrum-Team, gedacht als eigenes Start-up innerhalb des Unternehmens. Selbstorganisiert und an einem Ort, mit einer langfristigen Mission wie der Verbesserung der App-Benutzbarkeit auf Android oder der Bereitstellung von Bezahllösungen. Ohne formale Leitung, aber mit einem Product Owner und Zugang zu einem Agile Coach für kontinuierliche Verbesserung |
+| **Tribe** | Eine Sammlung von Squads, die in einem bestimmten Bereich arbeiten, bewusst unter rund 100 Personen gehalten |
+| **Chapter** | Eine kleine Gruppe von Menschen innerhalb eines Tribes mit ähnlichen Fähigkeiten, die im selben allgemeinen Kompetenzfeld arbeiten |
+| **Guild** | Die größte Gruppierung: Menschen aus der gesamten Organisation, die Wissen, Werkzeuge, Code und Praktiken teilen wollen |
+
+Die Product Owner der verschiedenen Squads stimmen sich ab, um eine Roadmap zu pflegen, die Spotifys Fortschritt als Ganzes verfolgt.
+
+<Aside type="tip">
+**Lass dich inspirieren, kopiere nicht.** Teams, die das Spotify-Modell eins zu eins übernommen haben, stellten fest, dass es überhaupt nicht zu ihnen passte. Spotify begann mit Squads und ergänzte beim Wachsen neue Gruppentypen, ohne die bestehenden Squads zu stören, bis das Unternehmen seine eigene Balance aus Zusammenarbeit und Verantwortung gefunden hatte. Schau dir dein eigenes Projekt und deine eigene Organisation an, nutze die Teile, die passen, scheue Versuch und Irrtum nicht und halte dich nie für fertig mit dem Verbessern.
+</Aside>
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Agile ist keine Methodik.** Es ist ein übergeordneter Ansatz und eine Philosophie, um Kundennutzen zu liefern, mit vielen Frameworks und Methoden unter seinem Dach.
+- **Ursprung:** leichtgewichtige Softwaremethoden entstanden organisch in den **1990er Jahren**, und **2001** trafen sich siebzehn Vordenker in Utah und schrieben das **Agile Manifest**. Das Problem, das sie benannten: Unternehmen, die so auf Planen und Dokumentieren fixiert waren, dass sie die Zufriedenheit der Kundschaft aus dem Blick verloren.
+- Agile schöpft aus der **Lean-Fertigung bei Toyota in den 1930er Jahren** und läuft heute in Biotech, Medien, Lebensmitteln, Mode, Luftfahrt, Gesundheitswesen, Bildung, Finanzwesen und mehr. Nicht nur Software.
+- **Iterativ und inkrementell:** die Arbeit wird in kurzen **Iterationen** wiederholt, von denen jede eine Teilmenge der Aktivitäten nimmt und die gesamte Arbeit dafür erledigt, wie viele **Mini-Waterfalls**. Increments zu liefern erkauft Feedback.
+- **Waterfall gegen Agile** in drei Aspekten: **Anforderungen** (fixiert und über Change Control gesteuert gegenüber dynamisch und laufend neu priorisiert), **Dokumentation** (umfangreich für Übergaben gegenüber kurz, gerade genug, bei Bedarf geschrieben) und **Deliverables** (ein großes Release am Ende gegenüber kleinen, häufigen).
+- **Keines ist besser.** Waterfall passt zu einem bekannten, verstandenen Endprodukt, etwa bei regulierungsgetriebener Arbeit. Agile passt zu Unsicherheit, entstehenden Märkten und allem, wo Feedback mehr zählt als Vorhersagbarkeit. Die **Verschwendung**, die Agile angreift, ist unnötige Dokumentation plus Monate für eine Funktion, die niemand will, und mehr Zusammenarbeit heilt beides.
+- **Vier Werte:** Individuen und Interaktionen über Prozesse und Werkzeuge, funktionierende Software über umfassende Dokumentation, Zusammenarbeit mit der Kundschaft über Vertragsverhandlung, Reagieren auf Veränderung über das Befolgen eines Plans. Auch die rechte Seite hat Wert, nur weniger.
+- **Zwölf Prinzipien in vier Themen:** Wertlieferung (früh und kontinuierlich liefern, späte Änderungen willkommen heißen, häufig liefern, funktionierendes Produkt als Fortschrittsmaß, Einfachheit), Zusammenarbeit mit dem Business (Business People und Developer täglich zusammen, Gespräch von Angesicht zu Angesicht), Teamdynamik und Kultur (motivierte Individuen, denen vertraut wird, nachhaltiges Tempo, technische Exzellenz, selbstorganisierte Teams) und Retrospektiven (in regelmäßigen Abständen reflektieren und dann anpassen).
+- **VUCA** = Volatilität, Unsicherheit, Komplexität, Ambiguität, vom US-amerikanischen War College. Hohes VUCA ist das Signal, Agile in Betracht zu ziehen. Agile beseitigt VUCA nicht, es gibt dir Werkzeuge, seine Risiken zu mindern. Office Greens **Virtual Verde** trifft alle vier Buchstaben.
+- **Scrum** - aus dem Rugby, kein Akronym. **72 Prozent** der agilen Teams im State of Agile Report 2019 nutzten Scrum oder eine Mischform. Backlog, Sprint von einer bis vier Wochen, Daily Scrum von höchstens 15 Minuten, Scrum Master, Product Owner, Development Team. Am besten mit einem crossfunktionalen **Pizza-Size-Team von drei bis neun**, und es einem Team aufzuzwingen scheitert.
+- **Scrums Wurzeln:** der HBR-Aufsatz von 1986 von Takeuchi und Nonaka - eingebaute Instabilität, selbstorganisierte Teams, überlappende Phasen, Multi-Learning, subtile Kontrolle, organisationaler Transfer von Wissen.
+- **Kanban** - kan (Zeichen) plus ban (Tafel). Zu erledigen, in Arbeit, erledigt, dazu ein vom Team gesetztes **WIP-Limit**. Sich auf weniger Arbeit gleichzeitig zu konzentrieren lässt Arbeit schneller fertig werden, was Kanban **Flow** nennt.
+- **XP** - Best Practices ins Extreme getrieben, besonders Test-first Development. Vier Aktivitäten: Designen, Coden, Testen, Zuhören. Praktiken: Pair Programming, Continuous Integration und Refactoring, kein großer Entwurf im Voraus, Tests schreiben statt Anforderungen.
+- **Lean** ist älter als Agile und hat es inspiriert: define value, map value stream, create flow, establish pull, pursue perfection.
+- **Hybrid ist normal.** Mische, wenn Stakeholder, Regulierung oder Dienstleister traditionelle Artefakte brauchen, das Team aber Scrum fährt, und merke, dass Pair Programming innerhalb von Scrum und Kanban-Boards für Sprints längst alltägliche Mischformen sind. Vermeide es, die Arbeitsweise zu oft zu ändern, und lass eine Mischform nie dem Projekt als Ganzem schaden. Zum Skalieren ist das Spotify-Modell aus **Squads, Tribes, Chapters und Guilds** eine Inspiration, keine Vorlage zum Kopieren.
+</Aside>
+
+---
+
+*Weiter: [Scrum 101 →](/de/learnings/online/project-management/agile-2-scrum-101/) - das meistgenutzte agile Framework, im Detail.*
