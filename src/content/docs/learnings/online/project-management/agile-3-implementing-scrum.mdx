@@ -1,0 +1,817 @@
+---
+title: "Agile 3 - Implementing Scrum"
+description: "The day-to-day mechanics of Scrum - the Product Backlog and its refinement, user stories, epics and the INVEST checklist, relative effort estimation with T-shirt sizes, story points and Planning Poker, the five Scrum events with their timeboxes and outputs, releasable Increment versus MVP, retrospective pitfalls, velocity and burndown charts, Kanban boards and the tools that hold it all."
+sidebar:
+  label: "C5·3 - Implementing Scrum"
+  order: 27
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Course 5: Agile Project Management*
+
+---
+
+Module 2 built Scrum from the theory up: empiricism and the three pillars, the five values, and the three roles of Product Owner, Scrum Master and Development Team. It named the Product Backlog, the Sprint Backlog and the Increment in passing, and it deliberately stopped short of the Scrum events. This module picks up exactly there and turns the framework into a working routine.
+
+The course says openly that it goes beyond the official Scrum Guide here, adding the popular tools, methods, tips and tricks that real Scrum Teams use on top of it. The order is practical. First comes the **Product Backlog**, captured as **user stories** grouped into **epics**. Then **estimation**, which the course calls one of the trickiest parts of Scrum, solved with relative effort estimation in **T-shirt sizes** or **story points**. Then the **five Scrum events**, followed by how a team tracks itself with **velocity**, **burndown charts** and **Kanban boards**, and the software that holds all of it.
+
+The running scenario is still Office Green's **Virtual Verde**, the service delivering plants to home offices. The four hands-on activities all build one Virtual Verde backlog step by step, from writing the stories to planning the Sprints and writing up the retrospective.
+
+<Aside type="note">
+**Where this sits:** these notes cover the artifacts and events in operation. The roles are not re-explained - when this page says the Product Owner owns something or the Scrum Master facilitates something, the role definitions are the ones from Module 2. Activities are described inline in the section where they occur, never as downloads.
+</Aside>
+
+---
+
+## The Product Backlog
+
+Earlier the Product Backlog was defined as the **single authoritative source** for what a team works on: every feature, requirement and activity tied to the deliverables that achieve the project goal. The nearest traditional equivalent is the set of **project requirements**. It is the central artifact of Scrum, the place where every possible idea, deliverable, feature or task is captured, and it acts as the product's guide and roadmap.
+
+### Three key features
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Living - items can be added at any time</span>
+  <span class="sc-chip violet">Owned and adjusted by the Product Owner</span>
+  <span class="sc-chip green">Always prioritised</span>
+</div>
+
+Because it is living, the backlog evolves across the whole life cycle and keeps telling the team what to pick up next. Because it is always prioritised, new information or features go in at their place in order of importance. Items at the top are specific and well defined, and the vaguer ones sit at the bottom.
+
+### The four fields worth capturing
+
+| Field | What it holds | Who owns it |
+| --- | --- | --- |
+| **Description** | A clear account of the item, with enough detail (an action, a location, the customer's perspective) for developers to meet the user's need | Product Owner |
+| **Value** | How much business value the item delivers to customers, team or users. The team agrees the notation together; the instructor uses one to four dollar signs, low to high | Product Owner |
+| **Estimate** | How much effort the team thinks the item will take, as a relative effort estimate | **Development Team** |
+| **Order** | The item's position. Items run highest to lowest priority, a list called a **stacked rank** | Product Owner, informed by value and estimate |
+
+Virtual Verde example description: as a Virtual Verde client, I plan to grow vegetables of my choice while working from home in my New York City apartment.
+
+### Ordering in practice
+
+<Steps>
+
+1. Market research shows home workers prefer easy-care plants over high-maintenance ones such as orchids, so the backlog reads: 1 succulents, 2 orchids.
+
+2. Support gets an email from a user who would love bonsai trees, which are also hard to look after. Before or after orchids?
+
+3. The Product Owner researches it and finds far more users have asked for orchids. Orchids get two dollar signs of value, bonsai trees get one, and bonsai goes to the bottom.
+
+4. Nobody yet knows what bonsai trees cost against succulents, so it is unclear whether they serve a high-end or low-end market. The Product Owner records that as an **assumption** in the description and moves on, to be studied once the item climbs the list.
+
+</Steps>
+
+<Aside type="tip">
+Include as much as you can in a backlog item, but do not agonise over unknowns. Document the assumption and revisit it when the item becomes a priority.
+</Aside>
+
+---
+
+## User stories and epics
+
+<Aside type="note">
+**User story** - a short, simple description of a feature or deliverable told from the user's perspective, so the solution stays centred on the user and their experience.
+<br />**Epic** - a group or collection of related user stories.
+</Aside>
+
+A user story has three elements: the **user**, the **action** they take, and the **benefit** to them. The most common formula is:
+
+> As a [user role], I want [this action] so that I can get [this value].
+
+Stories may start large and broad, then be broken down until they are as small and specific as needed. The reading adds a book or film analogy: a story is one narrative, while an epic is a set of related but independent stories that together show the overall arc.
+
+### Personas
+
+Writing good stories needs a concrete user in mind, someone interacting with the product to reach a specific outcome. The instructor likes to build **personas**, detailed descriptions of each user type, sometimes with names, because a user you can picture is a user you design better for.
+
+| Persona | Who they are on Virtual Verde |
+| --- | --- |
+| **Leo** | Plant vendor, handling plant acquisition, the supply chain and delivery logistics |
+| **Felicity** | Gardening expert who helps support give customers excellent plant care advice |
+| **Zach** | Amateur vegetable gardener who wants to cook dinner with what they buy |
+| **Nia** | Management consultant working from home who wants a professional video call backdrop |
+| **Reena** | Flower aficionado who wants a different arrangement each week |
+
+### What a story should contain
+
+The reading lists four elements to include when writing user stories:
+
+<ul>
+<li><strong>User persona</strong> - what the user is like, how they relate to the project, what goals they have.</li>
+<li><strong>Definition of Done</strong> - the agreed set of items that must be complete before the story counts as finished.</li>
+<li><strong>Tasks</strong> - the key activities needed to complete the story.</li>
+<li><strong>Any feedback already provided</strong> - if you are extending an existing product, fold in what customers said about earlier iterations.</li>
+</ul>
+
+Beyond insight into user goals, stories enable collaboration, prompt creative solutions and build momentum, since each finished story is a small win for the team.
+
+### The INVEST checklist
+
+Every story should pass six criteria.
+
+| Letter | Criterion | Meaning |
+| --- | --- | --- |
+| **I** | Independent | Can be started and finished on its own, not waiting on another story |
+| **N** | Negotiable | There is room for discussion about the item |
+| **V** | Valuable | Completing it must deliver value |
+| **E** | Estimable | The Definition of Done is clear enough for the team to put an estimate on it |
+| **S** | Small | It fits inside a planned Sprint. If not, split it. Low-priority stories may stay big until they near a Sprint |
+| **T** | Testable | A test can be written to check it meets the acceptance criteria |
+
+The **Product Owner** is the main author of user stories, but the team is responsible for telling them whether a story is clear and meets INVEST *before* investing time in it. The reading adds that a Developer may also write stories and epics, provided the Product Owner stays accountable for the backlog item.
+
+### Acceptance criteria
+
+<Aside type="note">
+**Acceptance criteria** - the checklist, written by the Product Owner, that decides whether a user story is done. A story is only complete when every item on it is met.
+</Aside>
+
+Worked example in the **live plant delivery** epic: *as a Virtual Verde client, I would like to acquire a bonsai tree so that I can have a beautiful plant and meditate while trimming its branches.* (The instructor got the idea from a nephew who learned that bonsai pruning is a meditative practice in Japan.) Its acceptance criteria say users can:
+
+<ul>
+<li>Browse three different types of bonsai tree to buy.</li>
+<li>Compare the three to see which is easiest and hardest to grow at home, perhaps via beginner, intermediate and advanced labels.</li>
+<li>Buy specific bonsai care packages, such as fertiliser and trimming shears.</li>
+<li>Access a bonsai booklet online, with a care booklet also packed with the tree.</li>
+<li>Find a bonsai troubleshooting page in the Virtual Verde FAQ.</li>
+</ul>
+
+Items high on the list naturally carry more detail and fewer grey areas. Leaving low-priority items vague is deliberate: it saves time on work that may get deprioritised later.
+
+### Epics
+
+Other Virtual Verde epics named: **live plant delivery**, **office plant advice service**, **vendor management** and **client data management**. The reading credits **Mike Cohn** with the Scrum meaning of epic, which he describes as a very large user story that cannot be delivered in one iteration and may need splitting. Epics track large, loosely defined ideas; stories are the much smaller unit of work drawn straight from the end user.
+
+The reading's library example shows the grouping. A library wants a website so readers can check reviews before borrowing:
+
+<figure class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Epic: website creation</div>
+      <ul>
+        <li>As an avid reader, I want to read reviews before I check out a book from my local branch so that I know the book interests me</li>
+        <li>Customers want to add books to their cart</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Epic: organisation of the physical space</div>
+      <ul>
+        <li>Customers want to walk into the library and find the non-fiction section easily</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Instead of one flat list of stories, the backlog is organised into sections, one per epic.</figcaption>
+</figure>
+
+### Activity: create a Product Backlog
+
+The first activity had me write the missing half of the Virtual Verde backlog. The template is one sheet with four columns: **Epic**, **User Story Title**, **Story** and **Acceptance Criteria** (two numbered criteria per story). The **Bonsai Trees** epic arrived filled in as a model, while six rows under a second epic were blank apart from the numbered criteria slots. The exemplar fills that second epic as **Plant Care Initiatives**:
+
+| User story title | Story | Acceptance criteria |
+| --- | --- | --- |
+| Low-maintenance options | As a potential customer, I want to find the easiest plants to care for so that I can buy low-maintenance options | Sort plants by beginner, intermediate and advanced; search for plants with similar care needs |
+| Watering reminders | As a plant owner, I want to remember when to water so that I do not under- or overwater | Sign up for text or email reminders; add calendar reminder stickers to each order |
+| Return policy | As a customer, I want a hassle-free return so that I can be sure I have the right plant | Credit and return FAQ linked from the homepage; every order ships with return labels and instructions |
+
+The other three plant care stories were plant care tips, plant care tools and expert help and advice. The six bonsai stories given as the model were selection, shipping, styles, tools, techniques and history.
+
+### Building the backlog in a work management tool
+
+A reading rebuilt the same backlog in **Asana** (noting ClickUp and Monday as free alternatives). Work management tools exist to cut **work about work**, the hours lost to hunting for information, switching apps and sitting in status meetings.
+
+<Steps>
+
+1. Create a project from a template. Asana's **Sprint Planning** template suits a Product Backlog and opens in **Board View**, which works like a Kanban board with sections as column headers.
+
+2. Add each **user story title** as a task in the **Backlog** column, with the full story in the task description.
+
+3. Add each **acceptance criterion** as a **subtask** of its story.
+
+4. Add a **custom field** for the epic (custom fields behave like tags or spreadsheet columns), then assign each story to its epic from the task pane or the Epic column in List view.
+
+</Steps>
+
+---
+
+## Backlog refinement
+
+The Product Owner owns the data in the backlog, but keeping a living document current is a team job.
+
+<Aside type="note">
+**Backlog refinement** - keeping the backlog described, estimated and prioritised so the Scrum Team can work effectively. After the Product Owner adds items with a description and value, the Product Owner and some or all of the team review the backlog together.
+</Aside>
+
+The review checks four things:
+
+<ul>
+<li>It holds the right items: nothing new is missing and nothing needs removing.</li>
+<li>The Product Owner has prioritised the items, which is also called setting the <strong>order field</strong>.</li>
+<li>Items at the top are ready for delivery, with clear acceptance criteria.</li>
+<li>Items carry <strong>estimates</strong>, meaning an informed assessment of how much work each one is.</li>
+</ul>
+
+When and how often to refine is the team's call, just as the estimation method is. Some teams hold dedicated refinement meetings, some refine continuously through conversations or email, and some fold it into a scheduled event such as Sprint Planning.
+
+---
+
+## Relative effort estimation
+
+Estimates tell planning how much effort each item or story will take, and so how much work lies ahead. The difficulty is human: people tend to underestimate how long things take, and on big projects that error multiplies until it becomes a root cause of projects running late and over budget.
+
+| | **Absolute estimation** | **Relative estimation** |
+| --- | --- | --- |
+| **Also called** | Time and effort estimation, in traditional project management | The Scrum approach |
+| **Question asked** | Exactly how long will this take? | How big is this compared with another item? |
+| **Units** | Hours, days, weeks | A relative unit or size, such as a T-shirt size or points |
+
+### T-shirt sizes
+
+Sizes run **XS, S, M, L, XL, XXL**. The benefits the reading gives: quick, well understood by Agile practitioners, and a good first step for teams new to relative estimation.
+
+<Steps>
+
+1. Agree the scale and metrics to use.
+
+2. Pick at least one **anchor** item and size it. The video's version: choose an item that feels medium and call it a medium. Some teams choose two anchors, one at the top and one at the bottom of the range.
+
+3. Compare each remaining item against the anchor (if that one is a medium, what is this one?) and agree a size, until every item is done.
+
+</Steps>
+
+Virtual Verde tried it on four items: adding bonsai trees to the catalogue, creating a mobile app, launching a new logo, and creating the new account page. The team chose **launching a new logo** as its medium and sized the other three against it.
+
+### Story points
+
+Story points are the instructor's favourite method. The idea is the same, an anchor item and comparisons against it, but the unit is points taken from the **Fibonacci sequence**, where each number is the sum of the two before it: 0, 1, 1, 2, 3, 5, 8, 13, 21 and on. For story points, the zero and the first 1 are dropped.
+
+<div class="sc-chips">
+  <span class="sc-chip green">1</span>
+  <span class="sc-chip green">2</span>
+  <span class="sc-chip green">3</span>
+  <span class="sc-chip violet">5</span>
+  <span class="sc-chip violet">8</span>
+  <span class="sc-chip amber">13</span>
+  <span class="sc-chip amber">21</span>
+  <span class="sc-chip slate">34 and beyond</span>
+</div>
+
+The spacing is the point. The numbers start close together and spread out as they climb, which mirrors how uncertainty and risk grow with size. One number therefore carries both **effort and risk**. Arguing 21 against 25 is pointless, but choosing between 21 and 34 is a genuine conversation. Reading steps: agree the permitted values (some teams cap at 21, some jump from 21 straight to 100, a team decision), set one or two anchors, then estimate the rest together and record each in the backlog system.
+
+### The fruit exercise
+
+The instructor's Google classes practise with fruit: how much effort does it take to eat each one completely? Factors include seeds, whether you need a napkin, whether it fits in one bite, peeling, and tools.
+
+| Fruit | Points | Reasoning |
+| --- | --- | --- |
+| Mango | **5** | The anchor |
+| Strawberry | **1** | Stems are no bother, low effort |
+| Cherry | **2** | Stems and seeds |
+| Orange | **3** | Peeling is easier than cutting a mango |
+| Banana | **3** | Needs peeling, much like an orange |
+| Pineapple | **13** | Huge, cannot be finished in one sitting |
+
+The real payoff of estimation exercises is not the numbers. They uncover good ideas on how to get things done (people cut pineapples in surprisingly different ways) and they surface the riskiest parts of the project.
+
+### Why points can beat sizes
+
+Back on Virtual Verde, points showed that **a new user page** and **bonsai trees in the catalogue** were not the same size, which T-shirt sizes might have implied. The new user page scored **8** because it is a simple software update; bonsai scored **13** because it also means finding vendors and building a supply chain.
+
+| | **T-shirt sizes** | **Story points** |
+| --- | --- | --- |
+| **Scale** | XS to XXL | Fibonacci numbers, starting 1, 2, 3, 5, 8 |
+| **Best for** | Less experienced teams, a first taste of relative estimation | Experienced teams |
+| **Precision** | Rougher | More accurate and specific, because the gaps widen with size |
+| **Process** | Agree scale, anchor, sort the rest | Agree permitted values, anchor, sort the rest and record |
+
+### Estimation best practices
+
+<ul>
+<li>Ask the Product Owner questions until there is enough information to estimate.</li>
+<li>Discuss estimates that diverge, so everyone understands how the item could be implemented.</li>
+<li>Agree the final size or points value and capture it in the system.</li>
+<li>If an item lands in the large range, discuss splitting it before moving on.</li>
+</ul>
+
+---
+
+## Agile estimation techniques
+
+A reading lists six techniques. The steps underneath are broadly the same whichever you use; the choice is team preference.
+
+| Technique | Best for | How it works |
+| --- | --- | --- |
+| **Planning Poker** | A small number of items, under 10; used in Sprint Planning | Consensus-based. Everyone holds Fibonacci cards, places one face down per item, all reveal together, then discuss, especially far-apart estimates |
+| **Dot Voting** | Sprints with few Sprint Backlog items | Items on paper around a table or on a wall; members walk round placing colour-coded dot stickers (for example S green, M blue, L orange, XL red) |
+| **Bucket System** | Large backlogs, a couple of hundred items in about an hour | A line of numbered note cards acts as the buckets. Each person draws a random item and places it without discussion, passes items they do not understand, and challenges misplacements until consensus. No more than 120 seconds per item |
+| **Large/Uncertain/Small** | Backlogs with many similar or comparable items | Like the Bucket System with only three categories. Place the obvious stories first, then discuss the complex ones |
+| **Ordering Method** | A small team with many backlog items | Items placed at random on a low to high scale; in turns, each member moves one item up or down one spot or passes, until nobody wants to move anything |
+| **Affinity Mapping** | Backlogs with more than 20 items | Sticky notes on a wall: place one, compare the next and group it or start a new group. End with roughly 3 to 10 groups, name each by theme, then prioritise the groups |
+
+Planning Poker decks sometimes add two extra cards: a **question mark** (I do not understand or lack information) and a **coffee cup** (I need a break). Hiding estimates until the reveal is what removes bias, because hearing a number aloud makes people react to the number or to the person who said it.
+
+### What effective estimation shares
+
+<div class="sc-quad">
+<div class="q amber">
+<div class="qh">Avoids false precision</div>
+<ul>
+<li>Rough relative estimates give more accuracy across the project</li>
+<li>No long debates over seven versus ten days</li>
+</ul>
+</div>
+<div class="q violet">
+<div class="qh">Avoids anchoring bias</div>
+<ul>
+<li>Private first estimates let people form independent views</li>
+<li>Stops people echoing others to avoid embarrassment</li>
+</ul>
+</div>
+<div class="q green">
+<div class="qh">Promotes inclusivity</div>
+<ul>
+<li>Group techniques produce better estimates</li>
+<li>They also build trust and cohesion</li>
+</ul>
+</div>
+<div class="q slate">
+<div class="qh">Leads to effort discovery</div>
+<ul>
+<li>Estimating together surfaces ways of completing items</li>
+<li>Those strategies might otherwise stay hidden</li>
+</ul>
+</div>
+</div>
+
+### Activity: add estimation
+
+The second activity extended the same backlog. The template adds two columns, **Value** and **Estimate**, to the four from the first activity. Value was already set for every story as one to three dollar signs, and the Bonsai Trees stories already carried point estimates as the model; my job was to put story points on the six Plant Care Initiatives stories. The exemplar's answers:
+
+| User story title | Value | Estimate (points) |
+| --- | --- | --- |
+| Low-maintenance options | `$$$` | 8 |
+| Plant care tips | `$$$` | 8 |
+| Plant care tools | `$$` | 13 |
+| Watering reminders | `$$` | 5 |
+| Expert help and advice | `$` | 8 |
+| Return policy | `$$` | 5 |
+
+For comparison, the given bonsai estimates ranged from 5 (shipping) to 21 (techniques, with three online courses as criteria).
+
+### Adding estimates in a work management tool
+
+The matching Asana reading used a different route in: instead of a template, **Import spreadsheet** uploads a CSV (useful for moving a backlog out of Excel or Google Sheets), then preview and create the project, here called Virtual Verde Backlog. The import generated custom fields for **Epic**, **Value** and **Estimate (Story Points)**, and estimates go straight into the Estimate column. Sort by any field (the example sorts by Value), use **Save layout as default**, then switch to Board view for a Kanban-style backlog. From there, stories can get an assignee and due date, and weekly status updates can report progress, accomplishments and blockers.
+
+---
+
+## The Sprint
+
+<Aside type="note">
+**Sprint** - also called an iteration, the event that sets the team's whole rhythm. It gives faster feedback, encourages collaboration and sharpens focus. The work in it is planned from the team's historical capacity and made ready for Sprint Planning.
+</Aside>
+
+Think of each Sprint as a **mini project** with planning, execution, delivery, closing and a retrospective in one small package. It matters so much that the other four events all revolve around it.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Sprint Planning<span class="sub">confirm capacity, choose the Sprint Backlog, set the Sprint Goal</span></div>
+    <div class="sc-node violet">Daily Scrum<span class="sub">15 minutes each day to synchronise on the Sprint Goal</span></div>
+    <div class="sc-node green">Sprint Review<span class="sub">demonstrate and inspect the work, unveil the Increment</span></div>
+    <div class="sc-node slate">Sprint Retrospective<span class="sub">improve people, processes and tools for the next Sprint</span></div>
+  </div>
+  <figcaption>All four events sit inside the fifth, the Sprint itself, and the next Sprint begins the moment this one ends.</figcaption>
+</figure>
+
+### Timeboxes
+
+Every event has a recommended duration, its timebox. Timeboxes create urgency that drives prioritisation, a window of focus that lifts productivity, and a predictable rhythm for the work. A **Sprint lasts one to four weeks**, and three considerations set the length:
+
+| Consideration | Points towards shorter | Points towards longer |
+| --- | --- | --- |
+| **Expected frequency of change** | New requests arriving weekly: a one-week Sprint lets you adapt more often | Stable needs |
+| **Focus time for developers** | Small items | If most items need at least a week to produce something valuable, use at least two weeks to avoid crunch mode |
+| **Delivery overhead** | Light reviews | Large multi-stakeholder reviews or several days of testing and QA: three or four weeks |
+
+There is no one-size-fits-all, and the length can change after a few Sprints. The instructor's own team runs one-week Sprints because of heavy weekly change, yet much of its work takes longer than a week, so it is weighing a move to two weeks.
+
+### What the Scrum Guide says about the Sprint
+
+The course has you read the 2020 Scrum Guide's Sprint section directly. The main points:
+
+<ul>
+<li>Sprints are the heartbeat of Scrum, where ideas become value.</li>
+<li>They are fixed-length, one month or less, for consistency. Each new Sprint starts straight after the last one ends.</li>
+<li>All the work towards the <strong>Product Goal</strong>, including the other four events, happens inside Sprints.</li>
+<li>They bring predictability by forcing inspection and adaptation towards the Product Goal at least once a calendar month.</li>
+<li>Too long a horizon risks the Sprint Goal going stale, complexity rising and risk growing. Shorter Sprints give more learning cycles and cap cost and effort risk in a smaller window.</li>
+<li>A Sprint can be <strong>cancelled</strong> if its Sprint Goal becomes obsolete, and only the <strong>Product Owner</strong> has that authority.</li>
+</ul>
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">During the Sprint, never</div>
+    <ul>
+      <li>Make changes that would put the Sprint Goal at risk</li>
+      <li>Let quality drop</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">During the Sprint, allowed</div>
+    <ul>
+      <li>Refine the Product Backlog as needed</li>
+      <li>Clarify and renegotiate scope with the Product Owner as more is learned</li>
+    </ul>
+  </div>
+</div>
+
+The Guide also names **burn-downs, burn-ups and cumulative flows** as forecasting practices, while stressing they do not replace empiricism: in complex work the future is unknown, and only what has already happened can inform decisions. The course teaches burndown charts later in this module; burn-ups and cumulative flows are only named, not explained.
+
+---
+
+## Sprint Planning
+
+Sprint Planning is the first event inside the Sprint and sets the team up for the next one to four weeks. The **entire Scrum Team** attends. It confirms **capacity** (time and people available), chooses the backlog items to be done, and that selection becomes the **Sprint Backlog** and, from it, the **Sprint Goal**.
+
+<Aside type="caution">
+The course gives timeboxes for the Sprint, the Daily Scrum, the Sprint Review and the Sprint Retrospective, but it does **not** give one for Sprint Planning.
+</Aside>
+
+The Scrum Master facilitates and steers the conversation through these questions:
+
+<ul>
+<li>Who is available this Sprint? Any vacations or conflicts?</li>
+<li>What has our average <strong>velocity</strong> been, meaning how many points or items we have completed per Sprint in the past?</li>
+<li>What can and should the team accomplish this Sprint?</li>
+<li>What is the ultimate Sprint Goal?</li>
+<li>How will the work get done?</li>
+<li>Who is responsible for which tasks during the Sprint?</li>
+</ul>
+
+### Definition of Done
+
+Module 2 defined the Definition of Done as the agreed set of items that must be complete before a story or backlog item counts as finished. This module gives examples of what might be on the list, stressing that it is not comprehensive and that the team should decide and keep improving it:
+
+<ul>
+<li>The code or solution is reviewed by an independent peer group.</li>
+<li>The product or unit passes all testing requirements, possibly including security or performance testing.</li>
+<li>Documentation is complete.</li>
+<li>Every acceptance criterion the Product Owner specified is met.</li>
+<li>The Product Owner accepts the story.</li>
+</ul>
+
+### Sprint Backlog and Sprint Goal
+
+<Aside type="note">
+**Sprint Backlog** - the subset of Product Backlog items identified for completion in the upcoming Sprint. It is the key deliverable of Sprint Planning.
+<br />**Sprint Goal** - the overarching objective for the Sprint, drawn from a big-picture view of the Sprint Backlog. It gives the team the *why* of the Sprint.
+</Aside>
+
+Virtual Verde runs four-week Sprints named by month (May Sprint, June Sprint and so on) against a Product Backlog of 50 items. For May, capacity and effort sizes say the team can take the top five:
+
+<ul>
+<li>Users can purchase bonsai trees.</li>
+<li>Users can access an online discussion forum about home office decor.</li>
+<li>The vendor management team can add audit results for vendors.</li>
+<li>Users can use a coupon to buy home office accessories.</li>
+<li>Customer support can connect products to support tickets.</li>
+</ul>
+
+The Sprint Goal: **provide a comprehensive experience for a user who wants to install a bonsai tree in their home office.** Every item ties back to it, such as a bonsai coupon and vendors audited for bonsai quality. The benefit of a shared goal is that the team works towards one broader objective instead of splitting into separate workstreams.
+
+### Activity: create a Sprint Plan and Sprint Backlog
+
+The third activity took the estimated backlog and planned two Sprints from it. The template has two sheets. The **Product Backlog** sheet adds a **Sprint** column to the Epic, Title, Story, Criteria, Value and Estimate columns. The **Sprint Backlog** sheet holds the items for the current Sprint plus a summary block per Sprint: **Name**, **Start date**, **End date**, **Point Capacity**, **Points Assigned** and **Value Attributed**. The template dates are 1 to 19 March 2021 for the current Sprint and 22 March to 9 April for the next, three weeks each, with capacity blank.
+
+The exemplar sets capacity at **60 points per Sprint** and sorts the backlog by value before assigning:
+
+| | **Current Sprint** | **Next Sprint** |
+| --- | --- | --- |
+| **Stories** | All six Plant Care Initiatives stories, plus Bonsai Styles and Bonsai Shipping | Bonsai Selection, Techniques, Tools and History |
+| **Points assigned** | 8 + 8 + 13 + 5 + 5 + 8 + 8 + 5 = **60** | 13 + 21 + 13 + 13 = **60** |
+| **Value attributed** | 16 dollar signs | 10 dollar signs |
+
+So capacity, not value alone, decides the cut: some high-value bonsai stories wait because they are large, while smaller lower-value stories fill the current Sprint exactly to capacity.
+
+### Creating Sprints in a work management tool
+
+The Asana reading recreated this plan by adding a custom **Sprint** field from the Customize menu, with options for **Current Sprint** and **Next Sprint**. Switch to List view to see every task, assign items with the Sprint dropdowns, then add due dates for the current Sprint's items. It also points to further features without teaching them: rules to automate repetitive steps, Timeline view, and custom templates for launching new Sprint-planning projects.
+
+---
+
+## Preparing a retrospective with gen AI
+
+This module includes a short video on using gen AI to prepare for a retrospective, sitting between the Sprint Planning material and the Daily Scrum. Retrospectives give honest, timely feedback that shapes the next Sprint and future work, and a tool such as **Gemini** can help draft the questions.
+
+<Steps>
+
+1. Give the tool clear, specific project details. The example prompt (spoken through Gemini's **microphone** feature, a tip for adding information or iterating by voice) describes a PM preparing a one-hour retrospective on a finished community fundraising event for a local school with area businesses and nonprofits, and asks for a question bank that sparks participation and uncovers what went well and what to improve.
+
+2. Narrow the long list down by **relevance, impact, engagement and time allotted**, because a big group and limited time mean you cannot use everything.
+
+3. Add the cultural and personal touches yourself: open by thanking the team, and adapt the icebreaker to your team's culture.
+
+4. Briefly explain the purpose of the meeting at the start, since many participants do not actually know what a retrospective is for.
+
+</Steps>
+
+The point is to let the tool handle time-consuming logistics so you can spend your effort on the insights only you can bring.
+
+---
+
+## The Daily Scrum and the Sprint Review
+
+Both are face-to-face events, which ties back to the Agile principle that face-to-face conversation is the most efficient and effective way to convey information to and within a development team.
+
+### The Daily Scrum
+
+Also called the **stand-up**, it is where the team synchronises and prioritises the day. It runs **15 minutes, at the same time and place every day**, and each team member answers three questions:
+
+<Steps>
+
+1. What did I do yesterday that helped the Development Team meet the Sprint Goal?
+
+2. What will I do today to help the Development Team meet the Sprint Goal?
+
+3. Do I see any impediment stopping me or the team from meeting our goals?
+
+</Steps>
+
+It lets the Scrum Master unblock people with little delay, and it keeps attention on the Sprint Backlog and Sprint Goal. The Scrum Guide says it happens every single day, but the instructor has run successful teams that met less often: their one-week Sprint team holds stand-ups on two days a week. Try it and see what suits the team.
+
+### Sarah's view from Google
+
+Sarah, a program manager on Google's Engineering Education team, treats a daily or weekly stand-up as an underrated way to centralise and organise a cross-functional project.
+
+<ul>
+<li><strong>Include everyone.</strong> It is tempting to think the data analyst has no need to hear what the marketer is doing, but a quick round of what I just finished and what I am working on builds visibility, transparency and camaraderie that documentation alone does not.</li>
+<li><strong>Keep it short.</strong> It is not a retrospective or a town hall. She books 15 to 20 minutes and is happy when it runs shorter. Blockers get a separate follow-up with that person or workstream owner.</li>
+<li><strong>Agree the time.</strong> With teams across time zones and locations, send a quick gut check or survey on candidate slots (11:00 am ET? 4:00 pm ET?), reach consensus, then stick to it.</li>
+<li><strong>Do not make daily attendance mandatory</strong> on a tight-deadline project, because different parts of the project move at different speeds.</li>
+<li><strong>Protect the timebox kindly.</strong> Write an agenda with minutes allocated per update. Never cut someone off mid-sentence; at a natural break, suggest parking the topic for later in the meeting or the next one.</li>
+</ul>
+
+### The Sprint Review
+
+Held at the close of the Sprint, the Review is a meeting of the **entire Scrum Team** where the product is demonstrated to establish what is finished and what is not. The Development Team and Product Owner play the heaviest part: exploring which Product Backlog items should count as done, and demonstrating and inspecting the product. It is **timeboxed to no more than four hours**.
+
+It is central to the pillars of **inspection and adaptation** and shows the values of **openness, courage and respect**, and it should be fun and uplifting, the moment the team impresses each other with what it achieved in the last one to four weeks. Some of the best product ideas come out of it.
+
+The Virtual Verde example: the team is launching a web page of home office plants, and a cross-functional marketing specialist's Sprint item was a launch email to existing **Plant Pals** corporate customers. In the August Sprint Review the email goes up on the shared screen and feedback comes on the spot: love the opening line, make the opening image bigger, make it easier to forward, shorten the text.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Feedback is immediate, adjusted in the room</span>
+  <span class="sc-chip violet">Everyone has a voice, so ownership is shared</span>
+  <span class="sc-chip green">The team learns how a teammate works, building trust</span>
+</div>
+
+### The Product Increment
+
+The Review is also where the team unveils the **Product Increment**, what the Sprint produced, which is considered **releasable**. The video links releasable to having developed a **Minimum Viable Product** with a set of implemented features or requirements. Only items that meet the Definition of Done are part of the Increment; anything not done goes **back to the Product Backlog**.
+
+---
+
+## Releasable Increment versus Minimum Viable Product
+
+The Scrum Guide describes an Increment as a concrete stepping stone towards the Product Goal. Each one adds to all previous Increments and is thoroughly verified so they all work together, and it must be usable to deliver value.
+
+### Potentially releasable Increment
+
+A **potentially releasable** (or shippable) Product Increment is the desired result of every Sprint: a completed, tested, ready-to-ship addition to the product. *Potentially* matters, because it does not mean the Increment actually ships.
+
+The reading's example is a pet-adoption app with three backlog features: presenting information on available pets, rating potential matches based on adopters, and letting users contact the adoption center. None is worth shipping alone, but finishing one feature completely in a Sprint (working, tested, whole) beats having fragments of all three with none complete. It also brings early feedback, protects quality and keeps room to respond to change. The reading's advice: always make a potentially releasable Increment your Sprint Goal.
+
+The reading also restates the **Definition of Done** as a formal description of the Increment's state once it meets the required quality measures. In software, done often means completed, reviewed and passed testing; outside software it might be a document with legal review and approval, or a formal closeout report. What matters is an explicit, shared understanding.
+
+### Who decides it is releasable
+
+The **Product Owner** makes the final call, making sure there is value before release. Questions they weigh:
+
+<ul>
+<li>Is the Increment complete?</li>
+<li>Will it bring value and meet quality measures? Has it been well tested?</li>
+<li>Can the end user use it, and can their direct or indirect feedback improve later versions?</li>
+</ul>
+
+### MVP compared
+
+<Aside type="note">
+**Minimum Viable Product (MVP)** - a version of a product with just enough features to satisfy early customers. **Eric Ries** coined the term, describing it as the version that lets a team collect the most validated learning about customers for the least effort. Examples: a website landing page, or a buy now button that only records that someone clicked it.
+</Aside>
+
+| | **Potentially releasable Increment** | **MVP** |
+| --- | --- | --- |
+| **Time scale** | Every Sprint | A feature package that may take several Sprints |
+| **Purpose** | A complete, tested, usable step towards the Product Goal | Get a viable release to market and collect user feedback fast |
+| **Who drives it** | Scrum Master and Product Owner make sure every Sprint produces one | Product Owner decides what makes a valuable, viable release |
+| **Pet app example** | One of the three features, finished end to end | All three features, but for **cats only** |
+
+Reducing the MVP's scope to cats lets the Product Owner release and learn from cat adopters, and that learning helps every pet type in later iterations. So can a releasable Increment be an MVP? Yes. Must it be? No.
+
+---
+
+## The Sprint Retrospective
+
+The last of the five events: a meeting of **up to three hours** in which the Scrum Team steps back and identifies improvements to how it works together. It covers what is and is not working in the **people, processes and tools**, which improvements are worth trying next Sprint, and whether last Sprint's improvements helped, and why. Because it happens at the end of every Sprint, retrospectives come round far more often in Scrum than in traditional project management.
+
+### Keys to a successful retrospective
+
+<Steps>
+
+1. **Stay blameless.** Show the value of respect. If anyone fears consequences for their feedback, the result suffers, so acknowledge any awkwardness and offer anonymous or private channels if needed.
+
+2. **Drive participation.** Retros only work when people feel their input counts. If nobody volunteers, prompt with: what is one thing we could try next Sprint, what slowed us down, what happened that we did not expect? The instructor's team recently found dependencies on stakeholders outside the Scrum Team were slowing it, and responded with new communication channels to raise its priorities with them.
+
+3. **Balance negative with positive.** Also ask where success showed up, so the team feels successful and can repeat it.
+
+4. **Act on it.** Teams stop participating if feedback never changes anything. Pursue improvements, or turn what worked best into team habits and norms.
+
+</Steps>
+
+### Pitfalls and best practices
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Pitfalls</div>
+    <ul>
+      <li><b>Too many gimmicks</b> - games and exercises do not suit every team; use them occasionally or when the team asks for something new</li>
+      <li><b>Only the negative</b> - also highlight where expectations were beaten, so successes get repeated</li>
+      <li><b>Changing process after every retro</b> - give a new process a few Sprints before judging it; note ideas, but wait before implementing</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Best practices</div>
+    <ul>
+      <li><b>Open, probing questions</b> - how could we have better achieved the Sprint Goal, not did we achieve it</li>
+      <li><b>Diverse participation styles</b> - start with silent journaling, or pairs, before the big group discussion</li>
+      <li><b>Cover every aspect of the Sprint</b> (list below)</li>
+      <li><b>Reflect on Scrum theory and values</b> - how could we be more transparent, how did we live our values this Sprint</li>
+    </ul>
+  </div>
+</div>
+
+The aspects to cover: team productivity and efficiency; scope and understanding of the Definition of Done; communication and interactions inside the team; stakeholder communication; and progress towards longer-range release plans.
+
+### Activity: the Sprint Retrospective
+
+The fourth activity came as two pieces: a slide deck acting as the retrospective board, and an email template for the Scrum Master's follow-up.
+
+**The retro board.** One slide per user story from the Virtual Verde current Sprint, each showing the story, its acceptance criteria, a **Done? Yes or No** verdict, a **+** column for what went well and a **Δ** (delta) column for what to change. Representative slides:
+
+| Story | Done? | + went well | Δ change |
+| --- | --- | --- | --- |
+| Low-maintenance options | Yes | Sorting and search added; tiers priced so beginner plants still net a margin | Disagreement over which plants are advanced; user-test clearer tier wording |
+| Plant care tools | **No**, supply chain delay | Bundling option coded (not live); single tools sold meanwhile | Scope not truly understood; vendor communication issues delayed kit items |
+| Watering reminders | Yes | Smooth user testing; stickers more popular than expected | Testers preferred texts, so monitor email use; add reminders to the app backlog |
+| Expert help and advice | **No**, more staff needed | Live chat modelled on existing corporate help, tested well | Broader scope than expected; may need to hire and train support staff |
+
+**The recap email.** The template's sections are **To** (Scrum Team), **From** (Scrum Master), **Subject line**, then **Intro**, **Recap**, **Key takeaways**, **Next steps** and **Closing**. The exemplar, subject *Sprint Retro: Some thoughts and key takeaways*, thanks the team, recaps six of eight items finished with good user feedback, then lists takeaways drawn from the whiteboard notes: new website features working and coding issues fixed fast; existing procedures reused rather than rebuilt; user testing built into tasks; care leaflet design smooth but content and design need better integration; a plan needed for vendor communication on shipping schedules; and scope misunderstandings, so the backlog estimates may need raising. It closes by promising follow-up on putting these into practice next Sprint.
+
+---
+
+## Velocity and burndown charts
+
+These two concepts let a Scrum Team manage its work through a Sprint and through the whole Product Backlog.
+
+<Aside type="note">
+**Burndown chart** - measures time against work done and work remaining, keeping the team aware of how it is doing against its goals. In Scrum it tracks the completion of user stories during the Sprint, and the Scrum Master may review it as often as daily.
+<br />**Velocity** - the average number of points a team burns down in a single Sprint.
+</Aside>
+
+If the team estimates in T-shirt sizes, map each size to a number first and use those for burndown and velocity. The example mapping: XS 1, S 2, M 5, L 8, and so on.
+
+### Reading a burndown: the July Sprint
+
+Virtual Verde's four-week July Sprint has 20 business days and a Sprint Backlog of **200 points**, so an even burn would be 10 points a day.
+
+| Day | Expected (even burn) | Actually burned | Reading |
+| --- | --- | --- | --- |
+| 5 | 50 | 22 | Only 25 percent of the Sprint gone, maybe still on track |
+| 10 | 100 | 45 | Should be about halfway: running late against the Sprint Goal |
+| 15 | 150 | 140 | Back on track |
+| 20 | 200 | 188 | Good result; examine what happened at the retrospective |
+
+<Aside type="caution">
+Day 10 is not the moment to panic or pressure the team. By then the Scrum Master should already be talking with the team about how to help and unblock them.
+</Aside>
+
+### Using velocity
+
+In Sprint Planning, the team uses its **average velocity over at least three Sprints** to judge how many items it can safely take on. Two things to hold on to:
+
+<ul>
+<li><strong>There is no good or bad velocity.</strong> It is simply what the team has historically achieved in a set timebox.</li>
+<li><strong>Velocities cannot be compared between teams</strong>, because each team calibrates its own points. The instructor's current three-person team burns 70 points in a one-week Sprint; an earlier five-person team managed 120 in two weeks. Neither was better, just different.</li>
+</ul>
+
+It can take several Sprints to reach a **stable velocity**, which is normal, and it settles as the team gets used to estimating and working together.
+
+### The forecasting superpower
+
+A stable velocity plus a refined, prioritised and estimated backlog lets you tell stakeholders and sponsors two things: roughly how long the whole backlog will take, and how much of it will be done by a given date.
+
+<Steps>
+
+1. Virtual Verde has averaged **200 points** per monthly Sprint over the last three months and has **1,500 points** left in the backlog.
+
+2. How long for everything? 1,500 divided by 200 gives about **seven or eight Sprints**.
+
+3. What will be ready by 1 January if it is now July? That is five months, so about 1,000 points: go down the backlog from the top and draw a line where the running total hits 1,000.
+
+4. To pull dates in, use the same numbers to decide whether to add people and raise velocity, rearrange priorities, or make other project decisions.
+
+</Steps>
+
+### Interpreting velocity: dos and don'ts
+
+A brand-new team has no history, so its first Sprint is a rough guess at how much it can finish; after a few Sprints the average becomes meaningful and drives Sprint Backlog selection, which is easy when backlog refinement has kept the backlog prioritised and estimated.
+
+| | Guidance | Why |
+| --- | --- | --- |
+| **Do** | Be careful sharing velocity with external stakeholders | They may lack the context to read it. Add supporting material, such as velocity over a date range with a trend visual, where dips and spikes can prompt improvements |
+| **Don't** | Use velocity as a performance metric | Pressure from executives, sponsors or stakeholders encourages tactics like intimidation, and fear of looking slow damages team culture |
+| **Don't** | Use velocity to compare teams | Points are subjective (one team's 5 is another's 3), so it is neither accurate nor fair, and velocity does not measure value anyway |
+| **Do** | Proceed with caution when projecting delivery dates | Stakeholders can use velocity as a pressure point for launch dates, missed dates breed false expectations and harsh competition, teams need several Sprints to learn their capacity, and far-off dates cannot absorb change. Never treat estimated dates as commitments |
+
+---
+
+## Kanban boards in a Scrum context
+
+The Kanban board, which the course touched on earlier, is another visual tool for progressing through a Sprint. Some teams call it a **Scrum board**. There are minor differences, but they are the same basic tool: the Scrum Guide does not define a Scrum board, and some market tools simply add Scrum-specific features to a Kanban board.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Visualisation<span class="n">see it</span></div>
+    <div class="sc-node amber soft">Everything at a glance<span class="sub">point at items, use colours and sizes, and spot where the challenges and improvement opportunities are</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">WIP limits<span class="n">limit it</span></div>
+    <div class="sc-node violet soft">Cap work in progress<span class="sub">each team sets its own limit, and the board makes breaches obvious; this supports the value of focus</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Flow of work<span class="n">move it</span></div>
+    <div class="sc-node green soft">Feel work move between phases<span class="sub">physical sticky notes or a virtual board, through to do, doing and done</span></div>
+  </div>
+</div>
+
+On WIP limits the video leans on the idea that multitasking does not really exist: in Scrum, the more work you hold at once, the less efficient you get.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">To do</div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Doing</div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Done</div>
+  </div>
+  <figcaption>Items often move during the Daily Scrum, but the team can move them at any time.</figcaption>
+</figure>
+
+Virtual Verde example: **Leo**, the plant vendor, finishes finalising contracts with the three top vendors for the initial launch. He moves the item from doing to done and checks what is next. If that was his last Sprint item, he asks teammates where he can help.
+
+---
+
+## Tools for Scrum Teams
+
+Transparency is a Scrum pillar, and tools support it by keeping everyone aware of progress and holding the Product Backlog, Sprint Backlog and other essential documents in one central place. In Scrum, the team chooses its tools together.
+
+| Tool category | Named tools | What it is used for on a Scrum Team |
+| --- | --- | --- |
+| **Backlog and Sprint management** | **Jira** (Atlassian) | Popular Agile project management tool covering all of team and backlog management: customisable, one central place for the Product Backlog, Sprint definitions, velocity, burndown charts and more |
+| | **Asana** | Sprint Planning and backlog management; plans work from daily tasks to strategic initiatives, lets everyone see who does what and when, and assigns tasks, automates workflows, tracks progress and communicates with stakeholders |
+| | **Trello** | Simple Kanban capabilities; the instructor uses it for personal projects such as planning a move and a big birthday party |
+| | Spreadsheets | Some teams build their own Agile tooling in spreadsheets |
+| **Documentation and collaboration** | **Google Docs** | Capturing key project information in long form, with documentation and collaboration in one tool |
+| **Spreadsheets** | **Google Sheets**, Microsoft Excel | Capturing backlogs, backlog item details and other project information |
+| **Presentations** | Google Slides or the Microsoft equivalent | Presenting information to the team |
+| **Communication** | Video conferencing, team and one-on-one chat, email | Faster answers so people unblock themselves before the next Daily Scrum |
+
+In traditional project management, tools such as **Microsoft Project** provide strong schedule and resource management, but a Scrum Team's most critical need is a tool to manage its backlog and Sprints. Most tools offer a free trial before you commit. The backlog and Sprint tools cannot do everything, which is why the documentation, spreadsheet, presentation and communication tools sit alongside them. Throughout the module's readings, **ClickUp** and **Monday** also appear as free alternatives to Asana.
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **Product Backlog** = the single authoritative source of work, roughly the traditional requirements set. It is living, owned by the Product Owner and always prioritised, with specific items on top and vague ones below. Fields: **description, value, estimate** (owned by the Development Team) and **order**, a stacked rank. Record unknowns as assumptions.
+- **User story** formula: as a [user role], I want [action] so that I can get [value]. Build personas. Include persona, Definition of Done, tasks and past feedback. **INVEST**: independent, negotiable, valuable, estimable, small, testable. **Acceptance criteria** are the Product Owner's done checklist. **Epics** group stories and are very large stories in Mike Cohn's sense.
+- **Backlog refinement** keeps the backlog described, estimated and prioritised; the team decides when, whether dedicated meetings, continuously, or inside Sprint Planning.
+- **Relative estimation** compares items instead of predicting hours. **T-shirt sizes** (XS to XXL) suit newer teams; **story points** use Fibonacci (1, 2, 3, 5, 8, 13, 21), combine effort and risk, and suit experienced teams. Both start with an anchor item. Fruit example: mango 5, pineapple 13.
+- **Techniques**: Planning Poker (under 10 items, hidden cards), Dot Voting, Bucket System (hundreds of items in an hour), Large/Uncertain/Small, Ordering Method, Affinity Mapping (over 20 items). Good estimation avoids false precision and anchoring bias, promotes inclusivity and leads to effort discovery.
+- **Five events**: the Sprint contains Sprint Planning, Daily Scrum, Sprint Review and Sprint Retrospective. Timeboxes create urgency, focus and rhythm.
+- **Sprint**: one to four weeks (the Guide: one month or less), chosen by change frequency, focus time and delivery overhead. No changes that endanger the Sprint Goal and no drop in quality; refinement and scope renegotiation with the Product Owner are allowed. Only the Product Owner can cancel it.
+- **Sprint Planning**: whole Scrum Team confirms capacity and velocity, produces the **Sprint Backlog** and the **Sprint Goal** (the why of the Sprint). No timebox given in the course.
+- **Daily Scrum**: 15 minutes, same time and place, three questions on yesterday, today and impediments. Sarah: include everyone, keep it short, agree the slot, use timed agendas, park topics politely.
+- **Sprint Review**: up to four hours, whole team demonstrates and inspects the work, feedback on the spot. Only done items join the **Increment**; the rest return to the backlog.
+- **Releasable Increment vs MVP**: every Sprint aims for a complete, tested, potentially releasable Increment; an MVP is the minimum feature set to satisfy early customers and learn, may take several Sprints, and is the Product Owner's call.
+- **Sprint Retrospective**: up to three hours on people, processes and tools. Blameless, participatory, balanced, acted on. Avoid gimmicks, negativity and changing process every Sprint; ask open questions and cover every aspect of the Sprint. Gen AI can draft the question bank.
+- **Burndown chart** tracks points completed against time; **velocity** is average points per Sprint over at least three Sprints. Map T-shirt sizes to numbers. No good or bad velocity, no cross-team comparison, no performance metric, careful sharing, and forecasts are not commitments.
+- **Kanban or Scrum board**: visualisation, WIP limits, flow through to do, doing, done.
+- **Tools**: Jira, Asana and Trello for backlogs and Sprints; Google Docs, Sheets and Slides for documentation, backlogs and presentations; video, chat and email for fast communication.
+</Aside>
+
+---
+
+*Next: [Applying Agile →](/learnings/online/project-management/agile-4-applying-agile/) - value-driven delivery, leading the change, and Agile beyond a single team.*

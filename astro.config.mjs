@@ -440,6 +440,8 @@ export default defineConfig({
 										items: [
 											{ label: '1 · Agile Fundamentals', translations: { de: '1 · Agile-Grundlagen' }, link: 'learnings/online/project-management/agile-1-fundamentals' },
 											{ label: '2 · Scrum 101', translations: { de: '2 · Scrum 101' }, link: 'learnings/online/project-management/agile-2-scrum-101' },
+											{ label: '3 · Implementing Scrum', translations: { de: '3 · Scrum umsetzen' }, link: 'learnings/online/project-management/agile-3-implementing-scrum' },
+											{ label: '4 · Applying Agile', translations: { de: '4 · Agile anwenden' }, link: 'learnings/online/project-management/agile-4-applying-agile' },
 										],
 									},
 									{
@@ -450,6 +452,7 @@ export default defineConfig({
 											{ label: 'Course 2 · Initiation', translations: { de: 'Kurs 2 · Initiierung' }, link: 'learnings/online/project-management/glossary-2-initiation' },
 											{ label: 'Course 3 · Planning', translations: { de: 'Kurs 3 · Planung' }, link: 'learnings/online/project-management/glossary-3-planning' },
 											{ label: 'Course 4 · Execution', translations: { de: 'Kurs 4 · Durchführung' }, link: 'learnings/online/project-management/glossary-4-execution' },
+											{ label: 'Course 5 · Agile', translations: { de: 'Kurs 5 · Agile' }, link: 'learnings/online/project-management/glossary-5-agile' },
 										],
 									},
 								],

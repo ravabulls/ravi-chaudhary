@@ -1,0 +1,817 @@
+---
+title: "Agile 3 - Scrum umsetzen"
+description: "Die alltägliche Mechanik von Scrum - das Product Backlog und seine Verfeinerung, User Stories, Epics und die INVEST-Checkliste, relative Aufwandsschätzung mit T-Shirt-Größen, Story Points und Planning Poker, die fünf Scrum Events mit ihren Timeboxes und Ergebnissen, releasefähiges Increment gegenüber MVP, Fallstricke der Retrospektive, Velocity und Burndown Charts, Kanban Boards und die Werkzeuge, die all das zusammenhalten."
+sidebar:
+  label: "C5·3 - Scrum umsetzen"
+  order: 27
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Kurs 5: Agiles Projektmanagement*
+
+---
+
+Modul 2 hat Scrum von der Theorie her aufgebaut: Empirie und die drei Säulen, die fünf Werte und die drei Rollen Product Owner, Scrum Master und Development Team. Product Backlog, Sprint Backlog und Increment wurden dort nebenbei genannt, und vor den Scrum Events hat das Modul bewusst haltgemacht. Dieses Modul setzt genau dort an und macht aus dem Framework eine funktionierende Routine.
+
+Der Kurs sagt offen, dass er hier über den offiziellen Scrum Guide hinausgeht und die verbreiteten Werkzeuge, Methoden, Tipps und Tricks ergänzt, die echte Scrum Teams obendrauf nutzen. Die Reihenfolge ist praktisch. Zuerst kommt das **Product Backlog**, erfasst als **User Stories**, die zu **Epics** gruppiert sind. Dann die **Schätzung**, die der Kurs einen der kniffligsten Teile von Scrum nennt, gelöst mit relativer Aufwandsschätzung in **T-Shirt-Größen** oder **Story Points**. Dann die **fünf Scrum Events**, gefolgt davon, wie ein Team sich selbst mit **Velocity**, **Burndown Charts** und **Kanban Boards** verfolgt, und von der Software, die all das zusammenhält.
+
+Das laufende Szenario ist weiterhin **Virtual Verde** von Office Green, der Service, der Pflanzen ins Homeoffice liefert. Die vier praktischen Aktivitäten bauen alle Schritt für Schritt ein einziges Virtual-Verde-Backlog auf, vom Schreiben der Stories bis zur Planung der Sprints und zur Auswertung der Retrospektive.
+
+<Aside type="note">
+**Wo das hingehört:** Diese Notizen behandeln die Artifacts und Events im Betrieb. Die Rollen werden nicht noch einmal erklärt - wenn diese Seite sagt, dass der Product Owner etwas verantwortet oder der Scrum Master etwas moderiert, gelten die Rollendefinitionen aus Modul 2. Aktivitäten werden direkt in dem Abschnitt beschrieben, in dem sie vorkommen, und nie als Downloads angeboten.
+</Aside>
+
+---
+
+## Das Product Backlog
+
+Das Product Backlog wurde zuvor als **einzige maßgebliche Quelle** dafür definiert, woran ein Team arbeitet: jede Funktion, jede Anforderung und jede Aktivität, die an die Deliverables geknüpft ist, mit denen das Projektziel erreicht wird. Das nächstliegende traditionelle Gegenstück ist die Menge der **Projektanforderungen**. Es ist das zentrale Artifact von Scrum, der Ort, an dem jede mögliche Idee, jedes Deliverable, jede Funktion und jede Aufgabe festgehalten wird, und es dient als Leitfaden und Roadmap des Produkts.
+
+### Drei Kernmerkmale
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Lebendig - Einträge können jederzeit hinzukommen</span>
+  <span class="sc-chip violet">Verantwortet und angepasst vom Product Owner</span>
+  <span class="sc-chip green">Immer priorisiert</span>
+</div>
+
+Weil es lebendig ist, entwickelt sich das Backlog über den gesamten Lebenszyklus weiter und sagt dem Team fortlaufend, was als Nächstes dran ist. Weil es immer priorisiert ist, landen neue Informationen oder Funktionen an ihrer Stelle in der Rangfolge der Wichtigkeit. Einträge oben sind konkret und gut definiert, die vageren stehen unten.
+
+### Die vier Felder, die sich zu erfassen lohnen
+
+| Feld | Was es enthält | Wer es verantwortet |
+| --- | --- | --- |
+| **Beschreibung** | Eine klare Darstellung des Eintrags mit genug Details (eine Handlung, ein Ort, die Perspektive der Kundschaft), damit die Developer das Bedürfnis der Nutzenden erfüllen können | Product Owner |
+| **Wert** | Wie viel Geschäftswert der Eintrag für Kundschaft, Team oder Nutzende liefert. Das Team legt die Notation gemeinsam fest; die Kursleitung nutzt ein bis vier Dollarzeichen, von niedrig bis hoch | Product Owner |
+| **Schätzung** | Wie viel Aufwand der Eintrag nach Einschätzung des Teams kosten wird, als relative Aufwandsschätzung | **Development Team** |
+| **Reihenfolge** | Die Position des Eintrags. Die Einträge laufen von höchster zu niedrigster Priorität, eine Liste, die man **Stacked Rank** nennt | Product Owner, gestützt auf Wert und Schätzung |
+
+Beispielbeschreibung bei Virtual Verde: Als Kundin von Virtual Verde möchte ich Gemüse meiner Wahl anbauen, während ich von meiner Wohnung in New York City aus im Homeoffice arbeite.
+
+### Priorisieren in der Praxis
+
+<Steps>
+
+1. Marktforschung zeigt, dass Menschen im Homeoffice pflegeleichte Pflanzen gegenüber anspruchsvollen wie Orchideen bevorzugen, also lautet das Backlog: 1 Sukkulenten, 2 Orchideen.
+
+2. Der Support bekommt eine E-Mail von einem Nutzer, der sich Bonsaibäume wünscht, die ebenfalls schwer zu pflegen sind. Vor oder nach den Orchideen?
+
+3. Der Product Owner recherchiert und stellt fest, dass weit mehr Nutzende nach Orchideen gefragt haben. Orchideen bekommen zwei Dollarzeichen Wert, Bonsaibäume eines, und Bonsai wandert ans Ende.
+
+4. Noch weiß niemand, was Bonsaibäume im Vergleich zu Sukkulenten kosten, daher ist unklar, ob sie einen High-End- oder einen Low-End-Markt bedienen. Der Product Owner hält das als **Annahme** in der Beschreibung fest und macht weiter; untersucht wird es, sobald der Eintrag in der Liste nach oben rückt.
+
+</Steps>
+
+<Aside type="tip">
+Schreib so viel wie möglich in einen Backlog-Eintrag, aber zerbrich dir nicht den Kopf über Unbekanntes. Dokumentiere die Annahme und greif sie wieder auf, wenn der Eintrag Priorität bekommt.
+</Aside>
+
+---
+
+## User Stories und Epics
+
+<Aside type="note">
+**User Story** - eine kurze, einfache Beschreibung einer Funktion oder eines Deliverables aus der Perspektive der Nutzenden, damit die Lösung auf die Nutzenden und ihr Erlebnis ausgerichtet bleibt.
+<br />**Epic** - eine Gruppe oder Sammlung zusammengehöriger User Stories.
+</Aside>
+
+Eine User Story hat drei Elemente: die **Nutzenden**, die **Handlung**, die sie ausführen, und den **Nutzen** für sie. Die gängigste Formel lautet:
+
+> Als [Nutzerrolle] möchte ich [diese Handlung], damit ich [diesen Wert] erhalte.
+
+Stories dürfen groß und breit anfangen und werden dann so lange heruntergebrochen, bis sie so klein und konkret sind wie nötig. Die Lektüre ergänzt eine Buch- oder Filmanalogie: Eine Story ist eine einzelne Erzählung, während ein Epic eine Reihe zusammengehöriger, aber unabhängiger Stories ist, die gemeinsam den übergreifenden Bogen zeigen.
+
+### Personas
+
+Gute Stories zu schreiben braucht konkrete Nutzende vor Augen, jemanden, der mit dem Produkt interagiert, um ein bestimmtes Ergebnis zu erreichen. Die Kursleitung baut gern **Personas**, detaillierte Beschreibungen jedes Nutzertyps, manchmal mit Namen, denn für Nutzende, die man sich vorstellen kann, gestaltet man besser.
+
+| Persona | Wer sie bei Virtual Verde sind |
+| --- | --- |
+| **Leo** | Pflanzenlieferant, zuständig für Pflanzenbeschaffung, Lieferkette und Lieferlogistik |
+| **Felicity** | Gartenexpertin, die dem Support hilft, der Kundschaft hervorragende Ratschläge zur Pflanzenpflege zu geben |
+| **Zach** | Hobby-Gemüsegärtner, der mit dem, was er kauft, Abendessen kochen möchte |
+| **Nia** | Unternehmensberaterin im Homeoffice, die einen professionellen Hintergrund für Videocalls möchte |
+| **Reena** | Blumenliebhaberin, die jede Woche ein anderes Arrangement möchte |
+
+### Was eine Story enthalten sollte
+
+Die Lektüre nennt vier Elemente, die beim Schreiben von User Stories hineingehören:
+
+<ul>
+<li><strong>User Persona</strong> - wie die Nutzenden sind, in welcher Beziehung sie zum Projekt stehen, welche Ziele sie haben.</li>
+<li><strong>Definition of Done</strong> - die vereinbarte Menge von Punkten, die vollständig sein müssen, bevor die Story als fertig gilt.</li>
+<li><strong>Aufgaben</strong> - die zentralen Aktivitäten, die zum Abschluss der Story nötig sind.</li>
+<li><strong>Bereits vorliegendes Feedback</strong> - wenn du ein bestehendes Produkt erweiterst, bau ein, was die Kundschaft zu früheren Iterationen gesagt hat.</li>
+</ul>
+
+Über den Einblick in die Ziele der Nutzenden hinaus ermöglichen Stories Zusammenarbeit, regen kreative Lösungen an und erzeugen Schwung, denn jede fertige Story ist ein kleiner Erfolg für das Team.
+
+### Die INVEST-Checkliste
+
+Jede Story sollte sechs Kriterien bestehen.
+
+| Buchstabe | Kriterium | Bedeutung |
+| --- | --- | --- |
+| **I** | Independent (unabhängig) | Kann für sich begonnen und abgeschlossen werden, ohne auf eine andere Story zu warten |
+| **N** | Negotiable (verhandelbar) | Es gibt Spielraum für Diskussion über den Eintrag |
+| **V** | Valuable (wertvoll) | Ihr Abschluss muss Wert liefern |
+| **E** | Estimable (schätzbar) | Die Definition of Done ist klar genug, dass das Team eine Schätzung abgeben kann |
+| **S** | Small (klein) | Sie passt in einen geplanten Sprint. Wenn nicht, wird sie aufgeteilt. Stories mit niedriger Priorität dürfen groß bleiben, bis sie in die Nähe eines Sprints rücken |
+| **T** | Testable (testbar) | Es lässt sich ein Test schreiben, der prüft, ob sie die Acceptance Criteria erfüllt |
+
+Der **Product Owner** ist der Hauptautor der User Stories, aber das Team ist dafür verantwortlich, ihm zu sagen, ob eine Story klar ist und INVEST erfüllt, *bevor* Zeit in sie investiert wird. Die Lektüre ergänzt, dass auch ein Developer Stories und Epics schreiben darf, sofern der Product Owner für den Backlog-Eintrag verantwortlich bleibt.
+
+### Acceptance Criteria
+
+<Aside type="note">
+**Acceptance Criteria** (Akzeptanzkriterien) - die Checkliste, vom Product Owner geschrieben, die entscheidet, ob eine User Story fertig ist. Eine Story ist erst abgeschlossen, wenn jeder Punkt darauf erfüllt ist.
+</Aside>
+
+Durchgerechnetes Beispiel im Epic **Lieferung lebender Pflanzen**: *Als Kundin von Virtual Verde möchte ich einen Bonsaibaum erwerben, damit ich eine schöne Pflanze habe und beim Beschneiden ihrer Äste meditieren kann.* (Die Idee hat die Kursleitung von einem Neffen, der gelernt hatte, dass das Beschneiden von Bonsais in Japan eine meditative Praxis ist.) Die Acceptance Criteria besagen, dass Nutzende:
+
+<ul>
+<li>drei verschiedene Arten von Bonsaibäumen zum Kauf durchsuchen können.</li>
+<li>die drei vergleichen können, um zu sehen, welcher zu Hause am leichtesten und welcher am schwersten zu ziehen ist, etwa über die Labels Einsteiger, Fortgeschritten und Experte.</li>
+<li>bestimmte Bonsai-Pflegepakete kaufen können, etwa Dünger und Schnittscheren.</li>
+<li>online auf eine Bonsai-Broschüre zugreifen können, wobei dem Baum zusätzlich eine Pflegebroschüre beiliegt.</li>
+<li>in den FAQ von Virtual Verde eine Seite zur Fehlerbehebung bei Bonsais finden.</li>
+</ul>
+
+Einträge weit oben in der Liste tragen naturgemäß mehr Details und weniger Grauzonen. Einträge mit niedriger Priorität vage zu lassen ist Absicht: Es spart Zeit bei Arbeit, die später vielleicht nach hinten rutscht.
+
+### Epics
+
+Weitere genannte Epics von Virtual Verde: **Lieferung lebender Pflanzen**, **Beratungsservice für Büropflanzen**, **Lieferantenmanagement** und **Kundendatenmanagement**. Die Lektüre schreibt die Scrum-Bedeutung von Epic **Mike Cohn** zu, der es als sehr große User Story beschreibt, die sich nicht in einer Iteration liefern lässt und womöglich aufgeteilt werden muss. Epics verfolgen große, lose definierte Ideen; Stories sind die sehr viel kleinere Arbeitseinheit, die direkt von den Endnutzenden abgeleitet wird.
+
+Das Bibliotheksbeispiel der Lektüre zeigt die Gruppierung. Eine Bibliothek möchte eine Website, damit Lesende Rezensionen prüfen können, bevor sie etwas ausleihen:
+
+<figure class="sc-fig">
+  <div class="sc-split">
+    <div class="sc-panel eff">
+      <div class="head">Epic: Erstellung der Website</div>
+      <ul>
+        <li>Als begeisterte Leserin möchte ich Rezensionen lesen, bevor ich ein Buch in meiner örtlichen Zweigstelle ausleihe, damit ich weiß, dass mich das Buch interessiert</li>
+        <li>Kundinnen und Kunden möchten Bücher in ihren Warenkorb legen</li>
+      </ul>
+    </div>
+    <div class="sc-panel rsp">
+      <div class="head">Epic: Gestaltung des physischen Raums</div>
+      <ul>
+        <li>Kundinnen und Kunden möchten die Bibliothek betreten und die Sachbuchabteilung leicht finden</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Statt einer flachen Liste von Stories ist das Backlog in Abschnitte gegliedert, einen pro Epic.</figcaption>
+</figure>
+
+### Aktivität: ein Product Backlog erstellen
+
+In der ersten Aktivität sollte ich die fehlende Hälfte des Virtual-Verde-Backlogs schreiben. Die Vorlage ist ein einzelnes Tabellenblatt mit vier Spalten: **Epic**, **User Story Title**, **Story** und **Acceptance Criteria** (zwei nummerierte Kriterien pro Story). Das Epic **Bonsai Trees** kam als Muster ausgefüllt, während sechs Zeilen unter einem zweiten Epic bis auf die nummerierten Kriterienfelder leer waren. Die Musterlösung füllt dieses zweite Epic als **Plant Care Initiatives** aus:
+
+| User-Story-Titel | Story | Acceptance Criteria |
+| --- | --- | --- |
+| Pflegeleichte Optionen | Als potenzielle Kundin möchte ich die am leichtesten zu pflegenden Pflanzen finden, damit ich pflegeleichte Optionen kaufen kann | Pflanzen nach Einsteiger, Fortgeschritten und Experte sortieren; nach Pflanzen mit ähnlichem Pflegebedarf suchen |
+| Gießerinnerungen | Als Pflanzenbesitzer möchte ich daran denken, wann ich gießen muss, damit ich weder zu wenig noch zu viel gieße | Für Erinnerungen per SMS oder E-Mail anmelden; jeder Bestellung Kalender-Erinnerungsaufkleber beilegen |
+| Rückgaberichtlinie | Als Kundin möchte ich eine unkomplizierte Rückgabe, damit ich sicher sein kann, die richtige Pflanze zu haben | FAQ zu Gutschrift und Rückgabe von der Startseite aus verlinkt; jede Bestellung wird mit Rücksendeetiketten und Anleitung verschickt |
+
+Die anderen drei Pflanzenpflege-Stories waren Pflegetipps, Pflegewerkzeuge sowie Expertenhilfe und Beratung. Die sechs Bonsai-Stories, die als Muster vorgegeben waren, lauteten Auswahl, Versand, Stile, Werkzeuge, Techniken und Geschichte.
+
+### Das Backlog in einem Work-Management-Tool aufbauen
+
+Eine Lektüre hat dasselbe Backlog in **Asana** nachgebaut (mit ClickUp und Monday als kostenlosen Alternativen). Work-Management-Tools gibt es, um **Arbeit über Arbeit** zu reduzieren, also die Stunden, die mit der Suche nach Informationen, dem Wechseln zwischen Apps und dem Absitzen von Statusmeetings verloren gehen.
+
+<Steps>
+
+1. Ein Projekt aus einer Vorlage anlegen. Die Vorlage **Sprint Planning** von Asana passt zu einem Product Backlog und öffnet sich in der **Board View**, die wie ein Kanban Board mit Abschnitten als Spaltenüberschriften funktioniert.
+
+2. Jeden **User-Story-Titel** als Aufgabe in der Spalte **Backlog** anlegen, mit der vollständigen Story in der Aufgabenbeschreibung.
+
+3. Jedes **Acceptance Criterion** als **Unteraufgabe** seiner Story anlegen.
+
+4. Ein **benutzerdefiniertes Feld** für das Epic hinzufügen (benutzerdefinierte Felder verhalten sich wie Tags oder Tabellenspalten) und dann jede Story über den Aufgabenbereich oder die Epic-Spalte in der Listenansicht ihrem Epic zuordnen.
+
+</Steps>
+
+---
+
+## Backlog Refinement
+
+Der Product Owner verantwortet die Daten im Backlog, aber ein lebendiges Dokument aktuell zu halten ist Teamarbeit.
+
+<Aside type="note">
+**Backlog Refinement** - das Backlog beschrieben, geschätzt und priorisiert halten, damit das Scrum Team wirksam arbeiten kann. Nachdem der Product Owner Einträge mit Beschreibung und Wert angelegt hat, prüfen der Product Owner und ein Teil des Teams oder das ganze Team das Backlog gemeinsam.
+</Aside>
+
+Die Prüfung kontrolliert vier Dinge:
+
+<ul>
+<li>Es enthält die richtigen Einträge: Nichts Neues fehlt, und nichts muss entfernt werden.</li>
+<li>Der Product Owner hat die Einträge priorisiert, was man auch das Setzen des <strong>Reihenfolge-Felds</strong> nennt.</li>
+<li>Die Einträge oben sind bereit zur Lieferung und haben klare Acceptance Criteria.</li>
+<li>Die Einträge tragen <strong>Schätzungen</strong>, also eine fundierte Einschätzung, wie viel Arbeit jeder einzelne ist.</li>
+</ul>
+
+Wann und wie oft verfeinert wird, entscheidet das Team, genauso wie die Schätzmethode. Manche Teams halten eigene Refinement-Meetings ab, manche verfeinern fortlaufend über Gespräche oder E-Mail, und manche packen es in ein geplantes Event wie das Sprint Planning.
+
+---
+
+## Relative Aufwandsschätzung
+
+Schätzungen sagen der Planung, wie viel Aufwand jeder Eintrag oder jede Story kosten wird und damit, wie viel Arbeit noch bevorsteht. Die Schwierigkeit ist menschlich: Menschen neigen dazu zu unterschätzen, wie lange Dinge dauern, und bei großen Projekten vervielfacht sich dieser Fehler, bis er zu einer Hauptursache dafür wird, dass Projekte zu spät kommen und das Budget sprengen.
+
+| | **Absolute Schätzung** | **Relative Schätzung** |
+| --- | --- | --- |
+| **Auch genannt** | Zeit- und Aufwandsschätzung, im traditionellen Projektmanagement | Der Scrum-Ansatz |
+| **Gestellte Frage** | Wie lange genau wird das dauern? | Wie groß ist das im Vergleich zu einem anderen Eintrag? |
+| **Einheiten** | Stunden, Tage, Wochen | Eine relative Einheit oder Größe, etwa eine T-Shirt-Größe oder Punkte |
+
+### T-Shirt-Größen
+
+Die Größen reichen von **XS, S, M, L, XL bis XXL**. Die Vorteile laut Lektüre: schnell, unter agilen Praktikern gut verstanden und ein guter erster Schritt für Teams, die neu in der relativen Schätzung sind.
+
+<Steps>
+
+1. Die zu verwendende Skala und die Metriken vereinbaren.
+
+2. Mindestens einen **Anker**-Eintrag wählen und dessen Größe festlegen. Die Version aus dem Video: Einen Eintrag wählen, der sich mittelgroß anfühlt, und ihn M nennen. Manche Teams wählen zwei Anker, einen am oberen und einen am unteren Ende der Spanne.
+
+3. Jeden verbleibenden Eintrag mit dem Anker vergleichen (wenn der ein M ist, was ist dann dieser?) und eine Größe vereinbaren, bis alle Einträge erledigt sind.
+
+</Steps>
+
+Virtual Verde hat es an vier Einträgen ausprobiert: Bonsaibäume in den Katalog aufnehmen, eine mobile App erstellen, ein neues Logo einführen und die neue Kontoseite erstellen. Das Team wählte **ein neues Logo einführen** als M und schätzte die anderen drei im Vergleich dazu.
+
+### Story Points
+
+Story Points sind die Lieblingsmethode der Kursleitung. Die Idee ist dieselbe, ein Anker-Eintrag und Vergleiche damit, aber die Einheit sind Punkte aus der **Fibonacci-Folge**, in der jede Zahl die Summe der beiden vorherigen ist: 0, 1, 1, 2, 3, 5, 8, 13, 21 und so weiter. Für Story Points fallen die Null und die erste 1 weg.
+
+<div class="sc-chips">
+  <span class="sc-chip green">1</span>
+  <span class="sc-chip green">2</span>
+  <span class="sc-chip green">3</span>
+  <span class="sc-chip violet">5</span>
+  <span class="sc-chip violet">8</span>
+  <span class="sc-chip amber">13</span>
+  <span class="sc-chip amber">21</span>
+  <span class="sc-chip slate">34 und darüber</span>
+</div>
+
+Auf die Abstände kommt es an. Die Zahlen beginnen dicht beieinander und rücken mit wachsender Größe auseinander, was widerspiegelt, wie Unsicherheit und Risiko mit der Größe zunehmen. Eine Zahl trägt daher sowohl **Aufwand als auch Risiko**. Über 21 gegen 25 zu streiten ist sinnlos, aber die Wahl zwischen 21 und 34 ist ein echtes Gespräch. Die Schritte laut Lektüre: die zulässigen Werte vereinbaren (manche Teams hören bei 21 auf, manche springen von 21 direkt auf 100, eine Teamentscheidung), einen oder zwei Anker setzen, dann den Rest gemeinsam schätzen und jede Schätzung im Backlog-System festhalten.
+
+### Die Obst-Übung
+
+In den Google-Kursen der Kursleitung wird mit Obst geübt: Wie viel Aufwand kostet es, jede Frucht vollständig zu essen? Faktoren sind Kerne, ob man eine Serviette braucht, ob sie in einen Bissen passt, Schälen und Werkzeuge.
+
+| Frucht | Punkte | Begründung |
+| --- | --- | --- |
+| Mango | **5** | Der Anker |
+| Erdbeere | **1** | Stiele stören nicht, geringer Aufwand |
+| Kirsche | **2** | Stiele und Kerne |
+| Orange | **3** | Schälen ist einfacher als eine Mango zu schneiden |
+| Banane | **3** | Muss geschält werden, ähnlich wie eine Orange |
+| Ananas | **13** | Riesig, lässt sich nicht auf einmal aufessen |
+
+Der eigentliche Gewinn von Schätzübungen sind nicht die Zahlen. Sie bringen gute Ideen zutage, wie sich Dinge erledigen lassen (Menschen schneiden Ananas auf überraschend unterschiedliche Weise), und sie machen die riskantesten Teile des Projekts sichtbar.
+
+### Warum Punkte Größen schlagen können
+
+Zurück bei Virtual Verde zeigten Punkte, dass **eine neue Nutzerseite** und **Bonsaibäume im Katalog** nicht gleich groß waren, was T-Shirt-Größen womöglich nahegelegt hätten. Die neue Nutzerseite bekam **8**, weil sie ein einfaches Software-Update ist; Bonsai bekam **13**, weil dafür auch Lieferanten gefunden und eine Lieferkette aufgebaut werden müssen.
+
+| | **T-Shirt-Größen** | **Story Points** |
+| --- | --- | --- |
+| **Skala** | XS bis XXL | Fibonacci-Zahlen, beginnend mit 1, 2, 3, 5, 8 |
+| **Am besten für** | Weniger erfahrene Teams, ein erster Einstieg in die relative Schätzung | Erfahrene Teams |
+| **Genauigkeit** | Gröber | Genauer und spezifischer, weil die Abstände mit der Größe wachsen |
+| **Ablauf** | Skala vereinbaren, Anker setzen, den Rest einsortieren | Zulässige Werte vereinbaren, Anker setzen, den Rest einsortieren und festhalten |
+
+### Best Practices beim Schätzen
+
+<ul>
+<li>Dem Product Owner so lange Fragen stellen, bis genug Information zum Schätzen vorliegt.</li>
+<li>Auseinanderliegende Schätzungen besprechen, damit alle verstehen, wie der Eintrag umgesetzt werden könnte.</li>
+<li>Die endgültige Größe oder den Punktwert vereinbaren und im System festhalten.</li>
+<li>Landet ein Eintrag im großen Bereich, vor dem Weitermachen über eine Aufteilung sprechen.</li>
+</ul>
+
+---
+
+## Agile Schätztechniken
+
+Eine Lektüre nennt sechs Techniken. Die darunterliegenden Schritte sind im Wesentlichen dieselben, egal welche du nutzt; die Wahl ist eine Frage der Teamvorliebe.
+
+| Technik | Am besten für | Wie sie funktioniert |
+| --- | --- | --- |
+| **Planning Poker** | Eine kleine Zahl von Einträgen, unter 10; eingesetzt im Sprint Planning | Konsensbasiert. Alle halten Fibonacci-Karten, legen pro Eintrag eine verdeckt hin, alle decken gleichzeitig auf, dann wird diskutiert, besonders über weit auseinanderliegende Schätzungen |
+| **Dot Voting** | Sprints mit wenigen Einträgen im Sprint Backlog | Einträge auf Papier rund um einen Tisch oder an einer Wand; die Mitglieder gehen herum und kleben farbcodierte Punktaufkleber (zum Beispiel S grün, M blau, L orange, XL rot) |
+| **Bucket System** | Große Backlogs, ein paar hundert Einträge in etwa einer Stunde | Eine Reihe nummerierter Karteikarten dient als Eimer. Jede Person zieht einen zufälligen Eintrag und legt ihn ohne Diskussion ab, gibt Einträge weiter, die sie nicht versteht, und hinterfragt falsch platzierte, bis Konsens herrscht. Nicht mehr als 120 Sekunden pro Eintrag |
+| **Large/Uncertain/Small** | Backlogs mit vielen ähnlichen oder vergleichbaren Einträgen | Wie das Bucket System, nur mit drei Kategorien. Zuerst die offensichtlichen Stories platzieren, dann die komplexen besprechen |
+| **Ordering Method** | Ein kleines Team mit vielen Backlog-Einträgen | Einträge werden zufällig auf einer Skala von niedrig bis hoch platziert; reihum verschiebt jedes Mitglied einen Eintrag um eine Stelle nach oben oder unten oder passt, bis niemand mehr etwas verschieben will |
+| **Affinity Mapping** | Backlogs mit mehr als 20 Einträgen | Haftnotizen an einer Wand: eine platzieren, die nächste vergleichen und zuordnen oder eine neue Gruppe beginnen. Am Ende stehen etwa 3 bis 10 Gruppen, jede wird nach ihrem Thema benannt, dann werden die Gruppen priorisiert |
+
+Planning-Poker-Decks enthalten manchmal zwei Zusatzkarten: ein **Fragezeichen** (ich verstehe es nicht oder mir fehlen Informationen) und eine **Kaffeetasse** (ich brauche eine Pause). Die Schätzungen bis zum Aufdecken verdeckt zu halten ist das, was Verzerrung beseitigt, denn wer eine Zahl laut hört, reagiert auf die Zahl oder auf die Person, die sie genannt hat.
+
+### Was wirksames Schätzen gemeinsam hat
+
+<div class="sc-quad">
+<div class="q amber">
+<div class="qh">Vermeidet Scheingenauigkeit</div>
+<ul>
+<li>Grobe relative Schätzungen bringen über das Projekt hinweg mehr Genauigkeit</li>
+<li>Keine langen Debatten über sieben gegen zehn Tage</li>
+</ul>
+</div>
+<div class="q violet">
+<div class="qh">Vermeidet Ankerverzerrung</div>
+<ul>
+<li>Verdeckte erste Schätzungen lassen Menschen eigenständige Sichtweisen bilden</li>
+<li>Verhindert, dass Menschen andere nachplappern, um Peinlichkeit zu vermeiden</li>
+</ul>
+</div>
+<div class="q green">
+<div class="qh">Fördert Inklusion</div>
+<ul>
+<li>Gruppentechniken erzeugen bessere Schätzungen</li>
+<li>Sie bauen außerdem Vertrauen und Zusammenhalt auf</li>
+</ul>
+</div>
+<div class="q slate">
+<div class="qh">Führt zur Entdeckung des Aufwands</div>
+<ul>
+<li>Gemeinsames Schätzen bringt Wege zutage, Einträge abzuschließen</li>
+<li>Diese Strategien blieben sonst womöglich verborgen</li>
+</ul>
+</div>
+</div>
+
+### Aktivität: Schätzungen ergänzen
+
+Die zweite Aktivität hat dasselbe Backlog erweitert. Die Vorlage ergänzt die vier Spalten aus der ersten Aktivität um zwei weitere, **Value** und **Estimate**. Der Wert war für jede Story bereits als ein bis drei Dollarzeichen gesetzt, und die Bonsai-Trees-Stories trugen als Muster schon Punktschätzungen; meine Aufgabe war, die sechs Plant-Care-Initiatives-Stories mit Story Points zu versehen. Die Antworten der Musterlösung:
+
+| User-Story-Titel | Wert | Schätzung (Punkte) |
+| --- | --- | --- |
+| Pflegeleichte Optionen | `$$$` | 8 |
+| Pflegetipps | `$$$` | 8 |
+| Pflegewerkzeuge | `$$` | 13 |
+| Gießerinnerungen | `$$` | 5 |
+| Expertenhilfe und Beratung | `$` | 8 |
+| Rückgaberichtlinie | `$$` | 5 |
+
+Zum Vergleich reichten die vorgegebenen Bonsai-Schätzungen von 5 (Versand) bis 21 (Techniken, mit drei Online-Kursen als Kriterien).
+
+### Schätzungen in einem Work-Management-Tool ergänzen
+
+Die passende Asana-Lektüre ging einen anderen Weg: Statt einer Vorlage lädt **Import spreadsheet** eine CSV-Datei hoch (nützlich, um ein Backlog aus Excel oder Google Sheets herauszuholen), dann folgen Vorschau und Anlegen des Projekts, hier Virtual Verde Backlog genannt. Der Import erzeugte benutzerdefinierte Felder für **Epic**, **Value** und **Estimate (Story Points)**, und die Schätzungen kommen direkt in die Spalte Estimate. Nach jedem beliebigen Feld sortieren (das Beispiel sortiert nach Value), **Save layout as default** nutzen und dann in die Board-Ansicht wechseln, um ein Backlog im Kanban-Stil zu erhalten. Von dort aus können Stories eine zuständige Person und ein Fälligkeitsdatum bekommen, und wöchentliche Status-Updates können Fortschritt, Erfolge und Blocker berichten.
+
+---
+
+## Der Sprint
+
+<Aside type="note">
+**Sprint** - auch Iteration genannt, das Event, das den gesamten Rhythmus des Teams vorgibt. Er sorgt für schnelleres Feedback, fördert Zusammenarbeit und schärft den Fokus. Die Arbeit darin wird auf Basis der bisherigen Kapazität des Teams geplant und für das Sprint Planning vorbereitet.
+</Aside>
+
+Stell dir jeden Sprint als **Mini-Projekt** vor, mit Planung, Umsetzung, Lieferung, Abschluss und Retrospektive in einem kleinen Paket. Er ist so wichtig, dass sich die anderen vier Events alle um ihn drehen.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Sprint Planning<span class="sub">Kapazität bestätigen, das Sprint Backlog auswählen, das Sprint Goal festlegen</span></div>
+    <div class="sc-node violet">Daily Scrum<span class="sub">jeden Tag 15 Minuten, um sich auf das Sprint Goal abzustimmen</span></div>
+    <div class="sc-node green">Sprint Review<span class="sub">die Arbeit vorführen und überprüfen, das Increment enthüllen</span></div>
+    <div class="sc-node slate">Sprint Retrospective<span class="sub">Menschen, Prozesse und Werkzeuge für den nächsten Sprint verbessern</span></div>
+  </div>
+  <figcaption>Alle vier Events liegen im fünften, dem Sprint selbst, und der nächste Sprint beginnt in dem Moment, in dem dieser endet.</figcaption>
+</figure>
+
+### Timeboxes
+
+Jedes Event hat eine empfohlene Dauer, seine Timebox. Timeboxes erzeugen Dringlichkeit, die die Priorisierung antreibt, ein Fokusfenster, das die Produktivität hebt, und einen vorhersehbaren Rhythmus für die Arbeit. Ein **Sprint dauert eine bis vier Wochen**, und drei Überlegungen bestimmen die Länge:
+
+| Überlegung | Spricht für kürzer | Spricht für länger |
+| --- | --- | --- |
+| **Erwartete Häufigkeit von Änderungen** | Neue Anfragen kommen wöchentlich: Ein einwöchiger Sprint erlaubt häufigeres Anpassen | Stabile Anforderungen |
+| **Fokuszeit für die Developer** | Kleine Einträge | Wenn die meisten Einträge mindestens eine Woche brauchen, um etwas Wertvolles hervorzubringen, mindestens zwei Wochen wählen, um den Krisenmodus zu vermeiden |
+| **Aufwand für die Lieferung** | Schlanke Reviews | Große Reviews mit vielen Stakeholdern oder mehrere Tage Tests und Qualitätssicherung: drei oder vier Wochen |
+
+Eine Einheitslösung gibt es nicht, und die Länge kann nach ein paar Sprints geändert werden. Das eigene Team der Kursleitung arbeitet wegen starker wöchentlicher Änderungen mit einwöchigen Sprints, doch ein Großteil seiner Arbeit dauert länger als eine Woche, deshalb erwägt es den Wechsel auf zwei Wochen.
+
+### Was der Scrum Guide über den Sprint sagt
+
+Der Kurs lässt dich den Sprint-Abschnitt des Scrum Guide 2020 direkt lesen. Die Hauptpunkte:
+
+<ul>
+<li>Sprints sind der Herzschlag von Scrum, in dem Ideen zu Wert werden.</li>
+<li>Sie haben aus Gründen der Beständigkeit eine feste Länge von einem Monat oder weniger. Jeder neue Sprint beginnt direkt nach dem Ende des vorherigen.</li>
+<li>Die gesamte Arbeit in Richtung des <strong>Product Goal</strong>, einschließlich der anderen vier Events, findet innerhalb von Sprints statt.</li>
+<li>Sie schaffen Vorhersehbarkeit, indem sie mindestens einmal pro Kalendermonat Überprüfung und Anpassung in Richtung des Product Goal erzwingen.</li>
+<li>Ein zu langer Horizont riskiert, dass das Sprint Goal veraltet, die Komplexität steigt und das Risiko wächst. Kürzere Sprints bringen mehr Lernzyklen und begrenzen das Kosten- und Aufwandsrisiko auf ein kleineres Zeitfenster.</li>
+<li>Ein Sprint kann <strong>abgebrochen</strong> werden, wenn sein Sprint Goal hinfällig wird, und nur der <strong>Product Owner</strong> hat diese Befugnis.</li>
+</ul>
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Während des Sprints niemals</div>
+    <ul>
+      <li>Änderungen vornehmen, die das Sprint Goal gefährden würden</li>
+      <li>Die Qualität sinken lassen</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Während des Sprints erlaubt</div>
+    <ul>
+      <li>Das Product Backlog nach Bedarf verfeinern</li>
+      <li>Den Scope mit dem Product Owner klären und neu verhandeln, wenn mehr gelernt wird</li>
+    </ul>
+  </div>
+</div>
+
+Der Guide nennt außerdem **Burn-downs, Burn-ups und Cumulative Flows** als Prognosepraktiken und betont zugleich, dass sie die Empirie nicht ersetzen: Bei komplexer Arbeit ist die Zukunft unbekannt, und nur das, was bereits geschehen ist, kann Entscheidungen stützen. Der Kurs behandelt Burndown Charts später in diesem Modul; Burn-ups und Cumulative Flows werden nur genannt, nicht erklärt.
+
+---
+
+## Sprint Planning
+
+Das Sprint Planning ist das erste Event innerhalb des Sprints und bereitet das Team auf die nächsten ein bis vier Wochen vor. Das **gesamte Scrum Team** nimmt teil. Es bestätigt die **Kapazität** (verfügbare Zeit und Personen) und wählt die zu erledigenden Backlog-Einträge aus, und diese Auswahl wird zum **Sprint Backlog** und daraus zum **Sprint Goal**.
+
+<Aside type="caution">
+Der Kurs nennt Timeboxes für den Sprint, den Daily Scrum, das Sprint Review und die Sprint Retrospective, aber für das Sprint Planning nennt er **keine**.
+</Aside>
+
+Der Scrum Master moderiert und lenkt das Gespräch mit diesen Fragen:
+
+<ul>
+<li>Wer ist in diesem Sprint verfügbar? Gibt es Urlaube oder Terminkonflikte?</li>
+<li>Wie hoch war unsere durchschnittliche <strong>Velocity</strong>, also wie viele Punkte oder Einträge haben wir in der Vergangenheit pro Sprint abgeschlossen?</li>
+<li>Was kann und sollte das Team in diesem Sprint erreichen?</li>
+<li>Was ist das eigentliche Sprint Goal?</li>
+<li>Wie wird die Arbeit erledigt?</li>
+<li>Wer ist während des Sprints für welche Aufgaben verantwortlich?</li>
+</ul>
+
+### Definition of Done
+
+Modul 2 hat die Definition of Done als die vereinbarte Menge von Punkten definiert, die vollständig sein müssen, bevor eine Story oder ein Backlog-Eintrag als fertig gilt. Dieses Modul gibt Beispiele dafür, was auf der Liste stehen könnte, und betont, dass sie nicht vollständig ist und das Team sie selbst festlegen und fortlaufend verbessern sollte:
+
+<ul>
+<li>Der Code oder die Lösung wird von einer unabhängigen Gruppe von Fachkolleginnen und -kollegen geprüft.</li>
+<li>Das Produkt oder die Einheit besteht alle Testanforderungen, womöglich einschließlich Sicherheits- oder Performancetests.</li>
+<li>Die Dokumentation ist vollständig.</li>
+<li>Jedes Acceptance Criterion, das der Product Owner festgelegt hat, ist erfüllt.</li>
+<li>Der Product Owner nimmt die Story ab.</li>
+</ul>
+
+### Sprint Backlog und Sprint Goal
+
+<Aside type="note">
+**Sprint Backlog** - die Teilmenge der Product-Backlog-Einträge, die zur Fertigstellung im kommenden Sprint bestimmt sind. Es ist das zentrale Deliverable des Sprint Planning.
+<br />**Sprint Goal** - das übergreifende Ziel des Sprints, abgeleitet aus dem Gesamtbild des Sprint Backlogs. Es gibt dem Team das *Warum* des Sprints.
+</Aside>
+
+Virtual Verde arbeitet mit vierwöchigen Sprints, die nach Monaten benannt sind (Mai-Sprint, Juni-Sprint und so weiter), und einem Product Backlog mit 50 Einträgen. Für Mai sagen Kapazität und Aufwandsgrößen, dass das Team die obersten fünf übernehmen kann:
+
+<ul>
+<li>Nutzende können Bonsaibäume kaufen.</li>
+<li>Nutzende können ein Online-Diskussionsforum zur Einrichtung des Homeoffice nutzen.</li>
+<li>Das Lieferantenmanagement-Team kann Auditergebnisse für Lieferanten hinzufügen.</li>
+<li>Nutzende können mit einem Gutschein Homeoffice-Zubehör kaufen.</li>
+<li>Der Kundensupport kann Produkte mit Support-Tickets verknüpfen.</li>
+</ul>
+
+Das Sprint Goal: **ein umfassendes Erlebnis für Nutzende bieten, die einen Bonsaibaum in ihrem Homeoffice aufstellen möchten.** Jeder Eintrag zahlt darauf ein, etwa ein Bonsai-Gutschein und Lieferanten, die auf Bonsai-Qualität geprüft sind. Der Vorteil eines gemeinsamen Ziels: Das Team arbeitet auf ein übergreifendes Ziel hin, statt in getrennte Arbeitsstränge zu zerfallen.
+
+### Aktivität: einen Sprint-Plan und ein Sprint Backlog erstellen
+
+Die dritte Aktivität nahm das geschätzte Backlog und plante daraus zwei Sprints. Die Vorlage hat zwei Tabellenblätter. Das Blatt **Product Backlog** ergänzt die Spalten Epic, Title, Story, Criteria, Value und Estimate um eine Spalte **Sprint**. Das Blatt **Sprint Backlog** enthält die Einträge des aktuellen Sprints sowie einen Zusammenfassungsblock pro Sprint: **Name**, **Start date**, **End date**, **Point Capacity**, **Points Assigned** und **Value Attributed**. Die Daten in der Vorlage sind der 1. bis 19. März 2021 für den aktuellen Sprint und der 22. März bis 9. April für den nächsten, jeweils drei Wochen, mit leerer Kapazität.
+
+Die Musterlösung setzt die Kapazität auf **60 Punkte pro Sprint** und sortiert das Backlog vor der Zuordnung nach Wert:
+
+| | **Aktueller Sprint** | **Nächster Sprint** |
+| --- | --- | --- |
+| **Stories** | Alle sechs Plant-Care-Initiatives-Stories plus Bonsai Styles und Bonsai Shipping | Bonsai Selection, Techniques, Tools und History |
+| **Zugewiesene Punkte** | 8 + 8 + 13 + 5 + 5 + 8 + 8 + 5 = **60** | 13 + 21 + 13 + 13 = **60** |
+| **Zugeordneter Wert** | 16 Dollarzeichen | 10 Dollarzeichen |
+
+Den Schnitt entscheidet also die Kapazität, nicht der Wert allein: Manche hochwertigen Bonsai-Stories warten, weil sie groß sind, während kleinere Stories mit geringerem Wert den aktuellen Sprint exakt bis zur Kapazität füllen.
+
+### Sprints in einem Work-Management-Tool anlegen
+
+Die Asana-Lektüre hat diesen Plan nachgebaut, indem sie über das Menü Customize ein benutzerdefiniertes Feld **Sprint** mit den Optionen **Current Sprint** und **Next Sprint** hinzufügte. In die Listenansicht wechseln, um jede Aufgabe zu sehen, die Einträge über die Sprint-Dropdowns zuordnen und dann Fälligkeitsdaten für die Einträge des aktuellen Sprints ergänzen. Sie verweist außerdem auf weitere Funktionen, ohne sie zu erklären: Regeln zur Automatisierung wiederkehrender Schritte, die Timeline-Ansicht und eigene Vorlagen zum Starten neuer Sprint-Planning-Projekte.
+
+---
+
+## Eine Retrospektive mit Gen AI vorbereiten
+
+Dieses Modul enthält ein kurzes Video darüber, wie man Gen AI zur Vorbereitung einer Retrospektive nutzt; es steht zwischen dem Stoff zum Sprint Planning und dem Daily Scrum. Retrospektiven liefern ehrliches, zeitnahes Feedback, das den nächsten Sprint und künftige Arbeit prägt, und ein Werkzeug wie **Gemini** kann helfen, die Fragen zu entwerfen.
+
+<Steps>
+
+1. Dem Werkzeug klare, konkrete Projektdetails geben. Der Beispiel-Prompt (über die **Mikrofon**-Funktion von Gemini eingesprochen, ein Tipp, um Informationen per Stimme zu ergänzen oder zu iterieren) beschreibt einen PM, der eine einstündige Retrospektive zu einer abgeschlossenen Spendenaktion für eine örtliche Schule mit Unternehmen und gemeinnützigen Organisationen aus der Umgebung vorbereitet, und bittet um einen Fragenkatalog, der Beteiligung anregt und herausarbeitet, was gut lief und was sich verbessern lässt.
+
+2. Die lange Liste nach **Relevanz, Wirkung, Beteiligung und verfügbarer Zeit** eingrenzen, denn bei einer großen Gruppe und begrenzter Zeit lässt sich nicht alles nutzen.
+
+3. Die kulturellen und persönlichen Akzente selbst setzen: mit einem Dank an das Team eröffnen und den Eisbrecher an die Kultur des eigenen Teams anpassen.
+
+4. Zu Beginn kurz den Zweck des Meetings erklären, da viele Teilnehmende gar nicht wissen, wofür eine Retrospektive da ist.
+
+</Steps>
+
+Der Sinn ist, das Werkzeug die zeitraubende Logistik erledigen zu lassen, damit du deine Energie in die Erkenntnisse stecken kannst, die nur du beisteuern kannst.
+
+---
+
+## Der Daily Scrum und das Sprint Review
+
+Beide sind Events von Angesicht zu Angesicht, was an das Agile-Prinzip anknüpft, dass das persönliche Gespräch der effizienteste und wirksamste Weg ist, Informationen an ein Development Team und innerhalb eines Development Teams zu vermitteln.
+
+### Der Daily Scrum
+
+Auch **Stand-up** genannt, ist er der Ort, an dem sich das Team abstimmt und den Tag priorisiert. Er dauert **15 Minuten, jeden Tag zur gleichen Zeit am gleichen Ort**, und jedes Teammitglied beantwortet drei Fragen:
+
+<Steps>
+
+1. Was habe ich gestern getan, das dem Development Team geholfen hat, das Sprint Goal zu erreichen?
+
+2. Was werde ich heute tun, um dem Development Team zu helfen, das Sprint Goal zu erreichen?
+
+3. Sehe ich ein Hindernis, das mich oder das Team davon abhält, unsere Ziele zu erreichen?
+
+</Steps>
+
+Er erlaubt dem Scrum Master, Blockaden mit wenig Verzögerung zu lösen, und hält die Aufmerksamkeit auf dem Sprint Backlog und dem Sprint Goal. Der Scrum Guide sagt, dass er an jedem einzelnen Tag stattfindet, aber die Kursleitung hat erfolgreiche Teams geführt, die sich seltener trafen: Ihr Team mit einwöchigen Sprints hält Stand-ups an zwei Tagen pro Woche. Ausprobieren und sehen, was zum Team passt.
+
+### Sarahs Sicht von Google
+
+Sarah, Program Managerin im Engineering-Education-Team von Google, sieht ein tägliches oder wöchentliches Stand-up als unterschätztes Mittel, um ein cross-funktionales Projekt zu bündeln und zu organisieren.
+
+<ul>
+<li><strong>Alle einbeziehen.</strong> Man ist versucht zu denken, der Datenanalyst müsse nicht hören, was die Marketingexpertin tut, aber eine kurze Runde zu dem, was ich gerade abgeschlossen habe und woran ich arbeite, schafft Sichtbarkeit, Transparenz und Kameradschaft, die Dokumentation allein nicht erzeugt.</li>
+<li><strong>Kurz halten.</strong> Es ist weder eine Retrospektive noch eine Betriebsversammlung. Sie plant 15 bis 20 Minuten ein und freut sich, wenn es kürzer wird. Blocker bekommen ein separates Folgegespräch mit der betreffenden Person oder der Verantwortlichen des Arbeitsstrangs.</li>
+<li><strong>Die Uhrzeit vereinbaren.</strong> Bei Teams über Zeitzonen und Standorte hinweg eine kurze Stimmungsabfrage oder Umfrage zu möglichen Zeitfenstern verschicken (11:00 Uhr ET? 16:00 Uhr ET?), Konsens herstellen und dann dabei bleiben.</li>
+<li><strong>Die tägliche Teilnahme nicht zur Pflicht machen</strong>, wenn ein Projekt eine knappe Deadline hat, denn verschiedene Teile des Projekts bewegen sich unterschiedlich schnell.</li>
+<li><strong>Die Timebox freundlich schützen.</strong> Eine Agenda mit Minuten pro Update schreiben. Niemanden mitten im Satz unterbrechen; bei einer natürlichen Pause vorschlagen, das Thema auf später im Meeting oder auf das nächste Meeting zu verschieben.</li>
+</ul>
+
+### Das Sprint Review
+
+Das Review findet am Ende des Sprints statt und ist ein Meeting des **gesamten Scrum Teams**, in dem das Produkt vorgeführt wird, um festzustellen, was fertig ist und was nicht. Development Team und Product Owner tragen den größten Teil: Sie klären, welche Product-Backlog-Einträge als erledigt gelten sollen, und führen das Produkt vor und überprüfen es. Die **Timebox beträgt höchstens vier Stunden**.
+
+Es ist zentral für die Säulen **Überprüfung und Anpassung** und zeigt die Werte **Offenheit, Mut und Respekt**, und es sollte Spaß machen und aufbauen, der Moment, in dem das Team sich gegenseitig mit dem beeindruckt, was es in den letzten ein bis vier Wochen erreicht hat. Einige der besten Produktideen entstehen dort.
+
+Das Virtual-Verde-Beispiel: Das Team bringt eine Webseite mit Homeoffice-Pflanzen heraus, und der Sprint-Eintrag einer cross-funktionalen Marketingspezialistin war eine Launch-E-Mail an bestehende Firmenkunden von **Plant Pals**. Im August-Sprint-Review kommt die E-Mail auf den geteilten Bildschirm, und das Feedback folgt sofort: toller Einstiegssatz, das Aufmacherbild größer machen, das Weiterleiten erleichtern, den Text kürzen.
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Feedback kommt sofort und wird noch im Raum umgesetzt</span>
+  <span class="sc-chip violet">Alle haben eine Stimme, die Verantwortung ist also geteilt</span>
+  <span class="sc-chip green">Das Team lernt, wie ein Teammitglied arbeitet, und baut Vertrauen auf</span>
+</div>
+
+### Das Product Increment
+
+Im Review enthüllt das Team außerdem das **Product Increment**, das, was der Sprint hervorgebracht hat und was als **releasefähig** gilt. Das Video verknüpft releasefähig damit, ein **Minimum Viable Product** mit einer Reihe umgesetzter Funktionen oder Anforderungen entwickelt zu haben. Nur Einträge, die die Definition of Done erfüllen, gehören zum Increment; alles, was nicht fertig ist, geht **zurück ins Product Backlog**.
+
+---
+
+## Releasefähiges Increment gegenüber Minimum Viable Product
+
+Der Scrum Guide beschreibt ein Increment als konkreten Trittstein in Richtung des Product Goal. Jedes Increment kommt zu allen vorherigen hinzu und wird gründlich verifiziert, damit alle zusammen funktionieren, und es muss nutzbar sein, um Wert zu liefern.
+
+### Potenziell releasefähiges Increment
+
+Ein **potenziell releasefähiges** (oder auslieferbares) Product Increment ist das angestrebte Ergebnis jedes Sprints: eine abgeschlossene, getestete, versandbereite Ergänzung des Produkts. *Potenziell* ist wichtig, denn es bedeutet nicht, dass das Increment tatsächlich ausgeliefert wird.
+
+Das Beispiel der Lektüre ist eine App zur Haustiervermittlung mit drei Backlog-Funktionen: Informationen zu verfügbaren Tieren anzeigen, mögliche Treffer anhand der Adoptierenden bewerten und Nutzenden die Kontaktaufnahme mit dem Tierheim ermöglichen. Keine davon lohnt für sich allein die Auslieferung, aber in einem Sprint eine Funktion vollständig fertigzustellen (funktionierend, getestet, komplett) ist besser, als Bruchstücke aller drei zu haben, von denen keine fertig ist. Es bringt außerdem frühes Feedback, schützt die Qualität und lässt Raum, auf Veränderungen zu reagieren. Der Rat der Lektüre: Mach ein potenziell releasefähiges Increment immer zu deinem Sprint Goal.
+
+Die Lektüre beschreibt die **Definition of Done** außerdem noch einmal als formale Beschreibung des Zustands des Increments, sobald es die geforderten Qualitätsmaßstäbe erfüllt. In der Software heißt fertig oft abgeschlossen, geprüft und durch die Tests gekommen; außerhalb der Software kann es ein Dokument mit juristischer Prüfung und Freigabe sein oder ein formaler Abschlussbericht. Entscheidend ist ein ausdrückliches, gemeinsames Verständnis.
+
+### Wer entscheidet, dass es releasefähig ist
+
+Der **Product Owner** trifft die endgültige Entscheidung und stellt sicher, dass vor dem Release Wert vorhanden ist. Fragen, die er abwägt:
+
+<ul>
+<li>Ist das Increment vollständig?</li>
+<li>Wird es Wert bringen und die Qualitätsmaßstäbe erfüllen? Ist es gut getestet?</li>
+<li>Können die Endnutzenden es verwenden, und kann ihr direktes oder indirektes Feedback spätere Versionen verbessern?</li>
+</ul>
+
+### Der Vergleich mit dem MVP
+
+<Aside type="note">
+**Minimum Viable Product (MVP)** - eine Version eines Produkts mit gerade genug Funktionen, um frühe Kundschaft zufriedenzustellen. **Eric Ries** hat den Begriff geprägt und beschreibt ihn als die Version, mit der ein Team mit dem geringsten Aufwand das meiste validierte Lernen über die Kundschaft sammeln kann. Beispiele: eine Landingpage einer Website oder ein Jetzt-kaufen-Button, der nur festhält, dass jemand darauf geklickt hat.
+</Aside>
+
+| | **Potenziell releasefähiges Increment** | **MVP** |
+| --- | --- | --- |
+| **Zeitmaßstab** | Jeder Sprint | Ein Funktionspaket, das mehrere Sprints dauern kann |
+| **Zweck** | Ein vollständiger, getesteter, nutzbarer Schritt in Richtung des Product Goal | Schnell ein tragfähiges Release auf den Markt bringen und Feedback der Nutzenden sammeln |
+| **Wer es vorantreibt** | Scrum Master und Product Owner sorgen dafür, dass jeder Sprint eines hervorbringt | Der Product Owner entscheidet, was ein wertvolles, tragfähiges Release ausmacht |
+| **Beispiel Haustier-App** | Eine der drei Funktionen, von Anfang bis Ende fertiggestellt | Alle drei Funktionen, aber **nur für Katzen** |
+
+Den Scope des MVP auf Katzen zu verkleinern erlaubt dem Product Owner, zu releasen und von Katzen-Adoptierenden zu lernen, und dieses Lernen hilft in späteren Iterationen jeder Tierart. Kann ein releasefähiges Increment also ein MVP sein? Ja. Muss es eines sein? Nein.
+
+---
+
+## Die Sprint Retrospective
+
+Das letzte der fünf Events: ein Meeting von **bis zu drei Stunden**, in dem das Scrum Team einen Schritt zurücktritt und Verbesserungen dafür findet, wie es zusammenarbeitet. Es behandelt, was bei **Menschen, Prozessen und Werkzeugen** funktioniert und was nicht, welche Verbesserungen sich im nächsten Sprint auszuprobieren lohnen und ob die Verbesserungen aus dem letzten Sprint geholfen haben und warum. Weil sie am Ende jedes Sprints stattfinden, kommen Retrospektiven in Scrum weit häufiger vor als im traditionellen Projektmanagement.
+
+### Schlüssel zu einer gelungenen Retrospektive
+
+<Steps>
+
+1. **Ohne Schuldzuweisung bleiben.** Den Wert Respekt zeigen. Wenn jemand für sein Feedback Konsequenzen fürchtet, leidet das Ergebnis, also Unbehagen offen anerkennen und bei Bedarf anonyme oder private Kanäle anbieten.
+
+2. **Beteiligung fördern.** Retros funktionieren nur, wenn Menschen spüren, dass ihr Beitrag zählt. Meldet sich niemand, mit Fragen nachhelfen: Was ist eine Sache, die wir im nächsten Sprint ausprobieren könnten, was hat uns ausgebremst, was ist passiert, das wir nicht erwartet haben? Das Team der Kursleitung stellte kürzlich fest, dass Abhängigkeiten von Stakeholdern außerhalb des Scrum Teams es bremsten, und reagierte mit neuen Kommunikationskanälen, um seine Prioritäten bei ihnen einzubringen.
+
+3. **Negatives mit Positivem ausbalancieren.** Auch fragen, wo sich Erfolg gezeigt hat, damit sich das Team erfolgreich fühlt und es wiederholen kann.
+
+4. **Danach handeln.** Teams hören auf, sich zu beteiligen, wenn Feedback nie etwas verändert. Verbesserungen verfolgen oder das, was am besten funktioniert hat, in Gewohnheiten und Normen des Teams verwandeln.
+
+</Steps>
+
+### Fallstricke und Best Practices
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Fallstricke</div>
+    <ul>
+      <li><b>Zu viele Spielereien</b> - Spiele und Übungen passen nicht zu jedem Team; gelegentlich einsetzen oder wenn das Team nach etwas Neuem fragt</li>
+      <li><b>Nur das Negative</b> - auch hervorheben, wo Erwartungen übertroffen wurden, damit sich Erfolge wiederholen</li>
+      <li><b>Den Prozess nach jeder Retro ändern</b> - einem neuen Prozess ein paar Sprints geben, bevor man ihn beurteilt; Ideen notieren, aber mit der Umsetzung warten</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Best Practices</div>
+    <ul>
+      <li><b>Offene, bohrende Fragen</b> - wie hätten wir das Sprint Goal besser erreichen können, nicht haben wir es erreicht</li>
+      <li><b>Vielfältige Beteiligungsformen</b> - mit stillem Aufschreiben oder in Paaren beginnen, vor der großen Gruppendiskussion</li>
+      <li><b>Jeden Aspekt des Sprints abdecken</b> (Liste unten)</li>
+      <li><b>Über Scrum-Theorie und -Werte reflektieren</b> - wie könnten wir transparenter sein, wie haben wir in diesem Sprint unsere Werte gelebt</li>
+    </ul>
+  </div>
+</div>
+
+Die abzudeckenden Aspekte: Produktivität und Effizienz des Teams; Scope und Verständnis der Definition of Done; Kommunikation und Interaktionen im Team; Kommunikation mit Stakeholdern; und Fortschritt in Richtung längerfristiger Release-Pläne.
+
+### Aktivität: die Sprint Retrospective
+
+Die vierte Aktivität bestand aus zwei Teilen: einem Foliensatz, der als Retrospektiven-Board dient, und einer E-Mail-Vorlage für die Nachbereitung durch den Scrum Master.
+
+**Das Retro-Board.** Eine Folie pro User Story aus dem aktuellen Sprint von Virtual Verde, jede mit der Story, ihren Acceptance Criteria, einem Urteil **Done? Yes oder No**, einer Spalte **+** für das, was gut lief, und einer Spalte **Δ** (Delta) für das, was sich ändern soll. Repräsentative Folien:
+
+| Story | Fertig? | + lief gut | Δ ändern |
+| --- | --- | --- | --- |
+| Pflegeleichte Optionen | Ja | Sortierung und Suche ergänzt; Stufen so bepreist, dass Einsteigerpflanzen trotzdem eine Marge abwerfen | Uneinigkeit darüber, welche Pflanzen als Experte gelten; klarere Stufenbezeichnungen mit Nutzenden testen |
+| Pflegewerkzeuge | **Nein**, Verzögerung in der Lieferkette | Bündeloption programmiert (nicht live); einzelne Werkzeuge werden in der Zwischenzeit verkauft | Scope nicht wirklich verstanden; Kommunikationsprobleme mit Lieferanten haben Set-Artikel verzögert |
+| Gießerinnerungen | Ja | Reibungslose Nutzertests; Aufkleber beliebter als erwartet | Testende bevorzugten SMS, also die E-Mail-Nutzung beobachten; Erinnerungen ins App-Backlog aufnehmen |
+| Expertenhilfe und Beratung | **Nein**, mehr Personal nötig | Live-Chat nach dem Vorbild des bestehenden Firmen-Supports, gut getestet | Breiterer Scope als erwartet; eventuell Support-Personal einstellen und schulen |
+
+**Die Zusammenfassungs-E-Mail.** Die Abschnitte der Vorlage sind **To** (Scrum Team), **From** (Scrum Master), **Subject line**, dann **Intro**, **Recap**, **Key takeaways**, **Next steps** und **Closing**. Die Musterlösung mit dem Betreff *Sprint Retro: Some thoughts and key takeaways* dankt dem Team, fasst zusammen, dass sechs von acht Einträgen mit gutem Nutzerfeedback fertig wurden, und listet dann Erkenntnisse aus den Whiteboard-Notizen auf: neue Website-Funktionen funktionieren und Programmierprobleme wurden schnell behoben; bestehende Abläufe wurden wiederverwendet statt neu aufgebaut; Nutzertests wurden in die Aufgaben eingebaut; das Design des Pflegeflyers lief reibungslos, aber Inhalt und Design müssen besser verzahnt werden; ein Plan für die Kommunikation mit Lieferanten zu Versandterminen ist nötig; und es gab Missverständnisse beim Scope, sodass die Backlog-Schätzungen womöglich angehoben werden müssen. Zum Schluss verspricht sie eine Nachverfolgung dazu, wie diese Punkte im nächsten Sprint in die Praxis umgesetzt werden.
+
+---
+
+## Velocity und Burndown Charts
+
+Mit diesen beiden Konzepten steuert ein Scrum Team seine Arbeit durch einen Sprint und durch das gesamte Product Backlog.
+
+<Aside type="note">
+**Burndown Chart** - misst die Zeit gegen erledigte und verbleibende Arbeit und hält dem Team bewusst, wie es im Verhältnis zu seinen Zielen dasteht. In Scrum verfolgt es den Abschluss von User Stories während des Sprints, und der Scrum Master kann es bis zu täglich prüfen.
+<br />**Velocity** - die durchschnittliche Zahl von Punkten, die ein Team in einem einzelnen Sprint abarbeitet.
+</Aside>
+
+Schätzt das Team in T-Shirt-Größen, wird zuerst jeder Größe eine Zahl zugeordnet, und diese Zahlen dienen dann für Burndown und Velocity. Die Beispielzuordnung: XS 1, S 2, M 5, L 8 und so weiter.
+
+### Ein Burndown lesen: der Juli-Sprint
+
+Der vierwöchige Juli-Sprint von Virtual Verde hat 20 Arbeitstage und ein Sprint Backlog von **200 Punkten**, ein gleichmäßiger Abbau wären also 10 Punkte pro Tag.
+
+| Tag | Erwartet (gleichmäßiger Abbau) | Tatsächlich abgebaut | Lesart |
+| --- | --- | --- | --- |
+| 5 | 50 | 22 | Erst 25 Prozent des Sprints vorbei, womöglich noch im Plan |
+| 10 | 100 | 45 | Sollte etwa zur Hälfte sein: gegenüber dem Sprint Goal im Verzug |
+| 15 | 150 | 140 | Wieder im Plan |
+| 20 | 200 | 188 | Gutes Ergebnis; in der Retrospektive untersuchen, was passiert ist |
+
+<Aside type="caution">
+Tag 10 ist nicht der Moment, in Panik zu geraten oder Druck auf das Team auszuüben. Bis dahin sollte der Scrum Master längst mit dem Team darüber sprechen, wie er helfen und Blockaden lösen kann.
+</Aside>
+
+### Velocity nutzen
+
+Im Sprint Planning nutzt das Team seine **durchschnittliche Velocity über mindestens drei Sprints**, um einzuschätzen, wie viele Einträge es sicher übernehmen kann. Zwei Dinge sollte man festhalten:
+
+<ul>
+<li><strong>Es gibt keine gute oder schlechte Velocity.</strong> Sie ist schlicht das, was das Team in einer festen Timebox bisher erreicht hat.</li>
+<li><strong>Velocities lassen sich nicht zwischen Teams vergleichen</strong>, weil jedes Team seine Punkte selbst kalibriert. Das aktuelle Dreierteam der Kursleitung arbeitet in einem einwöchigen Sprint 70 Punkte ab; ein früheres Fünferteam schaffte 120 in zwei Wochen. Keines war besser, nur anders.</li>
+</ul>
+
+Es kann mehrere Sprints dauern, bis eine **stabile Velocity** erreicht ist, was normal ist, und sie pendelt sich ein, wenn sich das Team an das Schätzen und die Zusammenarbeit gewöhnt.
+
+### Die Superkraft der Prognose
+
+Eine stabile Velocity plus ein verfeinertes, priorisiertes und geschätztes Backlog erlaubt dir, Stakeholdern und Sponsoren zwei Dinge zu sagen: ungefähr wie lange das gesamte Backlog dauern wird und wie viel davon bis zu einem bestimmten Datum fertig sein wird.
+
+<Steps>
+
+1. Virtual Verde hat in den letzten drei Monaten durchschnittlich **200 Punkte** pro monatlichem Sprint geschafft und hat noch **1.500 Punkte** im Backlog.
+
+2. Wie lange dauert alles? 1.500 geteilt durch 200 ergibt etwa **sieben oder acht Sprints**.
+
+3. Was ist bis zum 1. Januar fertig, wenn jetzt Juli ist? Das sind fünf Monate, also etwa 1.000 Punkte: das Backlog von oben nach unten durchgehen und dort eine Linie ziehen, wo die laufende Summe 1.000 erreicht.
+
+4. Um Termine vorzuziehen, mit denselben Zahlen entscheiden, ob Personen hinzukommen und die Velocity steigen soll, ob Prioritäten umgestellt werden oder ob andere Projektentscheidungen fallen.
+
+</Steps>
+
+### Velocity interpretieren: Dos and Don'ts
+
+Ein ganz neues Team hat keine Historie, daher ist sein erster Sprint eine grobe Vermutung darüber, wie viel es schaffen kann; nach ein paar Sprints wird der Durchschnitt aussagekräftig und steuert die Auswahl des Sprint Backlogs, was leichtfällt, wenn das Backlog Refinement das Backlog priorisiert und geschätzt gehalten hat.
+
+| | Empfehlung | Warum |
+| --- | --- | --- |
+| **Do** | Vorsichtig sein, wenn Velocity mit externen Stakeholdern geteilt wird | Ihnen fehlt womöglich der Kontext, um sie zu lesen. Unterstützendes Material ergänzen, etwa die Velocity über einen Zeitraum mit einer Trenddarstellung, in der Einbrüche und Spitzen Verbesserungen anstoßen können |
+| **Don't** | Velocity als Leistungskennzahl nutzen | Druck von Führungskräften, Sponsoren oder Stakeholdern fördert Taktiken wie Einschüchterung, und die Angst, langsam zu wirken, beschädigt die Teamkultur |
+| **Don't** | Velocity zum Vergleich von Teams nutzen | Punkte sind subjektiv (die 5 des einen Teams ist die 3 des anderen), das ist also weder genau noch fair, und Velocity misst ohnehin keinen Wert |
+| **Do** | Beim Hochrechnen von Lieferterminen mit Vorsicht vorgehen | Stakeholder können Velocity als Druckmittel für Launch-Termine nutzen, verpasste Termine erzeugen falsche Erwartungen und harten Wettbewerb, Teams brauchen mehrere Sprints, um ihre Kapazität kennenzulernen, und weit entfernte Termine können Veränderungen nicht auffangen. Geschätzte Termine nie als Zusagen behandeln |
+
+---
+
+## Kanban Boards im Scrum-Kontext
+
+Das Kanban Board, das der Kurs früher schon angeschnitten hat, ist ein weiteres visuelles Werkzeug, um durch einen Sprint voranzukommen. Manche Teams nennen es **Scrum Board**. Es gibt kleine Unterschiede, aber es ist dasselbe Grundwerkzeug: Der Scrum Guide definiert kein Scrum Board, und manche Werkzeuge am Markt ergänzen ein Kanban Board einfach um Scrum-spezifische Funktionen.
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Visualisierung<span class="n">sehen</span></div>
+    <div class="sc-node amber soft">Alles auf einen Blick<span class="sub">auf Einträge zeigen, Farben und Größen nutzen und erkennen, wo die Herausforderungen und Verbesserungschancen liegen</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">WIP-Limits<span class="n">begrenzen</span></div>
+    <div class="sc-node violet soft">Laufende Arbeit deckeln<span class="sub">jedes Team setzt sein eigenes Limit, und das Board macht Überschreitungen offensichtlich; das stützt den Wert Fokus</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Arbeitsfluss<span class="n">bewegen</span></div>
+    <div class="sc-node green soft">Spüren, wie sich Arbeit zwischen Phasen bewegt<span class="sub">physische Haftnotizen oder ein virtuelles Board, durch To do, Doing und Done</span></div>
+  </div>
+</div>
+
+Bei den WIP-Limits stützt sich das Video auf den Gedanken, dass es Multitasking eigentlich nicht gibt: In Scrum gilt, je mehr Arbeit du gleichzeitig hältst, desto ineffizienter wirst du.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">To do</div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Doing</div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Done</div>
+  </div>
+  <figcaption>Einträge wandern oft während des Daily Scrum weiter, aber das Team kann sie jederzeit verschieben.</figcaption>
+</figure>
+
+Virtual-Verde-Beispiel: **Leo**, der Pflanzenlieferant, schließt die Verträge mit den drei wichtigsten Lieferanten für den ersten Launch ab. Er verschiebt den Eintrag von Doing nach Done und schaut, was als Nächstes kommt. War das sein letzter Sprint-Eintrag, fragt er seine Teammitglieder, wo er helfen kann.
+
+---
+
+## Werkzeuge für Scrum Teams
+
+Transparenz ist eine Säule von Scrum, und Werkzeuge unterstützen sie, indem sie alle über den Fortschritt auf dem Laufenden halten und Product Backlog, Sprint Backlog und andere wesentliche Dokumente an einem zentralen Ort bündeln. In Scrum wählt das Team seine Werkzeuge gemeinsam aus.
+
+| Werkzeugkategorie | Genannte Werkzeuge | Wofür ein Scrum Team es nutzt |
+| --- | --- | --- |
+| **Backlog- und Sprint-Management** | **Jira** (Atlassian) | Verbreitetes Werkzeug für agiles Projektmanagement, das das gesamte Team- und Backlog-Management abdeckt: anpassbar, ein zentraler Ort für Product Backlog, Sprint-Definitionen, Velocity, Burndown Charts und mehr |
+| | **Asana** | Sprint Planning und Backlog-Management; plant Arbeit von täglichen Aufgaben bis zu strategischen Initiativen, lässt alle sehen, wer was wann macht, und weist Aufgaben zu, automatisiert Workflows, verfolgt den Fortschritt und kommuniziert mit Stakeholdern |
+| | **Trello** | Einfache Kanban-Funktionen; die Kursleitung nutzt es für private Projekte wie die Planung eines Umzugs und einer großen Geburtstagsfeier |
+| | Tabellen | Manche Teams bauen sich ihre eigenen agilen Werkzeuge in Tabellenkalkulationen |
+| **Dokumentation und Zusammenarbeit** | **Google Docs** | Zentrale Projektinformationen in ausführlicher Form festhalten, mit Dokumentation und Zusammenarbeit in einem Werkzeug |
+| **Tabellenkalkulation** | **Google Sheets**, Microsoft Excel | Backlogs, Details zu Backlog-Einträgen und andere Projektinformationen erfassen |
+| **Präsentationen** | Google Slides oder das Microsoft-Gegenstück | Dem Team Informationen präsentieren |
+| **Kommunikation** | Videokonferenzen, Team- und Einzelchat, E-Mail | Schnellere Antworten, damit Menschen ihre Blockaden vor dem nächsten Daily Scrum selbst lösen |
+
+Im traditionellen Projektmanagement bieten Werkzeuge wie **Microsoft Project** starkes Termin- und Ressourcenmanagement, aber das wichtigste Bedürfnis eines Scrum Teams ist ein Werkzeug, mit dem es sein Backlog und seine Sprints managt. Die meisten Werkzeuge bieten eine kostenlose Testphase, bevor man sich festlegt. Die Backlog- und Sprint-Werkzeuge können nicht alles, weshalb die Werkzeuge für Dokumentation, Tabellen, Präsentationen und Kommunikation daneben stehen. In den Lektüren des Moduls tauchen außerdem **ClickUp** und **Monday** als kostenlose Alternativen zu Asana auf.
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Product Backlog** = die einzige maßgebliche Quelle der Arbeit, grob die traditionelle Menge der Anforderungen. Es ist lebendig, wird vom Product Owner verantwortet und ist immer priorisiert, mit konkreten Einträgen oben und vagen darunter. Felder: **Beschreibung, Wert, Schätzung** (verantwortet vom Development Team) und **Reihenfolge**, ein Stacked Rank. Unbekanntes als Annahmen festhalten.
+- **User-Story**-Formel: Als [Nutzerrolle] möchte ich [Handlung], damit ich [Wert] erhalte. Personas bauen. Persona, Definition of Done, Aufgaben und bisheriges Feedback aufnehmen. **INVEST**: independent, negotiable, valuable, estimable, small, testable. **Acceptance Criteria** sind die Fertig-Checkliste des Product Owners. **Epics** gruppieren Stories und sind im Sinne von Mike Cohn sehr große Stories.
+- **Backlog Refinement** hält das Backlog beschrieben, geschätzt und priorisiert; das Team entscheidet, wann, ob in eigenen Meetings, fortlaufend oder innerhalb des Sprint Planning.
+- **Relative Schätzung** vergleicht Einträge, statt Stunden vorherzusagen. **T-Shirt-Größen** (XS bis XXL) passen zu neueren Teams; **Story Points** nutzen Fibonacci (1, 2, 3, 5, 8, 13, 21), verbinden Aufwand und Risiko und passen zu erfahrenen Teams. Beide beginnen mit einem Anker-Eintrag. Obst-Beispiel: Mango 5, Ananas 13.
+- **Techniken**: Planning Poker (unter 10 Einträgen, verdeckte Karten), Dot Voting, Bucket System (Hunderte von Einträgen in einer Stunde), Large/Uncertain/Small, Ordering Method, Affinity Mapping (über 20 Einträge). Gutes Schätzen vermeidet Scheingenauigkeit und Ankerverzerrung, fördert Inklusion und führt zur Entdeckung des Aufwands.
+- **Fünf Events**: Der Sprint enthält Sprint Planning, Daily Scrum, Sprint Review und Sprint Retrospective. Timeboxes erzeugen Dringlichkeit, Fokus und Rhythmus.
+- **Sprint**: eine bis vier Wochen (laut Guide: ein Monat oder weniger), gewählt nach Änderungshäufigkeit, Fokuszeit und Lieferaufwand. Keine Änderungen, die das Sprint Goal gefährden, und kein Qualitätsverlust; Refinement und Neuverhandlung des Scopes mit dem Product Owner sind erlaubt. Nur der Product Owner kann ihn abbrechen.
+- **Sprint Planning**: Das gesamte Scrum Team bestätigt Kapazität und Velocity und erzeugt das **Sprint Backlog** und das **Sprint Goal** (das Warum des Sprints). Im Kurs wird keine Timebox genannt.
+- **Daily Scrum**: 15 Minuten, gleiche Zeit und gleicher Ort, drei Fragen zu gestern, heute und Hindernissen. Sarah: alle einbeziehen, kurz halten, das Zeitfenster vereinbaren, Agenden mit Zeitvorgaben nutzen, Themen höflich vertagen.
+- **Sprint Review**: bis zu vier Stunden, das ganze Team führt die Arbeit vor und überprüft sie, Feedback kommt sofort. Nur fertige Einträge kommen ins **Increment**; der Rest geht zurück ins Backlog.
+- **Releasefähiges Increment gegenüber MVP**: Jeder Sprint zielt auf ein vollständiges, getestetes, potenziell releasefähiges Increment; ein MVP ist der minimale Funktionsumfang, um frühe Kundschaft zufriedenzustellen und zu lernen, kann mehrere Sprints dauern und ist die Entscheidung des Product Owners.
+- **Sprint Retrospective**: bis zu drei Stunden zu Menschen, Prozessen und Werkzeugen. Ohne Schuldzuweisung, beteiligend, ausgewogen, mit Konsequenzen. Spielereien, Negativität und Prozessänderungen in jedem Sprint vermeiden; offene Fragen stellen und jeden Aspekt des Sprints abdecken. Gen AI kann den Fragenkatalog entwerfen.
+- **Burndown Chart** verfolgt abgeschlossene Punkte gegen die Zeit; **Velocity** sind die durchschnittlichen Punkte pro Sprint über mindestens drei Sprints. T-Shirt-Größen auf Zahlen abbilden. Keine gute oder schlechte Velocity, kein Vergleich zwischen Teams, keine Leistungskennzahl, vorsichtiges Teilen, und Prognosen sind keine Zusagen.
+- **Kanban Board oder Scrum Board**: Visualisierung, WIP-Limits, Fluss durch To do, Doing, Done.
+- **Werkzeuge**: Jira, Asana und Trello für Backlogs und Sprints; Google Docs, Sheets und Slides für Dokumentation, Backlogs und Präsentationen; Video, Chat und E-Mail für schnelle Kommunikation.
+</Aside>
+
+---
+
+*Weiter: [Agile anwenden →](/de/learnings/online/project-management/agile-4-applying-agile/) - wertorientierte Lieferung, den Wandel führen und Agile über ein einzelnes Team hinaus.*
