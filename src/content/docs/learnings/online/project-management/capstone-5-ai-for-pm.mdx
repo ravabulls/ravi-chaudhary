@@ -1,0 +1,414 @@
+---
+title: "Capstone 5 - AI for Project Management"
+description: "Recall sheet for the certificate's AI module: what AI and generative AI are at this course's depth, the TCREI prompting framework, the human-in-the-loop rule, and how gen AI is used to draft a project charter, surface risks, summarise meetings, prepare a retrospective and plan stakeholder communication."
+sidebar:
+  label: "C6·5 - AI for PM"
+  order: 34
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Course 6: Applying Project Management in the Real World*
+
+---
+
+The first four weeks of the capstone ran a single project end to end, from a rough brief to a signed-off closeout. This final week does something different. It steps out of the scenario entirely and becomes a short, tools-focused module on using artificial intelligence in the project manager's day job.
+
+The framing is practical rather than technical. The course does not teach how models are built; it defines AI and generative AI in a sentence each, teaches one prompting framework, and then spends most of its time watching a working Google program manager apply that framework to five ordinary project tasks: writing a project charter, finding risks, planning stakeholder communication, turning meeting notes into action items, and preparing a retrospective. Around those demonstrations sits a consistent caution, that the tool does the heavy lifting while the project manager does the heavy thinking.
+
+Two people narrate the week. **Ben**, a Staff Program Manager on the **Google Cloud** team, gives both the opening perspective piece and every hands-on demonstration. He has delivered projects such as cloud networking features and training for the thousands of program managers at Google. Every demonstration uses **Gemini**, though the course is explicit that the techniques transfer to other tools.
+
+<Aside type="note">
+**Where this sits:** this is an add-on module, not a continuation of the capstone project. Nothing here depends on the earlier weeks, and the artifacts it references (charter, risk list, communication plan, retrospective) are the ones already taught in Courses 2 and 5. The value on offer is speed on those artifacts, not a new process.
+</Aside>
+
+---
+
+## What AI is, at this course's depth
+
+<Aside type="note">
+**Artificial intelligence (AI)** - computer systems that carry out cognitive tasks normally associated with human intelligence.
+<br />**Generative AI (gen AI)** - a specific type of AI that can produce new content, such as text, images or other media.
+<br />**Prompt** - the input given to a gen AI model, providing instructions about the output it should generate.
+</Aside>
+
+That is the whole conceptual foundation the module lays down. It does not explain what a large language model is, how one is trained, or why it produces the output it does. From there it moves straight to application: AI tools can augment and automate project management tasks such as drafting project plans, summarising meeting notes and analysing project data.
+
+The stated aims for the AI content across the certificate are to learn foundational AI concepts, discover the tools used in project management, review real-world examples from a Google project manager's day-to-day work, and get hands-on practice.
+
+### Tools and features the course names
+
+| Tool or feature | What the course says it does |
+| --- | --- |
+| **Gemini** | Google's gen AI tool, used for every demonstration in this module |
+| **Gemini Advanced** | The variant noted for allowing documents to be uploaded directly, rather than copying and pasting text into the prompt |
+| **Gemini Notebook** | Centralises project documentation, meeting notes and stakeholder communications, then analyses them to generate summaries, action items and even project risk assessments; its collaborative features support team facilitation, knowledge sharing and project execution |
+| **Google AI Overviews** | AI-generated summaries at the top of some Google Search results, combining several web sources to save time when researching a topic |
+| **ChatGPT** by OpenAI, **Microsoft Copilot**, **Claude** | Named as other gen AI tools the same techniques apply to |
+
+### Four ways gen AI is said to help
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Create content</span>
+  <span class="sc-chip violet">Analyse information quickly</span>
+  <span class="sc-chip green">Answer questions in detail</span>
+  <span class="sc-chip slate">Simplify day-to-day work</span>
+</div>
+
+<ul>
+<li><strong>Create content</strong> - generate text, images and other media, such as draft project proposals, status reports or presentation slides.</li>
+<li><strong>Analyse information quickly</strong> - work through large amounts of content at speed, summarising meeting notes, stakeholder feedback or project documentation so key points and trends surface faster.</li>
+<li><strong>Answer questions in detailed and nuanced ways</strong> - useful for research, such as asking about project management best practices, specific methodologies or industry trends.</li>
+<li><strong>Simplify day-to-day work</strong> - augment routine tasks such as drafting emails, setting up task lists, or suggesting possible ways around a project roadblock.</li>
+</ul>
+
+The module's recurring argument for all of this is time reallocation. Aspiring project managers are drawn to leading teams, navigating challenges and delivering projects, but complex projects slow them down with administrative work, documentation and chasing updates. Handing that layer to a tool buys back time for strategic decision-making.
+
+---
+
+## Ben's perspective: solving problems with AI
+
+Ben opens by calling AI a massive change for everything project managers will be doing, and says the key move is to get ahead of it by learning what it can and cannot do. Knowing where it works and where it does not is what makes the difference, because there are many project management tasks it should simply improve.
+
+His own uses, in his words:
+
+<ul>
+<li><strong>Tuning communication.</strong> He uses it constantly on complex or executive emails, to double check the writing, revise it, or suggest better wording, which makes what he delivers better.</li>
+<li><strong>Thinking a problem through.</strong> When he is stuck and his teammates are not around to talk it over, he can describe the ideas he has, the problem, and what he is trying to solve, and get dozens of interesting ideas back to synthesise into a result.</li>
+<li><strong>The elevator pitch.</strong> He had pages of material about his program and could not compress it. He asked for a one-sentence elevator pitch that was energetic, caught attention and did not lose the salient information, got several options back, and tuned one into a tight pitch he now uses whenever he describes the program to teams.</li>
+</ul>
+
+### Three things to consider when starting out
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Experiment freely<span class="sub">try different tools, approaches and prompting; some attempts fail and some work far better than expected</span></div>
+    <div class="sc-node violet">Be safe<span class="sub">mind both the content you put in and the validation you apply to what comes out</span></div>
+    <div class="sc-node green">Compare notes with others<span class="sub">colleagues trying the same thing will teach you as much as you teach them, and the experience compounds</span></div>
+  </div>
+  <figcaption>Ben's advice for anyone beginning to use AI in project management.</figcaption>
+</figure>
+
+His closing claim is that AI is a big deal for anyone in business and more so in project management, because beyond helping with the job it acts as a companion for discovering insights you would not otherwise have reached.
+
+---
+
+## Writing the prompt: the TCREI framework
+
+Getting value out of a gen AI tool depends on writing an effective prompt, and the course gives exactly one framework for it: **Task, Context, References, Evaluate, Iterate**. The mnemonic offered for when the steps slip your mind is **Thoughtfully Create Really Excellent Inputs**.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Task</div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Context</div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">References</div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Evaluate</div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Iterate</div>
+  </div>
+  <figcaption>The first three build the prompt, the last two improve it in cycles.</figcaption>
+</figure>
+
+| Step | What it means | Detail the course gives |
+| --- | --- | --- |
+| **Task** | What you want the model to do | Splits into **persona** and **format** |
+| **Persona** | The expertise you want the tool to draw on, or the audience to write for | A professional speech writer, a marketing executive with 15 years of experience, or output aimed at a customer or your manager. Be as detailed as you like |
+| **Format** | How the output should appear | A bulleted list, short sentences, a table |
+| **Context** | The details the tool needs to understand what you want | The worked contrast is below |
+| **References** | Examples for the tool to work from | Not always available, especially for abstract work or when you are hunting for ideas and inspiration |
+| **Evaluate** | Ask whether the input you gave produced the output you needed | The judgement step, covered again under the project charter |
+| **Iterate** | Try again with more information or a tweaked prompt | Described as a key part of prompting effectively |
+
+### Context, shown as a contrast
+
+| Weak on context | Strong on context |
+| --- | --- |
+| Give me some ideas for a birthday present under $30. | Give me five ideas for a birthday present. My budget is $30. The gift is for a 29-year-old who loves winter sports and has recently switched from snowboarding to skiing. |
+
+The same example carries the References step: adding examples of presents you have given in the past produces a more useful answer than the request alone.
+
+The general instruction for phrasing is to be clear and specific, use natural language, write as if you were speaking to another person, and express complete thoughts. The course also removes any pressure to over-engineer: starting with a simple prompt is fine, and sometimes a simple prompt is all you need. But if you want the tool's full potential, the secret is not magic, it is good prompts.
+
+### Human-in-the-loop
+
+<Aside type="caution">
+**Human-in-the-loop** - the approach the course names for using gen AI responsibly. It combines machine and human intelligence to train, use, verify and refine results. Gen AI works best as a complement to uniquely human skills, because no tool has the depth of experience, practical knowledge and interactive skills a person brings.
+</Aside>
+
+In practical terms this means being mindful of what goes into a tool and always evaluating and verifying what comes out. On confidential material the rule given is specific: consider carefully whether the task really needs sensitive or confidential information, and consult your organisation's rules or policies first. Outside work, avoid entering personal or confidential information and check how the data you enter may be used.
+
+---
+
+## Making meetings more productive
+
+A lot of time goes into preparing for and attending meetings, and badly run ones are a source of frustration. The course's sharper point is that what happens *after* the meeting is often the most important part: a good live conversation ends, everyone goes their separate ways, and it is no longer clear what each person should do next.
+
+The scenario demonstrated is generating a meeting summary that captures action items so the team can act on what was discussed.
+
+> Summarize the following meeting notes in a succinct, two-paragraph email that identifies the key points and action items. Include a friendly opening line and warm sign-off.
+
+The notes are then copied and pasted in below the instruction. Somewhat disorganised notes came back as a clear summary with action items attached, which matters because action items are easily lost inside notes and cause real problems when missed.
+
+### Two things to keep in mind
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Gen AI cannot read your mind</div>
+    <ul>
+      <li>Meeting notes are often sparse, so they must be complete enough to contain everything important</li>
+      <li>If capturing good notes is hard, some video conferencing software can produce a transcription of the meeting to work from</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Specify the format you need</div>
+    <ul>
+      <li>Match the format to the communication objective</li>
+      <li>A short email summary suits the people who attended</li>
+      <li>For people who missed the meeting, ask instead for a longer recap so they can get fully up to speed</li>
+    </ul>
+  </div>
+</div>
+
+The suggested practice is to pick a meeting already on your calendar and try it.
+
+---
+
+## Identifying and managing risk
+
+Every project carries risks, meaning potential events that could occur and affect the project's outcome. The course restates that a risk may have a **positive or negative** effect on one or more project objectives such as **scope, schedule, cost or quality**, and that no project eliminates all of them. What helps is being clear on what the risks are and which ones to prioritise, so you can work out how to mitigate them.
+
+The gap it targets is a familiar one: a project charter typically lists only a few risks. A gen AI tool can generate a fuller set so you are better prepared.
+
+The worked example is a **wellness app for dogs**, built by a mid-size company that offers dog walking, training and pet supplies:
+
+> I'm a project manager overseeing the development of a dog wellness app. We are a mid-size company offering dog walking, training, and pet supplies. Please review the following project details and identify only major risks that could affect the project timeline or budget.
+
+Project details are then pasted in from the project charter. This is where the course notes that tools such as Gemini Advanced allow a document to be uploaded directly instead.
+
+The output was a large list of potential risks, including some the project manager might not have thought of. It was also partly generic, and the diagnosis offered is that more detail would have narrowed it: the more information in the prompt, the better the tool works. Suggested additions are the risks encountered on previous projects and the risks already identified for this one.
+
+### Cautions on AI-generated risk lists
+
+<ul>
+<li>Gen AI is strong at <strong>brainstorming</strong>. Put that to work by asking not only what could help the project run better, but also what could go wrong.</li>
+<li>It generates text quickly, so challenge it to produce what you want and ask it to reformat the same material in different ways until one version works for you and the team.</li>
+<li>A long list is helpful but may contain items irrelevant to your project or your team's needs, <strong>and may miss key areas entirely</strong>. Reviewing it carefully and applying your own judgement is your job, not the tool's.</li>
+<li>As the project develops and new risks appear, go back to the tool with those specifics and brainstorm <strong>mitigation plans</strong>.</li>
+</ul>
+
+The honest framing given at the end: just like humans, gen AI cannot stop risks from becoming problems that derail a project. What it can do is help you get ahead of them, which is what being an effective project manager requires.
+
+---
+
+## Preparing a retrospective
+
+The analogy used is trying a new recipe or taking on a home improvement project and thinking afterwards that you wish you had known something before you started. You make a mental note about doing it differently next time, and project management works the same way: reviewing what went well and what did not makes the next project run more smoothly.
+
+Retrospectives suit any project management process because they provide honest feedback in a timely manner, and that feedback guides the next sprint and future work. The task handed to gen AI is generating the question bank. Course 5 teaches the same technique in its Scrum module, so the worked example also appears on [Implementing Scrum](/learnings/online/project-management/agile-3-implementing-scrum/); both pages keep it so each stands on its own for revision.
+
+<Aside type="tip">
+**Pro tip from the video:** prompts do not have to be typed. Activating the **microphone feature** lets you quickly add more information, start a new prompt, or iterate on an existing one using your voice.
+</Aside>
+
+The spoken prompt describes a project manager preparing to lead a one-hour retrospective for the team on a just-completed project, a community fundraising event for a local school involving businesses and nonprofits from the area, and asks for a robust question bank that will spark participation and guide the discussion towards what went well and what could be improved.
+
+<Steps>
+
+1. Take the long list of questions returned as a starting place, not a finished agenda.
+
+2. Prioritise and select the questions that align with your specific team and project goals, since a large group and a fixed hour mean you cannot use them all. The four factors given for narrowing down are **relevance, impact, engagement and time allotted**.
+
+3. Add the cultural and personal aspects yourself. Ben would open by thanking the team for their work in bringing the program together, and would adapt the icebreaker to his team's culture.
+
+4. Briefly explain the purpose of the meeting upfront, because many participants do not know what a retrospective is actually for.
+
+</Steps>
+
+The underlying trade is stated plainly: letting gen AI handle the time-consuming logistics frees you to focus on the concepts and insights only you can bring.
+
+---
+
+## Planning: building the project charter
+
+The module's planning section opens with a house. If you wanted to build one, your first move would not be picking up a hammer and nails. You would plan: set a budget, review blueprints, and know what the finished house should look like. Projects follow the same structure, and the plans are called the **project charter**, the formal document that defines the project and sets out the details needed to reach its goals.
+
+> Act as a project manager and build a project charter that includes the information below. Add placeholders for any missing information.
+
+The details are held in a separate document and pasted in: a description of the project, the business need, the deliverables, the project stakeholders and the success criteria. The point stressed is that this is not merely typing a request, it is supplying the critical information the tool has to respond to.
+
+The result was a good starting point rather than a finished charter. Many bullets needed expanding into full sentences and more detail had to be added by hand, but the head start was real, and more input at the beginning would have produced a more complete charter.
+
+### What to keep in mind
+
+<ul>
+<li>Gen AI creates a lot of content quickly and in different formats, which is genuinely useful when documentation like a charter is required.</li>
+<li>If you already have a charter template you like, share it with the tool, or describe the format you want, down to the number of pages or the sections to include.</li>
+<li><strong>Read responses closely.</strong> Skimming output that looks good can hide something you did not intend. Gen AI may be doing the heavy lifting, but you still have to do the heavy thinking. This is the <strong>E for Evaluate</strong> in practice.</li>
+<li>Experiment with different prompts by changing wording and formatting. Being willing to try again and deliberate with instructions is the <strong>I for Iterate</strong>, the process of refining prompts and outputs through repeated cycles of testing and adjustment.</li>
+</ul>
+
+### Iteration in more detail
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Give more specific guidance<span class="sub">where the output missed your expectations, the prompt probably lacked the detail needed for a useful response</span></div>
+    <div class="sc-node violet">Add a reference<span class="sub">share an example of what you expect; if you want a particular format or type of analysis, show the tool one</span></div>
+    <div class="sc-node green">Check your phrasing<span class="sub">were you as clear as possible? breaking instructions into shorter sentences improves the next attempt</span></div>
+    <div class="sc-node slate">Build on what you liked<span class="sub">if two of five ideas worked, explain why, ask for a new list on that reasoning, and say why the other three missed</span></div>
+  </div>
+  <figcaption>The tool can only work from what you tell it, so each cycle adds a missing piece.</figcaption>
+</figure>
+
+Applied to the charter itself, iteration might mean asking for less technical language, asking for particular sections to be shortened or lengthened, or asking whether any important information is missing from what was originally supplied that would make the charter stronger.
+
+Getting results you are happy with takes practice. The course's position is that playing and experimenting with prompts is the only way to find the path that works for you.
+
+---
+
+## Stakeholders and the ingredient AI cannot supply
+
+Even with the best plans, a strong project charter and a thorough awareness of the risks, the module states that a project will not succeed without one crucial ingredient: **good communication**. That is the point at which the human role is drawn most sharply.
+
+Gen AI can still help at a high level, by generating the list of communications a project needs to run smoothly, such as status reports and stakeholder updates.
+
+> Given the project charter, which includes the following information, please share a summary in a table form of the most important communications I should prepare during the project, and indicate both the type of communication and stakeholder.
+
+Charter information is pasted in as before. The output was a detailed table covering the project's communications, useful both for staying organised and for not forgetting something important. Its real value is making sure the right stakeholders are engaged so expectations can be managed and the project stays on track.
+
+### What stays with the project manager
+
+<div class="sc-quad">
+<div class="q amber">
+<div class="qh">Choose the format</div>
+<ul>
+<li>Output can come as a table, bullets or other formats</li>
+<li>Specify which one you want in the prompt, as the table was specified here</li>
+</ul>
+</div>
+<div class="q violet">
+<div class="qh">Respect house norms</div>
+<ul>
+<li>Your company may have standard communication templates and methods</li>
+<li>It may also have norms about who should receive which pieces of information</li>
+</ul>
+</div>
+<div class="q green">
+<div class="qh">Own the management of it</div>
+<ul>
+<li>You have a big role in deciding how communication is managed</li>
+<li>The tool supplies a helpful starting point, nothing more</li>
+</ul>
+</div>
+<div class="q slate">
+<div class="qh">Guard what goes in</div>
+<ul>
+<li>Always review company policy before putting sensitive or confidential material in a prompt</li>
+<li>Names of individuals are the example given; avoid entering this kind of information whenever possible</li>
+</ul>
+</div>
+</div>
+
+Once the stakeholder communications plan exists, the same tool can bring those communications to life, for instance by drafting a first version of a status email to the project's senior sponsors, which saves time on the writing without taking over the decision about what to say.
+
+---
+
+## Key takeaways
+
+The closing reading pulls the module together under four headings.
+
+### The growing role of AI in project management
+
+<ul>
+<li>Understanding and using AI matters for future success as a project manager, because these tools are becoming commonly used in the field.</li>
+<li>AI can analyse historical project data, predict task outcomes and make risk mitigation recommendations.</li>
+<li>It can augment the routine tasks that keep a project on time, by suggesting optimisations, sending timely reminders and tracking task progress automatically.</li>
+</ul>
+
+### Working smarter and faster with gen AI
+
+<ul>
+<li>Create a template for any project artifact, including project plans, project timelines and communication plans.</li>
+<li>Create, organise and outline agendas, meeting notes and task trackers.</li>
+<li>Create content such as emails, project plans, presentation ideas and executive summaries.</li>
+<li>Simplify daily tasks by summarising task progress automatically, identifying potential issues and sending personalised updates to team members.</li>
+<li>Transcribe or summarise meetings and meeting notes.</li>
+</ul>
+
+### Responsible use
+
+| Guideline | What it asks of you |
+| --- | --- |
+| **Review outputs carefully** | Check accuracy and usefulness before anything is used |
+| **Disclose your use of generative AI** | Stated plainly, with no further elaboration |
+| **Consider privacy and security** | Weigh the implications and avoid entering sensitive information |
+| **Apply human-in-the-loop** | AI should always serve as a complement to human skills and abilities |
+
+The list is explicitly described as not exhaustive, with a closing instruction to check your own company's policies on gen AI use.
+
+### AI in action, as demonstrated
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Documents<span class="n">draft</span></div>
+    <div class="sc-node amber soft">Project charter<span class="sub">quickly and effectively draft the document that defines the project and outlines how to reach its key goals</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Risk<span class="n">anticipate</span></div>
+    <div class="sc-node violet soft">Risks and responses<span class="sub">identify potential risks to timely completion and brainstorm ways to address them</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">People<span class="n">communicate</span></div>
+    <div class="sc-node green soft">Stakeholder communication<span class="sub">summarise project information and draft emails or other outreach</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Meetings<span class="n">run</span></div>
+    <div class="sc-node slate soft">Meetings and retrospectives<span class="sub">automatic note-taking, recaps, transcripts and planning assistance make both more efficient and productive</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Coordination<span class="n">organise</span></div>
+    <div class="sc-node amber soft">Gemini Notebook<span class="sub">coordinate projects across multiple teams, for research, knowledge organisation and content generation</span></div>
+  </div>
+</div>
+
+Ben's own sign-off is a challenge rather than a summary: think about the work you already do, find something that takes a lot of time or a project where you need ideas to get started, and commit to experimenting with gen AI on something that will make a real difference to your work. Like any new technology, it takes trying, testing and playing to learn.
+
+### Further resources the course points to
+
+<ul>
+<li><strong>Shaping the future of Project Management with AI</strong> - the Project Management Institute's report on AI trends in the industry and predictions for the future of AI in project management work.</li>
+<li><strong>Science and Tech Spotlight: Generative AI</strong> - an article from the U.S. Government Accountability Office on why generative AI systems matter.</li>
+<li><strong>There's More to AI Bias Than Biased Data, NIST Report Highlights</strong> - the risks when bias is present in AI data, and recommendations for mitigating them, from the National Institute of Standards and Technology.</li>
+<li><strong>What is Artificial Intelligence (AI)?</strong> - Google Cloud's introduction to AI, covering other uses such as speech and image recognition.</li>
+</ul>
+
+<Aside type="caution">
+Bias appears in this module only here, as a linked NIST resource. The course itself does not teach how bias arises in AI output or how to detect it, so treat this as a pointer rather than coverage.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **AI** = computer systems performing cognitive tasks normally associated with human intelligence. **Gen AI** = the type that creates new content. A **prompt** is the input that instructs it. That is the full depth of theory this module gives.
+- **Tools named**: Gemini (all demonstrations), Gemini Advanced (uploads documents directly), Gemini Notebook (centralises documentation, generates summaries, action items and risk assessments), Google AI Overviews in Search, plus ChatGPT, Copilot and Claude as alternatives.
+- **Four gen AI applications**: create content, analyse information quickly, answer questions in detail, simplify day-to-day work. The payoff is time moved from admin to strategic decision-making.
+- **Ben** (Staff Program Manager, Google Cloud) uses it to revise complex and executive emails, to think aloud when teammates are unavailable, and to compress a program description into an elevator pitch. His three starting rules: **experiment, be safe, compare notes with colleagues**.
+- **TCREI** = Task, Context, References, Evaluate, Iterate. Mnemonic: **Thoughtfully Create Really Excellent Inputs**. Task splits into **persona** (whose expertise, or which audience) and **format** (list, sentences, table). Context is the birthday-present contrast. References are examples, not always available. A simple prompt is often enough.
+- **Human-in-the-loop** combines machine and human intelligence to train, use, verify and refine. Be mindful going in, always verify coming out, and check organisational policy before using confidential information.
+- **Meetings**: the follow-through matters most. Prompt for a succinct two-paragraph summary email with key points and action items, then paste in the notes. Notes must be complete enough (use conferencing transcription if needed), and match format to audience, so a longer recap for those who missed it.
+- **Risk**: risks may be positive or negative and affect scope, schedule, cost or quality. A charter lists only a few, so gen AI extends the set. Dog wellness app example. More project detail gives a less generic list. It brainstorms well, reformats on demand, and can suggest mitigations later, but may include irrelevant items and **miss key areas**, so review with your own judgement.
+- **Retrospectives**: ask for a question bank, then narrow it by **relevance, impact, engagement and time allotted**. Add the thanks, the icebreaker and the cultural touches yourself, and explain the meeting's purpose upfront. Prompts can be spoken via the **microphone feature**.
+- **Project charter**: the house-building analogy, plan before you pick up the hammer. Prompt the tool to act as a project manager, supply description, business need, deliverables, stakeholders and success criteria, and ask for placeholders where information is missing. The output starts you off, it does not finish the job. **Read closely, do not skim.** Iterate by adding specifics, adding references, shortening sentences and building on the parts you liked.
+- **Communication is the crucial ingredient** no plan succeeds without. Gen AI can table up the communications needed by type and stakeholder, and draft a sponsor status email, but format choice, company templates and norms, and the management of communication stay with you, and names of individuals stay out of prompts.
+- **Responsible use**: review outputs for accuracy, disclose your use of gen AI, consider privacy and security, apply human-in-the-loop, and check your company's policies. The list is not exhaustive.
+</Aside>
+
+---
+
+*Back to the [course overview →](/learnings/online/project-management/) - that completes the Google Project Management Certificate.*

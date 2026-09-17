@@ -445,6 +445,17 @@ export default defineConfig({
 										],
 									},
 									{
+										label: 'Course 6 - Capstone', translations: { de: 'Kurs 6 - Capstone' },
+										collapsed: true,
+										items: [
+											{ label: '1 · Initiation', translations: { de: '1 · Initiierung' }, link: 'learnings/online/project-management/capstone-1-initiation' },
+											{ label: '2 · Planning', translations: { de: '2 · Planung' }, link: 'learnings/online/project-management/capstone-2-planning' },
+											{ label: '3 · Quality & Evaluation', translations: { de: '3 · Qualität & Evaluation' }, link: 'learnings/online/project-management/capstone-3-quality' },
+											{ label: '4 · Closing', translations: { de: '4 · Abschluss' }, link: 'learnings/online/project-management/capstone-4-closing' },
+											{ label: '5 · AI for PM', translations: { de: '5 · KI fürs PM' }, link: 'learnings/online/project-management/capstone-5-ai-for-pm' },
+										],
+									},
+									{
 										label: 'Glossaries', translations: { de: 'Glossare' },
 										collapsed: true,
 										items: [
@@ -453,8 +464,20 @@ export default defineConfig({
 											{ label: 'Course 3 · Planning', translations: { de: 'Kurs 3 · Planung' }, link: 'learnings/online/project-management/glossary-3-planning' },
 											{ label: 'Course 4 · Execution', translations: { de: 'Kurs 4 · Durchführung' }, link: 'learnings/online/project-management/glossary-4-execution' },
 											{ label: 'Course 5 · Agile', translations: { de: 'Kurs 5 · Agile' }, link: 'learnings/online/project-management/glossary-5-agile' },
+											{ label: 'Course 6 · Capstone', translations: { de: 'Kurs 6 · Capstone' }, link: 'learnings/online/project-management/glossary-6-capstone' },
 										],
 									},
+								],
+							},
+							{
+								label: 'Job Search with AI', translations: { de: 'Jobsuche mit KI' },
+								collapsed: true,
+								items: [
+									{ label: 'Overview', translations: { de: 'Übersicht' }, link: 'learnings/online/job-search-with-ai' },
+									{ label: '1 · Know Your Value', translations: { de: '1 · Den eigenen Wert kennen' }, link: 'learnings/online/job-search-with-ai/jobsearch-1-know-your-value' },
+									{ label: '2 · Resume & Presence', translations: { de: '2 · Lebenslauf & Auftritt' }, link: 'learnings/online/job-search-with-ai/jobsearch-2-resume-and-brand' },
+									{ label: '3 · Applying & Networking', translations: { de: '3 · Bewerben & Netzwerken' }, link: 'learnings/online/job-search-with-ai/jobsearch-3-apply-and-network' },
+									{ label: '4 · Interviews & Offers', translations: { de: '4 · Interviews & Angebote' }, link: 'learnings/online/job-search-with-ai/jobsearch-4-interview-and-offer' },
 								],
 							},
 							{

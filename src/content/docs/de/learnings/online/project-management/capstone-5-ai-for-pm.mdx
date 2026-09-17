@@ -1,0 +1,414 @@
+---
+title: "Capstone 5 - KI fürs Projektmanagement"
+description: "Lernnotizen zum KI-Modul des Zertifikats: was KI und generative KI in der Tiefe dieses Kurses bedeuten, das TCREI-Framework fürs Prompting, die Human-in-the-loop-Regel und wie generative AI genutzt wird, um einen Project Charter zu entwerfen, Risiken sichtbar zu machen, Meetings zusammenzufassen, eine Retrospektive vorzubereiten und die Stakeholder-Kommunikation zu planen."
+sidebar:
+  label: "C6·5 - KI fürs PM"
+  order: 34
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google Project Management Certificate · Kurs 6: Projektmanagement in der Praxis anwenden*
+
+---
+
+Die ersten vier Wochen des Capstone haben ein einziges Projekt von Anfang bis Ende durchgespielt, vom groben Briefing bis zum abgenommenen Projektabschluss. Diese letzte Woche macht etwas anderes. Sie verlässt das Szenario vollständig und wird zu einem kurzen, werkzeugorientierten Modul über den Einsatz künstlicher Intelligenz im Arbeitsalltag von Projektmanagerinnen und Projektmanagern.
+
+Der Rahmen ist praktisch, nicht technisch. Der Kurs lehrt nicht, wie Modelle gebaut werden; er definiert AI (künstliche Intelligenz) und generative AI (generative KI) in je einem Satz, vermittelt ein einziges Prompting-Framework und verbringt dann die meiste Zeit damit, einem arbeitenden Google-Program-Manager dabei zuzusehen, wie er dieses Framework auf fünf ganz gewöhnliche Projektaufgaben anwendet: einen Project Charter schreiben, Risiken finden, die Stakeholder-Kommunikation planen, Meetingnotizen in Action Items verwandeln und eine Retrospektive vorbereiten. Um diese Demonstrationen herum liegt eine durchgehende Warnung: Das Werkzeug übernimmt die schwere Arbeit, die schweren Gedanken übernimmt die Projektleitung.
+
+Zwei Personen führen durch die Woche. **Ben**, Staff Program Manager im Team **Google Cloud**, liefert sowohl den einleitenden Perspektivbeitrag als auch jede praktische Demonstration. Er hat Projekte wie Cloud-Networking-Funktionen und Trainings für die Tausenden Program Manager bei Google umgesetzt. Jede Demonstration nutzt **Gemini**, wobei der Kurs ausdrücklich sagt, dass sich die Techniken auf andere Werkzeuge übertragen lassen.
+
+<Aside type="note">
+**Wo das hingehört:** Das ist ein Zusatzmodul, keine Fortsetzung des Capstone-Projekts. Nichts hier baut auf den früheren Wochen auf, und die Artifacts, auf die es sich bezieht (Charter, Risikoliste, Kommunikationsplan, Retrospektive), sind genau die, die bereits in Kurs 2 und Kurs 5 gelehrt wurden. Angeboten wird Tempo bei diesen Artifacts, kein neuer Prozess.
+</Aside>
+
+---
+
+## Was KI ist, in der Tiefe dieses Kurses
+
+<Aside type="note">
+**Artificial intelligence (AI, künstliche Intelligenz)** - Computersysteme, die kognitive Aufgaben ausführen, die man normalerweise mit menschlicher Intelligenz verbindet.
+<br />**Generative AI (gen AI, generative KI)** - eine besondere Art von KI, die neue Inhalte erzeugen kann, etwa Text, Bilder oder andere Medien.
+<br />**Prompt** - die Eingabe an ein Gen-AI-Modell, die Anweisungen zu der Ausgabe enthält, die es erzeugen soll.
+</Aside>
+
+Das ist das gesamte konzeptionelle Fundament, das dieses Modul legt. Es erklärt nicht, was ein large language model ist, wie eines trainiert wird oder warum es die Ausgabe erzeugt, die es erzeugt. Von dort geht es direkt zur Anwendung: KI-Werkzeuge können Aufgaben im Projektmanagement erweitern und automatisieren, etwa Projektpläne entwerfen, Meetingnotizen zusammenfassen und Projektdaten analysieren.
+
+Die erklärten Ziele der KI-Inhalte über das gesamte Zertifikat hinweg: grundlegende KI-Konzepte lernen, die im Projektmanagement genutzten Werkzeuge kennenlernen, Beispiele aus der täglichen Arbeit eines Google-Projektmanagers ansehen und praktische Übung sammeln.
+
+### Werkzeuge und Funktionen, die der Kurs nennt
+
+| Werkzeug oder Funktion | Was der Kurs dazu sagt |
+| --- | --- |
+| **Gemini** | Googles Gen-AI-Werkzeug, in diesem Modul für jede Demonstration genutzt |
+| **Gemini Advanced** | Die Variante, bei der laut Kurs Dokumente direkt hochgeladen werden können, statt Text in den Prompt zu kopieren |
+| **Gemini Notebook** | Bündelt Projektdokumentation, Meetingnotizen und Stakeholder-Kommunikation zentral und analysiert sie dann, um Zusammenfassungen, Action Items und sogar Risikobewertungen für das Projekt zu erzeugen; die kollaborativen Funktionen unterstützen Teammoderation, Wissensaustausch und Projektumsetzung |
+| **Google AI Overviews** | KI-generierte Zusammenfassungen oben in manchen Google-Suchergebnissen, die mehrere Webquellen kombinieren und so bei der Recherche zu einem Thema Zeit sparen |
+| **ChatGPT** von OpenAI, **Microsoft Copilot**, **Claude** | Als weitere Gen-AI-Werkzeuge genannt, auf die dieselben Techniken zutreffen |
+
+### Vier Arten, wie generative AI helfen soll
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Inhalte erstellen</span>
+  <span class="sc-chip violet">Informationen schnell analysieren</span>
+  <span class="sc-chip green">Fragen ausführlich beantworten</span>
+  <span class="sc-chip slate">Den Arbeitsalltag vereinfachen</span>
+</div>
+
+<ul>
+<li><strong>Inhalte erstellen</strong> - Text, Bilder und andere Medien erzeugen, etwa Entwürfe von Projektangeboten, Statusberichten oder Präsentationsfolien.</li>
+<li><strong>Informationen schnell analysieren</strong> - große Mengen an Inhalten zügig durcharbeiten und Meetingnotizen, Stakeholder-Feedback oder Projektdokumentation zusammenfassen, damit Kernpunkte und Trends schneller sichtbar werden.</li>
+<li><strong>Fragen ausführlich und differenziert beantworten</strong> - nützlich für Recherche, etwa Fragen nach Best Practices im Projektmanagement, nach bestimmten Methoden oder nach Branchentrends.</li>
+<li><strong>Den Arbeitsalltag vereinfachen</strong> - Routineaufgaben unterstützen, etwa E-Mails entwerfen, Aufgabenlisten aufsetzen oder mögliche Wege um eine Projektblockade herum vorschlagen.</li>
+</ul>
+
+Das wiederkehrende Argument des Moduls für all das ist die Umverteilung von Zeit. Angehende Projektmanagerinnen und Projektmanager zieht es zur Führung von Teams, zur Bewältigung von Herausforderungen und zur Lieferung von Projekten, doch komplexe Projekte bremsen sie mit Verwaltungsarbeit, Dokumentation und dem Hinterherlaufen nach Updates. Diese Schicht an ein Werkzeug abzugeben, gewinnt Zeit für strategische Entscheidungen zurück.
+
+---
+
+## Bens Perspektive: Probleme mit KI lösen
+
+Ben eröffnet damit, dass er KI eine gewaltige Veränderung für alles nennt, was Projektmanagerinnen und Projektmanager künftig tun werden, und sagt, der entscheidende Schritt sei, ihr voraus zu sein, indem man lernt, was sie kann und was nicht. Zu wissen, wo sie funktioniert und wo nicht, macht den Unterschied, denn es gibt viele Projektmanagement-Aufgaben, die sie schlicht verbessern sollte.
+
+Seine eigenen Anwendungen, in seinen Worten aus dem Video:
+
+<ul>
+<li><strong>Kommunikation feinschleifen.</strong> Er nutzt es ständig bei komplexen E-Mails oder solchen an das Management, um den Text gegenzuprüfen, zu überarbeiten oder bessere Formulierungen vorzuschlagen, was das, was er abliefert, besser macht.</li>
+<li><strong>Ein Problem durchdenken.</strong> Wenn er feststeckt und seine Teamkolleginnen und -kollegen gerade nicht zum Reden da sind, kann er seine Ideen, das Problem und das, was er lösen will, beschreiben und bekommt Dutzende interessanter Ideen zurück, die er zu einem Ergebnis verdichtet.</li>
+<li><strong>Der Elevator Pitch.</strong> Er hatte seitenweise Material über sein Programm und bekam es nicht komprimiert. Er bat um einen Elevator Pitch in einem Satz, der energiegeladen ist, Aufmerksamkeit erregt und die wesentlichen Informationen nicht verliert, bekam mehrere Optionen zurück und schliff eine davon zu einem knappen Pitch, den er heute nutzt, wann immer er sein Programm gegenüber Teams beschreibt.</li>
+</ul>
+
+### Drei Dinge für den Einstieg
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Frei experimentieren<span class="sub">verschiedene Werkzeuge, Herangehensweisen und Prompts ausprobieren; manche Versuche scheitern, manche funktionieren weit besser als erwartet</span></div>
+    <div class="sc-node violet">Sicher bleiben<span class="sub">auf beides achten, auf die Inhalte, die du hineingibst, und auf die Prüfung dessen, was herauskommt</span></div>
+    <div class="sc-node green">Sich mit anderen austauschen<span class="sub">Kolleginnen und Kollegen, die dasselbe ausprobieren, bringen dir genauso viel bei wie du ihnen, und die Erfahrung summiert sich</span></div>
+  </div>
+  <figcaption>Bens Rat für alle, die anfangen, KI im Projektmanagement zu nutzen.</figcaption>
+</figure>
+
+Sein Schlussgedanke: KI ist eine große Sache für alle im Geschäftsleben und im Projektmanagement noch mehr, denn über die Hilfe bei der Arbeit hinaus wirkt sie wie eine Begleitung beim Entdecken von Erkenntnissen, auf die man sonst nicht gekommen wäre.
+
+---
+
+## Den Prompt schreiben: das TCREI-Framework
+
+Wert aus einem Gen-AI-Werkzeug zu ziehen hängt daran, einen wirksamen Prompt zu schreiben, und der Kurs gibt dafür genau ein Framework: **Task, Context, References, Evaluate, Iterate** (Aufgabe, Kontext, Referenzen, Bewerten, Iterieren). Die Merkhilfe für den Fall, dass dir die Schritte entfallen, lautet **Thoughtfully Create Really Excellent Inputs**, also sinngemäß „erstelle mit Bedacht wirklich hervorragende Eingaben“; die Anfangsbuchstaben dieser fünf englischen Wörter ergeben TCREI, weshalb die Komponenten hier englisch bleiben.
+
+<figure class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Task</div>
+    <span class="arrow">→</span>
+    <div class="sc-node violet">Context</div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">References</div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Evaluate</div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Iterate</div>
+  </div>
+  <figcaption>Die ersten drei bauen den Prompt, die letzten beiden verbessern ihn in Zyklen.</figcaption>
+</figure>
+
+| Schritt | Was er bedeutet | Details, die der Kurs gibt |
+| --- | --- | --- |
+| **Task** | Was das Modell tun soll | Zerfällt in **Persona** und **Format** |
+| **Persona** | Die Expertise, aus der das Werkzeug schöpfen soll, oder das Publikum, für das es schreiben soll | Eine professionelle Redenschreiberin, eine Marketingleitung mit 15 Jahren Erfahrung, oder eine Ausgabe, die sich an Kundschaft oder an die eigene Führungskraft richtet. So detailliert, wie du magst |
+| **Format** | Wie die Ausgabe aussehen soll | Eine Aufzählungsliste, kurze Sätze, eine Tabelle |
+| **Context** | Die Details, die das Werkzeug braucht, um zu verstehen, was du willst | Der durchgerechnete Gegensatz steht unten |
+| **References** | Beispiele, an denen sich das Werkzeug orientieren kann | Nicht immer vorhanden, besonders bei abstrakter Arbeit oder wenn du auf der Suche nach Ideen und Inspiration bist |
+| **Evaluate** | Fragen, ob die Eingabe, die du gegeben hast, die Ausgabe erzeugt hat, die du gebraucht hast | Der Schritt der Beurteilung, beim Project Charter noch einmal behandelt |
+| **Iterate** | Erneut versuchen, mit mehr Informationen oder angepasstem Prompt | Wird als Schlüsselbestandteil wirksamen Promptings beschrieben |
+
+### Kontext, als Gegensatz gezeigt
+
+| Schwach im Kontext | Stark im Kontext |
+| --- | --- |
+| Gib mir ein paar Ideen für ein Geburtstagsgeschenk unter 30 Dollar. | Gib mir fünf Ideen für ein Geburtstagsgeschenk. Mein Budget sind 30 Dollar. Das Geschenk ist für eine 29-jährige Person, die Wintersport liebt und kürzlich vom Snowboarden aufs Skifahren gewechselt ist. |
+
+Dasselbe Beispiel trägt auch den Schritt References: Beispiele für Geschenke zu ergänzen, die du in der Vergangenheit gemacht hast, erzeugt eine nützlichere Antwort als die Anfrage allein.
+
+Die allgemeine Anweisung zur Formulierung lautet: klar und konkret sein, natürliche Sprache verwenden, so schreiben, als sprächest du mit einem anderen Menschen, und vollständige Gedanken ausdrücken. Der Kurs nimmt außerdem den Druck heraus, zu viel zu konstruieren: Mit einem einfachen Prompt zu beginnen ist in Ordnung, und manchmal ist ein einfacher Prompt alles, was du brauchst. Willst du aber das volle Potenzial des Werkzeugs, dann liegt das Geheimnis nicht in Magie, sondern in guten Prompts.
+
+### Human-in-the-loop
+
+<Aside type="caution">
+**Human-in-the-loop** - der Ansatz, den der Kurs für den verantwortungsvollen Umgang mit generative AI benennt. Er verbindet maschinelle und menschliche Intelligenz, um Ergebnisse zu trainieren, zu nutzen, zu prüfen und zu verfeinern. Generative AI funktioniert am besten als Ergänzung zu einzigartig menschlichen Fähigkeiten, denn kein Werkzeug hat die Tiefe an Erfahrung, praktischem Wissen und interaktivem Geschick, die ein Mensch mitbringt.
+</Aside>
+
+Praktisch heißt das: achtsam sein, was in ein Werkzeug hineingeht, und immer bewerten und prüfen, was herauskommt. Für vertrauliches Material ist die Regel konkret: sorgfältig abwägen, ob die Aufgabe sensible oder vertrauliche Informationen wirklich braucht, und zuerst die Regeln oder Richtlinien der eigenen Organisation zu Rate ziehen. Außerhalb der Arbeit gilt: keine persönlichen oder vertraulichen Informationen eingeben und prüfen, wie die eingegebenen Daten verwendet werden könnten.
+
+---
+
+## Meetings produktiver machen
+
+Viel Zeit fließt in die Vorbereitung und die Teilnahme an Meetings, und schlecht geführte Meetings sind eine Quelle von Frust. Der schärfere Punkt des Kurses: Was *nach* dem Meeting passiert, ist oft der wichtigste Teil. Ein gutes Gespräch endet, alle gehen auseinander, und dann ist nicht mehr klar, was jede Person als Nächstes tun sollte.
+
+Das gezeigte Szenario ist, eine Meeting-Zusammenfassung zu erzeugen, die die Action Items festhält, damit das Team auf das Besprochene hin handeln kann.
+
+> Summarize the following meeting notes in a succinct, two-paragraph email that identifies the key points and action items. Include a friendly opening line and warm sign-off.
+
+Die Notizen werden dann unter die Anweisung kopiert. Aus einigermaßen unstrukturierten Notizen kam eine klare Zusammenfassung mit angehängten Action Items zurück, und das zählt, weil Action Items in Notizen leicht verloren gehen und echte Probleme verursachen, wenn sie übersehen werden.
+
+### Zwei Dinge, die zu beachten sind
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Generative AI kann deine Gedanken nicht lesen</div>
+    <ul>
+      <li>Meetingnotizen sind oft dünn, sie müssen also vollständig genug sein, um alles Wichtige zu enthalten</li>
+      <li>Wenn gute Notizen schwerfallen, kann manche Videokonferenzsoftware eine Transkription des Meetings erzeugen, mit der sich arbeiten lässt</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Gib das Format an, das du brauchst</div>
+    <ul>
+      <li>Das Format zum Kommunikationsziel passend wählen</li>
+      <li>Eine kurze E-Mail-Zusammenfassung passt für die Teilnehmenden</li>
+      <li>Für Personen, die das Meeting verpasst haben, stattdessen einen längeren Rückblick anfordern, damit sie vollständig auf Stand kommen</li>
+    </ul>
+  </div>
+</div>
+
+Die vorgeschlagene Übung: ein Meeting nehmen, das ohnehin im Kalender steht, und es ausprobieren.
+
+---
+
+## Risiken erkennen und managen
+
+Jedes Projekt trägt Risiken, also mögliche Ereignisse, die eintreten und das Projektergebnis beeinflussen könnten. Der Kurs wiederholt, dass ein Risk eine **positive oder negative** Wirkung auf eines oder mehrere Projektziele wie **Scope, Termine, Kosten oder Qualität** haben kann und dass kein Projekt alle Risiken beseitigt. Was hilft, ist Klarheit darüber, welche Risiken es gibt und welche zu priorisieren sind, damit du erarbeiten kannst, wie sie sich abmildern lassen.
+
+Die Lücke, auf die das zielt, ist vertraut: Ein Project Charter listet typischerweise nur wenige Risiken. Ein Gen-AI-Werkzeug kann einen vollständigeren Satz erzeugen, sodass du besser vorbereitet bist.
+
+Das durchgerechnete Beispiel ist eine **Wellness-App für Hunde**, gebaut von einem mittelgroßen Unternehmen, das Gassi-Service, Hundetraining und Tierbedarf anbietet:
+
+> I'm a project manager overseeing the development of a dog wellness app. We are a mid-size company offering dog walking, training, and pet supplies. Please review the following project details and identify only major risks that could affect the project timeline or budget.
+
+Anschließend werden die Projektdetails aus dem Project Charter eingefügt. An dieser Stelle merkt der Kurs an, dass Werkzeuge wie Gemini Advanced es erlauben, ein Dokument stattdessen direkt hochzuladen.
+
+Die Ausgabe war eine große Liste möglicher Risiken, darunter einige, an die die Projektleitung vielleicht nicht gedacht hätte. Sie war zugleich teilweise generisch, und die angebotene Diagnose lautet, dass mehr Details sie eingegrenzt hätten: Je mehr Informationen im Prompt stehen, desto besser arbeitet das Werkzeug. Vorgeschlagene Ergänzungen sind die Risiken aus früheren Projekten und die für dieses Projekt bereits identifizierten Risiken.
+
+### Vorbehalte gegenüber KI-generierten Risikolisten
+
+<ul>
+<li>Generative AI ist stark im <strong>Brainstorming</strong>. Setz das ein, indem du nicht nur fragst, was dem Projekt helfen könnte, sondern auch, was schiefgehen könnte.</li>
+<li>Sie erzeugt Text schnell, also fordere sie heraus, das zu produzieren, was du willst, und bitte sie, dasselbe Material immer wieder anders zu formatieren, bis eine Fassung für dich und das Team passt.</li>
+<li>Eine lange Liste ist hilfreich, kann aber Einträge enthalten, die für dein Projekt oder die Bedürfnisse deines Teams irrelevant sind, <strong>und kann zentrale Bereiche völlig übersehen</strong>. Sie sorgfältig zu prüfen und das eigene Urteil anzulegen ist deine Aufgabe, nicht die des Werkzeugs.</li>
+<li>Wenn sich das Projekt entwickelt und neue Risiken auftauchen, geh mit diesen Details zurück zum Werkzeug und entwickle im Brainstorming <strong>Mitigationspläne</strong>.</li>
+</ul>
+
+Der ehrliche Rahmen am Ende: Genau wie Menschen kann generative AI nicht verhindern, dass aus Risiken Probleme werden, die ein Projekt entgleisen lassen. Was sie kann, ist, dir zu helfen, ihnen voraus zu sein, und genau das verlangt wirksames Projektmanagement.
+
+---
+
+## Eine Retrospektive vorbereiten
+
+Die verwendete Analogie: Man probiert ein neues Rezept aus oder nimmt ein Heimwerkerprojekt in Angriff und denkt hinterher, man wünschte, man hätte etwas vorher gewusst. Man merkt sich innerlich, es beim nächsten Mal anders zu machen, und im Projektmanagement ist es genauso: Zu prüfen, was gut lief und was nicht, lässt das nächste Projekt reibungsloser laufen.
+
+Retrospektiven passen zu jedem Projektmanagement-Prozess, weil sie ehrliches Feedback zeitnah liefern, und dieses Feedback prägt den nächsten Sprint und die künftige Arbeit. Die Aufgabe, die an generative AI übergeben wird, ist das Erzeugen des Fragenkatalogs. Kurs 5 lehrt dieselbe Technik in seinem Scrum-Modul, deshalb erscheint das durchgerechnete Beispiel auch auf [Scrum umsetzen](/de/learnings/online/project-management/agile-3-implementing-scrum/); beide Seiten behalten es, damit jede für sich zur Wiederholung taugt.
+
+<Aside type="tip">
+**Pro-Tipp aus dem Video:** Prompts müssen nicht getippt werden. Die **Mikrofon**-Funktion zu aktivieren erlaubt es, schnell weitere Informationen zu ergänzen, einen neuen Prompt zu starten oder einen bestehenden per Stimme zu iterieren.
+</Aside>
+
+Der eingesprochene Prompt beschreibt eine Projektleitung, die eine einstündige Retrospektive für das Team zu einem gerade abgeschlossenen Projekt vorbereitet, einer gemeinschaftlichen Spendenaktion für eine örtliche Schule mit Unternehmen und gemeinnützigen Organisationen aus der Umgebung, und bittet um einen belastbaren Fragenkatalog, der Beteiligung anregt und das Gespräch dahin lenkt, was gut lief und was sich verbessern lässt.
+
+<Steps>
+
+1. Die lange Liste zurückgegebener Fragen als Ausgangspunkt nehmen, nicht als fertige Agenda.
+
+2. Die Fragen priorisieren und auswählen, die zu deinem konkreten Team und den Projektzielen passen, denn eine große Gruppe und eine feste Stunde bedeuten, dass sich nicht alle nutzen lassen. Die vier genannten Faktoren zum Eingrenzen sind **Relevanz, Wirkung, Beteiligung und verfügbare Zeit**.
+
+3. Die kulturellen und persönlichen Akzente selbst setzen. Ben würde damit eröffnen, dem Team für seine Arbeit beim Zustandekommen des Programms zu danken, und den Eisbrecher an die Kultur seines Teams anpassen.
+
+4. Zu Beginn kurz den Zweck des Meetings erklären, denn viele Teilnehmende wissen gar nicht, wofür eine Retrospektive eigentlich da ist.
+
+</Steps>
+
+Der zugrunde liegende Tausch wird klar benannt: Generative AI die zeitraubende Logistik erledigen zu lassen, macht dich frei für die Konzepte und Erkenntnisse, die nur du einbringen kannst.
+
+---
+
+## Planung: den Project Charter bauen
+
+Der Planungsabschnitt des Moduls beginnt mit einem Haus. Wolltest du eines bauen, wäre dein erster Schritt nicht, zu Hammer und Nägeln zu greifen. Du würdest planen: ein Budget festlegen, Baupläne prüfen und wissen, wie das fertige Haus aussehen soll. Projekte folgen derselben Struktur, und die Pläne heißen **Project Charter**, das formale Dokument, das das Projekt definiert und die Details festhält, die nötig sind, um seine Ziele zu erreichen.
+
+> Act as a project manager and build a project charter that includes the information below. Add placeholders for any missing information.
+
+Die Details liegen in einem separaten Dokument und werden eingefügt: eine Beschreibung des Projekts, der Geschäftsbedarf, die Deliverables, die Stakeholder des Projekts und die Erfolgskriterien. Betont wird, dass es hier nicht bloß darum geht, eine Anfrage zu tippen, sondern darum, die entscheidenden Informationen zu liefern, auf die das Werkzeug antworten muss.
+
+Das Ergebnis war ein guter Ausgangspunkt, kein fertiger Charter. Viele Stichpunkte mussten zu vollständigen Sätzen ausgebaut und weitere Details von Hand ergänzt werden, aber der Vorsprung war echt, und mehr Input am Anfang hätte einen vollständigeren Charter erzeugt.
+
+### Was zu beachten ist
+
+<ul>
+<li>Generative AI erzeugt schnell viele Inhalte in verschiedenen Formaten, was wirklich nützlich ist, wenn Dokumentation wie ein Charter gefordert ist.</li>
+<li>Wenn du schon eine Charter-Vorlage hast, die dir gefällt, teile sie mit dem Werkzeug oder beschreibe das gewünschte Format, bis hin zur Seitenzahl oder den Abschnitten, die enthalten sein sollen.</li>
+<li><strong>Antworten genau lesen.</strong> Eine Ausgabe zu überfliegen, die gut aussieht, kann etwas verbergen, das du nicht beabsichtigt hast. Generative AI übernimmt vielleicht die schwere Arbeit, die schweren Gedanken bleiben trotzdem bei dir. Das ist das <strong>E für Evaluate</strong> in der Praxis.</li>
+<li>Mit verschiedenen Prompts experimentieren, indem du Wortwahl und Formatierung änderst. Die Bereitschaft, es erneut zu versuchen und mit Anweisungen bewusst zu arbeiten, ist das <strong>I für Iterate</strong>, der Prozess des Verfeinerns von Prompts und Ausgaben durch wiederholte Zyklen aus Testen und Anpassen.</li>
+</ul>
+
+### Iteration im Detail
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Konkretere Vorgaben machen<span class="sub">wo die Ausgabe deine Erwartungen verfehlt hat, fehlte dem Prompt vermutlich das Detail für eine brauchbare Antwort</span></div>
+    <div class="sc-node violet">Eine Referenz ergänzen<span class="sub">ein Beispiel für das teilen, was du erwartest; willst du ein bestimmtes Format oder eine bestimmte Art von Analyse, zeig dem Werkzeug eines</span></div>
+    <div class="sc-node green">Die Formulierung prüfen<span class="sub">warst du so klar wie möglich? Anweisungen in kürzere Sätze zu zerlegen verbessert den nächsten Versuch</span></div>
+    <div class="sc-node slate">Auf dem aufbauen, was dir gefiel<span class="sub">wenn zwei von fünf Ideen funktioniert haben, erkläre warum, bitte um eine neue Liste auf dieser Grundlage und sag, warum die anderen drei danebenlagen</span></div>
+  </div>
+  <figcaption>Das Werkzeug kann nur mit dem arbeiten, was du ihm sagst, also ergänzt jeder Zyklus ein fehlendes Stück.</figcaption>
+</figure>
+
+Auf den Charter selbst angewandt, kann Iteration heißen, um weniger technische Sprache zu bitten, bestimmte Abschnitte kürzen oder ausbauen zu lassen oder zu fragen, ob in dem ursprünglich Gelieferten wichtige Informationen fehlen, die den Charter stärker machen würden.
+
+Ergebnisse zu bekommen, mit denen du zufrieden bist, braucht Übung. Die Position des Kurses: Mit Prompts zu spielen und zu experimentieren ist der einzige Weg, den Pfad zu finden, der für dich funktioniert.
+
+---
+
+## Stakeholder und die Zutat, die KI nicht liefern kann
+
+Selbst mit den besten Plänen, einem starken Project Charter und einem gründlichen Bewusstsein für die Risiken wird ein Projekt laut Modul ohne eine entscheidende Zutat nicht gelingen: **gute Kommunikation**. Genau hier wird die menschliche Rolle am schärfsten gezogen.
+
+Generative AI kann auf hoher Ebene trotzdem helfen, indem sie die Liste der Kommunikationsstücke erzeugt, die ein Projekt für einen reibungslosen Ablauf braucht, etwa Statusberichte und Stakeholder-Updates.
+
+> Given the project charter, which includes the following information, please share a summary in a table form of the most important communications I should prepare during the project, and indicate both the type of communication and stakeholder.
+
+Die Charter-Informationen werden wie zuvor eingefügt. Die Ausgabe war eine detaillierte Tabelle über die Kommunikation des Projekts, nützlich sowohl, um organisiert zu bleiben, als auch, um nichts Wichtiges zu vergessen. Ihr eigentlicher Wert liegt darin, sicherzustellen, dass die richtigen Stakeholder eingebunden sind, damit Erwartungen gesteuert werden können und das Projekt auf Kurs bleibt.
+
+### Was bei der Projektleitung bleibt
+
+<div class="sc-quad">
+<div class="q amber">
+<div class="qh">Das Format wählen</div>
+<ul>
+<li>Die Ausgabe kann als Tabelle, als Stichpunkte oder in anderen Formaten kommen</li>
+<li>Gib im Prompt an, welches du willst, so wie hier die Tabelle angegeben wurde</li>
+</ul>
+</div>
+<div class="q violet">
+<div class="qh">Hausregeln respektieren</div>
+<ul>
+<li>Dein Unternehmen hat womöglich Standardvorlagen und -methoden für Kommunikation</li>
+<li>Es hat womöglich auch Normen dazu, wer welche Informationen erhalten sollte</li>
+</ul>
+</div>
+<div class="q green">
+<div class="qh">Die Steuerung selbst verantworten</div>
+<ul>
+<li>Du hast eine große Rolle bei der Entscheidung, wie Kommunikation gemanagt wird</li>
+<li>Das Werkzeug liefert einen hilfreichen Ausgangspunkt, mehr nicht</li>
+</ul>
+</div>
+<div class="q slate">
+<div class="qh">Bewachen, was hineingeht</div>
+<ul>
+<li>Immer die Unternehmensrichtlinie prüfen, bevor sensibles oder vertrauliches Material in einen Prompt kommt</li>
+<li>Namen von Personen sind das genannte Beispiel; solche Informationen möglichst nie eingeben</li>
+</ul>
+</div>
+</div>
+
+Sobald der Plan für die Stakeholder-Kommunikation steht, kann dasselbe Werkzeug diese Kommunikation mit Leben füllen, etwa indem es eine erste Fassung einer Status-E-Mail an die Senior Sponsors des Projekts entwirft, was Zeit beim Schreiben spart, ohne die Entscheidung darüber zu übernehmen, was gesagt wird.
+
+---
+
+## Zentrale Erkenntnisse
+
+Die abschließende Lektüre führt das Modul unter vier Überschriften zusammen.
+
+### Die wachsende Rolle von KI im Projektmanagement
+
+<ul>
+<li>KI zu verstehen und zu nutzen zählt für den künftigen Erfolg als Projektmanagerin oder Projektmanager, weil diese Werkzeuge im Feld immer üblicher werden.</li>
+<li>KI kann historische Projektdaten analysieren, Ergebnisse von Aufgaben vorhersagen und Empfehlungen zur Risikominderung geben.</li>
+<li>Sie kann die Routineaufgaben unterstützen, die ein Projekt im Zeitplan halten, indem sie Optimierungen vorschlägt, rechtzeitig erinnert und den Aufgabenfortschritt automatisch verfolgt.</li>
+</ul>
+
+### Mit generative AI klüger und schneller arbeiten
+
+<ul>
+<li>Eine Vorlage für jedes Projekt-Artifact erstellen, einschließlich Projektplänen, Projektzeitplänen und Kommunikationsplänen.</li>
+<li>Agenden, Meetingnotizen und Aufgaben-Tracker erstellen, ordnen und gliedern.</li>
+<li>Inhalte erstellen wie E-Mails, Projektpläne, Präsentationsideen und Management-Zusammenfassungen.</li>
+<li>Tägliche Aufgaben vereinfachen, indem der Aufgabenfortschritt automatisch zusammengefasst, mögliche Probleme erkannt und personalisierte Updates an Teammitglieder gesendet werden.</li>
+<li>Meetings und Meetingnotizen transkribieren oder zusammenfassen.</li>
+</ul>
+
+### Verantwortungsvolle Nutzung
+
+| Leitlinie | Was sie von dir verlangt |
+| --- | --- |
+| **Ausgaben sorgfältig prüfen** | Genauigkeit und Nutzen kontrollieren, bevor etwas verwendet wird |
+| **Die Nutzung von generative AI offenlegen** | Schlicht so gesagt, ohne weitere Ausführung |
+| **Datenschutz und Sicherheit bedenken** | Die Konsequenzen abwägen und keine sensiblen Informationen eingeben |
+| **Human-in-the-loop anwenden** | KI sollte immer als Ergänzung menschlicher Fähigkeiten dienen |
+
+Die Liste wird ausdrücklich als nicht vollständig beschrieben, mit der abschließenden Anweisung, die Richtlinien des eigenen Unternehmens zur Nutzung von generative AI zu prüfen.
+
+### KI in Aktion, wie demonstriert
+
+<div class="sc-tiers">
+  <div class="sc-tier">
+    <div class="sc-tier-head">Dokumente<span class="n">entwerfen</span></div>
+    <div class="sc-node amber soft">Project Charter<span class="sub">schnell und wirksam das Dokument entwerfen, das das Projekt definiert und skizziert, wie seine Kernziele erreicht werden</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Risiko<span class="n">vorwegnehmen</span></div>
+    <div class="sc-node violet soft">Risiken und Reaktionen<span class="sub">mögliche Risiken für die rechtzeitige Fertigstellung erkennen und Wege zu ihrer Bearbeitung im Brainstorming entwickeln</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Menschen<span class="n">kommunizieren</span></div>
+    <div class="sc-node green soft">Stakeholder-Kommunikation<span class="sub">Projektinformationen zusammenfassen und E-Mails oder andere Ansprache entwerfen</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Meetings<span class="n">durchführen</span></div>
+    <div class="sc-node slate soft">Meetings und Retrospektiven<span class="sub">automatische Notizen, Rückblicke, Transkripte und Planungshilfe machen beides effizienter und produktiver</span></div>
+  </div>
+  <div class="sc-tier">
+    <div class="sc-tier-head">Koordination<span class="n">organisieren</span></div>
+    <div class="sc-node amber soft">Gemini Notebook<span class="sub">Projekte über mehrere Teams hinweg koordinieren, für Recherche, Wissensordnung und Inhaltserzeugung</span></div>
+  </div>
+</div>
+
+Bens eigener Schlusspunkt ist eher eine Aufforderung als eine Zusammenfassung: Denk an die Arbeit, die du ohnehin machst, finde etwas, das viel Zeit kostet, oder ein Projekt, für das dir Ideen zum Loslegen fehlen, und nimm dir vor, mit generative AI an etwas zu experimentieren, das einen echten Unterschied für deine Arbeit macht. Wie bei jeder neuen Technologie braucht es Versuchen, Testen und Spielen, um sie zu lernen.
+
+### Weiterführende Quellen, auf die der Kurs verweist
+
+<ul>
+<li><strong>Shaping the future of Project Management with AI</strong> - der Bericht des Project Management Institute über KI-Trends in der Branche und Vorhersagen zur Zukunft von KI in der Projektmanagement-Arbeit.</li>
+<li><strong>Science and Tech Spotlight: Generative AI</strong> - ein Artikel des U.S. Government Accountability Office darüber, warum generative KI-Systeme wichtig sind.</li>
+<li><strong>There's More to AI Bias Than Biased Data, NIST Report Highlights</strong> - die Risiken, wenn Bias in KI-Daten steckt, samt Empfehlungen zu deren Minderung, vom National Institute of Standards and Technology.</li>
+<li><strong>What is Artificial Intelligence (AI)?</strong> - Google Clouds Einführung in KI, die auch andere Anwendungen wie Sprach- und Bilderkennung abdeckt.</li>
+</ul>
+
+<Aside type="caution">
+Bias taucht in diesem Modul nur hier auf, als verlinkte NIST-Quelle. Der Kurs selbst lehrt nicht, wie Bias in KI-Ausgaben entsteht oder wie man ihn erkennt, also ist das ein Hinweis und keine Behandlung des Themas.
+</Aside>
+
+---
+
+## Wiederholungs-Zusammenfassung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **AI** = Computersysteme, die kognitive Aufgaben ausführen, die man normalerweise mit menschlicher Intelligenz verbindet. **Gen AI** = die Art, die neue Inhalte erzeugt. Ein **Prompt** ist die Eingabe, die sie anweist. Das ist die gesamte Theorietiefe dieses Moduls.
+- **Genannte Werkzeuge**: Gemini (alle Demonstrationen), Gemini Advanced (lädt Dokumente direkt hoch), Gemini Notebook (bündelt Dokumentation, erzeugt Zusammenfassungen, Action Items und Risikobewertungen), Google AI Overviews in der Suche, dazu ChatGPT, Copilot und Claude als Alternativen.
+- **Vier Anwendungen von generative AI**: Inhalte erstellen, Informationen schnell analysieren, Fragen ausführlich beantworten, den Arbeitsalltag vereinfachen. Der Gewinn ist Zeit, die von Verwaltung zu strategischen Entscheidungen wandert.
+- **Ben** (Staff Program Manager, Google Cloud) nutzt es, um komplexe E-Mails und solche ans Management zu überarbeiten, um laut zu denken, wenn Teamkolleginnen und -kollegen nicht verfügbar sind, und um eine Programmbeschreibung zu einem Elevator Pitch zu verdichten. Seine drei Einstiegsregeln: **experimentieren, sicher bleiben, sich mit Kolleginnen und Kollegen austauschen**.
+- **TCREI** = Task, Context, References, Evaluate, Iterate. Merkhilfe: **Thoughtfully Create Really Excellent Inputs**, deren Anfangsbuchstaben das Kürzel ergeben. Task zerfällt in **Persona** (wessen Expertise oder welches Publikum) und **Format** (Liste, Sätze, Tabelle). Context ist der Geburtstagsgeschenk-Gegensatz. References sind Beispiele, nicht immer vorhanden. Ein einfacher Prompt genügt oft.
+- **Human-in-the-loop** verbindet maschinelle und menschliche Intelligenz, um zu trainieren, zu nutzen, zu prüfen und zu verfeinern. Achtsam sein beim Hineingeben, immer prüfen beim Herauskommen und die Organisationsrichtlinie klären, bevor vertrauliche Informationen genutzt werden.
+- **Meetings**: Die Nachbereitung zählt am meisten. Um eine knappe zweiabsätzige Zusammenfassungs-E-Mail mit Kernpunkten und Action Items bitten und dann die Notizen einfügen. Notizen müssen vollständig genug sein (notfalls Transkription der Konferenzsoftware nutzen), und das Format muss zum Publikum passen, also ein längerer Rückblick für alle, die gefehlt haben.
+- **Risk**: Risiken können positiv oder negativ sein und Scope, Termine, Kosten oder Qualität betreffen. Ein Charter listet nur wenige, also erweitert generative AI den Satz. Beispiel der Wellness-App für Hunde. Mehr Projektdetails ergeben eine weniger generische Liste. Sie ist gut im Brainstorming, formatiert auf Zuruf um und kann später Mitigationen vorschlagen, kann aber Irrelevantes enthalten und **zentrale Bereiche übersehen**, also mit eigenem Urteil prüfen.
+- **Retrospektiven**: um einen Fragenkatalog bitten und ihn dann nach **Relevanz, Wirkung, Beteiligung und verfügbarer Zeit** eingrenzen. Den Dank, den Eisbrecher und die kulturellen Akzente selbst ergänzen und den Zweck des Meetings zu Beginn erklären. Prompts lassen sich über die **Mikrofon**-Funktion einsprechen.
+- **Project Charter**: die Hausbau-Analogie, planen, bevor man zum Hammer greift. Das Werkzeug anweisen, als Projektleitung zu agieren, Beschreibung, Geschäftsbedarf, Deliverables, Stakeholder und Erfolgskriterien liefern und um Platzhalter für fehlende Informationen bitten. Die Ausgabe bringt dich in Gang, sie beendet die Arbeit nicht. **Genau lesen, nicht überfliegen.** Iterieren, indem du Details ergänzt, Referenzen ergänzt, Sätze kürzt und auf den Teilen aufbaust, die dir gefallen haben.
+- **Kommunikation ist die entscheidende Zutat**, ohne die kein Plan gelingt. Generative AI kann die benötigte Kommunikation nach Typ und Stakeholder tabellarisch aufstellen und eine Status-E-Mail an Sponsoren entwerfen, aber Formatwahl, Unternehmensvorlagen und -normen sowie die Steuerung der Kommunikation bleiben bei dir, und Namen von Personen bleiben aus Prompts heraus.
+- **Verantwortungsvolle Nutzung**: Ausgaben auf Genauigkeit prüfen, die Nutzung von generative AI offenlegen, Datenschutz und Sicherheit bedenken, Human-in-the-loop anwenden und die Unternehmensrichtlinien prüfen. Die Liste ist nicht vollständig.
+</Aside>
+
+---
+
+*Zurück zur [Kursübersicht →](/de/learnings/online/project-management/) - damit ist das Google Project Management Certificate abgeschlossen.*
