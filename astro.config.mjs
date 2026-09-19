@@ -12,6 +12,7 @@ export default defineConfig({
 			},
 			customCss: [
 				'./src/styles/custom.css',
+				'./src/styles/german.css',
 			],
 			head: [
 				{
@@ -251,6 +252,26 @@ export default defineConfig({
 							collapsed: true,
 							items: [
 								{ label: 'ReDI School - Creative Communication', translations: { de: 'ReDI School - Kreative Kommunikation' }, link: 'learnings/workshops/redi-school-creative-communication' },
+							],
+						},
+						{
+							label: 'German (A1)', translations: { de: 'Deutsch (A1)' },
+							collapsed: true,
+							items: [
+								{ label: 'How this works', translations: { de: 'So funktioniert es' }, link: 'learnings/german' },
+								{
+									label: 'Woche 1', translations: { de: 'Woche 1' },
+									collapsed: false,
+									items: [
+										{ label: 'Tag 01', link: 'learnings/german/a1/tag-01' },
+										{ label: 'Tag 02', link: 'learnings/german/a1/tag-02' },
+										{ label: 'Tag 03', link: 'learnings/german/a1/tag-03' },
+										{ label: 'Tag 04', link: 'learnings/german/a1/tag-04' },
+										{ label: 'Tag 05', link: 'learnings/german/a1/tag-05' },
+										{ label: 'Tag 06', link: 'learnings/german/a1/tag-06' },
+										{ label: 'Tag 07', link: 'learnings/german/a1/tag-07' },
+									],
+								},
 							],
 						},
 						{

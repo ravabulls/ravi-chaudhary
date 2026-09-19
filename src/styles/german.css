@@ -1,0 +1,163 @@
+/* Styles for the German practice drills.
+   Kept separate from custom.css so the .sc-* diagram toolkit stays untouched.
+   Everything here is prefixed .de- to avoid collisions. */
+
+.de-drill {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 1rem 1.1rem 1.1rem;
+  margin: 1.4rem 0;
+  background: var(--sl-color-bg-nav);
+}
+
+.de-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+  border-bottom: 1px solid var(--sl-color-gray-6);
+  padding-bottom: 0.45rem;
+}
+
+.de-head strong { font-size: 0.95rem; letter-spacing: 0.01em; }
+
+.de-count {
+  font-size: 0.8rem;
+  color: var(--sl-color-gray-3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.de-timer {
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--sl-color-accent);
+  margin-bottom: 0.3rem;
+}
+
+.de-prompt {
+  font-size: 1.15rem;
+  line-height: 1.45;
+  margin: 0.6rem 0 0.35rem;
+  min-height: 1.6em;
+}
+
+.de-hint {
+  font-size: 0.85rem;
+  color: var(--sl-color-gray-3);
+  margin-bottom: 0.5rem;
+}
+
+.de-audio { margin: 0.35rem 0; }
+.de-audio audio, .de-drill audio { width: 100%; max-width: 32rem; }
+
+.de-input,
+.de-bdt-input {
+  width: 100%;
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.35rem;
+  background: var(--sl-color-black);
+  color: var(--sl-color-white);
+}
+
+.de-input:focus,
+.de-bdt-input:focus {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 1px;
+}
+
+.de-input:disabled { opacity: 0.65; }
+
+.de-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.6rem 0 0.2rem;
+}
+
+.de-btn {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--sl-color-gray-5);
+  background: transparent;
+  color: var(--sl-color-white);
+  cursor: pointer;
+}
+
+.de-btn:hover { background: var(--sl-color-gray-6); }
+.de-btn.de-primary { border-color: var(--sl-color-accent); }
+.de-btn.de-small { font-size: 0.78rem; padding: 0.25rem 0.6rem; }
+
+.de-feedback {
+  margin-top: 0.55rem;
+  font-size: 0.9rem;
+  min-height: 1.3em;
+}
+
+.de-feedback.ok { color: #4ade80; }
+.de-feedback.near { color: #fbbf24; }
+.de-feedback.no { color: #f87171; }
+
+.de-answer {
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 3px solid var(--sl-color-accent);
+  background: var(--sl-color-gray-7, rgba(255, 255, 255, 0.04));
+}
+
+.de-label { color: var(--sl-color-gray-3); font-size: 0.85rem; }
+
+/* bidirectional translation */
+
+.de-bdt-row {
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed var(--sl-color-gray-6);
+}
+
+.de-bdt-row:last-child { border-bottom: none; }
+.de-bdt-src { font-size: 1rem; margin-bottom: 0.4rem; }
+.de-bdt-input { margin-bottom: 0.4rem; }
+
+.de-bdt-model {
+  font-size: 0.95rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 3px solid var(--sl-color-accent);
+  background: var(--sl-color-gray-7, rgba(255, 255, 255, 0.04));
+}
+
+.de-bdt-note { font-size: 0.85rem; margin-top: 0.3rem; }
+.de-bdt-note.ok { color: #4ade80; }
+.de-bdt-note.near { color: #fbbf24; }
+.de-bdt-note.no { color: #f87171; }
+
+/* the paper block - deliberately looks like a worksheet */
+
+.de-paper {
+  border: 2px dashed var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 1rem 1.1rem;
+  margin: 1.4rem 0;
+}
+
+.de-paper h4 { margin-top: 0; }
+
+/* gender colours, used when nouns are introduced */
+
+.de-der { color: #60a5fa; font-weight: 600; }
+.de-die { color: #f87171; font-weight: 600; }
+.de-das { color: #4ade80; font-weight: 600; }
+
+@media (max-width: 40rem) {
+  .de-drill { padding: 0.8rem; }
+  .de-prompt { font-size: 1.05rem; }
+  .de-bar { gap: 0.3rem; }
+  .de-btn { padding: 0.3rem 0.6rem; }
+}

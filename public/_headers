@@ -47,6 +47,11 @@
 /sw.js
   Cache-Control: no-cache, no-store, must-revalidate
 
+# Audio for the German drills. These files never change once cut, so they
+# are cached hard - without this the catch-all would revalidate every play.
+/german/audio/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Everything else is HTML and revalidates on every visit. The response still
 # carries an ETag, so an unchanged page costs a 304 and no download.
 /*
