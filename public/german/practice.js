@@ -13,8 +13,16 @@
  *   </div>
  *
  * data-type: recall | cloze | substitution | conversion | response |
- *            translation | bdt | dictation | rapidfire
- * Audio drills add data-audio="/german/audio/file.mp3" on the item.
+ *            translation | bdt | dictation | rapidfire | shadow
+ *
+ * Two deliberate behaviours:
+ *   - A rapidfire round NEVER starts on page load. It waits for a Start click,
+ *     because the clock burning while you read the page above it is useless.
+ *   - Shadowing does not lean on slowing the audio down. Heavy playbackRate
+ *     smears consonants, and shadowing wants a short segment repeated many
+ *     times at close to natural speed. So the player offers an A-B loop with a
+ *     repetition counter, a one-click "loop these ten seconds", and only a mild
+ *     speed option with pitch preserved.
  */
 
 (function () {
@@ -22,8 +30,6 @@
 
   /* ---------- answer checking ---------------------------------------- */
 
-  // German learners type "ue" for "ü" and "ss" for "ß" constantly. Accept it,
-  // but say so, because the exam will not.
   function loosen(s) {
     return s
       .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue")
@@ -35,7 +41,6 @@
     return (s || "").trim().replace(/\s+/g, " ").replace(/[.!?]+$/, "");
   }
 
-  // Returns: exact | umlaut | caps | wrong
   function judge(given, wanted) {
     var g = tidy(given), w = tidy(wanted);
     if (!g) return "wrong";
@@ -68,6 +73,12 @@
     return n;
   }
 
+  function fmt(t) {
+    if (!isFinite(t) || t < 0) t = 0;
+    var m = Math.floor(t / 60), s = Math.floor(t % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
   /* ---------- the drill ----------------------------------------------- */
 
   function buildDrill(root) {
@@ -83,15 +94,16 @@
     if (!items.length) return;
 
     root.innerHTML = "";
-    var order = items.slice();
-    var i = 0, correct = 0, answered = 0, timer = null, secondsLeft = 60;
     var isRapid = type === "rapidfire";
+    var order = items.slice();
+    var i = 0, correct = 0, answered = 0, timer = null, secondsLeft = 60, running = false;
 
     var head = el("div", "de-head");
-    var title = el("strong", null, root.dataset.title || "Übung");
+    head.appendChild(el("strong", null, root.dataset.title || "Übung"));
     var counter = el("span", "de-count");
-    head.appendChild(title); head.appendChild(counter);
+    head.appendChild(counter);
 
+    var timerBox = el("div", "de-timer");
     var promptBox = el("div", "de-prompt");
     var hintBox = el("div", "de-hint");
     var audioBox = el("div", "de-audio");
@@ -106,16 +118,18 @@
     var feedback = el("div", "de-feedback");
     var answerBox = el("div", "de-answer");
 
+    var btnStart = el("button", "de-btn de-primary", "Start - 60 Sekunden");
     var btnCheck = el("button", "de-btn de-primary", "Prüfen");
     var btnSkip = el("button", "de-btn", "Zeigen");
     var btnAgain = el("button", "de-btn", "Wiederholen");
     var btnShuffle = el("button", "de-btn", "Mischen");
     var bar = el("div", "de-bar");
+    if (isRapid) bar.appendChild(btnStart);
     bar.appendChild(btnCheck); bar.appendChild(btnSkip);
     bar.appendChild(btnAgain); bar.appendChild(btnShuffle);
 
     root.appendChild(head);
-    if (isRapid) root.appendChild(el("div", "de-timer"));
+    if (isRapid) root.appendChild(timerBox);
     root.appendChild(promptBox);
     root.appendChild(audioBox);
     root.appendChild(hintBox);
@@ -124,7 +138,15 @@
     root.appendChild(feedback);
     root.appendChild(answerBox);
 
-    function render() {
+    function setRunning(on) {
+      running = on;
+      btnStart.style.display = (isRapid && !on) ? "" : "none";
+      btnCheck.style.display = (!isRapid || on) ? "" : "none";
+      btnSkip.style.display = (!isRapid || on) ? "" : "none";
+      input.style.display = (!isRapid || on) ? "" : "none";
+    }
+
+    function render(focus) {
       var it = order[i];
       counter.textContent = (i + 1) + " / " + order.length +
         "   richtig: " + correct + "/" + answered;
@@ -141,20 +163,20 @@
       answerBox.textContent = ""; answerBox.style.display = "none";
       input.value = "";
       input.disabled = false;
-      input.focus();
+      if (focus) input.focus();
     }
 
     function advance() {
-      if (i < order.length - 1) { i++; render(); }
+      if (i < order.length - 1) { i++; render(true); }
       else { finish(); }
     }
 
     function finish() {
       if (timer) { clearInterval(timer); timer = null; }
+      setRunning(false);
+      if (isRapid) btnStart.textContent = "Nochmal - 60 Sekunden";
       promptBox.textContent = "Fertig.";
       audioBox.innerHTML = ""; hintBox.style.display = "none";
-      input.style.display = "none"; btnCheck.style.display = "none";
-      btnSkip.style.display = "none";
       var pct = answered ? Math.round((correct / answered) * 100) : 0;
       feedback.className = "de-feedback ok";
       feedback.textContent = correct + " von " + answered + " richtig (" + pct + "%).";
@@ -163,6 +185,7 @@
     }
 
     function check() {
+      if (isRapid && !running) return;
       if (input.disabled) { advance(); return; }
       var it = order[i];
       var verdict = judge(input.value, it.a);
@@ -176,11 +199,45 @@
       answerBox.appendChild(el("span", "de-label", "Antwort: "));
       answerBox.appendChild(el("strong", null, it.a));
       input.disabled = true;
-      if (isRapid) { setTimeout(advance, 450); }
+      if (isRapid) setTimeout(advance, 450);
     }
 
+    function startTimer() {
+      secondsLeft = 60;
+      timerBox.textContent = "60s";
+      if (timer) clearInterval(timer);
+      timer = setInterval(function () {
+        secondsLeft--;
+        timerBox.textContent = secondsLeft + "s";
+        if (secondsLeft <= 0) { clearInterval(timer); timer = null; finish(); }
+      }, 1000);
+    }
+
+    function reset(doShuffle) {
+      if (timer) { clearInterval(timer); timer = null; }
+      if (doShuffle) order = shuffle(items.slice());
+      i = 0; correct = 0; answered = 0;
+      if (isRapid) {
+        setRunning(false);
+        timerBox.textContent = "60s - bereit";
+        btnStart.textContent = "Start - 60 Sekunden";
+        render(false);
+        promptBox.textContent = "Bereit? Drück Start.";
+      } else {
+        render(false);
+      }
+    }
+
+    btnStart.addEventListener("click", function () {
+      order = shuffle(items.slice());
+      i = 0; correct = 0; answered = 0;
+      setRunning(true);
+      startTimer();
+      render(true);
+    });
     btnCheck.addEventListener("click", check);
     btnSkip.addEventListener("click", function () {
+      if (isRapid && !running) return;
       var it = order[i];
       answered++;
       feedback.className = "de-feedback no";
@@ -191,40 +248,17 @@
       answerBox.appendChild(el("strong", null, it.a));
       input.disabled = true;
     });
-    btnAgain.addEventListener("click", function () {
-      i = 0; correct = 0; answered = 0;
-      if (isRapid) startTimer();
-      render();
-    });
-    btnShuffle.addEventListener("click", function () {
-      order = shuffle(items.slice());
-      i = 0; correct = 0; answered = 0;
-      if (isRapid) startTimer();
-      render();
-    });
+    btnAgain.addEventListener("click", function () { reset(false); });
+    btnShuffle.addEventListener("click", function () { reset(true); });
     input.addEventListener("keydown", function (e) {
       if (e.key === "Enter") { e.preventDefault(); check(); }
     });
 
-    function startTimer() {
-      var box = root.querySelector(".de-timer");
-      secondsLeft = 60;
-      if (timer) clearInterval(timer);
-      box.textContent = "60s";
-      timer = setInterval(function () {
-        secondsLeft--;
-        box.textContent = secondsLeft + "s";
-        if (secondsLeft <= 0) { clearInterval(timer); timer = null; finish(); }
-      }, 1000);
-    }
-
-    if (isRapid) { order = shuffle(items.slice()); startTimer(); }
-    render();
+    if (isRapid) reset(false);
+    else { setRunning(true); render(false); }
   }
 
   /* ---------- bidirectional translation ------------------------------- */
-  /* Two panes. You type, then reveal, then read the differences yourself -
-     Lampariello's point is that the comparison is the lesson.              */
 
   function buildBdt(root) {
     var items = Array.prototype.map.call(root.querySelectorAll(".de-item"), function (n) {
@@ -232,9 +266,9 @@
     });
     if (!items.length) return;
     var dir = root.dataset.direction === "de-en" ? "de-en" : "en-de";
+    var title = root.dataset.title || "Bidirektional";
     root.innerHTML = "";
-    root.appendChild(el("div", "de-head")).appendChild(
-      el("strong", null, root.dataset.title || "Bidirektional"));
+    root.appendChild(el("div", "de-head")).appendChild(el("strong", null, title));
 
     items.forEach(function (it, n) {
       var row = el("div", "de-bdt-row");
@@ -270,36 +304,96 @@
   }
 
   /* ---------- shadowing player ---------------------------------------- */
-  /* Native <audio> plus loop and speed. No library, no storage.           */
+  /* Built around repetition of a short stretch, not around slowing speech
+     down. Set A and B, or hit the ten-second button, and it loops until you
+     stop, counting the passes.                                            */
 
   function buildShadow(root) {
     var src = root.dataset.audio;
     if (!src) return;
     var label = root.dataset.title || "Shadowing";
+    var note = root.dataset.note || "";
     root.innerHTML = "";
     root.appendChild(el("div", "de-head")).appendChild(el("strong", null, label));
 
     var au = document.createElement("audio");
-    au.controls = true; au.preload = "none"; au.src = src;
+    au.controls = true; au.preload = "metadata"; au.src = src;
+    // keep voices sounding like voices if the speed is nudged at all
+    au.preservesPitch = true;
+    au.mozPreservesPitch = true;
+    au.webkitPreservesPitch = true;
     root.appendChild(au);
 
-    var bar = el("div", "de-bar");
-    [["0.6x", 0.6], ["0.75x", 0.75], ["1x", 1]].forEach(function (p) {
-      var b = el("button", "de-btn de-small", p[0]);
-      b.addEventListener("click", function () { au.playbackRate = p[1]; });
-      bar.appendChild(b);
-    });
-    var back = el("button", "de-btn de-small", "-5s");
-    back.addEventListener("click", function () { au.currentTime = Math.max(0, au.currentTime - 5); });
-    var loop = el("button", "de-btn de-small", "Loop: aus");
-    loop.addEventListener("click", function () {
-      au.loop = !au.loop;
-      loop.textContent = "Loop: " + (au.loop ? "an" : "aus");
-    });
-    bar.appendChild(back); bar.appendChild(loop);
-    root.appendChild(bar);
+    var a = null, b = null, looping = false, passes = 0;
 
-    if (root.dataset.note) root.appendChild(el("div", "de-hint", root.dataset.note));
+    var status = el("div", "de-loop-status");
+    function paint() {
+      status.textContent =
+        "A " + (a === null ? "-" : fmt(a)) +
+        "   B " + (b === null ? "-" : fmt(b)) +
+        (looping ? "   Schleife läuft - Durchgänge: " + passes : "   Schleife aus");
+    }
+
+    var row1 = el("div", "de-bar");
+    var bA = el("button", "de-btn de-small", "A setzen");
+    var bB = el("button", "de-btn de-small", "B setzen");
+    var bLoop = el("button", "de-btn de-small", "Schleife an");
+    var bTen = el("button", "de-btn de-primary de-small", "Diese 10 Sekunden wiederholen");
+    var bClear = el("button", "de-btn de-small", "Zurücksetzen");
+    [bTen, bA, bB, bLoop, bClear].forEach(function (x) { row1.appendChild(x); });
+
+    var row2 = el("div", "de-bar");
+    var bBack = el("button", "de-btn de-small", "-3s");
+    var bRe = el("button", "de-btn de-small", "A nochmal");
+    [bBack, bRe].forEach(function (x) { row2.appendChild(x); });
+    [["Tempo 1x", 1], ["0.9x", 0.9], ["0.8x", 0.8]].forEach(function (p) {
+      var x = el("button", "de-btn de-small", p[0]);
+      x.addEventListener("click", function () { au.playbackRate = p[1]; });
+      row2.appendChild(x);
+    });
+
+    root.appendChild(row1);
+    root.appendChild(row2);
+    root.appendChild(status);
+    if (note) root.appendChild(el("div", "de-hint", note));
+
+    bTen.addEventListener("click", function () {
+      a = au.currentTime;
+      b = a + 10;
+      looping = true; passes = 0;
+      bLoop.textContent = "Schleife aus";
+      au.currentTime = a;
+      au.play();
+      paint();
+    });
+    bA.addEventListener("click", function () { a = au.currentTime; if (b !== null && b <= a) b = null; paint(); });
+    bB.addEventListener("click", function () { if (a === null) a = 0; b = Math.max(au.currentTime, a + 1); paint(); });
+    bLoop.addEventListener("click", function () {
+      if (a === null || b === null) { status.textContent = "Erst A und B setzen, oder die 10-Sekunden-Taste nehmen."; return; }
+      looping = !looping;
+      passes = 0;
+      bLoop.textContent = looping ? "Schleife aus" : "Schleife an";
+      if (looping) { au.currentTime = a; au.play(); }
+      paint();
+    });
+    bClear.addEventListener("click", function () {
+      a = b = null; looping = false; passes = 0;
+      bLoop.textContent = "Schleife an";
+      au.playbackRate = 1;
+      paint();
+    });
+    bBack.addEventListener("click", function () { au.currentTime = Math.max(0, au.currentTime - 3); });
+    bRe.addEventListener("click", function () { if (a !== null) { au.currentTime = a; au.play(); } });
+
+    au.addEventListener("timeupdate", function () {
+      if (looping && a !== null && b !== null && au.currentTime >= b) {
+        au.currentTime = a;
+        passes++;
+        paint();
+      }
+    });
+
+    paint();
   }
 
   /* ---------- boot ----------------------------------------------------- */
