@@ -502,6 +502,25 @@ export default defineConfig({
 								],
 							},
 							{
+								label: 'Google AI Certificate', translations: { de: 'Google-KI-Zertifikat' },
+								collapsed: true,
+								items: [
+									{ label: 'Overview', translations: { de: 'Übersicht' }, link: 'learnings/online/google-ai' },
+									{ label: '1 · AI Fundamentals', translations: { de: '1 · KI-Grundlagen' }, link: 'learnings/online/google-ai/01-ai-fundamentals' },
+									{ label: '2 · Prompting', translations: { de: '2 · Prompting' }, link: 'learnings/online/google-ai/02-prompting' },
+									{ label: '3 · Responsible AI', translations: { de: '3 · Verantwortungsvolle KI' }, link: 'learnings/online/google-ai/03-responsible-ai' },
+									{ label: '4 · Brainstorming & Planning', translations: { de: '4 · Ideenfindung & Planung' }, link: 'learnings/online/google-ai/04-brainstorming-and-planning' },
+									{ label: '5 · Research & Insights', translations: { de: '5 · Recherche & Erkenntnisse' }, link: 'learnings/online/google-ai/05-research-and-insights' },
+									{ label: '6 · Writing & Communicating', translations: { de: '6 · Schreiben & Kommunizieren' }, link: 'learnings/online/google-ai/06-writing-and-communicating' },
+									{ label: '7 · Content Creation', translations: { de: '7 · Content-Erstellung' }, link: 'learnings/online/google-ai/07-content-creation' },
+									{ label: '8 · Data Analysis', translations: { de: '8 · Datenanalyse' }, link: 'learnings/online/google-ai/08-data-analysis' },
+									{ label: '9 · App Building', translations: { de: '9 · Apps bauen' }, link: 'learnings/online/google-ai/09-app-building' },
+									{ label: '10 · App Deployment', translations: { de: '10 · Apps ausliefern' }, link: 'learnings/online/google-ai/10-app-deployment' },
+									{ label: '11 · The Gemini API', translations: { de: '11 · Die Gemini-API' }, link: 'learnings/online/google-ai/11-gemini-api' },
+									{ label: '12 · Beyond Gemini', translations: { de: '12 · Jenseits von Gemini' }, link: 'learnings/online/google-ai/12-beyond-gemini' },
+								],
+							},
+							{
 								label: 'SAP Implementation & ERP', translations: { de: 'SAP-Implementierung & ERP' },
 								collapsed: true,
 								items: [

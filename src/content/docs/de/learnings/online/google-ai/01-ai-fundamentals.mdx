@@ -1,0 +1,356 @@
+---
+title: "Google AI 1 - KI-Grundlagen"
+description: "Wie KI tatsächlich funktioniert, ohne Fachjargon: Trainingsdaten und warum sie alles prägen, Machine Learning und seine drei Ansätze, LLMs und generative KI, Multimodalität, Agenten, der Unterschied zwischen Modell und App, Temperature und die drei wichtigsten Grenzen - Bias, Knowledge Cutoff und Drift."
+sidebar:
+  label: "1 · KI-Grundlagen"
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Kurs 1: AI Fundamentals*
+
+---
+
+Das Zertifikat beginnt damit, dass eine Vice President of Strategy, Operations and Outreach bei Google Research in einem Atemzug ein Versprechen und eine Einschränkung ausspricht. Das Versprechen: KI-Fähigkeiten, nach denen Arbeitgeber suchen, ein Zertifikat und ein Portfolio selbst gebauter Dinge. Die Einschränkung, geliefert als Analogie, die den Ton aller acht Kurse setzt: **Man würde Klavier nicht lernen, ohne die Tasten zu berühren**, also setzt der Kurs einen sofort in die Werkzeuge, statt zuerst Theorie zu lehren.
+
+Diese Entscheidung erklärt die Gestalt des Materials. Es gibt relativ wenige erklärende Videos und mehr als zwanzig Labs. Die erklärenden Videos sind es, was diese Notizen bewahren können; die Labs sind es, was diese Notizen rekonstruieren müssen.
+
+<Aside type="note">
+**Was das Zertifikat verspricht, hinterher zu können:** die Fragen vorhersehen, die jemand vor einem wichtigen Meeting stellen wird, sich in ein unbekanntes Thema einarbeiten, Projekt-Roadmaps, Präsentationen, Marketing-Bildwelten und Diagramme bauen, die eine Geschichte erzählen, grobe Ideen in Kommunikation verwandeln, die Kolleginnen und Kollegen überzeugt, Rohdaten in Visualisierungen übersetzen, die ein Team lesen kann, und eigene Apps bauen - ein interaktives Dashboard, einen Media-Asset-Generator - indem man KI in natürlicher Sprache dirigiert, ohne zu programmieren.
+</Aside>
+
+---
+
+## Der Haltungswechsel, auf dem das ganze Zertifikat ruht
+
+### Von der Aufgabe zur Zusammenarbeit
+
+Das erste inhaltliche Video handelt überhaupt nicht von Technik. Es argumentiert, dass die meisten Menschen KI weit unter ihrer Leistungsfähigkeit nutzen, weil sie sie für **Einzelaufgaben** einsetzen statt als **Collaborator**.
+
+Das durchgespielte Beispiel: Man hat das anspruchsvolle Ziel, den Umsatz der eigenen Geschäftseinheit bis Jahresende zu steigern.
+
+| Die kleine Nutzung | Die Zusammenarbeit |
+| --- | --- |
+| KI bitten, eine Notiz an das Team zu entwerfen, die das Projekt ankündigt | Sie bitten, die Prognose zu bauen und Optionen zur Umsatzsteigerung zu erzeugen |
+| | Sie die eigenen Annahmen unter Druck setzen und Risiken identifizieren lassen |
+| | Mit ihr verschiedene Umsatzszenarien durchspielen |
+
+Der Unterschied ist nicht Geschwindigkeit. Er liegt darin, dass die zweite Variante hilft, **sich durch die Schritte eines Problems zu bewegen**, und einen in die Lage versetzt, besser zu entscheiden, statt ein Stück Schreibarbeit schneller zu erledigen.
+
+### Drei Dinge, die Zusammenarbeit tatsächlich bringt
+
+Der anschließende Lesetext zerlegt die Abstraktion in drei konkrete Fähigkeiten, jede mit einem Beispiel am Entwurf eines Projektvorschlags.
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Informationen organisieren und verstehen<span class="sub">komplexes Material in verdauliche Stücke zerlegen, das Wichtige hervorheben, Verbindungen zeigen, die man übersehen hat. Beispiel: aktuelle Branchentrends zusammenfassen, bevor man schreibt</span></div>
+  <div class="sc-node violet">Ganz neue Dinge erschaffen<span class="sub">Text erzeugen, Daten als Diagramm visualisieren, ein Bild erzeugen, verschiedene Formulierungen sammeln. Beispiel: den ersten Entwurf des Vorschlags produzieren</span></div>
+  <div class="sc-node green">Bestehende Arbeit verbessern und verfeinern<span class="sub">Texte auf Klarheit prüfen, auf Fehler kontrollieren, vorschlagen, was überzeugender wäre. Beispiel: eine Durchsicht des Sales Pitch, die zeigt, dass die Preiserklärung verwirrend ist</span></div>
+</div>
+
+Die eigene Zusammenfassung des Lesetexts: KI zu nutzen heißt nicht, Aufgaben schneller zu erledigen, sondern klarer zu denken, selbstbewusster zu erschaffen und Arbeit zu verfeinern, bis sie die beste Fassung darstellt. Die angehängte praktische Anweisung - **ein Gespräch führen statt eine einzelne Anfrage zu stellen** - ist die kleinste Verhaltensänderung, die der Kurs verlangt, und wahrscheinlich die wirkungsvollste.
+
+### Deine Hälfte der Partnerschaft
+
+Der Kurs betont nachdrücklich, dass die menschliche Rolle kein Restposten ist. Vier Dinge hat nur man selbst:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Kontext - was um diese Aufgabe herum wirklich passiert</span>
+  <span class="sc-chip violet">Emotionale Intelligenz - wie das bei einem echten Menschen ankommt</span>
+  <span class="sc-chip green">Urteil - ob diese Ausgabe überhaupt verwendet werden sollte</span>
+  <span class="sc-chip soft">Verantwortung - die Folgen gehören in jedem Fall dir</span>
+</div>
+
+Als Paare formuliert, so wie der Kurs es tut: KI kann helfen, eine Präsentation zu erstellen, aber nur du kennst dein Publikum. KI kann Lösungen für ein Kundenserviceproblem anbieten, aber nur du kannst beurteilen, ob diese Lösungen zur Kundin gehen sollten.
+
+Und manche Aufgaben haben einfach die falsche Form dafür. Der Kurs nennt **Finanz-, Rechts- und Compliance-Beratung** als zu sensibel oder zu riskant, mit der Anweisung, sich stattdessen an eine Fachperson zu wenden. Das ist keine Grenze der sprachlichen Gewandtheit - zu allen drei wird souveräner Text entstehen - sondern eine Frage, wo die Verantwortung sitzt.
+
+<Aside type="tip">
+**Der Praxistipp, der mehr wert ist, als er aussieht.** Einer der Google-Praktiker beschreibt, wie er sich darauf trainiert hat, das Gefühl von *"uff, das will ich nicht machen"* als Signal zu nehmen: Dieser Widerwille ist der Auslöser, KI zu probieren. Nicht weil sie die Aufgabe beendet, sondern weil sie über den ersten Widerstand hinweghilft. Die Umdeutung ist nützlich - der beste Einsatz des Werkzeugs ist oft nicht der schwere Teil einer Arbeit, sondern der Teil, den man vermeidet.
+</Aside>
+
+---
+
+## Wie KI tatsächlich funktioniert, ohne Fachjargon
+
+### Die Kette der Definitionen
+
+Der Kurs baut das Vokabular in einer bewussten Reihenfolge auf, jeder Begriff ruht auf dem vorherigen.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node slate">Künstliche Intelligenz<span class="sub">das Konzept, intelligente Maschinen zu bauen, die sich durch ein Problem denken und Empfehlungen geben können</span></div>
+    <div class="sc-node amber">Modell<span class="sub">ein Computerprogramm, trainiert auf großen Datenmengen - Artikel, Bilder, Videos - das Muster findet und sie auf neue Situationen anwendet</span></div>
+    <div class="sc-node violet">Large Language Model (LLM)<span class="sub">ein Modell, trainiert auf genug Daten, um eine Anfrage zu verstehen und zu beantworten, die es noch nie gesehen hat</span></div>
+    <div class="sc-node green">Generative KI<span class="sub">die Fähigkeit, völlig neue Inhalte zu erzeugen - einen Blogbeitrag, ein Geburtstagshaiku - statt nur zu klassifizieren oder vorherzusagen</span></div>
+    <div class="sc-node soft">Multimodale Assistenz<span class="sub">arbeitet mit mehr als Text: versteht und erzeugt Bilder, Video, Audio</span></div>
+  </div>
+  <figcaption>Jeder Schritt weitet aus, was das Ding kann, und jeder verlangt mehr Daten und mehr Training als der darüber.</figcaption>
+</figure>
+
+**Training** ist der Prozess, der vom zweiten Kasten zu allem Weiteren führt: Das Modell verarbeitet Daten, findet Muster und verbessert sich über Zeit. Die Beharrlichkeit des Kurses, dass dies keine Zukunftstechnologie ist, trifft mit dem gewählten Beispiel - dem **Spamfilter in der E-Mail**, der riesige Datenmengen nutzt, um gewünschte von unerwünschter Post zu trennen, und jedes Mal besser wird, wenn man etwas als Spam markiert.
+
+### Warum Trainingsdaten fast alles erklären
+
+Die nützlichste Idee im technischen Teil des Kurses ist, dass das Verhalten eines Modells stromabwärts seiner Trainingsdaten liegt, und das Apfelbeispiel macht es greifbar.
+
+Ein Lebensmittelhändler trainiert ein Modell, Äpfel von anderen Früchten zu trennen, mit tausenden Bildern von Äpfeln. Enthielten die Trainingsdaten aber **nur rote Äpfel**, ist das Modell bei grünen und gelben weniger genau. Der Händler sortiert falsch, verliert Geld und verschwendet gute Früchte.
+
+Aus diesem einen Beispiel zieht der Kurs zwei Schlüsse, die für den Rest des Zertifikats wiederkehren:
+
+<Steps>
+
+1. **Die Trainingsdaten eines Modells prägen, was es tut.** Nicht bloß, was es weiß - was es gut kann.
+
+2. **Sie sind einer der Gründe, warum zwei Modelle dieselbe Frage anders beantworten.** Der zweite Grund ist die **Modellarchitektur**: Wie ein Modell programmiert ist und welche Regeln es auf Daten und Lernen anwendet, variiert von Modell zu Modell.
+
+</Steps>
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus.** Der Kurs bleibt bei "findet Muster" stehen, was stimmt, aber den zentralen Mechanismus unerklärt lässt. Worauf ein LLM tatsächlich trainiert wird, ist, **das nächste Token vorherzusagen** - ein Token ist etwa ein Wortbruchstück, sodass "unglaublich" drei Tokens sein kann und "Katze" eines. Mit enormen Textmengen konfrontiert, in denen das nächste Token verdeckt ist, passt das Modell Milliarden interner Zahlen an (seine **Parameter**), bis seine Vorhersagen der Realität entsprechen.
+
+Das ist der ganze Trick, und daraus folgen drei Dinge, die man mitnehmen sollte:
+
+- **Gewandtheit ist nicht Wissen.** Das Trainingsziel belohnt Text, der klingt wie die Trainingsdaten. Eine souveräne, gut geformte, falsche Antwort ist keine Fehlfunktion; es ist das System, das genau tut, worauf es trainiert wurde. Das ist der Mechanismus hinter der Halluzination, behandelt in [verantwortungsvolle KI](/de/learnings/online/google-ai/03-responsible-ai/).
+- **Training und Nutzung sind getrennte Ereignisse.** Training passiert einmal, kostet enorme Summen und endet an einem Datum. Die Nutzung danach heißt **Inferenz**, und das Modell lernt aus deinem Gespräch nichts. Deshalb ist der Knowledge Cutoff weiter unten eine harte Grenze und keine weiche.
+- **Alles sind Tokens, auch der Preis.** Eingabe und Ausgabe werden beide pro Token abgerechnet, weshalb die Kostendiskussion im [Kapitel zur Gemini-API](/de/learnings/online/google-ai/11-gemini-api/) eine Diskussion über Tokenzahlen ist.
+</Aside>
+
+### Machine Learning und die drei Wege dorthin
+
+Der Kurs trennt zwei Begriffe, die oft gleichbedeutend verwendet werden. **KI** ist das weite Feld: Werkzeuge bauen, die Aufgaben erledigen, die man normalerweise menschlicher Intelligenz zuordnet, vom E-Mail-Schreiben bis zum Vorschlagen von Fahrtrouten. **Machine Learning** ist die häufigste Technik, um diese Werkzeuge zu trainieren - sie erlaubt einem Programm, selbst Muster zu finden und aus Daten zu lernen, ohne für jedes mögliche Szenario programmiert zu sein.
+
+Das Beispiel sind Zebras und Pferde. Man gibt dem Programm tausende Bilder von beiden; irgendwann lernt es, Merkmale wie Streifen zu erkennen. Dieses Gelernte auf ein Foto anzuwenden, das es im Training nie gesehen hat, heißt **Inferenz**.
+
+Die drei Ansätze, jeder mit demselben Zebrabeispiel, damit der Unterschied sichtbar wird:
+
+| Ansatz | Worauf er trainiert | Wann man ihn nimmt | Die Zebra-Fassung |
+| --- | --- | --- | --- |
+| **Supervised Learning** | Ein großer, **von Menschen gelabelter** Datensatz | Wenn eine konkrete, bekannte Ausgabe im Sinn ist | Millionen Bilder, ausdrücklich als *Zebra* oder *Pferd* gelabelt. Das Modell lernt die Merkmale jedes Tieres und sortiert neue Bilder in diese vorgegebenen Kategorien |
+| **Unsupervised Learning** | Ein Datensatz, der **nicht** gelabelt wurde | Um Muster und Strukturen zu finden, wenn keine konkrete Ausgabe im Sinn ist | Ein unsortierter Haufen Fotos. Ohne gesagt zu bekommen, was ein Zebra ist, entdeckt das Modell eigene Muster - gestreift oder einfarbig - und gruppiert ähnliche Bilder |
+| **Reinforcement Learning** | Versuch und Irrtum, gelenkt von einem **Belohnungssystem** | Um laufend zu verfeinern, wie KI eine Aufgabe angeht | Ohne Training soll es Zebras in einem Video erkennen, also rät es. Richtige Treffer bringen eine positive Belohnung, falsche eine Strafe. Über viele Versuche passt es seine Strategie an, um die Gesamtbelohnung zu maximieren |
+
+Der Schlusssatz des Kurses: Heutige Modelle nutzen typischerweise **eine Kombination aller drei**, um Text, Bilder und Video zu erzeugen.
+
+### Agenten: die Fähigkeit, die der Kurs als neu markiert
+
+Der letzte Schritt im technischen Teil sind Agenten, definiert als Systeme, die **die Intelligenz fortgeschrittener Modelle mit Zugang zu Werkzeugen verbinden** - dem Kalender, der E-Mail. Der strukturelle Unterschied zu einem Chat: Statt einer einzelnen Aufgabe gibt man einem Agenten ein **weiter gefasstes Ziel**, und er zerlegt dieses Ziel in kleinere Schritte und handelt in deinem Namen, unter deiner Kontrolle.
+
+Das Beispiel des Kurses lohnt sich zu behalten, weil es den Umfang präzise zeigt. Man sagt: *"Organisiere ein Kickoff-Meeting für das Q3-Marketingprojekt mit dem Design- und dem Sales-Team für nächste Woche."* Der Agent prüft dann alle Kalender nach einem freien Platz, bucht einen Raum, entwirft eine Begrüßungsmail mit dem Projekt-Brief im Anhang und verschickt die Kalendereinladung.
+
+Der daraus gezogene Punkt: Die Chance liegt nicht darin, Fragen zu beantworten, sondern **aktiv dabei zu helfen, Ziele zu erreichen** - die mühsame Koordination zu übernehmen, damit das Team über die Strategie nachdenken kann.
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus.** Der Kurs erklärt, was ein Agent tut, aber nicht, was ihn möglich macht, und das fehlende Stück hat einen Namen. Ein Agent braucht einen standardisierten Weg zu Werkzeugen, und seit Ende 2024 ist dieser Standard das **Model Context Protocol (MCP)** - ein offenes Protokoll, um Modelle mit externen Werkzeugen und Datenquellen zu verbinden. Im Dezember 2025 wurde es an die neu gegründete **Agentic AI Foundation** unter der Linux Foundation übergeben, mitbegründet mit Block und OpenAI und unterstützt von AWS, Google, Microsoft, Salesforce und Snowflake. Bis Anfang 2026 waren mehr als zehntausend MCP-Server in öffentlichen Registries indexiert, und ChatGPT, Claude, Gemini, Microsoft Copilot und VS Code unterstützen es alle.
+
+Warum das für Nicht-Entwickler zählt: Der Grund, warum ein Agent deinen Kalender anfassen kann, ist keine Google-exklusive Abmachung mehr. Es ist ein Protokoll, was heißt, dass Werkzeuge, die man an einer Stelle anbindet, tendenziell auch an anderer funktionieren. Der Begleitstandard für Agenten, die *miteinander* reden, ist **A2A (Agent2Agent)**, behandelt in [Jenseits von Gemini](/de/learnings/online/google-ai/12-beyond-gemini/).
+</Aside>
+
+---
+
+## Modelle, Apps und die Auto-Analogie
+
+### Warum die Unterscheidung zählt
+
+Der Kurs nutzt eine Auto-Analogie, die besser ist als die meisten, weil sie saubere auf eine Verwirrung abbildet, über die Menschen tatsächlich stolpern - den Unterschied zwischen **Gemini, dem Modell** und **Gemini, der App**.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Das Modell ist der Motor</div>
+    <ul>
+      <li>Die Technologie, die das eigentliche Reasoning und Erzeugen leistet.</li>
+      <li>Sie liefert die ganze Leistung, und man interagiert nie direkt mit ihr.</li>
+      <li>Gemini ist <strong>eine Familie</strong> von Modellen, eingebaut in Google Search, Maps, Pixel und mehr - nicht eine Sache.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Die App ist das Auto</div>
+    <ul>
+      <li>Das, in das man einsteigt und das man fährt, unter gemini.google.com oder auf dem Handy.</li>
+      <li>Das Chatfeld und seine Funktionen sind Zündung, Lenkrad und Pedale.</li>
+      <li>Wenn eine neue Funktion erscheint, geht man zurück in die App und findet sie dort.</li>
+    </ul>
+  </div>
+</div>
+
+Innerhalb der App kann man **Modelle wechseln**, passend zur Aufgabe, und das ist der praktische Gewinn, diese Unterscheidung zu verstehen.
+
+### Ein Modell auswählen
+
+Verschiedene Modelle haben verschiedene Stärken, abhängig davon, wie sie trainiert und wie ihr Lernen verfeinert wurde. Die Orientierung des Kurses:
+
+- Manche Modelle sind gut darin, **schnell allgemeine Hilfe zu liefern**.
+- Andere eignen sich besser für **fortgeschrittene Aufgaben** - Recherche, Programmieren oder das Abwägen von Vor- und Nachteilen einer komplizierten Entscheidung.
+- **Komplexere Aufgaben verlangen mehr Rechenaufwand**, also kann ein leistungsfähigeres Modell länger für eine Antwort brauchen.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - die Modellnamen haben sich schon bewegt.** Die Demos in diesem Zertifikat laufen auf **Gemini 3.5 Flash** und **Gemini 3.1 Pro**. Zum Zeitpunkt des Schreibens ist die aktuelle Generation:
+
+| Modell | Zuschnitt | Indikativer API-Preis pro Million Tokens |
+| --- | --- | --- |
+| **Gemini 3.8 Flash** | Das leistungsfähigste Flash-Modell, gebaut für langlaufende Softwareentwicklung und autonome Agenten | 0,75 $ ein / 3,75 $ aus, ein Einführungspreis bis 31. Dezember 2026 |
+| **Gemini 3.1 Pro** | Fortgeschrittenes Reasoning | 2 $ ein / 12 $ aus bis 200K Tokens, darüber 4 $ / 18 $ |
+| **Gemini 3.5 Flash-Lite** | Hoher Durchsatz, Routinearbeit | 0,30 $ ein / 2,50 $ aus |
+
+Zwei Änderungen zählen mehr als die Zahlen. Erstens bedeutet die Benennung nicht mehr, was sie bedeutete: Ein aktuelles *Flash*-Modell ist leistungsfähiger als ein älteres *Pro*, also ist "Pro ist das gute" keine verlässliche Heuristik mehr - lies die Modellkarte, nicht das Suffix. Zweitens haben **Pro-Modelle im April 2026 die kostenlose Stufe verlassen**; freier Zugang gilt nur noch für Flash und Flash-Lite. Alles im Detail im [Kapitel zur Gemini-API](/de/learnings/online/google-ai/11-gemini-api/).
+</Aside>
+
+### Temperature
+
+Die eine Einstellung, die der Kurs ausdrücklich nennt, zu finden in Google AI Studio statt in der Gemini-App, und er betont sorgsam, dass Temperature hier nichts damit zu tun hat, ob man eine Jacke braucht. Sie steuert die **Kreativität der Ausgabe**.
+
+| Einstellung | Wirkung |
+| --- | --- |
+| **Niedrigere Temperature** | Die Ausgabe wird wahrscheinlich vorhersehbarer und gleichförmiger |
+| **Höhere Temperature** | Erfindungsreichere Ausgabe, die weniger vorhersehbar sein kann |
+
+Der Satz, den der Kurs daran hängt, ist der klarsichtigste im gesamten ersten Kurs: *KI weiß nichts, sie nutzt nur ihre Daten und ihr Gelerntes, um vorherzusagen, welche Antwort aus einer Bandbreite möglicher Optionen die beste sein könnte.* Temperature bestimmt, wie weit sie über diese Optionen streifen darf.
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - was Temperature darunter tut.** Bei jedem Schritt erzeugt das Modell eine Wahrscheinlichkeit für jedes mögliche nächste Token. Temperature skaliert diese Wahrscheinlichkeiten, bevor eines gezogen wird: nahe null gewinnt fast immer das wahrscheinlichste Token, sodass derselbe Prompt fast dieselbe Antwort gibt; höher bekommt der lange Schwanz eine echte Chance.
+
+Zwei praktische Folgen, die der Kurs nicht erwähnt:
+
+- **Niedrige Temperature ist nicht "genauer".** Sie ist *gleichförmiger*. Ein Modell, das bei 1,0 souverän falsch ist, wird bei 0,1 zuverlässig und wiederholbar falsch sein. Genauigkeit kommt aus Grounding und Verifikation, nicht aus diesem Regler.
+- **Passe sie der Aufgabe an.** Datenextraktion, Klassifikation, alles, wo man zwei Durchläufe vergleichen will: niedrig. Brainstorming, Namensfindung, alternative Formulierungen: höher. Aktuelle Gemini-Modelle bieten zusätzlich ein **Thinking Level**, das steuert, wie viel internes Reasoning vor der Antwort passiert - ein separater und oft folgenreicherer Regler als Temperature.
+</Aside>
+
+---
+
+## Die drei Grenzen, die man sich merken sollte
+
+Der Kurs widmet den Grenzen einen ganzen Lesetext und behandelt ihre Kenntnis als Teil verantwortungsvoller Nutzung, nicht als Haftungsausschluss. Drei werden benannt.
+
+### Bias in den Daten
+
+**Data Bias** entsteht, wenn Trainingsdaten schief, unvollständig sind oder historische und gesellschaftliche Verzerrungen widerspiegeln. Weil die Ausgabe von den Trainingsdaten gelenkt wird, kann das Modell diese Verzerrungen reproduzieren - das Beispiel des Kurses ist die Verknüpfung bestimmter Aktivitäten mit bestimmten Altersgruppen.
+
+Die Illustration ist die mit den Büros: Bittet man um ein Bild eines Büros, bekommt man vielleicht durchgängig ein Hochhaus, weil die Trainingsdaten aus urbanen Geschäftszentren stammen. Das Modell tut sich dann schwer mit kreativen Arbeitsräumen, Homeoffices oder ländlichen Geschäftsumgebungen.
+
+Zwei Prompt-Techniken werden als Gegenmittel angeboten:
+
+<Steps>
+
+1. **Sei konkret über die gewünschte Ausgabe.** Ergänze Kontext über das gedachte Publikum und seine Bedürfnisse und liefere faire, ausgewogene Referenzen, denen das Modell folgen kann.
+
+2. **Nutze Folgeprompts, um verzerrte Ausgaben zu korrigieren.** Benenne das Stereotyp ausdrücklich, wenn du iterierst, und bitte das Modell, die Verzerrung zu korrigieren.
+
+</Steps>
+
+### Knowledge Cutoff
+
+**Knowledge Cutoff** ist der Zeitpunkt, an dem die Trainingsdaten eines Modells enden; über alles danach fehlen dem Modell Informationen.
+
+Der Kurs geht hier sorgfältig mit einem scheinbaren Widerspruch um, und die Unterscheidung ist gut. Modelle *können* oft über sehr aktuelle Ereignisse Auskunft geben, weil manche eine **Live-Websuche** durchführen, um ihre Antwort zu ergänzen. Was man behalten sollte: Das ist der Unterschied zwischen **dem, was das Modell aus dem Training weiß**, und **dem, was es im Moment nachschauen kann**. Sein Kernwissen wird nicht laufend aktualisiert, also bleibt der Cutoff eine echte Beschränkung.
+
+Vier Techniken, damit umzugehen:
+
+| Technik | Was zu tun ist |
+| --- | --- |
+| **Den Cutoff nachschlagen** | Online nach dem Knowledge Cutoff des konkreten Werkzeugs suchen, damit du die Grenze seines internen Wissens kennst |
+| **Zeitkritische Informationen verifizieren** | Jede Statistik, aktuelle Nachricht oder jedes neue Ereignis gegen eine verlässliche externe Quelle abgleichen |
+| **Den Zeitraum angeben** | Statt "Was war der größte Song des Sommers?" fragen: "Was war der größte Song des Sommers 2025?" |
+| **Mit Folgeprompts verfeinern** | Nennt eine Antwort ein Produkt neu, das mehrere Jahre alt ist, nach aktuelleren Alternativen oder einer Klarstellung fragen |
+
+### Drift
+
+**Drift** ist der allmähliche Rückgang von Genauigkeit und Relevanz eines Modells, während sich die Welt verändert, und der Kurs teilt sie in zwei:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Faktische Drift</div>
+    <ul>
+      <li>KI wird über Zeit ungenauer wegen ihres Knowledge Cutoff.</li>
+      <li>Beispiel: Ratschläge zu aktuellen Modetrends werden umso unbrauchbarer, je weiter man sich vom Trainingsdatum entfernt.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Verhaltensdrift</div>
+    <ul>
+      <li>Das Verhalten der KI ändert sich über Zeit, weil Entwickler Modelle aktualisieren.</li>
+      <li>Man bemerkt vielleicht, dass Formatierung, Ton oder Gesprächsstil sich ändern, selbst bei identischen Prompts.</li>
+    </ul>
+  </div>
+</div>
+
+Drei Gegenmaßnahmen, alle Dinge, die man im Prompt tut, keine Einstellungen:
+
+- **Liefere genauen, aktuellen Kontext** in deinen Prompts, besonders bei schnell wechselnden Themen wie Markttrends oder Technologie.
+- **Halte Chats fokussiert**, indem du für jede Aufgabe ein neues Gespräch beginnst, was auch das Context Window zurücksetzt, wenn ein Gespräch zu lang geworden ist oder die Ausgabe vom Thema abdriftet.
+- **Sei ausdrücklich** mit klaren, konkreten Anweisungen.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - Verhaltensdrift hat einen praktischen Stachel.** Wenn du einen funktionierenden Prompt speicherst und monatelang nutzt, kann ein Modellupdate leise ändern, was zurückkommt: derselbe Prompt, ein anderes Format und ein nachgelagerter Schritt, der still kaputtgeht. Die Abwehr ist langweilig und wirksam - halte ein paar bekannte Eingaben mit bekannt guten Ausgaben bereit und lass sie laufen, sobald dir etwas seltsam vorkommt. Das ist die handgemachte Variante dessen, was Entwickler ein **Evaluation Set** nennen, und es ist die eine Gewohnheit, die Menschen, die ihren KI-Workflows trauen, von Menschen trennt, die wiederholt überrascht werden.
+</Aside>
+
+Der Lesetext endet mit dem Satz, um den sich das ganze Zertifikat dreht: *Die besten Ergebnisse entstehen aus der Verbindung menschlicher Erfindungsgabe mit den Fähigkeiten der KI.*
+
+---
+
+## Die Labs und wozu sie dienen
+
+### Wie ein Lab läuft
+
+Das Zertifikat enthält mehr als zwanzig Hands-on-Labs, gestaltet nach echten Arbeitsaufgaben. Jedes hat ein von Fachleuten geführtes Video-Tutorial und schriftliche Anleitungen im eigenen Tempo, und das erklärte Ergebnis über das Zertifikat hinweg ist ein **Portfolio von KI-Projekten, die man sofort bei der Arbeit nutzen kann**.
+
+Die Mechanik, weil sie prägt, was die Labs lehren können:
+
+<Steps>
+
+1. **Starte das Lab** von einem Desktop oder Laptop - Labs sind auf Handy oder Tablet nicht zugänglich.
+
+2. **Wähle, wie du lernen willst.** Entweder **Seamless Login**, das das KI-Werkzeug in einem neuen Tab öffnet, zwischen dem du hin und her wechselst, oder **Side-by-side Learning**, ein geteilter Bildschirm mit dem Werkzeug links und dem Video samt schriftlicher Anleitung rechts. Side-by-side ist die empfohlene Option, und beide schließen das Lab ab.
+
+3. **Nutze die Beispielprompts**, die in der schriftlichen Anleitung grau hervorgehoben sind. Kopieren, in das Werkzeug einfügen, dann **den Text in Klammern** persönlich anpassen. Beachte, dass Tastenkürzel für Kopieren und Einfügen in den Labs nicht funktionieren können - nutze die rechte Maustaste.
+
+4. **Bringe eigene Dateien mit oder nimm die Beispiele.** Eine Beispieldatei öffnet man über das Datei-Icon und **Use Template**, was sie in deinem Google Drive speichert; eigene Dateien kommen über die **+**-Schaltfläche und *Add from Drive* herein.
+
+5. **Mark as completed** am Ende der schriftlichen Anleitung, dann den Tab schließen und zum nächsten Element gehen.
+
+</Steps>
+
+Zwei ehrliche Vorbehalte, die der Kurs mitliefert. Erstens: **melde dich bei deinem Google-Konto an, bevor du promptest**, sonst wird deine Arbeit nicht gespeichert. Zweitens ändern sich die Werkzeuge ständig, sodass das Video nicht genau deinem Bildschirm entsprechen muss - die schriftliche Anleitung ist maßgeblich.
+
+### Warum das für diese Notizen zählt
+
+Die Labs sind der Grund, warum dieses Kapitel und die nächsten zwei die Form haben, die sie haben. Die eigene Anweisung des Kurses lautet, **die eigenen Details einzusetzen** statt der Demo wörtlich zu folgen, was didaktisch genau richtig ist und genau der Grund, warum die Labs keine rekonstruierbare Spur hinterlassen. Von dem Ding, das du aus deiner eigenen Tabelle gebaut hast, gibt es kein Transkript.
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - was man aus einem Lab mitnimmt, damit es überlebt.** Nachdem ich mehrere davon allein aus den Aktivitätsanleitungen rekonstruiert habe: Das, was man retten sollte, ist nie die Ausgabe. Es ist:
+
+- **der Prompt, mit den Klammerplatzhaltern noch darin**, damit er wiederverwendbar bleibt und kein Einzelstück wird;
+- **was du nach der ersten Antwort ändern musstest**, denn das ist die eigentliche Lektion;
+- **was das Werkzeug falsch gemacht hat**, denn das ist der Teil, den du sonst vergisst und neu entdeckst.
+
+Drei Zeilen pro Lab in einer Notizdatei reichen, und sie sind das Rohmaterial für die **Prompt Library**, die der Kurs im [Prompting-Kapitel](/de/learnings/online/google-ai/02-prompting/) zu bauen empfiehlt.
+</Aside>
+
+---
+
+## Zusammenfassung zur Wiederholung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Die Rahmung des Zertifikats:** KI als **Collaborator**, nicht als Werkzeug für Einzelaufgaben. Der echte Nutzen liegt darin, sich durch die Schritte eines Problems zu bewegen und besser entscheiden zu können, nicht darin, Schreibarbeit schneller zu erledigen. *Ein Gespräch führen statt eine einzelne Anfrage stellen.*
+- **Drei Dinge, die Zusammenarbeit bringt:** Informationen organisieren und verstehen, ganz neue Dinge erschaffen, eigene Arbeit verbessern und verfeinern.
+- **Deine unersetzliche Hälfte:** Kontext, emotionale Intelligenz, Urteil, Verantwortung. KI kann die Präsentation entwerfen, aber nur du kennst das Publikum.
+- **Wo KI das falsche Werkzeug ist:** Finanz-, Rechts- und Compliance-Beratung - zu sensibel oder zu riskant. Eine Fachperson einbeziehen.
+- **Der Auslöser aus der Praxis:** Das Gefühl *"uff, das will ich nicht machen"* ist das Signal, KI zu probieren - nicht weil sie die Aufgabe beendet, sondern weil sie über den Widerstand hilft.
+- **Die Definitionskette:** KI (das Konzept) → Modell (auf Daten trainiertes Programm, findet Muster, wendet sie auf Neues an) → LLM (bewältigt nie gesehene Anfragen) → generative KI (erzeugt neue Inhalte) → multimodal (Text, Bild, Video, Audio).
+- **Trainingsdaten prägen alles.** Das Rote-Äpfel-Beispiel: Ein nur auf rote Äpfel trainiertes Modell verkennt grüne. Das ist auch einer von zwei Gründen, warum zwei Modelle abweichen - der andere ist die **Modellarchitektur**.
+- **Über die Aufzeichnung hinaus:** Ein LLM wird darauf trainiert, **das nächste Token vorherzusagen**. Daher: Gewandtheit ist nicht Wissen, Training und Inferenz sind getrennt, weshalb der Cutoff hart ist, und alles einschließlich der Rechnung wird in Tokens gezählt.
+- **Machine Learning** lässt ein Programm Muster finden, ohne für jedes Szenario programmiert zu sein. Dieses Gelernte auf neue Daten anzuwenden heißt **Inferenz**. Drei Ansätze: **supervised** (von Menschen gelabelt, bekannte Ausgabe), **unsupervised** (ungelabelt, Struktur entdecken), **reinforcement** (Versuch und Irrtum gegen Belohnungen und Strafen). Moderne Modelle kombinieren alle drei.
+- **Agenten** verbinden Modellintelligenz mit Werkzeugzugang und nehmen ein **weiter gefasstes Ziel** statt einer Aufgabe: Kalender prüfen, Raum buchen, Mail entwerfen, Einladung senden.
+- **Über die Aufzeichnung hinaus:** Agenten erreichen Werkzeuge über **MCP**, im Dezember 2025 an die Agentic AI Foundation der Linux Foundation übergeben und inzwischen in ChatGPT, Claude, Gemini, Copilot und VS Code unterstützt.
+- **Modell gegen App:** Das Modell ist der Motor (Reasoning und Erzeugen, eine Familie, eingebaut in Search, Maps und Pixel), die App ist das Auto, das du fährst. Modelle in der App passend zur Aufgabe wechseln; komplexere Aufgaben dauern länger.
+- **Über die Aufzeichnung hinaus:** Die **3.5 Flash / 3.1 Pro** des Kurses sind überholt von **3.8 Flash** (0,75 $/3,75 $ pro Mio. Tokens, Einführungspreis bis 31.12.2026), **3.1 Pro** (2 $/12 $) und **3.5 Flash-Lite** (0,30 $/2,50 $). Pro verließ im April 2026 die kostenlose Stufe, und ein aktuelles Flash schlägt ein älteres Pro - lies die Karte, nicht das Suffix.
+- **Temperature** steuert Kreativität: niedriger ist vorhersehbar und gleichförmig, höher erfindungsreich und weniger vorhersehbar. Sie skaliert Token-Wahrscheinlichkeiten. Niedrig ist nicht *genau*, nur *wiederholbar*.
+- **Drei Grenzen.** **Bias** aus schiefen Trainingsdaten - abstellen durch Konkretheit und durch das Benennen des Stereotyps im Folgeprompt. **Knowledge Cutoff** - das Trainingsende; Live-Websuche ist Nachschauen, nicht Wissen, also Zeitkritisches verifizieren und den Zeitraum nennen. **Drift** - faktisch (Genauigkeit verfällt nach dem Cutoff) und verhaltensbezogen (Ton und Formatierung ändern sich mit Updates).
+- **Über die Aufzeichnung hinaus:** Verhaltensdrift zerstört gespeicherte Prompts leise. Halte ein paar bekannte Eingaben mit bekannt guten Ausgaben und lass sie erneut laufen - ein handgemachtes **Evaluation Set**.
+- **Die Labs:** mehr als 20 Hands-on, nur Desktop, Side-by-side empfohlen, graue Beispielprompts mit Klammerplatzhaltern zum Anpassen, vorher anmelden oder nichts wird gespeichert, und das Video kann von deinem Bildschirm abweichen - die schriftliche Anleitung gewinnt.
+</Aside>
+
+---
+
+*Weiter: [Prompting →](/de/learnings/online/google-ai/02-prompting/) - das Framework aus Persona, Task, Format und Context, die drei C, Iteration und das Verketten von Prompts zu einem Workflow.*

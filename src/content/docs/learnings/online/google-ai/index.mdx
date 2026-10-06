@@ -1,0 +1,150 @@
+---
+title: "Google AI Professional Certificate"
+description: "Study notes for the eight-course Google AI Professional Certificate - AI fundamentals, prompting, responsible use, brainstorming, research, communication, content creation, data analysis, and building and deploying apps by vibe coding, plus two added chapters on the Gemini API and on building with AI other than Gemini."
+sidebar:
+  label: Overview
+  order: 0
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate (Google on Coursera) - study notes for revision.*
+
+---
+
+Eight short courses, about thirteen hours of material, and no coding prerequisite. The certificate's claim is narrow and honest: it does not teach you to train models or to write software, it teaches you to put AI into the work you already do, and then - in the last two courses - to build small tools for yourself without writing code.
+
+The framing that runs through all eight courses comes from the first video: AI is a **collaborator**, not a vending machine. You bring the context, the judgment and the accountability; it brings speed, breadth and a tireless willingness to produce a first draft. Every course is built as demo first, practice second, with more than twenty hands-on labs where you repeat the demo on your own material.
+
+<Aside type="note">
+**Where this sits in my notes.** This is separate from the [Google Project Management Certificate](/learnings/online/project-management/) and from the shorter [Job Search with AI](/learnings/online/job-search-with-ai/) course, both of which live elsewhere in these online-learning pages. There is some deliberate overlap: the project management capstone has a chapter on AI for project managers, and the job search course uses the same Gemini tools for a different purpose.
+</Aside>
+
+## The eight courses
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1. AI Fundamentals<span class="sub">3 hours - how AI works, prompting, responsible use. The foundation for everything after it</span></div>
+    <div class="sc-node violet">2 to 6. Apply AI to five kinds of work<span class="sub">brainstorming and planning, research and insights, writing and communicating, content creation, data analysis. One hour each, two for content</span></div>
+    <div class="sc-node green">7 and 8. Build and ship your own tools<span class="sub">vibe coding in AI Studio: map your workflow, build three apps, then plan, debug and deploy one properly. Two hours each</span></div>
+  </div>
+  <figcaption>The first course is the only long one. Courses 2 to 6 are interchangeable - each applies the same fundamentals to a different task. Courses 7 and 8 are the step from using AI to building with it.</figcaption>
+</figure>
+
+<CardGrid>
+  <Card title="1 · AI Fundamentals" icon="rocket">
+    What AI actually is, how training data shapes a model, machine learning, LLMs, multimodality, agents, the model-versus-app distinction, temperature, and the three limitations that matter: bias, knowledge cutoff and drift.
+
+    [Read notes →](/learnings/online/google-ai/01-ai-fundamentals/)
+  </Card>
+  <Card title="1 · Prompting" icon="pencil">
+    The persona-task-format-context framework, the three C's, evaluating output, iteration, references, the context window and why one chat per topic, powerful prompt phrases, and prompt chaining.
+
+    [Read notes →](/learnings/online/google-ai/02-prompting/)
+  </Card>
+  <Card title="1 · Responsible AI" icon="warning">
+    Hallucination and the absence of common sense, the ACT checklist, human-in-the-loop, protecting confidential information, regulated work, building an audit trail, and SynthID.
+
+    [Read notes →](/learnings/online/google-ai/03-responsible-ai/)
+  </Card>
+  <Card title="2 · Brainstorming & Planning" icon="puzzle">
+    Problem framing before prompting, simulating experts to widen the option space, Gemini as devil's advocate against your own plan, applying constraints to converge, and Gemini Notebook as a project information hub.
+
+    [Read notes →](/learnings/online/google-ai/04-brainstorming-and-planning/)
+  </Card>
+  <Card title="3 · Research & Insights" icon="open-book">
+    Deep Research as an agentic research loop over hundreds of sources, reading a report critically, Gemini Notebook for source-grounded synthesis, and audio, video and interactive overviews.
+
+    [Read notes →](/learnings/online/google-ai/05-research-and-insights/)
+  </Card>
+  <Card title="4 · Writing & Communicating" icon="comment">
+    The five elements of communication that stay human, AI's four jobs, Canvas for drafting variants, tone and audience control, translation that carries intent, and rehearsing a hard conversation with Gemini Live.
+
+    [Read notes →](/learnings/online/google-ai/06-writing-and-communicating/)
+  </Card>
+  <Card title="5 · Content Creation" icon="seti:image">
+    Multimodality in practice: text to image with Nano Banana Pro, image to video with Veo, format transformation from any source to any output, and on-demand critique of a draft.
+
+    [Read notes →](/learnings/online/google-ai/07-content-creation/)
+  </Card>
+  <Card title="6 · Data Analysis" icon="bars">
+    Mixed-source analysis, the questions you still have to ask, Gemini in Sheets, treating open-text responses as a first-class data source, visualisation, scenario forecasting in Canvas, and the data privacy rule.
+
+    [Read notes →](/learnings/online/google-ai/08-data-analysis/)
+  </Card>
+  <Card title="7 · App Building" icon="laptop">
+    Vibe coding and the agentic AI behind it, the workflow-mapping worksheet that finds the right task, a tour of Google AI Studio, the three apps the course builds, brick-by-brick prompting, and chaining models.
+
+    [Read notes →](/learnings/online/google-ai/09-app-building/)
+  </Card>
+  <Card title="8 · App Deployment" icon="approve-check-circle">
+    The three-phase developer workflow: plan with a spec doc and four planning moves, debug with the error panel and staged isolation, then ground, gate and share the app with real permissions.
+
+    [Read notes →](/learnings/online/google-ai/10-app-deployment/)
+  </Card>
+</CardGrid>
+
+## Two chapters the certificate does not have
+
+The certificate stops at the edge of AI Studio. It never shows you the API that the app it just built is calling, and it never mentions that any AI other than Gemini exists. Both are worth knowing, so these notes add two chapters of their own.
+
+<CardGrid>
+  <Card title="The Gemini API in practice" icon="setting">
+    The step from a built app to code you control: API keys and why they belong on a server, the `google-genai` SDK, the Interactions API that replaced `generateContent` in 2026, the current model and price table, structured output, function calling, server-side tools, caching, batch, and how to keep a bill small.
+
+    [Read notes →](/learnings/online/google-ai/11-gemini-api/)
+  </Card>
+  <Card title="Beyond Gemini" icon="external">
+    Building with other AI: Claude, OpenAI and open-weight models with October 2026 prices, the three categories of build tool and which to reach for, MCP and A2A as the interoperability standards, agent frameworks, where to deploy, and the OWASP LLM Top 10.
+
+    [Read notes →](/learnings/online/google-ai/12-beyond-gemini/)
+  </Card>
+</CardGrid>
+
+## Every tool the certificate touches
+
+| Tool | What it is | Where it appears |
+| --- | --- | --- |
+| **Gemini app** | The all-purpose assistant and the course's home base, at gemini.google.com or on mobile | All eight courses |
+| **Gemini Live** | Real-time spoken conversation, in the mobile app. Used for roleplay and for talking through notes | Writing and communicating |
+| **Canvas** | A document and code workspace inside Gemini for drafting and iterating on long output | Writing, content, data analysis |
+| **Deep Research** | An agentic mode that opens and reads hundreds of sources in a reasoning loop, then writes a report | Research and insights |
+| **Gemini Notebook** | Source-grounded research and synthesis, with audio, video and interactive overviews. Formerly NotebookLM | Brainstorming, research |
+| **Nano Banana Pro** | The image generation and editing model inside the Gemini app | Fundamentals, content creation |
+| **Veo** | Video generation, including image-to-video and native audio | Content creation |
+| **Gemini in Sheets** | Analysis, cleaning and formula help in plain language inside a spreadsheet | Data analysis |
+| **Google AI Studio** | The developer-facing surface: a playground with model settings, and Build mode for vibe coding | Fundamentals, app building, deployment |
+| **SynthID** | Invisible watermarking that marks content as AI-generated | Responsible AI |
+
+<Aside type="caution">
+**Model names in these notes date fast.** The course demos run on **Gemini 3.5 Flash** and **Gemini 3.1 Pro**. By the time I wrote these notes the current Flash model was **Gemini 3.8 Flash** and Pro had left the free tier. Where a version number matters I have given both: what the recording shows, and what is current. Treat every number as a reading from one day, not a constant - the [Gemini API chapter](/learnings/online/google-ai/11-gemini-api/) says where to look up today's.
+</Aside>
+
+## How these notes handle the labs
+
+More than twenty of the certificate's items are hands-on labs and activities: you watch a short tutorial, then redo it on your own material in a split-screen workspace. Those are the most useful part of the certificate and the least recoverable part afterwards - there is no transcript of a lab you did yourself, and a concept explained half in a video and half in an activity arrives in notes with a hole in the middle.
+
+So these notes close the holes, and say where they did.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">From the course</div>
+    <ul>
+      <li>Ordinary body text, tables, diagrams and summaries are the course's own material: the videos, the readings, the activity instructions and the worksheet.</li>
+      <li>Where the course gives a figure, a framework or a prompt, it appears as the course gave it.</li>
+      <li>Where the course names a tool, the notes name the same tool.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Beyond the recording</div>
+    <ul>
+      <li>Anything marked <strong>Beyond the recording</strong> is mine, not Google's: the missing half of a concept, the mechanism under a demo, or what has changed since the course was filmed.</li>
+      <li>It is there because a concept taught half in a lab is not a concept until the other half is written down.</li>
+      <li>Every claim in those blocks was checked against current documentation rather than remembered.</li>
+    </ul>
+  </div>
+</div>
+
+<Aside type="tip">
+**Why bother separating them.** Because the two have different shelf lives and different authority. The course's own framing - collaborate rather than command, check before you use, tell people when you used it - will outlast every model number in these pages. My additions are accurate as of writing and will need rechecking. Keeping them visibly apart means a reread in a year can trust one half and verify the other.
+</Aside>

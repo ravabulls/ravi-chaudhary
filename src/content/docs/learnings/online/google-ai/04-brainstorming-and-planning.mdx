@@ -1,0 +1,214 @@
+---
+title: "Google AI 4 - Brainstorming and Planning"
+description: "Problem framing before prompting, simulating experts to widen the option space, pushing past the obvious ideas, using Gemini as a devil's advocate against your own plan, applying constraints to converge on one path, and Gemini Notebook as a project information hub."
+sidebar:
+  label: "4 · Brainstorming & Planning"
+  order: 4
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Course 2: AI for Brainstorming and Planning*
+
+---
+
+The second course is one hour long and almost entirely activity. Its instructor is a VP of Product Management at Google who leads a research team called **Paradigms of Intelligence**, which works on the nature and building blocks of intelligence - a credential that matters less than the framing he opens with.
+
+The biggest things achieved at work start as an idea, and the journey from a spark of inspiration to a finished project is not easy: identifying the right solution, building a plan, managing the bumps. The course proposes AI as three partners in that journey rather than one:
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">A creative collaborator<span class="sub">to help generate possibilities - simulate experts, push creative boundaries, bring industry knowledge into the process</span></div>
+    <div class="sc-node violet">A master strategist<span class="sub">to stress-test your assumptions - find the risks in your strategy before they become problems, and apply constraints to narrow down</span></div>
+    <div class="sc-node green">An execution expert<span class="sub">to build a plan from your ideas and keep everyone on the same page, using Gemini Notebook as an information hub</span></div>
+  </div>
+  <figcaption>Three roles across the project lifecycle - idea, plan, delivery. The same tool, asked for three different kinds of help.</figcaption>
+</figure>
+
+The promised outcome: break through creative blocks, find unexpected solutions to complicated problems, and turn your best ideas into action plans that drive progress.
+
+---
+
+## The principles that come before any prompt
+
+The course is unusually insistent that the technique is worthless without three things from you first.
+
+### Problem framing
+
+**Before you even consider using AI**, define clearly the problem you are trying to solve and why. Where you are and where you want to go is what anchors the process from start to finish.
+
+This is the course's most important sentence and the easiest one to nod at and skip, because framing a problem feels like a delay when you could be generating ideas.
+
+<Aside type="note">
+**Beyond the recording - how to actually frame a problem in four lines.** The course says to do it and moves on. The version that works, borrowed from ordinary product practice and compressed to something you can write in two minutes before opening a chat:
+
+1. **Current state.** What is happening now, stated as an observation rather than a complaint. *"Status meetings end without a decision roughly half the time."*
+2. **Desired state.** What would be true if this were solved. *"Every status meeting ends with a named owner and a date for each open item."*
+3. **Why it matters now.** The cost of leaving it alone, and the reason this is on your desk this month and not last year.
+4. **Constraints you already know.** Budget, headcount, deadline, anything politically fixed.
+
+The test of a good frame: it contains **no solution**. *"We need a better meeting template"* is a solution wearing a problem's clothes, and pasting it into a chat gets you five variations on a template instead of the possibility that the meeting should not exist.
+
+The practical payoff is that this four-line block **is** the context slot of the [persona-task-format-context framework](/learnings/online/google-ai/02-prompting/). Writing it is not preparation for prompting; it is most of the prompt.
+</Aside>
+
+### Context only you have
+
+AI does not have the background information about your customers, your team dynamics, or your leadership's priorities. The course is specific that these are **the critical things that determine which solutions to pursue and what steps belong in the plan** - and that the information can only come from you.
+
+### Be a tough critic
+
+Stated almost as an apology: AI is not perfect, and it can give you ideas that will not be a good fit. *So, please, be a tough critic.*
+
+Throughout the process you are setting up the problem, exploring the options, and using your judgment to decide what to do next. The course calls the whole thing a mindset shift, which is accurate - the difficulty is not operating the tool.
+
+---
+
+## Generating ideas
+
+### Simulating experts
+
+The first named technique: **simulate experts** to uncover solutions you never would have considered, and bring industry knowledge into the process.
+
+This is the persona slot of the prompting framework put to a specific use. The move is not "write like an expert" but "tell me what an expert would notice that I have missed".
+
+<Aside type="note">
+**Beyond the recording - what simulating experts looks like when it works.** The course names the technique in one line, and the activity is where you would have learned to do it. The shape that produces something useful rather than generic:
+
+**Convene a panel, not a single voice.** One persona gives you one perspective, which is barely better than your own. Ask for several at once and the disagreements are the value:
+
+> *You are a panel of four: a sceptical CFO, a frontline operations lead who will have to run this, a customer who has used the current process, and a competitor's strategist. Each of you reacts to the plan below in three sentences. Where you disagree with each other, say so explicitly.*
+
+**Make the experts specific to the domain, not to the job title.** *"An expert in multi-site logistics with a background in perishables"* produces different material from *"a logistics expert"*, because the specificity narrows which patterns in the training data get activated.
+
+**Ask for what the expert would ask, not what they would conclude.** The highest-value output from a simulated expert is usually a question you did not know to ask. *"What are the five questions someone with twenty years in this field would ask me about this plan?"* is worth more than any conclusion the model can offer, because the questions are checkable against reality and the conclusions are not.
+
+The honest limit: a simulated expert is a plausible average of how such people write, not an expert. It is good at surfacing the standard considerations of a field and bad at anything genuinely specific to your market, your contract or your data. Use it to **stop missing the obvious**, not as a substitute for asking a real person.
+</Aside>
+
+### Pushing creative boundaries
+
+The second named technique, and the one the course gives least detail on. The purpose is explicit - **uncover solutions you never would have considered** - which means the enemy is the model's strong pull toward the conventional answer.
+
+<Aside type="note">
+**Beyond the recording - four prompts that reliably get past the first obvious answer.** A single open request produces the median idea, because the median is what the model was trained to predict. Each of these breaks that in a different way:
+
+| Move | The prompt | Why it works |
+| --- | --- | --- |
+| **Quantity before quality** | *"Give me 20 options, one line each. Do not expand or evaluate any of them."* | The first five will be obvious. Forcing a long list pushes it into the tail, and forbidding expansion stops it committing early |
+| **Forced analogy** | *"How would a hospital emergency department solve this? How would a budget airline? How would a public library?"* | Transfers structure from an unrelated domain, which is where genuinely unexpected options come from |
+| **Inversion** | *"What would guarantee this fails? List ten ways."* then *"Now invert each one into something we could do."* | Much easier to generate failure modes than successes, and the inverted list is often non-obvious |
+| **Extreme constraint** | *"Solve it with no budget and one person."* then *"Solve it with unlimited budget."* | The two answers bracket the real solution space, and the zero-budget version is frequently the one worth doing |
+
+Then the step that makes the exercise worth having done: **cluster before you choose.** *"Group these twenty into themes and name each theme."* Twenty ideas are unmanageable; five themes are a decision.
+</Aside>
+
+---
+
+## Pressure-testing
+
+### Devil's advocate
+
+The course's framing is good: **the best ideas are the ones that can stand up to potential problems in the future**, and spotting those problems before they happen is hard. So use Gemini as a **devil's advocate** to find risks in your strategy before they become problems.
+
+The practitioner interview is the most concrete thing in the course, and it describes a workflow rather than a prompt. A product manager writes a **product requirements document** for a feature - what feature, why they are building it, the relevant data - then uploads the PRD to Gemini and says:
+
+> *"Give me feedback."*
+>
+> *"Tell me why this is a bad idea."*
+
+Gemini goes through it and pokes holes, which helps him think through whether it is actually a good idea and what other considerations he has missed. His description of the effect: it refines his plans and takes them to the next level.
+
+Two things about that workflow are worth noticing. First, he **writes the document before asking for criticism** - the criticism is of real work, not of a sketch. Second, the second prompt is deliberately unfair. *"Tell me why this is a bad idea"* gives the model permission to be negative, which it otherwise avoids.
+
+<Aside type="tip">
+**Beyond the recording - why you have to ask for criticism rudely.** Models are trained toward helpfulness, and in practice that produces a bias toward agreement. *"What do you think of my plan?"* reliably returns a compliment and three soft suggestions. The fix is to remove the option of approval from the question:
+
+- *"Tell me why this is a bad idea."* - the practitioner's version, and the simplest.
+- *"You are the person who has to clean up after this fails. Write the post-mortem."* A **pre-mortem**: assume the failure has happened and explain it. This produces far more specific risks than asking what might go wrong, because it is easier to explain a fact than to predict one.
+- *"List the assumptions this plan depends on, ranked by how damaging it would be if each turned out to be false."* The output is a list of things to go and check, which is more actionable than a list of risks.
+- *"Which part of this would a hostile reviewer attack first?"* Useful before a real review, for obvious reasons.
+
+The one to be careful with: a model asked to criticise will criticise, including things that are fine. Treat the output as **candidates for concern**, filter it with the context only you have, and expect roughly half of it to be noise. Half is still a good return on one sentence.
+</Aside>
+
+### Constraints to converge
+
+The counterpart to generating options: **apply constraints to get to the most relevant solutions**, so that you can choose the best path.
+
+This is the same mechanism as the constraints described in [prompting](/learnings/online/google-ai/02-prompting/), used at a different scale - not to shape one output but to eliminate branches of a decision.
+
+<Aside type="note">
+**Beyond the recording - converging without hand-waving.** Having generated twenty options and clustered them to five, the course leaves the actual choosing to you. Two moves make it tractable:
+
+**Name the criteria before you look at the options.** Otherwise you will choose first and justify afterwards, which is how everyone does it and why it feels so convincing. Three or four criteria, weighted, decided before you score anything: *effort, time to first result, reversibility, and whether it needs anyone's permission.*
+
+**Then ask for the scoring and argue with it.**
+
+> *Score each of these five options from 1 to 5 against: effort to implement, time to first visible result, how reversible it is, and how many people have to agree. Show it as a table, total the scores, and then tell me which option the table recommends and why that recommendation might be wrong.*
+
+The final clause is the one that earns its place. A scoring table is a device for making a decision legible, not for making it for you - and asking the model to attack its own table surfaces the criterion you weighted badly.
+
+One criterion the course never mentions and that belongs on most real lists: **reversibility**. A cheap decision you can undo next week deserves to be made immediately and without analysis. The expensive, hard-to-reverse one is the only place this whole apparatus is worth the time.
+</Aside>
+
+---
+
+## Managing the project: an information hub
+
+The third phase is about getting everyone on the same page. The named tool is **Gemini Notebook**, used to create an **information hub** where you and your teammates can ask questions and get answers about the project in seconds.
+
+The practitioner interview on it is short and enthusiastic: it is a way to keep track of everything you have been meaning to read, to organise it, to synthesise it, and to get the key insights needed to actually get things done.
+
+<Aside type="note">
+**Beyond the recording - what makes Gemini Notebook different from a chat, and the rename.** This is the one tool in the certificate whose value is structural rather than conversational, and the distinction is worth stating plainly:
+
+**It is grounded in sources you choose.** You upload documents, slides, PDFs, links; it answers from those and cites which source each claim came from. It is not consulting its training data and guessing. That is why it is the right tool for a project hub - when a teammate asks *"what did we decide about the vendor?"*, the answer comes from the actual document, with a pointer to it.
+
+**The practical consequence is far less hallucination**, for the reason set out in [responsible AI](/learnings/online/google-ai/03-responsible-ai/): grounding is the most effective single mitigation there is. It is not zero, and the citations still deserve a glance, but the failure mode changes from invention to misreading, which is a much better failure mode.
+
+**The name changed.** It was **NotebookLM** and became **Gemini Notebook** in July 2026; the address moved from `notebooklm.google.com` to `notebook.google.com`, with old links redirecting. If a course page, a bookmark or an older article says NotebookLM, it means this. The same update added synced notebooks across the Gemini app, mobile audio recording, interactive overviews, and code execution inside a notebook for data analysis.
+
+**The overviews are the underrated feature.** A notebook can generate an **audio overview** - two synthetic voices discussing your sources - plus video and interactive versions. The research-and-insights practitioner describes listening to one while getting ready in the morning, which sounds like a gimmick and is actually the point: it converts reading you will not do into listening you will. More in [research and insights](/learnings/online/google-ai/05-research-and-insights/).
+</Aside>
+
+---
+
+## From idea to plan
+
+The course's arc ends with turning the chosen idea into an action plan. It names this as the third phase and demonstrates it in the activity rather than the videos, and the writing-and-communicating course shows the same move from the other end - a practitioner there describes talking an out-of-the-box concept through with Gemini Live and having the conversation **synthesised into an action plan with clearly outlined next steps** to share with leadership.
+
+<Aside type="tip">
+**Beyond the recording - the prompt that turns a decision into a plan.** The gap between "we have chosen the approach" and "there is a plan" is where projects die quietly. One prompt covers it, and the parts that matter are the last two clauses:
+
+> *We have decided to [chosen option]. Turn this into a plan: the phases, what has to be true before each phase can start, who needs to be involved at each point, and the first three things I personally do on Monday. Flag anything in the plan that depends on a decision we have not actually made yet.*
+
+**The first three things on Monday** defeats the plan that is beautifully structured and impossible to begin. **Flag the undecided dependencies** catches the plan that quietly assumes approval, budget or a hiring decision that does not exist - which is the single most common reason a good plan stalls in week two.
+
+Then do the thing the course has been teaching all along: **be a tough critic** of the result. The plan is a draft by a collaborator who has never met your organisation.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The course's three roles for AI** across the project lifecycle: **creative collaborator** (generate possibilities), **master strategist** (stress-test assumptions), **execution expert** (build the plan, keep everyone aligned).
+- **Problem framing comes first.** Before you even consider using AI, define the problem and why. Where you are and where you want to go anchors everything. **Beyond the recording:** four lines - current state, desired state, why now, known constraints - and the test of a good frame is that it contains **no solution**. That block is most of the context slot of the prompting framework.
+- **Context only you have:** your customers, your team dynamics, your leadership's priorities. These determine which solutions to pursue and which steps belong in the plan.
+- **Be a tough critic.** AI will give you ideas that do not fit. You set up the problem, explore options, and judge.
+- **Simulate experts** to uncover solutions you would not have considered and bring industry knowledge in. **Beyond the recording:** convene a **panel** rather than one voice and ask where they disagree; make the expertise domain-specific rather than a job title; ask what an expert would **ask**, not what they would conclude. A simulated expert surfaces the obvious considerations of a field and knows nothing specific to your market.
+- **Push creative boundaries. Beyond the recording:** four reliable moves - **quantity before quality** (20 options, one line, no expansion), **forced analogy** (how would an emergency department solve this?), **inversion** (ten ways to guarantee failure, then invert), **extreme constraint** (no budget / unlimited budget). Then **cluster into named themes** before choosing.
+- **Devil's advocate:** the best ideas survive future problems, and spotting those early is hard. The practitioner workflow: write a real **PRD**, upload it, then *"give me feedback"* and *"tell me why this is a bad idea."*
+- **Beyond the recording:** models are biased toward agreement, so remove approval from the question. Use a **pre-mortem** (*write the post-mortem of this failure*), rank the **assumptions** by how damaging it would be if each were false, or ask what a hostile reviewer attacks first. Expect half the output to be noise.
+- **Apply constraints to converge** on the most relevant solutions. **Beyond the recording:** name three or four weighted criteria **before** looking at options, score in a table, then ask the model why its own recommendation might be wrong. Add **reversibility** to the criteria - cheap reversible decisions should just be made.
+- **Gemini Notebook as a project information hub**, where the team asks questions and gets answers in seconds. The practitioner uses it to track, organise and synthesise everything they meant to read.
+- **Beyond the recording:** Notebook is **grounded in sources you choose** and cites them, which is why it hallucinates far less than open chat - the failure mode shifts from invention to misreading. **NotebookLM was renamed Gemini Notebook in July 2026** and moved to `notebook.google.com`. **Audio, video and interactive overviews** convert reading you will not do into listening you will.
+- **From idea to plan. Beyond the recording:** ask for phases, preconditions, who is involved, **the first three things you do on Monday**, and a flag on anything depending on a decision not actually made.
+</Aside>
+
+---
+
+*Next: [Research and insights →](/learnings/online/google-ai/05-research-and-insights/) - Deep Research as an agentic loop, reading a generated report critically, and source-grounded synthesis.*

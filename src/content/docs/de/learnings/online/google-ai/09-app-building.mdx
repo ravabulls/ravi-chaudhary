@@ -1,0 +1,304 @@
+---
+title: "Google AI 9 - Apps bauen"
+description: "Vibe Coding und die agentische KI darunter, das Arbeitsblatt zur Workflow-Kartierung in vollem Umfang, eine Tour durch Chat- und Build-Modus von Google AI Studio, die drei Apps des Kurses, Prompting Stein für Stein, das Verketten von Modellen und wie man eine App beurteilt, die man nicht selbst geschrieben hat."
+sidebar:
+  label: "9 · Apps bauen"
+  order: 9
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Kurs 7: AI for App Building*
+
+---
+
+Der siebte Kurs ist der Punkt, an dem das Zertifikat seinen Charakter ändert. Bis hierher ging es in jedem Kurs darum, KI auf eine Aufgabe anzuwenden. In diesem geht es darum, **ein Werkzeug zu bauen und zu behalten**, und der Dozent sagt den Wechsel direkt: Dies ist der Schritt von der **Nutzerin der KI** zur **Erbauerin eigener KI-gestützter Lösungen**.
+
+Der Dozent leitet Product and Design bei Google AI Studio, und die Eingangsfrage ist gut gezielt. Denk an ein Projekt, an dem du gerade arbeitest - hattest du schon das Gefühl, genau dieselben Abläufe schon einmal durchlaufen zu haben? Die angebotene Methode hilft nicht nur beim aktuellen Projekt; sie hinterlässt **ein eigenes KI-Werkzeug, zu dem du immer wieder zurückkehren kannst.**
+
+<Aside type="note">
+**Das Beispiel, das es greifbar macht.** Du hast eine nervige wiederkehrende Aufgabe - Bilder für deinen monatlichen Newsletter auf die richtige Größe bringen. Du wünschtest dir eine App mit einer großen Upload-Schaltfläche, in die du die Bilder ziehst und sie in der Größe und im Format zurückbekommst, die du brauchst. Und während sie dabei ist, würdest du gern, dass sie **die Dateien nach der Namenskonvention deines Teams umbenennt**. Mit Vibe Coding kannst du genau das bauen.
+
+Die zweite Hälfte dieses Beispiels ist die wichtige. Die Namenskonvention ist spezifisch für dein Team, und genau deshalb macht es kein kommerzielles Produkt und genau deshalb lohnt es sich, zwei Stunden ins eigene zu investieren.
+</Aside>
+
+---
+
+## Was Vibe Coding ist
+
+### Die Definition und warum der Name
+
+**Vibe Coding** ist das Nutzen natürlicher Sprache, um Software oder Apps mit KI zu bauen. Der Name, wie der Kurs ihn mit einer gewissen Belustigung erklärt, kommt davon, dass *man nur den Vibe von dem kennen muss, was man erreichen will* - gefolgt vom sofortigen Zugeben, dass es ein bisschen mehr dazu gibt.
+
+Was es mit Prompting gemeinsam hat, ist der nützliche Teil. Vibe Coding verlangt von dir:
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Genau beschreiben, was du brauchst<span class="sub">dieselbe Präzision, die das Prompting-Framework verlangt</span></div>
+  <div class="sc-node violet">Der KI Details über deinen Workflow geben<span class="sub">der Context-Platz, angewandt darauf, wie du tatsächlich arbeitest</span></div>
+  <div class="sc-node green">Ihr helfen, gute von schlechten Ergebnissen zu unterscheiden<span class="sub">das ist Bewertung, und der Teil, der daraus einen Bau statt einer Demo macht</span></div>
+</div>
+
+### Agentische KI macht es möglich
+
+Der Kurs beantwortet das naheliegende *wie ist das überhaupt möglich* mit einem Begriff aus den [Grundlagen](/de/learnings/online/google-ai/01-ai-fundamentals/): **agentische KI**. Sie geht über das Antworten auf Prompts hinaus - **sie handelt in deinem Namen, unter deiner Aufsicht**. Nachdem du in normalen, nicht-technischen Worten beschrieben hast, was du brauchst, übernimmt der Agent die technische Arbeit: **Code schreiben, die Oberfläche bauen und sicherstellen, dass alles zusammen funktioniert**.
+
+### Wie schnell sich das bewegt
+
+Die eigene Anekdote des Dozenten ist das beste Argument des Kurses dafür, seine Erwartungen nicht an der Erfahrung des letzten Jahres auszurichten. Ein Jahr früher, als die Modelle gerade erschienen waren, wollte er sehen, ob er ein Spiel aus seiner Kindheit nachbauen könnte. Er kannte die Grenzen des Möglichen nicht, also kämpfte er sich **drei Tage** durch alle Arten von Fehlern, und irgendwie existierte das Spiel am Ende.
+
+Heute, sagt er, kann das Modell ihm das ganze Spiel bauen, wenn er **einen Screenshot** gibt. *Es ist verrückt, wie schnell sich diese Dinge bewegen.*
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - der ehrliche Umfang dessen, was man bekommt.** Zwei symmetrische Fehler sind es wert, vorweggenommen zu werden, denn Menschen machen den einen oder den anderen und beide kosten ein Wochenende.
+
+**Es ist realer, als es klingt.** Das ist kein Mock-up und kein No-Code-Formularbauer. Du bekommst eine echte Webanwendung - laufenden Code, eine echte Oberfläche, Logik, die ausgeführt wird - und du kannst sie herunterladen, in ein Repository legen und selbst hosten. Es ist Software, und sie ist deine.
+
+**Es ist weniger fertig, als es aussieht.** Was du in zehn Minuten bekommst, ist ein **Prototyp**: eine funktionsfähige erste Fassung zum Durchklicken und Testen. Der Deployment-Kurs sagt es ausdrücklich - *manche Funktionen können unvollständig sein oder noch nicht richtig funktionieren, und das ist völlig normal.* Der Weg vom funktionierenden Prototyp zu einem Werkzeug, auf das dein Team sich verlässt, ist der ganze [Kurs 8](/de/learnings/online/google-ai/10-app-deployment/), und er ist länger als die Strecke, die du gerade zurückgelegt hast.
+
+**Und die nützlichste Frage, die der Kurs nie stellt: sollte das überhaupt eine App sein?** Die ehrlichen Antworten, geordnet danach, wie oft sie richtig sind:
+
+| Wenn die Aufgabe... | Baue das |
+| --- | --- |
+| Einmal oder selten getan wird | **Nichts.** Prompte einfach Gemini und mach weiter. Das Arbeitsblatt unten existiert, um dir das zu sagen |
+| Überwiegend Arithmetik auf einer Tabelle ist | **Eine Tabelle**, vielleicht mit Gemini in Sheets. Schneller gebaut, leichter zu reparieren, und alle können sie schon lesen |
+| Fragen zu einem festen Set von Dokumenten beantwortet | **Ein Gemini Notebook.** Verankert, belegt, keine Bauzeit |
+| Ein wiederkehrendes mehrstufiges Urteil mit gleichbleibender Form ist | **Eine App.** Das ist der eigentliche Sweet Spot |
+| Geld, personenbezogene Daten oder eine Entscheidung über einen Menschen berührt | **Halt an und lies** erst den Compliance-Abschnitt in [verantwortungsvolle KI](/de/learnings/online/google-ai/03-responsible-ai/) |
+</Aside>
+
+---
+
+## Die richtige Aufgabe finden: das Workflow-Arbeitsblatt
+
+Vor allem Bauen lässt der Kurs dich deine eigene Arbeit kartieren. Das ist die eine Aktivität, deren Artefakt vollständig überlebt - ein Arbeitsblatt namens **Map your workflow** - und es ist das Beste im Kurs, denn es ist der Schritt, der verhindert, dass du etwas Eindrucksvolles und Nutzloses baust.
+
+### Die fünf Schritte
+
+<Steps>
+
+1. **Liste drei Ziele, die du bei der Arbeit erreichen willst** in diesem Monat. Die eigenen Beispiele des Arbeitsblatts: einen Quartalsbericht vorbereiten; einen Social-Media-Kalender für eine Kundin bauen; Ideen für Produkte oder Dienstleistungen zur Geschäftserweiterung recherchieren; den Onboarding-Prozess überarbeiten; die Conversion-Rate im Vertrieb verbessern; laufende Lieferantenverträge prüfen und für eine Verlängerung bewerten; Hilfecenter-Artikel schreiben.
+
+2. **Kartiere die nötigen Aufgaben.** Zerlege jedes Ziel in kleinere, konkrete Schritte - sei konkret darüber, was du tatsächlich tun wirst. Das durchgespielte Beispiel für einen Quartalsbericht: Kerndatenquellen und Kennzahlen identifizieren; Leistungstrends analysieren, indem man die aktuellen KPIs mit dem Vorquartal vergleicht; Diagramme und Grafiken entwickeln; den Bericht mit Fokus auf Wachstumsfelder und Verbesserungschancen entwerfen; eine Zusammenfassung der größten Erfolge und Herausforderungen erstellen; die Ergebnisse präsentieren.
+
+   Du kannst das Zerlegen auch Gemini überlassen: *"Before the end of the month, I want to [goal description]. Acting as an expert project manager, list five tactical tasks I need to do to accomplish this goal."*
+
+3. **Überlege, wie KI helfen kann** bei jeder Aufgabe, und notiere es. Die Beispiele des Arbeitsblatts zu demselben Bericht: Datenquellen bereinigen, indem Duplikate, fehlende Werte und Formatprobleme identifiziert werden; prozentuale Verschiebungen, Wachstumsraten und Abweichungen zum Vorquartal berechnen; eine Visualisierung wie ein Balkendiagramm erstellen; eine Berichtsgliederung aus den Kernergebnissen erzeugen; Ergebnisse synthetisieren, um die wichtigsten Erkenntnisse vorzuschlagen; deine Präsentationsweise verbessern und dir Rückmeldung geben.
+
+4. **Bewerte jede Aufgabe** anhand von drei Attributen. Aufgaben, die bei *einem* Attribut hoch liegen, sind gute Kandidaten für KI. Aufgaben, die bei **mehreren** Attributen hoch liegen oder **über mehrere Ziele hinweg** auftreten, sind die besten Kandidaten für eine **App**.
+
+5. **Identifiziere, wo eine App den größten Wert liefert**, indem du in der fertigen Tabelle nach Mustern und Schmerzpunkten suchst.
+
+</Steps>
+
+### Die drei Attribute
+
+| Attribut | Die Frage | Niedrig | Mittel | Hoch |
+| --- | --- | --- | --- | --- |
+| **Time spent** | Wie lange dauert die Aufgabe? | Minuten | Eine Stunde | Mehrere Stunden |
+| **Frequency** | Wie oft tust du sie? | Ein paar Mal im Monat | Wöchentlich | Täglich |
+| **Repetitiveness** | Ist sie jedes Mal im Grunde dieselbe? | Jedes Mal anders | Manche Teile wiederholen sich | Nahezu identisch |
+
+### Die eigene Tabelle lesen
+
+Die Anleitung des Arbeitsblatts zu Schritt 5 ist subtiler als "nimm die höchsten Werte", und die Feinheit ist der wertvolle Teil:
+
+- **Hoch bei allen drei** ist ein offensichtlicher Kandidat - aber es ist **keine Voraussetzung**.
+- **Eine wiederkehrende Aufgabe, die du täglich tust (hohe Frequenz) und die nur Minuten dauert (niedrige Zeit), kann trotzdem eine gute App sein**, denn die Kosten sind die Unterbrechung, nicht die Dauer.
+- **Aufgaben, die über mehrere Ziele auftreten, sind Aktivitäten mit hoher Wirkung**, denn eine App dient mehreren Zielen.
+- **Hoch bei den Attributen *und* über mehrere Ziele** sind deine Hauptkandidaten.
+
+Alles andere: Prompte Gemini statt irgendetwas zu bauen.
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - das Attribut, das das Arbeitsblatt auslässt.** Drei Spalten sind ein gutes Framework, und ihm fehlt das, was Scheitern vorhersagt: **wie stabil ist die Aufgabe?**
+
+Eine Aufgabe, deren Regeln sich jedes Quartal ändern, erzeugt eine App, die du jedes Quartal neu baust, und das Neubauen kostet mehr als die Aufgabe je gekostet hat. Die ehrliche vierte Spalte ist *würde das in sechs Monaten noch genauso funktionieren?* - und ein *nein* sollte einen Kandidaten disqualifizieren, der bei allem anderen hoch liegt.
+
+Zwei kleinere Ergänzungen aus derselben Richtung:
+
+- **Wer sonst macht das?** Eine Aufgabe, die drei Kolleginnen auch tun, verwandelt ein persönliches Werkzeug in etwas, das den Zusatzaufwand des [richtigen Ausliefern](/de/learnings/online/google-ai/10-app-deployment/) lohnt. Eine Aufgabe, die nur du tust, sollte improvisiert bleiben.
+- **Was passiert, wenn es falsch ist?** Ein Werkzeug, das etwas entwirft, das du vor dem Senden liest, darf unvollkommen sein. Ein Werkzeug, dessen Ausgabe direkt zu einer Kundin oder in einen Finanzbericht geht, darf es nicht und gehört in eine ganz andere Sorgfaltskategorie.
+</Aside>
+
+---
+
+## Eine Tour durch Google AI Studio
+
+Der Kurs stellt **Google AI Studio** unter `aistudio.google.com` vor und merkt sofort an, dass die Seite anders aussieht als Gemini - weil sie einem anderen Zweck dient.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Chat</div>
+    <ul>
+      <li>Wo du Prompts schreibst und Ausgaben bekommst, wie in jedem Chat.</li>
+      <li>Rechts Einstellungen zum Verändern der Ausgaben: <strong>aus allen neuesten Modellen wählen</strong>, <strong>System Instructions</strong> ergänzen, die das Modell vor deinem Prompt verarbeitet, <strong>Temperature</strong> anpassen und mehr.</li>
+      <li>Hier liegt die <a href="/de/learnings/online/google-ai/01-ai-fundamentals/">Temperature-Steuerung</a> aus dem Grundlagenkurs tatsächlich.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Build</div>
+    <ul>
+      <li>Wo der Kurs seine Zeit verbringt. Ein Textfeld oben ist der Ort, an dem du die Modelle zum Vibe Coding promptest.</li>
+      <li>Es funktioniert wie jedes andere KI-Werkzeug, nur dass zurückkommt: eine Anwendung.</li>
+      <li>Du kannst einen eigenen Prompt schreiben oder mit einem der Beispiele unter dem Feld starten.</li>
+    </ul>
+  </div>
+</div>
+
+### Worauf man beim Bauen achten soll
+
+Der Kurs benennt vier Dinge, und sie sind gleichzeitig das eigentliche Curriculum des Kurses:
+
+<Steps>
+
+1. **Der natürliche Gesprächsfluss** zwischen dir und AI Studio. Du iterierst in Alltagssprache, um Anforderungen zu verfeinern, die Ausgabe zu testen und das Ergebnis zu verbessern.
+
+2. **Wie konkret deine Rückmeldung sein muss.** Der Satz zum Merken: **vage Beschreibungen erzeugen generische Ergebnisse.** Je präziser du bist, desto wahrscheinlicher passt die App dazu.
+
+3. **Deine drei Rollen.** *Du bist Regisseurin, Nutzerin und Testerin deiner App* - und KI ist dein Entwicklerwerkzeug.
+
+4. **Die Geschwindigkeit.** In der Zeit, die ein Kaffeegespräch dauert, kommst du von *"ich wünschte, es gäbe ein Werkzeug dafür"* zu *"hier ist meine eigene Lösung."*
+
+</Steps>
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - was der Build-Modus tut, während du zusiehst.** Der Kurs zeigt die Oberfläche. Darunter, zum Zeitpunkt des Schreibens:
+
+- **Ein Agent mit Projektgedächtnis.** Der Build-Modus läuft auf dem **Antigravity Agent**, der Kontext über mehrere Dateien hält und Abhängigkeiten verwaltet - weshalb deine fünfte Anfrage deine zweite nicht rückgängig macht.
+- **Es erzeugt einen echten Stack.** Full-Stack-Web-Apps kommen als **React-Frontend mit Node.js-Backend** heraus, mit npm-Paketen verfügbar; es kann auch **native Android-Apps in Kotlin und Jetpack Compose** erzeugen.
+- **Vier Wege, Dinge zu ändern**, nicht einer. Chat-Prompts sind der naheliegende. Im **Annotation Mode** klickst du ein UI-Element an und beschreibst die Änderung für *dieses* Element, was viel präziser ist als eine Beschreibung in Worten. Im **Code-Tab** bearbeitest du direkt. Und **GitHub-Sync** gibt dir Zwei-Wege-Synchronisation mit einem Repository.
+- **Startpunkte jenseits eines leeren Felds:** eine *I'm Feeling Lucky*-Schaltfläche, das Remixen eines Projekts aus der Galerie oder Import aus GitHub.
+- **Echte Backend-Infrastruktur ist verfügbar:** Firebase Firestore und Authentication, Google-Workspace-APIs mit für dich konfiguriertem OAuth und Echtzeit-Multiplayer-Funktionen.
+- **Dein API-Key wird für dich behandelt, und zwar richtig.** AI Studio konfiguriert deinen Gemini-API-Key als **serverseitiges Secret**, sichtbar in einem **Secrets-Panel** in den Einstellungen. Die Gemini-Aufrufe deiner App erfolgen aus serverseitigem Code, *sodass er im Browser nie offengelegt wird*. Wenn du die App teilst, können andere sie nutzen, **aber deinen Key nicht sehen**. Das ist das wichtigste technische Detail in beiden App-Kursen - siehe [Kapitel zur Gemini-API](/de/learnings/online/google-ai/11-gemini-api/) dazu, warum es so sehr zählt.
+- **Zwei Vorbehalte, die man kennen sollte:** Es gibt **kein gleichzeitiges Bearbeiten in Echtzeit** - Teams koordinieren über GitHub - und Zugriff auf Mikrofon oder Kamera verlangt, Berechtigungen in `metadata.json` zu deklarieren.
+</Aside>
+
+---
+
+## Die drei Apps
+
+Der Kurs baut drei Apps gemeinsam. Die Labs sind nicht rekonstruierbar, die Spezifikationen aber schon, und sie sind ein guter Katalog dessen, wofür diese Art Werkzeug da ist - eine Entscheidungshilfe, ein Generator, ein Dashboard.
+
+| App | Was sie tut | Die Anpassung, die sie zu deiner macht |
+| --- | --- | --- |
+| **The Tiebreaker** | Hilft bei schwierigen Entscheidungen, indem sie deine Optionen analysiert, damit du dich mit der Wahl gut fühlst | Du passt sie an **deine bevorzugte Entscheidungsweise** an - Vergleich zweier Optionen nebeneinander oder eine tiefe Kosten-Nutzen-Analyse |
+| **Marketing Materials Generator** | Erstellt Werbung, Sticker, Banner, Poster und andere Visuals für einen Launch, eine Aktion oder eine Ankündigung | Beschleunigt den Kreativprozess, sodass du **eigene Assets für jedes Segment deines Publikums** produzieren kannst |
+| **Interactive Dashboard** | Visualisiert deine Daten schnell - keine statischen Grafiken oder Diagramme mehr, die man täglich aktualisieren muss | **Hält die Visualisierungen frisch, sodass jede und jeder Antworten bekommt, wenn sie gebraucht werden** |
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - warum diese drei und was jede lehrt.** Die Auswahl sieht willkürlich aus und ist es nicht. Jede App übt eine andere Fähigkeit, und zu wissen, welche welche ist, sagt dir, was du wiederverwenden kannst.
+
+**The Tiebreaker ist eine App für strukturiertes Denken.** Keine Daten, keine Bilder - ihr ganzer Wert ist, dass sie *jedes Mal dasselbe Framework anwendet*, und das ist das, worin Menschen am schlechtesten sind. Das wiederverwendbare Muster ist **eine App, die eine Methode erzwingt**: deine Checkliste für die Prüfung eines Vertrags, dein Framework zum Triagieren einer Anfrage, deine Kriterien für ein Go/No-Go. Die Designfrage ist nicht *was soll sie mir sagen*, sondern *was soll sie mich immer fragen*.
+
+**Der Marketing Materials Generator ist eine multimodale App.** Er nutzt die [Bilderzeugung](/de/learnings/online/google-ai/07-content-creation/) aus Kurs 5 in etwas mit einer Schaltfläche. Das wiederverwendbare Muster ist **dieselbe Transformation, wiederholt angewandt mit einer wechselnden Variable** - je Publikumssegment, je Region, je Produkt. Hier werden die Kosten pro Bild real, denn erzeugte Medien haben keine kostenlose Stufe.
+
+**Das Interactive Dashboard ist eine Daten-App** und die schwerste der drei. Die Formulierung *keine statischen Grafiken mehr, die man täglich aktualisieren muss* ist der eigentliche Wert: Die Arbeit, die sie entfernt, ist das Aktualisieren, nicht das Diagrammzeichnen. Es ist auch die App, in der [Verifikation](/de/learnings/online/google-ai/08-data-analysis/) am meisten zählt - der Fehler mit der erfundenen Umsatzzahl im Deployment-Kurs passierte in genau dieser Art App.
+
+Das Muster, das es über alle drei lohnt zu stehlen: **jede nimmt etwas, das du schon inkonsistent tust, und macht es konsistent.** Das, und nicht Automatisierung, ist es, wofür diese Werkzeuge tatsächlich gut sind.
+</Aside>
+
+---
+
+## Stein für Stein
+
+Der praktischste Rat des Kurses kommt aus der Praxis und widerspricht dem Instinkt, die ganze App in einem großartigen Prompt zu beschreiben.
+
+**Immer zerlegen** - nach den verschiedenen Bausteinen der App, die du bauen willst. Die Prozedur:
+
+<Steps>
+
+1. **Erzähl dem Modell zuerst das ganze Projekt**, damit es das Gesamtbild oder die ganze Geschichte dessen versteht, was du bauen wirst.
+
+2. **Dann sag: *"Cool, I have this app I'm going to make. Let's start with the first part."***
+
+3. **Wenn es den Teil fertig hat, sag *"now let's do the second part."*** Bau es Stein für Stein.
+
+</Steps>
+
+Zwei Gründe werden gegeben, und der zweite wird unterschätzt:
+
+- **Es wird es wahrscheinlich richtig machen**, weil es sich auf die sehr konkrete Aufgabe konzentriert, die du gegeben hast.
+- **Es ist leichter, Fehler zu korrigieren.** Bitte um das ganze große Ding und du weißt nicht, wo es schiefging. Geh Stein für Stein und **du weißt genau, welcher Stein den Fehler verursacht hat.**
+
+Der Schlussrat: *sei ein wenig geduldig damit und zerlege es in Schritte, genau wie du es bei einer Person mit einer wirklich komplexen Aufgabe tun würdest.*
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - die Reihenfolge, in der man die Steine baut.** Zerlegen ist richtig; die Reihenfolge zählt auch, und die funktionierende Reihenfolge ist kontraintuitiv:
+
+1. **Die hässlichste funktionierende Fassung der Kernschleife zuerst.** Eine Eingabe, eine Ausgabe, kein Styling, keine Extras. Funktioniert das Zentrale nicht, lohnt nichts anderes das Bauen.
+2. **Dann die Randfälle.** Leere Eingabe, falscher Dateityp, eine Zahl, wo Text erwartet wird. Das ist es, was eine App vor jemand anderem kaputtgehen lässt, und es ist jetzt billig und später teuer nachzurüsten.
+3. **Dann die zweite Funktion.** Erst wenn die erste solide ist.
+4. **Aussehen zuletzt.** Es ist am befriedigendsten zu prompten und am wenigsten folgenreich, und jede Änderung danach riskiert, es wieder zunichtezumachen.
+
+Die Versuchung läuft genau umgekehrt, denn eine gut aussehende Hülle erscheint in einem Prompt und fühlt sich wie Fortschritt an. Es ist die häufigste Art, wie diese Projekte steckenbleiben: Drei Stunden später hast du etwas Schönes, das die Sache nicht tut.
+
+Eine weitere Gewohnheit, die es zu bilden lohnt: **wenn etwas funktioniert, sag das und bitte, es nicht anzufassen.** *"Der Upload- und Größenanpassungsablauf funktioniert jetzt korrekt. Ändere ihn nicht. Füge als Nächstes den Umbenennungsschritt hinzu."* Modelle refaktorieren funktionierenden Code munter, während sie eine Funktion ergänzen, und dieser Satz verhindert das meiste davon.
+</Aside>
+
+---
+
+## Modelle verketten
+
+Ein Praktiker beschreibt die Fähigkeit, die AI Studio zu mehr als einem Codegenerator macht: **du kannst Modelle kombinieren.** Ein Bild erzeugen, es mit **Veo** zum Leben bringen, mit Gemini eine Geschichte darum bauen, das Video zurückgeben.
+
+Und der beruhigende Teil: *das Schöne an AI Studio ist, dass du nicht unbedingt wissen musst, wie man diese Dinge verkettet. Du musst nur deine Idee beschreiben.* Sag *"ich habe die Geschichte, ich will das Storyboard vorstellen, dann will ich das Storyboard animieren"*, und es verbindet diese Modelle für dich.
+
+Das ist dieselbe Idee wie [Prompt Chaining](/de/learnings/online/google-ai/02-prompting/), nur dass die Glieder verschiedene Modelle sind statt verschiedener Prompts - und so funktioniert die Storyboard-App des Deployment-Kurses.
+
+---
+
+## Zu dem stehen, was du gebaut hast
+
+Der Kurs verspricht etwas, das er dann größtenteils den Labs überlässt: Du wirst lernen, **den von der KI entwickelten Code zu bewerten, die Ergebnisse zu verantworten und deine App über Zeit zu pflegen.** Das ist das richtige Versprechen, und es verdient eine Antwort, die nicht voraussetzt, dass du Code lesen kannst.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - wie man eine App beurteilt, die man nicht geschrieben hat.** Du kannst den Code nicht prüfen, und du musst es nicht. Fünf Prüfungen, keine davon braucht Programmierkenntnisse:
+
+**1. Teste sie wie jemand, der sie kaputtmachen will.** Leere Eingabe. Eine riesige Datei. Der falsche Dateityp. Text, wo eine Zahl hingehört. Ein Datum in der Vergangenheit. Überhaupt nichts, dann abschicken. Die meisten Defekte einer per Vibe Coding gebauten App leben hier, weil das Modell für den glücklichen Pfad gebaut hat, den du beschrieben hast.
+
+**2. Prüfe eine Ausgabe von Hand.** Nimm eine einzelne Zahl oder ein Ergebnis, rechne es selbst und vergleiche. Das ist die Prüfung, die die schlimmste Fehlerklasse fängt, wie der Deployment-Kurs zeigt, wenn ein Dashboard eine Produktkategorie erfindet.
+
+**3. Bitte das Modell, dir seine eigene App zurück zu erklären.** *"Erkläre in Alltagssprache, was diese App Schritt für Schritt tut, einschließlich woher die Daten kommen und was passiert, wenn etwas fehlschlägt."* Zwei Dinge kommen dabei heraus: Du findest heraus, ob es zu dem passt, was du erbeten hast, und die Erklärung ist die Dokumentation, die du in vier Monaten willst.
+
+**4. Frage, worüber es sich Sorgen macht.** *"Was sind die drei wahrscheinlichsten Wege, auf denen diese App ein falsches oder verwirrendes Ergebnis liefert? Was musstest du annehmen, weil ich es nicht gesagt habe?"* Die zweite Frage ist die wertvolle - die stillschweigend ergänzten Annahmen sind der Ort, wo deine App von deiner Absicht abweicht.
+
+**5. Wisse, wohin deine Daten gehen.** Verlassen sie den Browser? Werden sie gespeichert? Geht etwas an einen Dritten? Frag direkt und lies die Antwort gegen die [Datenschutzregeln](/de/learnings/online/google-ai/03-responsible-ai/), unter denen du arbeitest. Bevor du etwas Sensibles hochlädst, gilt die eigene Anweisung des Deployment-Kurses: **prüfe immer die Richtlinien deiner Organisation, um zu bestätigen, dass du in einer freigegebenen, sicheren Umgebung bist.**
+
+**Und zur Pflege**, drei Gewohnheiten, die Minuten kosten und Nachmittage sparen:
+
+- **Behalte den Prompt, der sie gebaut hat.** Der finale Build-Prompt *ist* deine Spezifikation. Der Deployment-Kurs formalisiert das als **Spec Doc**, und es ist das, was dir erlaubt neu zu bauen statt zu reparieren.
+- **Speichere eine funktionierende Kopie**, bevor du eine große Änderung erbittest - lade das ZIP herunter oder committe nach GitHub. Agenten machen manchmal Dinge kaputt, während sie sie verbessern.
+- **Erwarte, dass sich das Modell darunter ändert.** Eine festgelegte Modellversion wird irgendwann abgekündigt, und Verhaltensdrift aus den [Grundlagen](/de/learnings/online/google-ai/01-ai-fundamentals/) kommt als *"das hat es früher richtig formatiert"* an. Halte zwei bekannte Eingaben mit bekannt guten Ausgaben und lass sie gelegentlich laufen.
+</Aside>
+
+---
+
+## Zusammenfassung zur Wiederholung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Der Wechsel:** von der **Nutzerin der KI** zur **Erbauerin eigener KI-gestützter Lösungen**. Das Ergebnis ist nicht ein fertiges Projekt, sondern ein eigenes Werkzeug, zu dem du zurückkehrst.
+- **Das Beispiel:** eine App mit großer Upload-Schaltfläche, die Newsletter-Bilder anpasst **und die Dateien nach der Namenskonvention deines Teams umbenennt** - die teamspezifische Hälfte ist genau der Grund, warum kein Produkt es für dich tut.
+- **Vibe Coding** = mit natürlicher Sprache Software mit KI bauen. Wie Prompting verlangt es, **genau zu beschreiben, was du brauchst**, **Details über deinen Workflow zu geben** und **zu helfen, gute von schlechten Ergebnissen zu unterscheiden**.
+- **Agentische KI** macht es möglich: Sie geht über das Antworten hinaus und **handelt in deinem Namen, unter deiner Aufsicht** - schreibt den Code, baut die Oberfläche, bringt es zum Zusammenspielen.
+- **Das Tempo:** Vor einem Jahr brauchte der Dozent **drei Tage** Fehler, um ein Kindheitsspiel nachzubauen. Jetzt produziert **ein Screenshot** das ganze Spiel.
+- **Über die Aufzeichnung hinaus:** Du bekommst **echte Software**, die du herunterladen und hosten kannst - und einen **Prototyp**, kein Produkt. Und frage zuerst, ob es überhaupt eine App sein sollte: seltene Aufgabe → einfach prompten; Arithmetik auf einer Tabelle → eine Tabelle; Fragen zu festen Dokumenten → ein Notebook; **wiederkehrendes mehrstufiges Urteil mit gleichbleibender Form → eine App**.
+- **Das Arbeitsblatt Map your workflow, fünf Schritte:** drei Ziele für den Monat listen; jedes in konkrete Aufgaben zerlegen (oder Gemini es tun lassen - *"acting as an expert project manager, list five tactical tasks"*); notieren, wie KI bei jeder helfen könnte; jede Aufgabe bewerten; dann finden, wo eine App am meisten Wert bringt.
+- **Drei Attribute:** **Time spent** (Minuten / eine Stunde / mehrere Stunden), **Frequency** (ein paar Mal im Monat / wöchentlich / täglich), **Repetitiveness** (jedes Mal anders / manche Teile wiederholen sich / nahezu identisch).
+- **Die Tabelle lesen:** hoch bei allen drei ist offensichtlich, aber **keine Voraussetzung** - eine tägliche Aufgabe von nur Minuten kann trotzdem eine App verdienen, denn die Kosten sind die Unterbrechung. **Aufgaben über mehrere Ziele haben hohe Wirkung.** Hoch bei Attributen **und** über Ziele = Hauptkandidat. Alles andere: einfach prompten.
+- **Über die Aufzeichnung hinaus - die fehlende vierte Spalte: wie stabil ist die Aufgabe?** Quartalsweise wechselnde Regeln erzeugen eine quartalsweise neu gebaute App. Außerdem: wer sonst tut das (gemeinsame Aufgaben rechtfertigen richtiges Ausliefern), und was passiert, wenn es falsch ist.
+- **AI Studio** unter `aistudio.google.com`. **Chat**: Prompts plus Einstellungen - neueste Modelle, **System Instructions** vor deinem Prompt, Temperature. **Build**: das Textfeld, in dem du Vibe Coding machst, oder ein Beispiel als Start.
+- **Vier Dinge zum Beachten:** der natürliche Gesprächsfluss; **vage Beschreibungen erzeugen generische Ergebnisse**; du bist **Regisseurin, Nutzerin und Testerin** mit KI als Entwicklerwerkzeug; und die Geschwindigkeit - Kaffeegesprächslänge von der Idee zum Prototyp.
+- **Über die Aufzeichnung hinaus - was der Build-Modus wirklich ist:** der **Antigravity Agent** hält Kontext über Dateien; Ausgabe als **React plus Node.js** oder native Android in Kotlin und Compose; vier Wege zu bearbeiten - Chat, **Annotation Mode** (Element anklicken, Änderung beschreiben), der **Code-Tab** und **GitHub-Sync**; Firestore, Auth und Workspace-APIs verfügbar; und dein **API-Key als serverseitiges Secret**, nie im Browser offengelegt, für Geteilte unsichtbar.
+- **Die drei Apps:** **The Tiebreaker** (schwierige Entscheidungen, angepasst an Vergleich nebeneinander oder tiefe Kosten-Nutzen-Analyse), der **Marketing Materials Generator** (Werbung, Sticker, Banner, Poster - eigene Assets je Publikumssegment) und das **Interactive Dashboard** (schnelle Visualisierung, nichts täglich zu aktualisieren, alle bekommen Antworten).
+- **Über die Aufzeichnung hinaus:** jede lehrt ein anderes Muster - **eine App, die eine Methode erzwingt**, **dieselbe Transformation mit einer wechselnden Variable**, und **eine Daten-App** (die schwerste, und wo Verifikation am meisten zählt). Alle drei machen etwas konsistent, das du schon inkonsistent tust.
+- **Stein für Stein:** erzähle dem Modell zuerst das **ganze Projekt**, dann *"let's start with the first part"*, dann den zweiten. Es trifft jeden Teil, weil es fokussiert ist, und **du weißt genau, welcher Stein den Fehler verursacht hat.** Sei geduldig, wie bei einer Person mit einer komplexen Aufgabe.
+- **Über die Aufzeichnung hinaus - Baureihenfolge:** hässlichste funktionierende Fassung der **Kernschleife** zuerst, dann die **Randfälle**, dann die zweite Funktion, **Aussehen zuletzt**. Die Versuchung läuft umgekehrt, und so bleiben diese Projekte stecken. Und wenn etwas funktioniert, sag *"ändere das nicht"*.
+- **Modelle verketten:** Bild → **Veo** → Geschichte in Gemini → Video zurück. In AI Studio **beschreibst du die Idee** und es verbindet die Modelle.
+- **Über die Aufzeichnung hinaus - eine App beurteilen, die du nicht geschrieben hast:** teste sie wie jemand, der sie kaputtmachen will; **prüfe eine Ausgabe von Hand**; bitte es, **dir seine eigene App zurück zu erklären** (das ist deine Dokumentation); frage, **was es annehmen musste, weil du es nicht gesagt hast**; und finde heraus, **wohin deine Daten gehen**. Pflege: **behalte den Prompt, der sie gebaut hat**, speichere eine funktionierende Kopie vor großen Änderungen, und erwarte Drift beim Modell darunter.
+</Aside>
+
+---
+
+*Weiter: [Apps ausliefern →](/de/learnings/online/google-ai/10-app-deployment/) - der dreiphasige Workflow: planen mit einem Spec Doc, debuggen, was kaputtgeht, dann verankern, abriegeln und teilen.*

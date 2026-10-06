@@ -1,0 +1,265 @@
+---
+title: "Google AI 3 - Responsible AI"
+description: "Hallucination and the absence of common sense, human-in-the-loop, the ACT checklist in full - ask, check, tell - protecting confidential information, regulated and licensed work, building an accountability trail, SynthID watermarking, and what the EU AI Act now requires."
+sidebar:
+  label: "3 · Responsible AI"
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Course 1: AI Fundamentals, responsible use section*
+
+---
+
+The opening is the sharpest thing in the certificate. Your boss says *"we need to talk."* Slightly worrying. Now a colleague says *"we need to talk."* Same four words, entirely different reaction.
+
+You can tell the difference because you understand nuance, context and consequences. **AI cannot** - not on its own. It can be an excellent collaborator, but it does not live in the real world the way you do, and that single fact is the whole basis of responsible use.
+
+<Aside type="note">
+**Google's stated AI principles**, as the course gives them: a commitment to AI that encourages **bold innovation**, **responsible development** and **collaborative progress**.
+</Aside>
+
+---
+
+## Two failures that are structural, not bugs
+
+### Hallucination
+
+**Hallucination** is when AI gets things wrong and states things that are not true. The course names four reasons it happens:
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Its training data contains an error<span class="sub">the model learned something wrong and reproduces it faithfully</span></div>
+  <div class="sc-node violet">The problem is too unique<span class="sub">it has not seen anything like your request before</span></div>
+  <div class="sc-node green">Real-world and physical knowledge is hard<span class="sub">it may struggle to understand how physical things actually behave</span></div>
+  <div class="sc-node slate">It is producing an answer that is really a guess<span class="sub">and a guess delivered in the same confident register as a fact</span></div>
+</div>
+
+The instruction that follows is unconditional: **always pay attention and verify what you get before using it in your work, even if the responses sound confident.** That last clause is the operative one - confidence of tone carries no information about accuracy.
+
+### No common sense
+
+The second limitation is less discussed and arguably more dangerous, because it is harder to spot. AI does not have common sense. Its outputs can seem insightful or intuitive, but there is no real understanding of the world underneath - **the outputs are based on patterns learned from data, not on experience**.
+
+The example given is small and perfect. Asked about street festivals happening on an upcoming weekend, it returned street festivals from previous years. A mistake that was caught and corrected - but one that would have been entirely invisible to anyone who did not already know the answer.
+
+<Aside type="caution">
+**Beyond the recording - why hallucination cannot simply be fixed, and what actually reduces it.** From the [fundamentals chapter](/learnings/online/google-ai/01-ai-fundamentals/): the model is trained to predict plausible next tokens. A fluent, confident, wrong answer is not the system failing - it is the system doing its job on a question where the plausible answer and the true answer diverge. There is no setting to turn it off.
+
+What genuinely helps, in rough order of effectiveness:
+
+- **Grounding.** Give the model the source material and tell it to answer only from that. This is why Gemini Notebook, which answers only from the sources you upload, hallucinates far less than an open chat - and why the deployment course's demo [grounds the app in a financial standards document](/learnings/online/google-ai/10-app-deployment/) rather than trusting the model's own arithmetic conventions.
+- **Ask for citations and then check them.** Not because the citations are reliable - a hallucinated source is a classic failure - but because checking them is fast and catches the worst cases.
+- **Give it permission to decline.** Adding *"if the sources do not contain the answer, say so"* measurably reduces invention. Without it, the model's implicit instruction is to produce something.
+- **Verify anything load-bearing yourself.** Names, numbers, dates, quotations and anything a decision rests on. These notes were built that way: a verification pass over source material for an earlier book page caught three plausible-sounding figures that were not in the book at all.
+
+The street-festival error is the shape to watch for: **not nonsense, but stale or displaced fact**. Nonsense is easy to catch. A real festival from the wrong year reads exactly like a right answer.
+</Aside>
+
+---
+
+## Human-in-the-loop
+
+The course's name for your role: **human-in-the-loop**, meaning you are constantly involved in the use of AI **at each step**, responsible for overseeing the process from beginning to end. The phrase it keeps returning to is that you are in the driver's seat - the same image as the model-versus-app car analogy, now carrying an obligation rather than a convenience.
+
+The hard version of this, stated plainly in the best-practices reading: **you should not rely on AI to finish work for you without your oversight. Completing the task requires your judgment and accountability.**
+
+---
+
+## ACT: the checklist
+
+The course compresses responsible use into three letters, and the mnemonic is deliberate - **ACT**, for *act responsibly*.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">A - Ask yourself<span class="sub">before doing anything: is this even a case where I should be using AI?</span></div>
+    <div class="sc-node violet">C - Check<span class="sub">after deciding AI is right: check the outputs before using them</span></div>
+    <div class="sc-node green">T - Tell<span class="sub">disclose your use of it</span></div>
+  </div>
+  <figcaption>Three steps in sequence. The first is the one most often skipped, and it is the only one that can save you from the other two.</figcaption>
+</figure>
+
+### A - Ask yourself
+
+Three questions, from the detailed checklist in the best-practices reading:
+
+| Question | What to weigh |
+| --- | --- |
+| **Is AI right for this task?** | Do not rely on AI for medical, legal, financial or other professional advice. Always consult a qualified human professional |
+| **Is this data safe to use?** | Avoid inputting sensitive, confidential, personal or proprietary data into a public AI tool - internal company data, customers' personally identifiable information |
+| **Am I following the rules?** | Check your employer's policies on AI at work, and make sure you are using an approved tool - an enterprise tool rather than a public one |
+
+The video adds a fourth consideration that is more practical than ethical: *can I use an off-the-shelf solution, or is this better suited to an enterprise tool?*
+
+### C - Check before you use the output
+
+Four dimensions, and the reading's framing of each:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Accuracy and objectivity</div>
+    <ul>
+      <li><strong>Accuracy:</strong> independently verify everything presented as fact - names, statistics, quotes - and watch for subtle hallucinations as well as obvious ones.</li>
+      <li><strong>Objectivity:</strong> a model's training data can produce unintended results. Look out for one-sided arguments, loaded language, stereotypes and other unfair assumptions it may have learned.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Appropriateness and judgment</div>
+    <ul>
+      <li><strong>Appropriateness:</strong> is the tone and style right for this audience and purpose? A company social media post is not a casual email.</li>
+      <li><strong>Originality and judgment:</strong> edit, refine and add your own expertise. If the output does not meet the need, iterate on the prompt rather than settling.</li>
+    </ul>
+  </div>
+</div>
+
+The sentence that holds the section together: **in many cases, it is what you do with the output that matters.**
+
+### T - Tell people when you use AI
+
+Two parts:
+
+- **Be transparent.** Clearly and appropriately disclose where and when AI was used to help generate content.
+- **Be compliant.** Follow your company's specific guidelines on AI disclosure, and never input sensitive information into a public-facing tool.
+
+The course names one piece of Google's own infrastructure here: **SynthID**, a tool that adds **digital watermarks** into AI-generated content such as video, so that the use of AI can be detected.
+
+<Aside type="caution">
+**Beyond the recording - what a watermark does and does not do.** SynthID embeds a signal into generated content that survives ordinary handling - compression, cropping, re-encoding - far better than file metadata, which any upload strips. That is a genuine advance over nothing.
+
+But it is not a general-purpose authenticity check, and treating it as one is a mistake:
+
+- **It only marks content from participating models.** Content from a model that does not watermark carries no signal, and absence of a watermark is not evidence of human authorship.
+- **Detection is not universally available.** Being able to verify a watermark depends on having access to a detector for that scheme.
+- **It identifies the generator, not the intent.** A watermark tells you something was AI-made; it says nothing about whether the claim it makes is true.
+
+The honest conclusion: SynthID helps platforms label content at scale. It does not replace your own disclosure, which is the part the course asks of you.
+</Aside>
+
+---
+
+## Protecting confidential information
+
+The best-practices reading treats this as the most immediate risk, and its instruction is a question to ask yourself before every prompt:
+
+> *"Am I including data in my prompt that someone else might expect me to keep private?"*
+
+The reading also notes the step before that: know **what data is collected and how it might be used** before you accept the terms of service of a website or an app.
+
+Four practical techniques, which between them handle most real cases:
+
+<Steps>
+
+1. **Use generic placeholders** when referring to people, projects or places.
+
+2. **Frame prompts around the task** you need done, not the people involved.
+
+3. **Input only the relevant context** needed to complete the task, rather than entire documents.
+
+4. **Clear AI's memory** to give it a clean slate - which protects privacy and also prevents bias from old prompts leaking into new work.
+
+</Steps>
+
+The data-analysis course repeats the rule in its blunt form - **never input confidential data into a public AI tool** - and adds the two ways out: use your company's enterprise-grade tool, or check the settings of the public tool and opt out of data collection.
+
+<Aside type="note">
+**Beyond the recording - the distinction that actually determines your exposure.** "Public tool" and "enterprise tool" are a useful shorthand, but the thing that matters underneath is a specific question: **does this product use my input to improve its models, and how long does it keep it?** Three broad tiers, worth knowing in outline because the answer differs:
+
+| Tier | Typical posture |
+| --- | --- |
+| **Free consumer chat** | The most permissive terms, often with human review of sampled conversations and use of content for improvement unless you turn it off. Check and change the setting; do not assume the default is what you want |
+| **Paid consumer or business plan** | Usually tighter, frequently with no training on your content, and with admin controls in a business tier |
+| **Developer API and enterprise** | Normally the strongest contractual position - content not used for training by default - and with explicit retention windows you can configure |
+
+A concrete example of the third, since it is the one people assume is vaguest: on the Gemini **Interactions API**, interactions are stored server-side by default for **1 day on the free tier and 55 days on paid**, paid projects can shorten that to 7, 14 or 28 days, you can delete an interaction programmatically, and passing `store=false` turns storage off entirely - at the cost of the server-side conversation chaining that depends on it.
+
+Two conclusions for anyone in the EU. First, this is a **GDPR** question as much as a policy one: personal data in a prompt is still personal data being processed, and the usual obligations about purpose, minimisation and lawful basis do not pause because the interface is a chat box. Second, the course's four techniques above are not etiquette - *generic placeholders* and *only the relevant context* are **data minimisation**, which is the thing the law actually asks for.
+</Aside>
+
+---
+
+## Regulated and licensed work
+
+Some tasks carry legal or compliance requirements that limit or prohibit AI use **even when the technology seems perfectly capable**. The reading names finance, legal and healthcare as operating under strict regulation about how decisions are made, how data is handled, and what must be documented.
+
+Three questions before using AI on anything that might touch a regulated area:
+
+| Question | What it means |
+| --- | --- |
+| **Does this task have regulatory requirements?** | Medical records, financial reporting, legal documents and compliance filings may have specific handling requirements. Consult your employer's policies or a qualified professional on the limits |
+| **Are there licensing or credential requirements?** | Some work must be performed or verified by a licensed professional. AI is not a substitute for qualified advice |
+| **Who is responsible?** | People are responsible for the inputs and outputs of AI tools, and must ensure appropriate oversight |
+
+The instruction: consult your organisation's compliance team, legal counsel, or regulatory experts and policies **before** using AI in these contexts.
+
+<Aside type="caution">
+**Beyond the recording - what the EU AI Act now actually requires.** The certificate is written for a global audience and does not mention it, but for anyone working in the EU this is the live regulation, and it moved recently in both directions.
+
+**In force now.** The **Article 50 transparency obligations** took effect on **2 August 2026** and were explicitly **not** delayed. In outline they require that people be told when they are interacting with an AI system, that AI-generated content be marked as such in machine-readable form, and that deepfakes be labelled. The Commission's enforcement powers over general-purpose AI models activated the same day.
+
+**Pushed back.** Most **high-risk** obligations were postponed by amendments approved in June 2026: Regulation 2026/1744 sets the main milestones at **2 December 2027** for Annex III systems and **2 August 2028** for Annex I product systems. Providers of general-purpose models placed on the market before 2 August 2025 have until **2 August 2027**.
+
+What this means in practice for the kind of work this certificate teaches:
+
+- **The "tell people" step of ACT is now a legal duty in the EU, not only good manners**, for the cases Article 50 covers. A customer-facing chatbot has to disclose that it is one.
+- **Most of what you build with vibe coding is not high-risk** under the Act's definitions - an internal dashboard or a storyboard generator is not a regulated use. But AI used in **employment decisions, access to education, creditworthiness or essential services** falls into Annex III, which is precisely the kind of internal tool a well-meaning person might build to screen applications. The postponed deadline is not permission; it is time to find out.
+- **Obligations attach to roles.** Build and distribute a tool and you are closer to a *provider*; use someone else's inside your organisation and you are a *deployer*. The duties differ.
+
+Dates in this area move. Treat the above as a reading from the date these notes were written and check the current position before relying on it - which is the course's own advice about time-sensitive information, applied to the course.
+</Aside>
+
+---
+
+## Building an accountability trail
+
+The reading's framing here is the one I would keep: creating a record of how you used AI **is not busy work meant to slow you down, it is professional integrity**.
+
+Three steps:
+
+- **Track your sources.** Distinguish between AI-generated content and your own contributions, so you can verify or explain your work later.
+- **Make your process auditable.** If someone asks *"how did you reach this conclusion?"*, you should be able to walk them through which parts involved AI and how you validated them.
+- **Document your verification steps.** Keep notes on how you checked AI's work, especially for important deliverables.
+
+<Aside type="tip">
+**Beyond the recording - the lightweight version that actually gets done.** The three steps above are correct and will be ignored if they require a process. What survives contact with real work is a few lines at the bottom of the document itself:
+
+> *Drafted with Gemini from the Q3 figures in `sales-q3.csv`. Revenue and margin numbers checked against the source sheet. Competitor claims in section 3 verified against the cited pages. Section 4 is mine.*
+
+That single paragraph does all three jobs at once: it separates AI content from yours, it makes the process auditable, and it records what was verified. It takes a minute, and it is the difference between a deliverable you can defend and one you can only hope nobody questions.
+</Aside>
+
+---
+
+## One small thing: give feedback
+
+The course includes a short plea from a practitioner that is easy to skip and worth not skipping. **If you get a bad response, give it a thumbs down.** Occasionally a feedback box appears asking what went wrong, with some preset options and a free-text field.
+
+The genuinely useful detail: what helps most is **not only saying what went wrong, but what you expected or what you would have wanted the response to look like.** That is the data that tells the people training the next version where the model is struggling, as opposed to merely that it did.
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The opening image:** *"we need to talk"* from your boss versus from a colleague. Same words, different meaning. You read nuance, context and consequences; AI does not.
+- **Google's AI principles:** bold innovation, responsible development, collaborative progress.
+- **Hallucination** - stating things that are not true. Four causes: an error in training data, a problem too unique to have been seen, difficulty with real-world and physical knowledge, or an answer that is really a guess. **Verify even when it sounds confident.**
+- **No common sense.** Outputs come from patterns, not experience. The street-festival example: asked about an upcoming weekend, it returned festivals from previous years - the dangerous kind of error, because it reads like a right answer.
+- **Beyond the recording:** hallucination cannot be switched off, but **grounding** in supplied sources, asking for citations and checking them, explicitly permitting *"say so if the sources don't contain it"*, and verifying anything load-bearing all reduce it. Watch for stale or displaced fact rather than nonsense.
+- **Human-in-the-loop:** you are involved at every step and responsible end to end. **Do not rely on AI to finish work without your oversight** - the task needs your judgment and accountability.
+- **ACT.** **A - Ask yourself:** is AI right for this (not medical, legal, financial)? Is this data safe (no sensitive, confidential, personal or proprietary data in public tools)? Am I following the rules (employer policy, approved tool)? Plus: off-the-shelf or enterprise?
+- **C - Check:** accuracy (verify names, statistics, quotes; watch for subtle errors), objectivity (one-sided arguments, loaded language, stereotypes), appropriateness (tone for this audience), originality and judgment (edit and add your expertise; iterate rather than settle). **It is what you do with the output that matters.**
+- **T - Tell:** disclose where and when AI was used, and follow company disclosure guidelines. **SynthID** adds digital watermarks so AI content can be detected.
+- **Beyond the recording:** a watermark survives compression and cropping where metadata does not, but it only marks participating models, detection is not universal, and absence of a watermark is not evidence of human authorship. It does not replace your disclosure.
+- **Protecting confidential information** - the question before every prompt: *"am I including data someone else might expect me to keep private?"* Four techniques: **generic placeholders**, **frame around the task not the people**, **only the relevant context rather than whole documents**, **clear the memory**. Know what the terms of service collect before accepting them.
+- **Beyond the recording:** the real question is whether a product trains on your input and how long it keeps it. Free consumer chat is the most permissive, paid plans tighter, developer APIs and enterprise strongest. On the Gemini Interactions API: stored 1 day free / 55 days paid, shortenable to 7, 14 or 28, deletable, or `store=false`. In the EU this is a **GDPR** question - the four techniques are **data minimisation**.
+- **Regulated work:** finance, legal and healthcare carry strict rules even where the technology is capable. Three questions: does this have regulatory requirements, are there licensing or credential requirements, who is responsible? Consult compliance or counsel first.
+- **Beyond the recording - the EU AI Act:** **Article 50 transparency duties have been in force since 2 August 2026** and were not delayed - disclose that users are talking to AI, mark AI content machine-readably, label deepfakes. High-risk obligations moved to **2 December 2027** (Annex III) and **2 August 2028** (Annex I); pre-August-2025 general-purpose models have until **2 August 2027**. Vibe-coded internal tools are usually not high-risk, but anything touching **employment, education, credit or essential services** is Annex III.
+- **Accountability trail - not busy work, professional integrity:** track your sources, make the process auditable, document your verification. **Beyond the recording:** one paragraph at the foot of the document naming what AI drafted, what you checked and against what, does all three.
+- **Give feedback.** Thumbs down on a bad response, and say **what you expected**, not just what went wrong.
+</Aside>
+
+---
+
+*Next: [Brainstorming and planning →](/learnings/online/google-ai/04-brainstorming-and-planning/) - problem framing, simulating experts, Gemini as devil's advocate, and a project information hub.*

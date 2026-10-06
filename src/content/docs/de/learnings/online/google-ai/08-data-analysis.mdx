@@ -1,0 +1,241 @@
+---
+title: "Google AI 8 - Datenanalyse"
+description: "Gemischte Quellen gleichzeitig verstehen, die Fragen, die man weiterhin selbst stellen muss, Gemini in Sheets für Bereinigung und Formeln, Freitextantworten als vollwertige Datenquelle, ein Diagramm wählen und prüfen, Szenarioprognosen in Canvas und die Datenschutzregel mit ihren zwei Ausgängen."
+sidebar:
+  label: "8 · Datenanalyse"
+  order: 8
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Kurs 6: AI for Data Analysis*
+
+---
+
+Das Szenario, mit dem der Kurs eröffnet, kennt jeder, der je versucht hat, eine offene Frage mit dem zu beantworten, was gerade herumlag. Du erkundest Wege, die Dienstleistungen deines Unternehmens zu verbessern, also sammelst du Umfragedaten, ziehst Berichte zur Kundenbindung und holst Meetingnotizen von Kolleginnen. Ehe du es merkst, hast du viel Material - **und ein anderes Problem**.
+
+Der Kurs benennt die zwei Hürden ehrlich. **Nicht alle haben eine Ausbildung darin, Daten zu analysieren**, und selbst für die, die eine haben, ist es nicht immer leicht, klare Erkenntnisse aus Rohdaten zu ziehen.
+
+<Aside type="note">
+**Warum überhaupt.** Zwei Gründe, beide genannt: Daten helfen bei **den besten und am besten informierten Entscheidungen**, und sie liefern **Unterstützung für deinen Standpunkt** zu einer Frage. Der zweite ist der, über den man zurückhaltend spricht, und der, der Budgets genehmigt bekommt.
+
+Das Versprechen des Kurses zielt direkt auf die erste Hürde: Mit KI können sogar Menschen, deren Blick beim Anblick einer Tabelle normalerweise glasig wird, Datenerkenntnisse nutzen.
+</Aside>
+
+---
+
+## Was KI mit unsauberen Daten macht
+
+Der Hauptanspruch: **Gemini kann unsaubere Daten nehmen und dir sagen, was sie bedeuten.** Der interessantere Anspruch liegt darunter - es kann **verschiedene Datentypen gleichzeitig** verstehen, und das Beispiel ist genau der schwere Fall vom Anfang: Kundenbindungszahlen *und* Umfragefeedback, zusammen.
+
+Die konkret benannten Fähigkeiten:
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Erklären, was die Daten bedeuten<span class="sub">auch über mehrere Quellen verschiedener Typen gleichzeitig</span></div>
+  <div class="sc-node violet">Visualisierungen erzeugen<span class="sub">um deine Ergebnisse zu kommunizieren</span></div>
+  <div class="sc-node green">Komplexe Analyse in Alltagssprache<span class="sub">mit Gemini in Sheets, in schlichtem Deutsch statt in Formelsyntax</span></div>
+  <div class="sc-node slate">Datenbereinigung beschleunigen und quellenübergreifende Muster finden<span class="sub">dazu komplizierte Formeln für dich untersuchen</span></div>
+</div>
+
+Die Zusammenfassung des Kurses zur Wirkung: Die frustrierendsten und zeitaufwendigsten Teile der Datenanalyse **treten in den Hintergrund**, und du entdeckst wertvolle Erkenntnisse in einem Bruchteil der Zeit.
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - was "Bereinigung" tatsächlich heißt, denn hier geht die Zeit hin.** Der Kurs nennt Bereinigung als etwas, das KI beschleunigt, ohne zu sagen, worin die Arbeit besteht. In der Praxis, an einer echten Tabelle, sind es diese fünf Dinge, und jedes davon kann man in Alltagssprache erbitten:
+
+| Problem | Wie es aussieht | Was man fragt |
+| --- | --- | --- |
+| **Inkonsistente Kategorien** | *Germany*, *DE*, *germany*, *Deutschland* in einer Spalte | *"Liste jeden eindeutigen Wert in Spalte C und gruppiere die, die dasselbe bedeuten."* |
+| **Gemischte Formate** | Daten als `03/04/2026` und `4. März 2026`; Zahlen als Text gespeichert | *"Welche Spalten haben inkonsistente Formate, und wie wäre die standardisierte Fassung?"* |
+| **Duplikate, die nicht identisch sind** | Dieselbe Kundin zweimal mit anderen Leerzeichen oder anderer E-Mail | *"Finde wahrscheinliche Duplikatzeilen und sag mir, warum du jedes Paar für einen Treffer hältst."* |
+| **Fehlende Werte** | Leerstellen, die *null*, *nicht zutreffend* und *niemand hat es ausgefüllt* bedeuten - drei verschiedene Dinge | *"Wo sind die Lücken, und sag mir für jede Spalte, ob eine Leerstelle plausibel eine Null ist."* |
+| **Ausreißer** | Eine Bestellung über 10.000 Stück, die ein Tippfehler ist, und eine, die echt ist | *"Markiere Werte mehr als drei Standardabweichungen vom Mittel und zeig mir die Zeilen."* |
+
+Bemerkenswert ist, dass die richtige Ausgabe für alle fünf **eine Liste des Gefundenen ist, keine bereinigte Datei**. Lass es finden, was der mühsame Teil ist, und entscheide selbst - denn *ob eine Leerstelle null bedeutet* ist eine Frage über dein Geschäft, nicht über deine Daten.
+</Aside>
+
+---
+
+## Die drei Dinge, die du weiterhin selbst tun musst
+
+Der Kurs stellt die naheliegende Frage direkt - *wenn Gemini all diese Analyse für mich machen kann, was muss ich dann tun?* - und gibt drei Antworten.
+
+<Steps>
+
+1. **Wirklich gute Fragen zu den Daten stellen.** Die Orientierung ist eine Reihenfolge statt ein Talent: *starte breit*, um die größten Trends und wichtigsten Schlüsse zu verstehen, *dann bohre* in die Details.
+
+2. **Die Implikationen verstehen.** Machst du eine Entdeckung oder findest eine interessante Erkenntnis, liegt es an dir, herauszuarbeiten, was sie bedeutet, und die richtige geschäftliche Entscheidung zu treffen.
+
+3. **Die Ergebnisse verifizieren**, um ihre Richtigkeit sicherzustellen.
+
+</Steps>
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - wie eine gute Frage aussieht, denn der Kurs sagt nur, man solle eine stellen.** Der Rat breit-dann-eng ist richtig, und der Fehlermodus ist, dass *breit* zu vage wird. Vier Formen, die zuverlässig etwas produzieren:
+
+- **Der Vergleich.** *"Wie unterscheidet sich dieses Quartal vom letzten, und welcher dieser Unterschiede ist größer als die normale Schwankung von Quartal zu Quartal?"* Der zweite Teil ist, was dich davon abhält, Rauschen als Trend zu berichten.
+- **Die Segmentaufteilung.** *"Gilt das für jedes Kundensegment, oder wird die Gesamtzahl von einer Gruppe getrieben?"* Das ist die produktivste einzelne Frage der Geschäftsanalyse, und eine aggregierte Zahl beantwortet sie fast nie.
+- **Die Widerlegung.** *"Was in diesen Daten spricht gegen den Schluss, den ich gerade gezogen habe?"* Der [Advocatus-Diaboli](/de/learnings/online/google-ai/04-brainstorming-and-planning/)-Zug, angewandt auf Belege.
+- **Die Abwesenheit.** *"Was bräuchte ich, um das sauber zu beantworten, das nicht in diesem Datensatz steckt?"* Oft die wertvollste Ausgabe und die einzige, die eine souveräne Antwort auf nicht tragfähigen Daten stoppt.
+
+Und eine vor allen anderen: **welche Entscheidung wird das ändern?** Eine Analyse, die keine Handlung ändern kann, ist ein Hobby.
+</Aside>
+
+---
+
+## Verifikation und die Zahl, die es nicht gibt
+
+Die dritte Anweisung - die Ergebnisse verifizieren - verdient mehr Gewicht, als der Kurs ihr gibt, denn dieser Kurs hat das höchste Verhältnis von plausibel aussehender Ausgabe zu prüfbarer Tatsache im Zertifikat.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - der Fehlermodus, den dieser Kurs hätte zeigen sollen und den der nächste zeigt.** Der [Kurs zum Ausliefern](/de/learnings/online/google-ai/10-app-deployment/) enthält den lehrreichsten Moment des ganzen Zertifikats, und es ist ein Datenfehler. Ein Vortragender hat ein Vertriebs-Dashboard mit einem Chat-Panel gebaut und fragt es, welche Produktkategorie den meisten Umsatz treibt. Es antwortet souverän: eine Kategorie, die **in den Daten nicht existiert**, mit einer Umsatzzahl, die nirgends auftaucht.
+
+Die Ursache, nach dem Debugging, lohnt zu wissen: Während es die Funktion baute, hatte das Modell sich selbst eine **Testdatei mit erfundenen Umsatzzahlen** geschrieben, um zu prüfen, ob der Chat funktioniert, und fragte weiterhin diese ab statt der echten Tabelle. Die Reaktion des Vortragenden ist die Lektion - *ich bin so froh, dass wir das getestet haben, denn hätte ich das mit dem Führungsteam geteilt, hätten sie magische Zahlen und eine Kategorie gesehen, die es nicht gibt.*
+
+Drei Gewohnheiten folgen daraus, und sie kosten fast nichts:
+
+- **Prüfe eine Zahl von Hand.** Nimm eine einzelne Zahl, rechne sie selbst aus der Quelle und vergleiche. Stimmt sie, hängt deine Pipeline wahrscheinlich an den richtigen Daten; stimmt sie nicht, zählt nichts anderes in der Ausgabe. Diese eine Prüfung hätte den Fehler oben sofort gefangen.
+- **Bitte es, die Rechnung zu zeigen**, nicht nur das Ergebnis: *"Zeig die Formel und die Zeilen, die du genutzt hast."* Ein Modell, das seine Arithmetik vorlegen muss, erfindet weniger davon, und du bekommst etwas Prüfbares.
+- **Bevorzuge Werkzeuge, die rechnen, vor Modellen, die aufsagen.** Eine Zahl im Chat zu erbitten lädt zur Vorhersage ein. **Gemini in Sheets** um eine Formel zu bitten oder ein Notebook zu nutzen, das tatsächlich **Code ausführt**, heißt, dass die Arithmetik von Arithmetik gemacht wird. Gemini Notebook bekam im Juli-2026-Update genau dafür Codeausführung für Datenanalyse.
+
+Die allgemeine Regel für diesen Kurs: **ein Modell ist verlässlich darin zu sagen, worauf man schauen soll, und unverlässlich darin, den Wert zu nennen.** Nutze es für die Struktur der Analyse und lass etwas Deterministisches rechnen.
+</Aside>
+
+---
+
+## Freitext als echte Daten
+
+Das Interessanteste in diesem Kurs ist eine Praktikerin, die eine Veränderung ihrer Arbeitsweise beschreibt statt einer Funktion.
+
+Sie sagt, sie arbeite auf eine ganz neue Weise, die sie vorher nicht gewählt hätte. Früher hätte sie Umfragedaten nicht so genau angesehen und wäre bei **sehr standardisiertem Reporting** geblieben. Das konkrete alte Verhalten erkennt jeder wieder, der je eine Umfrage durchgeführt hat: Bei einem Fragebogen, der teils Multiple Choice und teils Freitext ist, *"wenn das eine positive Antwort ist, schaue ich mir den Freitext vielleicht nicht an; wenn sie negativ ist, gehe ich hinein."*
+
+Jetzt kann sie **allen Text ziemlich gleich behandeln**, Dinge auf eine ganz neue Weise betrachten und Freitextantworten als *eine viel, viel reichere Datenquelle sehen, die sie oft ist.*
+
+Dieser letzte Teilsatz trägt das Argument. Das Freitextfeld ist meist dort, wo die echte Information steckt, und es wurde routinemäßig ignoriert, weil zweitausend Kommentare zu lesen nicht möglich war. Diese Beschränkung ist weg, und die Folge ist kein schnellerer Bericht, sondern ein anderer.
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - Freitextanalyse richtig statt impressionistisch machen.** Das Risiko, wenn Text billig verarbeitbar wird, ist, dass *"fass die Kommentare zusammen"* einen gewandten Absatz produziert, der die lautesten Antworten spiegelt, und du nicht erkennen kannst, ob ein Thema zweimal oder zweihundertmal auftrat. Vier Schritte halten es ehrlich:
+
+<Steps>
+
+1. **Leite die Themen aus den Daten ab, nicht aus deinen Erwartungen.** *"Lies alle 2.000 Antworten. Identifiziere die wiederkehrenden Themen. Nutze keine von mir vorgeschlagenen Kategorien - leite sie aus dem Text ab."* Dann lies die Themenliste und prüfe sie auf Plausibilität, bevor du weitergehst.
+
+2. **Zähle sie und berichte die Zahl.** *"Wie viele Antworten erwähnen jedes Thema? Gib mir die Zahl und den Prozentanteil am Gesamt."* Ein Thema ohne Zahl ist eine Anekdote.
+
+3. **Verlange wörtliche Zitate.** *"Gib mir drei echte Zitate je Thema, genau kopiert."* Das ist die Kontrolle gegen Erfindung und das, was du Menschen vorlegen wirst - ein echter Satz einer echten Kundin leistet mehr als jede Zusammenfassung.
+
+4. **Kreuze den Text mit den Zahlen.** Das ist die Fähigkeit, die der Kurs tatsächlich hervorhebt, und dort liegt die Erkenntnis: *"Bewerten die Personen, die Thema 2 erwähnten, die Zufriedenheitsfrage schlechter als die, die es nicht taten?"* Analyse über gemischte Quellen in einer Frage.
+
+</Steps>
+
+Zwei Vorbehalte, die jede Menge KI überleben. **Wer geantwortet hat, ist weiterhin eine Frage** - Freitextantworten kommen überproportional von Menschen mit starken Gefühlen, sodass die Häufigkeit eines Themas unter Antwortenden nicht seine Häufigkeit unter Kundinnen ist. Und **Stichprobengröße gilt weiterhin**: Ein Thema, das vier von zweitausend Personen erwähnen, sind vier Personen, wie artikuliert auch immer.
+</Aside>
+
+---
+
+## Visualisierung und Prognose
+
+### Diagramme
+
+Der Kurs nennt das Erzeugen von Visualisierungen zur Kommunikation von Ergebnissen, und die Praktikerin aus dem Schreibkurs nutzt dieselbe Idee vom anderen Ende - ein Diagramm für Stakeholder als Ergebnis der Analyse statt als ihre Arbeitsunterlage.
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - lass es das Diagramm wählen, dann prüfe die Wahl.** Ein wirklich nützlicher Prompt, denn zu wählen, was man plottet, ist schwerer als das Plotten:
+
+> *"Hier sind die Daten und der Punkt, den ich machen will: [Punkt]. Was ist das einzig beste Diagramm dafür, und warum ist es besser als die zwei naheliegenden Alternativen?"*
+
+Dann wende drei Prüfungen an, die KI nicht für dich anwendet:
+
+- **Macht das Diagramm den Punkt oder enthält es ihn bloß?** Ein Diagramm mit sechs Datenreihen macht überhaupt keinen Punkt. Ist die Botschaft nicht in zwei Sekunden sichtbar, ist es eine Tabelle, die ein Diagramm vorgibt zu sein.
+- **Ist die Achse ehrlich?** Eine beschnittene y-Achse verwandelt zwei Prozent Veränderung in eine Klippe. Manchmal legitim, immer eine Entscheidung - und nie eine, die man versehentlich trifft.
+- **Nennt der Titel das Ergebnis?** *"Umsatz nach Region"* ist eine Beschriftung. *"Drei Regionen wuchsen; der Süden fiel um 11 Prozent"* ist ein Ergebnis. Das zweite behalten Menschen, und es zu schreiben zwingt dich zu wissen, was du behauptest.
+</Aside>
+
+### Szenarioprognose
+
+Eine Praktikerin gibt den vollständigsten Workflow im Kurs und beschreibt den Launch vollständiger SAT-Tests auf Gemini. Die Kette lohnt es zu verfolgen, weil sie vier Werkzeuge des Zertifikats in Reihe nutzt:
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Gemini für die Erwägungen<span class="sub">wie Schülerinnen tatsächlich für den SAT lernen und die Kernmerkmale der Tests online. Es legte ein paar kleine Funktionen offen, die sie nicht erwogen hatten, früh genug zum Umsetzen</span></div>
+    <div class="sc-node violet">Nano Banana zum Visualisieren<span class="sub">erst Ideen sammeln, dann sehen, wie diese Funktionen aussehen könnten</span></div>
+    <div class="sc-node green">Canvas zum Prognostizieren<span class="sub">modellieren, wie die Nutzung der Funktion aussehen würde - Annahmen verändern und die Endnutzung bei verschiedenen Adoptionsraten oder Nutzungshäufigkeiten sehen</span></div>
+  </div>
+  <figcaption>Recherchieren, dann visualisieren, dann quantifizieren. Die Prognose kommt zuletzt, sobald es etwas Konkretes gibt, worüber man prognostiziert.</figcaption>
+</figure>
+
+Der kopierwerteste Teil ist die Mitte ihrer Schilderung: Gemini **wies auf Funktionen hin, die sie nicht erwogen hatten, und gab ihnen Zeit, sie umzusetzen.** Das ist der Advocatus-Diaboli-Einsatz aus dem Ideenfindungskurs, angewandt auf einen Produktlaunch, und der Gewinn war Terminplanung statt Erkenntnis.
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - was eine Canvas-Prognose nützlich macht.** Die Formulierung der Praktikerin ist *unsere Annahmen verändern und sehen, wie die Endnutzung wäre*, und das ist der ganze Wert: nicht die Zahl, sondern die **Sensitivität**. Drei Dinge, auf denen man bestehen sollte:
+
+- **Benenne die Annahmen getrennt vom Modell.** Adoptionsrate, Nutzungshäufigkeit, Abwanderung, jede als benannte Eingabe, die du ändern kannst - nicht eingebacken in einen Absatz Begründung, den du neu lesen müsstest, um sie zu finden.
+- **Bitte um drei Fälle, nicht um einen.** Pessimistisch, erwartet, optimistisch, mit der ausdrücklich genannten Annahme, die sich zwischen ihnen unterscheidet. Eine einzelne Prognose ist eine Schätzung mit Dezimalstelle.
+- **Frage, welche Annahme am meisten zählt.** *"Wenn ich nur eine dieser Zahlen wirklich herausfinden könnte, welche ändert die Antwort am meisten?"* Das sagt dir, wo du Rechercheaufwand investierst, und es ist die Frage, die eine Tabelle nicht für dich beantworten kann.
+
+Canvas ist die richtige Oberfläche dafür, weil das Artefakt bleibt und bearbeitbar ist, sodass das Modell etwas ist, das du behältst und überarbeitest, statt einer Nachricht im Chat. Derselbe Grund, warum es die Entwurfsoberfläche in [Schreiben und Kommunizieren](/de/learnings/online/google-ai/06-writing-and-communicating/) ist.
+</Aside>
+
+---
+
+## Die Datenschutzregel
+
+Dieser Kurs formuliert die Regel unverblümter als jeder andere im Zertifikat: *Das Ziel und die Regel sind einfach: **gib niemals vertrauliche Daten in ein öffentliches KI-Werkzeug**, und ziehe immer die Richtlinien deines Unternehmens zur zulässigen Nutzung von KI-Werkzeugen hinzu.*
+
+Und dann, ungewöhnlich, gibt er die zwei Ausgänge statt einen hängen zu lassen:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Option 1 - ein Enterprise-Werkzeug</div>
+    <ul>
+      <li>Prüfe, ob dein Unternehmen ein <strong>KI-Werkzeug in Enterprise-Qualität</strong> hat.</li>
+      <li>Das ist die richtige Antwort, wenn es eines gibt, und der Grund, warum es existiert.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Option 2 - die Einstellungen ändern</div>
+    <ul>
+      <li>Prüfe die Einstellungen des öffentlichen Werkzeugs, das du nutzt.</li>
+      <li>Du kannst der <strong>Datenerhebung widersprechen</strong> oder deine Datenschutzkontrollen nach Bedarf anpassen.</li>
+    </ul>
+  </div>
+</div>
+
+Die Rahmung, die der Kurs darum legt, ist gut: Diese Kontrollen zu verstehen betrifft nicht nur Datenschutz, es gibt dir **das Wissen und das Zutrauen, Daten überhaupt mit KI zu analysieren**. Wer nicht weiß, wo die Einstellung sitzt, wird das Werkzeug entweder ganz vermeiden oder leichtfertig nutzen.
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - der dritte Ausgang, den der Kurs übersieht, und oft der beste.** Bevor du nach einer Enterprise-Lizenz greifst oder einem Einstellungsschalter vertraust, erwäge, ob die Daten **überhaupt** identifizierbar sein müssen. Die meiste Analyse braucht das nicht.
+
+- **Entferne die Identifikatoren.** Ersetze Namen und Kontonummern durch `KUNDE_001`. Analytisch verlierst du nichts, denn das Muster über Kundinnen hinweg ist das Ergebnis, nicht welche Kundin es war.
+- **Analysiere die Struktur, hole die Details selbst.** Lade die anonymisierte Fassung hoch, arbeite heraus, worauf zu schauen ist, und führe die eigentliche Abfrage dann selbst gegen die echten Daten. Das Modell sieht nie einen Namen.
+- **Beschreibe statt hochzuladen.** *"Ich habe 40.000 Zeilen mit diesen Spalten und dieser Verteilungsform. Worauf sollte ich testen?"* bringt dir den Analyseplan, ohne dass Daten deinen Rechner verlassen.
+- **Achte auf die Freitextspalte**, wo Anonymisierung leise scheitert - Menschen schreiben Namen, Kontonummern und ihre eigenen Telefonnummern in Kommentare. Eine Spalte ohne Identifikatorfeld kann voll davon sein.
+
+Das bildet direkt auf die vier Techniken in [verantwortungsvolle KI](/de/learnings/online/google-ai/03-responsible-ai/) ab - generische Platzhalter, um die Aufgabe rahmen, nur relevanter Kontext - und in der EU ist es dasselbe, was die DSGVO **Datenminimierung** nennt. Es ist außerdem schlicht schneller, als eine Lizenz zu beantragen.
+</Aside>
+
+---
+
+## Zusammenfassung zur Wiederholung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Das Szenario:** Umfragedaten, Bindungsberichte und Meetingnotizen von Kolleginnen, und jetzt ein anderes Problem - daraus einen Sinn zu machen. **Nicht alle haben eine Ausbildung in Datenanalyse**, und selbst Ausgebildete ringen damit, klare Erkenntnisse aus Rohdaten zu ziehen.
+- **Warum es zählt:** Daten stützen die **besten und am besten informierten Entscheidungen** und liefern **Unterstützung für deinen Standpunkt**.
+- **Was KI tut:** erklärt, was unsaubere Daten bedeuten, auch über **mehrere Quellentypen gleichzeitig** (Bindungszahlen plus Umfragefeedback); erzeugt Visualisierungen; macht komplexe Analyse in **Alltagssprache mit Gemini in Sheets**; beschleunigt die **Bereinigung**; findet Muster **zwischen** Quellen; und untersucht komplizierte Formeln.
+- **Über die Aufzeichnung hinaus - was Bereinigung tatsächlich ist:** inkonsistente Kategorien, gemischte Formate, beinahe-identische Duplikatzeilen, fehlende Werte mit drei verschiedenen Bedeutungen, und Ausreißer. Bitte um **eine Liste des Gefundenen, keine bereinigte Datei** - ob eine Leerstelle null bedeutet, ist eine Frage über dein Geschäft.
+- **Drei Dinge, die deine bleiben:** **wirklich gute Fragen stellen** (breit starten für die größten Trends, dann bohren); **die Implikationen verstehen** und geschäftlich entscheiden; **die Ergebnisse verifizieren**.
+- **Über die Aufzeichnung hinaus - Frageformen:** der **Vergleich** (und ist dieser Unterschied größer als normale Schwankung?), die **Segmentaufteilung** (treibt eine Gruppe die Gesamtzahl?), die **Widerlegung** (was spricht gegen meinen Schluss?), die **Abwesenheit** (was brauche ich, das hier nicht steckt?). Und zuerst: **welche Entscheidung wird das ändern?**
+- **Über die Aufzeichnung hinaus - der Verifikationsfehler, den der nächste Kurs zeigt:** Ein Vertriebs-Dashboard berichtete souverän eine Produktkategorie, die es nicht gab, mit einer Umsatzzahl aus dem Nichts, weil das Modell sich eine **Testdatei mit erfundenen Zahlen** geschrieben hatte und diese abfragte. Gewohnheiten: **eine Zahl von Hand prüfen**, **es bitten, Formel und Zeilen zu zeigen**, und **Werkzeuge bevorzugen, die rechnen, vor Modellen, die aufsagen** - Sheets-Formeln oder ein Notebook, das Code ausführt. *Verlässlich darin, worauf man schauen soll, unverlässlich beim Wert.*
+- **Freitext als echte Daten:** Die Praktikerin übersprang Freitextantworten, wenn Multiple Choice positiv war, und ging nur bei negativen hinein. Jetzt behandelt sie allen Text gleich und nennt Freitext **eine viel reichere Datenquelle, die sie oft ist**.
+- **Über die Aufzeichnung hinaus - es richtig machen:** Themen aus dem Text ableiten statt sie zu liefern; **jedes Thema zählen und die Zahl berichten**; **wörtliche Zitate** verlangen; dann **den Text mit den Zahlen kreuzen** (bewerten die, die Thema 2 erwähnten, schlechter?). Wer geantwortet hat, bleibt eine Frage, und Stichprobengröße gilt weiterhin.
+- **Visualisierung. Über die Aufzeichnung hinaus:** bitte um das beste Diagramm für einen genannten Punkt und warum es die zwei naheliegenden Alternativen schlägt, dann prüfe drei Dinge - macht es den Punkt oder enthält es ihn bloß, ist die Achse ehrlich, und **nennt der Titel das Ergebnis** statt die Daten zu beschriften?
+- **Szenarioprognose:** die SAT-Launch-Kette - **Gemini** für Erwägungen dazu, wie Schülerinnen lernen, und die Kernmerkmale (es fand Funktionen, die sie nicht erwogen hatten, früh genug zum Umsetzen), **Nano Banana** zum Visualisieren, **Canvas** zum Prognostizieren der Nutzung bei verschiedenen Adoptionsraten und Häufigkeiten.
+- **Über die Aufzeichnung hinaus:** Der Wert ist **Sensitivität, nicht die Zahl**. Benenne die Annahmen als getrennte bearbeitbare Eingaben, bitte um pessimistischen, erwarteten und optimistischen Fall, und frage, **welche Annahme die Antwort am meisten ändert**.
+- **Die Datenschutzregel, unverblümt:** **gib niemals vertrauliche Daten in ein öffentliches KI-Werkzeug**, und ziehe die Richtlinien deines Unternehmens hinzu. Zwei Ausgänge: ein **Werkzeug in Enterprise-Qualität** oder **die Einstellungen** des öffentlichen ändern und der Datenerhebung widersprechen.
+- **Über die Aufzeichnung hinaus - der dritte Ausgang, oft der beste:** Mach die Daten nicht identifizierbar. Identifikatoren zu `KUNDE_001` entfernen, die anonymisierte Struktur analysieren und die echte Abfrage selbst laufen lassen, oder den Datensatz beschreiben statt ihn hochzuladen. **Prüfe die Freitextspalte**, wo Anonymisierung leise scheitert. Das ist **Datenminimierung** unter der DSGVO und schneller als eine Lizenz zu beantragen.
+</Aside>
+
+---
+
+*Weiter: [Apps bauen →](/de/learnings/online/google-ai/09-app-building/) - Vibe Coding, das Arbeitsblatt zur Workflow-Kartierung, eine Tour durch AI Studio und die drei Apps des Kurses.*

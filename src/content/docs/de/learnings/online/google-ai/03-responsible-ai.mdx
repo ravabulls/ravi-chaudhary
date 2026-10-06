@@ -1,0 +1,265 @@
+---
+title: "Google AI 3 - Verantwortungsvolle KI"
+description: "Halluzination und der fehlende gesunde Menschenverstand, Human-in-the-Loop, die vollständige ACT-Checkliste - ask, check, tell - der Schutz vertraulicher Informationen, regulierte und lizenzpflichtige Arbeit, eine Nachvollziehbarkeitsspur aufbauen, SynthID-Watermarking und was der EU AI Act inzwischen verlangt."
+sidebar:
+  label: "3 · Verantwortungsvolle KI"
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Kurs 1: AI Fundamentals, Abschnitt verantwortungsvolle Nutzung*
+
+---
+
+Der Einstieg ist das Schärfste im ganzen Zertifikat. Deine Chefin sagt *"wir müssen reden."* Leicht beunruhigend. Jetzt sagt eine Kollegin *"wir müssen reden."* Dieselben Worte, völlig andere Reaktion.
+
+Du erkennst den Unterschied, weil du Nuance, Kontext und Konsequenzen verstehst. **KI kann das nicht** - jedenfalls nicht von sich aus. Sie kann eine ausgezeichnete Mitarbeiterin sein, aber sie lebt nicht in der wirklichen Welt wie du, und diese einzige Tatsache ist die ganze Grundlage verantwortungsvoller Nutzung.
+
+<Aside type="note">
+**Googles erklärte KI-Prinzipien**, wie der Kurs sie gibt: ein Bekenntnis zu KI, die **kühne Innovation**, **verantwortungsvolle Entwicklung** und **gemeinschaftlichen Fortschritt** fördert.
+</Aside>
+
+---
+
+## Zwei Fehler, die strukturell sind und keine Bugs
+
+### Halluzination
+
+**Halluzination** ist, wenn KI Dinge falsch darstellt und Aussagen trifft, die nicht wahr sind. Der Kurs nennt vier Gründe:
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Die Trainingsdaten enthalten einen Fehler<span class="sub">das Modell hat etwas Falsches gelernt und reproduziert es getreu</span></div>
+  <div class="sc-node violet">Das Problem ist zu einzigartig<span class="sub">es hat nichts wie deine Anfrage vorher gesehen</span></div>
+  <div class="sc-node green">Reales und physisches Wissen ist schwer<span class="sub">es tut sich schwer zu verstehen, wie physische Dinge sich tatsächlich verhalten</span></div>
+  <div class="sc-node slate">Es produziert eine Antwort, die eigentlich geraten ist<span class="sub">und geraten wird im gleichen souveränen Register geliefert wie eine Tatsache</span></div>
+</div>
+
+Die folgende Anweisung ist unbedingt: **immer aufmerksam bleiben und prüfen, was du bekommst, bevor du es in deiner Arbeit verwendest, selbst wenn die Antworten souverän klingen.** Dieser letzte Nebensatz ist der entscheidende - der Tonfall der Überzeugung trägt keine Information über Richtigkeit.
+
+### Kein gesunder Menschenverstand
+
+Die zweite Grenze wird weniger diskutiert und ist wohl gefährlicher, weil sie schwerer zu erkennen ist. KI hat keinen gesunden Menschenverstand. Ihre Ausgaben können klug oder intuitiv wirken, aber darunter liegt kein echtes Verständnis der Welt - **die Ausgaben basieren auf Mustern aus Daten, nicht auf Erfahrung**.
+
+Das gegebene Beispiel ist klein und perfekt. Nach Straßenfesten an einem kommenden Wochenende gefragt, lieferte es Straßenfeste aus früheren Jahren. Ein Fehler, der entdeckt und korrigiert wurde - aber einer, der für jeden völlig unsichtbar gewesen wäre, der die Antwort nicht schon kannte.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - warum Halluzination nicht einfach behoben werden kann und was tatsächlich hilft.** Aus dem [Grundlagenkapitel](/de/learnings/online/google-ai/01-ai-fundamentals/): Das Modell ist darauf trainiert, plausible nächste Tokens vorherzusagen. Eine gewandte, souveräne, falsche Antwort ist kein Versagen des Systems - es ist das System, das seine Arbeit tut, bei einer Frage, wo plausible und wahre Antwort auseinanderfallen. Es gibt keine Einstellung, um das abzuschalten.
+
+Was wirklich hilft, grob nach Wirksamkeit:
+
+- **Grounding.** Gib dem Modell das Quellenmaterial und sag ihm, nur daraus zu antworten. Deshalb halluziniert Gemini Notebook, das nur aus den hochgeladenen Quellen antwortet, weit weniger als ein offener Chat - und deshalb [verankert die Demo des Deployment-Kurses](/de/learnings/online/google-ai/10-app-deployment/) die App in einem Dokument mit Finanzstandards statt der eigenen Rechenkonvention des Modells zu trauen.
+- **Um Quellenangaben bitten und sie dann prüfen.** Nicht weil die Angaben verlässlich wären - eine halluzinierte Quelle ist ein klassischer Fehler - sondern weil das Prüfen schnell geht und die schlimmsten Fälle fängt.
+- **Die Erlaubnis geben, abzulehnen.** Der Zusatz *"wenn die Quellen die Antwort nicht enthalten, sag das"* senkt Erfindungen messbar. Ohne ihn lautet die implizite Anweisung, irgendetwas zu produzieren.
+- **Alles Tragende selbst verifizieren.** Namen, Zahlen, Daten, Zitate und alles, worauf eine Entscheidung ruht. Diese Notizen wurden so gebaut: Ein Verifikationsdurchgang über das Quellenmaterial einer früheren Buchseite fand drei plausibel klingende Zahlen, die im Buch überhaupt nicht standen.
+
+Der Straßenfest-Fehler ist die Form, auf die man achten muss: **kein Unsinn, sondern veraltete oder verschobene Tatsache**. Unsinn ist leicht zu erkennen. Ein echtes Fest aus dem falschen Jahr liest sich genau wie eine richtige Antwort.
+</Aside>
+
+---
+
+## Human-in-the-Loop
+
+Der Name des Kurses für deine Rolle: **Human-in-the-Loop** - du bist **in jedem Schritt** fortwährend an der Nutzung der KI beteiligt und verantwortlich für die Aufsicht über den Prozess von Anfang bis Ende. Das Bild, zu dem er immer wieder zurückkehrt, ist, dass du am Steuer sitzt - dasselbe Bild wie bei der Modell-gegen-App-Auto-Analogie, das jetzt eine Pflicht statt einer Bequemlichkeit trägt.
+
+Die harte Fassung davon, klar gesagt im Lesetext zu Best Practices: **Du solltest nicht darauf setzen, dass KI deine Arbeit ohne deine Aufsicht beendet. Die Aufgabe abzuschließen verlangt dein Urteil und deine Verantwortung.**
+
+---
+
+## ACT: die Checkliste
+
+Der Kurs verdichtet verantwortungsvolle Nutzung auf drei Buchstaben, und das Merkwort ist Absicht - **ACT**, für *act responsibly*.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">A - Ask yourself<span class="sub">bevor du irgendetwas tust: Ist das überhaupt ein Fall, in dem ich KI nutzen sollte?</span></div>
+    <div class="sc-node violet">C - Check<span class="sub">nachdem du entschieden hast, dass KI passt: prüfe die Ausgaben, bevor du sie verwendest</span></div>
+    <div class="sc-node green">T - Tell<span class="sub">lege deine Nutzung offen</span></div>
+  </div>
+  <figcaption>Drei Schritte in dieser Reihenfolge. Der erste wird am häufigsten übersprungen und ist der einzige, der einen vor den anderen zwei retten kann.</figcaption>
+</figure>
+
+### A - Ask yourself
+
+Drei Fragen, aus der ausführlichen Checkliste im Lesetext zu Best Practices:
+
+| Frage | Was abzuwägen ist |
+| --- | --- |
+| **Ist KI für diese Aufgabe richtig?** | Verlasse dich nicht auf KI für medizinische, rechtliche, finanzielle oder andere fachliche Beratung. Ziehe immer eine qualifizierte Fachperson hinzu |
+| **Sind diese Daten sicher nutzbar?** | Gib keine sensiblen, vertraulichen, personenbezogenen oder geschützten Daten in ein öffentliches KI-Werkzeug - interne Unternehmensdaten, personenbezogene Daten von Kundinnen und Kunden |
+| **Halte ich die Regeln ein?** | Prüfe die Richtlinien deines Arbeitgebers zur KI-Nutzung und stelle sicher, dass du ein freigegebenes Werkzeug nutzt - ein Enterprise-Werkzeug statt eines öffentlichen |
+
+Das Video ergänzt eine vierte Überlegung, die eher praktisch als ethisch ist: *Kann ich eine Standardlösung nutzen, oder passt hier ein Enterprise-Werkzeug besser?*
+
+### C - Check, bevor du die Ausgabe verwendest
+
+Vier Dimensionen, und wie der Lesetext jede rahmt:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Genauigkeit und Objektivität</div>
+    <ul>
+      <li><strong>Genauigkeit:</strong> verifiziere alles, was als Tatsache dargestellt wird, unabhängig - Namen, Statistiken, Zitate - und achte auch auf subtile Halluzinationen, nicht nur auf offensichtliche.</li>
+      <li><strong>Objektivität:</strong> die Trainingsdaten eines Modells können unbeabsichtigte Ergebnisse erzeugen. Achte auf einseitige Argumente, wertende Sprache, Stereotype und andere unfaire Annahmen, die es gelernt haben könnte.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Angemessenheit und Urteil</div>
+    <ul>
+      <li><strong>Angemessenheit:</strong> passen Ton und Stil zu diesem Publikum und diesem Zweck? Ein Social-Media-Beitrag eines Unternehmens ist keine lockere E-Mail.</li>
+      <li><strong>Originalität und Urteil:</strong> bearbeite, verfeinere und bringe deine eigene Expertise ein. Passt die Ausgabe nicht, iteriere am Prompt statt sich zufriedenzugeben.</li>
+    </ul>
+  </div>
+</div>
+
+Der Satz, der den Abschnitt zusammenhält: **in vielen Fällen zählt, was du mit der Ausgabe machst.**
+
+### T - Tell, wenn du KI genutzt hast
+
+Zwei Teile:
+
+- **Sei transparent.** Lege klar und angemessen offen, wo und wann KI beim Erzeugen von Inhalten geholfen hat.
+- **Sei konform.** Folge den konkreten Offenlegungsvorgaben deines Unternehmens und gib niemals sensible Informationen in ein öffentlich zugängliches Werkzeug.
+
+Der Kurs nennt hier ein Stück von Googles eigener Infrastruktur: **SynthID**, ein Werkzeug, das **digitale Wasserzeichen** in KI-erzeugte Inhalte wie Video einbettet, damit die Nutzung von KI erkennbar ist.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - was ein Wasserzeichen kann und was nicht.** SynthID bettet ein Signal in erzeugte Inhalte ein, das gewöhnliche Weiterverarbeitung - Komprimierung, Zuschnitt, Neukodierung - weit besser übersteht als Datei-Metadaten, die jeder Upload entfernt. Das ist ein echter Fortschritt gegenüber nichts.
+
+Aber es ist keine allgemeine Echtheitsprüfung, und es als eine zu behandeln ist ein Fehler:
+
+- **Es markiert nur Inhalte aus teilnehmenden Modellen.** Inhalt aus einem Modell, das nicht markiert, trägt kein Signal, und das Fehlen eines Wasserzeichens ist kein Beweis für menschliche Autorschaft.
+- **Erkennung ist nicht überall verfügbar.** Ein Wasserzeichen verifizieren zu können setzt Zugang zu einem Detektor für dieses Verfahren voraus.
+- **Es identifiziert den Erzeuger, nicht die Absicht.** Ein Wasserzeichen sagt, dass etwas KI-gemacht ist; es sagt nichts darüber, ob die Aussage darin wahr ist.
+
+Der ehrliche Schluss: SynthID hilft Plattformen, Inhalte in großem Maßstab zu kennzeichnen. Es ersetzt nicht deine eigene Offenlegung, die der Teil ist, den der Kurs von dir verlangt.
+</Aside>
+
+---
+
+## Vertrauliche Informationen schützen
+
+Der Lesetext zu Best Practices behandelt das als unmittelbarstes Risiko, und seine Anweisung ist eine Frage, die man sich vor jedem Prompt stellt:
+
+> *"Gebe ich in meinem Prompt Daten mit, von denen jemand anderes erwarten würde, dass ich sie vertraulich behandle?"*
+
+Der Lesetext nennt auch den Schritt davor: zu wissen, **welche Daten erhoben werden und wie sie genutzt werden könnten**, bevor man die Nutzungsbedingungen einer Website oder App akzeptiert.
+
+Vier praktische Techniken, die zusammen die meisten echten Fälle abdecken:
+
+<Steps>
+
+1. **Nutze generische Platzhalter**, wenn du über Personen, Projekte oder Orte sprichst.
+
+2. **Rahme Prompts um die Aufgabe**, die zu tun ist, nicht um die beteiligten Personen.
+
+3. **Gib nur den relevanten Kontext ein**, der zur Erledigung nötig ist, statt ganze Dokumente.
+
+4. **Lösche das Gedächtnis der KI**, um mit einem leeren Blatt zu starten - das schützt die Privatheit und verhindert außerdem, dass Bias aus alten Prompts in neue Arbeit sickert.
+
+</Steps>
+
+Der Datenanalyse-Kurs wiederholt die Regel in ihrer unverblümten Form - **gib niemals vertrauliche Daten in ein öffentliches KI-Werkzeug** - und ergänzt die beiden Ausgänge: das Enterprise-Werkzeug des Unternehmens nutzen oder die Einstellungen des öffentlichen Werkzeugs prüfen und der Datenerhebung widersprechen.
+
+<Aside type="note">
+**Über die Aufzeichnung hinaus - die Unterscheidung, die deine Exposition wirklich bestimmt.** "Öffentliches Werkzeug" und "Enterprise-Werkzeug" sind eine nützliche Kurzform, aber was darunter zählt, ist eine konkrete Frage: **Nutzt dieses Produkt meine Eingaben, um seine Modelle zu verbessern, und wie lange behält es sie?** Drei grobe Stufen, deren Antworten sich unterscheiden:
+
+| Stufe | Typische Haltung |
+| --- | --- |
+| **Kostenloser Consumer-Chat** | Die freizügigsten Bedingungen, oft mit menschlicher Durchsicht gesampelter Gespräche und Nutzung der Inhalte zur Verbesserung, sofern man es nicht abschaltet. Prüfe und ändere die Einstellung; nimm nicht an, dass die Voreinstellung die gewünschte ist |
+| **Bezahlter Consumer- oder Business-Plan** | Üblicherweise strenger, häufig ohne Training auf deinen Inhalten, und mit Admin-Steuerung in einer Business-Stufe |
+| **Entwickler-API und Enterprise** | Normalerweise die stärkste vertragliche Position - Inhalte standardmäßig nicht fürs Training genutzt - und mit ausdrücklichen, konfigurierbaren Aufbewahrungsfristen |
+
+Ein konkretes Beispiel für die dritte, weil man sie am vagesten vermutet: In der Gemini **Interactions API** werden Interaktionen serverseitig standardmäßig **1 Tag in der kostenlosen und 55 Tage in der bezahlten Stufe** gespeichert, bezahlte Projekte können auf 7, 14 oder 28 Tage verkürzen, man kann eine Interaktion programmatisch löschen, und `store=false` schaltet die Speicherung ganz ab - auf Kosten der serverseitigen Gesprächsverkettung, die darauf aufbaut.
+
+Zwei Schlüsse für alle in der EU. Erstens ist das genauso eine **DSGVO**-Frage wie eine Richtlinienfrage: Personenbezogene Daten in einem Prompt sind weiterhin verarbeitete personenbezogene Daten, und die üblichen Pflichten zu Zweckbindung, Datenminimierung und Rechtsgrundlage pausieren nicht, weil die Oberfläche ein Chatfeld ist. Zweitens sind die vier Techniken oben keine Etikette - *generische Platzhalter* und *nur der relevante Kontext* sind **Datenminimierung**, also genau das, was das Gesetz verlangt.
+</Aside>
+
+---
+
+## Regulierte und lizenzpflichtige Arbeit
+
+Manche Aufgaben tragen rechtliche oder Compliance-Anforderungen, die KI-Nutzung einschränken oder verbieten, **selbst wenn die Technik völlig dazu in der Lage scheint**. Der Lesetext nennt Finanzwesen, Recht und Gesundheitswesen als Felder unter strenger Regulierung dazu, wie Entscheidungen getroffen, wie Daten behandelt und was dokumentiert werden muss.
+
+Drei Fragen, bevor man KI auf etwas anwendet, das einen regulierten Bereich berühren könnte:
+
+| Frage | Was es heißt |
+| --- | --- |
+| **Hat diese Aufgabe regulatorische Anforderungen?** | Patientenakten, Finanzberichterstattung, Rechtsdokumente und Compliance-Meldungen können spezifische Behandlungsvorgaben haben. Ziehe die Richtlinien deines Arbeitgebers oder eine Fachperson zu den Grenzen hinzu |
+| **Gibt es Lizenz- oder Qualifikationsanforderungen?** | Manche Arbeit muss von lizenzierten Fachpersonen ausgeführt oder geprüft werden. KI ersetzt keine qualifizierte Beratung |
+| **Wer trägt die Verantwortung?** | Menschen sind für Eingaben und Ausgaben von KI-Werkzeugen verantwortlich und müssen angemessene Aufsicht sicherstellen |
+
+Die Anweisung: Ziehe das Compliance-Team, die Rechtsabteilung oder regulatorische Fachleute und Richtlinien hinzu, **bevor** du KI in solchen Kontexten nutzt.
+
+<Aside type="caution">
+**Über die Aufzeichnung hinaus - was der EU AI Act inzwischen tatsächlich verlangt.** Das Zertifikat ist für ein globales Publikum geschrieben und erwähnt ihn nicht, aber für alle, die in der EU arbeiten, ist das die lebendige Regulierung, und sie hat sich kürzlich in beide Richtungen bewegt.
+
+**Jetzt in Kraft.** Die **Transparenzpflichten aus Artikel 50** gelten seit dem **2. August 2026** und wurden ausdrücklich **nicht** verschoben. Im Kern verlangen sie, dass Menschen erfahren, wenn sie mit einem KI-System interagieren, dass KI-erzeugte Inhalte maschinenlesbar markiert werden und dass Deepfakes gekennzeichnet werden. Die Durchsetzungsbefugnisse der Kommission gegenüber Modellen mit allgemeinem Verwendungszweck traten am selben Tag in Kraft.
+
+**Verschoben.** Die meisten Pflichten für **Hochrisiko**-Systeme wurden durch im Juni 2026 beschlossene Änderungen verschoben: Die Verordnung 2026/1744 setzt die Hauptfristen auf den **2. Dezember 2027** für Systeme nach Anhang III und den **2. August 2028** für Produktsysteme nach Anhang I. Anbieter von Modellen mit allgemeinem Verwendungszweck, die vor dem 2. August 2025 in Verkehr gebracht wurden, haben bis zum **2. August 2027** Zeit.
+
+Was das für die Art von Arbeit bedeutet, die dieses Zertifikat lehrt:
+
+- **Der "tell"-Schritt von ACT ist in der EU jetzt eine Rechtspflicht, nicht nur gute Sitte**, für die von Artikel 50 erfassten Fälle. Ein kundenseitiger Chatbot muss offenlegen, dass er einer ist.
+- **Das meiste, was man per Vibe Coding baut, ist nach den Definitionen des Gesetzes nicht Hochrisiko** - ein internes Dashboard oder ein Storyboard-Generator ist keine regulierte Nutzung. Aber KI in **Beschäftigungsentscheidungen, beim Zugang zu Bildung, bei Kreditwürdigkeit oder bei essenziellen Diensten** fällt unter Anhang III, und das ist genau die Art internes Werkzeug, das eine gut gemeinte Person bauen könnte, um Bewerbungen zu sortieren. Die verschobene Frist ist keine Erlaubnis; sie ist Zeit, es herauszufinden.
+- **Pflichten hängen an Rollen.** Baust und verbreitest du ein Werkzeug, bist du näher an einem *Anbieter*; nutzt du das Werkzeug eines anderen in deiner Organisation, bist du *Betreiber*. Die Pflichten unterscheiden sich.
+
+Daten in diesem Bereich bewegen sich. Behandle das Obige als Messwert vom Schreibdatum und prüfe die aktuelle Lage, bevor du darauf baust - was der eigene Rat des Kurses zu zeitkritischen Informationen ist, angewandt auf den Kurs.
+</Aside>
+
+---
+
+## Eine Nachvollziehbarkeitsspur aufbauen
+
+Die Rahmung des Lesetexts ist hier die, die ich behalten würde: Eine Aufzeichnung darüber zu erstellen, wie man KI genutzt hat, **ist keine Beschäftigungstherapie zum Bremsen, sondern berufliche Integrität**.
+
+Drei Schritte:
+
+- **Verfolge deine Quellen.** Unterscheide zwischen KI-erzeugten Inhalten und deinen eigenen Beiträgen, damit du deine Arbeit später verifizieren oder erklären kannst.
+- **Mach den Prozess prüfbar.** Fragt jemand *"wie bist du zu diesem Schluss gekommen?"*, solltest du durchgehen können, welche Teile KI beteiligt hatten und wie du sie validiert hast.
+- **Dokumentiere deine Prüfschritte.** Halte fest, wie du die Arbeit der KI kontrolliert hast, besonders bei wichtigen Lieferergebnissen.
+
+<Aside type="tip">
+**Über die Aufzeichnung hinaus - die leichtgewichtige Fassung, die tatsächlich gemacht wird.** Die drei Schritte oben sind richtig und werden ignoriert, wenn sie einen Prozess verlangen. Was den Kontakt mit echter Arbeit übersteht, sind ein paar Zeilen am Fuß des Dokuments selbst:
+
+> *Entworfen mit Gemini aus den Q3-Zahlen in `sales-q3.csv`. Umsatz- und Margenzahlen gegen das Quelldokument geprüft. Wettbewerbsaussagen in Abschnitt 3 gegen die zitierten Seiten verifiziert. Abschnitt 4 ist von mir.*
+
+Dieser einzige Absatz erledigt alle drei Aufgaben gleichzeitig: Er trennt KI-Inhalte von deinen, er macht den Prozess prüfbar, und er hält fest, was verifiziert wurde. Er kostet eine Minute, und er ist der Unterschied zwischen einem Lieferergebnis, das du verteidigen kannst, und einem, bei dem du nur hoffen kannst, dass niemand fragt.
+</Aside>
+
+---
+
+## Eine kleine Sache: gib Feedback
+
+Der Kurs enthält eine kurze Bitte aus der Praxis, die leicht zu überspringen ist und sich lohnt, nicht zu überspringen. **Bekommst du eine schlechte Antwort, gib ihr einen Daumen nach unten.** Gelegentlich erscheint ein Feedback-Feld mit der Frage, was schiefgelaufen ist, mit einigen Vorgaben und einem Freitextfeld.
+
+Das wirklich nützliche Detail: Am meisten hilft es, **nicht nur zu sagen, was schiefgelaufen ist, sondern was du erwartet hättest oder wie die Antwort hätte aussehen sollen.** Das sind die Daten, die den Menschen, die die nächste Version trainieren, sagen, wo das Modell Schwierigkeiten hat - im Unterschied dazu, bloß dass es welche hatte.
+
+---
+
+## Zusammenfassung zur Wiederholung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Das Eingangsbild:** *"wir müssen reden"* von der Chefin gegenüber von einer Kollegin. Dieselben Worte, andere Bedeutung. Du liest Nuance, Kontext und Konsequenzen; KI nicht.
+- **Googles KI-Prinzipien:** kühne Innovation, verantwortungsvolle Entwicklung, gemeinschaftlicher Fortschritt.
+- **Halluzination** - Aussagen treffen, die nicht wahr sind. Vier Ursachen: ein Fehler in den Trainingsdaten, ein zu einzigartiges Problem, Schwierigkeiten mit realem und physischem Wissen, oder eine Antwort, die eigentlich geraten ist. **Verifiziere auch dann, wenn es souverän klingt.**
+- **Kein gesunder Menschenverstand.** Ausgaben kommen aus Mustern, nicht aus Erfahrung. Das Straßenfest-Beispiel: nach einem kommenden Wochenende gefragt, lieferte es Feste früherer Jahre - die gefährliche Art Fehler, weil sie wie eine richtige Antwort aussieht.
+- **Über die Aufzeichnung hinaus:** Halluzination lässt sich nicht abschalten, aber **Grounding** in gelieferten Quellen, um Quellenangaben bitten und sie prüfen, ausdrücklich *"sag, wenn die Quellen das nicht enthalten"* erlauben, und alles Tragende verifizieren senken sie. Achte auf veraltete oder verschobene Tatsachen, nicht auf Unsinn.
+- **Human-in-the-Loop:** Du bist in jedem Schritt beteiligt und von Anfang bis Ende verantwortlich. **Verlasse dich nicht darauf, dass KI Arbeit ohne deine Aufsicht beendet** - die Aufgabe braucht dein Urteil und deine Verantwortung.
+- **ACT.** **A - Ask yourself:** Ist KI hier richtig (nicht medizinisch, rechtlich, finanziell)? Sind diese Daten sicher (keine sensiblen, vertraulichen, personenbezogenen oder geschützten Daten in öffentliche Werkzeuge)? Halte ich die Regeln ein (Arbeitgeberrichtlinie, freigegebenes Werkzeug)? Plus: Standardlösung oder Enterprise?
+- **C - Check:** Genauigkeit (Namen, Statistiken, Zitate verifizieren; auf subtile Fehler achten), Objektivität (einseitige Argumente, wertende Sprache, Stereotype), Angemessenheit (Ton für dieses Publikum), Originalität und Urteil (bearbeiten und eigene Expertise ergänzen; iterieren statt sich zufriedenzugeben). **Es zählt, was du mit der Ausgabe machst.**
+- **T - Tell:** offenlegen, wo und wann KI genutzt wurde, und den Offenlegungsvorgaben des Unternehmens folgen. **SynthID** fügt digitale Wasserzeichen hinzu, damit KI-Inhalte erkennbar sind.
+- **Über die Aufzeichnung hinaus:** Ein Wasserzeichen übersteht Komprimierung und Zuschnitt, wo Metadaten es nicht tun, markiert aber nur teilnehmende Modelle, Erkennung ist nicht überall verfügbar, und das Fehlen eines Wasserzeichens ist kein Beweis menschlicher Autorschaft. Es ersetzt deine Offenlegung nicht.
+- **Vertrauliche Informationen schützen** - die Frage vor jedem Prompt: *"gebe ich Daten mit, von denen jemand erwarten würde, dass ich sie vertraulich behandle?"* Vier Techniken: **generische Platzhalter**, **um die Aufgabe rahmen, nicht um die Personen**, **nur relevanter Kontext statt ganzer Dokumente**, **Gedächtnis löschen**. Wisse, was die Nutzungsbedingungen erheben, bevor du sie akzeptierst.
+- **Über die Aufzeichnung hinaus:** Die echte Frage ist, ob ein Produkt auf deinen Eingaben trainiert und wie lange es sie behält. Kostenloser Consumer-Chat ist am freizügigsten, bezahlte Pläne strenger, Entwickler-APIs und Enterprise am stärksten. In der Gemini Interactions API: **1 Tag kostenlos, 55 Tage bezahlt**, verkürzbar auf 7, 14 oder 28, löschbar, oder `store=false`. In der EU ist das eine **DSGVO**-Frage - die vier Techniken sind **Datenminimierung**.
+- **Regulierte Arbeit:** Finanzwesen, Recht und Gesundheitswesen tragen strenge Regeln, selbst wo die Technik es könnte. Drei Fragen: gibt es regulatorische Anforderungen, gibt es Lizenz- oder Qualifikationsanforderungen, wer trägt die Verantwortung? Zuerst Compliance oder Rechtsabteilung hinzuziehen.
+- **Über die Aufzeichnung hinaus - der EU AI Act:** **Die Transparenzpflichten aus Artikel 50 gelten seit dem 2. August 2026** und wurden nicht verschoben - offenlegen, dass Nutzende mit KI sprechen, KI-Inhalte maschinenlesbar markieren, Deepfakes kennzeichnen. Hochrisiko-Pflichten rückten auf den **2. Dezember 2027** (Anhang III) und **2. August 2028** (Anhang I); Modelle mit allgemeinem Verwendungszweck von vor August 2025 haben bis zum **2. August 2027**. Per Vibe Coding gebaute interne Werkzeuge sind meist nicht Hochrisiko, aber alles, was **Beschäftigung, Bildung, Kredit oder essenzielle Dienste** berührt, ist Anhang III.
+- **Nachvollziehbarkeitsspur - keine Beschäftigungstherapie, sondern berufliche Integrität:** Quellen verfolgen, den Prozess prüfbar machen, die Verifikation dokumentieren. **Über die Aufzeichnung hinaus:** Ein Absatz am Fuß des Dokuments, der benennt, was KI entworfen hat, was du geprüft hast und gegen was, erledigt alle drei.
+- **Gib Feedback.** Daumen nach unten bei einer schlechten Antwort, und sag **was du erwartet hättest**, nicht nur was schiefging.
+</Aside>
+
+---
+
+*Weiter: [Ideenfindung und Planung →](/de/learnings/online/google-ai/04-brainstorming-and-planning/) - Problem Framing, Expertinnen simulieren, Gemini als Advocatus Diaboli und eine Informationszentrale für das Projekt.*

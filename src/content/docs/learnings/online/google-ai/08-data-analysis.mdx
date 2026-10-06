@@ -1,0 +1,241 @@
+---
+title: "Google AI 8 - Data Analysis"
+description: "Making sense of mixed sources at once, the questions you still have to ask, Gemini in Sheets for cleaning and formulas, treating open-text responses as a first-class data source, choosing and checking a visualisation, scenario forecasting in Canvas, and the data privacy rule with its two ways out."
+sidebar:
+  label: "8 · Data Analysis"
+  order: 8
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Course 6: AI for Data Analysis*
+
+---
+
+The scenario the course opens with is familiar to anyone who has tried to answer an open question with whatever evidence was lying around. You are exploring ways to improve your company's services, so you collect survey data, pull reports on customer retention, and grab meeting notes from colleagues. Before you know it you have a lot to work with - **and a different kind of problem**.
+
+The course names the two obstacles honestly. **Not everyone has training in how to analyse data**, and even for those who do, it is not always easy to pull clear insights from raw data.
+
+<Aside type="note">
+**Why bother at all.** Two reasons, both given: data helps you make **the best and most informed decisions**, and it provides **support for your point of view** on an issue. The second is the one people are coy about and the one that gets budgets approved.
+
+The course's promise is aimed squarely at the first obstacle: with AI, even people whose eyes would normally glaze over at the sight of a spreadsheet can use data insights.
+</Aside>
+
+---
+
+## What AI does with messy data
+
+The headline claim: **Gemini can take messy data and tell you what it all means.** The more interesting claim is the one underneath it - it can make sense of **different types of data at the same time**, and the example is exactly the hard case from the opening: customer retention numbers *and* survey feedback, together.
+
+The specific capabilities named:
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Explain what the data means<span class="sub">including across several sources of different types at once</span></div>
+  <div class="sc-node violet">Create visualisations<span class="sub">to communicate your findings</span></div>
+  <div class="sc-node green">Do complex analysis in everyday language<span class="sub">with Gemini in Sheets, using plain English instead of formula syntax</span></div>
+  <div class="sc-node slate">Accelerate data cleaning, and find cross-source patterns<span class="sub">plus troubleshoot complicated formulas for you</span></div>
+</div>
+
+The course's summary of the effect: the most frustrating and time-consuming parts of data analysis **fade into the background**, and you discover valuable insights in a fraction of the time.
+
+<Aside type="note">
+**Beyond the recording - what "cleaning" actually means, since this is where the time goes.** The course names cleaning as something AI accelerates without saying what the work is. In practice, on a real spreadsheet, it is these five things, and every one of them is something you can ask for in plain language:
+
+| Problem | What it looks like | What to ask |
+| --- | --- | --- |
+| **Inconsistent categories** | *Germany*, *DE*, *germany*, *Deutschland* in one column | *"List every distinct value in column C and group the ones that mean the same thing."* |
+| **Mixed formats** | Dates as `03/04/2026` and `4 March 2026`; numbers stored as text | *"Which columns have inconsistent formats, and what would the standardised version be?"* |
+| **Duplicates that are not identical** | The same customer twice with different spacing or a different email | *"Find likely duplicate rows and tell me why you think each pair matches."* |
+| **Missing values** | Blanks that mean *zero*, *not applicable* and *nobody filled it in* - three different things | *"Where are the gaps, and for each column tell me whether a blank is plausibly a zero."* |
+| **Outliers** | One order of 10,000 units that is a typo, and one that is real | *"Flag values more than three standard deviations from the mean and show me the rows."* |
+
+The thing to notice is that the right output for all five is **a list of what it found, not a cleaned file**. Let it do the finding, which is the tedious part, and make the decisions yourself - because *whether a blank means zero* is a question about your business, not about your data.
+</Aside>
+
+---
+
+## The three things you still have to do
+
+The course asks the obvious question directly - *if Gemini can do all this analysis for me, what do I have to do?* - and gives three answers.
+
+<Steps>
+
+1. **Ask really good questions about the data.** The guidance is a sequence rather than a knack: *start broad* to understand the biggest trends and most important conclusions, *then drill down* into the details.
+
+2. **Understand the implications.** If you make a discovery or find an interesting insight, it is up to you to work out what it means and make the right business decisions.
+
+3. **Verify the findings** to ensure their accuracy.
+
+</Steps>
+
+<Aside type="tip">
+**Beyond the recording - what a good question looks like, since the course only says to ask one.** The broad-then-narrow advice is right, and the failure mode is that *broad* turns into vague. Four shapes that reliably produce something:
+
+- **The comparison.** *"How does this quarter differ from last, and which of those differences is larger than normal quarter-to-quarter variation?"* The second clause is what stops you reporting noise as a trend.
+- **The segment split.** *"Does this hold for every customer segment, or is the overall number being driven by one group?"* This is the single most productive question in business analysis, and an aggregate number almost never answers it.
+- **The disconfirmation.** *"What in this data argues against the conclusion I just drew?"* The [devil's advocate](/learnings/online/google-ai/04-brainstorming-and-planning/) move applied to evidence.
+- **The absence.** *"What would I need to answer this properly that is not in this dataset?"* Often the most valuable output, and the only one that stops a confident answer built on data that cannot support it.
+
+And one to ask before any of them: **what decision will this change?** An analysis that cannot change an action is a hobby.
+</Aside>
+
+---
+
+## Verification, and the number that is not there
+
+The third instruction - verify the findings - deserves more weight than the course gives it, because this course has the certificate's highest ratio of plausible-looking output to checkable fact.
+
+<Aside type="caution">
+**Beyond the recording - the failure mode this course should have shown you, which the next course does.** The [app deployment course](/learnings/online/google-ai/10-app-deployment/) contains the single most instructive moment in the whole certificate, and it is a data failure. A presenter has built a sales dashboard with a chat panel, and asks it which product category drives the most revenue. It answers confidently: a category that **does not exist in the data**, with a revenue figure that appears nowhere.
+
+The cause, once debugged, is worth knowing: while building the feature, the model had written itself a **test file with fake revenue numbers** to check that the chat worked, and was still querying that instead of the real spreadsheet. The presenter's own reaction is the lesson - *I'm so glad we tested this, because if I had shared this with the executive team, they would have seen some magical numbers and a category that didn't exist.*
+
+Three habits follow, and they cost almost nothing:
+
+- **Check one number by hand.** Pick a single figure, compute it yourself from the source, and compare. If it matches, your pipeline is probably connected to the right data; if it does not, nothing else in the output matters. This one check would have caught the failure above instantly.
+- **Ask it to show the calculation**, not just the result: *"Show the formula and the rows you used."* A model that has to produce its arithmetic makes less of it up, and you get something auditable.
+- **Prefer tools that compute over models that recite.** Asking for a number in chat invites prediction. Asking **Gemini in Sheets** for a formula, or using a notebook that actually **executes code**, means the arithmetic is done by arithmetic. Gemini Notebook gained code execution for data analysis in its July 2026 update for precisely this reason.
+
+The general rule for this course: **a model is reliable at telling you what to look at, and unreliable at telling you the value.** Use it for the structure of the analysis and let something deterministic do the sums.
+</Aside>
+
+---
+
+## Open text as real data
+
+The most interesting thing in this course is a practitioner describing a change in how she works rather than a feature.
+
+She says she is doing work in a brand-new way she would not have done before. Previously she would not have looked as closely at survey data, and would have stuck to **very stock reporting**. The specific old behaviour is recognisable to anyone who has run a survey: with a questionnaire that is part multiple-choice and part open-response, *"if this is a positive one, I might not look at the open-response; if it's a negative one, I'll dive in."*
+
+Now she can **treat all the text pretty equally**, look at things in a brand-new way, and consider open-text responses as *a much, much richer data source, as it often is.*
+
+That last clause carries the argument. The free-text box is usually where the real information is, and it was routinely ignored because reading two thousand comments was not possible. That constraint is gone, and the consequence is not a faster report but a different one.
+
+<Aside type="note">
+**Beyond the recording - doing open-text analysis properly rather than impressionistically.** The risk when text becomes cheap to process is that *"summarise the comments"* produces a fluent paragraph that reflects the loudest responses, and you cannot tell whether a theme appeared twice or two hundred times. Four steps keep it honest:
+
+<Steps>
+
+1. **Derive the themes from the data, not from your expectations.** *"Read all 2,000 responses. Identify the recurring themes. Do not use categories I have suggested - derive them from the text."* Then read the theme list and sanity-check it before going further.
+
+2. **Count them, and report the count.** *"For each theme, how many responses mention it? Give me the number and the percentage of the total."* A theme without a count is an anecdote.
+
+3. **Demand verbatim quotes.** *"Give me three actual quotes per theme, copied exactly."* This is the check on invention and the thing you will put in front of people - a real sentence from a real customer does more work than any summary.
+
+4. **Cross the text with the numbers.** This is the capability the course actually highlights, and it is where the insight lives: *"Do the people who mentioned theme 2 score lower on the satisfaction question than those who did not?"* Mixed-source analysis in one question.
+
+</Steps>
+
+Two cautions that survive any amount of AI. **Who answered is still a question** - open-text responses come disproportionately from people with strong feelings, so a theme's frequency among respondents is not its frequency among customers. And **sample size still applies**: a theme mentioned by four people out of two thousand is four people, however articulate.
+</Aside>
+
+---
+
+## Visualisation and forecasting
+
+### Charts
+
+The course names creating visualisations to communicate findings, and the practitioner from the writing course uses the same idea from the other end - a stakeholder-facing chart as the output of the analysis rather than its working.
+
+<Aside type="tip">
+**Beyond the recording - let it choose the chart, then check the choice.** A genuinely useful prompt, because choosing what to plot is harder than plotting it:
+
+> *"Here is the data and the point I want to make: [point]. What is the single best chart for that, and why is it better than the two obvious alternatives?"*
+
+Then apply three checks that AI will not apply for you:
+
+- **Does the chart make the point, or merely contain it?** A chart holding six series makes no point at all. If the takeaway is not visible in two seconds, it is a table pretending to be a chart.
+- **Is the axis honest?** A truncated y-axis turns a two percent change into a cliff. Sometimes legitimate, always a decision - and never one to make by accident.
+- **Does the title state the finding?** *"Revenue by region"* is a label. *"Three regions grew; the south fell 11 percent"* is a finding. The second one is what people remember, and writing it forces you to know what you are claiming.
+</Aside>
+
+### Scenario forecasting
+
+A practitioner gives the most complete workflow in the course, describing the launch of full-length SAT tests on Gemini. The chain is worth following because it uses four of the certificate's tools in sequence:
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Gemini for the considerations<span class="sub">how students actually study for the SAT, and the key features of the tests online. It surfaced a few small features they had not considered, early enough to implement them</span></div>
+    <div class="sc-node violet">Nano Banana to visualise<span class="sub">brainstorm, then see what those features could look like</span></div>
+    <div class="sc-node green">Canvas to forecast<span class="sub">model what feature use would look like - altering assumptions and seeing end usage under different adoption rates, or different frequencies of student use</span></div>
+  </div>
+  <figcaption>Research, then visualise, then quantify. The forecast comes last, once there is something concrete to forecast about.</figcaption>
+</figure>
+
+The part most worth copying is the middle of her account: Gemini **called out features they had not considered, and gave them time to implement**. That is the devil's-advocate use from the brainstorming course applied to a product launch, and the payoff was schedule rather than insight.
+
+<Aside type="note">
+**Beyond the recording - what makes a Canvas forecast useful.** The practitioner's phrase is *altering our assumptions and seeing what the end usage would be*, which is the whole value: not the number, but the **sensitivity**. Three things to insist on:
+
+- **Name the assumptions separately from the model.** Adoption rate, frequency of use, churn, each as a labelled input you can change - not baked into a paragraph of reasoning you would have to re-read to find.
+- **Ask for three cases, not one.** Pessimistic, expected, optimistic, with the assumption that differs between them stated explicitly. A single forecast is a guess with a decimal point.
+- **Ask which assumption matters most.** *"If I could only find out one of these numbers for real, which one changes the answer most?"* That tells you where to spend research effort, and it is the question a spreadsheet cannot answer for you.
+
+Canvas is the right surface for this because the artefact persists and is editable, so the model is something you keep and revise rather than a message in a chat. Same reason it is the drafting surface in [writing and communicating](/learnings/online/google-ai/06-writing-and-communicating/).
+</Aside>
+
+---
+
+## The data privacy rule
+
+This course states the rule more bluntly than any other in the certificate: *the goal and rule is simple, **never input confidential data into a public AI tool**, and always consult your company's policies on acceptable use of AI tools.*
+
+And then, unusually, it gives the two ways out rather than leaving you stuck:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Option 1 - an enterprise tool</div>
+    <ul>
+      <li>See whether your company has an <strong>enterprise-grade AI tool</strong>.</li>
+      <li>This is the correct answer when it exists, and the reason it exists.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Option 2 - change the settings</div>
+    <ul>
+      <li>Check the settings of the public tool you are using.</li>
+      <li>You can <strong>opt out of data collection</strong> or adjust your privacy controls as needed.</li>
+    </ul>
+  </div>
+</div>
+
+The framing the course puts on this is good: understanding these controls is not only about privacy, it is about **giving you the knowledge and confidence to analyse data with AI** at all. Someone who does not know where the setting is will either avoid the tool entirely or use it recklessly.
+
+<Aside type="tip">
+**Beyond the recording - the third option the course misses, and it is often the best one.** Before reaching for an enterprise licence or trusting a settings toggle, consider whether the data needs to be identifiable **at all**. Most analysis does not.
+
+- **Strip the identifiers.** Replace names and account numbers with `CUST_001`. You lose nothing analytically, because the pattern across customers is the finding, not which customer it was.
+- **Analyse the structure, bring back the specifics.** Upload the anonymised version, work out what to look for, then run the actual lookup yourself against the real data. The model never sees a name.
+- **Describe instead of uploading.** *"I have 40,000 rows with these columns and this shape of distribution. What should I test for?"* gets you the analysis plan with no data leaving your machine at all.
+- **Watch the free-text column**, which is where anonymisation quietly fails - people write names, account numbers and their own phone numbers inside comments. A column stripped of its identifier field can still be full of them.
+
+This maps directly onto the four techniques in [responsible AI](/learnings/online/google-ai/03-responsible-ai/) - generic placeholders, framing around the task, only the relevant context - and in the EU it is the same thing GDPR calls **data minimisation**. It is also simply faster than requesting a licence.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The scenario:** survey data, retention reports and colleagues' meeting notes, and now a different problem - making sense of it all. **Not everyone has training in analysing data**, and even trained people struggle to pull clear insight from raw data.
+- **Why it matters:** data supports the **best and most informed decisions**, and provides **support for your point of view**.
+- **What AI does:** explains what messy data means, including **several types of source at once** (retention numbers plus survey feedback); creates visualisations; does complex analysis in **everyday language with Gemini in Sheets**; accelerates **cleaning**; finds patterns **between** sources; and troubleshoots complicated formulas.
+- **Beyond the recording - what cleaning actually is:** inconsistent categories, mixed formats, near-duplicate rows, missing values that mean three different things, and outliers. Ask for **a list of what it found, not a cleaned file** - whether a blank means zero is a question about your business.
+- **Three things that stay yours:** **ask really good questions** (start broad for the biggest trends, then drill down); **understand the implications** and make the business decision; **verify the findings**.
+- **Beyond the recording - question shapes:** the **comparison** (and is this difference larger than normal variation?), the **segment split** (is one group driving the overall number?), the **disconfirmation** (what argues against my conclusion?), the **absence** (what do I need that isn't here?). And first: **what decision will this change?**
+- **Beyond the recording - the verification failure the next course demonstrates:** a sales dashboard confidently reported a product category that did not exist, with a revenue number from nowhere, because the model had written itself a **test file with fake numbers** and was querying that. Habits: **check one number by hand**, **ask it to show the formula and rows**, and **prefer tools that compute over models that recite** - Sheets formulas or a notebook that executes code. *Reliable about what to look at, unreliable about the value.*
+- **Open text as real data:** the practitioner used to skip open responses when the multiple-choice was positive and only dive in when it was negative. Now she treats all text equally and calls open-text **a much richer data source, as it often is**.
+- **Beyond the recording - doing it properly:** derive themes from the text rather than supplying them; **count each theme and report the number**; demand **verbatim quotes**; then **cross the text with the numbers** (do people who mentioned theme 2 score lower?). Remember that who answered is still a question, and sample size still applies.
+- **Visualisation. Beyond the recording:** ask for the best chart for a stated point and why it beats the two obvious alternatives, then check three things - does it make the point or merely contain it, is the axis honest, and **does the title state the finding** rather than label the data?
+- **Scenario forecasting:** the SAT launch chain - **Gemini** for considerations about how students study and the key features (it caught features they had not considered, early enough to implement), **Nano Banana** to visualise them, **Canvas** to forecast usage under different adoption rates and frequencies.
+- **Beyond the recording:** the value is **sensitivity, not the number**. Name the assumptions as separate editable inputs, ask for pessimistic, expected and optimistic cases, and ask **which assumption changes the answer most**.
+- **The privacy rule, stated bluntly:** **never input confidential data into a public AI tool**, and consult your company's policies. Two ways out: an **enterprise-grade tool**, or **change the settings** of the public one and opt out of data collection.
+- **Beyond the recording - the third way out, often the best:** do not make the data identifiable. Strip identifiers to `CUST_001`, analyse the anonymised structure and run the real lookup yourself, or describe the dataset instead of uploading it. **Check the free-text column**, where anonymisation quietly fails. This is **data minimisation** under GDPR, and it is faster than requesting a licence.
+</Aside>
+
+---
+
+*Next: [App building →](/learnings/online/google-ai/09-app-building/) - vibe coding, the workflow-mapping worksheet, a tour of AI Studio, and the three apps the course builds.*

@@ -1,0 +1,400 @@
+---
+title: "Google AI 11 - The Gemini API in Practice"
+description: "The step the certificate stops short of: API keys and why they belong on a server, the google-genai SDK, the Interactions API that replaced generateContent in 2026, the current model and price table, structured output, function calling, server-side tools, caching and batch, free-tier limits, and how to keep a bill small."
+sidebar:
+  label: "11 · The Gemini API"
+  order: 11
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Added chapter - not part of the certificate.*
+
+---
+
+The certificate takes you from using the Gemini app to building an app in AI Studio, and then stops. It never shows you the thing your app has been calling the whole time.
+
+That is a reasonable curriculum decision - the certificate promises no coding, and it keeps the promise. But it leaves a gap that matters the moment anything you built goes beyond yourself, because three of the most consequential facts about your app live on the other side of that boundary: **what it costs, where your key is, and what it is allowed to do.** The deployment course bumps into all three - a quota error, a server-side secret, a share link - without explaining any of them.
+
+<Aside type="note">
+**Who this chapter is for.** Someone who has done the certificate, has an app that works, and now wants to know what is underneath. It assumes no programming, and the code samples are there to be read rather than typed - the point of each is the shape, not the syntax. Everything here was checked against current documentation at the time of writing; the model names and prices will move, and the chapter says where to look up today's.
+</Aside>
+
+---
+
+## App, API, SDK: three words for three different things
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">The model<span class="sub">Gemini 3.8 Flash and its siblings. The engine, in the certificate's car analogy. You never touch it directly</span></div>
+    <div class="sc-node violet">The API<span class="sub">the interface over the internet: you send a request with your text and your key, you get a response. A contract, not a program</span></div>
+    <div class="sc-node green">The SDK<span class="sub">a small library in your language that writes the request for you, so you call a function instead of assembling HTTP by hand</span></div>
+    <div class="sc-node slate">The app<span class="sub">what the certificate builds. A user interface plus code that calls the API on the user's behalf</span></div>
+  </div>
+  <figcaption>The Gemini app and your AI Studio app sit at the bottom of this stack. Everything above is what the certificate does not show you.</figcaption>
+</figure>
+
+The practical difference between the app and the API is control and liability, in both directions. Through the app you get a polished interface, somebody else's rate limits and no bill. Through the API you get to decide the model, the parameters, the tools, the retry behaviour and the output format - and you get a bill, a key to protect, and responsibility for everything the thing does.
+
+---
+
+## Keys
+
+### Getting one
+
+A Gemini API key comes from AI Studio. If you did the certificate's app courses you already have one, because **AI Studio created it for you and put it in your app** - the Secrets panel in settings is where it lives.
+
+### The one rule
+
+<Aside type="caution">
+**An API key is a password that spends money. Treat it like one.**
+
+The single most common and most expensive mistake made by people new to this is putting a key somewhere it can be read. The places it must never go:
+
+- **In code that runs in the browser.** Anything in the page source is public, however obscure it looks. Your users can read it, and so can anyone else.
+- **In a public repository.** Keys are scraped from GitHub within minutes of being committed, by automated tooling built for exactly that. Committing a key and deleting it later does not help - it is in the history.
+- **In a notebook, a screenshot, a slide, or a shared document.** This is the quiet one. A Jupyter notebook saves its cell contents, so a key pasted into a cell travels with the file to everyone you send it to.
+- **In a support ticket or a chat message**, including to an AI assistant.
+
+I am emphatic about the notebook case because I have seen it happen in course material - a real, working key committed into a shared lab notebook by someone who had no idea it was being published. If that is ever you: **revoke the key immediately** rather than deleting the file. A revoked key is harmless; a deleted file is still in someone's download folder.
+
+**Where keys do go:** in an environment variable, in a secret manager, or in a server-side configuration file that is listed in `.gitignore`. And the architectural rule that makes all of this easier - **the browser calls your server, and your server calls Gemini.** The key never leaves your server.
+
+This is precisely what AI Studio does for you, and it is worth recognising as a deliberate design choice rather than a detail: *your app's Gemini API calls are made from server-side code using this key, so it is never exposed in the browser*, and people you share the app with **can use it but cannot see your key**. If you ever rebuild one of these apps by hand, that is the architecture to copy.
+</Aside>
+
+### The bill follows the key
+
+The commercial consequence, which the deployment course demonstrates without naming: **a deployed AI Studio app uses your key for every user's calls.** Ten people using your dashboard spend against your quota and your bill. That is the real reason a phased rollout matters, and the real reason anything lasting belongs on an organisational account with its own billing.
+
+---
+
+## The smallest working call
+
+Two SDKs, same shape. Install:
+
+```bash
+# Python
+pip install -U google-genai
+
+# JavaScript / TypeScript
+npm install @google/genai
+```
+
+Set the key as an environment variable - both SDKs read it automatically, so it never appears in your code:
+
+```bash
+export GEMINI_API_KEY="your-key-here"
+```
+
+Then the whole thing, in Python:
+
+```python
+from google import genai
+
+client = genai.Client()
+
+interaction = client.interactions.create(
+    model="gemini-3.8-flash",
+    input="Explain how AI works in a few words",
+)
+print(interaction.output_text)
+```
+
+And in JavaScript:
+
+```javascript
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({});
+
+const interaction = await ai.interactions.create({
+  model: "gemini-3.8-flash",
+  input: "Explain how AI works in a few words",
+});
+console.log(interaction.output_text);
+```
+
+That is the entire surface. Everything else in this chapter is additional arguments to that one call.
+
+<Aside type="note">
+**Three things to notice in six lines.**
+
+- **`genai.Client()` takes no key.** It reads `GEMINI_API_KEY` from the environment. This is not a convenience, it is the design: the easiest path is also the one where the key is not in your source.
+- **The model is a string you choose**, which means model selection is a decision you now own - and a line you will have to update when that model is retired.
+- **It is `interactions.create`, not `generate_content`.** That changed in 2026, and the next section is about why it matters.
+</Aside>
+
+---
+
+## The Interactions API
+
+### What changed
+
+If you have read a Gemini tutorial written before mid-2026, it will show `models.generate_content(...)`. That still works and is **fully supported** - but it is now labelled **legacy**. The **Interactions API** went generally available in June 2026 and is Google's recommended interface for Gemini, and **new agent features ship only through it**.
+
+The difference is where conversation state lives.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">generateContent - legacy</div>
+    <ul>
+      <li>Stateless: one request, one response.</li>
+      <li><strong>You</strong> keep the whole conversation history and resend it every turn.</li>
+      <li>Simple, and it means a long chat re-sends - and re-pays for - everything said so far on every single turn.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Interactions - current</div>
+    <ul>
+      <li>An <strong>Interaction</strong> is a complete turn in a conversation or task, held server-side.</li>
+      <li>You continue with <code>previous_interaction_id</code> and the server retrieves the prior context itself.</li>
+      <li>Better cache hit rates, so <strong>lower cost on multi-turn conversations</strong>, plus background execution and resumable streams.</li>
+    </ul>
+  </div>
+</div>
+
+### The step timeline
+
+The more interesting change is that an Interaction is not just an answer. It holds an ordered timeline of **steps**, which you can read:
+
+| Step type | What it is |
+| --- | --- |
+| `user_input` | Your message |
+| `model_thought` | The model's internal reasoning, when thinking is enabled |
+| `function_call` | A request to invoke a tool |
+| `function_result` | What the tool returned |
+| `model_output` | The final response |
+
+This is what makes a complicated interaction debuggable. The [deployment course's](/learnings/online/google-ai/10-app-deployment/) failure - an app returning fast, confident, fictional numbers with no error - is exactly the kind of thing a visible step timeline helps with: you can see whether a tool was called at all, which is precisely what *"the responses are both near instant and don't seem accurate"* was intuiting without the evidence.
+
+### Continuing a conversation
+
+```python
+first = client.interactions.create(
+    model="gemini-3.8-flash",
+    system_instruction="You are a concise analyst. Never speculate.",
+    input="Summarise the revenue trend in this data.",
+)
+
+second = client.interactions.create(
+    model="gemini-3.8-flash",
+    system_instruction="You are a concise analyst. Never speculate.",
+    previous_interaction_id=first.id,
+    input="Now break that down by region.",
+)
+```
+
+<Aside type="caution">
+**The footgun in that example, and it is easy to miss.** `system_instruction`, `tools` and `generation_config` are **interaction-scoped**. They do **not** carry forward from the previous interaction - which is why they are repeated above.
+
+Forget to resend them and your second turn silently loses its persona, its rules and its tools. Nothing errors; the model simply behaves differently and you spend twenty minutes wondering why turn two ignored instructions that turn one obeyed. Put them in a variable and pass the same variable every time.
+</Aside>
+
+### Storage, retention and stateless mode
+
+By default `store=true` and interactions are kept server-side: **1 day on the free tier, 55 days on paid**. Paid projects can shorten that to 7, 14 or 28 days in AI Studio, and you can delete an interaction programmatically.
+
+Passing `store=false` turns storage off entirely - you then manage the conversation history yourself, as with the legacy API. The trade-off is explicit: **no `previous_interaction_id` and no background execution** without storage.
+
+For anyone handling personal data under GDPR, that paragraph is the one to read twice. The retention window is a configurable processing decision, not a fixed property of the service.
+
+### Streaming and background work
+
+- **`stream=True`** returns the response in chunks as it is generated, so a user sees text appearing rather than a spinner. You handle events and watch for `step.delta` to pick up text as it arrives. Streams are **resumable** via `last_event_id`, which matters on a flaky connection.
+- **`background=True`** runs a long task asynchronously, which requires `store=True`. This is the right shape for anything that takes minutes - a long document analysis, a research-style task - rather than holding a request open.
+
+---
+
+## Making the output usable
+
+Two features do more for real applications than any amount of prompt wording, and neither appears in the certificate.
+
+### Structured output
+
+Asking for JSON in a prompt gets you JSON most of the time, which is the worst possible reliability: often enough to build on, not often enough to trust. **Structured output** lets you supply a schema the response must conform to, so the model is constrained rather than asked politely.
+
+This turns *"please reply with the fields I need"* into a guarantee, and it is what separates a demo from something that can feed the next step of a pipeline without a human looking at it. If your app ever parses the model's answer, it should be using this.
+
+### Function calling
+
+**Function calling** lets you describe your own functions - name, purpose, arguments - and have the model request one when it needs it. The model does not run anything; it returns a `function_call` step, **your code** executes it, and you pass the result back as a `function_result`.
+
+That division is the whole safety story. The model decides *that* a thing should happen; your code decides *whether* and *how*. Every check you want - permissions, limits, validation, logging - goes in your code, where it belongs.
+
+<Aside type="tip">
+**Why these two matter more than they sound.** Together they are the difference between a chatbot and a tool.
+
+Take the [certificate's dashboard app](/learnings/online/google-ai/09-app-building/). Built naively, the user asks a question and the model answers from text it has been shown - which is how you get a confident revenue figure for a product category that does not exist.
+
+Built with these two: the model receives the question, returns a `function_call` for `get_revenue_by_category(quarter="Q3")`, **your code** runs the actual query against the actual data, and the model gets real numbers back and writes them into a sentence. The arithmetic is done by arithmetic. The model does the language.
+
+That is the architectural answer to the single worst failure mode in this whole certificate, and it is one design decision rather than a discipline you have to maintain.
+</Aside>
+
+---
+
+## Server-side tools
+
+Some tools you do not have to build, because they run on Google's side. Pass them in `tools` and the model uses them when relevant:
+
+| Tool | What it does |
+| --- | --- |
+| **Google Search** | Grounds the answer in live search results - the mechanism behind the [knowledge cutoff workaround](/learnings/online/google-ai/01-ai-fundamentals/): lookup rather than recall |
+| **Code execution** | The model writes and runs code to compute an answer. The right tool for arithmetic, exactly as in [data analysis](/learnings/online/google-ai/08-data-analysis/) |
+| **URL context** | Fetches and reads specific URLs you name |
+| **File search** | Retrieval over files you have uploaded |
+| **Computer use** | Operating an interface |
+| **Google Maps** | Place and location data |
+
+Remember they are **interaction-scoped**: re-specify `tools` on every turn, or the second turn quietly has none.
+
+<Aside type="caution">
+**Grounding in search changes your exposure to [prompt injection](/learnings/online/google-ai/02-prompting/).** The moment your app reads live web pages or user-supplied URLs, it is reading text written by strangers - and text is instructions as far as a model is concerned. This is **indirect prompt injection**, and it is the reason function calling's separation matters: if the model can only *request* actions that your code validates, a malicious page can make it ask for something stupid but cannot make it happen.
+</Aside>
+
+---
+
+## Models and prices
+
+As of writing. These move, and the authoritative source is the Gemini API pricing and models documentation; AI Studio shows your project's own active limits.
+
+| Model | Model ID | For | Price per million tokens (in / out) |
+| --- | --- | --- | --- |
+| **Gemini 3.8 Flash** | `gemini-3.8-flash` | The most intelligent Flash model: long-horizon software engineering, autonomous agents, complex workflows | **$0.75 / $3.75** - introductory, to 31 Dec 2026, then $1.50 / $7.50 |
+| **Gemini 3.1 Pro** | - | Advanced reasoning | **$2 / $12** up to 200K tokens; **$4 / $18** above |
+| **Gemini 3.7 Flash** | `gemini-3.7-flash` | Prior generation, intricate coding and multi-step work | - |
+| **Gemini 3.5 Flash-Lite** | `gemini-3.5-flash-lite` | High-throughput routine tasks | **$0.30 / $2.50** |
+| **Gemini 3.8 Live** | `gemini-3.8-live` | Real-time voice, no reasoning delay | - |
+| **Gemini 3.8 Live Extended Thinking** | `gemini-3.8-live-extended-thinking` | Live audio with deeper background reasoning | - |
+| **Gemini 3.8 Flash TTS** | `gemini-3.8-flash-tts` | Studio-grade expressive speech, 130 languages | - |
+| **Nano Banana Pro** | `gemini-3-pro-image` | 4K images, precise text rendering | no free tier |
+| **Nano Banana 2** | `gemini-3.1-flash-image` | Production-scale image generation | no free tier |
+| **Veo 3.1** | `veo-3.1-generate-preview` | Cinematic video with synchronised audio | no free tier |
+| **Gemini Omni Flash** | `gemini-omni-1.1-flash` | Video generation, editing and interpolation | no free tier |
+| **Gemini Embedding 2** | `gemini-embedding-2-preview` | Multimodal embeddings for semantic search | - |
+
+<Aside type="caution">
+**Three things about this table that will catch you out.**
+
+**The naming no longer ranks capability.** *Flash* was once the cheap one and *Pro* the good one. Gemini 3.8 Flash is described as the most intelligent Flash model, built for autonomous agents, while 3.1 Pro is a prior-generation reasoning model. **Read the model card, not the suffix** - and note that the certificate's own demos use 3.5 Flash and 3.1 Pro, which is why the [debug demo](/learnings/online/google-ai/10-app-deployment/) ends up switching from Pro to Flash and getting a *better* result.
+
+**Long prompts can cost double.** Pro pricing steps up above 200K tokens. A "just paste the whole thing in" habit is a pricing decision.
+
+**Generated media has no free tier at all.** Text, speech and embedding models have one. Image, video and music do not. Anything with image generation in it costs money from the first call.
+</Aside>
+
+### The free tier
+
+Enough to learn on and not enough to run anything:
+
+- **Flash and Flash-Lite only.** **Pro models left the free tier in April 2026.**
+- Limits are expressed as **RPM** (requests per minute), **RPD** (requests per day) and **TPM** (tokens per minute), and they vary by model and account status - broadly single-digit to ~15 RPM and a few hundred to ~1,000 RPD. No credit card required.
+- **Check your own, do not hard-code these.** Active limits for your project are shown in AI Studio, and the published numbers change.
+
+This is the arithmetic behind the quota error in the debug demo. A free-tier app shared with a handful of colleagues will hit a limit the same afternoon.
+
+---
+
+## Keeping the bill small
+
+Six levers, in roughly descending order of effect.
+
+<Steps>
+
+1. **Use the smallest model that passes your test.** The gap between Flash-Lite at $0.30 and Pro at $4 on long prompts is more than tenfold. Most tasks in this certificate - classification, extraction, reformatting, summarising - run perfectly on Flash-Lite. Start cheap and move up only when output quality actually fails.
+
+2. **Send less.** Input is billed per token, and a grounding document attached to every request is paid for on **every request**. The [prompting advice](/learnings/online/google-ai/02-prompting/) to paste only what is relevant turns out to be a cost control as well as a quality one.
+
+3. **Let caching work.** Chaining with `previous_interaction_id` gives higher implicit cache hit rates, which is cheaper than resending history yourself. Explicit caching remains available on legacy `generateContent` for a large fixed context reused many times.
+
+4. **Batch anything not interactive.** The Batch API - still on `generateContent` rather than Interactions - processes large volumes asynchronously at roughly **half price**. If nobody is waiting for the answer, there is no reason to pay for speed.
+
+5. **Control the thinking.** Thinking is on by default on current models; `generation_config` takes a **`thinking_level`** to trade cost and latency against intelligence. Reasoning tokens are billed, and a deep-thinking model answering *"classify this as urgent or not"* is pure waste.
+
+6. **Cap your output.** Output costs roughly five times input. Asking for *"three bullets, under 40 words"* is a cost decision as much as an editorial one.
+
+</Steps>
+
+<Aside type="tip">
+**Do the arithmetic once, before you share anything.** It takes two minutes and it is the calculation nobody does.
+
+Take the dashboard app. Say each question sends a 2,000-token grounding document plus a 100-token question, and gets back 300 tokens. On Gemini 3.8 Flash at $0.75 in and $3.75 out:
+
+- in: 2,100 tokens → about **$0.0016**
+- out: 300 tokens → about **$0.0011**
+- **roughly $0.003 per question**
+
+Which sounds like nothing, and is: a thousand questions is about three dollars. **That** is the useful output of the exercise - knowing that this app is free in practice means you can stop worrying about it and share it.
+
+Now run the same arithmetic on the [Marketing Materials Generator](/learnings/online/google-ai/09-app-building/), where every click generates an image on a model with **no free tier**, and the answer comes out somewhere entirely different. Same two minutes, opposite conclusion. The point is not to be frugal - it is to know which of your apps needs a budget and which does not.
+</Aside>
+
+---
+
+## Rate limits, errors, and the enterprise path
+
+**Expect to be throttled.** A limit returns an error rather than a queue, and the correct response is to retry **with exponential backoff** - wait a second, then two, then four - rather than retrying immediately in a loop, which makes things worse. The SDKs include retry logic; know that it is there and what it does.
+
+**And expect a model to be retired.** A model ID pinned in your code is a dependency with an expiry date. When it goes, your app fails in production on a Tuesday. Keep the model name in configuration rather than scattered through your code, and keep a couple of known inputs with known-good outputs so you can tell whether a swap changed behaviour - the hand-rolled evaluation set from [the fundamentals](/learnings/online/google-ai/01-ai-fundamentals/).
+
+**For anything organisational**, the Gemini API is also available through **Google Cloud**, which is where you go for cloud IAM instead of an API key, consolidated billing, data residency, and the compliance posture an employer's security review will ask about. The code is nearly identical; the governance is not. If your [workflow worksheet](/learnings/online/google-ai/09-app-building/) turned up a task three colleagues also do, this is the path rather than your personal key.
+
+---
+
+## A security checklist
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Before you write any code</div>
+    <ul>
+      <li>Key in an <strong>environment variable or secret manager</strong>, never in source, never in the browser, never in a notebook.</li>
+      <li><code>.gitignore</code> covers your config file. Check it before the first commit, not after.</li>
+      <li>Decide <strong>whose</strong> key and whose billing this is.</li>
+      <li>Know what data will pass through, and whether it is allowed to.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Before anyone else uses it</div>
+    <ul>
+      <li><strong>Browser calls your server; server calls Gemini.</strong></li>
+      <li>Validate every model output before acting on it - never execute, render or query it unchecked.</li>
+      <li>Treat user-supplied text, files and URLs as <strong>untrusted input</strong>.</li>
+      <li>Set a <strong>spend limit</strong>, and know your rate limits.</li>
+      <li>Log what was asked and what was answered, for the <a href="/learnings/online/google-ai/03-responsible-ai/">accountability trail</a>.</li>
+      <li>In the EU: if users talk to it, <strong>tell them it is AI</strong> - Article 50, in force since 2 August 2026.</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The gap this chapter fills:** the certificate never shows the API its app calls, so three facts go unexplained - **what it costs, where your key is, and what it is allowed to do.**
+- **Four layers:** the **model** (the engine), the **API** (the interface over the internet), the **SDK** (a library that writes the request for you), the **app** (interface plus code calling the API). App gives you polish and no bill; API gives you control and a bill.
+- **Keys. An API key is a password that spends money.** Never in browser code, never in a public repo (scraped within minutes, and deleting later does not remove it from history), never in a notebook, screenshot, slide or chat message. **If one leaks, revoke it - do not just delete the file.** Keys go in environment variables or a secret manager. **Architecture: browser calls your server, server calls Gemini.** This is exactly what AI Studio does for you.
+- **The bill follows the key:** a deployed AI Studio app uses **your** key for every user.
+- **The smallest call:** `pip install -U google-genai` or `npm install @google/genai`, set `GEMINI_API_KEY`, then `client.interactions.create(model=..., input=...)` and read `output_text`. The client takes no key - it reads the environment, so the easy path is the safe one.
+- **The Interactions API replaced `generateContent`**, which still works but is **legacy**. GA June 2026, and **new agent features ship only there**. Legacy is stateless and you resend the whole history each turn; Interactions holds state server-side and you continue with `previous_interaction_id`, which gives better cache hits and **lower multi-turn cost**.
+- **The step timeline** - `user_input`, `model_thought`, `function_call`, `function_result`, `model_output` - is what makes a complex interaction debuggable, including the *"fast, confident and fictional"* class of failure.
+- **The footgun:** `system_instruction`, `tools` and `generation_config` are **interaction-scoped** and do **not** carry forward. Forget them on turn two and the persona, rules and tools vanish silently.
+- **Storage:** `store=true` by default - **1 day free, 55 days paid**, shortenable to 7, 14 or 28, and deletable. `store=false` disables storage but also `previous_interaction_id` and background execution. Read this twice if you handle personal data under GDPR.
+- **`stream=True`** for text as it generates (watch `step.delta`; resumable via `last_event_id`). **`background=True`** for long tasks, requires storage.
+- **Structured output** constrains the response to a schema, turning "please reply with these fields" into a guarantee. **Function calling** has the model *request* a function; **your code** runs it. That division is the safety story - every permission, limit and validation lives in your code.
+- **Together they fix the certificate's worst failure.** The dashboard asks, the model returns a `function_call`, your code queries the real data, the model writes the sentence. **Arithmetic by arithmetic; language by the model.**
+- **Server-side tools:** Google Search grounding, code execution, URL context, file search, computer use, Google Maps. Re-specify `tools` every turn. **Grounding in search or user URLs opens indirect prompt injection** - which is why function calling's separation matters.
+- **Models:** **Gemini 3.8 Flash** $0.75/$3.75 (introductory to 31 Dec 2026, then $1.50/$7.50), **3.1 Pro** $2/$12 and $4/$18 above 200K, **3.5 Flash-Lite** $0.30/$2.50, plus Live, TTS, Nano Banana 2 and Pro, Veo 3.1, Omni Flash, Embedding 2.
+- **Three traps:** the naming **no longer ranks capability** - read the card, not the suffix; **long prompts can cost double** past 200K on Pro; and **generated media has no free tier at all**.
+- **Free tier:** Flash and Flash-Lite only - **Pro left in April 2026**. Limits in **RPM / RPD / TPM**, roughly single digits to 15 RPM and a few hundred to 1,000 RPD. **Check your own in AI Studio; do not hard-code them.** This is why the debug demo hit a quota error.
+- **Six cost levers:** smallest model that passes your test; **send less** (grounding documents are re-billed every request); let **caching** work via `previous_interaction_id`; **batch** non-interactive work at about half price; control **`thinking_level`**; and cap output, which costs about five times input.
+- **Do the arithmetic once:** a 2,100-in / 300-out dashboard question is about **$0.003** on 3.8 Flash - a thousand questions for three dollars, so stop worrying and share it. Run the same sum on an image generator with no free tier and the answer is completely different.
+- **Expect throttling** and retry with **exponential backoff**. **Expect model retirement** - keep model names in configuration and keep known inputs with known-good outputs. For anything organisational, use **Google Cloud** for IAM, consolidated billing, data residency and compliance.
+</Aside>
+
+---
+
+*Next: [Beyond Gemini →](/learnings/online/google-ai/12-beyond-gemini/) - the other providers, the three categories of build tool, MCP and A2A, and where to deploy.*

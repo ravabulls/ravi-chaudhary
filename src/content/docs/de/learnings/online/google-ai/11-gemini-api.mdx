@@ -1,0 +1,400 @@
+---
+title: "Google AI 11 - Die Gemini-API in der Praxis"
+description: "Der Schritt, vor dem das Zertifikat haltmacht: API-Keys und warum sie auf einen Server gehören, das SDK google-genai, die Interactions API, die 2026 generateContent ersetzt hat, die aktuelle Modell- und Preistabelle, Structured Output, Function Calling, serverseitige Tools, Caching und Batch, die Grenzen der kostenlosen Stufe und wie man eine Rechnung klein hält."
+sidebar:
+  label: "11 · Die Gemini-API"
+  order: 11
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Ergänztes Kapitel - nicht Teil des Zertifikats.*
+
+---
+
+Das Zertifikat bringt dich vom Nutzen der Gemini-App zum Bauen einer App im AI Studio und hört dann auf. Es zeigt nie das Ding, das deine App die ganze Zeit aufgerufen hat.
+
+Das ist eine vertretbare Curriculum-Entscheidung - das Zertifikat verspricht kein Programmieren und hält das Versprechen. Aber es lässt eine Lücke, die zählt, sobald irgendetwas Gebautes über dich hinausgeht, denn drei der folgenreichsten Fakten über deine App liegen jenseits dieser Grenze: **was sie kostet, wo dein Key ist und was sie tun darf.** Der Deployment-Kurs stößt auf alle drei - einen Quota-Fehler, ein serverseitiges Secret, einen Share-Link - ohne eines davon zu erklären.
+
+<Aside type="note">
+**Für wen dieses Kapitel ist.** Für jemanden, der das Zertifikat gemacht hat, eine funktionierende App besitzt und nun wissen will, was darunter liegt. Es setzt kein Programmieren voraus, und die Codebeispiele sind zum Lesen da statt zum Abtippen - der Punkt jedes einzelnen ist die Form, nicht die Syntax. Alles hier wurde zum Zeitpunkt des Schreibens gegen aktuelle Dokumentation geprüft; die Modellnamen und Preise werden sich bewegen, und das Kapitel sagt, wo man die heutigen nachschlägt.
+</Aside>
+
+---
+
+## App, API, SDK: drei Wörter für drei verschiedene Dinge
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Das Modell<span class="sub">Gemini 3.8 Flash und seine Geschwister. Der Motor, in der Auto-Analogie des Zertifikats. Du berührst es nie direkt</span></div>
+    <div class="sc-node violet">Die API<span class="sub">die Schnittstelle über das Internet: du sendest eine Anfrage mit deinem Text und deinem Key, du bekommst eine Antwort. Ein Vertrag, kein Programm</span></div>
+    <div class="sc-node green">Das SDK<span class="sub">eine kleine Bibliothek in deiner Sprache, die die Anfrage für dich schreibt, sodass du eine Funktion aufrufst statt HTTP von Hand zusammenzubauen</span></div>
+    <div class="sc-node slate">Die App<span class="sub">was das Zertifikat baut. Eine Benutzeroberfläche plus Code, der die API im Namen der Nutzerin aufruft</span></div>
+  </div>
+  <figcaption>Die Gemini-App und deine AI-Studio-App sitzen unten in diesem Stapel. Alles darüber ist, was das Zertifikat dir nicht zeigt.</figcaption>
+</figure>
+
+Der praktische Unterschied zwischen App und API ist Kontrolle und Haftung, in beide Richtungen. Über die App bekommst du eine polierte Oberfläche, die Rate Limits eines anderen und keine Rechnung. Über die API bekommst du die Entscheidung über Modell, Parameter, Tools, Retry-Verhalten und Ausgabeformat - und du bekommst eine Rechnung, einen zu schützenden Key und Verantwortung für alles, was das Ding tut.
+
+---
+
+## Keys
+
+### Einen bekommen
+
+Ein Gemini-API-Key kommt aus AI Studio. Hast du die App-Kurse des Zertifikats gemacht, hast du schon einen, denn **AI Studio hat ihn für dich erzeugt und in deine App gelegt** - das Secrets-Panel in den Einstellungen ist, wo er liegt.
+
+### Die eine Regel
+
+<Aside type="caution">
+**Ein API-Key ist ein Passwort, das Geld ausgibt. Behandle ihn so.**
+
+Der häufigste und teuerste Fehler von Einsteigern ist, einen Key an eine Stelle zu legen, an der er gelesen werden kann. Die Orte, an die er niemals gehört:
+
+- **In Code, der im Browser läuft.** Alles im Seitenquelltext ist öffentlich, wie obskur es auch aussieht. Deine Nutzenden können ihn lesen, und alle anderen auch.
+- **In ein öffentliches Repository.** Keys werden innerhalb von Minuten nach dem Commit von GitHub abgegriffen, von automatischer Software, die genau dafür gebaut ist. Einen Key zu committen und später zu löschen hilft nicht - er steht in der Historie.
+- **In ein Notebook, einen Screenshot, eine Folie oder ein geteiltes Dokument.** Das ist der leise. Ein Jupyter-Notebook speichert seine Zellinhalte, sodass ein in eine Zelle eingefügter Key mit der Datei zu allen reist, denen du sie schickst.
+- **In ein Support-Ticket oder eine Chatnachricht**, einschließlich an eine KI-Assistenz.
+
+Ich bin beim Notebook-Fall nachdrücklich, weil ich es in Kursmaterial gesehen habe - ein echter, funktionierender Key, von jemandem in ein geteiltes Lab-Notebook committet, der keine Ahnung hatte, dass es veröffentlicht wird. Falls das je du bist: **widerrufe den Key sofort** statt die Datei zu löschen. Ein widerrufener Key ist harmlos; eine gelöschte Datei liegt noch im Download-Ordner von jemandem.
+
+**Wohin Keys gehören:** in eine Umgebungsvariable, in einen Secret Manager oder in eine serverseitige Konfigurationsdatei, die in `.gitignore` steht. Und die architektonische Regel, die all das leichter macht - **der Browser ruft deinen Server, und dein Server ruft Gemini.** Der Key verlässt deinen Server nie.
+
+Genau das tut AI Studio für dich, und es lohnt es, als bewusste Designentscheidung zu erkennen statt als Detail: *Die Gemini-Aufrufe deiner App erfolgen aus serverseitigem Code mit diesem Key, sodass er im Browser nie offengelegt wird*, und Menschen, mit denen du die App teilst, **können sie nutzen, aber deinen Key nicht sehen**. Baust du eine dieser Apps je von Hand nach, ist das die Architektur, die man kopiert.
+</Aside>
+
+### Die Rechnung folgt dem Key
+
+Die kommerzielle Folge, die der Deployment-Kurs demonstriert ohne sie zu benennen: **eine ausgelieferte AI-Studio-App nutzt deinen Key für die Aufrufe aller Nutzenden.** Zehn Menschen, die dein Dashboard nutzen, verbrauchen gegen deine Quota und deine Rechnung. Das ist der echte Grund, warum ein gestaffelter Rollout zählt, und der echte Grund, warum alles Dauerhafte auf ein Organisationskonto mit eigener Abrechnung gehört.
+
+---
+
+## Der kleinste funktionierende Aufruf
+
+Zwei SDKs, dieselbe Form. Installieren:
+
+```bash
+# Python
+pip install -U google-genai
+
+# JavaScript / TypeScript
+npm install @google/genai
+```
+
+Setze den Key als Umgebungsvariable - beide SDKs lesen ihn automatisch, sodass er nie in deinem Code auftaucht:
+
+```bash
+export GEMINI_API_KEY="your-key-here"
+```
+
+Dann das Ganze, in Python:
+
+```python
+from google import genai
+
+client = genai.Client()
+
+interaction = client.interactions.create(
+    model="gemini-3.8-flash",
+    input="Explain how AI works in a few words",
+)
+print(interaction.output_text)
+```
+
+Und in JavaScript:
+
+```javascript
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({});
+
+const interaction = await ai.interactions.create({
+  model: "gemini-3.8-flash",
+  input: "Explain how AI works in a few words",
+});
+console.log(interaction.output_text);
+```
+
+Das ist die ganze Oberfläche. Alles andere in diesem Kapitel sind zusätzliche Argumente an diesen einen Aufruf.
+
+<Aside type="note">
+**Drei Dinge, die in sechs Zeilen bemerkenswert sind.**
+
+- **`genai.Client()` nimmt keinen Key.** Es liest `GEMINI_API_KEY` aus der Umgebung. Das ist keine Bequemlichkeit, das ist das Design: Der einfachste Weg ist gleichzeitig der, bei dem der Key nicht im Quellcode steht.
+- **Das Modell ist ein String, den du wählst**, was heißt, dass die Modellwahl jetzt eine Entscheidung ist, die du verantwortest - und eine Zeile, die du aktualisieren musst, wenn das Modell abgekündigt wird.
+- **Es ist `interactions.create`, nicht `generate_content`.** Das hat sich 2026 geändert, und der nächste Abschnitt erklärt, warum es zählt.
+</Aside>
+
+---
+
+## Die Interactions API
+
+### Was sich geändert hat
+
+Hast du ein Gemini-Tutorial von vor Mitte 2026 gelesen, wird es `models.generate_content(...)` zeigen. Das funktioniert weiterhin und ist **vollständig unterstützt** - ist aber jetzt als **Legacy** gekennzeichnet. Die **Interactions API** wurde im Juni 2026 allgemein verfügbar und ist Googles empfohlene Schnittstelle für Gemini, und **neue Agent-Funktionen erscheinen nur dort**.
+
+Der Unterschied liegt darin, wo der Gesprächszustand lebt.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">generateContent - Legacy</div>
+    <ul>
+      <li>Zustandslos: eine Anfrage, eine Antwort.</li>
+      <li><strong>Du</strong> hältst die gesamte Gesprächshistorie und sendest sie jede Runde erneut.</li>
+      <li>Einfach, und es heißt, dass ein langer Chat alles bisher Gesagte in jeder einzelnen Runde erneut sendet - und erneut bezahlt.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Interactions - aktuell</div>
+    <ul>
+      <li>Eine <strong>Interaction</strong> ist eine vollständige Runde in einem Gespräch oder einer Aufgabe, serverseitig gehalten.</li>
+      <li>Du setzt mit <code>previous_interaction_id</code> fort, und der Server holt den vorherigen Kontext selbst.</li>
+      <li>Bessere Cache-Trefferquoten, also <strong>niedrigere Kosten bei mehrrundigen Gesprächen</strong>, plus Hintergrundausführung und fortsetzbare Streams.</li>
+    </ul>
+  </div>
+</div>
+
+### Die Schritt-Zeitleiste
+
+Die interessantere Änderung ist, dass eine Interaction nicht bloß eine Antwort ist. Sie hält eine geordnete Zeitleiste von **Schritten**, die man lesen kann:
+
+| Schritttyp | Was er ist |
+| --- | --- |
+| `user_input` | Deine Nachricht |
+| `model_thought` | Das interne Reasoning des Modells, wenn Thinking aktiv ist |
+| `function_call` | Eine Anforderung, ein Tool aufzurufen |
+| `function_result` | Was das Tool zurückgab |
+| `model_output` | Die finale Antwort |
+
+Das ist es, was eine komplizierte Interaktion debuggierbar macht. Das Scheitern im [Deployment-Kurs](/de/learnings/online/google-ai/10-app-deployment/) - eine App, die schnelle, souveräne, erfundene Zahlen ohne Fehler zurückgibt - ist genau die Art Sache, bei der eine sichtbare Schritt-Zeitleiste hilft: Du kannst sehen, ob überhaupt ein Tool aufgerufen wurde, was genau das ist, was *"die Antworten sind sowohl fast augenblicklich als auch nicht korrekt"* ohne Belege erahnte.
+
+### Ein Gespräch fortsetzen
+
+```python
+first = client.interactions.create(
+    model="gemini-3.8-flash",
+    system_instruction="You are a concise analyst. Never speculate.",
+    input="Summarise the revenue trend in this data.",
+)
+
+second = client.interactions.create(
+    model="gemini-3.8-flash",
+    system_instruction="You are a concise analyst. Never speculate.",
+    previous_interaction_id=first.id,
+    input="Now break that down by region.",
+)
+```
+
+<Aside type="caution">
+**Die Stolperfalle in diesem Beispiel, und sie ist leicht zu übersehen.** `system_instruction`, `tools` und `generation_config` sind **interaction-scoped**. Sie werden **nicht** aus der vorherigen Interaction übernommen - weshalb sie oben wiederholt sind.
+
+Vergiss sie und deine zweite Runde verliert still ihre Persona, ihre Regeln und ihre Tools. Nichts wirft einen Fehler; das Modell verhält sich einfach anders und du wunderst dich zwanzig Minuten, warum Runde zwei Anweisungen ignoriert, denen Runde eins folgte. Leg sie in eine Variable und übergib dieselbe Variable jedes Mal.
+</Aside>
+
+### Speicherung, Aufbewahrung und zustandsloser Modus
+
+Standardmäßig ist `store=true` und Interaktionen werden serverseitig behalten: **1 Tag in der kostenlosen Stufe, 55 Tage in der bezahlten**. Bezahlte Projekte können das in AI Studio auf 7, 14 oder 28 Tage verkürzen, und du kannst eine Interaction programmatisch löschen.
+
+`store=false` schaltet die Speicherung ganz ab - du verwaltest die Gesprächshistorie dann selbst, wie bei der Legacy-API. Der Kompromiss ist ausdrücklich: **kein `previous_interaction_id` und keine Hintergrundausführung** ohne Speicherung.
+
+Für alle, die personenbezogene Daten unter der DSGVO verarbeiten, ist dieser Absatz der, den man zweimal lesen sollte. Die Aufbewahrungsfrist ist eine konfigurierbare Verarbeitungsentscheidung, keine feste Eigenschaft des Dienstes.
+
+### Streaming und Hintergrundarbeit
+
+- **`stream=True`** gibt die Antwort in Stücken zurück, während sie erzeugt wird, sodass eine Nutzerin Text erscheinen sieht statt eines Ladekreises. Du behandelst Events und achtest auf `step.delta`, um Text aufzunehmen, wie er ankommt. Streams sind über `last_event_id` **fortsetzbar**, was bei einer wackeligen Verbindung zählt.
+- **`background=True`** lässt eine lange Aufgabe asynchron laufen, was `store=True` verlangt. Das ist die richtige Form für alles, was Minuten dauert - eine lange Dokumentanalyse, eine rechercheartige Aufgabe - statt eine Anfrage offen zu halten.
+
+---
+
+## Die Ausgabe brauchbar machen
+
+Zwei Funktionen leisten für echte Anwendungen mehr als jede Prompt-Formulierung, und keine davon erscheint im Zertifikat.
+
+### Structured Output
+
+JSON in einem Prompt zu erbitten bringt meistens JSON, was die schlechtestmögliche Verlässlichkeit ist: oft genug, um darauf zu bauen, nicht oft genug, um zu vertrauen. **Structured Output** erlaubt dir, ein Schema zu liefern, dem die Antwort entsprechen muss, sodass das Modell beschränkt wird statt höflich gebeten.
+
+Das verwandelt *"antworte bitte mit den Feldern, die ich brauche"* in eine Garantie, und es ist das, was eine Demo von etwas trennt, das den nächsten Schritt einer Pipeline füttern kann, ohne dass ein Mensch hinsieht. Wenn deine App je die Antwort des Modells parst, sollte sie das nutzen.
+
+### Function Calling
+
+**Function Calling** erlaubt dir, eigene Funktionen zu beschreiben - Name, Zweck, Argumente - und das Modell eine davon anfordern zu lassen, wenn es sie braucht. Das Modell führt nichts aus; es gibt einen `function_call`-Schritt zurück, **dein Code** führt sie aus, und du gibst das Ergebnis als `function_result` zurück.
+
+Diese Teilung ist die ganze Sicherheitsgeschichte. Das Modell entscheidet, *dass* etwas passieren soll; dein Code entscheidet, *ob* und *wie*. Jede Prüfung, die du willst - Berechtigungen, Grenzen, Validierung, Logging - sitzt in deinem Code, wo sie hingehört.
+
+<Aside type="tip">
+**Warum diese zwei mehr zählen, als sie klingen.** Zusammen sind sie der Unterschied zwischen einem Chatbot und einem Werkzeug.
+
+Nimm die [Dashboard-App des Zertifikats](/de/learnings/online/google-ai/09-app-building/). Naiv gebaut, stellt die Nutzerin eine Frage und das Modell antwortet aus Text, den man ihm gezeigt hat - so bekommst du eine souveräne Umsatzzahl für eine Produktkategorie, die es nicht gibt.
+
+Mit diesen zwei gebaut: Das Modell erhält die Frage, gibt einen `function_call` für `get_revenue_by_category(quarter="Q3")` zurück, **dein Code** führt die tatsächliche Abfrage gegen die tatsächlichen Daten aus, und das Modell bekommt echte Zahlen zurück und schreibt sie in einen Satz. Die Arithmetik wird von Arithmetik gemacht. Das Modell macht die Sprache.
+
+Das ist die architektonische Antwort auf den schlimmsten Fehlermodus in diesem ganzen Zertifikat, und es ist eine Designentscheidung statt einer Disziplin, die man aufrechterhalten muss.
+</Aside>
+
+---
+
+## Serverseitige Tools
+
+Manche Tools musst du nicht bauen, weil sie auf Googles Seite laufen. Übergib sie in `tools` und das Modell nutzt sie, wenn sie relevant sind:
+
+| Tool | Was es tut |
+| --- | --- |
+| **Google Search** | Verankert die Antwort in Live-Suchergebnissen - der Mechanismus hinter dem [Umgang mit dem Knowledge Cutoff](/de/learnings/online/google-ai/01-ai-fundamentals/): Nachschauen statt Erinnern |
+| **Code Execution** | Das Modell schreibt und führt Code aus, um eine Antwort zu berechnen. Das richtige Mittel für Arithmetik, genau wie in [Datenanalyse](/de/learnings/online/google-ai/08-data-analysis/) |
+| **URL Context** | Holt und liest bestimmte URLs, die du nennst |
+| **File Search** | Retrieval über Dateien, die du hochgeladen hast |
+| **Computer Use** | Eine Oberfläche bedienen |
+| **Google Maps** | Orts- und Standortdaten |
+
+Erinnere dich, dass sie **interaction-scoped** sind: `tools` in jeder Runde erneut angeben, oder die zweite Runde hat still keine.
+
+<Aside type="caution">
+**Verankerung in der Suche verändert deine Exposition gegenüber [Prompt Injection](/de/learnings/online/google-ai/02-prompting/).** Sobald deine App Live-Webseiten oder von Nutzenden gelieferte URLs liest, liest sie Text, den Fremde geschrieben haben - und Text ist für ein Modell Anweisung. Das ist **indirekte Prompt Injection**, und es ist der Grund, warum die Trennung beim Function Calling zählt: Kann das Modell Aktionen nur *anfordern*, die dein Code validiert, kann eine bösartige Seite es dazu bringen, etwas Dummes zu verlangen, aber nicht, es geschehen zu lassen.
+</Aside>
+
+---
+
+## Modelle und Preise
+
+Zum Zeitpunkt des Schreibens. Diese bewegen sich, und die maßgebliche Quelle ist die Gemini-API-Dokumentation zu Preisen und Modellen; AI Studio zeigt die aktiven Limits deines eigenen Projekts.
+
+| Modell | Modell-ID | Wofür | Preis pro Million Tokens (ein / aus) |
+| --- | --- | --- | --- |
+| **Gemini 3.8 Flash** | `gemini-3.8-flash` | Das intelligenteste Flash-Modell: langlaufende Softwareentwicklung, autonome Agenten, komplexe Workflows | **0,75 $ / 3,75 $** - Einführungspreis bis 31.12.2026, dann 1,50 $ / 7,50 $ |
+| **Gemini 3.1 Pro** | - | Fortgeschrittenes Reasoning | **2 $ / 12 $** bis 200K Tokens; **4 $ / 18 $** darüber |
+| **Gemini 3.7 Flash** | `gemini-3.7-flash` | Vorgängergeneration, aufwendiges Programmieren und mehrstufige Arbeit | - |
+| **Gemini 3.5 Flash-Lite** | `gemini-3.5-flash-lite` | Routineaufgaben mit hohem Durchsatz | **0,30 $ / 2,50 $** |
+| **Gemini 3.8 Live** | `gemini-3.8-live` | Echtzeit-Sprache, ohne Reasoning-Verzögerung | - |
+| **Gemini 3.8 Live Extended Thinking** | `gemini-3.8-live-extended-thinking` | Live-Audio mit tieferem Hintergrund-Reasoning | - |
+| **Gemini 3.8 Flash TTS** | `gemini-3.8-flash-tts` | Ausdrucksstarke Sprache in Studioqualität, 130 Sprachen | - |
+| **Nano Banana Pro** | `gemini-3-pro-image` | 4K-Bilder, präzise Textdarstellung | keine kostenlose Stufe |
+| **Nano Banana 2** | `gemini-3.1-flash-image` | Bilderzeugung im Produktionsmaßstab | keine kostenlose Stufe |
+| **Veo 3.1** | `veo-3.1-generate-preview` | Kinematisches Video mit synchronisiertem Audio | keine kostenlose Stufe |
+| **Gemini Omni Flash** | `gemini-omni-1.1-flash` | Videoerzeugung, -bearbeitung und -interpolation | keine kostenlose Stufe |
+| **Gemini Embedding 2** | `gemini-embedding-2-preview` | Multimodale Embeddings für semantische Suche | - |
+
+<Aside type="caution">
+**Drei Dinge an dieser Tabelle, die dich erwischen werden.**
+
+**Die Benennung ordnet die Leistungsfähigkeit nicht mehr.** *Flash* war einst das Billige und *Pro* das Gute. Gemini 3.8 Flash wird als intelligentestes Flash-Modell beschrieben, gebaut für autonome Agenten, während 3.1 Pro ein Reasoning-Modell der Vorgängergeneration ist. **Lies die Modellkarte, nicht das Suffix** - und beachte, dass die Demos des Zertifikats selbst 3.5 Flash und 3.1 Pro nutzen, weshalb die [Debug-Demo](/de/learnings/online/google-ai/10-app-deployment/) am Ende von Pro auf Flash wechselt und ein *besseres* Ergebnis bekommt.
+
+**Lange Prompts können doppelt kosten.** Der Pro-Preis steigt oberhalb von 200K Tokens. Die Gewohnheit "füge einfach das Ganze ein" ist eine Preisentscheidung.
+
+**Erzeugte Medien haben überhaupt keine kostenlose Stufe.** Text-, Sprach- und Embedding-Modelle haben eine. Bild, Video und Musik nicht. Alles mit Bilderzeugung darin kostet ab dem ersten Aufruf Geld.
+</Aside>
+
+### Die kostenlose Stufe
+
+Genug, um daran zu lernen, und nicht genug, um etwas zu betreiben:
+
+- **Nur Flash und Flash-Lite.** **Pro-Modelle verließen die kostenlose Stufe im April 2026.**
+- Limits werden als **RPM** (Anfragen pro Minute), **RPD** (Anfragen pro Tag) und **TPM** (Tokens pro Minute) ausgedrückt und variieren je Modell und Kontostatus - grob einstellige Zahlen bis etwa 15 RPM und ein paar hundert bis etwa 1.000 RPD. Keine Kreditkarte nötig.
+- **Prüfe deine eigenen, codiere diese nicht fest.** Die aktiven Limits deines Projekts werden in AI Studio gezeigt, und die veröffentlichten Zahlen ändern sich.
+
+Das ist die Rechnung hinter dem Quota-Fehler in der Debug-Demo. Eine App auf der kostenlosen Stufe, geteilt mit einer Handvoll Kolleginnen, trifft am selben Nachmittag auf ein Limit.
+
+---
+
+## Die Rechnung klein halten
+
+Sechs Hebel, grob nach absteigender Wirkung.
+
+<Steps>
+
+1. **Nimm das kleinste Modell, das deinen Test besteht.** Die Lücke zwischen Flash-Lite bei 0,30 $ und Pro bei 4 $ bei langen Prompts ist mehr als zehnfach. Die meisten Aufgaben in diesem Zertifikat - Klassifikation, Extraktion, Umformatieren, Zusammenfassen - laufen tadellos auf Flash-Lite. Starte billig und gehe erst hoch, wenn die Ausgabequalität tatsächlich versagt.
+
+2. **Sende weniger.** Eingabe wird pro Token abgerechnet, und ein an jede Anfrage angehängtes Verankerungsdokument wird bei **jeder Anfrage** bezahlt. Der [Prompting-Rat](/de/learnings/online/google-ai/02-prompting/), nur Relevantes einzufügen, erweist sich als Kostenkontrolle genauso wie als Qualitätsmaßnahme.
+
+3. **Lass Caching wirken.** Verketten mit `previous_interaction_id` gibt höhere implizite Cache-Trefferquoten, was billiger ist als die Historie selbst erneut zu senden. Explizites Caching bleibt auf dem Legacy-`generateContent` verfügbar für einen großen festen Kontext, der vielfach wiederverwendet wird.
+
+4. **Batche alles Nicht-Interaktive.** Die Batch API - noch auf `generateContent` statt Interactions - verarbeitet große Mengen asynchron zu etwa **halbem Preis**. Wartet niemand auf die Antwort, gibt es keinen Grund, für Geschwindigkeit zu bezahlen.
+
+5. **Steuere das Thinking.** Thinking ist bei aktuellen Modellen standardmäßig an; `generation_config` nimmt ein **`thinking_level`**, das Kosten und Latenz gegen Intelligenz abwägt. Reasoning-Tokens werden abgerechnet, und ein tief denkendes Modell, das *"klassifiziere das als dringend oder nicht"* beantwortet, ist pure Verschwendung.
+
+6. **Begrenze deine Ausgabe.** Ausgabe kostet etwa fünfmal so viel wie Eingabe. Um *"drei Stichpunkte, unter 40 Wörtern"* zu bitten ist eine Kostenentscheidung genauso wie eine redaktionelle.
+
+</Steps>
+
+<Aside type="tip">
+**Rechne es einmal aus, bevor du irgendetwas teilst.** Es dauert zwei Minuten und ist die Rechnung, die niemand macht.
+
+Nimm die Dashboard-App. Sagen wir, jede Frage sendet ein Verankerungsdokument mit 2.000 Tokens plus eine Frage mit 100 Tokens und bekommt 300 Tokens zurück. Auf Gemini 3.8 Flash bei 0,75 $ ein und 3,75 $ aus:
+
+- hinein: 2.100 Tokens → etwa **0,0016 $**
+- heraus: 300 Tokens → etwa **0,0011 $**
+- **etwa 0,003 $ pro Frage**
+
+Was wie nichts klingt und es ist: tausend Fragen sind etwa drei Dollar. **Das** ist das nützliche Ergebnis der Übung - zu wissen, dass diese App in der Praxis kostenlos ist, heißt, dass du aufhören kannst, dir Sorgen zu machen, und sie teilen kannst.
+
+Rechne jetzt dasselbe für den [Marketing Materials Generator](/de/learnings/online/google-ai/09-app-building/), bei dem jeder Klick ein Bild auf einem Modell **ohne kostenlose Stufe** erzeugt, und die Antwort kommt völlig anders heraus. Dieselben zwei Minuten, umgekehrter Schluss. Der Punkt ist nicht Sparsamkeit - er ist zu wissen, welche deiner Apps ein Budget braucht und welche nicht.
+</Aside>
+
+---
+
+## Rate Limits, Fehler und der Enterprise-Weg
+
+**Erwarte, gebremst zu werden.** Ein Limit gibt einen Fehler zurück statt einer Warteschlange, und die richtige Reaktion ist, **mit exponentiellem Backoff** erneut zu versuchen - eine Sekunde warten, dann zwei, dann vier - statt sofort in einer Schleife zu wiederholen, was es schlimmer macht. Die SDKs enthalten Retry-Logik; wisse, dass sie da ist und was sie tut.
+
+**Und erwarte, dass ein Modell abgekündigt wird.** Eine in deinem Code festgelegte Modell-ID ist eine Abhängigkeit mit Ablaufdatum. Fällt sie, scheitert deine App an einem Dienstag in der Produktion. Halte den Modellnamen in der Konfiguration statt verstreut über deinen Code, und halte ein paar bekannte Eingaben mit bekannt guten Ausgaben, damit du erkennen kannst, ob ein Wechsel das Verhalten geändert hat - das handgemachte Evaluation Set aus den [Grundlagen](/de/learnings/online/google-ai/01-ai-fundamentals/).
+
+**Für alles Organisationale** ist die Gemini-API auch über **Google Cloud** verfügbar, wo du Cloud-IAM statt eines API-Keys bekommst, konsolidierte Abrechnung, Datenresidenz und die Compliance-Position, nach der die Sicherheitsprüfung eines Arbeitgebers fragen wird. Der Code ist nahezu identisch; die Governance nicht. Hat dein [Workflow-Arbeitsblatt](/de/learnings/online/google-ai/09-app-building/) eine Aufgabe ergeben, die drei Kolleginnen auch tun, ist das der Weg statt deines persönlichen Keys.
+
+---
+
+## Eine Sicherheits-Checkliste
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Bevor du Code schreibst</div>
+    <ul>
+      <li>Key in einer <strong>Umgebungsvariable oder einem Secret Manager</strong>, nie im Quellcode, nie im Browser, nie in einem Notebook.</li>
+      <li><code>.gitignore</code> deckt deine Konfigurationsdatei. Prüfe es vor dem ersten Commit, nicht danach.</li>
+      <li>Entscheide, <strong>wessen</strong> Key und wessen Abrechnung das ist.</li>
+      <li>Wisse, welche Daten durchlaufen werden und ob das erlaubt ist.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Bevor jemand anderes sie nutzt</div>
+    <ul>
+      <li><strong>Browser ruft deinen Server; Server ruft Gemini.</strong></li>
+      <li>Validiere jede Modellausgabe, bevor du darauf handelst - niemals ungeprüft ausführen, rendern oder abfragen.</li>
+      <li>Behandle von Nutzenden gelieferten Text, Dateien und URLs als <strong>nicht vertrauenswürdige Eingabe</strong>.</li>
+      <li>Setze ein <strong>Ausgabenlimit</strong> und kenne deine Rate Limits.</li>
+      <li>Logge, was gefragt und was geantwortet wurde, für die <a href="/de/learnings/online/google-ai/03-responsible-ai/">Nachvollziehbarkeitsspur</a>.</li>
+      <li>In der EU: Sprechen Nutzende mit ihr, <strong>sag ihnen, dass es KI ist</strong> - Artikel 50, in Kraft seit dem 2. August 2026.</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Zusammenfassung zur Wiederholung
+
+<Aside type="tip">
+**Eine-Minute-Zusammenfassung**
+
+- **Die Lücke, die dieses Kapitel füllt:** Das Zertifikat zeigt die API nie, die seine App aufruft, sodass drei Fakten unerklärt bleiben - **was sie kostet, wo dein Key ist und was sie tun darf.**
+- **Vier Schichten:** das **Modell** (der Motor), die **API** (die Schnittstelle über das Internet), das **SDK** (eine Bibliothek, die die Anfrage für dich schreibt), die **App** (Oberfläche plus Code, der die API aufruft). Die App gibt dir Politur und keine Rechnung; die API gibt dir Kontrolle und eine Rechnung.
+- **Keys. Ein API-Key ist ein Passwort, das Geld ausgibt.** Nie in Browser-Code, nie in ein öffentliches Repo (innerhalb von Minuten abgegriffen, und späteres Löschen entfernt ihn nicht aus der Historie), nie in ein Notebook, einen Screenshot, eine Folie oder eine Chatnachricht. **Leakt einer, widerrufe ihn - lösche nicht nur die Datei.** Keys gehören in Umgebungsvariablen oder einen Secret Manager. **Architektur: Browser ruft deinen Server, Server ruft Gemini.** Genau das tut AI Studio für dich.
+- **Die Rechnung folgt dem Key:** eine ausgelieferte AI-Studio-App nutzt **deinen** Key für jede Nutzerin.
+- **Der kleinste Aufruf:** `pip install -U google-genai` oder `npm install @google/genai`, `GEMINI_API_KEY` setzen, dann `client.interactions.create(model=..., input=...)` und `output_text` lesen. Der Client nimmt keinen Key - er liest die Umgebung, sodass der einfache Weg der sichere ist.
+- **Die Interactions API ersetzte `generateContent`**, das weiterhin funktioniert, aber **Legacy** ist. Allgemein verfügbar seit Juni 2026, und **neue Agent-Funktionen erscheinen nur dort**. Legacy ist zustandslos und du sendest die ganze Historie jede Runde erneut; Interactions hält den Zustand serverseitig und du setzt mit `previous_interaction_id` fort, was bessere Cache-Treffer und **niedrigere Mehrrunden-Kosten** gibt.
+- **Die Schritt-Zeitleiste** - `user_input`, `model_thought`, `function_call`, `function_result`, `model_output` - macht eine komplexe Interaktion debuggierbar, einschließlich der Fehlerklasse *schnell, souverän und erfunden*.
+- **Die Stolperfalle:** `system_instruction`, `tools` und `generation_config` sind **interaction-scoped** und werden **nicht** übernommen. Vergiss sie in Runde zwei und Persona, Regeln und Tools verschwinden still.
+- **Speicherung:** `store=true` standardmäßig - **1 Tag kostenlos, 55 Tage bezahlt**, verkürzbar auf 7, 14 oder 28, löschbar. `store=false` schaltet Speicherung ab, aber auch `previous_interaction_id` und Hintergrundausführung. Zweimal lesen, wenn du personenbezogene Daten unter der DSGVO verarbeitest.
+- **`stream=True`** für Text, während er entsteht (auf `step.delta` achten; über `last_event_id` fortsetzbar). **`background=True`** für lange Aufgaben, verlangt Speicherung.
+- **Structured Output** beschränkt die Antwort auf ein Schema und verwandelt "antworte bitte mit diesen Feldern" in eine Garantie. **Function Calling** lässt das Modell eine Funktion *anfordern*; **dein Code** führt sie aus. Diese Teilung ist die Sicherheitsgeschichte - jede Berechtigung, Grenze und Validierung lebt in deinem Code.
+- **Zusammen beheben sie das schlimmste Scheitern des Zertifikats.** Das Dashboard fragt, das Modell gibt einen `function_call` zurück, dein Code fragt die echten Daten ab, das Modell schreibt den Satz. **Arithmetik von Arithmetik; Sprache vom Modell.**
+- **Serverseitige Tools:** Google Search Grounding, Code Execution, URL Context, File Search, Computer Use, Google Maps. `tools` in jeder Runde erneut angeben. **Verankerung in der Suche oder in URLs von Nutzenden öffnet indirekte Prompt Injection** - weshalb die Trennung beim Function Calling zählt.
+- **Modelle:** **Gemini 3.8 Flash** 0,75 $/3,75 $ (Einführungspreis bis 31.12.2026, dann 1,50 $/7,50 $), **3.1 Pro** 2 $/12 $ und 4 $/18 $ über 200K, **3.5 Flash-Lite** 0,30 $/2,50 $, dazu Live, TTS, Nano Banana 2 und Pro, Veo 3.1, Omni Flash, Embedding 2.
+- **Drei Fallen:** die Benennung **ordnet die Leistungsfähigkeit nicht mehr** - lies die Karte, nicht das Suffix; **lange Prompts können doppelt kosten** oberhalb von 200K bei Pro; und **erzeugte Medien haben überhaupt keine kostenlose Stufe**.
+- **Kostenlose Stufe:** nur Flash und Flash-Lite - **Pro verließ sie im April 2026**. Limits in **RPM / RPD / TPM**, grob einstellig bis 15 RPM und ein paar hundert bis 1.000 RPD. **Prüfe deine eigenen in AI Studio; codiere sie nicht fest.** Deshalb traf die Debug-Demo auf einen Quota-Fehler.
+- **Sechs Kostenhebel:** kleinstes Modell, das deinen Test besteht; **weniger senden** (Verankerungsdokumente werden jede Anfrage neu abgerechnet); **Caching** über `previous_interaction_id` wirken lassen; nicht-interaktive Arbeit zu etwa halbem Preis **batchen**; **`thinking_level`** steuern; und die Ausgabe begrenzen, die etwa fünfmal so viel kostet wie die Eingabe.
+- **Rechne es einmal aus:** eine Dashboard-Frage mit 2.100 ein / 300 aus kostet auf 3.8 Flash etwa **0,003 $** - tausend Fragen für drei Dollar, also aufhören sich Sorgen zu machen und teilen. Dieselbe Rechnung bei einem Bildgenerator ohne kostenlose Stufe ergibt etwas völlig anderes.
+- **Erwarte Bremsung** und versuche es mit **exponentiellem Backoff** erneut. **Erwarte Modellabkündigung** - halte Modellnamen in der Konfiguration und halte bekannte Eingaben mit bekannt guten Ausgaben. Für alles Organisationale nutze **Google Cloud** für IAM, konsolidierte Abrechnung, Datenresidenz und Compliance.
+</Aside>
+
+---
+
+*Weiter: [Jenseits von Gemini →](/de/learnings/online/google-ai/12-beyond-gemini/) - die anderen Anbieter, die drei Kategorien von Build-Werkzeugen, MCP und A2A, und wo man ausliefert.*

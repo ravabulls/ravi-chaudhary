@@ -1,0 +1,403 @@
+---
+title: "Google AI 10 - App Deployment"
+description: "The three-phase workflow that turns a demo into a dependable tool: planning with requirement gathering and a spec doc, the four planning moves, debugging with the error panel and the autocorrect loop, then grounding the app in real documents, adding a welcome banner, and controlling who gets access in a phased rollout."
+sidebar:
+  label: "10 · App Deployment"
+  order: 10
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Course 8: AI for App Deployment*
+
+---
+
+The last course opens with the certificate's best sentence and then immediately undercuts it, which is the right way round.
+
+> *If you can describe it, you can build it. That's the magic of vibe coding. It's the fastest way to turn an idea into an app - but as many builders know, magic can be unpredictable.*
+
+A single prompt is a great start, but **vibes alone won't stop an app from breaking when things get complex**. To build tools you and your team can actually depend on, you have to move beyond the one-shot prompt. **You need a system.**
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">1. Plan<span class="sub">map out a solid plan, which gives you a baseline to lean on as you build out the idea</span></div>
+    <div class="sc-node violet">2. Test and debug<span class="sub">to ensure your app works reliably</span></div>
+    <div class="sc-node green">3. Deploy<span class="sub">so others can use it in a safe and secure environment</span></div>
+  </div>
+  <figcaption>The course calls these the core skills that turn a cool demo into a reliable, secure, shareable tool - and the name for having them is <strong>a developer mindset</strong>.</figcaption>
+</figure>
+
+<Aside type="note">
+**Two caveats the instructor puts up front.** The demos use **AI Studio**, but *these strategies work in any browser-based AI tool*. And because AI tools change frequently, **always double-check your platform's current features** - advice these notes have had to take seriously, since several things have changed since filming.
+</Aside>
+
+---
+
+## Phase 1: Plan
+
+### The problem being solved
+
+The planning demo takes the role of a project manager with a real and specific complaint. On a typical project they track dozens of interdependent tasks, and *when one task is delayed, I can't see how it affects the rest of the project or the launch date.*
+
+So: an app that shows **how the tasks connect, and how one delay affects every step after it.**
+
+Notice what that is. Not *"build me a project management tool"* but a single pain point, stated in one sentence, with a clear input and a clear output. That framing is doing most of the work.
+
+### Using the playground as a thought partner
+
+The demo opens AI Studio's **playground** - *the place where you can actually chat and experiment with all of the Gemini models* - on **Gemini 3.5 Flash**, and describes the problem:
+
+> *I want to build an app that takes a project plan and visually shows me how a delay in one task may affect the entire project and the final launch. Help me plan it out.*
+
+The response offers five phases built around a graph visualisation. The demo does not want a graph, and the correction is the moment the whole course turns on:
+
+> *I am not so sure about the graph representation of the project. Can we come up with simplified view?*
+
+The reflection attached to it is the argument for planning at all: **if we hadn't done this, you would have already seen it add a graph that it thought was a solution - but maybe I wanted something else in my head.** Pushing back produces alternatives - a hierarchical list, a spreadsheet view - and the instructor's description of what is happening is the best characterisation of this work anywhere in the certificate: *this back and forth is effectively the partnership you're going to build with Gemini as you go about building things.*
+
+### Compressing the plan into one paragraph
+
+The second move is the one most people would not think of. Rather than carrying the whole conversation into the build, the demo asks for a compression:
+
+> *I also want you to write this as a solid one paragraph prompt for a vibe coding tool to explain what to build, capture all of the critical details in your prompt.*
+
+The reasoning is explicit, and it is about the model's limits rather than yours: *this might be way too much to give to one prompt - it's effectively a large doc, and we don't want to confuse the model with too many details either.* A plan is for thinking; a build prompt needs to be dense and short.
+
+What comes back is a single paragraph specifying a single app, with technical details and the UI: a **simulate-day slider**, a **responsive Gantt**, and the ripple effect highlighted in the timeline **by showing things fading when a delay takes place**. The demo's reaction - *all of this sounds really cool to me* - is worth noting because none of those three ideas came from the human.
+
+### Adding your own documents
+
+Then context, from Google Drive via the **+** button: a **Project Charter** document.
+
+> *Read the charter doc below, are there any other questions or things I should be considering when making this app we've been talking about?*
+
+The two things it finds are the best illustration in the certificate of why this step is worth the minute it takes:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Lag time</div>
+    <ul>
+      <li>It noticed that <strong>App Store approval takes seven to fourteen days.</strong></li>
+      <li>That is <strong>not active work done by the team</strong> - it is a waiting period.</li>
+      <li>So the app needs to support <strong>lag time</strong> as well as dependencies - a modelling requirement the human had not thought of.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Cost</div>
+    <ul>
+      <li>It picked up the <strong>budgets</strong> from the charter.</li>
+      <li>And suggested that a <strong>daily cost rate</strong> attached to certain tasks could be useful to see in the view.</li>
+      <li>Which turns a schedule tool into something that also answers "what does this delay cost?"</li>
+    </ul>
+  </div>
+</div>
+
+Then: *incorporate all of these catches you've made in the original prompt.*
+
+### Getting the prompt into Build mode cleanly
+
+Two practical details here that will save an afternoon.
+
+**The handoff.** Click the three dots, then **Make this an app**, and you are taken to Build mode with the prompt copied across.
+
+**The trap.** It copies **everything else from the chat too**, not just your prompt. The instructor flags it as something to watch for - *it's just porting over that chat into this build screen* - and the fix is to delete everything except the actual prompt. An app built from a prompt plus the meandering conversation that produced it is an app built from contradictory instructions.
+
+**The attachment, and one word that matters.** The real project plan goes in last, as a Google Sheet:
+
+> *I have also attached the Google Sheet of our project plan, make sure you base the app off of this.*
+
+The instructor explains the phrasing deliberately: *I usually like to say something like "make sure", because the model can sometimes go in a direction where it's using it more as a reference, rather than something that it's actually following all the way through.* A file attached without an instruction is treated as inspiration.
+
+### What got built
+
+The result has the phases and tasks from the Sheet - market research through UI/UX design - the delay slider, a five-day-week option, and budgets as a contingency. Moving the slider pushes out the dependent tasks.
+
+Two small observations from the demo are worth keeping. The model named it **Project Ripple** entirely unprompted - *models love to brand things* - which is harmless and easy to change later. And the summary of why this one is worth having: *this prototype is pretty personal to me. It's personal to the Sheet that I gave it. It's personal to the charter that I gave it.*
+
+The closing line of the phase: **investing time in a plan isn't just a preliminary step, it's the strategy that transforms a one-shot prompt into a reliable tool.** By defining the constraints early, *you'll move from passive prompting to leading the build.*
+
+---
+
+## The planning activity, in full
+
+The activity instructions are the most complete recoverable artefact in the certificate, and they contain the prompts worth keeping. The stated outputs: **a final plan** - one clear prompt capturing everything you decided, so the model builds what you intended without guessing - and **a prototype** you can click through and test on a real task from your own work.
+
+### Before you start
+
+- **The Google AI Pro trial** is optional and not required to complete the activity or earn the certificate; it gives higher access to the more capable models.
+- **Sign in to AI Studio**, though the activity notes you can complete it *with any AI tool you're comfortable with*.
+- **Example prompts** appear in highlighted boxes: copy one, replace the `[bracketed text]` with details from your own work, and adjust the wording however you need.
+- **Download the App Planning Guide** - a flexible set of strategies for collaborating with AI and thinking like a developer - and keep it open while planning.
+
+### Step 1: find a problem worth solving
+
+*Good apps start with a real problem.* Think about tasks you do often, **especially ones that are slow, repetitive, or easy to get wrong**. And if the task you pick has a lot of steps, **zero in on the one part that slows you down most.**
+
+> *I'm a [your role, e.g. project manager] and I want to build an app to solve a recurring problem in my work. The tasks I repeat most are [2 to 3 tasks]. Which of these is the best fit for an AI-powered tool, and why?*
+
+The instruction attached: **you don't have to accept the first suggestion.** Challenge the recommendations or ask for alternatives until you find an idea you want to build. If you are stuck, the [workflow-mapping worksheet](/learnings/online/google-ai/09-app-building/) from the previous course is the tool for this.
+
+### Step 2: describe the app in four parts
+
+Open a **new chat** for a clean start, then describe the app as **inputs, process, output, goal**. Covering all four gives the model a clear picture before it writes any code.
+
+> *I want to build an app that takes [inputs, e.g. my meeting notes] and does [process, e.g. sorting them into action items and owners] to create [output, e.g. a clean task checklist] that helps me [goal, e.g. leave every meeting with a clear to-do list]. Help me plan it out before we build anything.*
+
+### Step 3: the four planning moves
+
+The framing matters: this is **not a rigid checklist** but a flexible set of moves you use when your app needs them. *A simple app might take two moves, a complex one all four.*
+
+| Move | When to use it | The prompt |
+| --- | --- | --- |
+| **Upload a document for context** | When a generic plan is missing the specifics of your task. A **context doc** is any file with background the model can use - a style guide, a process doc, a list of rules, a sample of past work | *Use this document as additional context about [what you need to accomplish] when planning the app.* |
+| **Let the model interview you** | When you are not sure you have given it everything. This is called **requirement gathering** - it pulls out details you have not mentioned, so you catch them now rather than after the app is built | *Interview me one question at a time to gather everything you need to plan this app well. Ask about any details, rules, or potential mistakes I haven't mentioned yet.* Answer **at least three** questions |
+| **Strengthen your plan** | To make it reliable before you build. Find the places the app could give a wrong or confusing result | *Help me identify weak spots in your proposed logic. Name three specific situations where this app could give a wrong, confusing, or incomplete result.* Then: *For each weak spot you found, suggest a clear rule I can add to my plan so the app never makes that mistake.* |
+| **Cut what you don't need** | When the plan begins to feel bigger than your problem | *Can you describe how the app will work, step by step? Point out any steps, data, or features that aren't strictly needed to reach my goal, and suggest the simplest version that still works.* |
+
+<Aside type="caution">
+**The warning attached to the first move, and it is not boilerplate.** *Always check your organisation's policies to confirm you are using an approved, secure enterprise environment before uploading sensitive or confidential data.* The whole technique of this course is *upload your real documents*, which is exactly what makes the output good and exactly what makes this warning load-bearing. See [responsible AI](/learnings/online/google-ai/03-responsible-ai/) and the anonymisation options in [data analysis](/learnings/online/google-ai/08-data-analysis/).
+</Aside>
+
+<Aside type="tip">
+**Beyond the recording - the third move is the one to never skip.** *Name three situations where this app could give a wrong result*, then *turn each into a rule the app must follow*, is the most valuable prompt pair in the certificate, and the reason is structural: it converts the model's own knowledge of how such apps fail into constraints **before** the failure happens to you.
+
+It also produces something with a life beyond this app. The rules it writes are reusable - *always show the source row for any number you report*, *never infer a date that is not in the data*, *if a field is empty, say so rather than estimating* - and they belong in your [prompt library](/learnings/online/google-ai/02-prompting/) as a standing block to paste into the next build.
+</Aside>
+
+### Step 4: pull it together, then review it
+
+Two prompts, run in order. This final prompt is **your single source of truth**, so the model is not guessing when it starts. *Some app builders call this final prompt a spec doc. Yours is the same thing, just written in everyday language.*
+
+<Steps>
+
+1. **Pull it together.** *Pull everything we've discussed into one clear prompt I can build from. Include the plan, the rules we set, and how the app should be structured.*
+
+2. **Review it.** *Review this prompt against my original goal. Is anything missing, unclear, or contradictory, and does it still solve the problem I started with?* Then read what it flags and decide what to change - **you have the final say on what stays in.**
+
+</Steps>
+
+### Step 5: build, and try it on real work
+
+Copy the final plan into **New App** in Build mode. The build takes a few minutes. Then **run a real task from your own work** and see what it produces.
+
+The expectation-setting is honest: *a prototype is a functional first version you can click around and test. It's not a finished product. Some features may be incomplete or not work correctly yet. That's completely normal.*
+
+---
+
+## Phase 2: Test and debug
+
+### The attitude first
+
+Before any technique, a practitioner sets out the mindset, and it is the most encouraging passage in the certificate:
+
+> *The app failing is honestly part of the building process. I think of it as a bit of a back and forth. **You are the tester of your own application**, so when it doesn't work, just describe that to the model and usually you'll find a way to solve that problem. I also find that in the back and forth, you learn a ton about what works and what doesn't work, and your prompting in itself will get so much better. So **persevere through the pain. It is worth it.***
+
+The instructor's version: *it feels great when your app works on the first try, but that's the easy part. **The real work begins when things start to break.***
+
+### The demo app
+
+A storyboard generator: it turns a video idea into a storyboard of **what we see, what we hear, and how long each shot runs**.
+
+### Fixing the experience before fixing the errors
+
+The first change is not a bug at all. The three-column layout is right, but the prompt box should be the first thing you see, not part of a single page with everything on it:
+
+> *I want to change the app experience a little bit - instead of a single page view with everything, first I want a prompt box to appear where I enter my storyboard idea - and then it transitions to a new screen with the three-column layout we have.*
+
+The observation attached is worth internalising: **Gemini interprets it one way, trying to add its own flourishes and potentially its own layouts, and we have an idea of something else.** You go back and forth until you get the experience you were hoping for. What comes back adds something unrequested and good - the prompt box asks whether the video concept is **short form or long form**.
+
+### The debug panel
+
+Then a real test - *a short ad for a new form of coffee* - and a real error.
+
+<Steps>
+
+1. **Three red crosses appear at the bottom of the screen.** Clicking them opens a **debug panel** that *tells us where our app may be failing*. Its purpose is as much to **give Gemini context** as to inform you.
+
+2. **The chat says three errors running the code, with a Fix button.** Clicking it has the model take the error messages and work on making the app run.
+
+3. **Read the error log yourself.** In this case it said the app had **exceeded its quota** and potentially could not use **3.1 Pro** any more. The demo notes they *could* switch models manually, but lets the agent work first.
+
+4. **The model's diagnosis differs from the error message** - it concludes the failure was not actually the quota, notices the app had been using 3.1 Pro, suggests **3.5 Flash** instead, and fixes several other issues it found along the way.
+
+</Steps>
+
+That fourth step is the genuinely instructive one. The error message named a quota; the real problem was elsewhere. **An error message is a symptom, not a diagnosis** - which is why the course's framing is to isolate failures and track down the **root cause**.
+
+### The autocorrect loop
+
+The next failure is subtler and more interesting. The app generates a storyboard with visual descriptions, audio dialogue, timings and shot types - good - but for shots three and four it **reports the guideline violations to the user** instead of fixing them: *detail shot duration should be between two and four seconds, and b-roll should be between one and three.*
+
+So it understood the guidelines. It is just **making the human do the work**.
+
+The fix, with a screenshot attached as an example of the behaviour:
+
+> *When you generate a storyboard and it runs into any issues that don't meet our guidelines, please fix them automatically and adjust each shot.*
+
+What the model builds in response is a pattern worth naming: it makes the generation request, and **if the output violates any of the rules, it runs a loop again to fix that specific area** so everything works without the user having to intervene.
+
+### The pre-flight check
+
+The app has an **export check** button, which confirms the brand rules passed before you can export. The demo then adds a control instruction:
+
+> *I want to add a control instruction here, where every storyboard generated always ends with a CTA in the dialogue - make sure to also highlight that in our export check.*
+
+Gemini adds strict model instructions **and** puts it into the autocorrect loop. A test produces a closing CTA - *get started for free* - and the export check passes.
+
+Then the best moment in the course: the demo **deliberately breaks it**, editing the final line to *"coffee is amazing"* and running the export check again. It reports an error: **missing approved CTA in the dialogue section**.
+
+> *So we know our pre-flight check is working as intended.*
+
+<Aside type="tip">
+**Beyond the recording - that last move is the whole lesson, and it has a name.** Breaking something on purpose to confirm the alarm works is **testing the test**, and it is the difference between having a check and believing you have one. A validation rule that has never once failed is indistinguishable from a validation rule that does nothing.
+
+The pattern generalises to any app where output has to meet rules, and it is three parts:
+
+<Steps>
+
+1. **State the rules as rules**, in the build prompt, not as a hope.
+
+2. **Make the app enforce them itself** - the autocorrect loop - rather than reporting violations to a human who will approve them anyway.
+
+3. **Then violate each rule on purpose** and confirm the app notices. Once per rule. It takes two minutes.
+
+</Steps>
+
+The instructor's framing: **intentionally testing your app's limits is the ultimate way to prove your work is ready for the real world.**
+</Aside>
+
+---
+
+## Phase 3: Deploy
+
+### What the phase is for
+
+The intro video sets out three things:
+
+- **Connect your app to actual project files**, so it always uses real verified information instead of making guesses.
+- **Set up a friendly welcome message** that doubles as a quiet policy reminder for handling internal data safely.
+- **Set permissions**, controlling exactly who has access, using a **phased rollout**.
+
+The demo app is a sales dashboard that turns sales spreadsheets into a summary leadership can use, with a **chat panel for follow-up questions**. Someone on the team has seen it and loved it - *but it's not quite ready to share with everyone just yet.*
+
+### Grounding, and the welcome banner
+
+Two changes in one prompt, with a document attached from Drive:
+
+> *First, I want to ground all of the metrics and calculations in our app to the financial standards that we have. This is a doc I'm attaching, follow that for all calculations and internal rules, you must apply all of this to our dashboard.*
+>
+> *Second, I'm preparing to share this app with our executives, add a welcome banner explaining this dashboard and its features to help them get started.*
+
+The result: the calculations are resolved, the financial standards are **embedded across all of the AI capabilities**, and the app is grounded in company data. The welcome banner walks people through the dashboard - top-line metrics, regional and product category breakdowns, and the fact that you can review performance or ask for granular points in the chat.
+
+<Aside type="note">
+**Beyond the recording - what grounding actually means here, and why it is the most important idea in the course.** The word gets used loosely. In this demo it does two concrete things:
+
+**It replaces the model's defaults with yours.** Asked to compute a margin, a model will use a reasonable general definition. Your company has a specific one, written down in a standards document, and it may differ. Grounding means the app follows **your** rule rather than the industry average - which is the difference between a number that is defensible in a meeting and one that merely looks right.
+
+**It narrows where answers can come from.** This is the same mechanism as [Gemini Notebook](/learnings/online/google-ai/05-research-and-insights/) answering only from your sources, and the same mitigation named in [responsible AI](/learnings/online/google-ai/03-responsible-ai/): the most effective single defence against hallucination is removing the need to invent.
+
+The pattern to reuse: **any rule your organisation has written down is a grounding document.** Style guides, naming conventions, approval thresholds, pricing rules, escalation policies. Attaching one and saying *you must apply all of this* converts institutional knowledge into app behaviour, and it is the step that makes a personal prototype into something a colleague can trust.
+</Aside>
+
+### The failure that justifies the whole course
+
+Then the demo tests the chat panel: *which product category is driving the most revenue?*
+
+The answer is wrong in two ways at once. It names **electronics**, which does not exist in the product categories. And it gives a revenue figure - *that number 1234567 sounds like an amazing revenue number, but just not one that I'm seeing anywhere else.*
+
+The debugging is a masterclass in how to report a problem. A screenshot is pasted in for context, and then:
+
+> *The responses in the Analyst chat are both near instant and don't seem accurate.*
+
+The reason for including *near instant* is explained, and it is the kind of observation that only comes from paying attention: Gemini had been visibly thinking earlier, and now responds with what looks like a default - *so I'm wondering if it's even sending the chat at all.* The general rule drawn from it: **when you debug like this, it's important to try to tell the model exactly what you're experiencing**, because then it can reason about how you might have arrived at the problem.
+
+The cause, once found, is genuinely surprising and worth remembering permanently. While designing the Analyst chat feature, the model had **written itself a test file containing fake revenue numbers**, to check whether the chat worked at all. It was still querying **that file** instead of the actual CSV.
+
+After the fix: *which product category is driving the most revenue?* → **software, with 7.92 million**, which matches the dashboard.
+
+The reflection is the one to carry into any app you share: *I'm so glad we tested this, because if I had shared this with the executive team, they would have seen some magical numbers and a category that didn't exist, and I would have had a lot more questions to answer for them.*
+
+<Aside type="caution">
+**Beyond the recording - why this specific failure is so dangerous, and the one check that catches it.** Scaffolding left behind is a normal part of how software gets built; what is new is that the scaffolding was written by something that does not remember writing it, inside a file you never opened.
+
+The failure has a shape worth recognising: **the app worked perfectly.** No error, no red cross, no debug panel entry. It returned a fast, confident, well-formatted answer that was entirely fictional. The debug panel from phase 2 is useless against this class of bug, because nothing broke.
+
+The one check that catches it is the one from [data analysis](/learnings/online/google-ai/08-data-analysis/): **compute one number by hand and compare.** Pick a figure, work it out from the source yourself, and check it. If the top revenue category and its value match your own arithmetic, the app is probably connected to the right data. If they do not, nothing else it says counts.
+
+Two supporting habits:
+- **Ask the app where its numbers came from.** *"Which rows did you use to calculate that?"* An app that cannot answer is not querying your data.
+- **Test with data you know the answer to.** A small file with five rows and an obvious total. If it gets that wrong, you have found the problem in thirty seconds rather than in front of your executives.
+</Aside>
+
+### Sharing, and the rollout
+
+The mechanics are simple: the executive is added to the app, and because they should see it full screen rather than in the editor view, the demo hits **share**, checks the full-screen toggle, and **copies the link**. When they open it they get the full-screen dashboard.
+
+The practitioner's advice on the social half of this is more useful than it looks:
+
+> *The first thing I usually do if I'm sharing my app with other people is just do that test again, run through the app, make sure everything works exactly as intended. You might find something that someone may run into, so this is a helpful time to do that. After that, **don't worry about how people may perceive your app. Just put it out there.** I found that when you put your app out there, it's the best way to get feedback. It's also so much fun to see people using something you created.*
+
+The closing line of the course: **securing your data and setting up a controlled rollout is what ensures your tool is ready to be shared with others. You have a complete system to plan, debug and share your apps.**
+
+<Aside type="caution">
+**Beyond the recording - the thing about sharing that nobody tells you, and it costs money.** This is the single most important gap in the two app courses, and it is commercial rather than technical.
+
+**Your API key pays for everyone.** When AI Studio sets up your app, it configures your Gemini API key as a server-side secret - which is the right engineering decision, since it is never exposed in the browser and the people you share with cannot see it. But the consequence is that **the deployed app uses your API key for all users' Gemini API calls.** Ten colleagues using your dashboard are ten colleagues spending against your quota and, past the free tier, your bill.
+
+That reframes a "phased rollout" from good manners into basic prudence. Before you widen access:
+
+- **Work out what one use costs.** Roughly: how many tokens go in - including any grounding document, which is re-sent on every request - and how many come out. The [Gemini API chapter](/learnings/online/google-ai/11-gemini-api/) has the current prices and the arithmetic.
+- **Remember what has no free tier.** Image, video and music generation have none at all. A shared Marketing Materials Generator is a shared bill from the first click.
+- **Expect the quota error the debug demo hit.** *Exceeded our quota* is not an obscure failure - it is what happens when a free-tier app meets more than a few users. Free Flash limits are in the region of a handful of requests per minute and a few hundred to a thousand per day.
+- **Decide whose key it should be.** For anything that outlives a demo, the app belongs on an organisational account with its own billing and its own quota, not on your personal key. This is also the honest answer to *"who owns this tool?"*
+
+**And two security points beyond the key.** First, a shared app that accepts uploaded files or pasted text has an [injection surface](/learnings/online/google-ai/02-prompting/) - content someone uploads can contain instructions aimed at your app's model. Second, *who has access* is a real access-control decision, not a formality: an app grounded in your financial standards document is an app that will discuss your financial standards with anyone holding the link.
+</Aside>
+
+<Aside type="note">
+**Beyond the recording - beyond the share link.** The share-and-copy-link flow is the right first step and not the only one. As of writing, an app built in Build mode can also be:
+
+- **Deployed to Cloud Run with one button**, which takes you from code to a shareable URL in seconds, with the API key configured in the server-side environment. This is the route for something that needs to live independently of AI Studio.
+- **Downloaded as a ZIP** for self-hosting, in which case you set the `GEMINI_API_KEY` environment variable yourself.
+- **Synced two-way with GitHub**, which is also how a team collaborates on it, since there is no real-time collaborative editing in Build mode.
+
+Shared apps stay **private by default**, and you grant view or edit permission deliberately. If a colleague reports a **403 Access Restricted**, the documented causes are browser extensions or a build issue rather than a permissions mistake.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The opening:** *if you can describe it, you can build it - but magic can be unpredictable.* **Vibes alone won't stop an app breaking when things get complex. You need a system.** Three phases: **plan**, **test and debug**, **deploy** - the developer mindset. Strategies work in any browser-based AI tool, and tools change, so check current features.
+- **Phase 1, the problem:** not *"build me a project management tool"* but one pain point - when a task is delayed, you cannot see how it affects the launch date.
+- **Push back on the first plan.** It proposed a graph; the demo said *"I am not so sure about the graph representation"* and got a hierarchical list and a spreadsheet view instead. **Without that, you accept the first solution it thought of.** This back and forth *is* the partnership.
+- **Compress the plan into one paragraph** for the build tool - a full plan is *effectively a large doc* and would confuse the model. The compression produced the simulate-day slider, the responsive Gantt and the fading ripple effect, none of which the human proposed.
+- **Attach your own documents.** From the Project Charter it caught **App Store approval taking 7-14 days - a waiting period, not active work, so the app needs lag time** - and **daily cost rates** against tasks. Then *incorporate all of these catches into the original prompt.*
+- **Two traps in the handoff:** *Make this an app* copies **the whole chat**, not just your prompt, so delete the rest. And say *"make sure you base the app off of this"* when attaching a file, because otherwise the model treats it as a reference rather than following it.
+- **The build:** phases and tasks from the Sheet, delay slider, five-day-week option, budgets as contingency. It self-named the app *Project Ripple* - **models love to brand things.** *Investing time in a plan transforms a one-shot prompt into a reliable tool*; defining constraints early moves you **from passive prompting to leading the build.**
+- **The activity's five steps:** find a real problem (slow, repetitive, or easy to get wrong - and zero in on the one part that slows you most; **don't accept the first suggestion**); describe it as **inputs, process, output, goal** in a fresh chat; apply the planning moves; pull it together and review it; build and run a real task.
+- **The four planning moves** - flexible, not a checklist: **upload a context doc** (style guide, process doc, rules, past work); **let the model interview you** - *"interview me one question at a time"*, called **requirement gathering**, answer at least three; **strengthen the plan** - *"name three specific situations where this app could give a wrong result"*, then turn each into a rule; **cut what you don't need** - *"suggest the simplest version that still works."*
+- **The warning on uploads:** always confirm you are in an approved, secure enterprise environment before uploading sensitive data.
+- **Step 4 produces a spec doc** - *your single source of truth, just written in everyday language* - then a review against your original goal. **You have the final say.**
+- **Phase 2, the attitude:** *the app failing is part of the building process.* **You are the tester of your own application.** Your prompting improves in the back and forth. *Persevere through the pain. It is worth it.*
+- **Fix the experience, not only the errors:** the prompt box should come first, then transition to the three-column layout. **Gemini adds its own flourishes** - here, a useful one, asking short form or long form.
+- **The debug panel:** three red crosses open a panel showing where the app may be failing, which **gives Gemini context** as much as you. A **Fix button** hands the error messages to the model. The log said *exceeded our quota, can't use 3.1 Pro*; the model concluded the quota was **not** the real cause, suggested **3.5 Flash**, and fixed other issues too. **An error message is a symptom, not a diagnosis.**
+- **The autocorrect loop:** the app was reporting guideline violations to the user instead of fixing them. Prompted to *fix them automatically*, it built a loop - generate, and if the output breaks a rule, **run again to fix that specific area**.
+- **The pre-flight check:** an export check confirming brand rules pass, plus a control instruction that **every storyboard ends with a CTA**. Then the demo **deliberately broke it** and confirmed the check caught it. *So we know our pre-flight check is working as intended.* **Intentionally testing your app's limits is the ultimate way to prove it is ready.**
+- **Beyond the recording:** state rules as rules, make the app enforce them itself, then **violate each one on purpose** to confirm the alarm works. A check that has never failed is indistinguishable from no check.
+- **Phase 3:** connect the app to **real project files** so it stops guessing; add a **welcome banner** that doubles as a quiet policy reminder; set **permissions** with a **phased rollout**.
+- **Grounding:** *follow that for all calculations and internal rules, you must apply all of this.* **Beyond the recording:** grounding replaces the model's general defaults with **your** written rules, and narrows where answers can come from. **Any rule your organisation has written down is a grounding document.**
+- **The failure that justifies the course:** the chat panel named a product category that did not exist and a revenue number from nowhere. Cause: while building the feature the model had **written itself a test file with fake numbers** and was still querying it. **Tell the model exactly what you are experiencing** - including that the responses were *near instant*, which is what revealed it was not really running.
+- **Beyond the recording:** this bug threw **no error at all** - the app worked, fast and confidently, on fiction. The catch is to **compute one number by hand**, ask **which rows it used**, and **test with data whose answer you already know**.
+- **Sharing:** add the person, hit share, check the full-screen toggle, copy the link. **Run through the app once more before you share** - you may find what someone else would hit. Then *don't worry how people perceive it, just put it out there.*
+- **Beyond the recording - the commercial gap:** **your API key pays for everyone's usage.** A phased rollout is prudence, not manners. Work out the cost of one use (grounding documents are re-sent every request), remember **image and video generation have no free tier**, expect the **quota error** at free-tier limits, and move anything lasting onto an organisational account. Plus: a shared app that accepts uploads has an **injection surface**, and an app grounded in internal documents will discuss them with anyone holding the link.
+- **Beyond the recording - deployment options:** one-click **Cloud Run** deploy, **ZIP download** for self-hosting (set `GEMINI_API_KEY` yourself), and **two-way GitHub sync**, which is also how teams collaborate since Build mode has no live co-editing. Shared apps are **private by default**.
+</Aside>
+
+---
+
+*Next: [The Gemini API in practice →](/learnings/online/google-ai/11-gemini-api/) - the step the certificate stops short of: the API the app has been calling all along.*

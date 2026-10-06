@@ -1,0 +1,312 @@
+---
+title: "Google AI 12 - Beyond Gemini"
+description: "Building with AI other than Gemini: Claude, OpenAI and the open-weight families with current prices, the three categories of build tool and which to reach for, MCP and A2A as interoperability standards, agent frameworks, where to deploy, and the OWASP Top 10 for LLM applications."
+sidebar:
+  label: "12 · Beyond Gemini"
+  order: 12
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Added chapter - not part of the certificate.*
+
+---
+
+The Google AI Professional Certificate mentions no AI that is not Google's. That is not dishonesty - it is a Google course, teaching Google products, and it does a good job of it. But the skills it teaches are not Google-specific at all: prompting, grounding, verification, planning before building, testing on purpose. Those transfer completely, and knowing they transfer is the difference between having learnt Gemini and having learnt to work with AI.
+
+This chapter is the map of everything else, written for someone who has just finished the certificate.
+
+<Aside type="caution">
+**Everything in this chapter has a shelf life of weeks.** Model names and prices in this field change faster than any other technical subject I have taken notes on - three of the facts here were different six months ago and will be different six months from now. Prices in particular come from pricing pages and aggregators as of writing; **check the provider's own pricing page before you make a decision based on a number here.** The reasoning and the categories will outlast the figures.
+</Aside>
+
+---
+
+## Why bother looking past one provider
+
+Four reasons, in order of how often they actually decide the matter.
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Cost<span class="sub">the spread between the cheapest usable model and the most capable one is more than fiftyfold. Most work does not need the top of anyone's range</span></div>
+  <div class="sc-node violet">Capability on your task<span class="sub">models differ by task, not on a single ranking. The only test that counts is yours, on your inputs</span></div>
+  <div class="sc-node green">Concentration risk<span class="sub">one provider means one set of rate limits, one outage, one pricing decision and one deprecation schedule</span></div>
+  <div class="sc-node slate">Where the data goes<span class="sub">for European work especially: residency, sovereignty, and the option of running a model on hardware you control</span></div>
+</div>
+
+And one reason **not** to: switching costs are real but much smaller than they look, because all the major APIs now have close to the same shape. A request with a model name, a system instruction, a message and some tools looks nearly identical across providers, and the SDKs are a thin layer over that. Moving a working application between them is usually an afternoon, not a project.
+
+---
+
+## The three big API providers
+
+### Google Gemini
+
+Covered in full in [the previous chapter](/learnings/online/google-ai/11-gemini-api/). In summary: **Gemini 3.8 Flash** at $0.75 in / $3.75 out per million tokens (introductory to 31 December 2026), **3.1 Pro** at $2/$12 rising to $4/$18 above 200K tokens, **3.5 Flash-Lite** at $0.30/$2.50. The **Interactions API** is the current interface, with server-side conversation state. Free tier for Flash and Flash-Lite only.
+
+**Reach for it when:** you want the cheapest competent model, you are already in Google Workspace or Google Cloud, you need native image and video generation in the same place, or you want the one-click path from a vibe-coded app to a hosted URL.
+
+### Anthropic Claude
+
+A REST API at `api.anthropic.com`, with the **Messages API** at `POST /v1/messages` as the main surface. Authentication is an `Authorization: Bearer` header (or the legacy `x-api-key`), plus an `anthropic-version` header. Official SDKs cover Python, TypeScript, C#, Go, Java, PHP and Ruby.
+
+| Model | Model ID | Context | Price per million tokens (in / out) |
+| --- | --- | --- | --- |
+| **Claude Haiku 4.5** | `claude-haiku-4-5-20251001` | 200K | **$1 / $5** |
+| **Claude Sonnet 5.5** | `claude-sonnet-5-5` | 1M | **$2 / $10** |
+| **Claude Sonnet 4.6** | - | 1M | **$3 / $15** |
+| **Claude Opus 5.5** | `claude-opus-5-5` | 1M | **$4 / $20** |
+| **Claude Opus 5** | - | 1M | **$5 / $25** |
+| **Claude Fable 5.1** | `claude-fable-5-1` | 1M | **$10 / $50** |
+
+Beyond messages: a **Message Batches API** at 50% off, **Token Counting** so you can price a request before sending it, a **Files API**, and a **Skills API** for custom agent capabilities. In beta, **Claude Managed Agents** - Agents, Sessions and Environments APIs that run stateful agent sessions in managed cloud sandboxes. Prompt caching reads cost roughly a tenth of base input, and **batch discounts stack with caching**.
+
+Consumer and team plans, since they are often the cheaper route for individual use than the API: **Pro $20/month**, **Max 5x $100**, **Max 20x $200**, **Team Standard $25/seat**, **Team Premium $125/seat**, Enterprise from $20/seat plus usage.
+
+**Reach for it when:** the work is long-form writing, careful reasoning over a large document, or software engineering. Claude Code - a terminal-based coding agent - is the tool most often named by people doing serious work on existing codebases, as opposed to generating new ones. The 1M-token context across most of the range also makes the whole-repository or whole-contract case straightforward.
+
+### OpenAI
+
+The **Responses API** is the current primary surface, launched alongside the open-source **Agents SDK** in March 2025, with built-in tools that carry no separate model fee.
+
+| Model | Positioning | Price per million tokens (in / out) |
+| --- | --- | --- |
+| **GPT-6 Astra** | Flagship, released 3 September 2026 | **$10 / $50** (long-context **$20 / $75**) |
+| **GPT-5.5 Pro** | Premium reasoning | **$30 / $180** |
+| **GPT-5.6 Sol** | Flagship agentic | **$4 / $20**, on promotion through November 2026 |
+| **GPT-5.6 Terra** | Balanced | **$2 / $12** |
+| **GPT-5.6 Luna** | Budget | **$0.20 / $1.20** |
+
+Two pricing details that bite: **long-context rates are roughly doubled** for most models, and with hosted tools *"you pay for the underlying model tokens on every turn of the agent loop, plus per-call fees for hosted tools like web search and file search, plus container time for Code Interpreter."* An agent loop is not one request.
+
+**Reach for it when:** you want the widest ecosystem of third-party integrations and tutorials, you need the cheapest per-token option available anywhere (Luna at $0.20 in is remarkable), or you are building on tooling that already assumes it.
+
+<Aside type="tip">
+**How to actually choose, as opposed to reading comparison tables.** Benchmarks will not answer this and neither will this page. The method that works takes an hour:
+
+<Steps>
+
+1. **Write down ten real inputs** from the task you care about, including the two awkward ones you would normally avoid testing with.
+
+2. **Write down what a good output looks like** for each. This is the part people skip, and skipping it is why the exercise usually proves nothing.
+
+3. **Run all ten through two or three candidate models**, using the cheapest tier of each - the free tiers and the consumer plans are enough for this.
+
+4. **Score them yourself**, then look at the price of the one that won.
+
+</Steps>
+
+This is the **evaluation set** idea from [the fundamentals](/learnings/online/google-ai/01-ai-fundamentals/), used for choosing rather than for monitoring, and it is reusable: the same ten inputs test next year's models, and tell you whether a forced migration made anything worse.
+
+The result is frequently that the cheap model is fine, which is the most valuable thing an hour of testing can tell you.
+</Aside>
+
+---
+
+## Open-weight models
+
+A separate category, not a cheaper tier of the same thing. **Open-weight** means the trained parameters are published, so you can download the model and run it on hardware you control. Six families lead the field: **Meta Llama, Mistral, Alibaba Qwen, DeepSeek, Google Gemma and Microsoft Phi**.
+
+| Family | Notable current models | Licence |
+| --- | --- | --- |
+| **Qwen** | Qwen3.5 from 9B to 122B parameters, 201 languages, multimodal. **Qwen3.8-27B** (August 2026) is widely described as the best all-round local model, with native vision-language support | Apache 2.0 |
+| **DeepSeek** | DeepSeek V4 Pro - 1M token context, 1.6T total parameters with 49B active | MIT |
+| **Mistral** | Mistral Small 4 folds reasoning, multimodal understanding and agentic coding into one checkpoint. Mistral Large 3 (December 2025) is a sparse mixture-of-experts model, 675B total / 41B active | Apache 2.0 for the open line |
+| **Llama** | Llama 3.3 70B | Llama Community License - free under 700M monthly active users |
+| **Gemma** | Google's open-weight family, also available in AI Studio | Open |
+| **Phi** | Microsoft's small-model family | Open |
+
+Licences are converging on **Apache 2.0 and MIT** across Qwen, DeepSeek, Gemma, gpt-oss and Mistral's open line, which is a genuine shift - these are permissive licences that allow commercial use without a user-count threshold.
+
+### Running one locally
+
+**Ollama** is the usual way, and the requirements are more modest than people expect. Indicative figures: **Llama 3.2 3B** needs around 11.4 GB RAM and 2.0 GB disk; **Mistral 7B** around 7.4 GB RAM and 4.4 GB disk; **Qwen3 8B** and **DeepSeek R1 8B** around 5.8 GB RAM. A reasonably specified laptop runs a useful model.
+
+<Aside type="note">
+**Beyond the recording - when a local model is the right answer, and when it is a hobby.** Being honest about this saves a weekend.
+
+**Genuinely the right answer when:**
+- **The data cannot leave.** Client confidential material, patient data, anything where the [privacy rule](/learnings/online/google-ai/08-data-analysis/) and your employer's policy make a cloud API simply unavailable. A local model has no terms of service.
+- **Volume is high and the task is simple.** Classifying a hundred thousand records costs real money through an API and nothing but electricity locally.
+- **You need it offline or need determinism.** No rate limits, no outages, no silent model updates - which also means **no behavioural drift**, the one problem it solves outright.
+- **European data sovereignty is a requirement.** Worth noting that **Mistral AI (France) is the only major EU-based developer of open-weight models**, which matters for procurement conversations more than for technical ones.
+
+**A hobby when:**
+- **You want frontier quality.** A 27B model on a laptop is good. It is not Gemini 3.8 Flash or Opus 5.5, and pretending otherwise leads to weeks of prompt-tuning against a capability ceiling.
+- **You are doing it to save money on small volumes.** Flash-Lite at $0.30 per million input tokens is close enough to free that your own time dominates the cost.
+- **You have no appetite for operations.** Models to update, quantisation to choose, VRAM to manage, nothing to blame but yourself.
+
+The pattern used in practice: **a cheap frontier API for the hard calls, a local model for the high-volume simple ones, and a local model for anything that cannot leave the building.**
+</Aside>
+
+---
+
+## The three categories of build tool
+
+The certificate teaches one tool - AI Studio's Build mode. The landscape has three distinct categories, and choosing the wrong category is the most common way to waste a weekend.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node amber">Chat-to-app builders<span class="sub">describe it, get a hosted app. No setup, no code required, no programming knowledge assumed. This is where AI Studio Build mode sits</span></div>
+    <div class="sc-node violet">AI code editors<span class="sub">an IDE with an agent inside it. Assumes you can read and judge code. Highest ceiling, steepest floor</span></div>
+    <div class="sc-node green">Terminal and CLI agents<span class="sub">an agent working directly on a repository on your machine. Built for changing existing software rather than generating new software</span></div>
+  </div>
+  <figcaption>Capability rises down the list and so does the knowledge assumed. Someone finishing this certificate belongs in the first category, and should know the other two exist.</figcaption>
+</figure>
+
+### Chat-to-app builders
+
+| Tool | What distinguishes it |
+| --- | --- |
+| **Google AI Studio Build** | What the certificate teaches. Gemini models, server-side key handling done properly, one-click **Cloud Run** deploy, GitHub sync, annotation-mode editing |
+| **Lovable** | Widely described as the best starting point for non-technical beginners: full-stack app from a single prompt, hosted for you, no setup |
+| **Bolt.new** | Similar prompt-to-application simplicity; frequently named the fastest route from demo to a shareable URL |
+| **Replit** | Strong on full-stack scope - its Agent takes a single prompt from plan to deployed app, in a full online development environment |
+| **v0** | Production-quality **user interfaces** from natural language, output as React and Next.js with shadcn/ui. **Frontend only** - no database, no authentication, no business logic |
+| **Firebase Studio** | Free, Gemini-powered, best fit if you are already in the Google ecosystem, with free Firebase hosting |
+
+The guidance that recurs across every comparison: **if you have no coding experience, stay in this category.** Lovable has the lowest barrier for a full-stack app; Lovable, Bolt and Replit are the fastest choices **when the goal is validation rather than production**. That last qualifier is the one to take seriously - it is the same point the [deployment course](/learnings/online/google-ai/10-app-deployment/) makes when it insists a prototype is not a product.
+
+### AI code editors and terminal agents
+
+**Cursor** is the most-cited AI code editor, and the characterisation worth remembering is that it wins for *senior-engineer-controlled* building - the agent is powerful and you are expected to judge its output. **Windsurf** (now Devin Desktop) and **GitHub Copilot** occupy the same space.
+
+**Claude Code** is the best-known terminal agent: it works on a repository on your machine, runs commands, and is built around changing existing software rather than producing new software from a prompt. The distinction matters because it is the opposite end of the spectrum from the certificate: vibe coding excels at creating something that did not exist, and is much weaker at carefully modifying something that does.
+
+<Aside type="tip">
+**Beyond the recording - the honest progression.** Nobody needs all three categories, and the order to meet them is:
+
+1. **Start in a chat-to-app builder** - AI Studio if you did this certificate, since you already know it and your key is already configured. Build three or four small tools for yourself. This is where the [workflow worksheet](/learnings/online/google-ai/09-app-building/) pays off.
+2. **Move to an editor or terminal agent only when a specific frustration pushes you**, and it will be one of these: you need to change one thing without the agent rewriting three others; you need the app in your own repository with your own deployment; or you have hit something the builder cannot express.
+3. **Learn to read code before you learn to write it.** This is the step that actually unlocks the second category, and it is much smaller than learning to program. Being able to look at a generated function and tell whether it does what the name claims is most of the value, and the fastest way to get there is asking the model to explain its own code back to you - the same move as [judging an app you did not write](/learnings/online/google-ai/09-app-building/).
+</Aside>
+
+---
+
+## MCP and A2A: why none of this is as locked-in as it looks
+
+The most consequential development for anyone building with AI is not a model. It is that the connections between models and tools became a standard.
+
+### MCP
+
+The **Model Context Protocol** is an open standard for how AI models talk to external tools and data sources. Open-sourced on **25 November 2024**, it was adopted by OpenAI, Google DeepMind and Microsoft Copilot Studio within months, and in **December 2025 Anthropic donated it to the newly formed Agentic AI Foundation** under the Linux Foundation - co-founded with Block and OpenAI, backed by AWS, Google, Microsoft, Salesforce and Snowflake.
+
+The adoption numbers tell the story: **97 million monthly SDK downloads** by November 2025, **more than ten thousand MCP servers** indexed in public registries by early 2026, and support across **ChatGPT, Claude, Gemini, Microsoft Copilot and VS Code**.
+
+What this means in practice, for someone who does not care about protocols: **a tool connection you set up for one assistant tends to work with another.** The integration with your calendar, your repository, your database or your documents is not a bet on a vendor any more. It is the closest thing this field has to a USB port.
+
+### A2A
+
+**Agent2Agent** is the companion standard for agents talking to each other rather than to tools - so an agent built in one framework can delegate a task to an agent built in another, without framework-specific integration.
+
+---
+
+## Agent frameworks
+
+If you reach the point of building something more structured than a single API call, three frameworks dominate.
+
+| Framework | Model of the world | Notes |
+| --- | --- | --- |
+| **Google ADK** (Agent Development Kit) | Code-first and deliberately framework-agnostic | **Python, TypeScript, Java and Go** - ADK Java 1.0 and Go 1.0 both shipped in early 2026, which matters because most agent frameworks are Python-only. Native **A2A** support from the start, so an ADK agent can delegate to a LangGraph or CrewAI agent. Deep integration with Google's grounding, data access and monitoring |
+| **LangGraph** | Agents as **stateful directed cyclic graphs** - nodes, conditional edges, explicit control flow | From the LangChain ecosystem. The assumption is that complex agent behaviour is best managed by explicitly mapping how information moves between model calls, tool calls and branches. The largest ecosystem |
+| **CrewAI** | Agents as a crew with roles | Added **A2A** support in early 2026 with poll, stream and push handlers - functional, but newer and less battle-tested than ADK's |
+
+<Aside type="note">
+**Beyond the recording - you probably do not need one yet.** Agent frameworks solve a real problem and they are not the problem you have after this certificate. The honest progression:
+
+- **A single API call with good prompting** handles more than people expect. Start here.
+- **A chain of calls in plain code** - the [prompt chaining](/learnings/online/google-ai/02-prompting/) pattern written as five lines of script - handles most of the rest, and is far easier to debug than a framework, because the control flow is visible.
+- **Function calling with your own functions** covers nearly everything else, and that is a feature of the plain API rather than a framework.
+- **A framework earns its place** when you have genuine multi-step autonomy with branching, retries and state that has to survive failure. If you cannot describe why a loop in your own code is insufficient, it is sufficient.
+
+The exception worth knowing: if your organisation already has agents in several frameworks, **A2A support is the deciding feature**, and that is where ADK's early investment shows.
+</Aside>
+
+---
+
+## Where to put it
+
+The certificate's app lives in AI Studio and deploys to Cloud Run. The general options:
+
+| Target | Suits |
+| --- | --- |
+| **Google Cloud Run** | One-click from AI Studio, scales to zero so an idle app costs nothing, and the natural home for anything Gemini-based |
+| **Vercel** | The default for React and Next.js front ends, including v0's output. Serverless functions for the server side that holds your key |
+| **Cloudflare Workers** | Runs at the edge, generous free tier, good for small APIs and proxies - including the "my server holds the key" layer in front of a provider |
+| **Netlify** | Static sites with serverless functions, similar shape to Vercel |
+| **Your own server or container** | Full control, required for a self-hosted open-weight model, and the answer when data residency is non-negotiable |
+
+The one architectural requirement that survives every choice is the one from [the previous chapter](/learnings/online/google-ai/11-gemini-api/): **the browser calls your server, and your server calls the model.** Every option above can do that. Any arrangement that cannot is one where your key is public.
+
+---
+
+## The OWASP Top 10 for LLM applications
+
+The certificate's [ACT checklist](/learnings/online/google-ai/03-responsible-ai/) covers responsible *use*. Once you are building things other people touch, the relevant reference is the security one - the OWASP Top 10 for LLM Applications, 2025 edition:
+
+| | Risk | What it means for something you built |
+| --- | --- | --- |
+| **LLM01** | **Prompt Injection** | Crafted input - directly, or hidden in a document, page or file your app reads - makes the model do something other than its job. The top risk, and the one that gets worse the more your app can *do* |
+| **LLM02** | **Sensitive Information Disclosure** | Your app reveals what it should not: another user's data, your system instructions, the contents of a grounding document |
+| **LLM03** | **Supply Chain** | A compromised model, package, plugin or MCP server you pulled in |
+| **LLM04** | **Data and Model Poisoning** | Deliberately corrupted training or reference data |
+| **LLM05** | **Improper Output Handling** | Model output passed downstream without validation. Rendering it as HTML gives you cross-site scripting; putting it in a query gives you injection; running it gives you code execution. **Never trust model output as if you wrote it** |
+| **LLM06** | **Excessive Agency** | The agent can do more than the task requires. The fix is boring and effective: give it the narrowest permissions that work |
+| **LLM07** | **System Prompt Leakage** | Your instructions, rules and sometimes credentials extracted by asking cleverly. Assume the system prompt is discoverable and keep secrets out of it |
+| **LLM08** | **Vector and Embedding Weaknesses** | Problems in retrieval systems - including returning material a user should not see |
+| **LLM09** | **Misinformation** | Confidently wrong output acted on by a user. The [fake revenue category](/learnings/online/google-ai/10-app-deployment/) is this, exactly |
+| **LLM10** | **Unbounded Consumption** | Someone - or something in a loop - running up your bill or exhausting your quota. **Your key pays for every user**, so this is a budget risk as much as a security one |
+
+<Aside type="caution">
+**The two that will actually happen to you.** Not all ten are equally likely for a small internal tool.
+
+**LLM05, Improper Output Handling**, is the one people get wrong because it feels paranoid. The habit to form: model output is **untrusted user input**, no matter how much you trust the model. It gets validated before it is rendered, stored, executed or put in a query. The certificate's own instinct - *check the output before you use it* - is the human version of exactly this rule.
+
+**LLM01, Prompt Injection**, is the one that is already happening. Any app that reads a document, fetches a URL or accepts a file has the exposure, and - as noted in [prompting](/learnings/online/google-ai/02-prompting/) - I have hit injected instructions in otherwise reputable material I had collected myself. There is no complete fix. There are three partial ones that together handle most of it: **label untrusted content as content** rather than instruction, **constrain what the model can do** so a successful injection cannot achieve much, and **validate actions in your own code** rather than letting the model act directly. That last one is why [function calling](/learnings/online/google-ai/11-gemini-api/) is a security feature and not just an architecture.
+</Aside>
+
+---
+
+## What actually transfers from the certificate
+
+<Aside type="tip">
+**The point of this chapter, in one block.** Having gone through all eight courses and then looked at everything outside them, this is what turns out to be provider-independent:
+
+- **Persona, task, format, context** works on every model on this page. So do the three C's, iteration, references, few-shot examples and one chat per topic.
+- **Grounding** is the universal hallucination mitigation, whatever the provider. Give it the source; tell it to answer only from the source; let it say it does not know.
+- **The ACT discipline** - ask whether AI belongs here, check before you use it, tell people you used it - is a professional standard, not a Google policy. In the EU, part of it is now law.
+- **Plan before you build. Compress the plan into one prompt. Let the model interview you. Name three ways this could go wrong and turn each into a rule.** These are the most valuable things in the certificate and they have nothing to do with Gemini.
+- **Break it into bricks**, and when something works, tell it not to change it.
+- **Test your tests.** Break the rule on purpose and confirm the alarm sounds.
+- **Check one number by hand.**
+
+What does **not** transfer is everything this chapter is full of: model names, prices, button locations, which API is current. That is the half worth re-checking rather than remembering - which is also why these notes keep the two visibly apart.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **Four reasons to look past one provider:** **cost** (more than a fiftyfold spread), **capability on your specific task**, **concentration risk** (one set of limits, one outage, one deprecation schedule), and **where the data goes**. Switching costs are smaller than they look - the major APIs now have nearly the same shape.
+- **Google Gemini:** 3.8 Flash $0.75/$3.75, 3.1 Pro $2/$12 (and $4/$18 above 200K), 3.5 Flash-Lite $0.30/$2.50. **Interactions API**, free tier for Flash and Flash-Lite. Best for cheapest competent model, Google ecosystem, native image and video, one-click hosting.
+- **Anthropic Claude:** Messages API at `POST /v1/messages`, `Authorization: Bearer` plus `anthropic-version`. **Haiku 4.5 $1/$5** (200K), **Sonnet 5.5 $2/$10**, **Sonnet 4.6 $3/$15**, **Opus 5.5 $4/$20**, **Opus 5 $5/$25**, **Fable 5.1 $10/$50** - 1M context across most of the range. Plus Batches at 50% off, Token Counting, Files, Skills, and beta **Managed Agents** (Agents, Sessions, Environments). **Cache reads about a tenth of base input; batch stacks with caching.** Pro $20, Max $100/$200, Team $25/$125 per seat. Best for long-form writing, reasoning over big documents, and software engineering - **Claude Code** for existing codebases.
+- **OpenAI:** **Responses API** plus the open-source **Agents SDK** (March 2025). **GPT-6 Astra $10/$50** (long-context $20/$75), **GPT-5.5 Pro $30/$180**, **GPT-5.6 Sol $4/$20** (promo to Nov 2026), **Terra $2/$12**, **Luna $0.20/$1.20**. **Long-context rates roughly double**, and hosted tools bill per call plus container time **on every turn of the agent loop**.
+- **How to choose:** ten real inputs including the awkward ones, write down what good looks like, run them through two or three candidates on cheap tiers, score them yourself, then look at the price. Reusable as an **evaluation set**. The answer is often that the cheap model is fine.
+- **Open-weight models** - parameters published, run them yourself. Six families: **Llama, Mistral, Qwen, DeepSeek, Gemma, Phi**. **Qwen3.5** 9B-122B, Apache 2.0, 201 languages; **Qwen3.8-27B** (Aug 2026) the best all-round local model with native vision. **DeepSeek V4 Pro** 1M context, MIT. **Mistral Small 4** and **Large 3** (675B total / 41B active). **Llama 3.3 70B** free under 700M MAU. Licences converging on **Apache 2.0 and MIT**.
+- **Local with Ollama:** Llama 3.2 3B ~11.4 GB RAM, Mistral 7B ~7.4 GB, Qwen3 8B and DeepSeek R1 8B ~5.8 GB. **Right answer when** data cannot leave, volume is high and the task simple, you need offline or determinism (**it eliminates behavioural drift**), or EU sovereignty matters - **Mistral is the only major EU-based open-weight developer**. **A hobby when** you want frontier quality, you are chasing small savings, or you do not want the operations.
+- **Three categories of build tool:** **chat-to-app builders** (AI Studio Build, **Lovable** - lowest barrier for full-stack, **Bolt.new** - fastest demo-to-URL, **Replit** - full-stack scope, **v0** - frontend only, no DB or auth, **Firebase Studio** - free and Google-native); **AI code editors** (**Cursor** for senior-engineer-controlled work, Windsurf/Devin Desktop, Copilot); **terminal agents** (**Claude Code**, built for changing existing software rather than generating new).
+- **If you have no coding experience, stay in the first category.** Lovable, Bolt and Replit are fastest **when the goal is validation, not production**.
+- **The progression:** build three or four small tools in a builder first; move on only when a specific frustration pushes you; and **learn to read code before writing it** - much smaller than learning to program, and most of the value.
+- **MCP:** open-sourced **25 November 2024**, donated to the **Agentic AI Foundation** under the Linux Foundation in **December 2025** (with Block and OpenAI; backed by AWS, Google, Microsoft, Salesforce, Snowflake). **97M monthly SDK downloads** by Nov 2025, **10,000+ servers** indexed by early 2026, supported in ChatGPT, Claude, Gemini, Copilot and VS Code. **A tool connection set up for one assistant tends to work with another.** **A2A** is the agent-to-agent counterpart.
+- **Agent frameworks:** **Google ADK** - code-first, framework-agnostic, Python/TS/**Java/Go** (both 1.0 in early 2026), native A2A; **LangGraph** - stateful directed cyclic graphs, largest ecosystem; **CrewAI** - role-based crews, A2A added early 2026 but less battle-tested. **You probably do not need one:** a single good call, then a chain in plain code, then function calling, and only then a framework.
+- **Deployment:** **Cloud Run** (one click from AI Studio, scales to zero), **Vercel** (React/Next.js), **Cloudflare Workers** (edge, generous free tier, good as the key-holding layer), **Netlify**, or your own server for self-hosted models and data residency. **Browser calls your server; server calls the model** - every option supports it.
+- **OWASP Top 10 for LLM Applications 2025:** prompt injection, sensitive information disclosure, supply chain, data and model poisoning, improper output handling, excessive agency, system prompt leakage, vector and embedding weaknesses, misinformation, unbounded consumption.
+- **The two that will actually happen:** **LLM05** - treat model output as **untrusted user input**, validated before being rendered, stored, executed or queried; and **LLM01** - label untrusted content as content, constrain what the model can do, and **validate actions in your own code**, which is why function calling is a security feature.
+- **What transfers from the certificate:** the prompting framework, grounding, the ACT discipline, **plan before building**, **compress the plan into one prompt**, **let the model interview you**, **name three failures and make each a rule**, brick-by-brick building, **testing your tests**, and **checking one number by hand**. What does not transfer: every model name, price and button location on this page.
+</Aside>
+
+---
+
+*Back to the [certificate overview](/learnings/online/google-ai/).*

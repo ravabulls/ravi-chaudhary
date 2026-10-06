@@ -1,0 +1,356 @@
+---
+title: "Google AI 1 - AI Fundamentals"
+description: "How AI actually works without the jargon: training data and why it shapes everything, machine learning and its three approaches, LLMs and generative AI, multimodality, agents, the difference between a model and an app, temperature, and the three limitations that matter most - bias, knowledge cutoff and drift."
+sidebar:
+  label: "1 · AI Fundamentals"
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Course 1: AI Fundamentals*
+
+---
+
+The certificate opens with a VP of Strategy, Operations and Outreach at Google Research making a promise and a disclaimer in the same breath. The promise: AI skills employers are looking for, a certificate, and a portfolio of things you built yourself. The disclaimer, delivered as an analogy that sets the tone for all eight courses: **you would not learn the piano without touching the keys**, so the course puts you into the tools immediately rather than teaching theory first.
+
+That choice explains the shape of the material. There are relatively few explanatory videos and more than twenty labs. The explanatory videos are what these notes can preserve; the labs are what these notes have to reconstruct.
+
+<Aside type="note">
+**What the certificate claims you will be able to do afterwards:** anticipate the questions someone will ask before a big meeting, get up to speed on an unfamiliar topic, build project roadmaps and presentations and marketing imagery and charts that tell a story, turn rough ideas into communication that gets colleagues on board, turn raw data into visuals a team can read, and build custom apps - an interactive dashboard, a media asset creator - by directing AI in natural language with no coding.
+</Aside>
+
+---
+
+## The mindset shift that the whole certificate rests on
+
+### From task to collaboration
+
+The first substantive video is not about technology at all. It argues that most people use AI far below its capability because they use it for **one-off tasks** rather than as a **collaborator**.
+
+The worked example: you have a high-stakes goal of growing your business unit's revenue by year end.
+
+| The small use | The collaboration |
+| --- | --- |
+| Ask AI to draft a note to your team announcing the project | Ask it to help build the forecast and generate options for increasing sales |
+| | Have it pressure-test your assumptions and identify risks |
+| | Explore different revenue scenarios with it |
+
+The difference is not speed. It is that the second version helps you **navigate across the steps of a problem** and sets you up to make a better decision, instead of completing one piece of clerical work faster.
+
+### Three things collaboration actually gets you
+
+The reading that follows breaks the abstraction into three concrete capabilities, each with an example built on drafting a project proposal.
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Organise and understand information<span class="sub">break complex material into digestible chunks, highlight what matters, reveal connections you missed. Example: summarise recent industry trends before you draft</span></div>
+  <div class="sc-node violet">Create brand-new things<span class="sub">generate text, visualise data as a chart, generate an image, brainstorm different phrasings. Example: produce the first draft of the proposal</span></div>
+  <div class="sc-node green">Improve and refine existing work<span class="sub">review writing for clarity, check for errors, suggest what would be more persuasive. Example: a review of your sales pitch that reveals your pricing explanation is confusing</span></div>
+</div>
+
+The reading's own summary: using AI is not about getting tasks done faster, it is about thinking more clearly, creating more confidently, and refining work until it represents your best effort. The practical instruction attached to it - **have a conversation instead of making a single request** - is the smallest behavioural change the course asks for and probably the highest-leverage one.
+
+### Your half of the partnership
+
+The course is emphatic that the human role is not residual. Four things only you have:
+
+<div class="sc-chips">
+  <span class="sc-chip amber">Context - what is actually going on around this task</span>
+  <span class="sc-chip violet">Emotional intelligence - how this will land on a real person</span>
+  <span class="sc-chip green">Judgment - whether this output should be used at all</span>
+  <span class="sc-chip soft">Accountability - the consequences are yours either way</span>
+</div>
+
+Stated as pairs, which is how the course puts it: AI can help create a presentation, but only you know your audience. AI can offer solutions to a customer service problem, but only you can judge whether those solutions should go to the customer.
+
+And some tasks are simply the wrong shape for it. The course names **financial, legal and compliance advice** as too sensitive or risky, with the instruction to connect with a professional instead. That is not a limitation of the technology's fluency - it will produce confident text on all three - but of where accountability sits.
+
+<Aside type="tip">
+**The practitioner tip that is worth more than it looks.** One of the Google practitioners describes training himself to notice the feeling of *"ugh, I don't want to do that"* and treat it as a trigger: that reluctance is the signal to try AI. Not because it will finish the task, but because it gets the ball rolling past the initial resistance. The reframing is useful - the tool's best use is often not the hard part of a job but the part you are avoiding.
+</Aside>
+
+---
+
+## How AI actually works, without the jargon
+
+### The chain of definitions
+
+The course builds the vocabulary in a deliberate sequence, each term resting on the one before.
+
+<figure class="sc-fig">
+  <div class="sc-flow col">
+    <div class="sc-node slate">Artificial intelligence<span class="sub">the concept of building intelligent machines that can reason through a problem and provide recommendations</span></div>
+    <div class="sc-node amber">Model<span class="sub">a computer program trained on large amounts of data - articles, images, videos - that finds patterns and applies them to new situations</span></div>
+    <div class="sc-node violet">Large language model (LLM)<span class="sub">a model trained on enough data to understand and answer a request it has never seen before</span></div>
+    <div class="sc-node green">Generative AI<span class="sub">the ability to create entirely new content - a blog post, a birthday haiku - rather than only classify or predict</span></div>
+    <div class="sc-node soft">Multimodal assistant<span class="sub">works with more than text: understands and creates images, video, audio</span></div>
+  </div>
+  <figcaption>Each step is a widening of what the thing can do, and each depends on more data and more training than the one above it.</figcaption>
+</figure>
+
+**Training** is the process that gets you from the second box to the rest: the model processes data, finds patterns, and improves over time. The course's insistence that this is not futuristic technology lands with its chosen example - your **email spam filter**, which uses massive amounts of data to sort wanted mail from unwanted, and gets better every time you mark something as spam.
+
+### Why training data explains almost everything
+
+The single most useful idea in the course's technical section is that a model's behaviour is downstream of its training data, and the apple example makes it concrete.
+
+A food distributor trains a model to sort apples from other fruit, using thousands of images of apples. But if the training data contained **only red apples**, the model is less accurate on green and yellow ones. The distributor sorts incorrectly, loses money, and wastes good fruit.
+
+From that one example the course draws two conclusions that recur for the rest of the certificate:
+
+<Steps>
+
+1. **A model's training data shapes what it does.** Not merely what it knows - what it is capable of doing well.
+
+2. **It is one reason two models give different answers to the same question.** The second reason is **model architecture**: how the model is programmed, and the rules it applies to its data and its learning, vary from model to model.
+
+</Steps>
+
+<Aside type="note">
+**Beyond the recording.** The course stops at "finds patterns", which is true but leaves the central mechanism unexplained. What an LLM is actually trained to do is **predict the next token** - a token being roughly a word fragment, so that "unbelievable" might be three tokens while "cat" is one. Shown enormous quantities of text with the next token hidden, the model adjusts billions of internal numbers (its **parameters**) until its predictions match reality.
+
+That is the whole trick, and three things follow from it that are worth carrying around:
+
+- **Fluency is not knowledge.** The objective rewards text that sounds like the training data. A confident, well-formed, wrong answer is not a malfunction; it is the system doing exactly what it was trained to do. This is the mechanism behind hallucination, covered in [responsible AI](/learnings/online/google-ai/03-responsible-ai/).
+- **Training and use are separate events.** Training happens once, costs enormous sums, and ends on a date. Using the model afterwards is called **inference**, and the model learns nothing from your conversation. This is why the knowledge cutoff below is a hard boundary rather than a soft one.
+- **Everything is tokens, including the price.** Input and output are both billed per token, which is why the cost discussion in the [Gemini API chapter](/learnings/online/google-ai/11-gemini-api/) is a discussion about token counts.
+</Aside>
+
+### Machine learning, and the three ways to do it
+
+The course separates two terms people use interchangeably. **AI** is the broad field: building tools that complete tasks usually associated with human intelligence, from writing emails to suggesting driving routes. **Machine learning** is the most common technique for training those tools - it lets a program find patterns and learn from data on its own, without being programmed for every possible scenario.
+
+The example is zebras and horses. Give the program thousands of images of both; it eventually learns to identify features such as stripes. Applying that learning to a photo it never saw in training is called **inference**.
+
+The three approaches, each with the same zebra example so the difference is visible:
+
+| Approach | What it trains on | When you use it | The zebra version |
+| --- | --- | --- | --- |
+| **Supervised learning** | A large dataset **labelled by people** | When there is a specific, known output in mind | Millions of pictures explicitly labelled *zebra* or *horse*. The model learns each animal's characteristics and sorts new images into those predefined categories |
+| **Unsupervised learning** | A dataset that has **not** been labelled | To identify patterns and structures when there is no specific known output | An unlabelled pile of photos. Without being told what a zebra is, the model discovers patterns of its own - striped or solid - and clusters similar images together |
+| **Reinforcement learning** | Trial and error guided by a **reward system** | To continuously refine how AI approaches a task or goal | Asked to identify zebras in a video with no training, it guesses. Correct guesses earn a positive reward, wrong ones a penalty. Over many attempts it adjusts its strategy to maximise total reward |
+
+The course's closing note: today's models typically use **a combination of all three** to create text, images and video.
+
+### Agents: the capability the course flags as emerging
+
+The last step in the technical section is agents, defined as systems that **combine the intelligence of advanced models with access to tools** - your calendar, your email. The structural difference from a chat: instead of a single task, you give an agent a **broader goal**, and it breaks that goal into smaller steps and takes action on your behalf, under your control.
+
+The course's example is worth keeping because it shows the scope precisely. You say: *"Organise a kickoff meeting for the Q3 marketing project with the design and sales teams for next week."* The agent then checks everyone's calendars for a free slot, books a meeting room, drafts a welcome email with the project brief attached, and sends the calendar invitation.
+
+The point drawn from it: the opportunity is not answering your questions but **actively helping you accomplish your goals** - handling the tedious coordination so the team can think about the strategy instead.
+
+<Aside type="note">
+**Beyond the recording.** The course explains what an agent does but not what makes one possible, and the missing piece has a name. An agent needs a standard way to reach tools, and since late 2024 that standard is the **Model Context Protocol (MCP)** - an open protocol for connecting models to external tools and data sources. In December 2025 it was donated to the newly formed **Agentic AI Foundation** under the Linux Foundation, co-founded with Block and OpenAI and backed by AWS, Google, Microsoft, Salesforce and Snowflake. By early 2026 more than ten thousand MCP servers were indexed in public registries, and ChatGPT, Claude, Gemini, Microsoft Copilot and VS Code all support it.
+
+Why this matters to a non-engineer: the reason an agent can touch your calendar is no longer a Google-only arrangement. It is a protocol, which means tools you connect in one place tend to work in another. The companion standard for agents talking to *each other* is **A2A (Agent2Agent)**, covered in [Beyond Gemini](/learnings/online/google-ai/12-beyond-gemini/).
+</Aside>
+
+---
+
+## Models, apps, and the car analogy
+
+### Why the distinction matters
+
+The course uses a car analogy that is better than most, because it maps cleanly onto a confusion that genuinely trips people up - the difference between **Gemini the model** and **Gemini the app**.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">The model is the engine</div>
+    <ul>
+      <li>The technology that does the actual reasoning and generation.</li>
+      <li>It provides all the horsepower, and you never interact with it directly.</li>
+      <li>Gemini is <strong>a family</strong> of models, built into Google Search, Maps, Pixel and more - not one thing.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">The app is the car</div>
+    <ul>
+      <li>What you get into and drive, at gemini.google.com or on your phone.</li>
+      <li>The chat box and its features are the ignition, the steering wheel and the pedals.</li>
+      <li>When a new feature ships, you go back to the app and find it there.</li>
+    </ul>
+  </div>
+</div>
+
+Inside the app you can **switch models** to suit the task, which is the practical payoff of understanding the distinction.
+
+### Picking a model
+
+Different models have different strengths depending on how they were trained and how their learning was refined. The course's guidance:
+
+- Some models are good at **quickly providing all-around help**.
+- Others are better for **advanced tasks** - research, coding, or weighing the pros and cons of a complicated decision.
+- **More complex tasks require more computation**, so a more capable model may take longer to answer.
+
+<Aside type="caution">
+**Beyond the recording - the model names have already moved.** The demos in this certificate run on **Gemini 3.5 Flash** and **Gemini 3.1 Pro**. As of writing, the current generation is:
+
+| Model | Shape | Indicative API price per million tokens |
+| --- | --- | --- |
+| **Gemini 3.8 Flash** | The most capable Flash model, built for long-horizon software engineering and autonomous agents | $0.75 in / $3.75 out, an introductory rate running to 31 December 2026 |
+| **Gemini 3.1 Pro** | Advanced reasoning | $2 in / $12 out up to 200K tokens, rising to $4 / $18 above it |
+| **Gemini 3.5 Flash-Lite** | High throughput, routine work | $0.30 in / $2.50 out |
+
+Two changes matter more than the numbers. First, the naming no longer means what it used to: a current *Flash* model is more capable than an older *Pro* one, so "Pro is the good one" is no longer a safe heuristic - read the model card, not the suffix. Second, **Pro models left the free tier in April 2026**; free access is Flash and Flash-Lite only. Full detail in [the Gemini API chapter](/learnings/online/google-ai/11-gemini-api/).
+</Aside>
+
+### Temperature
+
+The one setting the course names explicitly, found in Google AI Studio rather than the Gemini app, and it takes care to say that temperature here is nothing to do with whether you need a jacket. It controls the **creativity of the output**.
+
+| Setting | Effect |
+| --- | --- |
+| **Lower temperature** | Output will likely be more predictable and consistent |
+| **Higher temperature** | More inventive output that could be less predictable |
+
+The sentence the course attaches to it is the most clear-eyed line in the whole first course: *AI doesn't know anything, it's just using its data and learning to predict what the best answer might be from a range of possible options.* Temperature is how widely it is allowed to range over those options.
+
+<Aside type="note">
+**Beyond the recording - what temperature is doing underneath.** At each step the model produces a probability for every possible next token. Temperature rescales those probabilities before one is picked: near zero, the highest-probability token wins almost every time, so the same prompt gives nearly the same answer; higher, the long tail gets a real chance.
+
+Two practical consequences the course does not mention:
+
+- **Low temperature is not "more accurate".** It is more *consistent*. A model confidently wrong at temperature 1.0 will be reliably, repeatably wrong at 0.1. If you want accuracy, that comes from grounding and verification, not from this dial.
+- **Match it to the job.** Data extraction, classification, anything where you will compare two runs: low. Brainstorming, naming, alternative phrasings: higher. Current Gemini models also expose a **thinking level** that controls how much internal reasoning the model does before answering, which is a separate and often more consequential dial than temperature.
+</Aside>
+
+---
+
+## The three limitations worth remembering
+
+The course devotes a full reading to limitations, and treats knowing them as part of being a responsible user rather than as a disclaimer. Three are named.
+
+### Bias in the data
+
+**Data bias** happens when training data is skewed, incomplete, or reflects historical and societal bias. Because output is directed by training data, the model can reproduce those biases - the course's example is connecting specific activities with certain age groups.
+
+The illustration is the one about offices: ask for an image of an office and you may consistently get a high-rise building, because the training data came from urban business hubs. The model then struggles with creative workspaces, home offices, or rural business settings.
+
+Two prompt techniques are offered as the fix:
+
+<Steps>
+
+1. **Be specific about the output you want.** Add context about your intended audience and their needs, and provide fair, balanced references for the model to follow.
+
+2. **Use follow-up prompts to correct biased output.** Point out the stereotype explicitly when you iterate, and ask the model to correct it.
+
+</Steps>
+
+### Knowledge cutoff
+
+**Knowledge cutoff** is the point in time when a model's training data ends; the model lacks information about anything after that date.
+
+The course is careful about an apparent contradiction here, and the distinction it draws is a good one. Models often *can* tell you about very recent events, because some perform a **live web search** to supplement their answer. The thing to hold on to: that is the difference between **what the model knows from training** and **what it can look up in the moment**. Its core knowledge is not continuously updated, so the cutoff remains a real constraint.
+
+Four techniques for working with it:
+
+| Technique | What to do |
+| --- | --- |
+| **Look up the cutoff** | Search online for the knowledge cutoff of the specific tool, so you know the boundary of its internal knowledge |
+| **Verify time-sensitive information** | Cross-reference any statistic, breaking news or recent event against a reliable external source |
+| **Specify your timeframe** | Instead of "What was the biggest song of the summer?", ask "What was the biggest song of the summer in 2025?" |
+| **Refine with follow-ups** | If an answer calls a product new when it is several years old, ask for more recent alternatives or clarification |
+
+### Drift
+
+**Drift** is the gradual decline in a model's accuracy and relevance as the real world changes, and the course splits it in two:
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Factual drift</div>
+    <ul>
+      <li>AI becomes less accurate over time because of its knowledge cutoff.</li>
+      <li>Example: advice on current fashion trends gets less useful the further you move from the training date.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Behavioural drift</div>
+    <ul>
+      <li>AI's behaviour changes over time as developers update models.</li>
+      <li>You may notice formatting, tone or conversational style changing even with the same prompts.</li>
+    </ul>
+  </div>
+</div>
+
+Three mitigations, all of them things you do in the prompt rather than settings you change:
+
+- **Provide accurate, up-to-date context** in your prompts, especially for fast-moving topics such as market trends or technology.
+- **Keep chats focused** by starting a new conversation for each task, which also resets the context window if a conversation has grown too long or the output has drifted off topic.
+- **Be explicit** with clear, specific instructions.
+
+<Aside type="caution">
+**Beyond the recording - behavioural drift has a practical sting.** If you save a prompt that works and reuse it for months, a model update can quietly change what it returns: the same prompt, a different format, and a downstream step that silently breaks. The defence is boring and effective - keep a couple of known inputs with known-good outputs, and run them after you notice anything odd. This is the manual version of what engineers call an **evaluation set**, and it is the single habit that separates people who trust their AI workflows from people who are repeatedly surprised by them.
+</Aside>
+
+The reading closes on the line the whole certificate turns on: *the best results come from a combination of human ingenuity and AI's capabilities.*
+
+---
+
+## The labs, and what they are for
+
+### How a lab runs
+
+The certificate includes more than twenty hands-on labs designed to mirror real workplace tasks. Each one has an expert-led video tutorial and written instructions you follow at your own pace, and the stated output across the certificate is a **portfolio of AI projects you can use at work right away**.
+
+The mechanics, since they shape what the labs can teach:
+
+<Steps>
+
+1. **Launch the lab** from a desktop or laptop - labs cannot be accessed on a phone or tablet.
+
+2. **Choose how to learn.** Either **seamless login**, which opens the AI tool in a new tab so you toggle back and forth, or **side-by-side learning**, a split screen with the tool on the left and the video and written instructions on the right. Side-by-side is the recommended option, and either completes the lab.
+
+3. **Use the sample prompts**, which are highlighted in grey in the written instructions. Copy one, paste it into the tool, then **edit the text in brackets** to personalise it. Note that keyboard shortcuts for copy and paste may not work in the labs - use right-click.
+
+4. **Bring your own files or use the samples.** A sample file opens via the file icon and **Use Template**, which saves it to your Google Drive; your own files come in through the **+** button and *Add from Drive*.
+
+5. **Mark as completed** at the end of the written instructions, then close the tab and go to the next item.
+
+</Steps>
+
+Two honest caveats the course includes. First, **sign into your Google account before prompting** or your work is not saved. Second, the tools are changing constantly, so what the video shows may not match your screen exactly - the written instructions are the authority.
+
+### Why this matters for these notes
+
+The labs are the reason this chapter and the next two exist in the shape they do. The course's own instruction is to **swap in your own details** rather than follow the demo literally, which is exactly right as pedagogy and exactly why the labs leave no recoverable trace. There is no transcript of the thing you built out of your own spreadsheet.
+
+<Aside type="tip">
+**Beyond the recording - what to keep from a lab so it survives.** Having now reconstructed several of these from the activity instructions alone, the thing worth salvaging is never the output. It is:
+
+- **the prompt, with your bracketed details still in it**, so it is reusable rather than a one-off;
+- **what you had to change** after the first response, because that is the actual lesson;
+- **what the tool got wrong**, since that is the part you will otherwise forget and rediscover.
+
+Three lines per lab in a notes file is enough, and it is the raw material for the **prompt library** the course recommends building in the [prompting chapter](/learnings/online/google-ai/02-prompting/).
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The certificate's framing:** AI as a **collaborator**, not a tool for one-off tasks. The real benefit is navigating across the steps of a problem and being set up to decide better, not completing clerical work faster. *Have a conversation instead of making a single request.*
+- **Three things collaboration gives you:** organise and understand information, create brand-new things, improve and refine your work.
+- **Your irreplaceable half:** context, emotional intelligence, judgment, accountability. AI can draft the presentation but only you know the audience.
+- **Where AI is the wrong tool:** financial, legal and compliance advice - too sensitive or risky. Consult a professional.
+- **The practitioner's trigger:** the feeling of *"ugh, I don't want to do that"* is the signal to try AI, not because it will finish the task but because it gets you past the resistance.
+- **The definition chain:** AI (the concept) → model (program trained on data, finds patterns, applies them to new situations) → LLM (handles requests it has never seen) → generative AI (creates new content) → multimodal (text, image, video, audio).
+- **Training data shapes everything.** The red-apples example: a model trained only on red apples misidentifies green ones. It is also one of two reasons two models differ - the other is **model architecture**.
+- **Beyond the recording:** an LLM is trained to **predict the next token**. Hence fluency is not knowledge, training and inference are separate events so the cutoff is hard, and everything including the bill is counted in tokens.
+- **Machine learning** lets a program find patterns without being programmed for every scenario. Applying that learning to new data is **inference**. Three approaches: **supervised** (human-labelled, known output), **unsupervised** (unlabelled, discover structure), **reinforcement** (trial and error against rewards and penalties). Modern models combine all three.
+- **Agents** combine model intelligence with access to tools, and take a **broader goal** rather than a task: check calendars, book a room, draft the email, send the invite.
+- **Beyond the recording:** agents reach tools through **MCP**, donated to the Linux Foundation's Agentic AI Foundation in December 2025 and now supported across ChatGPT, Claude, Gemini, Copilot and VS Code.
+- **Model versus app:** the model is the engine (reasoning and generation, a family built into Search, Maps and Pixel), the app is the car you drive. Switch models inside the app to suit the task; more complex tasks take longer.
+- **Beyond the recording:** the course's **3.5 Flash / 3.1 Pro** are superseded by **3.8 Flash** ($0.75/$3.75 per M tokens, introductory to 31 Dec 2026), **3.1 Pro** ($2/$12), **3.5 Flash-Lite** ($0.30/$2.50). Pro left the free tier in April 2026, and a current Flash now beats an older Pro - read the card, not the suffix.
+- **Temperature** controls creativity: lower is predictable and consistent, higher is inventive and less predictable. It rescales next-token probabilities. Low is not *accurate*, only *repeatable*.
+- **Three limitations.** **Bias** from skewed training data - fix by being specific and by naming the stereotype in a follow-up. **Knowledge cutoff** - the training end date; live web search is lookup, not knowledge, so verify anything time-sensitive and state your timeframe. **Drift** - factual (accuracy decays past the cutoff) and behavioural (tone and formatting change as models are updated).
+- **Beyond the recording:** behavioural drift breaks saved prompts silently. Keep a few known inputs with known-good outputs and re-run them - a hand-rolled **evaluation set**.
+- **The labs:** 20+ hands-on, desktop only, side-by-side recommended, grey sample prompts with bracketed text to personalise, sign in first or nothing saves, and the video may not match your screen - the written instructions win.
+</Aside>
+
+---
+
+*Next: [Prompting →](/learnings/online/google-ai/02-prompting/) - the persona-task-format-context framework, the three C's, iteration, and chaining prompts into a workflow.*

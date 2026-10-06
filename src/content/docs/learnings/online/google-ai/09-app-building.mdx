@@ -1,0 +1,304 @@
+---
+title: "Google AI 9 - App Building"
+description: "Vibe coding and the agentic AI underneath it, the workflow-mapping worksheet reproduced in full, a tour of Google AI Studio's chat and build modes, the three apps the course builds, brick-by-brick prompting, chaining models, and how to judge an app you did not write."
+sidebar:
+  label: "9 · App Building"
+  order: 9
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+*Google AI Professional Certificate - Course 7: AI for App Building*
+
+---
+
+The seventh course is where the certificate changes character. Until now every course has been about using AI on a task. This one is about **building a tool and keeping it**, and the instructor states the shift directly: this is the step from being a **user of AI** to being a **builder of your own AI-powered solutions**.
+
+The instructor leads Product and Design on Google AI Studio, and the opening question is well aimed. Think about a project you are working on now - ever felt like you have gone through the exact same motions before? The method on offer does not just help with the current project; it leaves you with **a custom AI tool you can go back to time and time again.**
+
+<Aside type="note">
+**The example that makes it concrete.** You have an annoying recurring task - resizing images for your monthly newsletter. You wish you had an app with a big Upload button where you drop the images in and get them back in the size and format you need. And while it is at it, you would love it to **rename the files to follow your team's naming conventions**. With vibe coding, you can build exactly that.
+
+The second half of that example is the important one. The naming convention is specific to your team, which is precisely why no commercial product does it and why building your own is worth two hours.
+</Aside>
+
+---
+
+## What vibe coding is
+
+### The definition, and why the name
+
+**Vibe coding** is using natural language to build software or apps with AI. The name, as the course explains it with some amusement, is because *all you have to do is know the vibe of what you want to achieve* - followed immediately by the admission that there is a little more to it than that.
+
+What it has in common with prompting is the useful part. Vibe coding requires you to:
+
+<div class="sc-flow col">
+  <div class="sc-node amber">Describe exactly what you need<span class="sub">the same precision the prompting framework asks for</span></div>
+  <div class="sc-node violet">Give AI details about your workflow<span class="sub">the context slot, applied to how you actually work</span></div>
+  <div class="sc-node green">Help it understand good results from bad ones<span class="sub">which is evaluation, and the part that makes it a build rather than a demo</span></div>
+</div>
+
+### Agentic AI is what makes it possible
+
+The course answers the obvious *how is this even possible* with a term from the [fundamentals](/learnings/online/google-ai/01-ai-fundamentals/): **agentic AI**. It goes beyond responding to prompts - **it takes action on your behalf, under your supervision**. After you describe what you need in normal, non-technical words, the agent handles the technical work: **writing code, building the interface, and making sure everything works together**.
+
+### How fast this is moving
+
+The instructor's own anecdote is the best argument in the course for not calibrating your expectations on last year's experience. A year earlier, when the models had just come out, he wanted to see whether he could rebuild a childhood game. He did not know the limits of what was possible, so for **three days** he persevered through all sorts of errors, and somehow by the end the game existed.
+
+Today, he says, if he gives the model **one screenshot**, it can make the entire game for him. *It's wild how fast these things are moving.*
+
+<Aside type="tip">
+**Beyond the recording - the honest scope of what you get.** Two symmetrical mistakes are worth heading off, because people make one or the other and both waste a weekend.
+
+**It is more real than it sounds.** This is not a mock-up or a no-code form builder. You get an actual web application - running code, a real interface, logic that executes - and you can download it, put it in a repository, and host it yourself. It is software, and it is yours.
+
+**It is less finished than it looks.** The thing you get in ten minutes is a **prototype**: a functional first version to click around and test. The deployment course says so explicitly - *some features may be incomplete or not work correctly yet, and that's completely normal.* The distance from working prototype to tool your team depends on is the whole of [course 8](/learnings/online/google-ai/10-app-deployment/), and it is longer than the distance you just covered.
+
+**And the most useful question the course never asks: should this be an app at all?** The honest answers, in order of how often they are right:
+
+| If the task is... | Build this |
+| --- | --- |
+| Done once, or rarely | **Nothing.** Just prompt Gemini and move on. The worksheet below exists to tell you this |
+| Mostly arithmetic on a table | **A spreadsheet**, possibly with Gemini in Sheets. Faster to build, easier to fix, and everyone can already read it |
+| Answering questions about a fixed set of documents | **A Gemini Notebook.** Grounded, cited, zero build time |
+| A repeated multi-step judgement with a consistent shape | **An app.** This is the actual sweet spot |
+| Anything touching money, personal data, or a decision about a person | **Stop and read** the compliance section of [responsible AI](/learnings/online/google-ai/03-responsible-ai/) first |
+</Aside>
+
+---
+
+## Finding the right task: the workflow worksheet
+
+Before any building, the course has you map your own work. This is the one activity whose artefact survives in full - a worksheet called **Map your workflow** - and it is the best single thing in the course, because it is the step that prevents you building something impressive and useless.
+
+### The five steps
+
+<Steps>
+
+1. **List three goals you want to accomplish at work** this month. The worksheet's own examples: prepare a quarterly performance report; build a social media calendar for a client; research ideas for products or services to expand the business; revamp the onboarding process; improve sales conversion rates; review active vendor contracts and assess for renewal; write help centre articles.
+
+2. **Map out the required tasks.** Break each goal into smaller, concrete steps - be specific about what you will actually be doing. The worked example, for a quarterly performance report: identify key data sources and metrics; analyse performance trends by comparing current KPIs to the previous quarter; develop visual charts and graphs; draft the report focusing on growth areas and opportunities; create a summary of the biggest wins and challenges; present the findings.
+
+   You can also have Gemini do the breaking down: *"Before the end of the month, I want to [goal description]. Acting as an expert project manager, list five tactical tasks I need to do to accomplish this goal."*
+
+3. **Consider how AI can help** with each task, and note it. The worksheet's examples against that same report: clean up data sources by identifying duplicate data, missing values and formatting issues; calculate percentage shifts, growth rates and variance against the previous quarter; create a visualisation such as a bar chart; generate a report outline based on key findings; synthesise findings to suggest the most important takeaways; improve your presentation delivery and give you feedback.
+
+4. **Rate every task** against three attributes. Tasks scoring highly on *any* attribute are good candidates for AI. Tasks scoring highly on **multiple** attributes, or appearing **across multiple goals**, are the best candidates for an **app**.
+
+5. **Identify where an app provides most value** by looking for patterns and pain points across the completed table.
+
+</Steps>
+
+### The three attributes
+
+| Attribute | The question | Low | Medium | High |
+| --- | --- | --- | --- | --- |
+| **Time spent** | How long does this task take? | Minutes | An hour | Several hours |
+| **Frequency** | How often do you do it? | A few times a month | Weekly | Daily |
+| **Repetitiveness** | Is it basically the same every time? | Different every time | Some repeated elements | Nearly identical every time |
+
+### Reading your own table
+
+The worksheet's guidance on step 5 is more subtle than "pick the highest scores", and the nuance is the valuable bit:
+
+- **High on all three** is an obvious candidate - but it is **not a requirement**.
+- **A repetitive task you do every day (high frequency) that only takes a few minutes (low time spent) can still be a good app**, because the cost is the interruption, not the duration.
+- **Tasks appearing across multiple goals are high-impact activities**, since one app serves several objectives.
+- **High across attributes *and* across multiple goals** are your prime candidates.
+
+Everything else: prompt Gemini instead of building anything.
+
+<Aside type="tip">
+**Beyond the recording - the attribute the worksheet leaves out.** Three columns is a good framework and it is missing the one that predicts failure: **how stable is the task?**
+
+A task whose rules change every quarter will produce an app you rebuild every quarter, and the rebuilding will cost more than the task ever did. The honest fourth column is *would this still work the same way in six months?* - and a *no* should disqualify a candidate that scores high on everything else.
+
+Two smaller additions from the same direction:
+
+- **Who else does this?** A task three colleagues also do turns a personal tool into something worth the extra effort of [proper deployment](/learnings/online/google-ai/10-app-deployment/). A task only you do should stay scrappy.
+- **What happens when it is wrong?** A tool that drafts something you will read before sending can be imperfect. A tool whose output goes straight to a customer or into a financial report cannot, and belongs in a different category of care entirely.
+</Aside>
+
+---
+
+## A tour of Google AI Studio
+
+The course introduces **Google AI Studio** at `aistudio.google.com` and notes immediately that the page looks different from Gemini - because it is for a different purpose.
+
+<div class="sc-split">
+  <div class="sc-panel eff">
+    <div class="head">Chat</div>
+    <ul>
+      <li>Where you write prompts and get output, as in any chat.</li>
+      <li>On the right, settings to modify your outputs: <strong>select from all of the newest models</strong>, add <strong>system instructions</strong> that the model processes before your prompt, adjust <strong>temperature</strong>, and more.</li>
+      <li>This is where the <a href="/learnings/online/google-ai/01-ai-fundamentals/">temperature control</a> from the fundamentals course actually lives.</li>
+    </ul>
+  </div>
+  <div class="sc-panel rsp">
+    <div class="head">Build</div>
+    <ul>
+      <li>Where the course spends its time. A text box at the top is where you prompt the models to vibe code.</li>
+      <li>It works like any other AI tool, except that what comes back is an application.</li>
+      <li>You can write your own prompt or start from one of the samples below the box.</li>
+    </ul>
+  </div>
+</div>
+
+### What to pay attention to while building
+
+The course names four things to watch, and they double as the actual curriculum of the course:
+
+<Steps>
+
+1. **The natural flow of conversation** between you and AI Studio. You iterate in plain language to refine requirements, test the output, and improve the result.
+
+2. **How specific your feedback needs to be.** The sentence to remember: **vague descriptions yield generic results.** The more precise you are about what you need, the more likely the app matches it.
+
+3. **Your three roles.** *You are the director, user, and tester of your app* - and AI is your developer tool.
+
+4. **The speed.** In the time it takes to have a chat over coffee, you go from *"I wish there was a tool for this"* to *"here's my custom solution."*
+
+</Steps>
+
+<Aside type="note">
+**Beyond the recording - what Build mode is doing while you watch.** The course shows the surface. Underneath, as of writing:
+
+- **An agent with project memory.** Build mode runs on the **Antigravity Agent**, which holds context across multiple files and manages dependencies - which is why your fifth request does not undo your second.
+- **It produces a real stack.** Full-stack web apps come out as a **React frontend with a Node.js backend**, with npm packages available; it can also produce **native Android apps in Kotlin and Jetpack Compose**.
+- **Four ways to change things**, not one. Chat prompts are the obvious one. **Annotation mode** lets you click a UI element and describe the change you want to *that* thing, which is far more precise than describing it in words. The **Code tab** lets you edit directly. And **GitHub sync** gives two-way synchronisation with a repository.
+- **Starting points beyond a blank box:** an *I'm Feeling Lucky* button, remixing a project from the gallery, or importing from GitHub.
+- **Real backend plumbing is available:** Firebase Firestore and Authentication, Google Workspace APIs with OAuth configured for you, and real-time multiplayer features.
+- **Your API key is handled for you, correctly.** AI Studio configures your Gemini API key as a **server-side secret**, visible in a **Secrets panel** in settings. Your app's Gemini calls are made from server-side code, *so it is never exposed in the browser*. When you share the app, other people can use it **but cannot see your key**. This is the single most important engineering detail in both app courses - see [the Gemini API chapter](/learnings/online/google-ai/11-gemini-api/) for why it matters so much.
+- **Two caveats worth knowing:** there is **no real-time collaborative editing** - teams coordinate through GitHub - and access to the microphone or camera requires declaring permissions in `metadata.json`.
+</Aside>
+
+---
+
+## The three apps
+
+The course builds three apps together. The labs are not recoverable, but the specifications are, and they are a good catalogue of what this kind of tool is for - one decision aid, one generator, one dashboard.
+
+| App | What it does | The customisation that makes it yours |
+| --- | --- | --- |
+| **The Tiebreaker** | Helps make tricky decisions by analysing your options so you feel good about the choice | You customise it to **your preferred approach to decision-making** - side-by-side comparison of two options, or a deep cost-benefit analysis |
+| **Marketing Materials Generator** | Creates ads, stickers, banners, posters and other visuals for a launch, a promotion or an announcement | Speeds up the creative process so you can produce **custom assets for every segment of your audience** |
+| **Interactive Dashboard** | Visualises your data fast - no more static graphs or charts you have to refresh every day | **Keeps the visualisations fresh so anyone can get answers when they need them** |
+
+<Aside type="note">
+**Beyond the recording - why these three, and what each one teaches.** The selection looks arbitrary and is not. Each app exercises a different capability, and knowing which is which tells you what to reuse.
+
+**The Tiebreaker is a structured-reasoning app.** No data, no images - its entire value is that it applies *the same framework every time*, which is the thing humans are worst at. The reusable pattern is **an app that enforces a method**: your checklist for reviewing a contract, your framework for triaging a request, your criteria for a go/no-go. The design question is not *what should it tell me* but *what should it always ask me*.
+
+**The Marketing Materials Generator is a multimodal app.** It uses the [image generation](/learnings/online/google-ai/07-content-creation/) from course 5 inside something with a button. The reusable pattern is **the same transformation applied repeatedly with one thing varying** - per audience segment, per region, per product. This is where the per-image cost becomes real, since generated media has no free tier.
+
+**The Interactive Dashboard is a data app**, and the hardest of the three to get right. The phrase *no more static graphs you have to refresh every day* is the actual value: the work it removes is the refreshing, not the charting. It is also the app where [verification](/learnings/online/google-ai/08-data-analysis/) matters most - the deployment course's fake-revenue-number failure happened in exactly this kind of app.
+
+The pattern worth stealing across all three: **each one takes something you already do inconsistently and makes it consistent.** That, rather than automation, is what these tools are actually good for.
+</Aside>
+
+---
+
+## Brick by brick
+
+The most practical advice in the course comes from a practitioner and contradicts the instinct to describe the whole app in one glorious prompt.
+
+**Always break it up** - in terms of the different blocks of the app you are trying to make. The procedure:
+
+<Steps>
+
+1. **Tell the model the whole project first**, so it understands the whole picture or the whole story of the thing you are about to make.
+
+2. **Then say: *"Cool, I have this app I'm going to make. Let's start with the first part."***
+
+3. **When it finishes that, say *"now let's do the second part."*** Build it brick by brick.
+
+</Steps>
+
+Two reasons given, and the second is the one people underrate:
+
+- **It will probably get it right**, because it is focusing on the very specific task you gave it.
+- **It is easier to correct errors.** Ask for the whole big thing and you do not know where it went wrong. Go brick by brick and **you know exactly which brick caused the fault.**
+
+The closing advice: *be a little patient with it and break it up into steps just like you would if you were to give any person a really complex task.*
+
+<Aside type="tip">
+**Beyond the recording - the order to build the bricks in.** Breaking it up is right; the sequence matters too, and the sequence that works is counterintuitive:
+
+1. **The ugliest working version of the core loop first.** One input, one output, no styling, no extras. If the central thing does not work, nothing else is worth building.
+2. **Then the edge cases.** Empty input, wrong file type, a number where text was expected. These are what break an app in front of someone else, and they are cheap to add now and expensive to retrofit.
+3. **Then the second feature.** Only once the first is solid.
+4. **Appearance last.** It is the most satisfying to prompt for and the least consequential, and every change you make afterwards risks undoing it.
+
+The temptation runs exactly backwards, because a good-looking shell appears in one prompt and feels like progress. It is the most common way these projects stall: three hours in you have something beautiful that does not do the thing.
+
+One more habit worth forming: **when something works, say so and ask it to leave it alone.** *"The upload and resize flow is working correctly now. Do not change it. Next, add the renaming step."* Models will cheerfully refactor working code while adding a feature, and that sentence prevents most of it.
+</Aside>
+
+---
+
+## Chaining models
+
+A practitioner describes the capability that makes AI Studio more than a code generator: **you can combine models.** Generate an image, bring it to life with **Veo**, create a story around it with Gemini, pass the video back.
+
+And the reassuring part: *the cool thing about AI Studio is you don't necessarily need to know how to chain those things. You just need to describe your idea.* Say *"I have the story, I want to imagine the storyboard, then I want to animate that storyboard"* and it ties those models together for you.
+
+This is the same idea as [prompt chaining](/learnings/online/google-ai/02-prompting/) with the links being different models rather than different prompts - and it is how the deployment course's storyboard app works.
+
+---
+
+## Owning what you built
+
+The course promises something it then mostly leaves to the labs: you will learn to **evaluate the code AI developed, own the results, and maintain your app over time.** That is the right promise, and it deserves an answer that does not assume you can read code.
+
+<Aside type="caution">
+**Beyond the recording - how to judge an app you did not write.** You cannot audit the code, and you do not have to. Five checks, none of which require programming:
+
+**1. Test it like someone trying to break it.** Empty input. A huge file. The wrong file type. Text where a number goes. A date in the past. Nothing at all, then submit. Most defects in a vibe-coded app live here, because the model built for the happy path you described.
+
+**2. Check one output by hand.** Pick a single number or result, work it out yourself, and compare. This is the check that catches the worst class of failure, as the deployment course demonstrates when a dashboard invents a product category.
+
+**3. Ask the model to explain its own app back to you.** *"Explain in plain language what this app does, step by step, including where the data comes from and what happens when something fails."* Two things come out of this: you find out whether it matches what you asked for, and the explanation is the documentation you will want in four months.
+
+**4. Ask it what it is worried about.** *"What are the three most likely ways this app gives a wrong or confusing result? What did you have to assume because I didn't tell you?"* The second question is the valuable one - the assumptions it filled in silently are where your app differs from your intention.
+
+**5. Know where your data goes.** Does it leave the browser? Does it get stored? Is anything sent to a third party? Ask directly, and read the answer against the [privacy rules](/learnings/online/google-ai/03-responsible-ai/) you are working under. Before uploading anything sensitive, the deployment course's own instruction applies: **always check your organisation's policies to confirm you are using an approved, secure environment.**
+
+**And on maintenance**, three habits that take minutes and save afternoons:
+
+- **Keep the prompt that built it.** The final build prompt *is* your specification. The deployment course formalises this as a **spec doc**, and it is the thing that lets you rebuild rather than repair.
+- **Save a copy that works** before you ask for a big change - download the ZIP or commit to GitHub. Agents sometimes break things while improving them.
+- **Expect the model underneath to change.** A pinned model version will be deprecated eventually, and behavioural drift from [the fundamentals](/learnings/online/google-ai/01-ai-fundamentals/) arrives as *"it used to format that correctly."* Keep two known inputs with known-good outputs and re-run them occasionally.
+</Aside>
+
+---
+
+## Revision summary
+
+<Aside type="tip">
+**One-minute recap**
+
+- **The shift:** from **user of AI** to **builder of your own AI-powered solutions**. The output is not one finished project but a custom tool you return to.
+- **The example:** an app with a big Upload button that resizes newsletter images **and renames the files to your team's naming convention** - the team-specific half is exactly why no product does it for you.
+- **Vibe coding** = using natural language to build software with AI. Like prompting, it requires you to **describe exactly what you need**, **give details about your workflow**, and **help it tell good results from bad**.
+- **Agentic AI** makes it possible: it goes beyond responding and **takes action on your behalf, under your supervision** - writing the code, building the interface, making it work together.
+- **The pace:** a year ago the instructor spent **three days** of errors rebuilding a childhood game. Now **one screenshot** produces the whole game.
+- **Beyond the recording:** you get **real software** you can download and host - and a **prototype**, not a product. And ask first whether it should be an app at all: rare task → just prompt; arithmetic on a table → a spreadsheet; questions about fixed documents → a Notebook; **repeated multi-step judgement with a consistent shape → an app**.
+- **The Map your workflow worksheet, five steps:** list three goals for the month; break each into concrete tasks (or have Gemini do it - *"acting as an expert project manager, list five tactical tasks"*); note how AI could help each; rate every task; then find where an app adds most value.
+- **Three attributes:** **time spent** (minutes / an hour / several hours), **frequency** (a few times a month / weekly / daily), **repetitiveness** (different every time / some repeated elements / nearly identical).
+- **Reading the table:** high on all three is obvious but **not required** - a daily task taking only minutes can still deserve an app, because the cost is the interruption. **Tasks appearing across multiple goals are high-impact.** High on attributes **and** across goals = prime candidate. Everything else: just prompt.
+- **Beyond the recording - the missing fourth column: how stable is the task?** Rules that change quarterly produce an app you rebuild quarterly. Also: who else does this (shared tasks justify proper deployment), and what happens when it is wrong.
+- **AI Studio** at `aistudio.google.com`. **Chat**: prompts plus settings - newest models, **system instructions** processed before your prompt, temperature. **Build**: the text box where you vibe code, or start from a sample.
+- **Four things to watch:** the natural conversational flow; **vague descriptions yield generic results**; you are **director, user and tester** with AI as your developer tool; and the speed - coffee-chat length from idea to prototype.
+- **Beyond the recording - what Build mode really is:** the **Antigravity Agent** holding context across files; output as **React plus Node.js**, or native Android in Kotlin and Compose; four ways to edit - chat, **annotation mode** (click the element, describe the change), the **Code tab**, and **GitHub sync**; Firestore, Auth and Workspace APIs available; and your **API key kept as a server-side secret**, never exposed in the browser, invisible to people you share with.
+- **The three apps:** **The Tiebreaker** (tricky decisions, customised to side-by-side comparison or deep cost-benefit), the **Marketing Materials Generator** (ads, stickers, banners, posters - custom assets per audience segment), and the **Interactive Dashboard** (fast visualisation, nothing to refresh daily, anyone can get answers).
+- **Beyond the recording:** each teaches a different pattern - **an app that enforces a method**, **the same transformation applied repeatedly with one variable**, and **a data app** (the hardest, and where verification matters most). All three make something you already do inconsistently consistent.
+- **Brick by brick:** tell the model the **whole project** first, then *"let's start with the first part"*, then the second. It gets each part right because it is focused, and **you know exactly which brick caused the fault.** Be patient, as you would with a person given a complex task.
+- **Beyond the recording - build order:** ugliest working version of the **core loop** first, then the **edge cases**, then the second feature, **appearance last**. The temptation runs backwards, and that is how these projects stall. And when something works, say *"do not change it"*.
+- **Chaining models:** image → **Veo** → story in Gemini → video back. In AI Studio you **describe the idea** and it ties the models together.
+- **Beyond the recording - judging an app you did not write:** test it like someone trying to break it; **check one output by hand**; ask it to **explain its own app back to you** (that is your documentation); ask **what it had to assume because you did not say**; and find out **where your data goes**. Maintenance: **keep the prompt that built it**, save a working copy before big changes, and expect the model underneath to drift.
+</Aside>
+
+---
+
+*Next: [App deployment →](/learnings/online/google-ai/10-app-deployment/) - the three-phase workflow: plan with a spec doc, debug what breaks, then ground, gate and share it.*
