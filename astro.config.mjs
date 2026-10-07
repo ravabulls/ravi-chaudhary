@@ -255,7 +255,7 @@ export default defineConfig({
 							],
 						},
 						{
-							label: 'German (A1)', translations: { de: 'Deutsch (A1)' },
+							label: 'German (A1-A2)', translations: { de: 'Deutsch (A1-A2)' },
 							collapsed: true,
 							items: [
 								{ label: 'How this works', translations: { de: 'So funktioniert es' }, link: 'learnings/german' },
@@ -309,6 +309,19 @@ export default defineConfig({
 										{ label: 'Tag 26', link: 'learnings/german/a1/tag-26' },
 										{ label: 'Tag 27', link: 'learnings/german/a1/tag-27' },
 										{ label: 'Tag 28', link: 'learnings/german/a1/tag-28' },
+									],
+								},
+								{
+									label: 'Woche 5', translations: { de: 'Woche 5' },
+									collapsed: true,
+									items: [
+										{ label: 'Tag 29', link: 'learnings/german/a1/tag-29' },
+										{ label: 'Tag 30', link: 'learnings/german/a1/tag-30' },
+										{ label: 'Tag 31', link: 'learnings/german/a1/tag-31' },
+										{ label: 'Tag 32', link: 'learnings/german/a1/tag-32' },
+										{ label: 'Tag 33', link: 'learnings/german/a1/tag-33' },
+										{ label: 'Tag 34', link: 'learnings/german/a1/tag-34' },
+										{ label: 'Tag 35', link: 'learnings/german/a1/tag-35' },
 									],
 								},
 							],
