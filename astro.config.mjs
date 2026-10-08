@@ -59,6 +59,10 @@ export default defineConfig({
 		'/learnings/german/a1/tag-54': '/learnings/german/a/a2/tag-54',
 		'/learnings/german/a1/tag-55': '/learnings/german/a/a2/tag-55',
 		'/learnings/german/a1/tag-56': '/learnings/german/a/a2/tag-56',
+		'/learnings/german/a1/tag-57': '/learnings/german/a/a2/tag-57',
+		'/learnings/german/a1/tag-58': '/learnings/german/a/a2/tag-58',
+		'/learnings/german/a1/tag-59': '/learnings/german/a/a2/tag-59',
+		'/learnings/german/a1/tag-60': '/learnings/german/a/a2/tag-60',
 	},
 	site: 'https://www.ravichaudhary.eu',
 	integrations: [
@@ -435,6 +439,16 @@ export default defineConfig({
 														{ label: 'Tag 54', link: 'learnings/german/a/a2/tag-54' },
 														{ label: 'Tag 55', link: 'learnings/german/a/a2/tag-55' },
 														{ label: 'Tag 56', link: 'learnings/german/a/a2/tag-56' },
+													],
+												},
+												{
+													label: 'Woche 9', translations: { de: 'Woche 9' },
+													collapsed: true,
+													items: [
+														{ label: 'Tag 57', link: 'learnings/german/a/a2/tag-57' },
+														{ label: 'Tag 58', link: 'learnings/german/a/a2/tag-58' },
+														{ label: 'Tag 59', link: 'learnings/german/a/a2/tag-59' },
+														{ label: 'Tag 60', link: 'learnings/german/a/a2/tag-60' },
 													],
 												},
 											],
