@@ -1,0 +1,363 @@
+---
+title: MPR Drishti - Leistungsanalyse für die Steuerverwaltung
+description: Eine durchgängige Analyse-Pipeline, die die monatlichen Leistungsberichte der indischen Verwaltung für indirekte Steuern erfasst, prüft und erklärt - 17.626 Berichte, 190 Berichtsarten, 11 Dashboards.
+sidebar:
+  label: MPR Drishti
+  order: 1
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Eine durchgängige Analyse-Pipeline, die die monatlichen Leistungsberichte der indischen Verwaltung für indirekte Steuern erfasst, prüft und erklärt: von der automatisierten Datenerfassung bis zu Dashboards, die eine klare Geschichte erzählen.</p>
+
+<Badge text="Datenerfassung & Automatisierung" variant="note" /> <Badge text="Data Engineering" variant="note" /> <Badge text="Datenqualität" variant="note" /> <Badge text="KPI-Design" variant="note" /> <Badge text="Visualisierung & Storytelling" variant="note" /> <Badge text="Analytik im öffentlichen Sektor" variant="note" />
+
+**Entstanden in:** meiner letzten Funktion im Staatsdienst, als Data Analytics Officer bei der CBIC ([zum Werdegang](/de/resume/experience/)) · **Gebaut für:** Beamtinnen, Beamte und Führungskräfte, die die monatlichen Leistungsbesprechungen vorbereiten und leiten · **Der Name:** *Drishti* bedeutet auf Hindi „Sicht“ oder „Weitblick“.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">17.626</span><span class="l">Berichtsdateien, automatisch erfasst und geordnet</span></div>
+  <div class="pj-stat"><span class="n">190</span><span class="l">Berichtsarten, jede mit eigenem Tabellenaufbau</span></div>
+  <div class="pj-stat"><span class="n">3</span><span class="l">Steuerarten: GST, Central Excise und Service Tax</span></div>
+  <div class="pj-stat"><span class="n">14 + 1</span><span class="l">Dienststellen und die Zone, verglichen mit ganz Indien</span></div>
+  <div class="pj-stat"><span class="n">11</span><span class="l">interaktive Dashboards: eines je Aufgabenbereich plus eine Zonenübersicht</span></div>
+  <div class="pj-stat"><span class="n">~2 s</span><span class="l">pro Bericht, unbeaufsichtigt erfasst</span></div>
+</div>
+
+<Aside type="caution" title="Zu den Daten auf dieser Seite">
+MPR Drishti arbeitet mit internen Daten der Verwaltung. Diese Seite zeigt deshalb **die Methode und die Fähigkeiten, niemals die Daten**. Alle Zahlen und Namen von Dienststellen in den Mock-ups sind erfunden. Es gibt keine echten Berichtszahlen, keine Angaben zu Steuerpflichtigen, keine Screenshots der echten Dashboards oder des Portals und keine Links zum Tool oder seinem Code. Das Tool wurde gebaut, um die MPR-Daten der CBIC auszuwerten; es ist kein offizielles Produkt der CBIC.
+</Aside>
+
+## Auf einen Blick
+
+Indiens Verwaltung für indirekte Steuern misst die Leistung ihrer Dienststellen mit **Monthly Performance Reports (MPRs)**, also monatlichen Leistungsberichten: Hunderte einzelner Berichte, die auf einem passwortgeschützten internen Portal Seite für Seite abgerufen werden. Ich habe um diese Berichte eine durchgängige Analyselösung gebaut. Ein Automatisierungstool erfasst jeden Bericht, den eine Zone braucht, und ein Offline-Dashboard verwandelt mehr als 17.000 davon in geprüfte, vergleichbare Kennzahlen. Es zeigt, wie jede Dienststelle dasteht, wie die Zone im Vergleich zu ganz Indien abschneidet und wo Handlungsbedarf besteht.
+
+<CardGrid>
+  <Card title="1 · MPR Downloader" icon="download">
+    **Datenerfassung.** Eine einzige Datei zum Doppelklicken, ohne Installation. Die Nutzerin oder der Nutzer meldet sich an; danach arbeitet das Tool die Berichtsseiten so ab, wie es ein Mensch tun würde, für jede gewählte Dienststelle und jeden Monat. Jeder Bericht landet in einer einheitlichen Ordnerstruktur, der Lauf lässt sich jederzeit anhalten und fortsetzen und endet mit einer Vollständigkeitsprüfung.
+  </Card>
+  <Card title="2 · MPR Drishti" icon="magnifier">
+    **Analyse und Storytelling.** Eine einzige Offline-Webseite: Ordner darauf ziehen, und jedes Dashboard füllt sich von selbst. Sie liest, prüft und verknüpft die Berichte zu Kennzahlen für jede Dienststelle, die Zone und ganz Indien und zeigt sie als Folien-Dashboards mit Überschriften, die aus den Daten entstehen, dazu Excel- und PDF-Export.
+  </Card>
+</CardGrid>
+
+## Die Herausforderung
+
+- **Daten in einzelnen Webseiten eingesperrt.** Jeder Bericht ist eine eigene Seite. Um ihn zu öffnen, wählt man Jahr, Monat, Steuerart, Zone und Dienststelle aus fünf Auswahllisten und klickt dann auf eine Schaltfläche.
+- **Menge und Vielfalt.** Das Bild einer einzigen Zone braucht Tausende Berichte aus 190 Berichtsarten, 3 Steuerarten und 15 berichtenden Einheiten, und jede Berichtsart hat ihren eigenen Tabellenaufbau mit verbundenen Kopfzeilen.
+- **Formate, die sich ändern.** Mehrere Berichtsfamilien wurden um 2023-24 neu gestaltet, sodass sich Jahre nicht einfach nebeneinanderstellen lassen.
+- **Keine eingebauten Prüfungen oder Vergleiche.** Berichte können vorläufig, doppelt, falsch abgelegt oder in sich widersprüchlich sein. Wer Dienststellen miteinander oder die Zone mit dem nationalen Bild vergleichen wollte, musste Zahlen von Hand in Tabellen übertragen.
+
+### Vorher und nachher
+
+| | Vorher | Nachher |
+|---|---|---|
+| **Daten erfassen** | Fünf Auswahllisten und ein Klick für jeden Bericht, jede Dienststelle, jeden Monat | Einmal auswählen; die Berichte laden unbeaufsichtigt, etwa 2 Sekunden pro Stück |
+| **Ordnen** | Dateinamen vom Portal, gespeichert, wo sie gerade landeten | Ein Ordnerbaum: Steuerart → Zone → Haushaltsjahr → Dienststelle → Bericht |
+| **Prüfen** | Fehler fielen zufällig auf, wenn überhaupt | Jede Datei geprüft: Vollständigkeit, falscher Monat oder falsche Einheit, Dubletten, Summen, die nicht aufgehen |
+| **Vergleichen** | Tabellen von Hand, Bericht für Bericht | Jede Dienststelle gegen die Zone, das Vorjahr und ganz Indien, über alle Aufgabenbereiche |
+| **Berichten** | Statische Tabellen | Dashboards mit Schlussfolgerungen und Handlungspunkten, eine Excel-Arbeitsmappe und PDF-Folien |
+
+## Mein Vorgehen: eine Pipeline in sechs Stufen
+
+Jede Stufe des Analyse-Lebenszyklus ist abgedeckt und von Grund auf selbst gebaut: erfassen, ordnen, prüfen, verknüpfen, analysieren und kommunizieren.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">1 · Erfassen<span class="sub">Browser-Automatisierung</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">2 · Ordnen<span class="sub">Ordnerschema, Protokolle</span></div>
+    <div class="sc-bnd">Downloader<br />dann<br />Drishti</div>
+    <div class="sc-node">3 · Prüfen<span class="sub">Datei- und Rechenprüfungen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">4 · Verknüpfen<span class="sub">einlesen, zuordnen, angleichen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">5 · Analysieren<span class="sub">KPIs, Trends, Benchmarks</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">6 · Kommunizieren<span class="sub">Dashboards, Excel, PDF</span></div>
+  </div>
+  <figcaption>Stufe 1 und 2 übernimmt der MPR Downloader, Stufe 3 bis 6 das Dashboard MPR Drishti.</figcaption>
+</div>
+
+<Steps>
+
+1. **Erfassen - automatisierte Datensammlung.** Das Tool öffnet ein eigenes Edge-Browserfenster und wartet, bis sich die Person angemeldet hat. Ein Passwort sieht oder speichert es nie. Innerhalb dieser angemeldeten Sitzung wählt es für jeden Bericht Jahr, Monat, Steuerart, Zone und Dienststelle, in gleichmäßigem Tempo. Es wartet, bis jede Seite fertig geladen ist, wiederholt fehlgeschlagene Abrufe, pausiert, wenn das Portal langsam ist, und bittet um eine neue Anmeldung, wenn die Sitzung abläuft.
+   <Badge text="Browser-Automatisierung" variant="tip" /> <Badge text="PowerShell" variant="tip" /> <Badge text="Robustes Scraping" variant="tip" />
+
+2. **Ordnen - ein einheitliches Ablageschema.** Jeder Bericht landet unter *Steuerart / Zone / Haushaltsjahr / Dienststelle / Bericht*. Die Downloads sind inkrementell: Vorhandene Dateien werden übersprungen, und Kopien, die vor der monatlichen Abgabefrist der Dienststellen gespeichert wurden, werden bei einem späteren Lauf automatisch erneuert. Jeder Versuch wird protokolliert (JSON Lines und CSV), und jeder Lauf endet mit einem Abgleich gegen das, was das Portal anbietet.
+   <Badge text="Data Engineering" variant="tip" /> <Badge text="Inkrementelle Ladevorgänge" variant="tip" /> <Badge text="Prüfpfad" variant="tip" />
+
+3. **Prüfen - erst kontrollieren, dann verwenden.** Jede Datei wird auf falschen Monat oder falsche Einheit, Dubletten, in Excel neu gespeicherte Dateien, fehlende Tabellen und unvollständige Sätze geprüft. Auch die innere Rechnung wird kontrolliert: Anfangsbestand + Zugänge − Erledigungen muss den Endbestand ergeben, Summen müssen der Summe ihrer Teile entsprechen, und Beträge müssen in der richtigen Einheit stehen. Jeder Befund sagt, was getan wurde und was zu tun ist.
+   <Badge text="Datenqualität" variant="tip" /> <Badge text="Abstimmung" variant="tip" /> <Badge text="Anomalieerkennung" variant="tip" />
+
+4. **Verknüpfen - von Tabellen zu einem Modell.** HTML-Berichtstabellen mit verbundenen Kopfzellen werden in ein Raster eingelesen, und jede Zahl erhält einen stabilen Schlüssel (Tabelle · Zeilenpfad · Spaltenpfad). Die Namen der Dienststellen werden trotz abweichender Schreibweisen zugeordnet. Alte und neue Berichtsformate werden angeglichen, damit sich Jahre vergleichen lassen, die Dienststellen sich zur Zonensumme addieren und ganz Indien als Vergleichsmaßstab dient.
+   <Badge text="Parsing" variant="tip" /> <Badge text="Entity Matching" variant="tip" /> <Badge text="Datenmodellierung" variant="tip" />
+
+5. **Analysieren - Kennzahlen, die für Führungskräfte zählen.** Ich habe für jeden Aufgabenbereich eigene KPIs entworfen: Erledigungs- und Beitreibungsquoten, Wachstum gegenüber dem Vorjahr, Zielerreichung gegen gleitende Ziele, Altersstruktur offener Fälle sowie Anteile und Konzentration (etwa den Anteil der 25 größten Steuerpflichtigen). Jede Dienststelle wird gegen die Zone eingeordnet und die Zone gegen ganz Indien.
+   <Badge text="KPI-Design" variant="tip" /> <Badge text="Benchmarking" variant="tip" /> <Badge text="Fachanalyse" variant="tip" />
+
+6. **Kommunizieren - Schlussfolgerungen statt nur Diagramme.** Elf Dashboards im Folienformat mit selbst gebauten Diagrammen: Balken, gestapelte Balken, Linien, Bullet-Charts, Heatmap-Scorecards und Sankey-Flüsse. Überschriften und bis zu sechs Handlungspunkte entstehen direkt aus den Zahlen. Ein Klick exportiert eine zusammengefasste Excel-Arbeitsmappe oder PDF-Folien.
+   <Badge text="Datenvisualisierung" variant="tip" /> <Badge text="Data Storytelling" variant="tip" /> <Badge text="UX" variant="tip" />
+
+</Steps>
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/mpr-drishti/downloader.svg" alt="Mock-up des MPR Downloaders: ein Formular in sechs Schritten (Steuerart, Zonen, Dienststellen, Monate, Berichte, Speicherort) neben einer Fortschrittsanzeige mit Zählern für geladene, übersprungene, erneuerte, wiederholte und fehlgeschlagene Berichte. Alle Zahlen sind erfunden." loading="lazy" />
+  <figcaption>Der MPR Downloader: ein Formular in sechs Schritten und eine Live-Fortschrittsanzeige. Mock-up mit erfundenen Zahlen; die Mock-ups zeigen die englische Oberfläche des Tools.</figcaption>
+</figure>
+
+## Die Daten verknüpfen
+
+Jeder Bericht beantwortet für sich nur eine enge Frage. Der Wert entstand erst durch die Verknüpfung: über Dienststellen, über die Zeit, über Berichte, über Aufgabenbereiche hinweg und gegen einen nationalen Vergleichsmaßstab.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Ein Ordner<span class="sub">17.626 Berichtsdateien · 190 Arten · 15 Einheiten + ganz Indien</span></div>
+    <span class="arrow">→<small>nach Berichtscode verteilt, geprüft</small></span>
+    <div class="pj-group">
+      <span class="sc-chip">Anti-Evasion</span>
+      <span class="sc-chip">Revenue & Mobilisation</span>
+      <span class="sc-chip">Adjudication</span>
+      <span class="sc-chip">Arrears & Recovery</span>
+      <span class="sc-chip">Legal & Prosecution</span>
+      <span class="sc-chip">Audit</span>
+      <span class="sc-chip">Refunds & Registration</span>
+      <span class="sc-chip">Return Scrutiny</span>
+      <span class="sc-chip legacy">Central Excise</span>
+      <span class="sc-chip legacy">Service Tax (legacy)</span>
+    </div>
+    <span class="arrow">→<small>Kernzahlen aus den 8 GST-Dashboards</small></span>
+    <div class="sc-node green">Zonal Summary<span class="sub">Überschriften, Kennzahlen, Geldflüsse, Handlungspunkte</span></div>
+  </div>
+  <figcaption>Ein Ordner mit Rohberichten wird auf zehn Fach-Dashboards verteilt. Die acht GST-Dashboards melden ihre Kernzahlen, und die Zonenübersicht fasst sie zusammen, ohne selbst eine einzige Datei zu lesen.</figcaption>
+</div>
+
+<CardGrid>
+  <Card title="1 · Über Dienststellen" icon="list-format">
+    Die 14 Commissionerates (die Dienststellen einer Zone) werden zur Zonensumme addiert und mit dem eigenen Bericht der Zone abgeglichen. Ausführende, Berufungs- und Prüfungsdienststellen werden unterschiedlich behandelt: Berufungsdienststellen melden die Fälle der Dienststellen, die sie betreuen, noch einmal, deshalb bleiben sie außen vor, damit nichts doppelt zählt. Heatmap-Scorecards ordnen jede Dienststelle gegen die Zone ein.
+  </Card>
+  <Card title="2 · Über die Zeit" icon="random">
+    Die Haushaltsjahre seit Einführung der GST im Jahr 2017 werden nebeneinandergestellt, mit dem März als Ganzjahreswert. Alte und neu gestaltete Berichtsformate werden angeglichen, und eine Jahresansicht vergleicht nur die Kennzahlen, die beide Formate gemeinsam haben. Vorläufige Monate werden nach der Abgabefrist erneuert.
+  </Card>
+  <Card title="3 · Über Berichte" icon="document">
+    Zusammengehörige Berichte werden miteinander abgestimmt: die Übersicht der Rückstände mit den Berichten nach Verfahrensstand, Fallausgänge mit Erledigungen, Prüfungszahlen über drei Prüfberichte hinweg. Eine Lücke zwischen einer Summe und ihren Teilen wird als „nicht zugeordnet“ gezeigt statt versteckt.
+  </Card>
+  <Card title="4 · Über Aufgabenbereiche" icon="puzzle">
+    Der Ablauf eines Steuerstreits wird durchgängig verknüpft, von der Anhörung über die Entscheidung und die Rückstände bis zur Beitreibung, und als Sankey-Fluss dargestellt. Entscheidungen, mit denen eine Forderung fallen gelassen wurde, stehen neben den Rechtsmitteln der Verwaltung, und eine Übersicht fasst alle GST-Bereiche zusammen.
+  </Card>
+  <Card title="5 · Gegen einen nationalen Maßstab" icon="approve-check-circle">
+    Jede wichtige Quote wird zwischen der Zone und ganz Indien verglichen, aber nur für Monate, in denen der gesamtindische Datensatz vollständig ist und keine Datei abgelehnt wurde. Ein Ausreißerschutz verwirft einen Monat, wenn der Anteil der Zone an ganz Indien mehr als das Zehnfache von seinem üblichen Wert (dem Median) abweicht. So fallen falsch eingegebene nationale Zahlen auf, bevor sie einen Vergleich verzerren.
+  </Card>
+</CardGrid>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Show-Cause-Notice<span class="sub">Forderung angekündigt</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Adjudication-Entscheidung<span class="sub">bestätigt oder fallen gelassen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Rückstand<span class="sub">bestätigt, noch nicht gezahlt</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Beitreibung<span class="sub">tatsächlich eingenommen</span></div>
+  </div>
+  <figcaption>Die Kette eines Steuerstreits, der die Dashboards durchgängig folgen. Erst die Verknüpfung von vier getrennten Berichtsfamilien macht aus Fallzahlen eine Geschichte über Geld.</figcaption>
+</div>
+
+## Die Dashboards
+
+Elf Dashboards, eines für jede Frage, die eine Führungskraft stellt. Jedes ist ein Foliensatz, der demselben roten Faden folgt: eine Übersicht, die Themen des Aufgabenbereichs, ein Vergleich der Dienststellen, der gesamtindische Maßstab und am Ende die Handlungspunkte. Jede Überschrift ist eine Schlussfolgerung aus den Zahlen, etwa „Nur N % eingenommen“ oder „Dienststellen A und B lieferten N % des Wachstums“, und kein fester Text. Der Foliensatz für Adjudication läuft zum Beispiel so:
+
+<div class="sc-fig">
+  <div class="sc-chips">
+    <span class="sc-chip">Overview</span>
+    <span class="sc-chip">Pendency</span>
+    <span class="sc-chip">Disposal</span>
+    <span class="sc-chip">High-value cases</span>
+    <span class="sc-chip">Call book</span>
+    <span class="sc-chip green">Comparison</span>
+    <span class="sc-chip green">All India</span>
+    <span class="sc-chip amber">Actions</span>
+  </div>
+</div>
+
+Die Mock-ups unten zeigen Aufbau, Diagrammtypen, Überschriften und Handlungspunkte mit erfundenen Zahlen und neutralen Namen für die Dienststellen.
+
+<Tabs>
+  <TabItem label="Übersicht">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-overview.svg" alt="Mock-up der Übersichtsfolie der Zonal Summary: vier Kennzahlenkacheln, eine Balkenliste der Dienststellen nach Kennzahlen auf oder über Zonenniveau und ein unterteilter Balken, der aufgedeckte Beträge nach eingenommen, in Entscheidung und in Berufung zeigt. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Übersicht der Zone: Kennzahlen mit Veränderung zum Vorjahr, die Dienststellen auf einen Blick und der Stand der aufgedeckten Beträge.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Rangfolge">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-ranking.svg" alt="Mock-up einer Vergleichsfolie: Erledigungsquoten von acht Dienststellen als waagerechte Balken, mit Bezugslinien für den Zonendurchschnitt und ganz Indien; die zwei schwächsten Dienststellen sind beschriftet. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Vergleich: jede Dienststelle gegen den Zonendurchschnitt und ganz Indien, die Überschrift nennt, wer Aufmerksamkeit braucht.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Scorecard">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-scorecard.svg" alt="Mock-up einer Scorecard: eine Heatmap von acht Dienststellen über sechs Kennzahlen, jede Zelle eingefärbt als besser als die Zone, innerhalb von drei Punkten oder schlechter. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Scorecard der Dienststellen: eine Heatmap, die auf einen Blick zeigt, wo jede Dienststelle vor oder hinter der Zone liegt.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Geldfluss">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-sankey.svg" alt="Mock-up eines Sankey-Diagramms, das 100 geforderte Rupien von der Show-Cause-Notice über die Entscheidung (bestätigt, fallen gelassen, offen) bis zu eingenommen, durch Berufung ausgesetzt und noch beizutreiben verfolgt. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Geldfluss: ein Sankey-Diagramm, das jede 100 geforderten Rupien von der Anhörung bis zur Beitreibung verfolgt.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Handlungspunkte">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-actions.svg" alt="Mock-up einer Folie mit Handlungspunkten: vier Punkte nach Dringlichkeit High, Medium und Low geordnet, jeder mit einem Befund in einer Zeile und einer kurzen Erklärung. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Handlungspunkte: nur dann gemeldet, wenn die Zahlen sie zeigen, nach Dringlichkeit geordnet.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+| Dashboard | Welche Fragen es beantwortet | Beispielkennzahlen |
+|---|---|---|
+| **Zonal Summary** | Wie steht die Zone über alle Aufgabenbereiche da, und wo liegt sie hinter dem nationalen Bild? | „k von M Kennzahlen so gut wie ganz Indien“; stärkste und schwächste Dienststellen; aufgedeckte, offene und eingenommene Beträge |
+| **Anti-Evasion** | Wie viel Steuerhinterziehung wird aufgedeckt und tatsächlich eingenommen? Was zeigen Ermittlungen, Durchsuchungen und Festnahmen? | Aufdeckung, Einnahmequote, Wachstum, Erledigungsquote |
+| **Revenue & Mobilisation** | Liegt das Aufkommen im Ziel und wächst es? Wer sind die größten Steuerpflichtigen, und warum zahlten einige weniger? | Wachstum, Zielerreichung gegen ein gleitendes Ziel, Erstattungen in % des Bruttoaufkommens, Konzentration der Top 25, gesperrte Vorsteuer nach Alter |
+| **Adjudication** | Wie viele Fälle sind offen, wie alt sind sie, und welche stehen kurz vor der gesetzlichen Frist? | Erledigungsquote, Anteil älter als 1 Jahr, Fälle mit weniger als 3 Monaten Restfrist, Anteil bestätigter Forderungen |
+| **Arrears & Recovery** | Wo stecken bestätigte Einnahmen fest, und wie viel wird beigetrieben? | Rückstände nach Stand und Alter, Beitreibungsquote, Verfahren ohne Aussetzung, Insolvenzforderungen |
+| **Legal & Prosecution** | Wie schneidet die Verwaltung in Rechtsmittelverfahren ab? Welche Fälle sind alt oder besonders hoch? | Erfolgsquote, Erledigungsquote, Anteil älter als 3 Jahre, offene Überprüfungen, verspätete Strafverfahren |
+| **Audit** | Werden die zugeteilten Steuerpflichtigen geprüft, und wird das Aufgedeckte auch eingenommen? | Prüfabdeckung, Aufdeckung gegen Beitreibung, Prüfvermerke nach Alter, unbeantwortete Vermerke der externen Prüfung |
+| **Refunds & Registration** | Werden Erstattungen und Registrierungen fristgerecht bearbeitet? | Eingangsbestätigung in 15 Tagen, länger als 60 Tage offen, Genehmigung in 7 Tagen, Ablehnungsquote |
+| **Return Scrutiny** | Werden Steuererklärungen geprüft, führt die Prüfung zu eingenommener Steuer, und reichen die Steuerpflichtigen ein? | Abschlussquote, Beitreibungsquote, Einreichungsquote gegen ganz Indien |
+| **Central Excise** | Wie entwickeln sich die Einnahmen aus Mineralöl und Tabak, und wie schnell werden Streitfälle aus der Zeit vor der GST erledigt? | Wachstum, Zielerreichung, Entscheidungsquote, Anteil alter ruhender Fälle |
+| **Service Tax (legacy)** | Was ist vom Bestand aus der Zeit vor der GST übrig, und wie lange dauert es, ihn abzubauen? | Jahre bis zur Erledigung der Berufungen im aktuellen Tempo, beitreibbarer Anteil, Hinweise auf seit Langem unveränderte Fälle |
+
+<CardGrid>
+  <Card title="Ablegen und los" icon="rocket">
+    Einen Ordner ablegen. Jedes Dashboard liest im Hintergrund nur seine eigenen Berichte, und die Übersicht füllt sich von selbst.
+  </Card>
+  <Card title="Offline und vertraulich" icon="laptop">
+    Eine einzige Webseite ohne Server und ohne Uploads. Die Daten verlassen den Browser nie.
+  </Card>
+  <Card title="Erkunden" icon="setting">
+    Zeitraum wählen, Dienststellen auswählen (die Summen werden neu berechnet), Folienübersicht, helles und dunkles Design, Tastenkürzel.
+  </Card>
+  <Card title="Excel-Arbeitsmappe" icon="add-document">
+    Übersicht, Kurzfassung, ein Blatt je Berichtstabelle im Originalaufbau, das Prüfprotokoll und Daten im Langformat für Pivot-Tabellen.
+  </Card>
+  <Card title="PDF-Folien" icon="document">
+    Jede Folie auf einer eigenen Seite gedruckt, bereit für die Leistungsbesprechung.
+  </Card>
+  <Card title="Handlungspunkte" icon="warning">
+    Bis zu sechs Handlungspunkte je Aufgabenbereich, nach Dringlichkeit geordnet und nur dann gemeldet, wenn die Zahlen sie zeigen.
+  </Card>
+</CardGrid>
+
+## Datenqualität: Zahlen, denen man trauen kann
+
+Echte Verwaltungsdaten sind unordentlich. Ein großer Teil der Arbeit floss darin, Probleme automatisch zu erkennen und jede Entscheidung zu erklären, damit die Nutzerinnen und Nutzer dem Ergebnis vertrauen können. Jedes Dashboard beginnt mit einer **Validierungsfolie**: Ein Abdeckungsraster zeigt jede Dienststelle und jeden Monat als vollständig, teilweise, problematisch oder fehlend, und eine Befundliste sortiert alles in Fehler, Warnungen und Hinweise.
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/mpr-drishti/slide-validation.svg" alt="Mock-up der Validierungsfolie: ein Abdeckungsraster von acht Dienststellen mal zwölf Monaten mit vollständigen, teilweisen, problematischen und fehlenden Zellen, daneben eine Befundliste mit dem, was gefunden und getan wurde. Alle Daten sind erfunden." loading="lazy" />
+  <figcaption>Die Validierungsfolie: die Abdeckung auf einen Blick und jeder Befund mit dem, was das Dashboard daraufhin getan hat. Mock-up mit erfundenen Daten.</figcaption>
+</figure>
+
+| Problem in den Daten | Wie es erkannt wird | Was dann passiert |
+|---|---|---|
+| **Falsche Datei am falschen Ort** | Monat, Einheit und Berichtscode im Berichtskopf werden mit Dateiname und Ordner verglichen | Der Berichtskopf gilt; Abweichungen werden markiert oder die Datei wird abgelehnt |
+| **Dubletten und alte Kopien** | Derselbe Bericht, dieselbe Einheit, derselbe Monat zweimal; identische Zahlen unter zwei Einheiten | Die neueste Kopie bleibt; die anderen werden gekennzeichnet |
+| **Vorläufige Daten** | Ein Bericht, der vor der monatlichen Abgabefrist der Dienststellen gespeichert wurde | Beim nächsten Lauf nach diesem Datum automatisch neu geladen |
+| **Summen, die nicht aufgehen** | Anfangsbestand + Zugänge − Erledigungen = Endbestand; Summe = Summe der Teile; Altersgruppen = offene Fälle; „im Monat“ ≤ „bis zum Monat“ | Mit den genauen Zahlen markiert; Lücken als „nicht zugeordnet“ gezeigt |
+| **Falsche Maßeinheit** | Beträge, die gemessen am gesamten Aufkommen oder Fallbestand der Einheit unplausibel groß sind (in Rupien statt in Lakh eingetragen) | Aus den Summen herausgenommen, mit einer Begründung |
+| **Eigenheiten der Zahlenformate** | Ungewöhnliche Trennzeichen, Leerfelder, Striche und Prozentspalten | Zahlen bereinigt; Prozentwerte neu berechnet statt übernommen |
+| **Abweichende Namen** | Die Schreibweise der Dienststellen unterscheidet sich zwischen Berichten und Jahren | Zugeordnet mit Toleranz für kleine Tippfehler, aber ohne je Nord mit Süd oder I mit II zu verwechseln |
+| **Einheiten ohne Meldung** | Der Bericht einer Einheit enthält nur Nullen, während alle anderen Zahlen melden | Als „nichts gemeldet“ markiert und aus den Quoten herausgenommen |
+| **Verzerrter oder unvollständiger Maßstab** | Der Anteil der Zone an ganz Indien weicht mehr als das Zehnfache vom Median ab, oder der gesamtindische Datensatz ist unvollständig | Der gesamtindische Vergleich für diesen Monat entfällt |
+
+<Aside type="tip" title="Erklärbar von Anfang an">
+Ein Klick auf einen Befund erklärt das Problem, **was das Dashboard getan hat** und **was zu tun ist**. Dasselbe Protokoll steht auch in der Excel-Arbeitsmappe. Der Downloader macht es schon bei der Erfassung genauso: Jeder Lauf endet mit einem Abgleich zwischen dem, was das Portal anbietet, und dem, was im Ordner liegt (**Complete**, **Not available yet** oder **Not complete**), samt jedem fehlenden Bericht und dem Grund. Er unterscheidet sogar echte Lücken von Berichten, die eine bestimmte Art von Dienststelle nie abgibt.
+</Aside>
+
+## Designentscheidungen
+
+Analyse-Tools werden genutzt, wenn sie zu den Menschen und ihrem Arbeitsumfeld passen. Diese Entscheidungen haben den Bau geprägt.
+
+| Entscheidung | Warum | Wie |
+|---|---|---|
+| **Keine Installation** | Auf Dienstrechnern ist das Installieren von Software oft nicht erlaubt | Beide Tools sind einzelne Dateien. Der Downloader braucht nur Windows und Edge, das Dashboard läuft in jedem aktuellen Browser |
+| **Anmeldung bleibt beim Menschen** | Das Portal nutzt eine Mehr-Faktor-Anmeldung, und Zugangsdaten dürfen nie gespeichert oder automatisiert werden | Die Person meldet sich an; das Tool wartet und arbeitet dann nur innerhalb der angemeldeten Berichtsseite |
+| **Datenschutz zuerst** | Leistungsdaten sind vertraulich | Das Dashboard läuft komplett offline: kein Server, keine Uploads, Dateien werden nur im Browser gelesen |
+| **Fortsetzbar und inkrementell** | Große Downloads werden unterbrochen, und Portale haben schlechte Tage | Vorhandenes überspringen, vorläufige Kopien erneuern, wiederholen, die Sitzung wiederherstellen |
+| **Erklären statt verstecken** | Die Nutzerinnen und Nutzer müssen den Zahlen vertrauen können | Jeder Ausschluss und jede Korrektur kommt mit Begründung und Handlungsvorschlag |
+| **Schlussfolgerungen statt nur Diagramme** | Führungskräfte müssen wissen, wo sie handeln sollen | Überschriften und Handlungspunkte aus den Daten, verglichen mit dem Vorjahr, der Zone und ganz Indien |
+| **Modulare Dashboards** | Jeder Aufgabenbereich hat eigene Berichte und eigene Logik | Ein gemeinsamer Kern plus ein Modul je Aufgabenbereich, jedes auf einer eigenen Seite; neue Dashboards lassen sich einfach anschließen |
+
+## Ergebnisse und Wirkung
+
+- **17.626 Berichte** erfasst und geordnet, für eine Zone und ganz Indien, über 3 Steuerarten und 37 Berichtsmonate der GST-Jahre.
+- **Unbeaufsichtigte Erfassung** mit etwa 2 Sekunden pro Bericht; spätere Läufe holen nur, was fehlt oder vorläufig ist.
+- **Jede Datei geprüft**, mit einer Vollständigkeitsprüfung nach jedem Download.
+- **11 Dashboards aus einem einzigen abgelegten Ordner**, die 14 Dienststellen miteinander, mit der Zone und mit ganz Indien vergleichen.
+- **Excel-Zusammenfassung per Klick** für jeden Aufgabenbereich, im Originalaufbau der Berichte und zusätzlich als analysefertige Daten im Langformat.
+- **Präsentationsfertige PDF-Folien** für Leistungsbesprechungen.
+
+### Was es einspart
+
+Eine grobe Schätzung allein für die Datenerfassung: Bei angenommenen 30 Sekunden pro Bericht von Hand (fünf Auswahllisten, ein Klick, dann Speichern und Ablegen) kommen 17.626 Berichte auf etwa **147 Stunden**, also fast vier Arbeitswochen mit je 40 Stunden. Der Downloader erfasst denselben Bestand unbeaufsichtigt in rund **10 Stunden** Rechenzeit, und niemand muss dabei sitzen und klicken. Spätere Läufe holen nur Neues oder Vorläufiges, sodass das Aktualisieren Minuten statt Tage dauert. Noch größer ist die Ersparnis beim Vergleichen: Zahlen, die früher Bericht für Bericht in Tabellen übertragen wurden, stehen jetzt automatisch nebeneinander, über Dienststellen, Jahre und ganz Indien.
+
+### Wem es hilft
+
+<CardGrid>
+  <Card title="Wer die Zahlen zusammenstellt" icon="pencil">
+    Keine fünf Auswahllisten und kein Klick mehr pro Bericht, kein Umbenennen und Ablegen von Hand und kein Übertragen von Zahlen in Tabellen. Fehler fallen auf, bevor jemand auf ihnen aufbaut.
+  </Card>
+  <Card title="Führungskräfte in Besprechungen" icon="comment">
+    Jeder Aufgabenbereich kommt als kurzer Foliensatz mit einer Schlussfolgerung auf jeder Folie und bis zu sechs Handlungspunkten nach Dringlichkeit, druckfertig als PDF-Folien.
+  </Card>
+  <Card title="Die Zone als Ganzes" icon="approve-check">
+    Jede Dienststelle wird auf derselben Grundlage gemessen, gegen die Zone, das Vorjahr und ganz Indien, mit angeglichenen alten und neuen Berichtsformaten. Schwachstellen werden sichtbar, solange noch Zeit zum Handeln ist.
+  </Card>
+</CardGrid>
+
+## Wie sich das Projekt entwickelt hat
+
+Die erste Version des Downloaders und seiner Vollständigkeitsprüfung habe ich in Python geschrieben. Damit das Tool auf jedem Dienstrechner ohne Installation läuft, habe ich es als einzelne Datei zum Doppelklicken neu gebaut, mit geführtem Formular, Live-Fortschritt, automatischen Prüfungen und einem abschließenden Vollständigkeitsbericht. Die Analyseseite ist genauso gewachsen: zuerst ein gemeinsamer Kern (Einlesen, Prüfen, Diagramme, Folien und Excel-Export), dann ein Modul je Aufgabenbereich und schließlich eine Übersicht, die alle zusammenführt.
+
+## Fähigkeiten und Werkzeuge
+
+<CardGrid>
+  <Card title="Datenerfassung & Automatisierung" icon="download">
+    Ein passwortgeschütztes Portal automatisiert, ohne mit Zugangsdaten umzugehen. Browsersteuerung über das Chrome DevTools Protocol. Wiederholungen, Wiederherstellung der Sitzung und fortsetzbare Läufe.
+  </Card>
+  <Card title="Data Engineering" icon="setting">
+    Ein Ordner- und Benennungsschema für 17.626 Dateien. Inkrementelle, idempotente Downloads. Protokolle in JSON Lines und CSV als Prüfpfad.
+  </Card>
+  <Card title="Datenaufbereitung & Parsing" icon="random">
+    190 HTML-Tabellenaufbauten mit verbundenen Kopfzeilen eingelesen. Stabile Schlüssel für jede Zahl. Entity Matching für die Namen der Dienststellen.
+  </Card>
+  <Card title="Datenqualität & Abstimmung" icon="approve-check-circle">
+    Saldenprüfungen und Abstimmung über Berichte hinweg. Erkennung von Ausreißern und falschen Maßeinheiten. Ein nachvollziehbares Befundprotokoll.
+  </Card>
+  <Card title="Datenmodell & Integration" icon="puzzle">
+    Eine Hierarchie Dienststelle → Zone → ganz Indien. Alte und neue Berichtsformate angeglichen. Doppelzählungen zwischen Dienststellenarten vermieden.
+  </Card>
+  <Card title="KPI-Design & Analyse" icon="magnifier">
+    Erledigungs-, Beitreibungs-, Erfolgs- und Abdeckungsquoten. Wachstum, Zielerreichung, Altersstruktur und Konzentration. Benchmarking und Rangfolgen.
+  </Card>
+  <Card title="Visualisierung" icon="star">
+    Selbst gebaute SVG-Diagramme: Balken, gestapelte Balken, Linien, Bullet-Charts, Heatmaps und Sankey-Flüsse. Ein einheitliches Farbsystem mit hellem und dunklem Design.
+  </Card>
+  <Card title="Data Storytelling" icon="comment-alt">
+    Überschriften, die aus den Zahlen entstehen. Handlungspunkte nach Dringlichkeit. Foliensätze, bereit für Leistungsbesprechungen.
+  </Card>
+  <Card title="Produkt- & Fachdenken" icon="rocket">
+    Tools ohne Installation, offline und mit Datenschutz zuerst, gebaut für Menschen ohne technischen Hintergrund und gestützt auf tiefes Wissen über die Kennzahlen der Verwaltung indirekter Steuern.
+  </Card>
+</CardGrid>
+
+| Bereich | Werkzeuge und Technologien |
+|---|---|
+| **Datenerfassung** | Windows PowerShell 5.1 in einer einzigen Datei zum Doppelklicken, .NET WebSockets, das Chrome DevTools Protocol zur Steuerung von Microsoft Edge |
+| **Analyse und Dashboards** | HTML5, CSS und reines JavaScript (ohne Framework), DOMParser zum Einlesen der Tabellen, selbst gebaute SVG-Diagramme, ein abgeschotteter Frame je Dashboard mit Kommunikation über postMessage |
+| **Berichte** | ExcelJS für die Excel-Arbeitsmappe, ein CSS-Drucklayout für die PDF-Folien |
+| **Datenformate** | HTML-Berichtstabellen (.xls), JSON und JSON Lines, CSV, XLSX |
+| **Frühere Version** | Python, für die erste Download-Engine und die Vollständigkeitsprüfung |
+| **Arbeitsweise** | Versionskontrolle mit Git |
+
+<Badge text="Datenanalyse" /> <Badge text="ETL" /> <Badge text="Web-Automatisierung" /> <Badge text="Datenqualität" /> <Badge text="KPI-Dashboards" /> <Badge text="Datenvisualisierung" /> <Badge text="Data Storytelling" /> <Badge text="JavaScript" /> <Badge text="PowerShell" /> <Badge text="Excel-Automatisierung" /> <Badge text="Analytik im öffentlichen Sektor" /> <Badge text="GST" />

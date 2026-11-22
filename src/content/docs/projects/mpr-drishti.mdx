@@ -1,0 +1,363 @@
+---
+title: MPR Drishti - Government Performance Analytics
+description: An end-to-end analytics pipeline that collects, validates and explains the monthly performance reports of India's indirect-tax administration - 17,626 reports, 190 report types, 11 dashboards.
+sidebar:
+  label: MPR Drishti
+  order: 1
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">An end-to-end analytics pipeline that collects, validates and explains the monthly performance reports of India's indirect-tax administration: from automated data collection to dashboards that tell the story.</p>
+
+<Badge text="Data acquisition & automation" variant="note" /> <Badge text="Data engineering" variant="note" /> <Badge text="Data quality" variant="note" /> <Badge text="KPI design" variant="note" /> <Badge text="Visualisation & storytelling" variant="note" /> <Badge text="Public-sector analytics" variant="note" />
+
+**Built during:** my last government role, as Data Analytics Officer at CBIC ([see experience](/resume/experience/)) · **Built for:** officers and managers who prepare and run monthly performance reviews · **The name:** *Drishti* means "vision" or "sight" in Hindi.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">17,626</span><span class="l">report files collected and organised automatically</span></div>
+  <div class="pj-stat"><span class="n">190</span><span class="l">report types, each with its own table layout</span></div>
+  <div class="pj-stat"><span class="n">3</span><span class="l">tax streams: GST, Central Excise and Service Tax</span></div>
+  <div class="pj-stat"><span class="n">14 + 1</span><span class="l">commissionerates and the zone, benchmarked against All India</span></div>
+  <div class="pj-stat"><span class="n">11</span><span class="l">interactive dashboards: one per function plus a zonal summary</span></div>
+  <div class="pj-stat"><span class="n">~2 s</span><span class="l">per report, collected unattended</span></div>
+</div>
+
+<Aside type="caution" title="About the data on this page">
+MPR Drishti works with internal government data, so this page shows the **method and the skills, never the data**. Every figure and unit name in the mock-ups below is invented. There are no real report figures, no taxpayer details, no screenshots of the real dashboards or the portal, and no links to the tool or its code. The tool was built to analyse CBIC's MPR data; it is not an official CBIC product.
+</Aside>
+
+## At a glance
+
+India's indirect-tax administration tracks the performance of its field offices through **Monthly Performance Reports (MPRs)**: hundreds of separate reports, published one page at a time on a login-protected internal portal. I built an end-to-end analytics solution around them. An automation tool collects every report a zone needs, and an offline dashboard turns more than 17,000 of them into validated, comparable measures. It shows how each commissionerate is doing, how the zone compares with All India, and where action is needed.
+
+<CardGrid>
+  <Card title="1 · MPR Downloader" icon="download">
+    **Data collection.** A single double-click file with nothing to install. The user logs in; the tool then works through the report pages the way a person would, for every unit and month chosen. It files each report into one consistent folder structure, is safe to stop and resume, and finishes with a completeness check.
+  </Card>
+  <Card title="2 · MPR Drishti" icon="magnifier">
+    **Analysis and storytelling.** A single offline web page: drop the folder on it and every dashboard fills itself. It parses, validates and connects the reports into measures for each unit, the zone and All India, then presents them as slide-style dashboards with headlines written from the data, plus Excel and PDF exports.
+  </Card>
+</CardGrid>
+
+## The challenge
+
+- **Data locked in one-at-a-time web pages.** Each report is a separate page. Reaching one means choosing year, month, tax stream, zone and commissionerate from five dropdowns, then clicking a button.
+- **Volume and variety.** One zone's picture needs thousands of reports across 190 report types, 3 tax streams and 15 reporting units, and each type has its own table layout with merged headers.
+- **Formats that change over time.** Several report families were redesigned around 2023-24, so years cannot simply be lined up side by side.
+- **No built-in checks or comparisons.** Reports can be provisional, duplicated, misfiled or internally inconsistent. Comparing units, or the zone with the national picture, meant copying figures into spreadsheets by hand.
+
+### Before and after
+
+| | Before | After |
+|---|---|---|
+| **Collecting data** | Five dropdowns and a click for every report, every unit, every month | Choose once; reports download unattended, about 2 seconds each |
+| **Organising** | Files named by the portal, saved wherever they landed | One folder tree: stream → zone → financial year → commissionerate → report |
+| **Checking** | Errors found by chance, if at all | Every file checked: completeness, wrong month or unit, duplicates, totals that don't add up |
+| **Comparing** | Manual spreadsheets, one report at a time | Each unit against the zone, last year and All India, across every function |
+| **Reporting** | Static tables | Dashboards with conclusions and points for attention, an Excel workbook and PDF slides |
+
+## My approach: a six-stage pipeline
+
+Every stage of the analytics lifecycle is covered, built from scratch: acquire, organise, validate, integrate, analyse and communicate.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">1 · Acquire<span class="sub">browser automation</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">2 · Organise<span class="sub">folder schema, logs</span></div>
+    <div class="sc-bnd">Downloader<br />then<br />Drishti</div>
+    <div class="sc-node">3 · Validate<span class="sub">file and arithmetic checks</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">4 · Integrate<span class="sub">parse, map, harmonise</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">5 · Analyse<span class="sub">KPIs, trends, benchmarks</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">6 · Communicate<span class="sub">dashboards, Excel, PDF</span></div>
+  </div>
+  <figcaption>Stages 1 and 2 are the MPR Downloader; stages 3 to 6 are the MPR Drishti dashboard.</figcaption>
+</div>
+
+<Steps>
+
+1. **Acquire - automated collection.** The tool opens its own Edge browser window and waits while the user logs in, so it never sees or stores a password. Inside that logged-in session it chooses year, month, stream, zone and commissionerate for every report, at a steady pace. It waits for each page to settle, retries failures, pauses when the portal is slow and asks for a fresh login if the session expires.
+   <Badge text="Browser automation" variant="tip" /> <Badge text="PowerShell" variant="tip" /> <Badge text="Resilient scraping" variant="tip" />
+
+2. **Organise - one storage schema.** Every report lands in *stream / zone / financial year / commissionerate / report*. Downloads are incremental: files already present are skipped, and copies saved before the units' monthly filing deadline are refreshed automatically on a later run. Every attempt is logged (JSON Lines and CSV), and each run ends with a completeness check against what the portal listed.
+   <Badge text="Data engineering" variant="tip" /> <Badge text="Incremental loads" variant="tip" /> <Badge text="Audit trail" variant="tip" />
+
+3. **Validate - check before use.** Each file is checked for the wrong month or unit, duplicates, files resaved in Excel, missing tables and incomplete sets. Internal arithmetic is checked too: opening + received − disposed must equal closing, totals must equal the sum of their parts, and amounts must be in the right unit. Each issue says what was done and what to do.
+   <Badge text="Data quality" variant="tip" /> <Badge text="Reconciliation" variant="tip" /> <Badge text="Anomaly detection" variant="tip" />
+
+4. **Integrate - from tables to one model.** HTML report tables with merged header cells are parsed into a grid, and every figure gets a stable key (table · row path · column path). Commissionerate names are matched despite spelling variants. Old and new report formats are harmonised so years can be compared, units add up to zone totals, and All India serves as the benchmark.
+   <Badge text="Parsing" variant="tip" /> <Badge text="Entity matching" variant="tip" /> <Badge text="Data modelling" variant="tip" />
+
+5. **Analyse - measures that matter to managers.** I designed function-specific KPIs: disposal and recovery rates, growth on last year, achievement against moving targets, age profiles of pending cases, and shares and concentration (for example, the top 25 taxpayers' share). Each commissionerate is ranked against the zone, and the zone against All India.
+   <Badge text="KPI design" variant="tip" /> <Badge text="Benchmarking" variant="tip" /> <Badge text="Domain analysis" variant="tip" />
+
+6. **Communicate - conclusions, not just charts.** Eleven slide-style dashboards with hand-built charts: bars, stacked bars, lines, bullet charts, heatmap scorecards and Sankey flows. Headlines and up to six points for attention are written from the figures themselves. One click exports a consolidated Excel workbook or PDF slides.
+   <Badge text="Data visualisation" variant="tip" /> <Badge text="Data storytelling" variant="tip" /> <Badge text="UX" variant="tip" />
+
+</Steps>
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/mpr-drishti/downloader.svg" alt="Mock-up of the MPR Downloader: a six-step form (stream, zones, commissionerates, months, reports, save to) beside a progress screen with counters for downloaded, skipped, refreshed, retried and failed reports. All figures are invented." loading="lazy" />
+  <figcaption>The MPR Downloader: a six-step form and a live progress screen. Mock-up with invented figures.</figcaption>
+</figure>
+
+## Connecting the data
+
+Each report on its own answers a narrow question. The value came from linking them: across units, across time, across reports, across functions and against a national benchmark.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">One folder<span class="sub">17,626 report files · 190 types · 15 units + All India</span></div>
+    <span class="arrow">→<small>routed by report code, validated</small></span>
+    <div class="pj-group">
+      <span class="sc-chip">Anti-Evasion</span>
+      <span class="sc-chip">Revenue & Mobilisation</span>
+      <span class="sc-chip">Adjudication</span>
+      <span class="sc-chip">Arrears & Recovery</span>
+      <span class="sc-chip">Legal & Prosecution</span>
+      <span class="sc-chip">Audit</span>
+      <span class="sc-chip">Refunds & Registration</span>
+      <span class="sc-chip">Return Scrutiny</span>
+      <span class="sc-chip legacy">Central Excise</span>
+      <span class="sc-chip legacy">Service Tax (legacy)</span>
+    </div>
+    <span class="arrow">→<small>headline figures from the 8 GST dashboards</small></span>
+    <div class="sc-node green">Zonal Summary<span class="sub">headlines, measures, money flows, points for attention</span></div>
+  </div>
+  <figcaption>One folder of raw reports is routed into ten function dashboards. The eight GST dashboards each publish their headline figures, and the Zonal Summary combines them without reading a single file itself.</figcaption>
+</div>
+
+<CardGrid>
+  <Card title="1 · Across units" icon="list-format">
+    The 14 commissionerates are added up to the zone total and cross-checked against the zone's own report. Executive, appeals and audit units are treated differently: appeals units re-report the cases of the units they serve, so they are set aside to avoid double counting. Scorecard heatmaps rank each unit against the zone.
+  </Card>
+  <Card title="2 · Across time" icon="random">
+    Financial years since GST began in 2017 are lined up, using March as each year's full-year figure. Old and redesigned report formats are harmonised, and a "years" view compares only the measures both formats share. Provisional months are refreshed after the filing deadline.
+  </Card>
+  <Card title="3 · Across reports" icon="document">
+    Related reports are reconciled with each other: the arrears summary against the stage-wise reports, case outcomes against disposals, audit counts across three audit reports. A gap between a total and its parts is shown as "not accounted for" rather than hidden.
+  </Card>
+  <Card title="4 · Across functions" icon="puzzle">
+    The tax-dispute process is linked end to end, from notice to adjudication order to arrears to recovery, and drawn as Sankey flows. Orders that dropped a demand are shown beside the department's appeals, and one summary combines all GST functions.
+  </Card>
+  <Card title="5 · Against a national benchmark" icon="approve-check-circle">
+    Every key rate is compared between the zone and All India, but only for months where the All India set is complete and no file was rejected. An outlier guard drops a month if the zone's share of All India is more than ten times away from its usual (median) share, which catches mis-keyed national figures before they distort a comparison.
+  </Card>
+</CardGrid>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node amber">Show-cause notice<span class="sub">demand raised</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Adjudication order<span class="sub">confirmed or dropped</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Arrears<span class="sub">confirmed, not yet paid</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Recovery<span class="sub">money actually realised</span></div>
+  </div>
+  <figcaption>The dispute chain the dashboards follow end to end. Linking four separate report families is what turns case counts into a story about money.</figcaption>
+</div>
+
+## The dashboards
+
+Eleven dashboards, one for each question a manager asks. Each is a deck of slides that follows the same story track: an overview, the function's own topics, a comparison of units, the All India benchmark and finally the actions. Every headline is a conclusion worked out from the figures, such as "Only N% realised" or "Units A and B delivered N% of the growth", rather than fixed text. The Adjudication deck, for example, runs:
+
+<div class="sc-fig">
+  <div class="sc-chips">
+    <span class="sc-chip">Overview</span>
+    <span class="sc-chip">Pendency</span>
+    <span class="sc-chip">Disposal</span>
+    <span class="sc-chip">High-value cases</span>
+    <span class="sc-chip">Call book</span>
+    <span class="sc-chip green">Comparison</span>
+    <span class="sc-chip green">All India</span>
+    <span class="sc-chip amber">Actions</span>
+  </div>
+</div>
+
+The mock-ups below show the layout, chart types, headlines and action points with invented figures and generic unit names.
+
+<Tabs>
+  <TabItem label="Overview">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-overview.svg" alt="Mock-up of the Zonal Summary overview slide: four stat tiles, a bar list of units by measures at or above the zone, and a segmented bar showing money detected as realised, in adjudication and under appeal. All figures are invented." loading="lazy" />
+      <figcaption>Zonal Summary overview: stat tiles with change on last year, units at a glance and where detected money stands.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Unit ranking">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-ranking.svg" alt="Mock-up of a comparison slide: disposal rates of eight units as horizontal bars, with reference lines for the zone average and All India, and the two weakest units annotated. All figures are invented." loading="lazy" />
+      <figcaption>Comparison: each unit against the zone average and All India, with the headline naming who needs attention.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Scorecard">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-scorecard.svg" alt="Mock-up of a unit scorecard: a heatmap of eight units across six measures, each cell coloured better than, within three points of, or worse than the zone. All figures are invented." loading="lazy" />
+      <figcaption>Unit scorecard: a heatmap that shows at a glance where each unit is ahead of or behind the zone.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Money flow">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-sankey.svg" alt="Mock-up of a Sankey diagram following 100 rupees demanded from show-cause notice to adjudication order (confirmed, dropped, awaiting decision) and on to recovered, stayed by appeal and pending recovery. All figures are invented." loading="lazy" />
+      <figcaption>Money flow: a Sankey diagram that follows every 100 rupees demanded from notice to recovery.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Points for attention">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/mpr-drishti/slide-actions.svg" alt="Mock-up of a points-for-attention slide: four action points ranked High, Medium and Low, each with a one-line finding and a short explanation. All figures are invented." loading="lazy" />
+      <figcaption>Points for attention: raised only when the figures show them, ranked by severity.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+| Dashboard | Questions it answers | Example measures |
+|---|---|---|
+| **Zonal Summary** | How is the zone doing across all functions, and where does it lag the national picture? | "k of M key measures as good as All India"; best and weakest units; money detected, pending and realised |
+| **Anti-Evasion** | How much evasion is detected and actually realised? What do investigations, searches and arrests show? | Detection, realisation %, growth, disposal % |
+| **Revenue & Mobilisation** | Is collection on target and growing? Who are the largest taxpayers, and why did some pay less? | Growth, achievement against a moving target, refunds as % of gross, top-25 concentration, blocked credit by age |
+| **Adjudication** | How many cases are pending, how old are they, and which are close to the legal time limit? | Disposal rate, share over 1 year, cases with under 3 months left, % of demand confirmed |
+| **Arrears & Recovery** | Where is confirmed revenue stuck, and how much is being recovered? | Arrears by stage and age, recovery rate, litigation without a stay, insolvency claims |
+| **Legal & Prosecution** | How does the department fare in appeals? Which cases are old or high-value? | Win rate, disposal rate, share over 3 years, reviews pending, late prosecutions |
+| **Audit** | Are allotted taxpayers being audited, and is what audit detects being recovered? | Coverage, detection against recovery, audit paras by age, external audit paras awaiting a reply |
+| **Refunds & Registration** | Are refunds and registrations processed on time? | Acknowledged in 15 days, pending over 60 days, approved in 7 days, rejection rate |
+| **Return Scrutiny** | Are returns scrutinised, does scrutiny turn into recovered tax, and are taxpayers filing? | Concluded %, recovery %, return filing rate against All India |
+| **Central Excise** | How is revenue from petroleum and tobacco doing, and how fast are pre-GST disputes being cleared? | Growth, achievement against target, adjudication rate, old call-book share |
+| **Service Tax (legacy)** | What is left of the pre-GST book, and how long will it take to clear? | Years needed to clear appeals at this year's pace, recoverable share, unchanged-since flags |
+
+<CardGrid>
+  <Card title="Drop and go" icon="rocket">
+    Drop one folder. Each dashboard reads only its own reports in the background, and the summary fills itself.
+  </Card>
+  <Card title="Offline and private" icon="laptop">
+    A single web page with no server and no uploads. The data never leaves the browser.
+  </Card>
+  <Card title="Explore" icon="setting">
+    Choose the period, pick commissionerates (totals are recomputed), get a slide overview, switch light and dark themes, use keyboard shortcuts.
+  </Card>
+  <Card title="Excel workbook" icon="add-document">
+    Summary, abstract, one sheet per report table in its original layout, the validation log, and long-format data ready for pivot tables.
+  </Card>
+  <Card title="PDF slides" icon="document">
+    Every slide printed one per page, ready for a review meeting.
+  </Card>
+  <Card title="Points for attention" icon="warning">
+    Up to six action points per function, ranked by severity, raised only when the figures show them.
+  </Card>
+</CardGrid>
+
+## Data quality: making the numbers trustworthy
+
+Real administrative data is messy. A large part of the work went into catching problems automatically, and into explaining every decision so that users can trust the result. Every dashboard opens with a **Validation** slide: a coverage grid shows each commissionerate and month as complete, partial, problem or missing, and an issue list sorts everything into errors, warnings and notes.
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/mpr-drishti/slide-validation.svg" alt="Mock-up of the validation slide: a coverage grid of eight units by twelve months with complete, partial, problem and missing cells, beside an issue list that says what was found and what was done. All data is invented." loading="lazy" />
+  <figcaption>The Validation slide: coverage at a glance, and every issue with what the dashboard did about it. Mock-up with invented data.</figcaption>
+</figure>
+
+| Problem in the data | How it is caught | What happens |
+|---|---|---|
+| **Wrong file in the wrong place** | The month, unit and report code in the report header are compared with the file name and folder | The header wins; mismatches are flagged or the file is rejected |
+| **Duplicates and old copies** | The same report, unit and month seen twice; identical figures under two units | The latest copy is kept; the rest are labelled |
+| **Provisional data** | A report saved before the units' monthly filing deadline | Downloaded again automatically on the next run after that date |
+| **Totals that don't add up** | Opening + received − disposed = closing; total = sum of parts; age buckets = pending; "for the month" ≤ "up to the month" | Flagged with the exact figures; gaps shown as "not accounted for" |
+| **Wrong unit of measure** | Amounts implausibly large against the unit's whole revenue or caseload (entered in rupees, not lakh) | Left out of the totals, with a note saying why |
+| **Number formatting quirks** | Odd separators, blanks, dashes and percentage columns | Numbers cleaned; percentages recalculated rather than trusted |
+| **Names that vary** | Commissionerate spellings differ between reports and years | Matched while tolerating small typos, but never confusing North with South, or I with II |
+| **Units reporting nothing** | A unit's report is all zeros while every other unit reports figures | Flagged as "nothing reported" and excluded from rates |
+| **Distorted or incomplete benchmark** | The zone's share of All India is more than 10 times away from its median, or the All India set is incomplete | That month's All India comparison is dropped |
+
+<Aside type="tip" title="Explainable by design">
+Clicking an issue explains the problem, **what the dashboard did** about it, and **what to do**. The same log goes into the Excel workbook. The downloader does the same at collection time: each run ends with a check of what the portal listed against what is in the folder (**Complete**, **Not available yet** or **Not complete**), listing every missing report and the reason. It even tells genuine gaps apart from reports that a type of unit never files.
+</Aside>
+
+## Design decisions
+
+Analytics tools get used when they fit the people and the environment. These choices shaped the build.
+
+| Decision | Why | How |
+|---|---|---|
+| **Zero installation** | Users work on office computers where installing software is often not allowed | Both tools are single files. The downloader needs only Windows and Edge; the dashboard runs in any modern browser |
+| **Human in the loop for login** | The portal uses a multi-factor login, and credentials must never be stored or automated | The user logs in; the tool waits, then works only inside the logged-in report page |
+| **Privacy first** | Performance data is sensitive | The dashboard is fully offline: no server, no uploads, files read only in the browser |
+| **Resumable and incremental** | Large downloads get interrupted, and portals have bad days | Skip what is already there, refresh provisional copies, retry, recover the session |
+| **Explain, don't hide** | Users need to trust the numbers | Every exclusion or correction comes with a reason and a suggested action |
+| **Conclusions, not just charts** | Managers need to know what to act on | Headlines and action points generated from the data, compared with last year, the zone and All India |
+| **Modular dashboards** | Each function has its own reports and logic | A shared engine plus one module per function, each in its own page; new dashboards plug in |
+
+## Results and impact
+
+- **17,626 reports** collected and organised for one zone and All India, across 3 tax streams and 37 report months of the GST years.
+- **Unattended collection** at about 2 seconds per report; later runs fetch only what is missing or provisional.
+- **Every file validated**, with a completeness check after each download.
+- **11 dashboards from a single folder drop**, comparing 14 commissionerates with each other, with the zone and with All India.
+- **One-click Excel consolidation** per function, in the original report layout plus analysis-ready long-format data.
+- **Presentation-ready PDF slides** for performance reviews.
+
+### What it saves
+
+A rough estimate for data collection alone: at an assumed 30 seconds per report by hand (five dropdowns, a click, then saving and filing the file), 17,626 reports come to about **147 hours**, close to four 40-hour working weeks. The downloader collects the same set unattended in roughly **10 hours** of machine time, and nobody has to sit and click. Later runs fetch only what is new or provisional, so keeping the set up to date takes minutes rather than days. Beyond collection, the bigger saving is the comparison work: figures that used to be copied into spreadsheets report by report now line up automatically across units, years and All India.
+
+### Who it helps
+
+<CardGrid>
+  <Card title="Officers who compile the figures" icon="pencil">
+    No more five dropdowns and a click per report, no renaming and filing by hand, and no copying figures into spreadsheets. Errors are caught before anyone builds on them.
+  </Card>
+  <Card title="Managers in review meetings" icon="comment">
+    Each function arrives as a short deck with a conclusion on every slide and up to six points for attention, ranked by severity, ready to print as PDF slides.
+  </Card>
+  <Card title="The zone as a whole" icon="approve-check">
+    Every unit is measured on the same basis, against the zone, last year and All India, with old and new report formats lined up. Weak spots show up while there is still time to act.
+  </Card>
+</CardGrid>
+
+## How the project evolved
+
+The first version of the downloader and its completeness audit were written in Python. To make the tool usable on any office computer without installing anything, I rebuilt it as a single double-click file with a guided form, live progress, automatic checks and a final completeness report. The analysis side grew the same way: a shared engine first (parsing, validation, charts, slides and Excel export), then one module per function, then a summary that combines them all.
+
+## Skills and tools
+
+<CardGrid>
+  <Card title="Data acquisition & automation" icon="download">
+    Automated a login-protected portal without handling credentials. Browser control through the Chrome DevTools Protocol. Retries, session recovery and resumable runs.
+  </Card>
+  <Card title="Data engineering" icon="setting">
+    A folder and naming schema for 17,626 files. Incremental, idempotent downloads. JSON Lines and CSV logs as an audit trail.
+  </Card>
+  <Card title="Data wrangling & parsing" icon="random">
+    Parsed 190 HTML table layouts with merged headers. Stable keys for every figure. Entity matching for unit names.
+  </Card>
+  <Card title="Data quality & reconciliation" icon="approve-check-circle">
+    Balance checks and cross-report reconciliation. Outlier and unit-of-measure detection. An explainable issue log.
+  </Card>
+  <Card title="Data modelling & integration" icon="puzzle">
+    A unit → zone → All India hierarchy. Old and new report formats harmonised. Double counting avoided across unit types.
+  </Card>
+  <Card title="KPI design & analysis" icon="magnifier">
+    Disposal, recovery, win and coverage rates. Growth, target achievement, ageing and concentration. Benchmarking and ranking.
+  </Card>
+  <Card title="Visualisation" icon="star">
+    Hand-built SVG charts: bars, stacked bars, lines, bullet charts, heatmaps and Sankey flows. A consistent colour system with light and dark themes.
+  </Card>
+  <Card title="Data storytelling" icon="comment-alt">
+    Headlines generated from the figures. Severity-ranked points for attention. Slide decks ready for review meetings.
+  </Card>
+  <Card title="Product & domain thinking" icon="rocket">
+    Zero-install, offline, privacy-first tools built for non-technical users, grounded in deep knowledge of indirect-tax administration KPIs.
+  </Card>
+</CardGrid>
+
+| Area | Tools and technologies |
+|---|---|
+| **Data collection** | Windows PowerShell 5.1 packed into a single double-click file, .NET WebSockets, the Chrome DevTools Protocol driving Microsoft Edge |
+| **Analytics and dashboards** | HTML5, CSS and vanilla JavaScript (no framework), DOMParser for table parsing, hand-built SVG charts, one isolated frame per dashboard talking through postMessage |
+| **Reporting** | ExcelJS for the Excel workbook, a CSS print layout for the PDF slides |
+| **Data formats** | HTML report tables (.xls), JSON and JSON Lines, CSV, XLSX |
+| **Earlier version** | Python, for the first download engine and completeness audit |
+| **Workflow** | Git version control |
+
+<Badge text="Data Analytics" /> <Badge text="ETL" /> <Badge text="Web Automation" /> <Badge text="Data Quality" /> <Badge text="KPI Dashboards" /> <Badge text="Data Visualisation" /> <Badge text="Data Storytelling" /> <Badge text="JavaScript" /> <Badge text="PowerShell" /> <Badge text="Excel Automation" /> <Badge text="Public-Sector Analytics" /> <Badge text="GST" />

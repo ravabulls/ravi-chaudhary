@@ -113,6 +113,11 @@ export default defineConfig({
 					autogenerate: { directory: 'resume' },
 				},
 				{
+					label: 'Projects', translations: { de: 'Projekte' },
+					collapsed: true,
+					autogenerate: { directory: 'projects' },
+				},
+				{
 					label: 'Learnings', translations: { de: 'Lernmaterial' },
 					collapsed: true,
 					items: [

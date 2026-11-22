@@ -433,3 +433,72 @@ table.sc-matrix td.hl {
   .sc-chip { font-size: 0.76rem; padding: 0.3rem 0.6rem; }
   .sc-fig figcaption, .sc-cap { font-size: 0.8rem; }
 }
+
+/* ============================================================
+   Project pages (.pj-*)
+   Shared by every page under /projects/. Built on the same
+   theme variables as the .sc-* toolkit, so they adapt to
+   light and dark mode.
+   ============================================================ */
+.pj-lead {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--sl-color-gray-2);
+}
+
+/* Headline numbers. The wrapper carries .not-content so Starlight's
+   flow spacing does not push the tiles out of line. */
+.pj-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+.pj-stat {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background: var(--sl-color-gray-6);
+  min-width: 0;
+}
+.pj-stat .n {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--sl-color-text-accent);
+}
+.pj-stat .l {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--sl-color-gray-3);
+}
+
+/* Mock-up screenshots: a framed figure, caption from .sc-fig */
+.pj-shot img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px -10px rgb(0 0 0 / 0.3);
+}
+
+/* A wrapped group of chips that sits inside an .sc-flow as one step */
+.pj-group {
+  flex: 1 1 18rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+  align-content: center;
+  padding: 0.65rem;
+  border: 1px dashed var(--sl-color-gray-4);
+  border-radius: 12px;
+  min-width: 0;
+}
+.pj-group .sc-chip.legacy {
+  border-style: dashed;
+  background: transparent;
+}
