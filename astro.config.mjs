@@ -109,18 +109,19 @@ export default defineConfig({
 				},
 				{
 					label: 'Resume', translations: { de: 'Lebenslauf' },
-					collapsed: true,
+					collapsed: false,
 					autogenerate: { directory: 'resume' },
 				},
 				{
 					label: 'Projects', translations: { de: 'Projekte' },
-					collapsed: true,
+					collapsed: false,
 					autogenerate: { directory: 'projects' },
 				},
 				{
 					label: 'Learnings', translations: { de: 'Lernmaterial' },
-					collapsed: true,
+					collapsed: false,
 					items: [
+						{ label: 'Overview', link: 'learnings', translations: { de: 'Übersicht' } },
 						{
 							label: 'MBA Subjects', translations: { de: 'MBA-Fächer' },
 							collapsed: true,
