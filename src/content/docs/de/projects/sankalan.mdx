@@ -1,0 +1,250 @@
+---
+title: Sankalan - Überwachung und Berichtswesen für Gerichtsverfahren
+description: Ein zentrales Power-BI-Dashboard, das jedes Verfahren vor dem Supreme Court, den High Courts, dem CAT und den Rechtsmittelinstanzen in einer Live-Ansicht zusammenführte - offen, erledigt, angefochten, fällige Erwiderungen und anstehende Termine - gespeist aus einem Excel-Blatt je Commissionerate.
+sidebar:
+  label: Sankalan
+  order: 3
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Eine Live-Ansicht jedes Verfahrens vor dem Supreme Court, den High Courts, dem CAT und den Rechtsmittelinstanzen: was offen ist, was entschieden wurde, wogegen Rechtsmittel eingelegt wurden, welche Erwiderungen fällig sind und welche Termine anstehen.</p>
+
+<Badge text="Power BI" variant="note" /> <Badge text="Datenintegration" variant="note" /> <Badge text="Datenmodellierung" variant="note" /> <Badge text="KPI-Design" variant="note" /> <Badge text="Prozessführung" variant="note" /> <Badge text="Management-Reporting" variant="note" />
+
+**Entstanden in:** meiner juristischen Verwendung in Indiens Verwaltung für indirekte Steuern, als zentrale Ansprechperson (Nodal Officer) für Gerichtsverfahren ([zum Werdegang](/de/resume/experience/)) · **Meine Rolle:** Entwickler und alleiniger Projektleiter, unter der Anleitung der vorgesetzten Stellen · **Gebaut mit:** Power BI und Excel · **Der Name:** *Sankalan* bedeutet auf Hindi „Zusammenstellung“.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">4+</span><span class="l">Arten von Instanzen: Supreme Court, High Courts, CAT und Rechtsmittelinstanzen</span></div>
+  <div class="pj-stat"><span class="n">1</span><span class="l">gemeinsame Vorlage, mit einem Blatt je Commissionerate</span></div>
+  <div class="pj-stat"><span class="n">1</span><span class="l">zentrales Dashboard: die eine Quelle für alle Berichte über Verfahren</span></div>
+  <div class="pj-stat"><span class="n">Live</span><span class="l">Termine, Erwiderungen, Rechtsmittel und Erledigungen, sobald eine Einheit aktualisiert</span></div>
+</div>
+
+<Aside type="caution" title="Zu den Abbildungen auf dieser Seite">
+Sankalan lief auf internen Verfahrensdaten, und ich habe keinen Zugriff mehr auf das Dashboard. Die gezeigten Berichtsseiten sind **veranschaulichende Nachbildungen**, die für diese Seite gezeichnet wurden, mit erfundenen Zahlen und neutralen Namen für die Einheiten; es sind keine Screenshots des Originals. Auf dieser Seite erscheinen keine Aktenzeichen, keine Namen von Beteiligten und keine Einzelheiten zu einem Verfahren.
+</Aside>
+
+## Auf einen Blick
+
+<CardGrid>
+  <Card title="Die Herausforderung" icon="warning">
+    Verfahren liefen gleichzeitig vor vielen Instanzen: dem Supreme Court, den High Courts, dem Central Administrative Tribunal (CAT) sowie den Rechtsmittelgerichten und Widerspruchsbehörden. Jedes Commissionerate führte seine Unterlagen in eigenem Format. Eine einfache Frage der Leitung, etwa wie viele Verfahren vor dem High Court offen sind und welche diese Woche verhandelt werden, hieß deshalb, jede Einheit anzurufen und die Antworten von Hand zusammenzutragen.
+  </Card>
+  <Card title="Was ich gebaut habe" icon="puzzle">
+    Ein zentrales Dashboard für Gerichtsverfahren in Power BI, verbunden mit einem Excel-Blatt, das jedes Commissionerate im gemeinsamen Format führte. Es zeigte live, wie viele Verfahren offen, erledigt, angefochten oder noch ohne Erwiderung waren und welche Termine anstanden, von der Summe der Zone bis zum einzelnen Verfahren.
+  </Card>
+  <Card title="Meine Rolle" icon="pencil">
+    Als zentrale Ansprechperson für Gerichtsverfahren hielt ich die Unterlagen aller Instanzen. Ich habe das Dashboard entwickelt und war alleiniger Projektleiter, unter der Anleitung der vorgesetzten Stellen: Ich habe die gemeinsame Vorlage entworfen, die Blätter verbunden und bereinigt, das Datenmodell und die Kennzahlen gebaut, die Berichtsseiten gestaltet und damit an die Leitung berichtet.
+  </Card>
+  <Card title="Das Ergebnis" icon="approve-check-circle">
+    Ein zentraler, verlässlicher Ort für den Stand jedes Verfahrens. Berichte an die Leitung bedeuteten keine neue Sammelrunde mehr, und Termine, ausstehende Erwiderungen und Entscheidungen über Rechtsmittel wurden früh genug sichtbar, um zu handeln.
+  </Card>
+</CardGrid>
+
+## Das Problem: zeitkritische Informationen, überall verstreut
+
+Bei Gerichtsverfahren werden kleine Versäumnisse teuer. Eine Erwiderung, die vor dem Termin nicht eingereicht wurde, oder eine verstrichene Rechtsmittelfrist kann ein Verfahren entscheiden, bevor es überhaupt um die Sache geht. Die Informationen, die das verhindern, lagen aber verteilt über Commissionerates, Instanzen und Akten.
+
+<CardGrid>
+  <Card title="Wo stehen wir?" icon="magnifier">
+    Wie viele Verfahren sind offen, vor welcher Instanz, zu welchem Thema und in welchem Commissionerate? Wie lange sind sie schon offen?
+  </Card>
+  <Card title="Was steht an?" icon="list-format">
+    Welche Termine sind diese Woche, und ist für jedes Verfahren die Erwiderung eingereicht?
+  </Card>
+  <Card title="Wie schneiden wir ab?" icon="approve-check">
+    Wie viele Verfahren wurden erledigt, und wie viele zugunsten der Behörde? Wurde gegen jede nachteilige Entscheidung rechtzeitig ein Rechtsmittel eingelegt oder ein Verzicht dokumentiert?
+  </Card>
+</CardGrid>
+
+| Warum es schwierig war | |
+|---|---|
+| **Verstreute Unterlagen** | Jedes Commissionerate führte sein eigenes Register, in eigenem Aufbau |
+| **Viele Instanzen** | Jede Instanz hat eigene Verfahrensarten, Stadien und Fristen |
+| **Zeitkritisch** | Verhandlungstermine und Rechtsmittelfristen lassen keinen Raum für verspätete Informationen |
+| **Wiederholtes Zusammentragen** | Jede Besprechung und jede Anfrage der Leitung löste eine neue Runde aus Anrufen und Tabellen aus |
+| **Keine gemeinsame Sicht** | Niemand konnte sehen, welche Einheit bei Erwiderungen, Rechtsmitteln oder Aktualisierungen zurücklag |
+
+## Die Lösung: eine Vorlage, ein Modell, ein Dashboard
+
+<div class="sc-fig">
+  <div class="sc-tiers pj-tiers4">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Quellen <span class="n">von jeder Einheit geführt</span></div>
+      <div class="sc-node soft">Ein Excel-Blatt je Commissionerate</div>
+      <div class="sc-node soft">Überall dieselbe Vorlage und dieselben Spalten</div>
+      <div class="sc-node soft">Auswahllisten für Instanz, Stadium und Ausgang</div>
+      <div class="sc-node soft">Aktualisiert von der zuständigen Einheit</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Zusammenführen <span class="n">Power Query</span></div>
+      <div class="sc-node slate">Verbindung zu jedem Blatt</div>
+      <div class="sc-node slate">Anfügen zu einer Verfahrenstabelle</div>
+      <div class="sc-node slate">Daten, Namen und Status bereinigen</div>
+      <div class="sc-node slate">Fehlende oder veraltete Einträge markieren</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Modell <span class="n">Datenmodell und Kennzahlen</span></div>
+      <div class="sc-node">Verfahren, Instanzen, Einheiten und Kalender</div>
+      <div class="sc-node">Offen, erledigt und Ausgang</div>
+      <div class="sc-node">Fällige und überfällige Erwiderungen</div>
+      <div class="sc-node">Tage bis zum Termin und bis zur Frist</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Bericht <span class="n">für die, die entscheiden</span></div>
+      <div class="sc-node green">Übersicht für die Leitung</div>
+      <div class="sc-node green">Termine und Fristen</div>
+      <div class="sc-node green">Commissionerates im Vergleich</div>
+      <div class="sc-node green">Verfahrensregister mit Drill-down</div>
+    </div>
+  </div>
+  <figcaption>Von einem Blatt je Commissionerate zu einem einzigen Dashboard: zusammenführen, modellieren, berichten.</figcaption>
+</div>
+
+<Steps>
+
+1. **Eine Vorlage für jedes Commissionerate.** Ich habe eine einheitliche Excel-Vorlage mit festen Spalten und Auswahllisten für Instanz, Stadium, Ausgang und Status der Erwiderung entworfen. So erfasste jede Einheit ihre Verfahren auf dieselbe Weise, und die Blätter ließen sich ohne Nacharbeit zusammenführen.
+
+2. **Die Verantwortung bleibt bei der Einheit.** Jedes Commissionerate führte und aktualisierte sein eigenes Blatt, weil die zuständige Einheit ihr Verfahren am besten kennt. Das Dashboard las die Blätter nur und veränderte sie nie.
+
+3. **Eine zentrale Verbindung.** Power BI verband sich über Power Query mit allen Blättern, fügte sie zu einer Verfahrenstabelle zusammen, bereinigte Daten und Namen und markierte Einträge mit fehlenden Feldern oder Blätter, die länger nicht aktualisiert wurden.
+
+4. **Ein Modell rund um das Verfahren.** Die Verfahren waren mit Instanzen, Commissionerates und einer Datumstabelle verknüpft, mit Kennzahlen für offene und erledigte Verfahren, Ausgänge, Entscheidungen über Rechtsmittel, fällige und überfällige Erwiderungen sowie die verbleibenden Tage bis zu jedem Termin und jeder Rechtsmittelfrist.
+
+5. **Berichtsseiten für jede Frage.** Eine Übersicht für die Leitung, eine Seite für Termine und Fristen mit allem, was zu tun war, ein Vergleich der Commissionerates und ein Verfahrensregister, auf das sich jede Summe herunterfiltern ließ.
+
+6. **Berichte nach oben.** Als zentrale Ansprechperson nutzte ich das Dashboard für die Berichte an die Leitung: Zahlen für Besprechungen, Antworten auf Fragen, sobald sie kamen, und regelmäßige Berichte, alles aus derselben Quelle.
+
+</Steps>
+
+### Was jeder Verfahrensdatensatz enthielt
+
+| Feldgruppe | Inhalt | Wofür es genutzt wurde |
+|---|---|---|
+| **Identität des Verfahrens** | Instanz, Verfahrensart, Aktenzeichen und Commissionerate | Der Schlüssel, der jede Aktualisierung einem Verfahren zuordnet |
+| **Gegenstand und Streitwert** | Der Streitpunkt und der betroffene Betrag | Prioritäten und die betroffenen Einnahmen |
+| **Stadium** | Eingereicht, offen, zur Entscheidung vorbehalten oder erledigt | Zahl der offenen und erledigten Verfahren |
+| **Erwiderung** | Fälligkeitsdatum und Einreichungsdatum | Fällige und überfällige Erwiderungen |
+| **Termine** | Nächster Verhandlungstermin | Der Terminkalender |
+| **Ausgang** | Zugunsten, dagegen, zurückverwiesen oder zurückgenommen, mit Datum der Entscheidung | Anteile der Ausgänge und Erfolgsquoten |
+| **Entscheidung über Rechtsmittel** | Rechtsmittel eingelegt, Entscheidung akzeptiert oder in Prüfung, mit Fristende | Die Überwachung der Rechtsmittelfristen |
+
+## Das Dashboard
+
+Vier Berichtsseiten, jede beantwortet eine Frage. Die Nachbildungen unten zeigen drei davon, mit ihrem Aufbau und der Art der Kennzahlen, auf Grundlage erfundener Zahlen. Die Oberfläche ist, wie im Original, englisch.
+
+<Tabs>
+  <TabItem label="Übersicht">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/sankalan/overview.svg" alt="Veranschaulichende Nachbildung der Übersichtsseite: Filter für Instanz, Commissionerate, Zeitraum und Thema, sechs Kennzahlenkarten, offene Verfahren je Instanz und der Ausgang der in diesem Jahr erledigten Verfahren. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Übersicht: die Lage der Zone bei Gerichtsverfahren auf einen Blick, filterbar nach Instanz, Commissionerate, Zeitraum und Thema.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Termine & Fristen">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/sankalan/hearings.svg" alt="Veranschaulichende Nachbildung der Terminseite: anstehende Verhandlungen mit dem Stand der jeweiligen Erwiderung und nachteilige Entscheidungen mit den verbleibenden Tagen bis zum Ablauf der Rechtsmittelfrist. Alle Daten sind erfunden." loading="lazy" />
+      <figcaption>Termine und Fristen: was in den kommenden Wochen zu tun ist, mit Stand der Erwiderung und verbleibenden Tagen für ein Rechtsmittel.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Commissionerates">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/sankalan/commissionerates.svg" alt="Veranschaulichende Nachbildung der Commissionerate-Ansicht: acht Einheiten mit offenen und erledigten Verfahren, Anteil zugunsten der Behörde, fälligen und überfälligen Erwiderungen, Terminen der nächsten sieben Tage und dem Stand der letzten Aktualisierung jedes Blatts. Alle Zahlen sind erfunden." loading="lazy" />
+      <figcaption>Commissionerates im Vergleich, einschließlich der Aktualität jedes Blatts.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+| Seite | Welche Frage sie beantwortet | Beispielkennzahlen |
+|---|---|---|
+| **Übersicht** | Wo steht die Zone bei Gerichtsverfahren? | Offene Verfahren je Instanz, Erledigungen, Anteil zugunsten der Behörde, fällige Erwiderungen, Termine der nächsten 7 Tage |
+| **Termine & Fristen** | Was ist in den kommenden Wochen zu tun? | Anstehende Termine mit Stand der Erwiderung, nachteilige Entscheidungen mit verbleibenden Tagen bis zur Rechtsmittelfrist |
+| **Commissionerates** | Welche Einheiten liegen im Plan, und wo ist Nachfassen nötig? | Offen, erledigt, Anteil zugunsten, fällige und überfällige Erwiderungen, Datum der letzten Aktualisierung |
+| **Verfahrensregister** | Wie ist der genaue Stand dieses Verfahrens? | Der vollständige Datensatz eines Verfahrens, mit einem Klick aus jeder Summe erreichbar |
+
+### Kennzahlen, auf die es ankam
+
+<CardGrid>
+  <Card title="Offene Verfahren und Alter" icon="list-format">
+    Offene Verfahren nach Instanz, Thema und Commissionerate, und wie lange sie schon offen waren.
+  </Card>
+  <Card title="Erledigungen und Ausgänge" icon="approve-check-circle">
+    Verfahren zugunsten, dagegen, zurückverwiesen oder zurückgenommen, insgesamt und je Instanz.
+  </Card>
+  <Card title="Rechtsmittel" icon="random">
+    Für jede nachteilige Entscheidung: Rechtsmittel eingelegt, Entscheidung akzeptiert oder noch in Prüfung, gemessen am Fristende.
+  </Card>
+  <Card title="Erwiderungen" icon="document">
+    Fällige, eingereichte und überfällige Erwiderungen, verfolgt vor jedem Termin.
+  </Card>
+  <Card title="Terminkalender" icon="information">
+    Jeder Termin der kommenden Tage, über alle Instanzen und Commissionerates.
+  </Card>
+  <Card title="Aktualität der Daten" icon="setting">
+    Wann jedes Commissionerate sein Blatt zuletzt aktualisiert hatte, damit veraltete Zahlen nie für aktuelle gehalten wurden.
+  </Card>
+</CardGrid>
+
+## Designentscheidungen
+
+| Entscheidung | Warum | Wie |
+|---|---|---|
+| **Excel als Einstieg** | Jede Einheit arbeitete bereits mit Excel; neue Software hätte die Einführung gebremst | Eine gemeinsame Vorlage mit Auswahllisten für einheitliche Einträge |
+| **Verantwortung vor Ort** | Die zuständige Einheit kennt den Stand eines Verfahrens am besten | Jedes Commissionerate führte sein eigenes Blatt; das Dashboard las es nur |
+| **Eine zentrale Quelle** | Unterschiedliche Zahlen aus unterschiedlichen Dateien sorgten in Besprechungen für Verwirrung | Das zentrale Dashboard wurde die einzige Quelle für alle Berichte über Verfahren |
+| **Fristen zuerst** | Ein versäumter Termin oder eine verstrichene Rechtsmittelfrist ist der teuerste Fehler | Termine und Rechtsmittelfristen auf einer eigenen Seite, nach Dringlichkeit sortiert |
+| **Von der Summe zum Verfahren** | Die Leitung fragt erst nach Summen, dann nach einem Verfahren | Jede Zahl lässt sich bis zu den zugrunde liegenden Datensätzen herunterfiltern |
+| **Aktualität sichtbar** | Ein Dashboard ist nur so gut wie seine letzte Aktualisierung | Die letzte Aktualisierung jeder Einheit steht neben ihren Zahlen |
+
+## Was es gebracht hat
+
+| | Vorher | Mit Sankalan |
+|---|---|---|
+| **Stand eines Verfahrens** | Anrufe und Schreiben an das zuständige Commissionerate | Ein Klick von der Summe der Zone zum Verfahren |
+| **Berichte an die Leitung** | Für jede Anfrage neu aus allen Einheiten zusammengetragen | Jederzeit im Dashboard bereit |
+| **Termine** | Von jeder Einheit getrennt verfolgt | Ein Kalender über alle Instanzen und Einheiten |
+| **Erwiderungen** | Nachgefasst, wenn ein Termin näher rückte | Fällige und überfällige Erwiderungen je Einheit, im Voraus sichtbar |
+| **Entscheidungen über Rechtsmittel** | Fristen in einzelnen Akten verborgen | Nachteilige Entscheidungen mit den verbleibenden Tagen bis zur Rechtsmittelfrist |
+| **Nachfassen** | Keine Sicht darauf, welche Einheit zurücklag | Die Lage jeder Einheit und die Aktualität ihrer Daten, nebeneinander |
+
+<CardGrid>
+  <Card title="Die Leitung" icon="star">
+    Eine Sicht auf alle Verfahren der Zone für Besprechungen und Entscheidungen, mit Antworten in dem Moment, in dem eine Frage gestellt wurde.
+  </Card>
+  <Card title="Die Commissionerates" icon="pencil">
+    Arbeiteten weiter im vertrauten Excel, mit weniger wiederholten Anfragen nach denselben Zahlen und einem klaren Blick auf ihre eigene Lage.
+  </Card>
+  <Card title="Die zentrale Rechtsstelle" icon="approve-check">
+    Ein Ort, um alle Instanzen zu überwachen, bei den Einheiten nachzufassen und nach oben zu berichten, statt von Hand zusammenzutragen.
+  </Card>
+</CardGrid>
+
+## Fähigkeiten und Werkzeuge
+
+<CardGrid>
+  <Card title="Reporting mit Power BI" icon="star">
+    Berichtsseiten, gestaltet um die Fragen, die die Leitung tatsächlich stellte, mit Filtern, Kennzahlenkarten und Drill-down bis zum einzelnen Verfahren.
+  </Card>
+  <Card title="Datenmodell & Kennzahlen" icon="puzzle">
+    Ein Modell rund um das Verfahren, mit Instanzen, Einheiten und einer Datumstabelle, und DAX-Kennzahlen für offene und erledigte Verfahren, Ausgänge, Erwiderungen und Fristen.
+  </Card>
+  <Card title="Datenintegration" icon="random">
+    Power Query, um ein Blatt je Commissionerate zu verbinden, anzufügen und zu bereinigen, zu einer einheitlichen Verfahrenstabelle.
+  </Card>
+  <Card title="Vorlagendesign & Datenqualität" icon="add-document">
+    Eine Excel-Vorlage mit festen Spalten und Auswahllisten, damit die Daten schon an der Quelle einheitlich waren und nicht erst nachträglich korrigiert werden mussten.
+  </Card>
+  <Card title="Kennzahlen aus der juristischen Praxis" icon="document">
+    Kennzahlen, die abbilden, wie Gerichtsverfahren wirklich ablaufen: Instanzen, Stadien, Erwiderungen, Termine und Fristen.
+  </Card>
+  <Card title="Koordination & Berichtswesen" icon="comment">
+    Als zentrale Ansprechperson alle Commissionerates auf ein Format abgestimmt und das Dashboard zur Grundlage der Berichte nach oben gemacht.
+  </Card>
+</CardGrid>
+
+| Bereich | Werkzeuge |
+|---|---|
+| **Dashboard und Modell** | Power BI: Power Query, das Datenmodell, DAX-Kennzahlen und Berichtsseiten |
+| **Datenerfassung** | Excel: eine gemeinsame Vorlage mit festen Spalten und Auswahllisten, ein Blatt je Commissionerate |
+
+<Badge text="Power BI" /> <Badge text="Power Query" /> <Badge text="DAX" /> <Badge text="Excel" /> <Badge text="Datenintegration" /> <Badge text="Datenmodellierung" /> <Badge text="KPI-Design" /> <Badge text="Dashboard-Design" /> <Badge text="Prozessführung" /> <Badge text="Management-Reporting" /> <Badge text="Öffentlicher Sektor" />

@@ -1,0 +1,250 @@
+---
+title: Sankalan - Litigation Monitoring & Reporting
+description: A central Power BI dashboard that brought every case before the Supreme Court, High Courts, CAT and appellate forums into one live view - pending, disposed, appealed, counters due and hearings coming up - fed by one Excel sheet per commissionerate.
+sidebar:
+  label: Sankalan
+  order: 3
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">One live view of every case before the Supreme Court, High Courts, CAT and the appellate forums: what is pending, what was decided, what was appealed, which counters are due and which hearings are coming up.</p>
+
+<Badge text="Power BI" variant="note" /> <Badge text="Data integration" variant="note" /> <Badge text="Data modelling" variant="note" /> <Badge text="KPI design" variant="note" /> <Badge text="Legal operations" variant="note" /> <Badge text="Management reporting" variant="note" />
+
+**Built during:** my legal posting in India's indirect-tax administration, as the nodal officer for litigation ([see experience](/resume/experience/)) · **My role:** creator and sole project lead, working under the guidance of senior authorities · **Built with:** Power BI and Excel · **The name:** *Sankalan* means "compilation" in Hindi.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">4+</span><span class="l">types of forum: Supreme Court, High Courts, CAT and appellate forums</span></div>
+  <div class="pj-stat"><span class="n">1</span><span class="l">shared template, with one sheet kept by each commissionerate</span></div>
+  <div class="pj-stat"><span class="n">1</span><span class="l">central dashboard: the single source for litigation reporting</span></div>
+  <div class="pj-stat"><span class="n">Live</span><span class="l">hearings, counters, appeals and disposals, as each unit updates</span></div>
+</div>
+
+<Aside type="caution" title="About the visuals on this page">
+Sankalan ran on internal case records, and I no longer have access to the dashboard. The report pages shown here are **illustrative reconstructions** drawn for this page, with invented figures and generic unit names; they are not screenshots of the original. No case numbers, party names or details of any matter appear on this page.
+</Aside>
+
+## At a glance
+
+<CardGrid>
+  <Card title="The challenge" icon="warning">
+    Cases ran in many forums at once: the Supreme Court, the High Courts, the Central Administrative Tribunal (CAT) and the appellate tribunals and authorities. Each commissionerate kept its own records in its own format, so a simple question from senior authorities, such as how many cases were pending in the High Court and which came up this week, meant calling every unit and compiling the answers by hand.
+  </Card>
+  <Card title="What I built" icon="puzzle">
+    A central litigation dashboard in Power BI, connected to an Excel sheet kept by each commissionerate in one shared format. It showed, live, how many cases were pending, disposed, appealed or awaiting a counter, and which hearings were coming up, from the zone total down to a single case.
+  </Card>
+  <Card title="My role" icon="pencil">
+    As the nodal officer for litigation, I held the records for every forum. I created the dashboard and was the sole project lead, working under the guidance of senior authorities: I designed the shared template, connected and cleaned the sheets, built the data model and measures, designed the report pages, and used it to report to senior authorities.
+  </Card>
+  <Card title="The result" icon="approve-check-circle">
+    One central, trusted place for the status of every case. Reporting to senior authorities no longer meant a fresh round of compilation, and hearings, pending counters and appeal decisions became visible early enough to act on.
+  </Card>
+</CardGrid>
+
+## The problem: time-critical information, scattered everywhere
+
+Litigation is where small slips become expensive. A counter affidavit not filed before a hearing, or an appeal period allowed to lapse, can decide a case before its merits are ever argued. Yet the information needed to prevent that was spread across commissionerates, forums and files.
+
+<CardGrid>
+  <Card title="Where do we stand?" icon="magnifier">
+    How many cases are pending, in which forum, on which subject and in which commissionerate? How long have they been pending?
+  </Card>
+  <Card title="What is coming up?" icon="list-format">
+    Which hearings are this week, and has the counter or reply been filed for each of them?
+  </Card>
+  <Card title="How are we doing?" icon="approve-check">
+    How many cases were disposed, and how many in the department's favour? Was every adverse order appealed in time, or a decision recorded not to appeal?
+  </Card>
+</CardGrid>
+
+| Why it was hard | |
+|---|---|
+| **Scattered records** | Every commissionerate kept its own register, in its own layout |
+| **Many forums** | Each forum has its own case types, stages and timelines |
+| **Time-critical** | Hearing dates and limitation periods for appeals leave no room for late information |
+| **Repeated compilation** | Every review meeting or request from senior authorities started a fresh round of calls and spreadsheets |
+| **No common view** | There was no way to see which unit was behind on counters, appeals or updates |
+
+## The solution: one template, one model, one dashboard
+
+<div class="sc-fig">
+  <div class="sc-tiers pj-tiers4">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Sources <span class="n">kept by each unit</span></div>
+      <div class="sc-node soft">One Excel sheet per commissionerate</div>
+      <div class="sc-node soft">The same template and columns everywhere</div>
+      <div class="sc-node soft">Dropdowns for forum, stage and outcome</div>
+      <div class="sc-node soft">Updated by the unit handling the case</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Combine <span class="n">Power Query</span></div>
+      <div class="sc-node slate">Connect to every sheet</div>
+      <div class="sc-node slate">Append into one case table</div>
+      <div class="sc-node slate">Clean dates, names and statuses</div>
+      <div class="sc-node slate">Flag missing or stale updates</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Model <span class="n">data model and measures</span></div>
+      <div class="sc-node">Cases, forums, units and a calendar</div>
+      <div class="sc-node">Pending, disposed and outcomes</div>
+      <div class="sc-node">Counters due and overdue</div>
+      <div class="sc-node">Days to hearing and to limitation</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Report <span class="n">to the people who decide</span></div>
+      <div class="sc-node green">Overview for senior authorities</div>
+      <div class="sc-node green">Hearings and deadlines</div>
+      <div class="sc-node green">Commissionerates side by side</div>
+      <div class="sc-node green">Case register with drill-down</div>
+    </div>
+  </div>
+  <figcaption>From one sheet per commissionerate to a single dashboard: combine, model, report.</figcaption>
+</div>
+
+<Steps>
+
+1. **One template for every commissionerate.** I designed a single Excel template with fixed columns and dropdowns for forum, stage, outcome and counter status, so every unit recorded its cases the same way and the sheets could be combined without manual rework.
+
+2. **Ownership stays with the unit.** Each commissionerate kept and updated its own sheet, because the unit handling a case knows it best. The dashboard only read the sheets; it never changed them.
+
+3. **One central connection.** Power BI connected to all the sheets through Power Query, appended them into one case table, cleaned dates and names, and flagged records with missing fields or sheets that had not been updated recently.
+
+4. **A model built around the case.** Cases were linked to forums, commissionerates and a date table, with measures for pending and disposed cases, outcomes, appeal decisions, counters due and overdue, and the days left to each hearing and each appeal deadline.
+
+5. **Report pages for each question.** An overview for senior authorities, a hearings-and-deadlines page for what needed action, a side-by-side view of the commissionerates, and a case register that any total could be filtered down to.
+
+6. **Reporting upwards.** As the nodal officer, I used the dashboard to report to senior authorities: figures for review meetings, answers to questions as they came, and periodic reports, all from the same source.
+
+</Steps>
+
+### What each case record captured
+
+| Field group | What it held | What it fed |
+|---|---|---|
+| **Case identity** | Forum, case type, case reference and commissionerate | The key that ties every update to one case |
+| **Subject and stakes** | The issue in dispute and the amount involved | Priorities and the revenue at stake |
+| **Stage** | Filed, pending, reserved for orders or disposed | Pending and disposal counts |
+| **Counter or reply** | Due date and filing date | Counters due and overdue |
+| **Hearings** | Next date of hearing | The hearing calendar |
+| **Outcome** | In favour, against, remanded or withdrawn, with the order date | Outcome shares and success rates |
+| **Appeal decision** | Appeal filed, accepted or under consideration, with the limitation date | The appeal-deadline watch |
+
+## The dashboard
+
+Four report pages, each answering one question. The reconstructions below show three of them, with their layout and the kind of measures on each, using invented figures.
+
+<Tabs>
+  <TabItem label="Overview">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/sankalan/overview.svg" alt="Illustrative reconstruction of the overview page: slicers for forum, commissionerate, period and subject, six KPI cards, pending cases by forum and the outcome of cases disposed this year. All figures are invented." loading="lazy" />
+      <figcaption>Overview: the zone's litigation position at a glance, filterable by forum, commissionerate, period and subject.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Hearings & deadlines">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/sankalan/hearings.svg" alt="Illustrative reconstruction of the hearings page: upcoming hearings with the counter or reply status of each, and orders against the department with the days left to appeal. All data is invented." loading="lazy" />
+      <figcaption>Hearings and deadlines: what needs action in the coming weeks, with counter status and days left to appeal.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Commissionerates">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/sankalan/commissionerates.svg" alt="Illustrative reconstruction of the commissionerate view: eight units with pending and disposed cases, share decided in favour, counters due and overdue, hearings in the next seven days and how recently each sheet was updated. All figures are invented." loading="lazy" />
+      <figcaption>Commissionerates side by side, including how fresh each unit's sheet is.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+| Page | Question it answers | Example measures |
+|---|---|---|
+| **Overview** | Where does the zone stand in litigation? | Pending by forum, disposals, share decided in favour, counters due, hearings in the next 7 days |
+| **Hearings & deadlines** | What needs action in the coming weeks? | Upcoming hearings with counter status, orders against the department with days left to appeal |
+| **Commissionerates** | Which units are on track, and which need follow-up? | Pending, disposed, in favour, counters due and overdue, date of each unit's last update |
+| **Case register** | What exactly is the status of this case? | The full record of a case, reached from any total with a click |
+
+### Measures that mattered
+
+<CardGrid>
+  <Card title="Pending and age" icon="list-format">
+    Cases pending by forum, subject and commissionerate, and how long they had been pending.
+  </Card>
+  <Card title="Disposals and outcomes" icon="approve-check-circle">
+    Cases decided in favour, against, remanded or withdrawn, overall and by forum.
+  </Card>
+  <Card title="Appeals" icon="random">
+    For every order against the department: appeal filed, accepted, or still under decision, against the limitation date.
+  </Card>
+  <Card title="Counters and replies" icon="document">
+    Counters and replies due, filed and overdue, tracked ahead of each hearing.
+  </Card>
+  <Card title="Hearing calendar" icon="information">
+    Every hearing in the coming days, across all forums and commissionerates.
+  </Card>
+  <Card title="Data freshness" icon="setting">
+    When each commissionerate last updated its sheet, so stale figures were never mistaken for current ones.
+  </Card>
+</CardGrid>
+
+## Design decisions
+
+| Decision | Why | How |
+|---|---|---|
+| **Excel as the entry point** | Every unit already worked in Excel; new software would have slowed adoption | One shared template, with dropdowns to keep entries consistent |
+| **Ownership stays local** | The unit handling a case knows its status best | Each commissionerate maintained its own sheet; the dashboard only read it |
+| **One central source** | Different counts from different files caused confusion in reviews | The nodal dashboard became the single source for all litigation reporting |
+| **Deadlines first** | A missed hearing or a lapsed appeal period is the costliest failure | Hearings and appeal deadlines on their own page, sorted by urgency |
+| **From total to case** | Senior authorities ask about totals first, then about one case | Every number filters down to the underlying case records |
+| **Freshness on show** | A dashboard is only as good as its latest update | Each unit's last update displayed beside its figures |
+
+## Value delivered
+
+| | Before | With Sankalan |
+|---|---|---|
+| **Status of a case** | Calls and letters to the commissionerate handling it | One click from the zone total to the case |
+| **Reports to senior authorities** | Compiled afresh from every unit for each request | Ready on the dashboard whenever they were needed |
+| **Hearings** | Tracked separately by each unit | One calendar across every forum and unit |
+| **Counters and replies** | Chased when a hearing came close | Due and overdue counters visible per unit, in advance |
+| **Appeal decisions** | Limitation dates buried in individual files | Orders against the department listed with the days left to appeal |
+| **Follow-up** | No view of which unit was behind | Each unit's position, and how fresh its data is, side by side |
+
+<CardGrid>
+  <Card title="Senior authorities" icon="star">
+    A zone-wide view of litigation for reviews and decisions, with answers available the moment a question was asked.
+  </Card>
+  <Card title="Commissionerates" icon="pencil">
+    Kept working in familiar Excel, with fewer repeated requests for the same figures and a clear view of their own position.
+  </Card>
+  <Card title="The nodal legal function" icon="approve-check">
+    One place to monitor every forum, follow up with units and report upwards, instead of compiling by hand.
+  </Card>
+</CardGrid>
+
+## Skills and tools
+
+<CardGrid>
+  <Card title="Power BI reporting" icon="star">
+    Report pages designed around the questions senior authorities actually asked, with slicers, KPI cards and drill-down to individual cases.
+  </Card>
+  <Card title="Data modelling & measures" icon="puzzle">
+    A case-centred model with forums, units and a date table, and DAX measures for pending, disposed, outcomes, counters and deadlines.
+  </Card>
+  <Card title="Data integration" icon="random">
+    Power Query to connect, append and clean one sheet per commissionerate into a single, consistent case table.
+  </Card>
+  <Card title="Template design & data quality" icon="add-document">
+    One Excel template with fixed columns and dropdowns, so data was consistent at the source rather than fixed afterwards.
+  </Card>
+  <Card title="Legal-domain KPI design" icon="document">
+    Measures built on how litigation really works: forums, stages, counters, hearings and limitation periods.
+  </Card>
+  <Card title="Coordination & reporting" icon="comment">
+    As nodal officer, aligned every commissionerate on one format and turned the dashboard into the basis for reporting upwards.
+  </Card>
+</CardGrid>
+
+| Area | Tools |
+|---|---|
+| **Dashboard and model** | Power BI: Power Query, the data model, DAX measures and report pages |
+| **Data capture** | Excel: a shared template with fixed columns and dropdown validation, one sheet per commissionerate |
+
+<Badge text="Power BI" /> <Badge text="Power Query" /> <Badge text="DAX" /> <Badge text="Excel" /> <Badge text="Data integration" /> <Badge text="Data modelling" /> <Badge text="KPI design" /> <Badge text="Dashboard design" /> <Badge text="Legal operations" /> <Badge text="Management reporting" /> <Badge text="Public sector" />
