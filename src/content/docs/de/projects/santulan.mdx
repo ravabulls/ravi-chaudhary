@@ -1,0 +1,396 @@
+---
+title: Santulan - Personalanalyse nach Arbeitslast
+description: Arbeitslast-, Personal- und Planstellendaten von 527 Dienststellen in einem Modell verbunden, das zeigt, wo Beamte überlastet sind, und einen fairen, begründbaren Versetzungsplan entwirft - eine Offline-Datei, null laufende Kosten.
+sidebar:
+  label: Santulan
+  order: 2
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Arbeitslast-, Personal- und Planstellendaten in einem Modell verbunden, das zeigt, wo Beamte überlastet sind, und einen fairen, begründbaren Versetzungsplan entwirft.</p>
+
+<Badge text="Datenintegration" variant="note" /> <Badge text="Datenmodellierung" variant="note" /> <Badge text="KPI-Design" variant="note" /> <Badge text="Personalanalytik" variant="note" /> <Badge text="Zuteilung unter Nebenbedingungen" variant="note" /> <Badge text="Dashboard-Design" variant="note" />
+
+**Kontext:** eine Zone der indischen Central-GST-Verwaltung (CGST) ([zu meinem Werdegang](/de/resume/experience/)) · **Gebaut für:** den Chief Commissioner, die Principal Commissioners und die Personalabteilungen · **Das Tool:** der *Manpower Deployment Analyzer*, so heißt es in den Screenshots · **Der Name:** *Santulan* bedeutet auf Hindi „Gleichgewicht“.
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/santulan/zone-view.webp" alt="Zone-View-Dashboard des Manpower Deployment Analyzer: Kennzahlenkacheln, ein Balkendiagramm der Arbeitslast je Commissionerate, ein Ringdiagramm mit dem Anteil jedes Commissionerates an der Zone und die am stärksten belasteten Range-Dienststellen. Anonymisierte Beispieldaten." />
+  <figcaption>Das Zone-View-Dashboard. Alle Screenshots auf dieser Seite zeigen anonymisierte Beispieldaten: Namen ersetzt, Zahlen zufällig verändert. Die Oberfläche des Tools ist englisch.</figcaption>
+</figure>
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">527</span><span class="l">Dienststellen in der Zone modelliert</span></div>
+  <div class="pj-stat"><span class="n">108</span><span class="l">Arbeitslast-Parameter in 7 Analyseebenen</span></div>
+  <div class="pj-stat"><span class="n">9</span><span class="l">Datenquellen in einem Modell verbunden</span></div>
+  <div class="pj-stat"><span class="n">4</span><span class="l">Schutzregeln für jeden Versetzungsvorschlag</span></div>
+  <div class="pj-stat"><span class="n">1 Datei</span><span class="l">komplett offline, ohne Server, ohne laufende Kosten</span></div>
+</div>
+
+<Aside type="caution" title="Zu den Daten auf dieser Seite">
+Santulan arbeitet mit vertraulichen Personaldaten. Diese Seite zeigt deshalb **die Methode und das Produkt, niemals die echten Daten**. Die Screenshots stammen aus einer anonymisierten Version des Tools: Die Namen der Dienststellen sind ersetzt (Commissionerate A, Range 253 und so weiter), und jede Zahl ist zufällig verändert, sodass keine Zahl darin ein echtes Ergebnis ist. Das Logo der Behörde wurde entfernt, und weder die Tool-Datei noch die Excel-Dateien noch die echten Zahlen werden veröffentlicht.
+</Aside>
+
+## Auf einen Blick
+
+<CardGrid>
+  <Card title="Die Herausforderung" icon="warning">
+    Jedes Jahr werden die Beamten einer Steuerverwaltungszone im Annual General Transfer (AGT), der jährlichen Versetzungsrunde, neu eingesetzt. Diese Entscheidungen wurden mit Eindrücken und Präzedenzfällen begründet, weil niemand die Arbeitslast genau sehen konnte. Dabei kann die gemessene Last pro Beamten zwischen Dienststellen mit derselben Aufgabe um ein Mehrfaches auseinanderliegen.
+  </Card>
+  <Card title="Was ich gebaut habe" icon="puzzle">
+    Eine einzige Offline-Webanwendung, die rohe Arbeitslastmeldungen, Personalregister und Planstellendaten in eine vergleichbare Kennzahl verwandelt: **Arbeitslast pro Beamten im Vergleich zum Zonendurchschnitt**. Daraus entwirft sie einen Versetzungsplan nach Dienstgraden, der die Bedingungen der Praxis einhält.
+  </Card>
+  <Card title="Meine Rolle" icon="pencil">
+    Ich habe das Projekt von Anfang bis Ende verantwortet: das Problem verstehen, das Datenmodell und die Bewertungsmethode entwerfen, die Datenerfassung aufbauen, die Analyse- und Zuteilungslogik schreiben, die Dashboards gestalten und alles als Werkzeug verpacken, das auch Beamte ohne technischen Hintergrund nutzen können.
+  </Card>
+  <Card title="Das Ergebnis" icon="approve-check-circle">
+    Entscheiderinnen und Entscheider sehen, wie stark die Beamten in jeder der 527 Dienststellen belastet sind, und warum. Sie erhalten einen Entwurf für Versetzungen nach Dienstgraden, mit einer Begründung hinter jeder Zahl. Jede Annahme bleibt sichtbar und änderbar, sodass sich die Diskussion von Meinungen zu den konkreten Zahlen verlagert, über die man uneins ist.
+  </Card>
+</CardGrid>
+
+| | Projektdaten |
+|---|---|
+| **Bereich** | Personalanalytik im öffentlichen Sektor: Central-GST-Verwaltung (CGST), Indien |
+| **Nutzer** | Chief Commissioner (Sicht auf die ganze Zone), Principal Commissioners (innerhalb ihres eigenen Commissionerates) und Personalabteilungen |
+| **Umfang** | 8 Commissionerates, 66 Divisions und 342 Range-Dienststellen, dazu Audit- und Appeals-Commissionerates sowie 15 Einheiten für die Analyse des Unterstützungspersonals: insgesamt 527 Dienststellen |
+| **Daten** | Eine Arbeitslaststudie der Zone von 2024 (Range-Ebene), eine Laufbahnstudie von 2024 zu Soll- und Ist-Stärke in 28 Dienstgraden, Geografie und Vorgaben der Leitung |
+| **Ergebnis** | Eine eigenständige HTML-Datei (etwa 1,5 MB), die in jedem Browser auf Computer oder Smartphone läuft, ohne Installation, Internet oder Server |
+| **Werkzeuge** | JavaScript, HTML/CSS, selbst gebaute SVG-Diagramme, SheetJS (Excel im Browser), Google Apps Script, Google Forms und Sheets, Excel, Node.js für Smoke-Tests der Berechnungen |
+
+## Das Problem: wichtige Entscheidungen, keine gemeinsamen Zahlen
+
+Eine Steuerzone ist eine Hierarchie, neben der eigene Audit-Einheiten (Circles, Groups) und Appeals-Einheiten stehen. Jede Ebene erledigt andere Arbeit, darunter Registrierungen, Prüfung von Steuererklärungen, Erstattungen, Adjudication, Prüfungen und Rechtsmittel. Jedes Jahr müssen die Beamten auf all diese Ebenen verteilt werden.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Zone<span class="sub">das Gesamtbild</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Commissionerates<span class="sub">8 ausführende Einheiten</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Divisions<span class="sub">66 Dienststellen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Ranges<span class="sub">342 Außendienststellen</span></div>
+  </div>
+  <figcaption>Die ausführende Hierarchie. Audit- und Appeals-Commissionerates stehen mit eigenen Ebenen daneben, und jede Ebene misst andere Arbeit.</figcaption>
+</div>
+
+Die Fragen, die die Entscheider nicht mit Daten beantworten konnten:
+
+<CardGrid>
+  <Card title="Wer ist überlastet?" icon="magnifier">
+    Welche Dienststellen sind überlastet, und wie stark? Ist die Last eines Beamten in einer Range mit der eines Beamten in der Zentrale vergleichbar?
+  </Card>
+  <Card title="Wer soll wechseln?" icon="random">
+    Wie viele Superintendents und Inspectors sollen versetzt werden, und von wo nach wo? Würde eine Versetzung die Planstellen überschreiten oder die abgebende Dienststelle überlasten?
+  </Card>
+  <Card title="Ist es fair?" icon="list-format">
+    Ist das Unterstützungspersonal (Verwaltungskräfte) fair auf die Einheiten verteilt? Welche Commissionerates verteilen ihre Arbeit ungewöhnlich auf ihre eigenen Ebenen?
+  </Card>
+</CardGrid>
+
+| Warum es schwierig war | |
+|---|---|
+| **Datensilos** | Die Arbeitslastmeldungen lagen bei jeder Dienststelle, das Personal in Registern, die Planstellen in einer eigenen Laufbahndatei, und Geografie gab es nirgends |
+| **Unterschiedliche Einheiten** | Jede Ebene misst andere Arbeit, deshalb sind 100 Punkte in einer Range und 100 Punkte in der Zentrale nicht dasselbe |
+| **Unordentliche Personaldaten** | Viele Beamte haben zusätzlich die Leitung von zwei oder drei Dienststellen, deshalb gibt die reine Kopfzahl die Kapazität falsch wieder |
+| **Uneinheitliche Schlüssel** | Dieselbe Dienststelle war in verschiedenen Dateien unterschiedlich geschrieben (der volle Name einer Stadt in der einen, die Kurzform in der anderen), und die Reihenfolge der Spalten wechselte von Datei zu Datei |
+| **Wenig Technik** | Die Dienststellen arbeiten mit Excel. Es gab keinen Server, kein Budget und kein IT-Projekt, und die Daten waren vertraulich und mussten auf dem Rechner der Nutzer bleiben |
+| **Vertrauen** | Eine undurchsichtige Bewertung würde für Versetzungen nie akzeptiert. Jede Zahl musste sich selbst erklären |
+
+<Aside type="tip" title="Das Designziel, das ich mir gesetzt habe">
+Die Debatte sollte sich von *„Ich habe das Gefühl, diese Dienststelle ist überbesetzt“* zu *„Die Beamten dieser Dienststelle tragen 72 % der durchschnittlichen Last der Zone, und hier ist die Rechnung“* bewegen. Das Tool soll die Arbeitslast messen und nie den Beamten bewerten. Die Entscheidung bleibt bei der zuständigen Stelle.
+</Aside>
+
+## Die Daten: neun Quellen in einem Modell verbunden
+
+<div class="sc-fig">
+  <div class="sc-tiers pj-tiers4">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Quellen <span class="n">neun Eingaben</span></div>
+      <div class="sc-node soft">Arbeitslaststudie der Ranges</div>
+      <div class="sc-node soft">Personal in Zentrale und Divisions</div>
+      <div class="sc-node soft">Arbeitslast in Divisions und Zentrale</div>
+      <div class="sc-node soft">Arbeitslast in Audit und Appeals</div>
+      <div class="sc-node soft">Laufbahn: Soll gegen Ist</div>
+      <div class="sc-node soft">Geografie der Distrikte</div>
+      <div class="sc-node soft">Vorgaben: Gewichte und Level Shares</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Integrieren <span class="n">ein Datensatz</span></div>
+      <div class="sc-node slate">Import nach Spaltenüberschrift, Reihenfolge egal</div>
+      <div class="sc-node slate">Hierarchieschlüssel: Commissionerate › Division › Range</div>
+      <div class="sc-node slate">Namen der Dienststellen dateiübergreifend zugeordnet</div>
+      <div class="sc-node slate">Zusätzliche Leitung zählt als 1/N eines Beamten</div>
+      <div class="sc-node slate">Prüfung mit Fehlerbericht in klarer Sprache</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Modellieren <span class="n">vergleichbar machen</span></div>
+      <div class="sc-node">Gewichteter Arbeitslastwert</div>
+      <div class="sc-node">Gewichtete Personalstärke</div>
+      <div class="sc-node">Last pro Beamten gegen Zonendurchschnitt</div>
+      <div class="sc-node">Level Shares: eine gemeinsame Einheit</div>
+      <div class="sc-node">Planstellengrenzen und Schutzregeln</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Entscheiden <span class="n">in die Praxis bringen</span></div>
+      <div class="sc-node green">Dashboards und Drill-down</div>
+      <div class="sc-node green">Karte der Zone</div>
+      <div class="sc-node green">Versetzungsliste nach Dienstgraden</div>
+      <div class="sc-node green">Fairer Anteil beim Unterstützungspersonal</div>
+      <div class="sc-node green">Live-Präsentation, Druck und PDF</div>
+    </div>
+  </div>
+  <figcaption>Von verstreuten Quellen zu Entscheidungen: integrieren, modellieren, entscheiden.</figcaption>
+</div>
+
+| Datenquelle | Körnung und Umfang | Status | Verwendet für |
+|---|---|---|---|
+| **Arbeitslaststudie der Ranges** | 342 Ranges × 28 Parameter + Beamte | <Badge text="Echt 2024" variant="success" /> | Kernarbeitslast der Außendienststellen |
+| **Personal in Zentrale und Divisions** | 8 Commissionerates | <Badge text="Echt 2024" variant="success" /> | Beamte außerhalb der Ranges |
+| **Arbeitslast der Division-Dienststellen** | 66 Divisions × 14 Parameter | <Badge text="Hochgerechnet" variant="caution" /> | Adjudication, Erstattungen, Überprüfung |
+| **Arbeitslast der Commissionerate-Zentralen** | 8 Zentralen × 12 Parameter | <Badge text="Hochgerechnet" variant="caution" /> | Recht, Steuerfahndung, Innenrevision |
+| **Arbeitslast Audit** | 70 Groups, 20 Circles, 3 Zentralen | <Badge text="Demo" /> | Analyse der Prüfungsabteilung |
+| **Arbeitslast Appeals** | 3 Commissionerates × 17 Parameter | <Badge text="Demo" /> | Rechtsmittelverfahren |
+| **Laufbahnstärke** | 15 Einheiten × 28 Dienstgrade × Soll / Ist | <Badge text="Echt 2024" variant="success" /> | Planstellengrenzen, faire Verteilung des Unterstützungspersonals |
+| **Geografie der Distrikte** | Distriktgrenzen → Commissionerate | <Badge text="Referenz" variant="note" /> | Karte der Zone |
+| **Vorgaben der Leitung** | Gewichte, Dienstgrad-Gewichte, Level Shares | <Badge text="Vorgabe" variant="note" /> | Zählwerte in vergleichbare Last umrechnen |
+
+Ebenen ohne echte Meldungen laufen vorerst mit klar gekennzeichneten hochgerechneten oder Demo-Zahlen, bis die Dienststellen über die eingebaute Datenerfassung melden.
+
+<CardGrid>
+  <Card title="Arbeitslast ↔ Personal" icon="approve-check">
+    Dieselbe Zeile derselben Dienststelle, deshalb ist die Last pro Beamten exakt.
+  </Card>
+  <Card title="Range ↔ Division ↔ Commissionerate" icon="list-format">
+    Über Hierarchieschlüssel zusammengeführt, für den Vergleich über die ganze Zone.
+  </Card>
+  <Card title="Arbeitslast ↔ Planstellen" icon="document">
+    Über normalisierte Namen der Dienststellen zugeordnet, damit Zugänge bei der Soll-Stärke enden.
+  </Card>
+  <Card title="Vorgaben ↔ Daten" icon="setting">
+    Gewichte und Level Shares machen aus den eigenen Punkten jeder Ebene eine gemeinsame Einheit.
+  </Card>
+</CardGrid>
+
+## Der analytische Ansatz: von Rohzahlen zu einem fairen, erklärbaren Plan
+
+<Steps>
+
+1. **Gewichteter Arbeitslastindex.** `Score(Dienststelle) = Σ (Wert × Gewicht)` über 108 Parameter in 7 Ebenen, gruppiert nach Bereichen wie Steuerpflichtige, Registrierung, Erstattungen, Prüfung von Erklärungen, Adjudication, Audit und Vollzug. Jedes Gewicht drückt aus, wie viel Arbeit eine Einheit bedeutet.
+
+2. **Kapazität in Beamten-Äquivalenten.** `Stärke(Dienststelle) = Σ (Beamte × Dienstgrad-Gewicht)`. Die Dienstgrad-Gewichte reichen von 25 für einen Commissioner bis 4 für einen Inspector. Wer zusätzlich N Dienststellen leitet, zählt in jeder als 1/N, sodass die Kapazität der Wirklichkeit entspricht und nicht der Kopfzahl.
+
+3. **Last pro Beamten gegen die Zone.** `Last = Score ÷ Stärke`, dargestellt in Prozent des Zonendurchschnitts (Gesamtscore ÷ Gesamtstärke). Jede Dienststelle steht gegen 100 %: darunter heißt leichter als der Durchschnitt, darüber schwerer.
+
+4. **Ebenen vergleichbar machen.** `R(Ebene) = (Anteil der Ebene × Arbeitslast der Abteilung) ÷ Score der Ebene`. Jede Ebene bewertet in eigenen Punkten. Eine sichtbare Vorgabe, die **Level Shares** (zum Beispiel Ranges 50 %, Divisions 20 %, Zentrale 30 %), rechnet sie in eine Einheit um; die Ranges verankern die Skala bei R = 1.
+
+5. **Bedarf und Lücke.** `Bedarf = Arbeitslast ÷ durchschnittliche Last der Zone`. Die Lücke zwischen Bedarf und tatsächlicher Stärke wird in ganze Superintendents und Inspectors umgerechnet, nach dem eigenen Dienstgradmix jeder Dienststelle.
+
+6. **Zuteilung unter Nebenbedingungen.** Vier Schutzregeln gelten für jeden Vorschlag: Eine abgebende Dienststelle wird nie über den Zonendurchschnitt gedrückt; eine aufnehmende Dienststelle wird nie über ihre Planstellen hinaus aufgefüllt, geprüft Dienstgrad für Dienstgrad; keine Dienststelle gibt Beamte ab, die sie nicht wirklich hat; und Versetzungen erfolgen in ganzen Beamten, nach Dienstgrad, als Paar von Abgeber → Empfänger.
+
+7. **Ausreißererkennung: der Vergleich mit Gleichrangigen.** Wie jedes Commissionerate seine Arbeit auf die eigenen Ebenen verteilt, wird mit dem Durchschnitt der anderen verglichen, und Abweichungen ab ±30 % werden zur genaueren Prüfung markiert. Weil hier Gleiches mit Gleichem verglichen wird, hängt die Prüfung nicht von den Level Shares ab.
+
+8. **Faire Verteilung des Unterstützungspersonals.** Das Verwaltungspersonal (Executive Assistants, Tax Assistants, Bürokräfte und Hilfskräfte) wird mit dem fairen Anteil jeder Einheit verglichen, im Verhältnis zu den Beamten, die es unterstützt. Das Tool zeigt Personal pro 100 Beamte, Überschuss und Defizit sowie einen Versetzungsplan nach Dienstgraden.
+
+</Steps>
+
+## Datenerfassung und Datenqualität: eine Pipeline, die Dienststellen wirklich nutzen können
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Vorlage<span class="sub">erzeugtes Excel, Namen vorausgefüllt</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Erfassen<span class="sub">Excel oder ein per Skript gebautes Google-Formular</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Prüfen<span class="sub">Fehler in klaren Worten</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Laden<span class="sub">versioniert, lokal gespeichert</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Analysieren<span class="sub">jede Ansicht sofort aktuell</span></div>
+  </div>
+</div>
+
+<CardGrid>
+  <Card title="Vorlagen aus dem Modell erzeugt" icon="add-document">
+    Die Excel-Vorlage jeder Ebene wird aus ihrer aktuellen Parameterliste erzeugt: eine Spalte je Parameter, Spalten für die Beamten, vorausgefüllte Namen der Dienststellen und ein Blatt „So ausfüllen“. Kommt ein Parameter hinzu, enthält ihn die nächste Vorlage automatisch.
+  </Card>
+  <Card title="Google-Formulare, automatisiert" icon="rocket">
+    Ein in das Tool eingebettetes Google Apps Script macht aus jeder Vorlage ein **kaskadierendes Formular**: Eine Dienststelle wählt ihr Commissionerate, sieht dann nur dessen Divisions und danach nur die Ranges dieser Division. Jede Zahl ist Pflicht und wird geprüft, und der Hilfetext erklärt die 1/N-Regel mit Beispielen. Eine zweite Funktion entfernt Dubletten (die letzte Antwort je Dienststelle gilt), erzeugt eine hochladefertige Datei im exakten Format und listet die Dienststellen, die noch nicht geantwortet haben.
+  </Card>
+  <Card title="Prüfung, bevor etwas geladen wird" icon="approve-check-circle">
+    Spalten werden über ihre normalisierte Überschrift zugeordnet, deshalb spielen Reihenfolge, typografische Anführungszeichen, Striche und zusätzliche Leerzeichen keine Rolle. Fehlende Spalten, doppelte Zeilen, negative Werte und Text in Zahlenzellen werden in klaren Worten aufgelistet, und nichts wird übernommen, bevor die Datei sauber ist.
+  </Card>
+  <Card title="Kontrollierte Parameter" icon="setting">
+    Die Parameter und Gewichte aller Ebenen lassen sich in ein Blatt exportieren, bearbeiten und wieder importieren. Der Import wird geprüft und erst nach einer Bestätigungsübersicht übernommen. Ein umbenannter Parameter gilt als neu, sodass alte Zahlen nie stillschweigend umbenannt werden.
+  </Card>
+  <Card title="Lücken verantwortungsvoll füllen" icon="information">
+    Ebenen ohne echte Meldungen wurden durch **proportionale Hochrechnung** aus der Range-Studie vorbelegt, wobei das Personal der Zentralen ohne Doppelzählung auf Division-Dienststellen und Zentrale aufgeteilt wurde. Jeder solche Datensatz bleibt gekennzeichnet, bis echte Daten ihn ersetzen. Eingebettete Daten sind versioniert: Updates erneuern Demo-Ebenen und lassen hochgeladene Daten unberührt.
+  </Card>
+</CardGrid>
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/santulan/deck-pipeline.webp" alt="Folie aus der Präsentation mit dem Titel Offices fill one form, everything else is automatic: fünf Schritte von einem Formular über die Prüfung und sichtbare Lasten bis zum fairen Anteil und zu Versetzungen." loading="lazy" />
+  <figcaption>Dieselbe Geschichte für die Entscheider erzählt: eine Folie aus der eingebauten Präsentation.</figcaption>
+</figure>
+
+## Das Produkt
+
+Von der Zonenübersicht bis zur Versetzungsliste. Jedes Diagramm lässt sich per Klick vertiefen und zeigt beim Überfahren Details, und zwei Zielgruppen haben eigene Ansichten: Der Chief Commissioner sieht Versetzungen *zwischen* den Commissionerates, jeder Principal Commissioner den Ausgleich *innerhalb* seines eigenen.
+
+### Ansichten für die Planung
+
+<Tabs>
+  <TabItem label="Versetzungsliste">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/transfer-sheet.webp" alt="AGT-Versetzungsliste: Commissionerates, die Beamte brauchen, und solche, die welche abgeben können, nach Superintendents und Inspectors, mit Planstellengrenzen und der Arbeit pro Beamten vor und nach der Versetzung. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>AGT-Versetzungsliste: wer Beamte braucht und wer welche abgeben kann, nach Dienstgraden, mit Planstellengrenzen und der Last pro Beamten vorher → nachher (100 % = Zonendurchschnitt).</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Durchschnittslast">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/average-load.webp" alt="Durchschnittliche Last pro Beamten je Commissionerate gegen eine gestrichelte Linie für den Zonendurchschnitt, mit Drill-down in die Divisions eines Commissionerates und Tabellen darunter. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Durchschnittslast pro Beamten: die Commissionerates gegen die Linie des Zonendurchschnitts, mit Drill-down in die Divisions.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Level Shares">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/level-shares.webp" alt="Seite Level Shares: eine Erklärung in klarer Sprache und änderbare Prozentwerte für Ranges, Division-Dienststellen und Commissionerate-Zentrale, daneben der aus der heutigen Besetzung gemessene Anteil. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Level Shares: die eine Vorgabe der Leitung, in klarer Sprache erklärt, daneben der aus der heutigen Besetzung gemessene Anteil.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Unterstützungspersonal">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/support-staff-fair-share.webp" alt="Divergierende Balken mit Überschuss und Defizit an Verwaltungspersonal gegenüber dem fairen Anteil jeder Einheit. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Fairer Anteil beim Unterstützungspersonal: Überschuss und Defizit gegenüber dem fairen Anteil jeder Einheit, als divergierende Balken.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+### Daten erkunden und einspeisen
+
+<Tabs>
+  <TabItem label="Drill-down">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/drilldown-ranges.webp" alt="Arbeitslast aller Ranges der Zone als Rangfolge, daneben die zehn Parameter, die die Last am stärksten treiben. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Drill-down: alle 342 Ranges als Rangfolge, filterbar nach Commissionerate und Division, mit den Parametern, die die Last treiben.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Arbeitsmix">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/work-type-mix.webp" alt="100-%-gestapelte Balken, die die Arbeit jedes Commissionerates nach Arbeitsgruppen aufteilen, mit einem Ringdiagramm der Anteile in der Zone. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Arbeitsmix: 100-%-gestapelte Balken zeigen, welche Art von Arbeit jedes Commissionerate leistet.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Analyseebenen">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/home-levels.webp" alt="Startseite mit der Frage, was analysiert werden soll, und Karten für die Range-, Division- und Commissionerate-Ebene sowie die Audit-Ebenen, jede mit eigenem Dashboard und eigenen Daten. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Analyseebenen: Jede Art von Einheit hat eigene Parameter, eine eigene Excel-Vorlage und ein eigenes Dashboard.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Data Hub">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/data-hub.webp" alt="Data Hub: Übersicht der aktuellen Daten, Download einer leeren Excel-Vorlage, ein Upload-Bereich für die ausgefüllte Datei und der optionale Weg über ein Google-Formular. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Data Hub: Vorlage herunterladen, geprüft hochladen oder optional über ein Google-Formular sammeln.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Parameter">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/parameters.webp" alt="Seite Parameter und Gewichte: gruppierte Arbeitslast-Parameter mit änderbaren Gewichten, Schaltflächen zum Hinzufügen und Export und Import des gesamten Parametersatzes." loading="lazy" />
+      <figcaption>Parameter und Gewichte: Jede Annahme ist änderbar, und alles wird sofort neu berechnet.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+## Visualisierung und Technik: gebaut für die, die entscheiden
+
+| Zweck | Diagrammwahl |
+|---|---|
+| **Rangfolge** | Sortierte waagerechte Balken: wer die meiste Arbeit trägt |
+| **Anteil** | Ringdiagramm: das Stück jedes Commissionerates an der Zone |
+| **Zusammensetzung** | 100-%-gestapelte Balken: die Art der Arbeit |
+| **Überschuss / Defizit** | Divergierende Balken um eine Nulllinie für den fairen Anteil |
+| **Geografie** | Choroplethenkarte mit Farbstufen nach Rang |
+| **Vergleichsmaßstab** | % des Zonendurchschnitts und Werte vorher → nachher |
+| **Überblick** | Kennzahlenkacheln für Summen, Durchschnitte und Versetzungen |
+
+<CardGrid>
+  <Card title="Eine Offline-Datei" icon="document">
+    Rund 5.000 Zeilen HTML, CSS und JavaScript, ohne Frameworks und ohne Build-Schritt. Sie lässt sich als einzelner E-Mail-Anhang verschicken.
+  </Card>
+  <Card title="Diagramme von Grund auf" icon="star">
+    Eigene SVG-Diagrammbausteine (Balken, Ring, gestapelt, divergierend und Karte), alle von Hand gezeichnet.
+  </Card>
+  <Card title="Excel und Google, automatisiert" icon="add-document">
+    SheetJS liest Uploads und schreibt Vorlagen direkt im Browser; Google Apps Script automatisiert Formulare und Tabellen für die Datenerfassung.
+  </Card>
+  <Card title="Lokale Speicherung" icon="laptop">
+    Die Daten liegen im Browserspeicher, mit Schema-Versionierung und automatischer Migration älterer Stände.
+  </Card>
+  <Card title="Für jede Zone und testbar" icon="setting">
+    Jedes Commissionerate, jede Division, jeder Dienstgrad und jeder Parameter kommt aus den Daten, sodass eine Umorganisation oder eine andere Zone nur einen neuen Upload braucht. Die Kernberechnungen sind für automatische Smoke-Tests in Node.js zugänglich.
+  </Card>
+  <Card title="Datenschutz von Anfang an" icon="approve-check-circle">
+    Überhaupt keine Netzwerkaufrufe: Die Daten verlassen den Computer nie.
+  </Card>
+</CardGrid>
+
+**Storytelling:** eine Präsentation mit 8 Folien, ein einseitiges Handbuch, ein ▶ Präsentationsmodus für den Beamer und Druck als PDF für jede Seite. Die Analyse kommt in den Besprechungsraum, ohne dass jemand Folien nachbauen muss, und jede Zahl auf den Folien wird aus den geladenen Daten berechnet, sodass sich die Geschichte mit jedem Upload aktualisiert.
+
+<Tabs>
+  <TabItem label="Startseite">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/start-screen.webp" alt="Startseite mit drei Einstiegen: die Präsentation, das Handbuch und der Analyzer selbst." loading="lazy" />
+      <figcaption>Startseite: drei Einstiege, die Präsentation, das Handbuch oder der Analyzer selbst.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Präsentation">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/deck-load-gap.webp" alt="Folie mit dem Titel Officers doing the same job carry very different loads: Balkendiagramm der durchschnittlichen Last pro Beamten je Commissionerate und eine berechnete Kernaussage. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Live-Präsentation: Jede Zahl auf den Folien wird aus den geladenen Daten berechnet.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Schutzregeln">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/deck-guardrails.webp" alt="Folie mit den vier Zuteilungsregeln: nie überlastet, nie über die Planstellen hinaus, nie nur auf dem Papier, immer nach Dienstgrad." loading="lazy" />
+      <figcaption>Schutzregeln, klar formuliert: die vier Zuteilungsregeln, wie sie in der Präsentation erscheinen.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Dunkles Design">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/zone-view-dark.webp" alt="Das Zone-View-Dashboard im dunklen Design. Anonymisierte Beispieldaten." loading="lazy" />
+      <figcaption>Dunkles Design, ein 16:9-Präsentationsmodus, Druck mit gespeicherten Filtern und ein Layout für Mobilgeräte.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+## Fähigkeiten, Ergebnisse und Grundsätze
+
+| Fähigkeit | Wo sie sich zeigt |
+|---|---|
+| **Problemdefinition** | Eine Debatte über Versetzungen in messbare Fragen übersetzt, mit eigenen Ansichten für die Entscheider auf Zonen- und auf Commissionerate-Ebene |
+| **Datenmodellierung** | Ein hierarchisches Modell (Zone › Commissionerate › Division › Range) über 7 Ebenen, dazu Laufbahn und Geografie |
+| **Datenintegration** | Neun Quellen über Hierarchieschlüssel und normalisierte Namen der Dienststellen verbunden |
+| **Datenbereinigung & Prüfung** | Normalisierte Überschriften und Prüfungen auf Dubletten, negative Werte und Text, mit Fehlerberichten in klarer Sprache |
+| **KPI- & Indexdesign** | Gewichteter Arbeitslastwert, Kapazität in Beamten-Äquivalenten, Last pro Beamten, % des Zonendurchschnitts |
+| **Normalisierung über Einheiten** | Umrechnungsfaktoren über Level Shares mit einer Ankerebene |
+| **Optimierung unter Nebenbedingungen** | Schutzregeln, Planstellengrenzen, Rundung auf ganze Beamte, Paarung von Abgeber → Empfänger |
+| **Ausreißererkennung** | Ein Vergleich mit Gleichrangigen, der Abweichungen von ±30 % markiert |
+| **Synthetische Daten** | Proportionale Hochrechnung für fehlende Ebenen, klar gekennzeichnet |
+| **Visualisierung & Dashboards** | Sechs Diagrammtypen, Drill-downs, eine Choroplethenkarte und Kennzahlenkacheln |
+| **Datenerfassung & Automatisierung** | Erzeugte Excel-Vorlagen und eine Pipeline aus Google Forms und Apps Script |
+| **Data Storytelling** | Live-Präsentation, Handbuch, Präsentations- und Druckmodus |
+| **Verantwortungsvolle Analytik** | Offene Annahmen, die Entscheidung bleibt beim Menschen, Datenschutz von Anfang an |
+
+### Was es bringt
+
+- **Ungleichgewicht sichtbar gemacht:** die Last pro Beamten für jede Dienststelle, nebeneinander.
+- **Begründbare Entscheidungen:** Jeder Vorschlag zeigt seinen Grund und die vollständige Rechnung.
+- **Schnellere Vorbereitung der Versetzungsrunde:** ein Planentwurf nach Dienstgraden in Minuten, direkt aus den Daten.
+- **Auf Dauer gebaut:** übersteht Umorganisationen und funktioniert für andere Zonen.
+- **Kostenlos und vertraulich:** kein Anbieter, kein Server, keine Daten, die den Rechner verlassen.
+
+> **„Die Zahlen messen die Arbeitslast, nie den Beamten. Das Tool informiert; die zuständige Stelle entscheidet.“**
+>
+> Jede Annahme ist eine sichtbare, änderbare Zahl, sodass jeder, der anderer Meinung ist, genau auf die Zahl zeigen kann, mit der er nicht einverstanden ist.
+
+<Badge text="Datenanalyse" /> <Badge text="Datenintegration" /> <Badge text="Datenmodellierung" /> <Badge text="KPI-Design" /> <Badge text="Dashboard-Design" /> <Badge text="Datenvisualisierung" /> <Badge text="Personalanalytik" /> <Badge text="Zuteilung unter Nebenbedingungen" /> <Badge text="Datenqualität" /> <Badge text="JavaScript" /> <Badge text="Excel" /> <Badge text="Google Apps Script" /> <Badge text="Öffentlicher Sektor" />

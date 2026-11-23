@@ -1,0 +1,396 @@
+---
+title: Santulan - Workload-Based Staffing Analytics
+description: Connecting workload, staffing and sanction data for 527 offices into one model that shows where officers are overloaded and drafts a fair, defensible transfer plan - one offline file, zero running cost.
+sidebar:
+  label: Santulan
+  order: 2
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Connecting workload, staffing and sanction data into one model that shows where officers are overloaded and drafts a fair, defensible transfer plan.</p>
+
+<Badge text="Data integration" variant="note" /> <Badge text="Data modelling" variant="note" /> <Badge text="KPI design" variant="note" /> <Badge text="Workforce analytics" variant="note" /> <Badge text="Constraint-based allocation" variant="note" /> <Badge text="Dashboard design" variant="note" />
+
+**Context:** a zone of India's Central GST (CGST) administration ([see my experience](/resume/experience/)) · **Built for:** the Chief Commissioner, Principal Commissioners and establishment sections · **The tool:** the *Manpower Deployment Analyzer*, the name in the screenshots · **The name:** *Santulan* means "balance" in Hindi.
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/santulan/zone-view.webp" alt="Zone View dashboard of the Manpower Deployment Analyzer: headline tiles, a bar chart of workload by Commissionerate, a donut of each Commissionerate's share of the zone, and the heaviest Range offices. Anonymised sample data." />
+  <figcaption>The Zone View dashboard. All screenshots on this page use anonymised sample data: names replaced, figures randomised.</figcaption>
+</figure>
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">527</span><span class="l">offices modelled across the zone</span></div>
+  <div class="pj-stat"><span class="n">108</span><span class="l">workload parameters in 7 analysis levels</span></div>
+  <div class="pj-stat"><span class="n">9</span><span class="l">data inputs connected into one model</span></div>
+  <div class="pj-stat"><span class="n">4</span><span class="l">guardrails on every transfer suggestion</span></div>
+  <div class="pj-stat"><span class="n">1 file</span><span class="l">fully offline, no server, zero running cost</span></div>
+</div>
+
+<Aside type="caution" title="About the data on this page">
+Santulan works with sensitive staffing data, so this page shows the **method and the product, never the real data**. The screenshots come from an anonymised version of the tool: office names are replaced (Commissionerate A, Range 253 and so on) and every figure is randomised, so none of the numbers in them are real results. The department's logo has been removed, and the tool file, the Excel files and the real figures are not published.
+</Aside>
+
+## At a glance
+
+<CardGrid>
+  <Card title="The challenge" icon="warning">
+    Every year, officers in a tax administration zone are re-posted in the Annual General Transfer (AGT). Those decisions were argued from impressions and precedent, because nobody could see workload precisely. Yet measured load per officer can differ several times over between offices doing the same job.
+  </Card>
+  <Card title="What I built" icon="puzzle">
+    A single, offline web application that turns raw workload returns, staffing registers and sanction data into one comparable measure: **workload per officer against the zonal average**. It then drafts a grade-wise transfer plan that respects real-world constraints.
+  </Card>
+  <Card title="My role" icon="pencil">
+    I took the project from start to finish: understanding the problem, designing the data model and the scoring method, building the data-collection pipeline, writing the analysis and allocation logic, designing the dashboards, and packaging it all as a tool that non-technical officers can use.
+  </Card>
+  <Card title="The result" icon="approve-check-circle">
+    Decision-makers can see how heavily loaded the officers in any of 527 offices are, and why. They get a draft, grade-wise transfer plan with a reason behind every number. Every assumption stays visible and editable, so the discussion moves from opinions to the specific numbers people disagree with.
+  </Card>
+</CardGrid>
+
+| | Project facts |
+|---|---|
+| **Domain** | Public-sector workforce analytics: Central GST (CGST) administration, India |
+| **Users** | Chief Commissioner (zone-wide view), Principal Commissioners (within their own Commissionerate) and establishment sections |
+| **Scope** | 8 Commissionerates, 66 Divisions and 342 Range offices, plus Audit and Appeals Commissionerates and 15 formations for support-staff analysis: 527 offices in all |
+| **Data** | A 2024 zonal workload study (Range level), a 2024 cadre study of sanctioned against working strength across 28 grades, geography, and policy inputs |
+| **Deliverable** | One self-contained HTML file (about 1.5 MB) that runs in any browser on a computer or phone, with no installation, internet or server |
+| **Tools** | JavaScript, HTML/CSS, hand-built SVG charts, SheetJS (Excel in the browser), Google Apps Script, Google Forms and Sheets, Excel, Node.js for calculation smoke tests |
+
+## The problem: important decisions, no shared numbers
+
+A tax zone is a hierarchy, with separate Audit (Circles, Groups) and Appeals formations beside it. Each level does different work, including registrations, return scrutiny, refunds, adjudication, audits and appeals. Each year, officers have to be distributed across all of them.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Zone<span class="sub">the whole picture</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Commissionerates<span class="sub">8 executive units</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Divisions<span class="sub">66 offices</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Ranges<span class="sub">342 field offices</span></div>
+  </div>
+  <figcaption>The executive hierarchy. Audit and Appeals Commissionerates sit beside it with their own levels, and every level measures different work.</figcaption>
+</div>
+
+The questions decision-makers could not answer with data:
+
+<CardGrid>
+  <Card title="Who is overloaded?" icon="magnifier">
+    Which offices are overloaded, and by how much? Is a Range officer's load comparable with that of an officer at headquarters?
+  </Card>
+  <Card title="Who should move?" icon="random">
+    How many Superintendents and Inspectors should move, and from where to where? Would a move breach sanctioned strength, or overload the office giving officers?
+  </Card>
+  <Card title="Is it fair?" icon="list-format">
+    Is support (ministerial) staff spread fairly across formations? Which Commissionerates have an unusual balance of work across their own levels?
+  </Card>
+</CardGrid>
+
+| Why it was hard | |
+|---|---|
+| **Silos** | Workload returns sat with each office, staffing in registers, sanctioned strength in a separate cadre file, and geography nowhere at all |
+| **Different units** | Each level measures different work, so 100 points at a Range office and 100 points at headquarters are not the same thing |
+| **Messy staffing** | Many officers hold additional charge of two or three offices, so headcount alone misstates capacity |
+| **Inconsistent keys** | The same office was spelled differently in different files (a city's full name in one, its short form in another), and column order varied from file to file |
+| **Low-tech setting** | Offices work in Excel. There was no server, no budget and no IT project, and the data was sensitive and had to stay on the user's machine |
+| **Trust** | A black-box score would never be accepted for postings. Every number had to explain itself |
+
+<Aside type="tip" title="The design goal I set">
+Turn the debate from *"I feel this office is overstaffed"* into *"this office's officers carry 72% of the zonal average load, and here is the calculation."* The tool should measure workload and never judge the officer. The decision stays with the competent authority.
+</Aside>
+
+## The data: connecting nine inputs into one model
+
+<div class="sc-fig">
+  <div class="sc-tiers pj-tiers4">
+    <div class="sc-tier">
+      <div class="sc-tier-head">Sources <span class="n">nine inputs</span></div>
+      <div class="sc-node soft">Range workload study</div>
+      <div class="sc-node soft">HQ and Division staffing</div>
+      <div class="sc-node soft">Division and HQ workload</div>
+      <div class="sc-node soft">Audit and Appeals workload</div>
+      <div class="sc-node soft">Cadre: sanctioned vs working</div>
+      <div class="sc-node soft">District geography</div>
+      <div class="sc-node soft">Policy: weights and Level Shares</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Integrate <span class="n">make it one dataset</span></div>
+      <div class="sc-node slate">Import by column heading, any column order</div>
+      <div class="sc-node slate">Hierarchy keys: Commissionerate › Division › Range</div>
+      <div class="sc-node slate">Office names matched across files</div>
+      <div class="sc-node slate">Additional charge counted as 1/N of an officer</div>
+      <div class="sc-node slate">Validation with a plain-language error report</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Model <span class="n">make it comparable</span></div>
+      <div class="sc-node">Weighted workload score</div>
+      <div class="sc-node">Weighted officer strength</div>
+      <div class="sc-node">Load per officer vs zonal average</div>
+      <div class="sc-node">Level Shares: one common unit</div>
+      <div class="sc-node">Sanction caps and guardrails</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">Decide <span class="n">put it to use</span></div>
+      <div class="sc-node green">Dashboards and drill-down</div>
+      <div class="sc-node green">Zone map</div>
+      <div class="sc-node green">Grade-wise AGT transfer sheet</div>
+      <div class="sc-node green">Support-staff fair share</div>
+      <div class="sc-node green">Live briefing deck, print and PDF</div>
+    </div>
+  </div>
+  <figcaption>From scattered sources to decisions: integrate, model, decide.</figcaption>
+</div>
+
+| Input | Grain and size | Status | Used for |
+|---|---|---|---|
+| **Range workload study** | 342 Ranges × 28 parameters + officers | <Badge text="Real 2024" variant="success" /> | Core workload of field offices |
+| **HQ and Division staffing** | 8 Commissionerates | <Badge text="Real 2024" variant="success" /> | Officers outside the Ranges |
+| **Division office workload** | 66 Divisions × 14 parameters | <Badge text="Extrapolated" variant="caution" /> | Adjudication, refunds, review |
+| **Commissionerate HQ workload** | 8 HQs × 12 parameters | <Badge text="Extrapolated" variant="caution" /> | Legal, anti-evasion, vigilance |
+| **Audit workload** | 70 Groups, 20 Circles, 3 HQs | <Badge text="Demo" /> | Audit department analysis |
+| **Appeals workload** | 3 Commissionerates × 17 parameters | <Badge text="Demo" /> | Appellate work |
+| **Cadre strength** | 15 formations × 28 grades × sanctioned / working | <Badge text="Real 2024" variant="success" /> | Sanction caps, support-staff fairness |
+| **District geography** | District boundaries → Commissionerate | <Badge text="Reference" variant="note" /> | Zone map |
+| **Policy inputs** | Weightages, grade weights, Level Shares | <Badge text="Policy" variant="note" /> | Turning counts into comparable load |
+
+Levels without real returns yet run on clearly labelled extrapolated or demo figures until offices report through the built-in collection pipeline.
+
+<CardGrid>
+  <Card title="Workload ↔ staffing" icon="approve-check">
+    The same row of the same office, so load per officer is exact.
+  </Card>
+  <Card title="Range ↔ Division ↔ Commissionerate" icon="list-format">
+    Rolled up through hierarchy keys for zone-wide comparison.
+  </Card>
+  <Card title="Workload ↔ cadre sanction" icon="document">
+    Matched on normalised office names to cap receipts at sanctioned strength.
+  </Card>
+  <Card title="Policy ↔ data" icon="setting">
+    Weightages and Level Shares turn each level's own points into one common unit.
+  </Card>
+</CardGrid>
+
+## The analytical approach: from raw counts to a fair, explainable plan
+
+<Steps>
+
+1. **Weighted workload index.** `Score(office) = Σ (value × weight)` across 108 parameters in 7 levels, grouped into areas such as taxpayers, registration, refunds, scrutiny, adjudication, audit and enforcement. Each weight reflects how much work one unit means.
+
+2. **Capacity in officer-equivalents.** `Strength(office) = Σ (officers × grade weight)`. Grade weights run from 25 for a Commissioner to 4 for an Inspector. An officer holding additional charge of N offices counts as 1/N in each, so capacity reflects reality, not headcount.
+
+3. **Load per officer against the zone.** `Load = Score ÷ Strength`, shown as a percentage of the zonal average (total score ÷ total strength). Every office is shown against 100%: below means lighter than average, above means heavier.
+
+4. **Making levels comparable.** `R(level) = (share of level × department workload) ÷ level score`. Each level scores in its own points. One visible policy input, the **Level Shares** (for example Ranges 50%, Divisions 20%, HQ 30%), converts them into one unit, with the Ranges anchoring the scale at R = 1.
+
+5. **Requirement and gap.** `Required = workload ÷ zonal average load`. The gap between required and actual strength is converted into whole Superintendents and Inspectors, using each office's own grade mix.
+
+6. **Constraint-based allocation.** Four guardrails apply to every suggestion: an office giving officers is never pushed above the zonal average; a receiving office is never filled beyond sanctioned strength, checked grade by grade; no office gives officers it does not actually have; and moves are in whole officers, by grade, paired giver → receiver.
+
+7. **Outlier detection: a peer mix check.** Each Commissionerate's split of work across its own levels is compared with the peer average, and deviations of ±30% or more are flagged for a closer look. Because it compares like with like, the check doesn't depend on the policy shares.
+
+8. **Support-staff fairness.** Ministerial staff (executive assistants, tax assistants, clerks and multi-tasking staff) are compared with each formation's fair share, in proportion to the officers they serve. The tool shows staff per 100 officers, surplus and deficit, and a grade-wise movement plan.
+
+</Steps>
+
+## Data collection and quality: a pipeline offices can actually use
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Template<span class="sub">generated Excel, office names pre-filled</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node slate">Collect<span class="sub">Excel, or a Google Form built by script</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Validate<span class="sub">errors in plain words</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Load<span class="sub">versioned, saved locally</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Analyse<span class="sub">every view updates instantly</span></div>
+  </div>
+</div>
+
+<CardGrid>
+  <Card title="Templates generated from the model" icon="add-document">
+    Each level's Excel template is generated from its current parameter list: one column per parameter, officer columns, office names pre-filled and a "How to fill" sheet. Add a parameter and the next template carries it automatically.
+  </Card>
+  <Card title="Google Forms, automated" icon="rocket">
+    A Google Apps Script embedded in the tool turns any template into a **cascading form**: an office picks its Commissionerate, then sees only that Commissionerate's Divisions, then only that Division's Ranges. Every figure is required and validated, and the help text explains the 1/N rule with examples. A second function removes duplicates (the latest reply per office wins), produces an upload-ready file in the exact format, and lists the offices that have not replied.
+  </Card>
+  <Card title="Validation before anything loads" icon="approve-check-circle">
+    Columns are matched by normalised heading, so column order, curly quotes, dashes and extra spaces don't matter. Missing columns, duplicate rows, negative values and text in number cells are listed in plain words, and nothing is applied until the file is clean.
+  </Card>
+  <Card title="Governed parameters" icon="setting">
+    All levels' parameters and weights can be exported to one sheet, edited and re-imported. The import is validated and only applied after a confirmation summary. A renamed parameter is treated as new, so old figures are never silently relabelled.
+  </Card>
+  <Card title="Filling gaps responsibly" icon="information">
+    Levels without real returns were seeded by **proportional extrapolation** from the Range study, with headquarters staff split between Division offices and HQ without double counting. Every such dataset is labelled until real data replaces it. Embedded data is versioned: upgrades refresh demo levels and never touch uploaded ones.
+  </Card>
+</CardGrid>
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/santulan/deck-pipeline.webp" alt="Briefing-deck slide titled Offices fill one form, everything else is automatic: five steps from one form to checked, loads visible, fair share and postings and re-balancing." loading="lazy" />
+  <figcaption>The same story, told to decision-makers: a slide from the built-in briefing deck.</figcaption>
+</figure>
+
+## The product
+
+From the zone view to the transfer sheet. Every chart supports drill-down by click and hover details, and two audiences get their own views: the Chief Commissioner sees moves *between* Commissionerates, and each Principal Commissioner sees re-balancing *within* their own.
+
+### Planning views
+
+<Tabs>
+  <TabItem label="Transfer sheet">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/transfer-sheet.webp" alt="AGT transfer sheet: Commissionerates that need officers and those that can give them, grade-wise Superintendents and Inspectors, sanction caps, and work per officer before and after the move. Anonymised sample data." loading="lazy" />
+      <figcaption>AGT transfer sheet: who needs officers and who can give them, grade-wise, with sanction caps and each office's load per officer before → after the move (100% = zonal average).</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Average load">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/average-load.webp" alt="Average load per officer by Commissionerate against a dashed zonal-average line, with a drill-down into the Divisions of one Commissionerate and tables below. Anonymised sample data." loading="lazy" />
+      <figcaption>Average load per officer: Commissionerates against the zonal average line, with drill-down to Divisions.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Level Shares">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/level-shares.webp" alt="Level Shares page: a plain-language explanation and editable percentages for Ranges, Division offices and Commissionerate HQ, beside the share measured from today's staffing. Anonymised sample data." loading="lazy" />
+      <figcaption>Level Shares: the one policy input, explained in plain language, with the share measured from today's staffing beside it.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Support staff">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/support-staff-fair-share.webp" alt="Diverging bar chart of ministerial staff surplus and deficit against each formation's fair share. Anonymised sample data." loading="lazy" />
+      <figcaption>Support-staff fair share: surplus and deficit against each formation's fair share, shown as diverging bars.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+### Exploring and feeding the data
+
+<Tabs>
+  <TabItem label="Drill-down">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/drilldown-ranges.webp" alt="Range-wise workload for all Ranges of the zone, ranked, beside the top ten parameters driving the load. Anonymised sample data." loading="lazy" />
+      <figcaption>Drill-down: all 342 Ranges ranked, filterable by Commissionerate and Division, with the top parameters driving the load.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Work-type mix">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/work-type-mix.webp" alt="100% stacked bars showing each Commissionerate's work split by work group, with a donut of the zone's work-group shares. Anonymised sample data." loading="lazy" />
+      <figcaption>Work-type mix: 100% stacked bars showing the nature of each Commissionerate's work.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Analysis levels">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/home-levels.webp" alt="Home screen asking what you want to analyse, with cards for the Range, Division and Commissionerate levels and the Audit levels, each with its own dashboard and data. Anonymised sample data." loading="lazy" />
+      <figcaption>Analysis levels: every formation type has its own parameters, Excel template and dashboard.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Data Hub">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/data-hub.webp" alt="Data Hub: current data summary, download of a blank Excel template, an upload area for the filled file, and the optional Google Form route. Anonymised sample data." loading="lazy" />
+      <figcaption>Data Hub: template download, validated upload and the optional Google Form route.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Parameters">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/parameters.webp" alt="Parameters and weightages page: grouped workload parameters with editable weights, add-parameter buttons and download and upload of the full parameter set." loading="lazy" />
+      <figcaption>Parameters and weightages: every assumption is editable, and everything recalculates instantly.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+## Visualisation and engineering: built for the people who decide
+
+| Purpose | Chart choice |
+|---|---|
+| **Ranking** | Sorted horizontal bars: who carries the most work |
+| **Share** | Donut: each Commissionerate's slice of the zone |
+| **Composition** | 100% stacked bars: the nature of the work |
+| **Surplus / deficit** | Diverging bars around a fair-share zero line |
+| **Geography** | Choropleth map with rank-based colour steps |
+| **Benchmark** | % of zonal average, and before → after values |
+| **Headline** | KPI tiles for totals, averages and moves |
+
+<CardGrid>
+  <Card title="One offline file" icon="document">
+    About 5,000 lines of HTML, CSS and JavaScript, with no frameworks and no build step. It can be emailed as a single attachment.
+  </Card>
+  <Card title="Charts from scratch" icon="star">
+    Custom SVG chart components (bar, donut, stacked, diverging and map), all drawn by hand.
+  </Card>
+  <Card title="Excel and Google, automated" icon="add-document">
+    SheetJS reads uploads and writes templates in the browser; Google Apps Script automates Forms and Sheets for data collection.
+  </Card>
+  <Card title="Local persistence" icon="laptop">
+    Data is kept in browser storage, with schema versioning and automatic migration of older saves.
+  </Card>
+  <Card title="Zone-agnostic and testable" icon="setting">
+    Every Commissionerate, Division, grade and parameter comes from the data, so a reorganisation or another zone needs only a fresh upload. Core calculations are exposed for automated smoke tests in Node.js.
+  </Card>
+  <Card title="Privacy by design" icon="approve-check-circle">
+    No network calls at all: the data never leaves the computer.
+  </Card>
+</CardGrid>
+
+**Storytelling:** an 8-slide briefing deck, a one-page handbook, a ▶ Present mode for projectors and print-to-PDF for every page. The analysis travels into the meeting room without anyone re-making slides, and every figure on the slides is computed from the loaded data, so the story updates with each upload.
+
+<Tabs>
+  <TabItem label="Start screen">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/start-screen.webp" alt="Start screen with three ways in: the briefing deck, the handbook and the analyzer itself." loading="lazy" />
+      <figcaption>Start screen: three ways in, the briefing deck, the handbook or the analyzer itself.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Briefing deck">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/deck-load-gap.webp" alt="Briefing-deck slide titled Officers doing the same job carry very different loads, with a bar chart of average load per officer by Commissionerate and a computed headline. Anonymised sample data." loading="lazy" />
+      <figcaption>Live briefing deck: every figure on the slides is computed from the loaded data.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Guardrails">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/deck-guardrails.webp" alt="Briefing-deck slide with the four allocation rules: never overloaded, never beyond sanction, never imaginary, always by grade." loading="lazy" />
+      <figcaption>Guardrails, stated plainly: the four allocation rules as they appear in the briefing deck.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Dark mode">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/santulan/zone-view-dark.webp" alt="The Zone View dashboard in dark mode. Anonymised sample data." loading="lazy" />
+      <figcaption>Dark mode, a 16:9 present mode, printing with recorded filters and a mobile-friendly layout.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+## Skills, results and principles
+
+| Skill | Where it shows |
+|---|---|
+| **Problem framing** | Turned a postings debate into measurable questions, with separate views for zone-level and Commissionerate-level decision-makers |
+| **Data modelling** | A hierarchical model (zone › Commissionerate › Division › Range) across 7 levels, plus cadre and geography |
+| **Data integration** | Nine inputs joined through hierarchy keys and normalised office names |
+| **Data cleaning & validation** | Heading normalisation and checks for duplicates, negatives and text, with plain-language error reports |
+| **KPI & index design** | Weighted workload score, capacity in officer-equivalents, load per officer, % of zonal average |
+| **Normalisation across units** | Level Shares conversion ratios with an anchor level |
+| **Optimisation under constraints** | Guardrails, sanction caps, whole-officer rounding, giver → receiver pairing |
+| **Outlier detection** | A peer mix check that flags ±30% deviations from the peer average |
+| **Synthetic data** | Proportional extrapolation to fill missing levels, clearly labelled |
+| **Visualisation & dashboards** | Six chart types, drill-downs, a choropleth map and KPI tiles |
+| **Data collection & automation** | Generated Excel templates and a Google Forms + Apps Script pipeline |
+| **Data storytelling** | Live briefing deck, handbook, present and print modes |
+| **Responsible analytics** | Transparent assumptions, the human keeps the decision, privacy by design |
+
+### Value delivered
+
+- **Imbalance made visible:** load per officer for every office, side by side.
+- **Defensible decisions:** every suggestion shows its reason and full calculation.
+- **Faster AGT preparation:** a grade-wise draft plan in minutes, straight from the data.
+- **Built to last:** survives reorganisations and works for other zones.
+- **Zero cost, fully private:** no vendor, no server, no data leaving the machine.
+
+> **"The numbers measure workload, never the officer. The tool informs; the competent authority decides."**
+>
+> Every assumption is a visible, editable number, so anyone who disagrees can point at the exact figure they disagree with.
+
+<Badge text="Data analytics" /> <Badge text="Data integration" /> <Badge text="Data modelling" /> <Badge text="KPI design" /> <Badge text="Dashboard design" /> <Badge text="Data visualisation" /> <Badge text="Workforce analytics" /> <Badge text="Constraint-based allocation" /> <Badge text="Data quality" /> <Badge text="JavaScript" /> <Badge text="Excel" /> <Badge text="Google Apps Script" /> <Badge text="Public sector" />

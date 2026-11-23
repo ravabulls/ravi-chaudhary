@@ -502,3 +502,26 @@ table.sc-matrix td.hl {
   border-style: dashed;
   background: transparent;
 }
+
+/* A four-stage model read left to right (sources → integrate → model →
+   decide) must keep all four stages on one row while the content column
+   allows it, then fall back to two columns, then one. */
+.sc-tiers.pj-tiers4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.sc-tiers.pj-tiers4 .sc-node {
+  font-size: 0.8rem;
+  padding: 0.45rem 0.55rem;
+}
+@media (max-width: 50rem) {
+  .sc-tiers.pj-tiers4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 30rem) {
+  .sc-tiers.pj-tiers4 { grid-template-columns: 1fr; }
+}
+
+/* A status badge inside a table cell should never break mid-word */
+.sl-markdown-content td .sl-badge {
+  white-space: nowrap;
+}
