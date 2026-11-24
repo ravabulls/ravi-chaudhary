@@ -164,7 +164,6 @@ export default defineConfig({
 											{ label: '7 · PM Foundations', link: 'learnings/mba/applied-market-and-business-strategy/07-project-management-foundations', translations: { de: '7 · PM-Grundlagen' } },
 											{ label: '8 · Planning & Control', link: 'learnings/mba/applied-market-and-business-strategy/08-project-planning-and-control', translations: { de: '8 · Planung & Steuerung' } },
 											{ label: '9 · Agile PM', link: 'learnings/mba/applied-market-and-business-strategy/09-agile-project-management', translations: { de: '9 · Agiles PM' } },
-											{ label: 'Team Project · Project RE:CHARGE', link: 'projects/cermedes-recharge', translations: { de: 'Teamprojekt · Project RE:CHARGE' } },
 									],
 								},
 								{
