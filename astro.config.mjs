@@ -63,6 +63,15 @@ export default defineConfig({
 		'/learnings/german/a1/tag-58': '/learnings/german/a/a2/tag-58',
 		'/learnings/german/a1/tag-59': '/learnings/german/a/a2/tag-59',
 		'/learnings/german/a1/tag-60': '/learnings/german/a/a2/tag-60',
+		// Pages moved into the Projects section (2026-11-24)
+		'/learnings/mba/generative-ai-for-managers/venture-clienting-ai': '/projects/venture-clienting-ai',
+		'/de/learnings/mba/generative-ai-for-managers/venture-clienting-ai': '/de/projects/venture-clienting-ai',
+		'/learnings/online/shipping': '/projects',
+		'/de/learnings/online/shipping': '/de/projects',
+		'/learnings/online/shipping/maritime-cii-dashboard': '/projects/maritime-cii-dashboard',
+		'/de/learnings/online/shipping/maritime-cii-dashboard': '/de/projects/maritime-cii-dashboard',
+		'/learnings/online/shipping/ship-engine-digital-twin': '/projects/ship-engine-digital-twin',
+		'/de/learnings/online/shipping/ship-engine-digital-twin': '/de/projects/ship-engine-digital-twin',
 	},
 	site: 'https://www.ravichaudhary.eu',
 	integrations: [
@@ -139,8 +148,6 @@ export default defineConfig({
 										{ label: '4 · GenAI Agents', link: 'learnings/mba/generative-ai-for-managers/04-genai-agents', translations: { de: '4 · GenAI-Agenten' } },
 										{ label: '5 · GenAI-Assisted ML', link: 'learnings/mba/generative-ai-for-managers/05-genai-assisted-ml', translations: { de: '5 · GenAI-gestütztes ML' } },
 										{ label: '6 · Business Cases', link: 'learnings/mba/generative-ai-for-managers/06-genai-business-cases', translations: { de: '6 · Business Cases' } },
-											{ label: 'Applied Project · Venture Clienting & AI', link: 'learnings/mba/generative-ai-for-managers/venture-clienting-ai', translations: { de: 'Anwendungsprojekt · Venture Clienting & KI' } },
-										{ label: 'Capstone Project · Contract & SLA Copilot', link: 'projects/contract-sla-copilot', translations: { de: 'Capstone-Projekt · Contract & SLA Copilot' } },
 									],
 								},
 								{
@@ -748,14 +755,6 @@ export default defineConfig({
 											{ label: '13 · Enterprise Environment', link: 'learnings/online/sap-erp-consulting/13-enterprise-environment', translations: { de: '13 · Unternehmensumfeld' } },
 										],
 									},
-								],
-							},
-							{
-								label: 'Shipping',
-								collapsed: true,
-								items: [
-									{ label: 'Maritime CII Dashboard', link: 'learnings/online/shipping/maritime-cii-dashboard' },
-									{ label: 'Ship Engine Digital Twin', link: 'learnings/online/shipping/ship-engine-digital-twin' },
 								],
 							},
 						],
