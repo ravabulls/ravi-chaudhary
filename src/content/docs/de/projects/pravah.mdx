@@ -1,0 +1,200 @@
+---
+title: Pravah - Container-Scanning aus einem Fenster
+description: Eine Prozessneugestaltung am Containerscanner eines Seehafens, die die Freigabezeit je Container von 6-7 Minuten auf unter eine Minute senkte - Scanlisten im Voraus, ein Raum statt zwei Etagen und ein digitales Register, das sich selbst prüft.
+sidebar:
+  label: Pravah
+  order: 4
+---
+
+import { Aside, Badge, Card, CardGrid, Steps } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Die Freigabe am Containerscanner eines Seehafens, von 6-7 Minuten auf unter eine Minute je Container verkürzt: Scanlisten im Voraus, ein Raum statt zwei Etagen und ein digitales Register, das sich selbst prüft.</p>
+
+<Badge text="Prozessverbesserung" variant="note" /> <Badge text="Lean Operations" variant="note" /> <Badge text="Engpassanalyse" variant="note" /> <Badge text="Kapazitätsplanung" variant="note" /> <Badge text="Microsoft Forms" variant="note" /> <Badge text="Excel-Automatisierung" variant="note" />
+
+**Kontext:** die Container-Scanning-Einheit eines großen Seehafens, während meiner Verwendung im Import- und Exportbereich ([zum Werdegang](/de/resume/experience/)) · **Meine Rolle:** Entwickler und alleiniger Projektleiter, unter der Anleitung der vorgesetzten Stellen · **Der Name:** *Pravah* bedeutet auf Hindi „Fluss“ im Sinne von Strömung.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">6-7 Min.</span><span class="l">Freigabe eines Containers vorher</span></div>
+  <div class="pj-stat"><span class="n">45-60 s</span><span class="l">Freigabe eines Containers nachher</span></div>
+  <div class="pj-stat"><span class="n">~85 %</span><span class="l">weniger Zeit je Container</span></div>
+  <div class="pj-stat"><span class="n">1 Fenster</span><span class="l">ein Raum für Scan und Bildauswertung statt zwei Etagen</span></div>
+  <div class="pj-stat"><span class="n">Jedes Schiff</span><span class="l">Scanliste im Voraus, Personal passend zur Arbeitslast</span></div>
+  <div class="pj-stat"><span class="n">0</span><span class="l">manuelle Prüfungen, ob jeder markierte Container gescannt wurde</span></div>
+</div>
+
+<Aside type="note" title="Zu den Abbildungen">
+Hier wurde neu geordnet, wie Menschen, Räume und Papiere zusammenarbeiten; Screenshots gibt es deshalb keine. Raumaufteilung und Register auf dieser Seite sind schematische Abbildungen, die für sie gezeichnet wurden, mit erfundenen Containernummern. Kein Hafen, kein Schiff und keine echten Containerdaten werden gezeigt. Die Beschriftungen in den Abbildungen sind englisch.
+</Aside>
+
+## Auf einen Blick
+
+<CardGrid>
+  <Card title="Die Herausforderung" icon="warning">
+    Die Freigabe eines Containers am Scanner dauerte im Schnitt 6-7 Minuten. Für jeden einzelnen Container wanderte ein Papierbeleg zwischen zwei Beamten auf zwei verschiedenen Etagen, niemand wusste im Voraus, wie viele Container kommen würden, und die Scanregister wurden von Hand geführt. Vor dem Scanner stauten sich die Lkw.
+  </Card>
+  <Card title="Was ich verändert habe" icon="puzzle">
+    Drei Dinge: Die Liste der zum Scan markierten Container erreichte die Einheit, sobald ein Schiff einlief; die Arbeitsplätze für Scan und Bildauswertung zogen in einen Raum, sodass Container an einem einzigen Fenster freigegeben wurden; und aus dem Papierregister wurde ein Webformular, dessen Einträge automatisch mit der Scanliste jedes Schiffs abgeglichen wurden.
+  </Card>
+  <Card title="Meine Rolle" icon="pencil">
+    Ich hatte den Auftrag, die Arbeit der Einheit zu straffen. Ich habe den neuen Ablauf entwickelt und war alleiniger Projektleiter, unter der Anleitung der vorgesetzten Stellen: den alten Prozess erfassen, die Engpässe finden, den Umzug beider Systeme in einen Raum planen, die Scanlisten im Voraus organisieren und das digitale Register aufbauen.
+  </Card>
+  <Card title="Das Ergebnis" icon="approve-check-circle">
+    Die Freigabezeit sank von 6-7 Minuten auf 45 Sekunden bis eine Minute je Container, und die lange Schlange vor dem Scanner löste sich auf. Die Beamten wurden nach dem erwarteten Aufkommen eingeteilt, und ob jeder markierte Container eines Schiffs gescannt war, ließ sich ohne manuelle Prüfung auf einen Blick sehen.
+  </Card>
+</CardGrid>
+
+## Das Problem: drei Engpässe
+
+In einem Hafen fahren die für eine zerstörungsfreie Kontrolle ausgewählten Container auf ihrem Lkw durch einen Scanner. Das Scanbild wird auf Auffälligkeiten geprüft, und erst danach wird der Container freigegeben. Die Kontrolle selbst war richtig. Die Art, wie die Arbeit um sie herum organisiert war, nicht.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Lkw kommt an<span class="sub">Fahrer übergibt einen Beleg</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Beamter 1<span class="sub">prüft, scannt, vermerkt von Hand</span></div>
+    <span class="arrow">→<small>Beleg in eine andere Etage getragen</small></span>
+    <div class="sc-node amber">Beamter 2<span class="sub">prüft das Bild auf Auffälligkeiten</span></div>
+    <span class="arrow">→<small>Beleg zurückgetragen</small></span>
+    <div class="sc-node green">Freigabe<span class="sub">erst nach der Prüfung</span></div>
+  </div>
+  <figcaption>Der alte Ablauf: ein Container nach dem anderen, und die Papiere wandern zwischen den Etagen. Durchschnitt: 6-7 Minuten je Container.</figcaption>
+</div>
+
+<CardGrid>
+  <Card title="1 · Papier unterwegs" icon="document">
+    Jeder Beleg musste vom Scannerraum in eine andere Etage, wo ein zweites System das Bild zeigte und ein zweiter Beamter freigab, und wieder zurück. Der Scanner stand still, während der Lkw auf die Rundreise seiner Papiere wartete.
+  </Card>
+  <Card title="2 · Arbeit im Blindflug" icon="magnifier">
+    Die Einheit wusste nicht, wie viele Container zum Scan kommen würden. Die Beamten ließen sich nicht nach der Arbeitslast einteilen, waren also zu Spitzenzeiten unvorbereitet und in ruhigen Zeiten nicht ausgelastet.
+  </Card>
+  <Card title="3 · Register, die niemand abgleichen konnte" icon="list-format">
+    Scans wurden in physischen Registern festgehalten. Ob jeder auf einem Schiff markierte Container tatsächlich gescannt worden war, ließ sich nur Zeile für Zeile prüfen, langsam und fehleranfällig.
+  </Card>
+</CardGrid>
+
+Die Folge war eine lange Schlange von Lkw vor dem Scanner: langsamere Freigabe der Ware für die Händler, Stau im Terminal und ständiger Druck auf die Beamten, eine Kontrolle zu beschleunigen, die für den Vollzug wichtig ist.
+
+## Wie ich vorgegangen bin
+
+<Steps>
+
+1. **Den Ablauf begehen und messen.** Ich bin Containern von der Ankunft bis zur Freigabe gefolgt und habe jeden Schritt gemessen. Der größte Teil der 6-7 Minuten war weder Scan noch Bildauswertung, sondern Warten und Papier, das zwischen den Etagen unterwegs war.
+
+2. **Wert von Verschwendung trennen.** Der Scan und die Auswertung des Bildes sind die Kontrolle und mussten bleiben. Belege tragen, auf sie warten und erneut abzeichnen brachte nichts.
+
+3. **Den echten Engpass finden.** Der Engpass war nicht der Scanner, sondern die Übergabe zwischen den beiden Beamten. Jede Verbesserung an anderer Stelle hätte die Schlange nur verschoben.
+
+4. **Alles um ein Fenster herum neu ordnen.** Ich habe die Neuausrichtung geplant, sodass beide Systeme, die Scansteuerung und die Bildauswertung, in einem Raum stehen, mit einer einzigen Stelle, an der ein Container freigegeben wird.
+
+5. **Die Information früher bereitstellen.** Die Einheit musste wissen, was kommt, bevor die Lkw da waren. Deshalb stand die Liste der zum Scan markierten Container zur Verfügung, sobald ein Schiff einlief.
+
+6. **Die Kontrolle digitalisieren.** Die Papierregister wurden durch ein einfaches Webformular ersetzt, dessen Ergebnisse automatisch mit der Scanliste abgeglichen wurden.
+
+7. **Im Alltag verankern.** Die neue Arbeitsweise wurde den Beamten erklärt, in echten Schichten erprobt und angepasst, bis sie das normale Verfahren war.
+
+</Steps>
+
+## Die Lösung: drei Änderungen
+
+### 1. Wissen, was kommt
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Schiff läuft ein<span class="sub">Container zum Scan markiert</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Scanliste geteilt<span class="sub">sofort mit der Scanning-Einheit</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Beamte eingeteilt<span class="sub">nach dem erwarteten Aufkommen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Scanner bereit<span class="sub">bevor die Lkw kommen</span></div>
+  </div>
+</div>
+
+Sobald ein Schiff einlief, erhielt die Einheit die Liste seiner zum Scan markierten Container. Die Beamten wussten, wie viele Container zu erwarten waren und welche, sodass die richtige Zahl von Beamten im Dienst sein konnte, und die Liste wurde zur Referenz dafür, dass nichts übersehen wurde.
+
+### 2. Ein Raum, ein Fenster
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/pravah/layout.svg" alt="Schema des Scan-Ablaufs vorher und nachher. Vorher: Ein Papierbeleg wanderte vom Scannerraum im Erdgeschoss in den Bildauswertungsraum auf einer anderen Etage und zurück, während sich die Lkw in der Scannerspur stauten. Nachher: Scansteuerung und Bildauswertung teilen sich einen Raum, und der Container wird an einem einzigen Fenster freigegeben." loading="lazy" />
+  <figcaption>Die Aufstellung vor und nach der Neuordnung. Schematisch, nicht maßstabsgetreu.</figcaption>
+</figure>
+
+Beide Systeme zogen in einen gemeinsamen Raum. Der Beamte an der Scansteuerung und der Beamte, der das Bild auswertet, arbeiten jetzt nebeneinander: Das Bild erscheint auf dem Nachbartisch, sobald der Scan fertig ist, und der Container wird an einem Fenster freigegeben. Kein Beleg muss den Raum verlassen, deshalb verschwanden die Rundreise und das Warten, das mit ihr verbunden war. Die Prüfung durch zwei Beamte blieb genau wie zuvor; nur die Wege fielen weg.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Lkw kommt an<span class="sub">Container auf der Scanliste</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Scan<span class="sub">Beamter 1</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Bild ausgewertet<span class="sub">Beamter 2, im selben Raum</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Freigabe an einem Fenster<span class="sub">45-60 Sekunden insgesamt</span></div>
+  </div>
+  <figcaption>Der neue Ablauf: dieselben zwei Prüfungen, ohne die Rundreise der Papiere.</figcaption>
+</div>
+
+### 3. Ein Register, das sich selbst prüft
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/pravah/register.svg" alt="Abbildung des digitalen Registers: ein Webformular für Schiff, Containernummer, Scanstatus und Beamten sowie eine Tabelle, die jeden Eintrag mit der Scanliste des Schiffs abgleicht und zeigt, wie viele Container gescannt, zur Beschau weitergeleitet oder noch offen sind. Containernummern sind erfunden." loading="lazy" />
+  <figcaption>Das digitale Register: ein Formular für die Beamten und eine Tabelle, die jeden Eintrag mit der Scanliste des Schiffs abgleicht. Veranschaulichend, mit erfundenen Containernummern.</figcaption>
+</figure>
+
+Mit Microsoft Forms habe ich ein Webformular eingerichtet, in das die Beamten nur die Nummer des Containers, den sie scannen, und den Scanstatus eintragen. Die Antworten landen in einer Excel-Tabelle, die mit der Scanliste des Schiffs verbunden ist, sodass jeder Eintrag automatisch über die Containernummer zugeordnet wird. Was gescannt ist, was zur Beschau weitergeleitet wurde und was noch aussteht, zeigt sich sofort, ohne dass jemand Register von Hand durchgehen muss.
+
+## Vorher und nachher
+
+| | Vorher | Nachher |
+|---|---|---|
+| **Freigabe eines Containers** | Im Schnitt 6-7 Minuten | 45 Sekunden bis eine Minute |
+| **Die Papiere** | Für jeden Container ein Beleg, der zwischen Etagen getragen wird | Nichts verlässt den Raum |
+| **Die beiden Beamten** | Auf verschiedenen Etagen, verbunden durch einen Papierbeleg | Nebeneinander, verbunden über den Bildschirm |
+| **Die Schlange vor dem Scanner** | Lang, über den Tag wachsend | Aufgelöst |
+| **Kenntnis der Arbeitslast** | Unbekannt, bis die Lkw kamen | Scanliste für jedes Schiff, im Voraus |
+| **Personaleinsatz** | Zu Spitzenzeiten unvorbereitet, in ruhigen Zeiten nicht ausgelastet | Beamte nach dem erwarteten Aufkommen eingeteilt |
+| **Das Register** | Handschriftlich, in physischen Büchern | Ein Webformular, das eine Tabelle füllt |
+| **Prüfung, ob ein Schiff vollständig gescannt ist** | Zeile für Zeile von Hand | Automatisch, über die Containernummer |
+
+## Aus Sicht des Operations Managements
+
+Das Projekt war klein, aber es wendet klassisches Operations-Denken an. Jedes der alten Probleme entspricht einer bekannten Form von Verschwendung im Lean Management:
+
+| Verschwendung | Wo sie auftrat | Was sie beseitigte |
+|---|---|---|
+| **Transport** | Belege, die zwischen Etagen getragen wurden | Beide Systeme in einem Raum |
+| **Warten** | Lkw und Beamte warteten auf Papiere | Das Bild erreicht Beamten 2 im Moment der Aufnahme |
+| **Bewegung** | Wege von Beamten und Personal zwischen den Etagen | Ein Raum, ein Fenster |
+| **Überbearbeitung** | Wiederholte handschriftliche Vermerke | Ein einziger Eintrag in einem Formular |
+| **Fehler** | Übersehene oder falsch erfasste Container in Papierregistern | Automatischer Abgleich mit der Scanliste |
+| **Ungenutzte Kapazität** | Personaleinteilung ohne Kenntnis der Arbeitslast | Scanlisten für jedes Schiff im Voraus |
+
+Das eigentliche Problem war die Kapazität, nicht der Einsatz. Bei 6-7 Minuten je Container konnte ein Scanner nur etwa 9 oder 10 Container pro Stunde freigeben; bei unter einer Minute konnte derselbe Scanner rund 60 schaffen. Sobald seine Kapazität deutlich über der Rate lag, mit der Lkw ankamen, hatte die Schlange nichts mehr, woraus sie wachsen konnte.
+
+## Was es gebracht hat
+
+- **Schnellere Freigabe:** von 6-7 Minuten auf 45 Sekunden bis eine Minute je Container, rund 85 % weniger Zeit.
+- **Keine Schlangen mehr:** Die Reihe wartender Lkw vor dem Scanner löste sich auf, das entlastete das Terminal und beschleunigte die Freigabe der Ware.
+- **Kontrolle unverändert:** Jedes Bild wird weiterhin von einem zweiten Beamten geprüft, bevor der Container freikommt; der Ablauf wurde schneller, ohne den Vollzug zu schwächen.
+- **Personal passend zur Arbeit:** Scanlisten im Voraus ermöglichten es, die Beamten nach dem erwarteten Aufkommen einzuteilen.
+- **Vollständiger, nachweisbarer Scan:** Für jedes Schiff ist auf einen Blick klar, welche markierten Container gescannt, weitergeleitet oder noch offen sind, mit einem digitalen Eintrag hinter jedem Vorgang.
+- **Fast ohne Kosten:** eine Änderung von Raumaufteilung und Verfahren plus vorhandene Werkzeuge, Microsoft Forms und Excel; kein neues System musste gekauft werden.
+
+## Gezeigte Fähigkeiten
+
+| Fähigkeit | Wo sie sich zeigt |
+|---|---|
+| **Probleme erkennen** | Erkannt, dass eine eingespielte, akzeptierte Arbeitsweise die Ursache der Schlange war, und sie angepackt |
+| **Prozessaufnahme & Zeitmessung** | Container durchgängig begleitet und jeden Schritt gemessen, um zu sehen, wohin die Minuten gingen |
+| **Lean-Denken** | Die Schritte, die die Kontrolle ausmachen, von reiner Verschwendung getrennt und die Verschwendung entfernt |
+| **Engpassanalyse** | Den Engpass in der Übergabe zwischen den Beamten gefunden, nicht im Scanner |
+| **Ablauf- & Raumplanung** | Den Umzug beider Systeme in einen Raum und ein einziges Freigabefenster geplant |
+| **Kapazitätsplanung** | Scanlisten im Voraus genutzt, um Beamte nach dem erwarteten Aufkommen einzuteilen |
+| **Gestaltung des Informationsflusses** | Die Scanliste nach vorne verlegt, sodass die Information vor der Arbeit ankam |
+| **Digitalisierung mit Low-Code** | Das Erfassungsformular in Microsoft Forms gebaut, direkt am Arbeitsplatz nutzbar |
+| **Excel-Automatisierung & Abgleich** | Die Formularantworten mit der Scanliste verbunden, für automatische Zuordnung und Statusverfolgung |
+| **Veränderungsmanagement** | Die Beamten durch eine Änderung von Ort und Art ihrer Arbeit mitgenommen und sie zur Routine gemacht |
+| **Gestaltung von Kontrollen** | Die Bildprüfung durch zwei Beamte beibehalten und eine digitale Dokumentation ergänzt, sodass Tempo nicht auf Kosten der Sicherheit ging |
+
+<Badge text="Prozessverbesserung" /> <Badge text="Lean Operations" /> <Badge text="Engpassanalyse" /> <Badge text="Ablaufgestaltung" /> <Badge text="Kapazitätsplanung" /> <Badge text="Microsoft Forms" /> <Badge text="Excel" /> <Badge text="Datenabgleich" /> <Badge text="Veränderungsmanagement" /> <Badge text="Handelserleichterung" /> <Badge text="Öffentlicher Sektor" />

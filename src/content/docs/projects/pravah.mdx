@@ -1,0 +1,200 @@
+---
+title: Pravah - Single-Window Container Scanning
+description: A process redesign at a sea-port container scanner that cut clearance time per container from 6-7 minutes to under a minute - advance scan lists, one room instead of two floors, and a digital register that checks itself.
+sidebar:
+  label: Pravah
+  order: 4
+---
+
+import { Aside, Badge, Card, CardGrid, Steps } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Container clearance at a sea-port scanner, cut from 6-7 minutes to under a minute per container: advance scan lists, one room instead of two floors, and a digital register that checks itself.</p>
+
+<Badge text="Process improvement" variant="note" /> <Badge text="Lean operations" variant="note" /> <Badge text="Bottleneck analysis" variant="note" /> <Badge text="Capacity planning" variant="note" /> <Badge text="Microsoft Forms" variant="note" /> <Badge text="Excel automation" variant="note" />
+
+**Context:** the container scanning unit at a major sea port, during my posting in imports and exports ([see experience](/resume/experience/)) · **My role:** creator and sole project lead, working under the guidance of senior authorities · **The name:** *Pravah* means "flow" in Hindi.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">6-7 min</span><span class="l">to clear one container before</span></div>
+  <div class="pj-stat"><span class="n">45-60 s</span><span class="l">to clear one container after</span></div>
+  <div class="pj-stat"><span class="n">~85%</span><span class="l">less time per container</span></div>
+  <div class="pj-stat"><span class="n">1 window</span><span class="l">one room for scanning and image analysis, instead of two floors</span></div>
+  <div class="pj-stat"><span class="n">Every vessel</span><span class="l">scan list received in advance, so staff matched the workload</span></div>
+  <div class="pj-stat"><span class="n">0</span><span class="l">manual checks to confirm that every marked container was scanned</span></div>
+</div>
+
+<Aside type="note" title="About the illustrations">
+This was a redesign of how people, rooms and paperwork worked together, so there are no screenshots. The layout and register shown on this page are schematic illustrations drawn for it, with invented container numbers. No port, vessel or real container details appear.
+</Aside>
+
+## At a glance
+
+<CardGrid>
+  <Card title="The challenge" icon="warning">
+    Clearing one container through the scanner took 6-7 minutes on average. A paper receipt travelled between two officers on two different floors for every single container, nobody knew in advance how many containers were coming, and the scanning registers were kept by hand. Trucks queued at the scanner.
+  </Card>
+  <Card title="What I changed" icon="puzzle">
+    Three things: the list of containers marked for scanning now reached the unit as soon as a vessel arrived; the scanning and image-analysis stations moved into one room so containers were cleared at a single window; and the paper register became a web form whose entries were checked automatically against each vessel's scan list.
+  </Card>
+  <Card title="My role" icon="pencil">
+    I was given the task of streamlining the unit. I created the new set-up and was the sole project lead, working under the guidance of senior authorities: mapping the old process, finding the bottlenecks, planning the move of both systems into one room, arranging the advance scan lists, and building the digital register.
+  </Card>
+  <Card title="The result" icon="approve-check-circle">
+    Clearance time fell from 6-7 minutes to 45 seconds to a minute per container, and the long queue at the scanner cleared. Officers were rostered to the expected volume, and whether every marked container of a vessel had been scanned became visible at a glance, with no manual checks.
+  </Card>
+</CardGrid>
+
+## The problem: three bottlenecks
+
+At a port, containers selected for non-intrusive inspection pass through a scanner on their truck. The scan image is read for anything abnormal, and only then is the container released. The control itself was sound. The way the work was organised around it was not.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Truck arrives<span class="sub">driver hands over a receipt</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Officer 1<span class="sub">checks, scans, endorses by hand</span></div>
+    <span class="arrow">→<small>receipt carried to another floor</small></span>
+    <div class="sc-node amber">Officer 2<span class="sub">reads the image for abnormalities</span></div>
+    <span class="arrow">→<small>receipt carried back</small></span>
+    <div class="sc-node green">Release<span class="sub">only after clearance</span></div>
+  </div>
+  <figcaption>The old process: one container at a time, with the paperwork walking between floors. Average: 6-7 minutes per container.</figcaption>
+</div>
+
+<CardGrid>
+  <Card title="1 · Paper on the move" icon="document">
+    Every receipt had to travel from the scanner room to a different floor, where a second system showed the image and a second officer cleared it, and then back again. The scanner sat idle while the truck waited for its paperwork to make the round trip.
+  </Card>
+  <Card title="2 · Working blind" icon="magnifier">
+    The unit did not know how many containers were coming for scanning. Officers could not be rostered to the workload, so they were unprepared at peaks and under-used at quiet times.
+  </Card>
+  <Card title="3 · Registers nobody could reconcile" icon="list-format">
+    Scans were recorded in physical registers. Checking whether every container marked on a vessel had actually been scanned meant going through the registers line by line, which was slow and easy to get wrong.
+  </Card>
+</CardGrid>
+
+The cost showed up as a long queue of trucks at the scanner: slower cargo release for traders, congestion in the terminal, and constant pressure on officers to hurry a check that matters for enforcement.
+
+## How I approached it
+
+<Steps>
+
+1. **Walk the process and time it.** I followed containers from arrival to release and timed each step. Most of the 6-7 minutes was not scanning or image analysis at all; it was waiting, and paper moving between floors.
+
+2. **Separate value from waste.** The scan and the reading of the image are the control, and they had to stay. Carrying receipts, waiting for them and re-endorsing them added nothing.
+
+3. **Find the real constraint.** The bottleneck was not the scanner but the hand-off between the two officers. Any improvement elsewhere would just move the queue.
+
+4. **Redesign around one window.** I planned the reorientation of the set-up so that both systems, the scan control and the image analysis, sat in a single room, with one point where a container is cleared.
+
+5. **Fix the information upstream.** The unit needed to know what was coming before the trucks arrived, so the list of containers marked for scanning was made available as soon as a vessel came in.
+
+6. **Digitise the control.** Paper registers were replaced by a simple web form, with the results checked automatically against the scan list.
+
+7. **Settle it into routine.** The new way of working was explained to the officers, tried out on real shifts and adjusted until it ran as the normal procedure.
+
+</Steps>
+
+## The solution: three changes
+
+### 1. Know what is coming
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Vessel arrives<span class="sub">containers marked for scanning</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Scan list shared<span class="sub">with the scanning unit at once</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Officers rostered<span class="sub">to the expected volume</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Scanner ready<span class="sub">before the trucks arrive</span></div>
+  </div>
+</div>
+
+As soon as a vessel came in, the list of its containers marked for scanning was given to the unit. Officers knew how many containers to expect and which ones, so the right number of officers could be on duty, and the list became the reference for checking that nothing was missed.
+
+### 2. One room, one window
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/pravah/layout.svg" alt="Schematic of the scanning set-up before and after. Before: a paper receipt travelled from the ground-floor scanner control room up to the image analysis room on another floor and back, while trucks queued in the scanner lane. After: scan control and image analysis share one room and the container is cleared at a single window." loading="lazy" />
+  <figcaption>The set-up before and after the reorganisation. Schematic, not to scale.</figcaption>
+</figure>
+
+Both systems were moved into a single room. The officer at the scan control and the officer reading the image now work side by side: the image appears on the next desk the moment the scan is done, and the container is cleared from one window. No receipt has to leave the room, so the round trip, and the wait that came with it, disappeared. The two-officer check stayed exactly as it was; only the walking went.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Truck arrives<span class="sub">container on the scan list</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Scan<span class="sub">officer 1</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Image read<span class="sub">officer 2, same room</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Cleared at one window<span class="sub">45-60 seconds in all</span></div>
+  </div>
+  <figcaption>The new process: the same two checks, without the paper round trip.</figcaption>
+</div>
+
+### 3. A register that checks itself
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/pravah/register.svg" alt="Illustration of the digital register: a web form for the vessel, container number, scanning status and officer, and a sheet that matches every entry against the vessel's scan list, showing how many containers are scanned, referred and still to scan. Container numbers are invented." loading="lazy" />
+  <figcaption>The digital register: a form for the officers, and a sheet that reconciles every entry with the vessel's scan list. Illustrative, with invented container numbers.</figcaption>
+</figure>
+
+Using Microsoft Forms, I set up a web form in which officers simply enter the container number they are scanning and its scanning status. The responses land in an Excel sheet that is connected to the vessel's scan list, so every entry is matched automatically by container number. What has been scanned, what was referred for examination and what is still outstanding shows up straight away, with no registers to go through by hand.
+
+## Before and after
+
+| | Before | After |
+|---|---|---|
+| **Time to clear one container** | 6-7 minutes on average | 45 seconds to a minute |
+| **The paperwork** | A receipt carried between floors for every container | Nothing leaves the room |
+| **The two officers** | On different floors, linked by a paper receipt | Side by side, linked by the screen |
+| **The queue at the scanner** | Long, building up through the day | Cleared |
+| **Knowing the workload** | Unknown until trucks arrived | Scan list for every vessel, in advance |
+| **Staffing** | Unprepared at peaks, idle at quiet times | Officers rostered to the expected volume |
+| **The register** | Handwritten, in physical books | A web form feeding a sheet |
+| **Checking a vessel was fully scanned** | Line-by-line manual checking | Automatic, by container number |
+
+## In operations terms
+
+This was a small project, but it applies classic operations thinking. Each of the old problems maps onto a recognised form of waste in lean management:
+
+| Waste | Where it appeared | What removed it |
+|---|---|---|
+| **Transport** | Receipts carried between floors | Both systems in one room |
+| **Waiting** | Trucks and officers waiting for paperwork | The image reaches officer 2 the moment it is taken |
+| **Motion** | Officers and staff walking between floors | One room, one window |
+| **Over-processing** | Repeated handwritten endorsements | A single entry in a form |
+| **Defects** | Containers missed or wrongly recorded in manual registers | Automatic matching against the scan list |
+| **Unused capacity** | Officers rostered without knowing the workload | Advance scan lists for every vessel |
+
+Capacity, not effort, was the real issue. At 6-7 minutes a container, one scanner could clear only about 9 or 10 containers an hour; at under a minute, the same scanner could clear around 60. Once its capacity comfortably exceeded the rate at which trucks arrived, the queue had nothing left to build on.
+
+## Value delivered
+
+- **Faster clearance:** from 6-7 minutes to 45 seconds to a minute per container, about 85% less time.
+- **No more queues:** the line of trucks waiting at the scanner cleared, easing congestion and speeding up the release of cargo.
+- **Control kept intact:** every image is still read by a second officer before release; the process got faster without weakening enforcement.
+- **People matched to the work:** advance scan lists let the unit roster officers to the expected volume.
+- **Complete, provable scanning:** for every vessel, it is clear at a glance which marked containers have been scanned, referred or are still outstanding, with a digital record behind each entry.
+- **Almost no cost:** a change of layout and procedure plus tools that were already available, Microsoft Forms and Excel; no new system to buy.
+
+## Skills demonstrated
+
+| Skill | Where it shows |
+|---|---|
+| **Problem identification** | Saw that a routine, accepted way of working was the cause of the queue, and took it on |
+| **Process mapping & time study** | Followed containers end to end and timed each step to see where the minutes went |
+| **Lean thinking** | Separated the steps that are the control from the ones that were only waste, and removed the waste |
+| **Bottleneck analysis** | Located the constraint in the hand-off between officers, not in the scanner |
+| **Workflow & layout redesign** | Planned the move of both systems into one room and a single clearance window |
+| **Capacity planning** | Used advance scan lists to roster officers to the expected volume |
+| **Information-flow design** | Moved the scan list upstream, so information arrived before the work |
+| **Low-code digitisation** | Built the data-entry form in Microsoft Forms for officers to use on the spot |
+| **Excel automation & reconciliation** | Connected the form's responses to the scan list for automatic matching and status tracking |
+| **Change management** | Brought officers along through a change in where and how they worked, and made it the normal routine |
+| **Control design** | Kept the two-officer image check and added a digital record, so speed did not cost assurance |
+
+<Badge text="Process improvement" /> <Badge text="Lean operations" /> <Badge text="Bottleneck analysis" /> <Badge text="Workflow redesign" /> <Badge text="Capacity planning" /> <Badge text="Microsoft Forms" /> <Badge text="Excel" /> <Badge text="Data reconciliation" /> <Badge text="Change management" /> <Badge text="Trade facilitation" /> <Badge text="Public sector" />
