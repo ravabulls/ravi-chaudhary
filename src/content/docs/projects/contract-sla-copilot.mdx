@@ -1,0 +1,272 @@
+---
+title: Contract & SLA Copilot - Agentic RAG for Service Operations
+description: A team capstone from the MBA course Generative AI for Managers - a business case, MVP design and working mini MVP for an AI copilot that turns 37-minute contract lookups into 6-minute answers with cited clauses and human review.
+sidebar:
+  label: Contract & SLA Copilot
+  order: 5
+---
+
+import { Aside, Badge, Card, CardGrid, LinkButton, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">An internal AI copilot that answers contract and SLA questions with cited clauses and a human check before anything reaches the customer, taken from use-case selection to a costed business case, an MVP design and a working mini MVP.</p>
+
+<Badge text="Team project" variant="caution" /> <Badge text="Generative AI" variant="note" /> <Badge text="Agentic RAG" variant="note" /> <Badge text="Business case" variant="note" /> <Badge text="Product management" variant="note" /> <Badge text="AI governance" variant="note" />
+
+**Context:** capstone of the MBA course *Generative AI for Managers* at TUHH / NIT Hamburg ([see the course notes](/learnings/mba/generative-ai-for-managers/06-genai-business-cases/)) · **Team:** Team NIT26-1, three members (Ana, Jenny and Ravi) · **Delivered:** a proposal pack, a 12-slide pitch with a recorded 10-minute video, and a mini MVP built in Python and Streamlit.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">37 → 6 min</span><span class="l">handling time per contract query, as-is versus to-be</span></div>
+  <div class="pj-stat"><span class="n">84%</span><span class="l">less time per query</span></div>
+  <div class="pj-stat"><span class="n">€133,865</span><span class="l">likely annual value (range €66,500 to €250,750)</span></div>
+  <div class="pj-stat"><span class="n">€38-55K</span><span class="l">MVP investment, with payback in year one</span></div>
+  <div class="pj-stat"><span class="n">21 / 25</span><span class="l">prioritisation score: the highest of the use cases assessed</span></div>
+  <div class="pj-stat"><span class="n">15 cases</span><span class="l">golden set used to evaluate the working mini MVP</span></div>
+</div>
+
+<Aside type="note" title="About the numbers">
+This is a course business case for a typical enterprise service operation, not a deployed system. The time, value and cost figures are the team's planning estimates, built transparently from a process map and stated assumptions; they are not measured results. The contracts in the mini MVP are synthetic.
+</Aside>
+
+<LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf" icon="download">Proposal pack (PDF, 10 pages)</LinkButton> <LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf" icon="download" variant="secondary">Pitch deck (PDF, 12 slides)</LinkButton> <LinkButton href="https://contractcopilot.streamlit.app/" icon="external" variant="minimal">Try the mini MVP</LinkButton>
+
+## At a glance
+
+<CardGrid>
+  <Card title="The challenge" icon="warning">
+    Service desk agents answering customer questions about contract coverage, SLA response times or service credits spent about 37 minutes per query, searching long agreements, appendices and amendments across several systems. The process was slow, agents read the same clause differently, and a wrong answer creates legal and financial exposure.
+  </Card>
+  <Card title="What we designed" icon="puzzle">
+    A copilot panel beside the support ticket. It structures the question, retrieves the relevant clauses from the contract repository, drafts an answer with clause-level citations and a confidence signal, and routes ambiguous cases to a contract specialist. An agent reviews every draft before it is sent.
+  </Card>
+  <Card title="The team's work" icon="pencil">
+    Working as a team of three, we took the idea through the full course framework: use-case selection and prioritisation, as-is and to-be process maps, value sizing, a product requirements document, architecture, a build-or-buy decision, governance, a 30/60/90-day rollout, KPIs and the pitch, and then a working mini MVP to prove the core flow.
+  </Card>
+  <Card title="The outcome" icon="approve-check-circle">
+    A fundable proposal: handling time from 37 to about 6 minutes, a likely annual value of €133,865 against an MVP cost of €38,000 to €55,000, and a controlled pilot with clear go and no-go gates, all backed by a live demo that answers with citations and escalates when unsure.
+  </Card>
+</CardGrid>
+
+## The problem
+
+<Tabs>
+  <TabItem label="The problem">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/contract-sla-copilot/slide-problem.webp" alt="Pitch slide: 37 minutes to answer a simple SLA question; slow, error-prone and inconsistent; affects service desk leads daily, account managers weekly and legal analysts ad hoc; about 2,600 queries a year." loading="lazy" />
+      <figcaption>Slide from the team's pitch: 37 minutes per query, across an eight-step manual process.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Before & after">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/contract-sla-copilot/slide-before-after.webp" alt="Pitch slide comparing the as-is process, 37 minutes in eight manual steps, with the to-be process, 6 minutes with AI-assisted steps and human review; the bottleneck steps 3 to 5 are automated." loading="lazy" />
+      <figcaption>The as-is and to-be process maps: the bottleneck of finding and interpreting clauses is automated, and the human review stays.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+The as-is process map showed where the 37 minutes went. Three steps, retrieving the right contract version, reading the PDFs and SLA tables, and a specialist interpreting the clauses, took 20 minutes between them, more than half of the total. That is the work GenAI is good at, and the work the copilot takes over.
+
+| Step (as-is) | Who | Time |
+|---|---|---|
+| Clarify the query | Service agent | 4 min |
+| Look up the customer and contract context | Service agent | 5 min |
+| Retrieve the contract, SLA appendix and amendments | Service agent | 6 min |
+| Read the PDFs and SLA tables | Service agent | 8 min |
+| Interpret the clauses | Contract specialist | 6 min |
+| Draft the response | Service agent | 4 min |
+| Review and approve | Manager | 3 min |
+| Send and log | Service agent | 1 min |
+| **Total** | | **37 min** |
+
+## How we approached it
+
+The course asks for a complete *Capstone Proposal Pack*, built in four blocks. We followed it end to end.
+
+<Steps>
+
+1. **Choose the right use case (Block A).** We screened candidate use cases for fit and scored them on value potential, time to value, feasibility, risk and evaluability. The Contract & SLA Copilot scored 21 out of 25, a *strategic bet* on the course's value versus time-to-value grid (high value, needing careful planning and executive sponsorship), with evaluability as its strongest point: every answer can be checked against the clause it cites.
+
+2. **Map the process and size the value (Block B).** An eight-step as-is map (37 minutes) and an eight-step to-be map (about 6 minutes) gave a saving of 31 minutes per query. At 2,600 queries a year and a loaded cost of €55 an hour, that is €73,865 in time alone, and €133,865 once avoided SLA penalties and rework are added.
+
+3. **Specify the MVP (Block C).** A product requirements document defined the job to be done, three in-scope features, eight explicit non-features, five user stories and five testable acceptance criteria. The architecture sketch, the build-or-buy table and a governance-lite checklist completed the design.
+
+4. **Plan the rollout and the safety net (Block D).** A 30/60/90-day plan with go/no-go gates, 11 KPIs across adoption, efficiency, quality and business outcome, a pre-launch evaluation on a 100-case golden set, stop-and-fix triggers and a kill switch.
+
+5. **Pitch it.** A 12-slide deck and a recorded 10-minute pitch, structured as problem, why now, MVP, value, plan and the ask, leading with the business problem rather than the technology.
+
+6. **Prove the core flow.** A mini MVP in Python and Streamlit that answers questions over a small set of contracts with citations, confidence and escalation, and evaluates itself on a golden set.
+
+</Steps>
+
+## The solution
+
+### Scope: three features, eight non-features
+
+<CardGrid>
+  <Card title="F1 · Query structuring" icon="list-format">
+    Turns the customer's question into a structured query, with the contract or customer, the SLA topic, the service type and the relevant asset, so the right contract is found first time.
+  </Card>
+  <Card title="F2 · Clause retrieval with citations" icon="magnifier">
+    Semantic search finds the relevant contract sections and returns clause snippets, clause identifiers and document references, so every answer is grounded in real text.
+  </Card>
+  <Card title="F3 · AI draft with human review" icon="approve-check">
+    Drafts a customer-ready answer with citations in a panel beside the ticket, where the agent can accept, edit or reject it. Nothing is sent automatically.
+  </Card>
+</CardGrid>
+
+Just as deliberate was what the MVP would **not** do: send answers automatically, support several languages, integrate fully with the CRM, transcribe calls, edit contracts, predict SLA breaches, run on mobile or offer analytics dashboards. Keeping the scope this tight is what made a four-week MVP realistic.
+
+### Architecture: an agentic workflow with retrieval
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/contract-sla-copilot/slide-architecture.webp" alt="Pitch slide of the agentic RAG workflow in eight steps, from agent query through extraction, retrieval and reasoning agents to human review, specialist review if flagged, sending and system logging, with the key components listed below." loading="lazy" />
+  <figcaption>The agentic RAG workflow from the pitch: decompose, retrieve, reason, approve, log.</figcaption>
+</figure>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Agent asks<span class="sub">in the copilot panel</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Extraction agent<span class="sub">intent and entities</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Retrieval agent<span class="sub">clauses from the vector store</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Reasoning agent<span class="sub">cited draft, confidence</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Human review<span class="sub">accept, edit or reject</span></div>
+    <span class="arrow">→<small>only if flagged</small></span>
+    <div class="sc-node amber">Specialist<span class="sub">ambiguous clauses</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Send and log<span class="sub">full audit trail</span></div>
+  </div>
+  <figcaption>Two human approval gates: the agent always, the contract specialist whenever the system flags ambiguity.</figcaption>
+</div>
+
+| Component | What it does |
+|---|---|
+| **Copilot panel** | Sits beside the service ticket; shows the draft, the citations and the confidence flag, with accept, edit and reject |
+| **Orchestration layer** | Triggers the agents in order, applies the routing rules and sends flagged cases to a person |
+| **Extraction agent** | Turns free text into a structured query: customer, SLA topic, entitlement type |
+| **Retrieval and reasoning agent** | Searches the vector store and drafts an answer grounded in clause-level evidence |
+| **Vector database** | Indexed contract and SLA chunks with their version, ID and section |
+| **Indexing layer** | Ingests, chunks and indexes approved contracts in the background, read-only |
+| **Logging layer** | Records the query, the clauses used, the draft, the edits and the final answer for audit and evaluation |
+
+**Build or buy?** We recommended a hybrid: **buy** the commodity infrastructure (document indexing, vector database, LLM inference) to hit the four-week timeline, and **build** the intelligence layer (query extraction, contract-specific reasoning prompts, ambiguity detection), because generic copilots lack the clause-level precision and citation grounding that legally sensitive commitments need.
+
+## The value case
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/contract-sla-copilot/slide-value-sizing.webp" alt="Pitch slide of the ROI model: likely annual value of 133,865 euros, with a conservative 66,500 and an optimistic 250,750, and the table of query volume, minutes saved, hours saved, hourly cost, time savings and quality savings." loading="lazy" />
+  <figcaption>The value-sizing model from the pitch. Every figure traces back to the process map and a stated assumption.</figcaption>
+</figure>
+
+| | Conservative | Likely | Optimistic |
+|---|---|---|---|
+| Queries a year | 2,000 | 2,600 | 3,000 |
+| Minutes saved per query | 31 | 31 | 31 |
+| Hours saved a year | 1,033 | 1,343 | 1,550 |
+| Loaded hourly cost | €45 | €55 | €65 |
+| Value of time saved | €46,500 | €73,865 | €100,750 |
+| Avoided penalties and rework | €20,000 | €60,000 | €150,000 |
+| **Total annual value** | **€66,500** | **€133,865** | **€250,750** |
+
+Against an MVP investment of €38,000 to €55,000 (infrastructure €8-12K, four weeks of development €25-35K, pilot monitoring €5-8K), the copilot pays back within its first year. Each query handled with it is worth about €28 in freed time.
+
+## Governance and rollout
+
+<CardGrid>
+  <Card title="Human in the loop" icon="approve-check-circle">
+    No AI answer reaches a customer without an agent's review. Ambiguous or high-impact cases go to a contract specialist.
+  </Card>
+  <Card title="Data and access" icon="setting">
+    Contracts are confidential: they stay in the approved cloud tenant, access is by single sign-on and role, and every session is tied to a user.
+  </Card>
+  <Card title="Evaluation" icon="magnifier">
+    A 100-case golden set from historical tickets (40% coverage, 30% SLA, 30% credits, edge cases included), reviewed blind by contract managers. The pilot starts only at 85% answer accuracy and 90% citation grounding or better.
+  </Card>
+  <Card title="Stop and fix" icon="warning">
+    The rollout pauses automatically if accuracy falls below 85%, citation grounding below 90%, the override rate rises above 25%, latency exceeds 90 seconds, or any serious data leak occurs. The product owner and the service operations lead hold the kill switch.
+  </Card>
+</CardGrid>
+
+| Phase | What happens | Gate to the next phase |
+|---|---|---|
+| **Days 1-30 · Pilot** | 10 tier-1 agents, coverage, SLA and credit questions only, one day of training, weekly reviews | 80% adoption or more, zero data leaks, stable human review |
+| **Days 31-60 · Expand** | All 50 agents, contract managers added, the top three pilot issues fixed | Resolution in 10 minutes or less, 85% accuracy, escalations under control |
+| **Days 61-90 · Scale** | The copilot becomes the standard first step; ownership moves to service operations | ROI readout against the €73,865 time-savings target |
+
+## The working mini MVP
+
+To show that the core of the design works, a mini MVP was built and deployed. It runs the full operator flow, from question to evidence, answer, review, audit and evaluation, over eight short synthetic contracts, one of them an addendum that overrides its base contract, to test amendment handling.
+
+<CardGrid>
+  <Card title="Hybrid retrieval" icon="magnifier">
+    Contract clauses are embedded and indexed with FAISS. Each hit is scored as 65% semantic similarity and 35% keyword overlap, and the top five clauses are passed on as evidence.
+  </Card>
+  <Card title="Grounded answers" icon="document">
+    An LLM, Google Gemini or OpenAI chosen in the app, drafts a short answer, a reasoning summary and citations with contract and clause IDs, using only the retrieved evidence.
+  </Card>
+  <Card title="Confidence and escalation" icon="warning">
+    Confidence is calibrated against the evidence. Answers are escalated when confidence falls below 0.60, when the top clauses are too close to call, or when a question needs legal judgment.
+  </Card>
+  <Card title="Human review and audit" icon="approve-check">
+    A review tab to accept, edit, reject or escalate each answer, and a log of every run: question, retrieved clauses, answer, citations and the reviewer's decision.
+  </Card>
+  <Card title="Built-in evaluation" icon="list-format">
+    A 15-case golden set with expected answers and clause IDs. The evaluator reports answer accuracy, citation validity, clause overlap, groundedness, retrieval hit rate, escalation accuracy and latency.
+  </Card>
+  <Card title="Safe to share" icon="setting">
+    No API key ships with the app: users paste their own key into the interface, and nothing is stored in the repository.
+  </Card>
+</CardGrid>
+
+The demo's own targets were 12 of 15 golden cases materially correct, 13 of 15 with a valid contract and clause citation, and an answer in under about ten seconds.
+
+<LinkButton href="https://contractcopilot.streamlit.app/" icon="external">Open the mini MVP</LinkButton> <LinkButton href="https://github.com/ravabulls/mini_mvp" icon="github" variant="secondary">View the code on GitHub</LinkButton> <LinkButton href="https://drive.google.com/file/d/1xaQLj9b4lKRLHEA-RCLk2UWHlKsDk4zA/view?usp=sharing" icon="external" variant="minimal">Watch the pitch video</LinkButton>
+
+<Aside type="note">
+The mini MVP runs on Streamlit Community Cloud's free tier, so it may take 20 to 30 seconds to wake up. To try it, you need your own Gemini or OpenAI API key.
+</Aside>
+
+## Technical stack
+
+| Component | Technology |
+|---|---|
+| Application | Python · Streamlit |
+| Generation | Google Gemini (gemini-2.5-flash by default) or OpenAI, selectable in the app |
+| Embeddings | Gemini embeddings (gemini-embedding-001, 768 dimensions) |
+| Vector index | FAISS, with JSON metadata |
+| Data validation | Pydantic |
+| Evaluation | pandas · NumPy, over a 15-case golden set |
+| Hosting | Streamlit Community Cloud, code on GitHub |
+
+## Skills demonstrated
+
+| Skill | Where it shows |
+|---|---|
+| **Use-case selection** | Fit filters and a five-criterion prioritisation score, with evaluability as a deciding factor |
+| **Process mapping** | Eight-step as-is and to-be maps, with times, roles, pain points and risks per step |
+| **Value sizing** | A transparent three-scenario model from volume, minutes saved and loaded cost |
+| **Product management** | Job to be done, scoped features and non-features, user stories, testable acceptance criteria |
+| **Solution architecture** | An agentic RAG workflow with orchestration, retrieval, reasoning, approval gates and logging |
+| **Build-or-buy analysis** | A ten-criterion comparison leading to a hybrid recommendation |
+| **Responsible AI and governance** | Human review, access control, audit logging, failure modes, stop-and-fix triggers, a kill switch |
+| **Rollout and KPI design** | A gated 30/60/90-day plan and 11 leading and lagging KPIs |
+| **LLM evaluation** | Golden sets, citation grounding, escalation accuracy and latency as measurable quality gates |
+| **Prototyping** | A deployed Streamlit mini MVP with hybrid retrieval, cited answers and self-evaluation |
+| **Pitching** | A ten-minute investment pitch that leads with the business problem and ends with a clear ask |
+| **Teamwork** | Delivered as a three-person team across analysis, design, build and presentation |
+
+## What the project taught
+
+The hardest part of a GenAI business case is not the model; it is making the value believable. Anchoring every number to a timed process map made the €133,865 traceable, line by line, instead of a guess. Scope discipline mattered just as much: the eight non-features are what make a four-week MVP credible. And in a legally sensitive setting, trust has to be designed in, not added later, through citations on every answer, a human gate before anything is sent, escalation when the system is unsure, and a golden set that decides whether the pilot may go ahead at all.
+
+## Downloads and links
+
+<LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf" icon="download">Proposal pack (PDF, 10 pages)</LinkButton> <LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf" icon="download" variant="secondary">Pitch deck (PDF, 12 slides)</LinkButton>
+
+- **Proposal pack:** the use-case one-pager, process maps and value sizing, the MVP requirements, the architecture and build-or-buy decision, the governance checklist, the rollout plan with KPIs, and the pitch script.
+- **Pitch deck:** the 12 slides presented to the course, with links to the video, the mini MVP and the code on the last slide.
+- **The course behind it:** [Day 6 · GenAI Business Cases](/learnings/mba/generative-ai-for-managers/06-genai-business-cases/), the study notes on the framework this project applies, and the [course overview](/learnings/mba/generative-ai-for-managers/).
+
+<Badge text="Generative AI" /> <Badge text="Agentic RAG" /> <Badge text="LLM evaluation" /> <Badge text="Business case" /> <Badge text="Value sizing" /> <Badge text="Product management" /> <Badge text="AI governance" /> <Badge text="Python" /> <Badge text="Streamlit" /> <Badge text="FAISS" /> <Badge text="Gemini" /> <Badge text="Team project" />

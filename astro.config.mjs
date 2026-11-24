@@ -140,6 +140,7 @@ export default defineConfig({
 										{ label: '5 · GenAI-Assisted ML', link: 'learnings/mba/generative-ai-for-managers/05-genai-assisted-ml', translations: { de: '5 · GenAI-gestütztes ML' } },
 										{ label: '6 · Business Cases', link: 'learnings/mba/generative-ai-for-managers/06-genai-business-cases', translations: { de: '6 · Business Cases' } },
 											{ label: 'Applied Project · Venture Clienting & AI', link: 'learnings/mba/generative-ai-for-managers/venture-clienting-ai', translations: { de: 'Anwendungsprojekt · Venture Clienting & KI' } },
+										{ label: 'Capstone Project · Contract & SLA Copilot', link: 'projects/contract-sla-copilot', translations: { de: 'Capstone-Projekt · Contract & SLA Copilot' } },
 									],
 								},
 								{

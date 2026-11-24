@@ -1,0 +1,272 @@
+---
+title: Contract & SLA Copilot - Agentic RAG für den Kundenservice
+description: Ein Team-Capstone aus dem MBA-Kurs Generative AI for Managers - Business Case, MVP-Konzept und funktionierender Mini-MVP für einen KI-Copiloten, der aus 37-minütigen Vertragsrecherchen 6-minütige Antworten mit zitierten Klauseln und menschlicher Prüfung macht.
+sidebar:
+  label: Contract & SLA Copilot
+  order: 5
+---
+
+import { Aside, Badge, Card, CardGrid, LinkButton, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Ein interner KI-Copilot, der Fragen zu Verträgen und SLAs mit zitierten Klauseln beantwortet und vor jeder Antwort an den Kunden eine menschliche Prüfung vorsieht, von der Auswahl des Anwendungsfalls über einen durchgerechneten Business Case und ein MVP-Konzept bis zu einem funktionierenden Mini-MVP.</p>
+
+<Badge text="Teamprojekt" variant="caution" /> <Badge text="Generative KI" variant="note" /> <Badge text="Agentic RAG" variant="note" /> <Badge text="Business Case" variant="note" /> <Badge text="Produktmanagement" variant="note" /> <Badge text="KI-Governance" variant="note" />
+
+**Kontext:** Capstone des MBA-Kurses *Generative AI for Managers* an der TUHH / NIT Hamburg ([zu den Kursnotizen](/de/learnings/mba/generative-ai-for-managers/06-genai-business-cases/)) · **Team:** Team NIT26-1, drei Mitglieder (Ana, Jenny und Ravi) · **Abgegeben:** ein Proposal Pack, ein Pitch mit 12 Folien und einem aufgezeichneten 10-Minuten-Video sowie ein Mini-MVP in Python und Streamlit.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">37 → 6 Min.</span><span class="l">Bearbeitungszeit je Vertragsanfrage, Ist gegen Soll</span></div>
+  <div class="pj-stat"><span class="n">84 %</span><span class="l">weniger Zeit je Anfrage</span></div>
+  <div class="pj-stat"><span class="n">133.865 €</span><span class="l">wahrscheinlicher Jahresnutzen (Spanne 66.500 bis 250.750 €)</span></div>
+  <div class="pj-stat"><span class="n">38-55 Tsd. €</span><span class="l">MVP-Investition, amortisiert im ersten Jahr</span></div>
+  <div class="pj-stat"><span class="n">21 / 25</span><span class="l">Priorisierungswert: der höchste der bewerteten Anwendungsfälle</span></div>
+  <div class="pj-stat"><span class="n">15 Fälle</span><span class="l">Golden Set zur Bewertung des funktionierenden Mini-MVP</span></div>
+</div>
+
+<Aside type="note" title="Zu den Zahlen">
+Dies ist ein Business Case aus einem Kurs für einen typischen Kundenservice in einem Unternehmen, kein produktiv eingesetztes System. Die Angaben zu Zeit, Nutzen und Kosten sind Planungsschätzungen des Teams, nachvollziehbar aufgebaut aus einer Prozessaufnahme und offen genannten Annahmen; es sind keine gemessenen Ergebnisse. Die Verträge im Mini-MVP sind synthetisch. Die Abbildungen stammen aus dem englischsprachigen Pitch.
+</Aside>
+
+<LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf" icon="download">Proposal Pack (PDF, 10 Seiten)</LinkButton> <LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf" icon="download" variant="secondary">Pitch-Deck (PDF, 12 Folien)</LinkButton> <LinkButton href="https://contractcopilot.streamlit.app/" icon="external" variant="minimal">Mini-MVP ausprobieren</LinkButton>
+
+## Auf einen Blick
+
+<CardGrid>
+  <Card title="Die Herausforderung" icon="warning">
+    Servicemitarbeitende, die Kundenfragen zu Vertragsabdeckung, SLA-Reaktionszeiten oder Servicegutschriften beantworten, brauchten etwa 37 Minuten pro Anfrage: Sie durchsuchten lange Verträge, Anhänge und Nachträge in mehreren Systemen. Der Ablauf war langsam, dieselbe Klausel wurde unterschiedlich gelesen, und eine falsche Antwort schafft rechtliche und finanzielle Risiken.
+  </Card>
+  <Card title="Was wir entworfen haben" icon="puzzle">
+    Ein Copilot-Panel neben dem Support-Ticket. Es strukturiert die Frage, sucht die passenden Klauseln im Vertragsarchiv, entwirft eine Antwort mit Zitaten auf Klauselebene und einem Konfidenzsignal und leitet unklare Fälle an Vertragsspezialisten weiter. Jeder Entwurf wird vor dem Versand von einem Menschen geprüft.
+  </Card>
+  <Card title="Die Arbeit des Teams" icon="pencil">
+    Zu dritt haben wir die Idee durch das gesamte Kursraster geführt: Auswahl und Priorisierung des Anwendungsfalls, Ist- und Soll-Prozess, Nutzenrechnung, Produktanforderungen, Architektur, Make-or-Buy-Entscheidung, Governance, ein 30/60/90-Tage-Rollout, KPIs und der Pitch, und danach ein funktionierender Mini-MVP, der den Kernablauf belegt.
+  </Card>
+  <Card title="Das Ergebnis" icon="approve-check-circle">
+    Ein finanzierbarer Vorschlag: Bearbeitungszeit von 37 auf etwa 6 Minuten, ein wahrscheinlicher Jahresnutzen von 133.865 € bei MVP-Kosten von 38.000 bis 55.000 € und ein kontrollierter Pilot mit klaren Go- und No-Go-Schwellen, gestützt durch eine Live-Demo, die mit Zitaten antwortet und bei Unsicherheit eskaliert.
+  </Card>
+</CardGrid>
+
+## Das Problem
+
+<Tabs>
+  <TabItem label="Das Problem">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/contract-sla-copilot/slide-problem.webp" alt="Folie aus dem Pitch: 37 Minuten für eine einfache SLA-Frage; langsam, fehleranfällig und uneinheitlich; betroffen sind Service-Desk-Leitungen täglich, Account Manager wöchentlich und Rechtsanalysten nach Bedarf; etwa 2.600 Anfragen pro Jahr." loading="lazy" />
+      <figcaption>Folie aus dem Pitch des Teams: 37 Minuten pro Anfrage, verteilt auf einen manuellen Ablauf in acht Schritten.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Vorher & nachher">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/contract-sla-copilot/slide-before-after.webp" alt="Folie, die den Ist-Prozess mit 37 Minuten in acht manuellen Schritten dem Soll-Prozess mit 6 Minuten, KI-gestützten Schritten und menschlicher Prüfung gegenüberstellt; die Engpassschritte 3 bis 5 sind automatisiert." loading="lazy" />
+      <figcaption>Ist- und Soll-Prozess: Der Engpass aus Suchen und Auslegen der Klauseln wird automatisiert, die menschliche Prüfung bleibt.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+Die Aufnahme des Ist-Prozesses zeigte, wohin die 37 Minuten gingen. Drei Schritte, die richtige Vertragsversion finden, PDFs und SLA-Tabellen lesen und die Auslegung der Klauseln durch Spezialisten, kosteten zusammen 20 Minuten, mehr als die Hälfte der Gesamtzeit. Genau darin ist generative KI stark, und genau diese Arbeit übernimmt der Copilot.
+
+| Schritt (Ist) | Wer | Zeit |
+|---|---|---|
+| Anfrage klären | Servicemitarbeitende | 4 Min. |
+| Kunden- und Vertragskontext nachschlagen | Servicemitarbeitende | 5 Min. |
+| Vertrag, SLA-Anhang und Nachträge beschaffen | Servicemitarbeitende | 6 Min. |
+| PDFs und SLA-Tabellen lesen | Servicemitarbeitende | 8 Min. |
+| Klauseln auslegen | Vertragsspezialisten | 6 Min. |
+| Antwort entwerfen | Servicemitarbeitende | 4 Min. |
+| Prüfen und freigeben | Führungskraft | 3 Min. |
+| Senden und dokumentieren | Servicemitarbeitende | 1 Min. |
+| **Gesamt** | | **37 Min.** |
+
+## Wie wir vorgegangen sind
+
+Der Kurs verlangt ein vollständiges *Capstone Proposal Pack* in vier Blöcken. Wir sind ihm von Anfang bis Ende gefolgt.
+
+<Steps>
+
+1. **Den richtigen Anwendungsfall wählen (Block A).** Wir haben mögliche Anwendungsfälle auf ihre Eignung geprüft und nach Nutzenpotenzial, Zeit bis zum Nutzen, Machbarkeit, Risiko und Bewertbarkeit eingestuft. Der Contract & SLA Copilot erreichte 21 von 25 Punkten, eine *strategische Wette* in der Kursmatrix aus Nutzen und Zeit bis zum Nutzen (hoher Nutzen, braucht sorgfältige Planung und Rückhalt der Leitung), mit der Bewertbarkeit als größter Stärke: Jede Antwort lässt sich an der zitierten Klausel überprüfen.
+
+2. **Prozess aufnehmen und Nutzen beziffern (Block B).** Ein Ist-Prozess in acht Schritten (37 Minuten) und ein Soll-Prozess in acht Schritten (etwa 6 Minuten) ergaben eine Ersparnis von 31 Minuten pro Anfrage. Bei 2.600 Anfragen im Jahr und Vollkosten von 55 € pro Stunde sind das 73.865 € allein an Zeit und 133.865 € mit vermiedenen SLA-Strafen und Nacharbeit.
+
+3. **Das MVP spezifizieren (Block C).** Ein Produktanforderungsdokument legte den Job to be Done, drei Funktionen im Umfang, acht ausdrücklich ausgeschlossene Funktionen, fünf User Stories und fünf prüfbare Abnahmekriterien fest. Architekturskizze, Make-or-Buy-Tabelle und eine schlanke Governance-Checkliste vervollständigten das Konzept.
+
+4. **Rollout und Sicherheitsnetz planen (Block D).** Ein 30/60/90-Tage-Plan mit Go/No-Go-Schwellen, 11 KPIs zu Nutzung, Effizienz, Qualität und Geschäftsergebnis, eine Vorabbewertung an einem Golden Set mit 100 Fällen, Stop-and-Fix-Auslöser und ein Notschalter.
+
+5. **Den Pitch halten.** Ein Deck mit 12 Folien und ein aufgezeichneter 10-Minuten-Pitch in der Reihenfolge Problem, Warum jetzt, MVP, Nutzen, Plan und Bitte, mit dem Geschäftsproblem statt der Technik am Anfang.
+
+6. **Den Kernablauf belegen.** Ein Mini-MVP in Python und Streamlit, das Fragen zu einer kleinen Sammlung von Verträgen mit Zitaten, Konfidenz und Eskalation beantwortet und sich selbst an einem Golden Set bewertet.
+
+</Steps>
+
+## Die Lösung
+
+### Umfang: drei Funktionen, acht Nicht-Funktionen
+
+<CardGrid>
+  <Card title="F1 · Anfrage strukturieren" icon="list-format">
+    Wandelt die Kundenfrage in eine strukturierte Anfrage um, mit Vertrag oder Kunde, SLA-Thema, Serviceart und betroffener Anlage, damit gleich der richtige Vertrag gefunden wird.
+  </Card>
+  <Card title="F2 · Klauselsuche mit Zitaten" icon="magnifier">
+    Eine semantische Suche findet die passenden Vertragsabschnitte und liefert Klauselauszüge, Klausel-IDs und Dokumentverweise, sodass jede Antwort auf echtem Text beruht.
+  </Card>
+  <Card title="F3 · KI-Entwurf mit menschlicher Prüfung" icon="approve-check">
+    Entwirft eine kundentaugliche Antwort mit Zitaten in einem Panel neben dem Ticket, wo sie angenommen, bearbeitet oder abgelehnt werden kann. Nichts wird automatisch versendet.
+  </Card>
+</CardGrid>
+
+Ebenso bewusst war, was das MVP **nicht** tun sollte: Antworten automatisch versenden, mehrere Sprachen unterstützen, vollständig ins CRM integriert sein, Anrufe transkribieren, Verträge bearbeiten, SLA-Verletzungen vorhersagen, auf Mobilgeräten laufen oder Analyse-Dashboards bieten. Erst dieser enge Umfang machte ein MVP in vier Wochen realistisch.
+
+### Architektur: ein agentischer Ablauf mit Retrieval
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/contract-sla-copilot/slide-architecture.webp" alt="Folie aus dem Pitch mit dem agentischen RAG-Ablauf in acht Schritten, von der Anfrage über Extraktions-, Retrieval- und Reasoning-Agenten bis zur menschlichen Prüfung, der Spezialistenprüfung bei Markierung, dem Versand und der Protokollierung, darunter die wichtigsten Komponenten." loading="lazy" />
+  <figcaption>Der agentische RAG-Ablauf aus dem Pitch: zerlegen, suchen, schlussfolgern, freigeben, protokollieren.</figcaption>
+</figure>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Anfrage<span class="sub">im Copilot-Panel</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Extraktions-Agent<span class="sub">Absicht und Entitäten</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Retrieval-Agent<span class="sub">Klauseln aus dem Vektorspeicher</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Reasoning-Agent<span class="sub">zitierter Entwurf, Konfidenz</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Menschliche Prüfung<span class="sub">annehmen, bearbeiten, ablehnen</span></div>
+    <span class="arrow">→<small>nur bei Markierung</small></span>
+    <div class="sc-node amber">Spezialist<span class="sub">unklare Klauseln</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Senden und protokollieren<span class="sub">vollständiger Prüfpfad</span></div>
+  </div>
+  <figcaption>Zwei menschliche Freigaben: die Servicemitarbeitenden immer, die Vertragsspezialisten, sobald das System eine Unklarheit meldet.</figcaption>
+</div>
+
+| Komponente | Aufgabe |
+|---|---|
+| **Copilot-Panel** | Neben dem Service-Ticket; zeigt Entwurf, Zitate und Konfidenzhinweis, mit Annehmen, Bearbeiten und Ablehnen |
+| **Orchestrierungsschicht** | Ruft die Agenten in der richtigen Reihenfolge auf, wendet die Weiterleitungsregeln an und gibt markierte Fälle an einen Menschen |
+| **Extraktions-Agent** | Macht aus freiem Text eine strukturierte Anfrage: Kunde, SLA-Thema, Art des Anspruchs |
+| **Retrieval- und Reasoning-Agent** | Durchsucht den Vektorspeicher und entwirft eine Antwort auf Grundlage von Belegen auf Klauselebene |
+| **Vektordatenbank** | Indizierte Vertrags- und SLA-Abschnitte mit Version, ID und Abschnitt |
+| **Indexierungsschicht** | Nimmt freigegebene Verträge im Hintergrund auf, teilt sie in Abschnitte und indiziert sie, nur lesend |
+| **Protokollierungsschicht** | Hält Anfrage, verwendete Klauseln, Entwurf, Änderungen und finale Antwort für Prüfung und Bewertung fest |
+
+**Make or Buy?** Wir empfahlen eine Mischform: die Standard-Infrastruktur **kaufen** (Dokumentindexierung, Vektordatenbank, LLM-Inferenz), um den Vier-Wochen-Zeitplan zu halten, und die Intelligenzschicht **selbst bauen** (Extraktion der Anfrage, vertragsspezifische Reasoning-Prompts, Erkennung von Unklarheiten), weil allgemeine Copiloten nicht die Präzision auf Klauselebene und die Belegbarkeit liefern, die rechtlich heikle Zusagen brauchen.
+
+## Der Business Case
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/contract-sla-copilot/slide-value-sizing.webp" alt="Folie aus dem Pitch mit dem ROI-Modell: wahrscheinlicher Jahresnutzen von 133.865 Euro, konservativ 66.500 und optimistisch 250.750 Euro, dazu die Tabelle mit Anfragevolumen, eingesparten Minuten und Stunden, Stundensatz, Zeitersparnis und Qualitätsersparnis." loading="lazy" />
+  <figcaption>Das Nutzenmodell aus dem Pitch. Jede Zahl lässt sich auf die Prozessaufnahme und eine genannte Annahme zurückführen.</figcaption>
+</figure>
+
+| | Konservativ | Wahrscheinlich | Optimistisch |
+|---|---|---|---|
+| Anfragen pro Jahr | 2.000 | 2.600 | 3.000 |
+| Eingesparte Minuten je Anfrage | 31 | 31 | 31 |
+| Eingesparte Stunden pro Jahr | 1.033 | 1.343 | 1.550 |
+| Vollkosten pro Stunde | 45 € | 55 € | 65 € |
+| Wert der eingesparten Zeit | 46.500 € | 73.865 € | 100.750 € |
+| Vermiedene Strafen und Nacharbeit | 20.000 € | 60.000 € | 150.000 € |
+| **Jahresnutzen gesamt** | **66.500 €** | **133.865 €** | **250.750 €** |
+
+Bei einer MVP-Investition von 38.000 bis 55.000 € (Infrastruktur 8-12 Tsd. €, vier Wochen Entwicklung 25-35 Tsd. €, Begleitung des Piloten 5-8 Tsd. €) amortisiert sich der Copilot im ersten Jahr. Jede damit bearbeitete Anfrage ist etwa 28 € an freigewordener Zeit wert.
+
+## Governance und Rollout
+
+<CardGrid>
+  <Card title="Der Mensch entscheidet" icon="approve-check-circle">
+    Keine KI-Antwort erreicht einen Kunden ohne Prüfung durch die Servicemitarbeitenden. Unklare oder folgenreiche Fälle gehen an Vertragsspezialisten.
+  </Card>
+  <Card title="Daten und Zugriff" icon="setting">
+    Verträge sind vertraulich: Sie bleiben in der freigegebenen Cloud-Umgebung, der Zugriff erfolgt über Single Sign-on und Rollen, und jede Sitzung ist einer Person zugeordnet.
+  </Card>
+  <Card title="Bewertung" icon="magnifier">
+    Ein Golden Set mit 100 Fällen aus historischen Tickets (40 % Abdeckung, 30 % SLA, 30 % Gutschriften, Grenzfälle eingeschlossen), blind geprüft von Vertragsmanagern. Der Pilot startet erst ab 85 % Antwortgenauigkeit und 90 % belegten Zitaten.
+  </Card>
+  <Card title="Stop and Fix" icon="warning">
+    Der Rollout stoppt automatisch, wenn die Genauigkeit unter 85 % fällt, die Belegquote unter 90 %, die Korrekturquote über 25 % steigt, die Antwortzeit 90 Sekunden überschreitet oder ein ernster Datenabfluss auftritt. Product Owner und Leitung des Servicebetriebs halten den Notschalter.
+  </Card>
+</CardGrid>
+
+| Phase | Was passiert | Schwelle zur nächsten Phase |
+|---|---|---|
+| **Tag 1-30 · Pilot** | 10 Mitarbeitende im First-Level-Support, nur Fragen zu Abdeckung, SLA und Gutschriften, ein Tag Schulung, wöchentliche Reviews | Mindestens 80 % Nutzung, kein Datenabfluss, stabile menschliche Prüfung |
+| **Tag 31-60 · Ausweiten** | Alle 50 Mitarbeitenden, Vertragsmanager hinzugenommen, die drei größten Probleme aus dem Pilot behoben | Bearbeitung in höchstens 10 Minuten, 85 % Genauigkeit, Eskalationen unter Kontrolle |
+| **Tag 61-90 · Skalieren** | Der Copilot wird zum Standard-Erstschritt; die Verantwortung geht an den Servicebetrieb | ROI-Auswertung gegen das Ziel von 73.865 € Zeitersparnis |
+
+## Der funktionierende Mini-MVP
+
+Um zu zeigen, dass der Kern des Konzepts funktioniert, wurde ein Mini-MVP gebaut und veröffentlicht. Er bildet den gesamten Ablauf ab, von der Frage über Belege, Antwort und Prüfung bis zu Protokoll und Bewertung, auf Grundlage von acht kurzen synthetischen Verträgen, darunter ein Nachtrag, der seinen Basisvertrag ändert, um den Umgang mit Nachträgen zu testen.
+
+<CardGrid>
+  <Card title="Hybride Suche" icon="magnifier">
+    Vertragsklauseln werden eingebettet und mit FAISS indiziert. Jeder Treffer wird zu 65 % nach semantischer Ähnlichkeit und zu 35 % nach Wortübereinstimmung bewertet, und die fünf besten Klauseln gehen als Belege weiter.
+  </Card>
+  <Card title="Belegte Antworten" icon="document">
+    Ein LLM, Google Gemini oder OpenAI nach Wahl in der App, entwirft eine kurze Antwort, eine Begründung und Zitate mit Vertrags- und Klausel-IDs, ausschließlich auf Grundlage der gefundenen Belege.
+  </Card>
+  <Card title="Konfidenz und Eskalation" icon="warning">
+    Die Konfidenz wird an den Belegen kalibriert. Antworten werden eskaliert, wenn die Konfidenz unter 0,60 liegt, wenn die besten Klauseln zu nah beieinanderliegen oder wenn eine Frage rechtliche Beurteilung verlangt.
+  </Card>
+  <Card title="Menschliche Prüfung und Protokoll" icon="approve-check">
+    Ein Prüf-Tab zum Annehmen, Bearbeiten, Ablehnen oder Eskalieren jeder Antwort und ein Protokoll jedes Durchlaufs: Frage, gefundene Klauseln, Antwort, Zitate und Entscheidung der prüfenden Person.
+  </Card>
+  <Card title="Eingebaute Bewertung" icon="list-format">
+    Ein Golden Set mit 15 Fällen samt erwarteten Antworten und Klausel-IDs. Die Auswertung meldet Antwortgenauigkeit, Gültigkeit der Zitate, Klauselübereinstimmung, Belegtheit, Trefferquote der Suche, Genauigkeit der Eskalation und Antwortzeit.
+  </Card>
+  <Card title="Sicher teilbar" icon="setting">
+    Die App enthält keinen API-Schlüssel: Nutzerinnen und Nutzer geben ihren eigenen in der Oberfläche ein, und im Repository ist nichts gespeichert.
+  </Card>
+</CardGrid>
+
+Die eigenen Ziele der Demo waren 12 von 15 Golden-Set-Fällen inhaltlich richtig, 13 von 15 mit gültigem Vertrags- und Klauselzitat und eine Antwort in unter etwa zehn Sekunden.
+
+<LinkButton href="https://contractcopilot.streamlit.app/" icon="external">Mini-MVP öffnen</LinkButton> <LinkButton href="https://github.com/ravabulls/mini_mvp" icon="github" variant="secondary">Code auf GitHub ansehen</LinkButton> <LinkButton href="https://drive.google.com/file/d/1xaQLj9b4lKRLHEA-RCLk2UWHlKsDk4zA/view?usp=sharing" icon="external" variant="minimal">Pitch-Video ansehen</LinkButton>
+
+<Aside type="note">
+Der Mini-MVP läuft auf der kostenlosen Stufe von Streamlit Community Cloud und braucht beim ersten Aufruf eventuell 20 bis 30 Sekunden zum Starten. Zum Ausprobieren wird ein eigener API-Schlüssel für Gemini oder OpenAI benötigt. Die Oberfläche ist englisch.
+</Aside>
+
+## Technischer Aufbau
+
+| Komponente | Technologie |
+|---|---|
+| Anwendung | Python · Streamlit |
+| Textgenerierung | Google Gemini (standardmäßig gemini-2.5-flash) oder OpenAI, wählbar in der App |
+| Embeddings | Gemini-Embeddings (gemini-embedding-001, 768 Dimensionen) |
+| Vektorindex | FAISS, mit JSON-Metadaten |
+| Datenvalidierung | Pydantic |
+| Bewertung | pandas · NumPy, an einem Golden Set mit 15 Fällen |
+| Hosting | Streamlit Community Cloud, Code auf GitHub |
+
+## Gezeigte Fähigkeiten
+
+| Fähigkeit | Wo sie sich zeigt |
+|---|---|
+| **Auswahl von Anwendungsfällen** | Eignungsfilter und ein Priorisierungswert aus fünf Kriterien, mit der Bewertbarkeit als entscheidendem Faktor |
+| **Prozessaufnahme** | Ist- und Soll-Prozess in acht Schritten, mit Zeiten, Rollen, Schwachstellen und Risiken je Schritt |
+| **Nutzenrechnung** | Ein nachvollziehbares Modell mit drei Szenarien aus Volumen, eingesparten Minuten und Vollkosten |
+| **Produktmanagement** | Job to be Done, abgegrenzte Funktionen und Nicht-Funktionen, User Stories, prüfbare Abnahmekriterien |
+| **Lösungsarchitektur** | Ein agentischer RAG-Ablauf mit Orchestrierung, Suche, Reasoning, Freigaben und Protokollierung |
+| **Make-or-Buy-Analyse** | Ein Vergleich über zehn Kriterien mit der Empfehlung einer Mischform |
+| **Verantwortungsvolle KI und Governance** | Menschliche Prüfung, Zugriffskontrolle, Protokollierung, Fehlerszenarien, Stop-and-Fix-Auslöser, ein Notschalter |
+| **Rollout- und KPI-Design** | Ein 30/60/90-Tage-Plan mit Schwellen und 11 Früh- und Spätindikatoren |
+| **Bewertung von LLMs** | Golden Sets, Belegquote, Eskalationsgenauigkeit und Antwortzeit als messbare Qualitätsschwellen |
+| **Prototyping** | Ein veröffentlichter Streamlit-Mini-MVP mit hybrider Suche, zitierten Antworten und Selbstbewertung |
+| **Pitching** | Ein zehnminütiger Investitions-Pitch, der mit dem Geschäftsproblem beginnt und mit einer klaren Bitte endet |
+| **Teamarbeit** | Als Dreierteam über Analyse, Konzept, Umsetzung und Präsentation hinweg abgeliefert |
+
+## Was das Projekt gelehrt hat
+
+Das Schwierigste an einem Business Case für generative KI ist nicht das Modell, sondern einen glaubwürdigen Nutzen zu zeigen. Weil jede Zahl an einer gemessenen Prozessaufnahme hing, ließen sich die 133.865 € Zeile für Zeile nachvollziehen, statt nur geschätzt zu wirken. Ebenso wichtig war Disziplin beim Umfang: Erst die acht ausgeschlossenen Funktionen machen ein MVP in vier Wochen glaubwürdig. Und in einem rechtlich heiklen Umfeld muss Vertrauen von Anfang an eingeplant werden, nicht nachträglich: mit Zitaten bei jeder Antwort, einer menschlichen Freigabe vor jedem Versand, Eskalation bei Unsicherheit und einem Golden Set, das darüber entscheidet, ob der Pilot überhaupt starten darf.
+
+## Downloads und Links
+
+<LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-capstone.pdf" icon="download">Proposal Pack (PDF, 10 Seiten)</LinkButton> <LinkButton href="/learnings/mba/generative-ai-for-managers/submissions/day6-pitch.pdf" icon="download" variant="secondary">Pitch-Deck (PDF, 12 Folien)</LinkButton>
+
+- **Proposal Pack** (englisch): Use-Case-Steckbrief, Prozessaufnahmen und Nutzenrechnung, MVP-Anforderungen, Architektur und Make-or-Buy-Entscheidung, Governance-Checkliste, Rollout-Plan mit KPIs und das Pitch-Skript.
+- **Pitch-Deck** (englisch): die 12 Folien aus dem Kurs, mit Links zu Video, Mini-MVP und Code auf der letzten Folie.
+- **Der Kurs dahinter:** [Tag 6 · GenAI Business Cases](/de/learnings/mba/generative-ai-for-managers/06-genai-business-cases/), die Lernnotizen zu dem Raster, das dieses Projekt anwendet, und die [Kursübersicht](/de/learnings/mba/generative-ai-for-managers/).
+
+<Badge text="Generative KI" /> <Badge text="Agentic RAG" /> <Badge text="LLM-Bewertung" /> <Badge text="Business Case" /> <Badge text="Nutzenrechnung" /> <Badge text="Produktmanagement" /> <Badge text="KI-Governance" /> <Badge text="Python" /> <Badge text="Streamlit" /> <Badge text="FAISS" /> <Badge text="Gemini" /> <Badge text="Teamprojekt" />
