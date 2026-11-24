@@ -1,0 +1,301 @@
+---
+title: GST Nirikshak - Aus verstreuten Steuerdaten werden nachvollziehbare Belege
+description: Eine Offline-Analyseumgebung, die Steuererklärungen, E-Way-Bills sowie Daten von Dritten, Finanz- und Rechtsdaten über gemeinsame Schlüssel verbindet und daraus nachvollziehbare, belegte Fälle für GST-Ermittler macht - gebaut und getestet mit synthetischen Daten.
+sidebar:
+  label: GST Nirikshak
+  order: 1.5
+---
+
+import { Aside, Badge, Card, CardGrid, Steps } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Eine Offline-Analyseumgebung für GST-Ermittler: Sie führt mehr als zehn Arten von Steuer-, Logistik-, Finanz- und Rechtsdaten über gemeinsame Schlüssel zusammen, sodass ein Beamter an einem Ort vom ersten Hinweis zu einem dokumentierten, nachvollziehbaren Fall kommt.</p>
+
+<Badge text="Datenintegration" variant="note" /> <Badge text="Graphanalyse" variant="note" /> <Badge text="Erklärbare Analytik" variant="note" /> <Badge text="Python · DuckDB" variant="note" /> <Badge text="Datenschutz von Anfang an" variant="note" /> <Badge text="KI-gestützte Entwicklung" variant="note" />
+
+**Kontext:** entstanden aus meiner Arbeit in einer Datenanalyse-Funktion in Indiens Verwaltung für indirekte Steuern ([zum Werdegang](/de/resume/experience/)) · **Meine Rolle:** Entwickler und alleiniger Projektleiter, unter der Anleitung der vorgesetzten Stellen: Idee, Datenrecherche, Spezifikation, Architektur, KI-gestützte Umsetzung und Validierung · **Der Name:** *Nirikshak* bedeutet auf Hindi „Prüfer“ oder „Beobachter“.
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/gst-nirikshak/network-graph.webp" alt="Netzwerkanalyse in der App mit synthetischen Daten: ein Ring aus vier Einheiten, die Vorsteuer im Kreis weitergeben, zwei Einheiten mit gelöschter Registrierung und der Fluss der Vorsteuer zu einem Begünstigten, mit einer Legende zu Formen und Farben." />
+  <figcaption>Netzwerkanalyse in der App: ein Karussellring (orange) und zwei Einheiten mit gelöschter Registrierung (gestrichelter Rand), die Vorsteuer an einen Begünstigten (Quadrat) weitergeben. Alle Namen und Zahlen sind synthetisch; die Oberfläche ist englisch.</figcaption>
+</figure>
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">25+</span><span class="l">Dateiformate aus mehr als zehn Arten von Quellen</span></div>
+  <div class="pj-stat"><span class="n">80</span><span class="l">nachvollziehbare Prüfungen in 15 Regelpaketen</span></div>
+  <div class="pj-stat"><span class="n">12</span><span class="l">Module entlang des Arbeitsablaufs der Ermittler</span></div>
+  <div class="pj-stat"><span class="n">507</span><span class="l">automatisierte Tests gegen synthetische Daten mit bekannten Ergebnissen</span></div>
+  <div class="pj-stat"><span class="n">~53 Tsd.</span><span class="l">Zeilen Python, von der Idee bis Version 1.0 in 15 Meilensteinen</span></div>
+  <div class="pj-stat"><span class="n">0</span><span class="l">Netzwerkverbindungen nach außen: komplett offline</span></div>
+</div>
+
+<Aside type="caution" title="Zu dieser Seite">
+GST Nirikshak wurde ausschließlich mit **synthetischen Daten** gebaut und getestet: Weder im Code noch in den Tests, der Dokumentation oder auf dieser Seite stehen echte Steuerdaten, und alle gezeigten Namen und Zahlen sind erfunden. Die Seite erklärt Problem, Konzept und Technik; die konkreten Prüfregeln und Schwellenwerte lässt sie bewusst weg. Der Durchlauf unten ist die eingebaute Demonstration der App, kein echter Fall und keine echte Beitreibung.
+</Aside>
+
+## Auf einen Blick
+
+<CardGrid>
+  <Card title="Die Herausforderung" icon="warning">
+    Die GST erzeugt umfangreiche Daten, doch für Ermittler, die einen Fall aufbauen, liegen die Teile in getrennten Portalen, Downloads und Tabellen: Steuererklärungen, Einkaufsaufstellungen, E-Way-Bills, Meldungen Dritter, Bücher, Kontoauszüge und ein Recht, das sich per Mitteilung ändert. Das Zusammenführen geschah von Hand, langsam und im Nachhinein schwer zu erklären.
+  </Card>
+  <Card title="Was ich gebaut habe" icon="puzzle">
+    Eine Desktop-Webanwendung, die vollständig auf dem eigenen Rechner des Beamten läuft. Sie erkennt mehr als 25 Dateiformate, verbindet sie über gemeinsame Schlüssel in einem Fallspeicher und führt Abgleiche, Screenings, Netzwerk- und Bewegungsanalysen sowie 80 regelbasierte Prüfungen durch, bis hin zu priorisierten Arbeitslisten, belegten Feststellungen und Berichten.
+  </Card>
+  <Card title="Meine Rolle" icon="pencil">
+    Ich habe sie von der Idee bis zur funktionierenden, getesteten Anwendung gebracht: den Arbeitsablauf erfasst, die Datenformate untersucht, die Spezifikation geschrieben, Datenmodell und Architektur entworfen, eine KI-gestützte Umsetzung in fünfzehn Meilensteinen gesteuert und jedes Modul an synthetischen Daten mit bekannten, eingebauten Fehlern validiert.
+  </Card>
+  <Card title="Das Ergebnis" icon="approve-check-circle">
+    Eine vollständige Version 1.0, durchgängig validiert an einer synthetischen Demo-Zone mit 20 Fällen. Jede Zahl lässt sich bis zu ihren Quellzeilen, der erzeugenden Regel und der Rechtsgrundlage zurückverfolgen, sodass eine Feststellung begründet und nicht nur angezeigt wird.
+  </Card>
+</CardGrid>
+
+## Das Problem
+
+<CardGrid>
+  <Card title="Daten an vielen Orten" icon="document">
+    Steuererklärungen, Aufstellungen, E-Way-Bills, Meldungen Dritter und rechtliche Mitteilungen kommen als PDF, Excel, JSON, CSV und Text, jede mit eigenem Aufbau.
+  </Card>
+  <Card title="Abgleich von Hand" icon="random">
+    Umsätze gegen gezahlte Steuer, geltend gemachte gegen zustehende Vorsteuer oder berechnete gegen tatsächlich bewegte Ware abzugleichen, geschah von Hand in Tabellen: langsam und fehleranfällig.
+  </Card>
+  <Card title="Schwer zu erklären" icon="magnifier">
+    Eine Zahl in einem Bericht ließ sich kaum zu ihren Zeilen und ihrer Rechtsgrundlage zurückverfolgen; Ergebnisse waren schwer zu wiederholen und noch schwerer zu verteidigen.
+  </Card>
+  <Card title="Netzwerke verstecken sich in Tabellen" icon="puzzle">
+    Scheinrechnungsnetzwerke geben Vorsteuer über Ketten und Kreise von Firmen weiter. Sie zu erkennen, braucht Graphanalyse, die Tabellen nicht leisten.
+  </Card>
+  <Card title="Vertraulich von Natur aus" icon="setting">
+    Steuerdaten sind vertraulich, Cloud-Werkzeuge kamen deshalb nicht infrage. Was helfen sollte, musste auf dem eigenen Rechner des Beamten laufen.
+  </Card>
+</CardGrid>
+
+## Was ich gemacht habe
+
+<Steps>
+
+1. **Die Arbeit verstehen.** Ich habe den Arbeitsablauf der Ermittler vom ersten Hinweis bis zur Berechnung einer Forderung erfasst, samt den Fragen, die bei jedem Schritt gestellt werden.
+
+2. **Die Daten untersuchen.** Ich habe die Struktur der Erklärungen, Aufstellungen und Berichte untersucht, von denen die Arbeit abhängt: ihre Felder, ihren Aufbau und wie sie zusammenhängen. Nur die Struktur; es wurden keine Daten kopiert.
+
+3. **Spezifizieren.** Ich habe eine detaillierte Spezifikation geschrieben (Version 3.1): das Datenmodell, jede Prüfung mit ihrer Rechtsgrundlage, die Oberflächen, das Sicherheitskonzept und die Abnahmetests.
+
+4. **Mit KI-Unterstützung bauen.** Ich habe fünfzehn Meilensteine geplant und KI-Coding-Agenten (Claude Code) gesteuert, die parallel unter einem schriftlichen Vertrag arbeiteten, der die gemeinsamen Dateien, die Datenschutzregeln und den Teststandard festlegte. Jeden Meilenstein habe ich geprüft, zusammengeführt und das Ergebnis integriert.
+
+5. **Belegen.** Ich habe einen Generator für synthetische Daten gebaut, der bekannte Fehler einbaut, dazu 507 automatisierte Tests mit erwarteten Werten und eine Demo-Zone mit 20 Fällen, die jedes Modul zeigt.
+
+</Steps>
+
+## Die Daten verbinden: der Kern des Projekts
+
+Die Grundidee ist einfach: jede Quelle in einen gemeinsamen Fallspeicher bereinigen und über wenige gemeinsame Schlüssel verbinden. Sobald die Schlüssel passen, wird jede Analyse zu einem Join statt zu einer Suche von Hand.
+
+<div class="sc-fig">
+  <div class="sc-tiers pj-tiers4">
+    <div class="sc-tier">
+      <div class="sc-tier-head">1 · Quellen <span class="n">10+ Arten, 25+ Formate</span></div>
+      <div class="sc-node soft">Erklärungen und Einkaufsaufstellungen</div>
+      <div class="sc-node soft">Meldungen Dritter</div>
+      <div class="sc-node soft">Warenbewegung</div>
+      <div class="sc-node soft">Registrierungsdaten</div>
+      <div class="sc-node soft">Recht: Sätze und Regeln nach Datum</div>
+      <div class="sc-node soft">Bücher, Bank- und Handelsdaten</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">2 · Verbinden <span class="n">ein Fallspeicher</span></div>
+      <div class="sc-node slate">Jede Datei an ihren Überschriften erkennen</div>
+      <div class="sc-node slate">Fingerabdruck erzeugen (SHA-256)</div>
+      <div class="sc-node slate">Bereinigen, normalisieren, selbst prüfen</div>
+      <div class="sc-node slate">In DuckDB über gemeinsame Schlüssel verbinden</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">3 · Analysieren <span class="n">nachvollziehbare Methoden</span></div>
+      <div class="sc-node">Abgleichen und zuordnen</div>
+      <div class="sc-node">Screening und Vergleich mit Gleichartigen</div>
+      <div class="sc-node">Regelprüfungen, Recht nach Datum</div>
+      <div class="sc-node">Graphanalyse</div>
+      <div class="sc-node">Plausibilität der Warenbewegung</div>
+      <div class="sc-node">Schätzungen mit offenen Annahmen</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">4 · Handeln <span class="n">was der Beamte erhält</span></div>
+      <div class="sc-node green">Priorisierte Arbeitslisten</div>
+      <div class="sc-node green">Nachvollziehbare Feststellungen</div>
+      <div class="sc-node green">Berichte und Anlagen</div>
+      <div class="sc-node green">Steuer, Zinsen und Fristen</div>
+      <div class="sc-node green">Fallverfolgung und Berichtswesen</div>
+    </div>
+  </div>
+  <figcaption>Von verstreuten Dateien zu nachvollziehbaren Feststellungen: Jede Quelle wird in einen Fallspeicher bereinigt und über gemeinsame Schlüssel verbunden.</figcaption>
+</div>
+
+| Art der Quelle | Beispiele | Was sie beiträgt |
+|---|---|---|
+| **Eigene Erklärungen** | Umsatzerklärung, Zusammenfassung mit gezahlter Steuer, Jahreserklärung | Was das Unternehmen Monat für Monat und für das Jahr angibt |
+| **Aufstellungen der Lieferanten** | Automatisch erstellte Einkaufsaufstellungen aus den Meldungen der Lieferanten | Die Vorsteuer, die dem Unternehmen tatsächlich zusteht, Rechnung für Rechnung |
+| **Meldungen Dritter** | Steuerabzug durch öffentliche Auftraggeber, E-Commerce-Einbehalte, Einkommensteuerauszüge | Was andere an das Unternehmen gezahlt haben: eine unabhängige Prüfung des Umsatzes |
+| **Warenbewegung** | E-Way-Bills, das öffentliche Verzeichnis der PIN-Codes | Ob berechnete Ware plausibel bewegt wurde |
+| **Registrierungsdaten** | Registrierungsdaten des gesamten Gebiets | Die Grundgesamtheit, für Screening und Vergleich mit Gleichartigen |
+| **Recht** | Steuersätze, Befreiungen, Reverse Charge, gesperrte Vorsteuer, Abgaben, jeweils mit Gültigkeitsdatum | Die richtige Behandlung an jedem Datum, sodass Prüfungen zeitabhängig sind |
+| **Bücher und Finanzen** | Summen- und Saldenliste, Umsatzjournal, Kontoauszüge | Umsatz laut Büchern gegen die Erklärungen; Geldflüsse |
+| **Außenhandel** | Ausfuhr- und Einfuhrpapiere | Exporte und Importe gegen Erstattungen und geltend gemachte Vorsteuer |
+
+Dateien werden an ihren Überschriften erkannt statt an festen Zeilenpositionen, sodass die App mit Titelzeilen, verbundenen Kopfzeilen und kleinen Änderungen im Aufbau zurechtkommt.
+
+### Die gemeinsamen Schlüssel
+
+<div class="sc-fig">
+  <div class="sc-chips">
+    <span class="sc-chip">GSTIN</span>
+    <span class="sc-chip">PAN</span>
+    <span class="sc-chip">Zeitraum</span>
+    <span class="sc-chip">Rechnung + Lieferant</span>
+    <span class="sc-chip">Fahrzeug + Zeit</span>
+    <span class="sc-chip">PIN-Code</span>
+    <span class="sc-chip">Warencode + Datum</span>
+    <span class="sc-chip amber">Name, Adresse, Telefon (unscharf)</span>
+  </div>
+</div>
+
+| Schlüssel | Was er verbindet | Welche Frage er beantwortbar macht |
+|---|---|---|
+| **GSTIN** | Die Registrierungsnummer in Erklärungen, E-Way-Bills und Meldungen Dritter | Stimmt, was das Unternehmen angibt, mit dem überein, was andere über es melden? |
+| **PAN** | Alle Registrierungen eines Unternehmens und seine Einkommensteuerdaten | Ist ein Unternehmen auf mehrere Registrierungen verteilt? |
+| **Zeitraum** | Monate und Geschäftsjahre über Erklärungen und Bücher | In welchen Monaten entsteht eine Lücke, und sind Zinsen fällig? |
+| **Rechnung + Lieferant** | Das Einkaufsjournal gegen die Meldungen der Lieferanten | Welche Vorsteuer hat keine passende Rechnung oder wird doppelt geltend gemacht? |
+| **Fahrzeug + Zeit** | E-Way-Bills gegen Bewegungsdaten | Konnte die Ware auf diesem Beleg tatsächlich transportiert worden sein? |
+| **PIN-Code** | Adressen zu ungefähren Standorten | Ist die angegebene Entfernung für diese Strecke plausibel? |
+| **Warencode + Datum** | Waren zum Rechtsstamm und zu Gleichartigen | Wurde an diesem Tag der richtige Satz angewendet? Weicht eine Firma stark von Gleichartigen ab? |
+| **Name, Adresse, Telefon** | Unscharfer Abgleich über Registrierungen und frühere Fälle | Sind angeblich unabhängige Firmen in Wahrheit verbunden? Wurde dieser Hinweis schon geprüft? |
+
+## Ein Durchlauf mit synthetischen Daten
+
+Die App enthält eine Demonstration. Sie zeigt, wie jede weitere Quelle eine zusätzliche Beweisebene hinzufügt. Alle Firmen und Zahlen sind synthetisch.
+
+<Steps>
+
+1. **Erkennen.** Screenings über die Grundgesamtheit setzen eine Gruppe eng verbundener Neuregistrierungen an die Spitze der Arbeitsliste, jeweils mit Punktwert und Begründung.
+
+2. **Verbinden.** Lieferbeziehungen aus Erklärungen, Einkaufsaufstellungen und E-Way-Bills ergeben ein Netzwerk aus 18 Einheiten. Die Graphsuche findet einen Ring aus vier Firmen, die Vorsteuer im Kreis weitergeben, und zwei Firmen mit Vorsteuer, aber ohne echte Einkäufe, die alle einen Begünstigten speisen (das Bild oben auf dieser Seite). Die Analyse dauert etwa eine Zehntelsekunde.
+
+3. **Prüfen.** Die 95 E-Way-Bills des Rings werden darauf geprüft, ob die Ware physisch bewegt worden sein kann: 36 Sendungen fallen durch, die Steuer darauf wird exakt berechnet, für die nicht geprüften Belege gibt es eine klar gekennzeichnete Schätzung.
+
+4. **Erhärten.** Finanzdaten zeigen Geld, das zwischen zwei der Firmen im Kreis fließt, passend zum Muster im Netzwerk.
+
+5. **Erklären.** Jede Feststellung wird zu einem Befund mit Rechtsgrundlage, Methode (exakt oder geschätzt), Konfidenz und Quellzeilen. Der Beamte entwirft den Bericht mit Anlagen; eine vorgesetzte Person genehmigt ihn, bevor er registriert wird.
+
+6. **Handeln.** Für einen verwandten Fall berechnet die App die Steuer je Monat, Zinsen taggenau, bereits geleistete Zahlungen, Optionen für Strafzuschläge und die gesetzlichen Fristen.
+
+</Steps>
+
+## Was die Anwendung kann
+
+Zwölf Module folgen dem Arbeitsablauf der Ermittler, von der Entscheidung, wen man prüft, bis zur Berechnung einer Forderung und dem Bericht darüber.
+
+<CardGrid>
+  <Card title="Hinweisgewinnung" icon="magnifier">
+    Lädt einen Registrierungsauszug mit Hunderttausenden Datensätzen in etwa 30 Sekunden, führt 11 nachvollziehbare Screenings mit Vergleichen nach Warencode und Rückwärtstests durch und erzeugt priorisierte Arbeitslisten.
+  </Card>
+  <Card title="Analyse der Erklärungen" icon="list-format">
+    Gleicht Umsätze mit gezahlter Steuer und geltend gemachte mit zustehender Vorsteuer ab, Monat für Monat, mit Verspätungszinsen und einem jährlichen Vergleich über die Erklärungen.
+  </Card>
+  <Card title="Vorsteuerabgleich auf Rechnungsebene" icon="approve-check">
+    Gleicht das Einkaufsjournal mit den Meldungen der Lieferanten ab, um Vorsteuer ohne Rechnung, doppelte Ansprüche und Lieferanten zu finden, die nicht mehr melden.
+  </Card>
+  <Card title="Daten Dritter" icon="random">
+    Vergleicht, was öffentliche Auftraggeber und E-Commerce-Betreiber gemeldet haben, mit der eigenen Erklärung des Unternehmens, neben Vergleichsfirmen derselben Auftraggeber.
+  </Card>
+  <Card title="Rechtsstamm" icon="document">
+    Steuersätze, Befreiungen, Reverse Charge, gesperrte Vorsteuer und Abgaben mit Gültigkeitsdatum und Mitteilung: „Welcher Satz galt an diesem Tag?“, und Auswertungen aller, die von einer Änderung betroffen sind.
+  </Card>
+  <Card title="Branchenleitfäden und Schätzungen" icon="open-book">
+    13 Branchen-Checklisten und Schätzungen als Spannen, Näherungswerte, Vergleichswerte oder Hochrechnungen, mit jeder Annahme sichtbar und änderbar.
+  </Card>
+  <Card title="Netzwerkanalyse" icon="puzzle">
+    Baut ein Liefernetzwerk auf und findet Kreisgeschäfte, Cluster, Kettenstufen und Vorsteuerflüsse, dann zeichnet es das Bild und die Anlagen.
+  </Card>
+  <Card title="Warenbewegung" icon="rocket">
+    Entfernungen aus PIN-Codes und Plausibilitätsprüfungen für Fahrzeuge, mit exakter und hochgerechneter Steuer auf Ware, die nicht bewegt worden sein kann.
+  </Card>
+  <Card title="Anreicherungen" icon="setting">
+    Eine Überleitung vom Umsatz laut Büchern zu den Erklärungen und Verknüpfungen zu Einkommensteuerauszügen, Kontoauszügen, Zolldaten und Unterlagen zur Lohnbearbeitung.
+  </Card>
+  <Card title="Fallberichte" icon="pencil">
+    Ein Beweismittelarchiv und eine juristische Bibliothek; entwirft Berichte im Word-Format der Behörde mit Excel-Anlagen, mit Vier-Augen-Freigabe.
+  </Card>
+  <Card title="Register und Berichtswesen" icon="list-format">
+    Ersetzt ein Tabellenregister: datierte Ereignisse, Wiedervorlagen nach Alter, Erinnerungsschreiben, Managementberichte im bestehenden Format und eine unscharfe Dublettenprüfung.
+  </Card>
+  <Card title="Berechnung von Forderungen" icon="approve-check-circle">
+    Steuer je Zeitraum, Zinsen taggenau, Zuordnung von Zahlungen, Optionen für Strafzuschläge, Verjährungsfristen und eine Fristenübersicht.
+  </Card>
+</CardGrid>
+
+<Aside type="tip" title="Gebaut für Veränderung">
+Beamte können eine neue Prüfung in einem Formular anlegen, an einem Fall testen und aktivieren, ohne Code. Ein Format-Assistent lernt einen neuen Dateiaufbau einmal. Eine Übersicht zur Datenlage zeigt, welche Prüfungen für einen Fall bereit, teilweise möglich oder blockiert sind, und entwirft die Anforderung der fehlenden Daten.
+</Aside>
+
+## Gebaut für Vertrauen
+
+Im Steuervollzug ist eine Zahl nur nützlich, wenn sie sich verteidigen lässt. Daraus folgt das Konzept.
+
+<CardGrid>
+  <Card title="Erklärbar von Anfang an" icon="magnifier">
+    Jede Zahl lässt sich bis zu ihren Quellzeilen, der erzeugenden Regel und der Rechtsgrundlage zurückverfolgen. Jede Prüfung nennt ihre Methode (exakt, Näherung oder Schätzung) und ihre Konfidenz. Schätzungen zeigen ihre Annahmen, und eine geänderte Annahme berechnet die Zahl neu. Entscheidungen der Beamten zu Feststellungen bleiben bei einem erneuten Prüflauf erhalten.
+  </Card>
+  <Card title="Vertraulich und manipulationssicher" icon="setting">
+    Komplett offline: Verbindungen nach außen sind blockiert, solange die App läuft. Jede importierte Datei erhält einen Fingerabdruck, das Prüfprotokoll ist per Hash verkettet, Sicherungen sind signiert und Fallpakete digital versiegelt, sodass jede Änderung sichtbar wird. Die Webschicht ist gehärtet, und die App läuft ohne Administratorrechte.
+  </Card>
+  <Card title="Gründlich getestet" icon="approve-check-circle">
+    Ein Generator für synthetische Daten baut bekannte Fehler ein, sodass jede Prüfung gegen erwartete Werte getestet wird: 507 automatisierte Tests, darunter eigenschaftsbasierte Tests und Leistungsmessungen. Keine echten Steuerdaten in Code, Tests oder Dokumentation.
+  </Card>
+  <Card title="Gemacht für die Nutzung" icon="laptop">
+    Eine Browser-Oberfläche mit hellem und dunklem Design, eine geführte Einführung beim ersten Start, eine Anleitungsseite, ein in die App eingebautes Handbuch mit 22 Kapiteln und eine Demo-Zone mit 20 synthetischen Fällen per Klick, für Schulungen und Präsentationen.
+  </Card>
+</CardGrid>
+
+## Technik und Architektur
+
+Eine lokale Webanwendung: ein Python-Server auf dem eigenen Rechner des Beamten und der normale Browser als Oberfläche. Kein Internet, keine Cloud, keine Installationsrechte nötig.
+
+| Schicht | Werkzeuge | Warum |
+|---|---|---|
+| **Analyse-Engine** | DuckDB (eingebettetes SQL), PyArrow | Schnelle spaltenorientierte Analyse großer Auszüge auf einem Rechner, ohne Datenbankserver |
+| **Graph und Abgleich** | Eigene Graphalgorithmen, RapidFuzz | Kreisgeschäfte, Cluster und Kettenstufen; unscharfer Abgleich von Namen und Adressen |
+| **Dateiverarbeitung** | python-calamine, pypdfium2, JSON- und CSV-Leser | Erklärungen und Berichte aus Excel, PDF, JSON und CSV lesen |
+| **Dokumente** | python-docx, XlsxWriter, Pillow | Berichte, Schreiben, Anlagen und Netzwerkbilder im Format der Behörde |
+| **Webserver** | FastAPI, Uvicorn, Jinja2 | Ein testbarer Server mit serverseitig erzeugten Seiten |
+| **Oberfläche** | HTMX, Alpine.js, Tabulator, Cytoscape.js | Interaktive Tabellen und Netzwerkbilder, alles lokal gebündelt |
+| **Sicherheit** | cryptography (Ed25519), Argon2, SHA-256 | Signaturen, versiegelte Pakete, Passwörter und Datei-Fingerabdrücke |
+| **Qualität** | pytest, Hypothesis, pytest-socket | Unit-Tests, eigenschaftsbasierte und offline erzwungene Tests |
+| **Paketierung** | PyInstaller, portable Version | Läuft auf abgesicherten Windows-Rechnern ohne Administratorrechte |
+
+### Wie ich es gebaut habe
+
+Ich habe das Projekt wie ein Produkt behandelt. Ich bin vom Arbeitsablauf der Beamten und der Gestalt der Daten ausgegangen, habe eine Spezifikation geschrieben, die präzise genug zum Bauen und Testen war, und sie in fünfzehn Meilensteine aufgeteilt. Die Umsetzung war KI-gestützt: Ich habe Claude-Code-Agenten gesteuert, die auf getrennten Zweigen parallel arbeiteten, unter einem schriftlichen Vertrag, der die gemeinsamen Dateien, die Datenschutzregeln und den Teststandard festlegte, *erst richtig, dann vollständig*: Jede Prüfung braucht erwartete Werte auf synthetischen Daten. Jeden Meilenstein habe ich geprüft und zusammengeführt und dann alles zu einer App mit geführter Einführung, Handbuch und Demo-Zone integriert.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">1 · Erkunden<span class="sub">Arbeitsablauf und Datenformate</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">2 · Spezifizieren<span class="sub">Spezifikation v3.1: Datenmodell, Prüfungen, Abnahme</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">3 · Bauen<span class="sub">15 Meilensteine, parallele KI-gestützte Stränge</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">4 · Validieren<span class="sub">eingebaute Fehler, 507 Tests, Demo-Zone</span></div>
+  </div>
+</div>
+
+## Gezeigte Fähigkeiten
+
+| Bereich | Fähigkeiten |
+|---|---|
+| **Datenanalyse** | Abgleich und Abweichungsanalyse, Anomalie-Screening, Vergleich mit Gleichartigen, Graph- und Netzwerkanalyse, räumliche Plausibilität, Schätzung und Hochrechnung, Rückwärtstests, erklärbare Analytik, Betrugserkennung |
+| **Data Engineering** | Datenintegration, Einlesen vieler Formate (PDF, Excel, JSON, CSV), Entity Resolution und unscharfer Abgleich, Datenmodellierung, SQL (DuckDB), PyArrow, Datenqualitätsprüfungen, Datenherkunft, Erzeugung synthetischer Daten |
+| **Fachgebiet und Produkt** | GST und indirekte Steuern, Analytik für Steuer-Compliance, Anforderungen und Spezifikation, Ablaufgestaltung, Meilensteinplanung, Nutzerdokumentation, GovTech |
+| **Technik und Umsetzung** | Python, FastAPI, HTMX, automatisierte Tests (pytest), Sicherheit und Datenschutz von Anfang an, Offline-first-Architektur, KI-gestützte Entwicklung, Git |
+
+> **„GST Nirikshak zeigt, wie ich mit Daten arbeite: bei der Entscheidung beginnen, die jemand treffen muss, jede Quelle finden, die dafür zählt, sie über belastbare Schlüssel verbinden und jede Zahl sich selbst erklären lassen.“**
+
+Der Quellcode ist nicht öffentlich. Eine Vorführung mit den synthetischen Demodaten ist auf Anfrage möglich.
+
+<Badge text="Datenanalyse" /> <Badge text="Datenintegration" /> <Badge text="Graphanalyse" /> <Badge text="Erklärbare Analytik" /> <Badge text="Betrugserkennung" /> <Badge text="Python" /> <Badge text="DuckDB" /> <Badge text="FastAPI" /> <Badge text="Datenschutz von Anfang an" /> <Badge text="KI-gestützte Entwicklung" /> <Badge text="GovTech" />

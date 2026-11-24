@@ -1,0 +1,301 @@
+---
+title: GST Nirikshak - Turning Scattered Tax Data into Explainable Evidence
+description: An offline analytics workbench that links tax returns, e-way bills, third-party, financial and legal data on shared keys and turns them into explainable, evidence-backed cases for GST investigators - built and tested on synthetic data.
+sidebar:
+  label: GST Nirikshak
+  order: 1.5
+---
+
+import { Aside, Badge, Card, CardGrid, Steps } from '@astrojs/starlight/components';
+
+<p class="pj-lead">An offline analytics workbench for GST investigators: it brings more than ten kinds of tax, logistics, financial and legal data together on shared keys, so an officer can go from a first signal to a documented, explainable case in one place.</p>
+
+<Badge text="Data integration" variant="note" /> <Badge text="Graph analytics" variant="note" /> <Badge text="Explainable analytics" variant="note" /> <Badge text="Python · DuckDB" variant="note" /> <Badge text="Privacy by design" variant="note" /> <Badge text="AI-assisted development" variant="note" />
+
+**Context:** grew out of my work in a data analytics role in India's indirect-tax administration ([see experience](/resume/experience/)) · **My role:** creator and sole project lead, working under the guidance of senior authorities: idea, data research, specification, architecture, AI-assisted build and validation · **The name:** *Nirikshak* means "inspector" or "observer" in Hindi.
+
+<figure class="sc-fig pj-shot">
+  <img src="/projects/gst-nirikshak/network-graph.webp" alt="Network analysis inside the app on synthetic data: a ring of four units passing credit in a loop, two units with cancelled registrations, and the credit flowing to one beneficiary, with a legend explaining the shapes and colours." />
+  <figcaption>Network analysis in the app: a circular-trading ring (orange) and two units with cancelled registrations (dashed borders) passing credit to one beneficiary (square). Every name and figure is synthetic.</figcaption>
+</figure>
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">25+</span><span class="l">input file formats from more than ten kinds of source</span></div>
+  <div class="pj-stat"><span class="n">80</span><span class="l">explainable checks in 15 rule packs</span></div>
+  <div class="pj-stat"><span class="n">12</span><span class="l">modules following the investigator's workflow</span></div>
+  <div class="pj-stat"><span class="n">507</span><span class="l">automated tests against synthetic data with known answers</span></div>
+  <div class="pj-stat"><span class="n">~53k</span><span class="l">lines of Python, idea to version 1.0 in 15 milestones</span></div>
+  <div class="pj-stat"><span class="n">0</span><span class="l">outside network connections: fully offline</span></div>
+</div>
+
+<Aside type="caution" title="About this page">
+GST Nirikshak was built and tested entirely on **synthetic data**: no real taxpayer data is in its code, tests or documentation, or anywhere on this page, and every name and number shown is invented. The page explains the problem, the design and the engineering; it deliberately leaves out the specific detection rules and thresholds. The walkthrough below is the app's built-in demonstration, not a real case or recovery.
+</Aside>
+
+## At a glance
+
+<CardGrid>
+  <Card title="The challenge" icon="warning">
+    GST produces rich data, but for an investigator building a case the pieces sit in separate portals, downloads and spreadsheets: returns, purchase statements, e-way bills, third-party reports, books, bank statements and a law that changes by notification. Joining them was manual, slow and hard to explain afterwards.
+  </Card>
+  <Card title="What I built" icon="puzzle">
+    A desktop web application that runs entirely on the officer's own PC. It recognises 25+ file formats, links them on shared keys in one case store, and runs reconciliations, screens, network and movement analysis and 80 rule-based checks, ending in ranked worklists, evidence-backed findings and reports.
+  </Card>
+  <Card title="My role" icon="pencil">
+    I took it from idea to a working, tested application: mapped the workflow, studied the data formats, wrote the build specification, designed the data model and architecture, directed an AI-assisted build in fifteen milestones, and validated every module against synthetic data with known, planted problems.
+  </Card>
+  <Card title="The result" icon="approve-check-circle">
+    A complete version 1.0, validated end to end on a synthetic demo zone with 20 cases. Every figure traces back to its source rows, the rule that produced it and the legal provision, so a finding can be defended, not just displayed.
+  </Card>
+</CardGrid>
+
+## The problem
+
+<CardGrid>
+  <Card title="Data in many places" icon="document">
+    Returns, statements, e-way bills, third-party reports and legal notifications arrive as PDF, Excel, JSON, CSV and text, each in its own layout.
+  </Card>
+  <Card title="Manual matching" icon="random">
+    Comparing sales with tax paid, credit claimed with credit available, or goods billed with goods moved was done by hand in spreadsheets: slow and easy to get wrong.
+  </Card>
+  <Card title="Hard to explain" icon="magnifier">
+    A figure in a report could not easily be traced back to its rows and its legal basis, so results were hard to repeat and harder to defend.
+  </Card>
+  <Card title="Networks hide in tables" icon="puzzle">
+    Fake-invoice networks pass credit through chains and loops of firms. Seeing them needs graph analysis that spreadsheets cannot do.
+  </Card>
+  <Card title="Confidential by nature" icon="setting">
+    Tax data is confidential, so cloud tools were not an option. Whatever helped had to run on the officer's own machine.
+  </Card>
+</CardGrid>
+
+## What I did
+
+<Steps>
+
+1. **Understand the work.** I mapped the investigator's workflow from finding a lead to computing a demand, and the questions asked at each step.
+
+2. **Study the data.** I studied the structure of the returns, statements and reports the work depends on: their fields, layouts and how they relate. Structure only; no data was copied.
+
+3. **Specify.** I wrote a detailed build specification (version 3.1): the data model, every check with its legal basis, the screens, the security model and the acceptance tests.
+
+4. **Build with AI assistance.** I planned fifteen milestones and directed AI coding agents (Claude Code) working in parallel under a written contract that fixed the shared files, the privacy rules and the testing standard. I reviewed and merged each milestone and integrated the result.
+
+5. **Prove it.** I built a synthetic data generator that plants known problems, 507 automated tests with expected values, and a demo zone of 20 cases that exercises every module.
+
+</Steps>
+
+## Connecting the data: the heart of the project
+
+The core idea is simple: clean every source into one case store and link it on a small set of shared keys. Once the keys line up, each analysis becomes a join instead of a manual hunt.
+
+<div class="sc-fig">
+  <div class="sc-tiers pj-tiers4">
+    <div class="sc-tier">
+      <div class="sc-tier-head">1 · Sources <span class="n">10+ kinds, 25+ formats</span></div>
+      <div class="sc-node soft">Returns and purchase statements</div>
+      <div class="sc-node soft">Third-party reports</div>
+      <div class="sc-node soft">Goods movement</div>
+      <div class="sc-node soft">Registration data</div>
+      <div class="sc-node soft">Law: rates and rules by date</div>
+      <div class="sc-node soft">Books, bank and trade data</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">2 · Connect <span class="n">one case store</span></div>
+      <div class="sc-node slate">Recognise each file by its headings</div>
+      <div class="sc-node slate">Fingerprint it (SHA-256)</div>
+      <div class="sc-node slate">Clean, normalise, self-check</div>
+      <div class="sc-node slate">Link on shared keys in DuckDB</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">3 · Analyse <span class="n">explainable methods</span></div>
+      <div class="sc-node">Reconcile and match</div>
+      <div class="sc-node">Screen and benchmark against peers</div>
+      <div class="sc-node">Rule checks, law by date</div>
+      <div class="sc-node">Graph analysis</div>
+      <div class="sc-node">Movement feasibility</div>
+      <div class="sc-node">Estimates with stated assumptions</div>
+    </div>
+    <div class="sc-tier">
+      <div class="sc-tier-head">4 · Act <span class="n">what the officer gets</span></div>
+      <div class="sc-node green">Ranked worklists</div>
+      <div class="sc-node green">Explainable findings</div>
+      <div class="sc-node green">Reports and annexures</div>
+      <div class="sc-node green">Tax, interest and deadlines</div>
+      <div class="sc-node green">Case tracking and reports</div>
+    </div>
+  </div>
+  <figcaption>From scattered files to explainable findings: every source is cleaned into one case store and linked on shared keys.</figcaption>
+</div>
+
+| Kind of source | Examples | What it adds |
+|---|---|---|
+| **Own returns** | Sales return, summary return with tax paid, annual return | What the business declares, month by month and for the year |
+| **Supplier statements** | Auto-drafted purchase statements built from suppliers' filings | The credit the business is actually entitled to, invoice by invoice |
+| **Third-party reports** | Tax deducted by government buyers, e-commerce collections, income-tax statements | What others report paying the business: an independent check on turnover |
+| **Goods movement** | E-way bills, the public PIN code directory | Whether billed goods were plausibly moved |
+| **Registration data** | Registration details across the area | The wider population, for screening and peer comparison |
+| **Law** | Rates, exemptions, reverse charge, blocked credit, cess, each with its effective date | The correct treatment on any given date, so checks are time-aware |
+| **Books and finance** | Trial balance, sales register, bank statements | Turnover in the books against the returns; money flows |
+| **Trade** | Shipping bills and bills of entry | Exports and imports against refunds and credit claimed |
+
+Files are recognised by their headings rather than fixed row positions, so the app copes with banner rows, merged headers and small layout changes.
+
+### The shared keys
+
+<div class="sc-fig">
+  <div class="sc-chips">
+    <span class="sc-chip">GSTIN</span>
+    <span class="sc-chip">PAN</span>
+    <span class="sc-chip">Period</span>
+    <span class="sc-chip">Invoice + supplier</span>
+    <span class="sc-chip">Vehicle + time</span>
+    <span class="sc-chip">PIN code</span>
+    <span class="sc-chip">Product code + date</span>
+    <span class="sc-chip amber">Name, address, phone (fuzzy)</span>
+  </div>
+</div>
+
+| Key | What it links | The question it makes answerable |
+|---|---|---|
+| **GSTIN** | The registration number across returns, e-way bills and third-party reports | Does what the business declared match what others reported about it? |
+| **PAN** | All registrations of one business, and its income-tax data | Is one business spread across several registrations? |
+| **Period** | Months and financial years across returns and books | In which months does a gap appear, and is interest due? |
+| **Invoice + supplier** | The purchase register against suppliers' filings | Which credit claims have no matching invoice, or are claimed twice? |
+| **Vehicle + time** | E-way bills against movement records | Could the goods on this bill actually have travelled? |
+| **PIN code** | Addresses to approximate locations | Is the declared distance plausible for this route? |
+| **Product code + date** | Products to the law master and to peers | Was the right rate applied on that date? Is a firm far out of line with its peers? |
+| **Name, address, phone** | Fuzzy matching across registrations and past cases | Are supposedly independent firms actually linked? Was this lead already examined? |
+
+## A walkthrough on synthetic data
+
+The app ships with a demonstration story. It shows how each extra source adds a layer of proof. All firms and figures are synthetic.
+
+<Steps>
+
+1. **Spot it.** Population screens rank a group of closely linked new registrations at the top of the worklist, each with a score and the reasons behind it.
+
+2. **Connect it.** Supply links from returns, purchase statements and e-way bills become a network of 18 units. Graph search finds a ring of four firms passing credit in a loop and two firms with credit but no real purchases, all feeding one beneficiary (the picture at the top of this page). The analysis takes about a tenth of a second.
+
+3. **Test it.** The ring's 95 e-way bills are tested for whether the goods could physically have moved: 36 consignments fail, and the tax on them is computed exactly, with a clearly labelled estimate for the bills not tested.
+
+4. **Corroborate it.** Financial records show money moving in a loop between two of the firms, matching the pattern in the network.
+
+5. **Explain it.** Each finding becomes an issue with its legal provision, its method (exact or estimate), its confidence and its source rows. The officer drafts the report with annexures; a supervisor approves it before it is registered.
+
+6. **Act on it.** For a related case, the app computes tax by month, interest day by day, payments already made, penalty options and the statutory deadlines.
+
+</Steps>
+
+## What the application does
+
+Twelve modules follow the investigator's workflow, from deciding whom to look at to computing a demand and reporting on it.
+
+<CardGrid>
+  <Card title="Lead generation" icon="magnifier">
+    Loads a registration extract of hundreds of thousands of records in about 30 seconds, runs 11 explainable screens with product-code peer benchmarks and back-testing, and produces ranked worklists.
+  </Card>
+  <Card title="Return analysis" icon="list-format">
+    Reconciles sales with tax paid and credit claimed with credit available, month by month, with late-filing interest and an annual comparison across returns.
+  </Card>
+  <Card title="Invoice-level credit matching" icon="approve-check">
+    Matches the purchase register with suppliers' filings to find credit without an invoice, duplicate claims and suppliers who stopped filing.
+  </Card>
+  <Card title="Third-party data" icon="random">
+    Compares what government buyers and e-commerce operators reported with the business's own return, alongside peers who work for the same buyers.
+  </Card>
+  <Card title="Law masters" icon="document">
+    Effective-dated rates, exemptions, reverse charge, blocked credit and cess, each with its notification: "what was the rate on this date", and sweeps that list everyone affected by a change.
+  </Card>
+  <Card title="Sector playbooks and estimates" icon="open-book">
+    13 sector checklists, and estimates as ranges, proxies, peer-based or extrapolated figures, with every assumption shown and editable.
+  </Card>
+  <Card title="Network analysis" icon="puzzle">
+    Builds a supply network and finds trading cycles, clusters, chain levels and credit flows, then draws the picture and the annexures.
+  </Card>
+  <Card title="Goods movement" icon="rocket">
+    Distances from PIN codes and vehicle-feasibility tests, with exact and extrapolated tax on goods that could not have moved.
+  </Card>
+  <Card title="Enrichers" icon="setting">
+    A books-to-returns turnover bridge and links to income-tax statements, bank statements, customs data and job-work records.
+  </Card>
+  <Card title="Case reports" icon="pencil">
+    An evidence locker and legal library; drafts reports in the office's own Word format with Excel annexures, with maker-checker approval.
+  </Card>
+  <Card title="Register and reporting" icon="list-format">
+    Replaces a spreadsheet register: dated events, follow-up ageing, reminder letters, management reports in existing layouts and a fuzzy duplicate check.
+  </Card>
+  <Card title="Demand computations" icon="approve-check-circle">
+    Tax by period, interest day by day, payments appropriated, penalty options, limitation dates and a deadline dashboard.
+  </Card>
+</CardGrid>
+
+<Aside type="tip" title="Built for change">
+Officers can define a new check on a form, test it on a case and switch it on, with no code. A format wizard learns a new file layout once. A data-sufficiency view shows which checks are ready, partial or blocked for a case, and drafts the request for the missing data.
+</Aside>
+
+## Built to be trusted
+
+In tax enforcement, a number is only useful if it can be defended. The design follows from that.
+
+<CardGrid>
+  <Card title="Explainable by design" icon="magnifier">
+    Every figure traces back to its source rows, the rule that produced it and the legal provision. Each check states its method (exact, proxy or estimate) and its confidence. Estimates print their assumptions, and changing one recomputes the figure. Officers' decisions on findings survive a re-run of the checks.
+  </Card>
+  <Card title="Private and tamper-evident" icon="setting">
+    Fully offline: outside network connections are blocked while the app runs. Every imported file is fingerprinted, the audit log is hash-chained, backups are signed, and case packages are digitally sealed so any change shows. The web layer is hardened, and the app runs without admin rights.
+  </Card>
+  <Card title="Tested properly" icon="approve-check-circle">
+    A synthetic data generator plants known problems, so every check is tested against expected values: 507 automated tests, including property-based tests and performance benchmarks. No real taxpayer data in the code, tests or documentation.
+  </Card>
+  <Card title="Made to be used" icon="laptop">
+    A browser interface with light and dark themes, a guided first-run tour, a "How to" page, a 22-chapter manual built into the app, and a one-click demo zone of 20 synthetic cases for training and presentations.
+  </Card>
+</CardGrid>
+
+## Technology and architecture
+
+A local web application: a Python server on the officer's own PC and the normal browser as the interface. No internet, no cloud, no installation rights needed.
+
+| Layer | Tools | Why |
+|---|---|---|
+| **Analytics engine** | DuckDB (embedded SQL), PyArrow | Fast columnar analysis of large extracts on one PC, with no database server |
+| **Graph and matching** | Own graph algorithms, RapidFuzz | Trading cycles, clusters and chain levels; fuzzy name and address matching |
+| **File handling** | python-calamine, pypdfium2, JSON and CSV readers | Reading returns and reports from Excel, PDF, JSON and CSV |
+| **Documents** | python-docx, XlsxWriter, Pillow | Reports, notices, annexures and network pictures in the office's own formats |
+| **Web server** | FastAPI, Uvicorn, Jinja2 | A testable server with server-rendered pages |
+| **Interface** | HTMX, Alpine.js, Tabulator, Cytoscape.js | Interactive tables and network pictures, all bundled locally |
+| **Security** | cryptography (Ed25519), Argon2, SHA-256 | Signatures, sealed packages, passwords and file fingerprints |
+| **Quality** | pytest, Hypothesis, pytest-socket | Unit, property-based and offline-enforced tests |
+| **Packaging** | PyInstaller, portable build | Runs on locked-down Windows PCs without admin rights |
+
+### How I built it
+
+I treated the project as a product. I started from the officers' workflow and the shape of the data, wrote a specification precise enough to build and test against, and split it into fifteen milestones. The build was AI-assisted: I directed Claude Code agents working on separate branches in parallel, under a written contract that fixed the shared files, the privacy rules and the testing standard, *correct before complete*: every check needs expected values on synthetic data. I reviewed and merged each milestone, then integrated everything into one app with a guided tour, a manual and a demo zone.
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">1 · Discover<span class="sub">workflow and data formats</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">2 · Specify<span class="sub">spec v3.1: data model, checks, acceptance</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">3 · Build<span class="sub">15 milestones, parallel AI-assisted streams</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">4 · Validate<span class="sub">planted problems, 507 tests, demo zone</span></div>
+  </div>
+</div>
+
+## Skills demonstrated
+
+| Area | Skills |
+|---|---|
+| **Data analytics** | Reconciliation and variance analysis, anomaly screening, peer benchmarking, graph and network analysis, geospatial feasibility, estimation and extrapolation, back-testing, explainable analytics, fraud detection |
+| **Data engineering** | Data integration, multi-format ingestion (PDF, Excel, JSON, CSV), entity resolution and fuzzy matching, data modelling, SQL (DuckDB), PyArrow, data quality checks, data lineage, synthetic data generation |
+| **Domain and product** | GST and indirect tax, tax compliance analytics, requirements and specification, workflow design, milestone planning, user documentation, GovTech |
+| **Engineering and delivery** | Python, FastAPI, HTMX, automated testing (pytest), security and privacy by design, offline-first architecture, AI-assisted development, Git |
+
+> **GST Nirikshak shows how I work with data: start from the decision someone has to make, find every source that bears on it, connect them on keys that hold up, and make every number explain itself.**
+
+The source code is private. A walkthrough on the synthetic demo data is available on request.
+
+<Badge text="Data analytics" /> <Badge text="Data integration" /> <Badge text="Graph analytics" /> <Badge text="Explainable analytics" /> <Badge text="Fraud detection" /> <Badge text="Python" /> <Badge text="DuckDB" /> <Badge text="FastAPI" /> <Badge text="Privacy by design" /> <Badge text="AI-assisted development" /> <Badge text="GovTech" />
