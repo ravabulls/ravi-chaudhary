@@ -1,0 +1,177 @@
+---
+title: Carbon Snapshot - Interaktives Emissions-Dashboard
+description: Ein Teamprojekt aus dem Coding-Modul des MBA - ein Web-Dashboard in Python und Dash, das 155.476 Datensätze von Climate TRACE in eine klickbare Übersicht der weltweiten Treibhausgasemissionen nach Land, Jahr, Sektor und Untersektor verwandelt, 2015 bis 2024.
+sidebar:
+  label: Carbon Snapshot
+  order: 10
+---
+
+import { Aside, Badge, Card, CardGrid, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<p class="pj-lead">Ein Web-Dashboard, vollständig in Python geschrieben, mit dem jede und jeder erkunden kann, wer wie viel emittiert und durch welche Tätigkeit: Länder, Jahre, Sektoren oder Untersektoren auswählen oder einfach auf die Karte, die Treemap oder einen Balken klicken, und alle Diagramme, Kennzahlen und Tabellen aktualisieren sich gemeinsam.</p>
+
+<Badge text="Teamprojekt" variant="caution" /> <Badge text="Python" variant="note" /> <Badge text="Dash" variant="note" /> <Badge text="Plotly" variant="note" /> <Badge text="Datenvisualisierung" variant="note" /> <Badge text="CO₂-Bilanzierung" variant="note" />
+
+**Kontext:** Teamprojekt im Coding-Modul des MBA in Technologiemanagement an der TUHH / NIT Hamburg · **Präsentiert:** 5. Juli 2025, als *Carbon Snapshot: Emissions Dashboard* · **Daten:** das offene Emissionsinventar Climate TRACE auf Länderebene · **Ergebnis:** eine funktionierende Dash-Anwendung und ein technischer Durchgang durch ihren Code auf 23 Folien.
+
+<div class="pj-stats not-content">
+  <div class="pj-stat"><span class="n">155.476</span><span class="l">Emissionsdatensätze in einer Tabelle zusammengeführt</span></div>
+  <div class="pj-stat"><span class="n">252</span><span class="l">Länder und Gebiete</span></div>
+  <div class="pj-stat"><span class="n">9 · 58</span><span class="l">Sektoren und Untersektoren, von Energie bis Reisanbau</span></div>
+  <div class="pj-stat"><span class="n">2015-2024</span><span class="l">zehn Jahre Emissionen, in Milliarden Tonnen CO₂e</span></div>
+  <div class="pj-stat"><span class="n">4 + 3</span><span class="l">verknüpfte Filter, dazu drei Diagramme, die per Klick filtern</span></div>
+  <div class="pj-stat"><span class="n">1</span><span class="l">Callback, der alle Diagramme, Kennzahlen und die Tabelle synchron hält</span></div>
+</div>
+
+<Aside type="note" title="Zu Code und Daten">
+Code und Präsentation bleiben privat; die Screenshots auf dieser Seite stammen aus der App des Teams, die für diese Beschreibung lokal ausgeführt wurde. Alle Zahlen stammen aus dem öffentlichen Climate-TRACE-Inventar, so wie das Team es aufbereitet hat. Das Jahr 2025 ist ausgenommen, weil es damals noch unvollständig war.
+</Aside>
+
+## Auf einen Blick
+
+<CardGrid>
+  <Card title="Die Frage" icon="information">
+    Emissionsdaten sind öffentlich, liegen aber in Dutzenden einzelner Dateien, eine pro Sektor, mit Hunderttausenden Zeilen. Welche Länder und Tätigkeiten zählen am meisten, und wie verändert sich das? Eine Tabellenkalkulation kann das nicht interaktiv beantworten.
+  </Card>
+  <Card title="Was wir gebaut haben" icon="laptop">
+    Eine einseitige Web-App: vier Filter, drei Kennzahlen, eine Weltkarte, eine Sektor-Treemap, ein Balkendiagramm der größten Emittenten, eine Trendlinie und eine Detailtabelle, alle aus denselben gefilterten Daten.
+  </Card>
+  <Card title="Wie es funktioniert" icon="setting">
+    pandas lädt und bereinigt die Daten einmal und hält sie im Speicher. Plotly Express zeichnet die Diagramme, Dash Bootstrap Components ordnet die Seite, und Dash-Callbacks verbinden jeden Klick mit den Diagrammen.
+  </Card>
+  <Card title="Was es zeigt" icon="approve-check-circle">
+    Die weltweiten Emissionen stiegen von 2015 bis 2024 von 55,8 auf 62,2 Milliarden Tonnen CO₂e, um etwa 11,5 %, mit einem einzigen Rückgang im Jahr 2020. Energie ist der größte Sektor, und die Stromerzeugung allein ist die größte Einzelquelle.
+  </Card>
+</CardGrid>
+
+## Das Dashboard
+
+<Tabs>
+  <TabItem label="Übersicht">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/carbon-snapshot/overview.webp" alt="Das Carbon Emissions Dashboard: Titel und Schaltfläche zum Zurücksetzen aller Filter, vier Filter für Land, Jahr, Sektor und Untersektor, drei Kennzahlen mit insgesamt 590,475 Milliarden Tonnen CO2e, 252 Ländern und durchschnittlich 2,343 Milliarden Tonnen pro Land, darunter eine Weltkarte und eine Treemap nach Sektor und Untersektor." loading="lazy" />
+      <figcaption>Die Gesamtansicht ohne Filter: 590 Milliarden Tonnen CO₂e in zehn Jahren, eine nach Emissionen eingefärbte Weltkarte und eine Treemap vom Sektor bis zum Untersektor.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Größte Emittenten und Trend">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/carbon-snapshot/charts.webp" alt="Balkendiagramm der zehn größten Emittenten, angeführt von China, den Vereinigten Staaten, Indien und der Russischen Föderation, daneben ein Liniendiagramm der weltweiten Emissionen, die von etwa 55,8 Milliarden Tonnen 2015 auf etwa 62,2 Milliarden Tonnen 2024 steigen, mit einem Rückgang 2020." loading="lazy" />
+      <figcaption>Die zehn größten Emittenten und der weltweite Trend. Der Rückgang 2020 ist das Pandemiejahr.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Länder vergleichen">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/carbon-snapshot/compare-countries.webp" alt="Mit Indien und Deutschland ausgewählt zeigt das Balkendiagramm beide Länder rot hervorgehoben, und das Trenddiagramm zeigt zwei Linien: Indien steigt von etwa 3,3 auf etwa 4,1 Milliarden Tonnen, Deutschland sinkt von etwa 1,0 auf etwa 0,8 Milliarden Tonnen zwischen 2015 und 2024." loading="lazy" />
+      <figcaption>Zwei Länder ausgewählt: hervorgehobene Balken und je eine Trendlinie. Indiens Emissionen stiegen um etwa 26 %, die deutschen sanken um etwa 22 %.</figcaption>
+    </figure>
+  </TabItem>
+  <TabItem label="Sektor und Jahr">
+    <figure class="sc-fig pj-shot">
+      <img src="/projects/carbon-snapshot/sector-year-filter.webp" alt="Das Dashboard gefiltert auf den Sektor Verkehr und das Jahr 2024: insgesamt 9,101 Milliarden Tonnen CO2e, die Weltkarte neu eingefärbt und die Treemap mit den Verkehrs-Untersektoren, dominiert vom Straßenverkehr, gefolgt von internationaler Luftfahrt und internationaler Schifffahrt." loading="lazy" />
+      <figcaption>Verkehr im Jahr 2024: 9,1 Milliarden Tonnen, davon etwa 74 % aus dem Straßenverkehr.</figcaption>
+    </figure>
+  </TabItem>
+</Tabs>
+
+## Was es kann
+
+| Element | Was es zeigt | Wie man interagiert |
+|---|---|---|
+| **Vier Filter** | Land, Jahr, Sektor, Untersektor | Mehrfachauswahl; leer bedeutet "alle" |
+| **Kennzahlen** | Gesamtemissionen, Anzahl der Länder, Durchschnitt pro Land | Bei jeder Änderung neu berechnet |
+| **Weltkarte** | Gesamtemissionen pro Land als Choroplethenkarte | Klick auf ein Land nimmt es in den Filter auf oder entfernt es |
+| **Treemap** | Emissionen nach Sektor und Untersektor, nach Menge skaliert | Klick auf einen Sektor filtert danach |
+| **Größte Emittenten** | Die zehn größten Emittenten der aktuellen Auswahl | Klick auf einen Balken schaltet das Land um; ausgewählte Länder werden rot |
+| **Trendlinie** | Emissionen über die Zeit: weltweit, ein Land oder eine Linie je ausgewähltem Land | Folgt dem Länderfilter |
+| **Datentabelle** | Alle passenden Datensätze, größte zuerst, zehn Zeilen pro Seite | Scrollen und blättern; aktualisiert sich mit den Filtern |
+| **Zurücksetzen** | Löscht alle Auswahlen auf einmal | Eine Schaltfläche |
+
+## Wie wir es gebaut haben
+
+<Steps>
+
+1. **Daten vorbereiten.** Climate TRACE veröffentlicht eine Datei pro Sektor auf Länderebene. Das Team führte sie zu einer Tabelle aus Land, Jahr, Sektor, Untersektor und Emissionen in Milliarden Tonnen CO₂e zusammen, lud sie mit pandas, entfernte das unvollständige Jahr 2025 und die doppelte Rohspalte der Emissionen und erstellte die Auswahllisten für die vier Filter.
+
+2. **Die Seite aufbauen.** Dash Bootstrap Components lieferte ein responsives Raster, geschrieben in Python: eine Kopfzeile mit Titel und Zurücksetzen-Schaltfläche, eine Reihe mit vier Filterkarten, drei Kennzahlkarten, zwei Reihen mit je zwei Diagrammen und eine Tabelle über die volle Breite, alles im klaren FLATLY-Design mit einem zentralen Farbschema.
+
+3. **Die Diagramme zeichnen.** Plotly Express erzeugte Choroplethenkarte, Treemap, Balken- und Liniendiagramm mit wenigen Zeilen pro Diagramm, Hover-Details, Titel und Farbskalen einmal festgelegt.
+
+4. **Die Diagramme klickbar machen.** Kleine Callbacks lesen, wo auf Karte, Balken oder Treemap geklickt wurde, und fügen dieses Land oder diesen Sektor im passenden Filter hinzu oder entfernen ihn, sodass die Diagramme selbst zu Filtern werden.
+
+5. **Alles synchron halten.** Ein zentraler Callback hört auf alle vier Filter und die Zurücksetzen-Schaltfläche, filtert die Daten einmal, berechnet die drei Kennzahlen neu, zeichnet alle vier Diagramme und aktualisiert die Tabelle, alles in einem Schritt.
+
+6. **Es erklären.** Das Team präsentierte die App und ging ihren Code Folie für Folie durch, von den Imports bis zu den Callbacks.
+
+</Steps>
+
+<div class="sc-fig">
+  <div class="sc-flow">
+    <div class="sc-node slate">Climate-TRACE-Dateien<span class="sub">eine pro Sektor</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">pandas<span class="sub">zusammenführen, bereinigen, cachen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node amber">Filter und Klicks<span class="sub">Auswahllisten, Karte, Balken, Treemap</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node">Ein Callback<span class="sub">einmal filtern, neu berechnen</span></div>
+    <span class="arrow">→</span>
+    <div class="sc-node green">Dashboard<span class="sub">Kennzahlen, 4 Diagramme, Tabelle</span></div>
+  </div>
+  <figcaption>Jede Interaktion läuft über denselben Weg, sodass Kennzahlen, Diagramme und Tabelle nie voneinander abweichen.</figcaption>
+</div>
+
+## Warum Dash
+
+Das Team verglich drei Wege, eine Daten-App in Python zu bauen, bevor es sich entschied.
+
+| Option | Was sie bietet | Warum nicht (oder warum) |
+|---|---|---|
+| **Flask allein** | Volle Kontrolle über einen Webserver | Jede Seite braucht handgeschriebenes HTML, CSS und JavaScript |
+| **Streamlit** | Der schnellste Einstieg | Weniger Kontrolle über das Layout und einfachere Interaktion zwischen Diagrammen |
+| **Dash** | Python für Oberfläche und Logik, mit eingebauten Plotly-Diagrammen | **Gewählt:** genaue Layout-Kontrolle und Callbacks, die viele Diagramme gleichzeitig aktualisieren |
+
+## Was die Daten zeigen
+
+<CardGrid>
+  <Card title="Weiter steigend" icon="warning">
+    Die weltweiten Emissionen wuchsen von 55,8 Milliarden Tonnen CO₂e im Jahr 2015 auf 62,2 Milliarden im Jahr 2024. Der einzige Rückgang kam 2020, etwa 3 % unter 2019, und war 2021 mehr als ausgeglichen.
+  </Card>
+  <Card title="Wenige Länder dominieren" icon="star">
+    Über das Jahrzehnt stehen China, die Vereinigten Staaten, Indien und Russland zusammen für mehr als die Hälfte aller Emissionen im Datensatz.
+  </Card>
+  <Card title="Energie zuerst" icon="rocket">
+    Energie ist der größte Sektor, etwa ein Viertel der Gesamtmenge, und die Stromerzeugung ist der größte einzelne Untersektor, vor dem Straßenverkehr.
+  </Card>
+  <Card title="Getrennte Wege" icon="random">
+    Indiens Emissionen stiegen zwischen 2015 und 2024 um etwa 26 %, die deutschen sanken um etwa 22 %: Dasselbe Dashboard zeigt Wachstum und Dekarbonisierung nebeneinander.
+  </Card>
+</CardGrid>
+
+## Technischer Stack
+
+| Komponente | Technologie |
+|---|---|
+| Sprache | Python |
+| Web-Framework | Dash (von Plotly) |
+| Layout und Gestaltung | Dash Bootstrap Components, FLATLY-Design |
+| Diagramme | Plotly Express: Choroplethenkarte, Treemap, Balken, Linie |
+| Datenverarbeitung | pandas, eine bereinigte Tabelle im Speicher |
+| Tabelle | Dash DataTable mit Seitenumbruch und horizontalem Scrollen |
+| Datenquelle | Climate TRACE, Emissionen auf Länderebene nach Sektor |
+
+## Gezeigte Fähigkeiten
+
+| Fähigkeit | Wo sie sichtbar wird |
+|---|---|
+| **Python für Analysen** | Laden, Bereinigen und Aggregieren von 155.476 Datensätzen mit pandas |
+| **Datenvisualisierung** | Für jede Frage das passende Diagramm: wo (Karte), was (Treemap), wer (Balken), wann (Trend) |
+| **Interaktives App-Design** | Verknüpfte Filter, klickbare Diagramme und eine einzige Datenquelle für jede Ansicht |
+| **Ereignisgesteuerte Programmierung** | Dash-Callbacks mit mehreren Ausgaben, abgesicherten Klicks und umschaltbaren Auswahlen |
+| **CO₂-Bilanzierung** | Arbeiten in CO₂-Äquivalenten über Sektoren, Untersektoren und Länder |
+| **Technische Kommunikation** | Ein Code-Durchgang Folie für Folie für ein nicht spezialisiertes Publikum |
+| **Teamarbeit** | Als Team gebaut und präsentiert, mit Arbeit aus mehreren Notebooks zu einer App zusammengeführt |
+
+## Was das Projekt gelehrt hat
+
+Gute Dashboards beginnen mit Fragen, nicht mit Diagrammen. Jede Darstellung hier beantwortet eine: woher die Emissionen kommen, welche Tätigkeiten sie verursachen, wer die größten Emittenten sind und wie sich das verändert. Die nützlichste Designentscheidung war technisch, aber einfach: Jeder Filter und jeder Klick läuft über eine einzige Aktualisierungsfunktion, sodass Kennzahlen, Diagramme und Tabelle immer genau dieselben Daten beschreiben. Und das Projekt hat daran erinnert, dass es beim Programmieren für eine Führungskraft weniger um Syntax geht als darum, einen großen, verstreuten Datensatz in etwas zu verwandeln, das Menschen selbst erkunden können.
+
+<Badge text="Python" /> <Badge text="Dash" /> <Badge text="Plotly Express" /> <Badge text="pandas" /> <Badge text="Dash Bootstrap Components" /> <Badge text="Climate TRACE" /> <Badge text="Datenvisualisierung" /> <Badge text="CO₂-Bilanzierung" /> <Badge text="Teamprojekt" />
